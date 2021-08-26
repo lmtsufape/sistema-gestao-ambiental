@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -17,6 +18,13 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    public const ROLE_ENUM = [
+        'requerente' => 1,
+        'represetante_legal' => 2,
+        'analista' => 3,
+        'secretario' => 4,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -58,4 +67,32 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class, 'endereco_id');
+    }
+
+    public function telefone()
+    {
+        return $this->belongsTo(Telefone::class, 'telefone_id');
+    }
+
+    public function requerente()
+    {
+        return $this->hasOne(Requerente::class, 'user_id');
+    }
+
+    public function empresa()
+    {
+        return $this->hasOne(Empresa::class, 'user_id');
+    }
+
+    public function setAtributes($input) 
+    {
+        $this->name = $input['name'];
+        $this->email = $input['email'];
+        $this->password = Hash::make($input['password']);
+        $this->role = User::ROLE_ENUM['requerente'];
+    }
 }
