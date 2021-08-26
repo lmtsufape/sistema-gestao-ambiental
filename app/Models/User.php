@@ -68,16 +68,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
-    public function endereco()
-    {
-        return $this->belongsTo(Endereco::class, 'endereco_id');
-    }
-
-    public function telefone()
-    {
-        return $this->belongsTo(Telefone::class, 'telefone_id');
-    }
-
     public function requerente()
     {
         return $this->hasOne(Requerente::class, 'user_id');

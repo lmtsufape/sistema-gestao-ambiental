@@ -13,6 +13,16 @@ class Telefone extends Model
         'numero',
     ];
 
+    public function empresa()
+    {
+        return $this->hasOne(Empresa::class, 'telefone_id');
+    }
+
+    public function requerente()
+    {
+        return $this->hasOne(Requerente::class, 'telefone_id');
+    }
+
     public function setNumero($numero)
     {
         $this->numero = $numero;

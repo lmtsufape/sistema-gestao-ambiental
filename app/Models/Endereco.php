@@ -19,6 +19,16 @@ class Endereco extends Model
         'complemento',
     ];
 
+    public function empresa()
+    {
+        return $this->hasOne(Empresa::class, 'endereco_id');
+    }
+
+    public function requerente()
+    {
+        return $this->hasOne(Requerente::class, 'endereco_id');
+    }
+
     public function setAtributes($input) 
     {
         $this->cep          = $input['cep'];
