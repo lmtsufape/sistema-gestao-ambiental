@@ -19,7 +19,7 @@ class CreateRequerimentosTable extends Migration
             $table->integer('tipo');
             $table->double('valor');
 
-            $table->unsignedBigInteger('analista_id');
+            $table->unsignedBigInteger('analista_id')->nullable();
             $table->foreign('analista_id')->references('id')->on('users');
             $table->unsignedBigInteger('represetante_id')->nullable();
             $table->foreign('represetante_id')->references('id')->on('represetante_legals');
