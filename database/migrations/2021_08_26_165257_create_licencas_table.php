@@ -18,7 +18,6 @@ class CreateLicencasTable extends Migration
             $table->string('protocolo')->nullable();
             $table->integer('status');
             $table->integer('tipo');
-            $table->double('valor');
             $table->string('validade');
 
             $table->unsignedBigInteger('requerimento_id');
