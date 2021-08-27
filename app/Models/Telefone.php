@@ -23,6 +23,11 @@ class Telefone extends Model
         return $this->hasOne(Requerente::class, 'telefone_id');
     }
 
+    public function representanteLegal()
+    {
+        return $this->hasOne(RepresetanteLegal::class, 'telefone_id');
+    }
+
     public function setNumero($numero)
     {
         $this->numero = $numero;

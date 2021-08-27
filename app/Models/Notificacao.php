@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Notificacao extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'texto',
+    ];
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id');
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(FotoNotificacao::class, 'notificacao_id');
+    }
 }

@@ -31,6 +31,26 @@ class Empresa extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function requerimentos()
+    {
+        return $this->hasMany(Requerimento::class, 'empresa_id');
+    }
+
+    public function cnae() 
+    {
+        return $this->belongsTo(Cnae::class, 'cnae_id');
+    }
+
+    public function notificacoes()
+    {
+        return $this->hasMany(Notificacao::class, 'empresa_id');
+    }
+
+    public function represetanteLegal()
+    {
+        return $this->belongsTo(RepresetanteLegal::class, 'represetante_legal_id');
+    }
+
     public function setAtributes($input)
     {
         $this->nome = $input['nome_da_empresa'];

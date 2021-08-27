@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class FotoDenuncia extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'caminho',
+        'comentario',
+    ];
+
+    public function denuncia()
+    {
+        return $this->belongsTo(Denuncia::class, 'denuncia_id');
+    }
 }

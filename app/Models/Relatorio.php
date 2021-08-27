@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Relatorio extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'texto',
+        'aprovacao',
+    ];
+
+    public function visita()
+    {
+        return $this->belongsTo(Visita::class, 'visita_id');
+    }
 }

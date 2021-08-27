@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class FotoNotificacao extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'caminho',
+        'comentario',
+    ];
+
+    public function notificacao()
+    {
+        return $this->belongsTo(Notificacao::class, 'notificacao_id');
+    }
 }
