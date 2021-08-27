@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 
 class UserController extends Controller
@@ -25,18 +26,25 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $request->validated();
+        $user = new User();
+        $user->setAtributes($request);
+        $user->role = User::ROLE_ENUM['analista'];
+        $user->email_verified_at = now();
+        $user->save();
+        
+        return redirect(route('usuarios.index'))->with(['success' => 'Analista cadastrado com sucesso!']);
     }
 
     /**
@@ -81,6 +89,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect(route('usuarios.index'))->with(['success' => 'Analista deletado com sucesso!']);
     }
 }

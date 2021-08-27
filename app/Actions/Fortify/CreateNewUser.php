@@ -63,6 +63,7 @@ class CreateNewUser implements CreatesNewUsers
         $requerente = new Requerente();
 
         $user->setAtributes($input);
+        $user->role = User::ROLE_ENUM['requerente'];
         $user->save();
 
         $endereco->setAtributes($input);

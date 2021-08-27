@@ -93,6 +93,5 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->name = $input['name'];
         $this->email = $input['email'];
         $this->password = Hash::make($input['password']);
-        $this->role = User::ROLE_ENUM['requerente'];
     }
 }
