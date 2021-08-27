@@ -18,8 +18,8 @@ class CreateFotoDenunciasTable extends Migration
             $table->string('caminho');
             $table->text('comentario')->nullable();
 
-            $table->unsignedBigInteger('requerimento_id');
-            $table->foreign('requerimento_id')->references('id')->on('requerimentos');
+            $table->unsignedBigInteger('denuncia_id');
+            $table->foreign('denuncia_id')->references('id')->on('denuncias');
             
             $table->timestamps();
         });
