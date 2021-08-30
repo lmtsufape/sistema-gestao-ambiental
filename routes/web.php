@@ -23,4 +23,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::resource('usuarios', UserController::class);
+    Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
 });
