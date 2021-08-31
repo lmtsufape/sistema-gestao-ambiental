@@ -20,8 +20,8 @@ class Cnae extends Model
         return $this->belongsTo(Setor::class, 'setor_id');
     }
 
-    public function empresas() 
+    public function empresas()
     {
-        return $this->hasMany(Empresa::class, 'cnae_id');
+        return $this->belongsToMany(Empresa::class);
     }
 }

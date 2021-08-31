@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
-    
+
     public $fillable = [
         'nome',
         'cnpj',
@@ -36,9 +36,9 @@ class Empresa extends Model
         return $this->hasMany(Requerimento::class, 'empresa_id');
     }
 
-    public function cnae() 
+    public function cnaes()
     {
-        return $this->belongsTo(Cnae::class, 'cnae_id');
+        return $this->belongsToMany(Cnae::class);
     }
 
     public function notificacoes()
