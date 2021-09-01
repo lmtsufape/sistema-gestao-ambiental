@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -24,4 +25,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
+    Route::resource('setores', SetorController::class);
 });
