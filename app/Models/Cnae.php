@@ -19,7 +19,6 @@ class Cnae extends Model
         'nome',
         'codigo',
         'potencial_poluidor',
-        'setor_id',
     ];
 
     public function setor()
@@ -29,7 +28,7 @@ class Cnae extends Model
 
     public function empresas()
     {
-        return $this->belongsToMany(Empresa::class);
+        return $this->belongsToMany(Empresa::class, 'cnae_empresa', 'cnae_id', 'empresa_id');
     }
 
     public function setAtributes($input)

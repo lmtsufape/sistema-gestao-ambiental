@@ -13,7 +13,6 @@ class Empresa extends Model
         'nome',
         'cnpj',
         'porte',
-        'potencial_poluidor',
     ];
 
     public function endereco()
@@ -38,7 +37,7 @@ class Empresa extends Model
 
     public function cnaes()
     {
-        return $this->belongsToMany(Cnae::class);
+        return $this->belongsToMany(Cnae::class, 'cnae_empresa', 'empresa_id', 'cnae_id');
     }
 
     public function notificacoes()

@@ -15,8 +15,10 @@ class CreateCnaeEmpresaTable extends Migration
     {
         Schema::create('cnae_empresa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cnae_id')->constrained();
-            $table->foreignId('empresa_id')->constrained();
+            $table->bigInteger('cnae_id');
+            $table->foreign('cnae_id')->references('id')->on('cnaes');
+            $table->bigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

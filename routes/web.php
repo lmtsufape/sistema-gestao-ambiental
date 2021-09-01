@@ -33,3 +33,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
         ->name('cnaes.create');
 });
+
+Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
+    ->name("ajax.listar.cnaes");

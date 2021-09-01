@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setor;
+use App\Models\Cnae;
 use Illuminate\Http\Request;
 
 class SetorController extends Controller
@@ -96,5 +97,15 @@ class SetorController extends Controller
         $setor->delete();
 
         return redirect(route('setores.index'))->with(['success' => 'Setor deletado com sucesso!']);
+    }
+
+    public function ajaxCnaes(Request $request)
+    {
+        $cnaes = Cnae::where('setor_id', '=', $request->setor_id)->orderBy('nome', 'ASC')->get();
+        $data = array(
+            'success'   => true,
+            'cnaes'     => $cnaes,
+        );
+        echo json_encode($data);
     }
 }
