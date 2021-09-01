@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -26,4 +27,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
     Route::resource('setores', SetorController::class);
+
+    Route::resource('cnaes', CnaeController::class);
+
+    Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
+        ->name('cnaes.create');
 });

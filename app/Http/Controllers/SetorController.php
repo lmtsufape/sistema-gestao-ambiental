@@ -54,9 +54,11 @@ class SetorController extends Controller
      * @param  \App\Models\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function show(Setor $setor)
+    public function show($id)
     {
-        //
+        $setor = Setor::find($id);
+        $cnaes = $setor->cnaes;
+        return view('setor.show', compact('setor', 'cnaes'));
     }
 
     /**

@@ -14,7 +14,7 @@ class Setor extends Model
         'descricao',
     ];
 
-    public function canes()
+    public function cnaes()
     {
         return $this->hasMany(Cnae::class, 'setor_id');
     }
