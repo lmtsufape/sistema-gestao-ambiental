@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             EnderecoSeeder::class,
             TelefoneSeeder::class,
             RequerenteSeeder::class,
-            TelefoneSeeder::class,
+            EmpresaSeeder::class,
         ]);
     }
 }

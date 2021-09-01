@@ -13,6 +13,7 @@ class Requerimento extends Model
         'requerida'     => 1,
         'em_andamento'  => 2,
         'finalizada'    => 3,
+        'cancelada'     => 4,
     ];
 
     public const TIPO_ENUM = [

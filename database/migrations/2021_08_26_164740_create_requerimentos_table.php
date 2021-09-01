@@ -17,7 +17,7 @@ class CreateRequerimentosTable extends Migration
             $table->id();
             $table->integer('status');
             $table->integer('tipo');
-            $table->double('valor');
+            $table->double('valor')->nullable();
 
             $table->unsignedBigInteger('analista_id')->nullable();
             $table->foreign('analista_id')->references('id')->on('users');
