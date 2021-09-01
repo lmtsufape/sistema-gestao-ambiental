@@ -68,7 +68,11 @@ class RequerimentoController extends Controller
      */
     public function show($id)
     {
-        //
+        $requerimento = Requerimento::find($id);
+        $this->authorize('view', $requerimento);
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+
+        return view('requerimento.show', compact('requerimento', 'analistas'));
     }
 
     /**
@@ -95,7 +99,7 @@ class RequerimentoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Cancela um requerimento.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -111,6 +115,28 @@ class RequerimentoController extends Controller
         
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
         $requerimento->update();
+    }
+
+    /**
+     * Atribui um analista a um requerimento.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function atribuirAnalista(Request $request) 
+    {
+        $this->authorize('isSecretario', User::class);
+        $validated = $request->validate([
+            'analista' => 'required',
+            'requerimento' => 'required',
+        ]);
+        
+        $analista = User::find($request->analista);
+        $requerimento = Requerimento::find($request->requerimento);
+        $requerimento->analista_id = $analista->id;
+        $requerimento->update();
+
+        return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
     }
 
     /**

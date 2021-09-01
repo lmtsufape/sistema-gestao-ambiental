@@ -25,4 +25,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
     Route::resource('requerimentos', RequerimentoController::class);
+    Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
 });

@@ -24,7 +24,7 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isSecretario($user) 
+    public function isSecretario(User $user) 
     {
         return $user->role == User::ROLE_ENUM['secretario'];
     }
@@ -34,7 +34,7 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isAnalista($user) 
+    public function isAnalista(User $user) 
     {
         return $user->role == User::ROLE_ENUM['analista'];
     }
@@ -44,8 +44,18 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isRequerente($user) 
+    public function isRequerente(User $user) 
     {
         return $user->role == User::ROLE_ENUM['requerente'];
+    }
+
+    /**
+     * Checa se o usuário logado é um secretario ou requerente.
+     *
+     * @return boolean
+     */
+    public function isRequerenteOrSecretario(User $user)
+    {
+        return $this->isSecretario($user) || $this->isRequerente($user);
     }
 }

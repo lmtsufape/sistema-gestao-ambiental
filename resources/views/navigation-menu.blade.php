@@ -19,12 +19,12 @@
                         <x-jet-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                             {{ __('Usuários') }}
                         </x-jet-nav-link>
-                    @endif
-                    @can('isRequerente', \App\Models\User::class)
+                    @endcan
+                    @can('isRequerenteOrSecretario', \App\Models\User::class)
                         <x-jet-nav-link href="{{route('requerimentos.index')}}" :active="request()->routeIs('requerimentos.*')">
                             {{ __('Requerimentos') }}
                         </x-jet-nav-link>
-                    @endif
+                    @endcan
                 </div>
             </div>
 

@@ -30,7 +30,8 @@ class RequerimentoPolicy
      */
     public function view(User $user, Requerimento $requerimento)
     {
-        //
+        $userPolicy = new UserPolicy();
+        return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user);
     }
 
     /**
@@ -91,5 +92,22 @@ class RequerimentoPolicy
     public function forceDelete(User $user, Requerimento $requerimento)
     {
         //
+    }
+
+    /**
+     * Retorna se um requerimento está sendo analisado pelo analista.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Requerimento  $requerimento
+     * @return boolean
+     */
+    private function analises(User $user, Requerimento $requerimento)
+    {
+        $userPolicy = new UserPolicy();
+        if ($userPolicy->isAnalista($user)) {
+            return $user->requerimentos->contains($requerimento);
+        }
+
+        return false;
     }
 }

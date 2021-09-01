@@ -12,7 +12,13 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Requerimentos criados por você</h5>
+                                <h5 class="card-title">
+                                    @can('isSecretario', \App\Models\User::class)
+                                        {{__('Requerimentos')}}
+                                    @elsecan('create', $post)
+                                        {{__('Requerimentos criados por você')}}
+                                    @endcan
+                                </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Requerimentos</h6>
                             </div>
                             <div class="col-md-4" style="text-align: right">
@@ -77,6 +83,11 @@
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                             <td>
+                                                @can('isSecretario', \App\Models\User::class)
+                                                <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
+                                                    Analisar
+                                                </a>
+                                                @endcan
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
                                                     Cancelar
                                                 </button>
