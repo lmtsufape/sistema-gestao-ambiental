@@ -103,6 +103,7 @@ class RequerimentoController extends Controller
     public function destroy($id)
     {
         $requerimento = Requerimento::find($id);
+        $this->authorize('delete', $requerimento);
 
         if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
             return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
