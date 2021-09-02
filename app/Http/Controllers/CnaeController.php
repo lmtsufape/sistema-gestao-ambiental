@@ -74,9 +74,10 @@ class CnaeController extends Controller
      * @param  \App\Models\Cnae  $cnae
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cnae $cnae)
+    public function edit($id)
     {
-        //
+        $cnae = Cnae::find($id);
+        return view('cnae.edit', compact('cnae'));
     }
 
     /**
@@ -86,9 +87,25 @@ class CnaeController extends Controller
      * @param  \App\Models\Cnae  $cnae
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cnae $cnae)
+    public function update(Request $request, $id)
     {
-        //
+        if (strlen($request->codigo) < 7) {
+            return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
+        }
+        $cnae = Cnae::find($id);
+
+        $validator = $request->validate([
+            'nome'      => 'required|string',
+            'codigo'    => 'required|string|unique:cnaes,codigo,'.$cnae->id,
+            'potencial_poluidor' => 'required',
+        ]);
+
+
+        $cnae->setAtributes($request);
+        $cnae->potencial_poluidor = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
+        $cnae->update();
+
+        return redirect(route('setores.show', ['setore' => $cnae->setor]))->with(['success' => 'Cnae editado com sucesso!']);
     }
 
     /**

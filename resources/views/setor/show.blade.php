@@ -69,9 +69,19 @@
                                                 @endswitch
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarCnae_{{$cnae->id}}">
-                                                    Deletar
-                                                </button>
+                                                <div class="btn-group">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                                                                <a class="dropdown-item" href="{{route('cnaes.edit', ['cnae' => $cnae->id])}}">Editar Cnae</a>
+                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarCnae_{{$cnae->id}}" style="color: red; cursor: pointer;">Deletar cnae</a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

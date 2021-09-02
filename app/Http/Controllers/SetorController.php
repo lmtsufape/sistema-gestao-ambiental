@@ -58,7 +58,7 @@ class SetorController extends Controller
     public function show($id)
     {
         $setor = Setor::find($id);
-        $cnaes = $setor->cnaes;
+        $cnaes = Cnae::where('setor_id', '=', $setor->id)->orderBy('nome', 'ASC')->get();
         return view('setor.show', compact('setor', 'cnaes'));
     }
 
@@ -68,9 +68,10 @@ class SetorController extends Controller
      * @param  \App\Models\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Setor $setor)
+    public function edit($id)
     {
-        //
+        $setor = Setor::find($id);
+        return view('setor.edit', compact('setor'));
     }
 
     /**
@@ -80,9 +81,19 @@ class SetorController extends Controller
      * @param  \App\Models\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Setor $setor)
+    public function update(Request $request, $id)
     {
-        //
+        $setor = Setor::find($id);
+
+        $validator = $request->validate([
+            'nome'      => 'required|string',
+            'descricao' => 'required|string',
+        ]);
+
+        $setor->setAtributes($request);
+        $setor->update();
+
+        return redirect(route('setores.index'))->with(['success' => 'Setor editado com sucesso!']);
     }
 
     /**

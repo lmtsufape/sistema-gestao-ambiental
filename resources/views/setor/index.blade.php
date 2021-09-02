@@ -50,6 +50,7 @@
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                             @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
                                                                 <a class="dropdown-item" href="{{route('setores.show', ['setore' => $setor->id])}}">Visualizar Setor</a>
+                                                                <a class="dropdown-item" href="{{route('setores.edit', ['setore' => $setor->id])}}">Editar Setor</a>
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="color: red; cursor: pointer;">Deletar setor</a>
                                                             @endif
                                                         </div>
