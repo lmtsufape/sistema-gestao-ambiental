@@ -21,9 +21,11 @@
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Requerimentos</h6>
                             </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" data-toggle="modal" data-target="#novo_requerimento">Novo requerimento</a>
-                            </div>
+                            @can('isRequerente', \App\Models\User::class)
+                                <div class="col-md-4" style="text-align: right">
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#novo_requerimento">Novo requerimento</a>
+                                </div>
+                            @endcan
                         </div>
                         <div div class="form-row">
                             @if(session('success'))

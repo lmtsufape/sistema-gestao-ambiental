@@ -134,6 +134,7 @@ class RequerimentoController extends Controller
         $analista = User::find($request->analista);
         $requerimento = Requerimento::find($request->requerimento);
         $requerimento->analista_id = $analista->id;
+        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->update();
 
         return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
