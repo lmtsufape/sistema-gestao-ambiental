@@ -15,7 +15,7 @@ class CreateDocumentosTable extends Migration
     {
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('nome', 290);
             $table->string('documento_modelo')->nullable();
             $table->timestamps();
         });

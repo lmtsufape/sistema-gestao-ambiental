@@ -16,9 +16,14 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                     @if(auth()->user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                    <x-jet-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
-                        {{ __('Usuários') }}
-                    </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
+                            {{ __('Usuários') }}
+                        </x-jet-nav-link>
+                    @endif
+                    @if(auth()->user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                        <x-jet-nav-link href="{{route('documentos.index')}}" :active="request()->routeIs('documentos.*')">
+                            {{ __('Documentos') }}
+                        </x-jet-nav-link>
                     @endif
                 </div>
             </div>
