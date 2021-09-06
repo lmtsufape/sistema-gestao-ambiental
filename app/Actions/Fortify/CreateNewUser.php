@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Cnae;
 use App\Models\User;
 use App\Models\Endereco;
 use App\Models\Telefone;
@@ -51,7 +52,8 @@ class CreateNewUser implements CreatesNewUsers
             'cidade_da_empresa'         => ['required', 'string', 'max:255'],
             'estado_da_empresa'         => ['required', 'string', 'max:255'],
             'complemento_da_empresa'    => ['nullable', 'string', 'max:255'],
-            
+            'cnaes_id'                  => ['required'],
+
         ])->validate();
 
         $user = new User();
@@ -88,6 +90,10 @@ class CreateNewUser implements CreatesNewUsers
         $empresa->telefone_id = $telefoneEmpresa->id;
         $empresa->save();
 
+        $cnaes_id = $input['cnaes_id'];
+        foreach($cnaes_id as $cnae_id){
+            $empresa->cnaes()->attach((Cnae::find($cnae_id)));
+        }
         return $user;
     }
 }
