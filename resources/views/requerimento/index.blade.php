@@ -63,6 +63,8 @@
                                                     {{__('Requerida')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
                                                     {{__('Em andamento')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                    {{__('Documentos requeridos')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif
@@ -85,7 +87,7 @@
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                             <td>
-                                                @can('isSecretario', \App\Models\User::class)
+                                                @can('isSecretarioOrAnalista', \App\Models\User::class)
                                                 <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
                                                     Analisar
                                                 </a>
@@ -121,7 +123,7 @@
                         <label for="name">{{ __('Tipo de requerimento') }}</label>
                         <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" required>
                             <option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>
-                            @if ($primeiroRequerimento)
+                            @if (isset($primeiroRequerimento) && $primeiroRequerimento)
                                 <option value="1">{{__('Primeira licença')}}</option>
                             @else
                                 <option value="2">{{__('Renovação')}}</option>

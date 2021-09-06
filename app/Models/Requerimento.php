@@ -12,8 +12,9 @@ class Requerimento extends Model
     public const STATUS_ENUM = [
         'requerida'     => 1,
         'em_andamento'  => 2,
-        'finalizada'    => 3,
-        'cancelada'     => 4,
+        'documentos_requeridos' => 3,
+        'finalizada'    => 4,
+        'cancelada'     => 5,
     ];
 
     public const TIPO_ENUM = [

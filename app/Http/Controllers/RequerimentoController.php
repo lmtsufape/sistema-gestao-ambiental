@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Requerimento;
+use App\Models\Documento;
 use App\Http\Requests\RequerimentoRequest;
 
 class RequerimentoController extends Controller
@@ -25,6 +26,19 @@ class RequerimentoController extends Controller
             $requerimentos = Requerimento::all();
         }
         return view('requerimento.index', compact('requerimentos', 'primeiroRequerimento'));
+    }
+
+    /**
+     * Retorna a view dos requerimentos do analista logado.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function analista() 
+    {
+        $user = auth()->user();
+        $requerimentos = $user->requerimentos;
+        
+        return view('requerimento.index', compact('requerimentos'));
     }
 
     /**
@@ -71,8 +85,9 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('view', $requerimento);
         $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+        $documentos = Documento::orderBy('nome')->get();
 
-        return view('requerimento.show', compact('requerimento', 'analistas'));
+        return view('requerimento.show', compact('requerimento', 'analistas', 'documentos'));
     }
 
     /**
@@ -138,6 +153,59 @@ class RequerimentoController extends Controller
         $requerimento->update();
 
         return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
+    }
+
+    /**
+     * Salva a lista de documentos para retirar a licença.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeChecklist(Request $request)
+    {   
+        if ($request->documentos == null) {
+            return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
+        }
+
+        $requerimento = Requerimento::find($request->requerimento);
+        foreach ($request->documentos as $documento_id) {
+            $requerimento->documentos()->attach($documento_id);
+        }
+
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
+    }
+
+    /**
+     * Editar a lista de documentos para retirar a licença.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateChecklist(Request $request) 
+    {
+        if ($request->documentos == null) {
+            return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
+        }
+
+        $requerimento = Requerimento::find($request->requerimento);
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        $requerimento->update();
+        
+        // Documentos desmarcados
+        foreach ($requerimento->documentos as $documento) {
+            if (!in_array($documento->id, $request->documentos)) {
+                $requerimento->documentos()->detach($documento->id);
+            } 
+        }
+
+        // Documentos marcados
+        foreach ($request->documentos as $documento_id) {
+            if (!$requerimento->documentos->contains('id', $documento_id)) {
+                $requerimento->documentos()->attach($documento_id);
+            }
+        }
+
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
     /**
