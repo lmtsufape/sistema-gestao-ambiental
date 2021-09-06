@@ -58,4 +58,14 @@ class UserPolicy
     {
         return $this->isSecretario($user) || $this->isRequerente($user);
     }
+
+    /**
+     * Checa se o usuário logado é um secretario ou analista.
+     *
+     * @return boolean
+     */
+    public function isSecretarioOrAnalista(User $user) 
+    {
+        return $this->isSecretario($user) || $this->isAnalista($user);
+    }
 }

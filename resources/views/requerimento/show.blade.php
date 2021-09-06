@@ -23,6 +23,18 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Requerimentos > analisar requerimento</h6>
                             </div>
                         </div>
+                        @error('error')
+                            <div class="alert alert-danger" role="alert">
+                                {{$message}}
+                            </div>
+                        @enderror
+                        @if(session('success'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-success" role="alert">
+                                    <p>{{session('success')}}</p>
+                                </div>
+                            </div>
+                        @endif
                         <div class="accordion" id="accordionExample">
                             <div class="card">
                                 <div class="card-header" id="headingOne">
@@ -182,6 +194,36 @@
                                                 <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5" disabled>{{$requerimento->empresa->endereco->complemento}}</textarea>
                                             </div>
                                         </div>
+                                        @can('isAnalista', \App\Models\User::class)
+                                        <div class="form-row">
+                                            <div class="col-md-12 form-group">
+                                                <h3>Cnaes</h3>
+                                            </div>
+                                        </div>
+                                            <div class="form-row">
+                                                @foreach ($requerimento->empresa->cnaes as $cnae)
+                                                    <div class="card" style="width: 18rem; margin: 5px;">
+                                                        <div class="card-body">
+                                                        <h5 class="card-title">{{$cnae->nome}}</h5>
+                                                        <h6 class="card-subtitle mb-2 text-muted">{{$cnae->codigo}}</h6>
+                                                        <p class="card-text">
+                                                            @switch($cnae->potencial_poluidor)
+                                                                @case(1)
+                                                                    Baixo
+                                                                    @break
+                                                                @case(2)
+                                                                    Médio
+                                                                    @break
+                                                                @case(3)
+                                                                    Alto
+                                                                    @break                                                                    
+                                                            @endswitch
+                                                        </p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endcan
                                     </div>
                                 </div>
 
@@ -203,31 +245,117 @@
                             
                         </div>
                         <br>
-                        <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
-                            @csrf
-                            <div class="form-row">
+                        @can('isAnalista', \App\Models\User::class)
+                        <div class="form-row">
+                            @if ($requerimento->documentos->count() > 0)
                                 <div class="col-md-6">
-                                    <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                    <label for="analista">{{__('Selecione um analista')}}</label>
-                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                        <option value="">-- {{__('Selecione um analista')}} --</option>
-                                        @foreach ($analistas as $analista)
-                                            <option value="{{$analista->id}}">{{$analista->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <a class="btn btn-primary" style="width: 100%;">Analisar documentos</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
+                                </div> 
+                            @else 
+                                <div class="col-md-6">
+                                    <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos</a>
                                 </div>
                                 <div class="col-md-6">
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
+                            @endif
+                            
+                        </div>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
+                                @csrf
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                        <label for="analista">{{__('Selecione um analista')}}</label>
+                                        <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                            <option value="">-- {{__('Selecione um analista')}} --</option>
+                                            @foreach ($analistas as $analista)
+                                                <option value="{{$analista->id}}">{{$analista->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        @endcan
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal documentos -->
+    <div class="modal fade" id="documentos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #28a745;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Requisitar documentos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
+                        @csrf
+                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                        @foreach ($documentos as $documento)
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}">
+                                    <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" form="documentos-form">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal documentos -->
+    <div class="modal fade" id="documentos-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #28a745;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Editar checklist de documentos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="documentos-form-edit" method="POST" action="{{route('requerimento.checklist.edit')}}">
+                        @csrf
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                        @foreach ($documentos as $documento)
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
+                                    <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
                 </div>
             </div>
         </div>

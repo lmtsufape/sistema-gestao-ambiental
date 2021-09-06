@@ -17,13 +17,7 @@ class DocumentoSeeder extends Seeder
     public function run()
     {
         $pdf = PDF::loadHTML("<h1>Documento</h1>");
-        $caminho_licencas = "documentos/licencas/";
-
-        Storage::put('public/' . $caminho_licencas . "req_licenca_ambiental.pdf", $pdf->stream());
-        DB::table('documentos')->insert([
-            'nome' => 'Requerimento de licença ambiental devidamente preenchida e assinada pelo empreendedor',
-            'documento_modelo' => $caminho_licencas . 'req_licenca_ambiental.pdf'
-        ]);
+        $caminho_licencas = "documentos/licencas/";      
 
         Storage::put('public/' . $caminho_licencas . 'cpf_rg_requerente.pdf', $pdf->stream());
         DB::table('documentos')->insert([

@@ -22,5 +22,15 @@ class EmpresaSeeder extends Seeder
             'telefone_id' => 2,
             'endereco_id' => 2,
         ]);
+
+        DB::table('cnae_empresa')->insert([
+            'cnae_id' => 1,
+            'empresa_id' => 1,
+        ]);
+
+        DB::table('cnae_empresa')->insert([
+            'cnae_id' => 2,
+            'empresa_id' => 1,
+        ]);
     }
 }
