@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             SetorSeeder::class,
             CnaeSeeder::class,
             UserSeeder::class,
+            EnderecoSeeder::class,
+            TelefoneSeeder::class,
+            RequerenteSeeder::class,
+            EmpresaSeeder::class,
         ]);
     }
 }
