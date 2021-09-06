@@ -15,16 +15,22 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    @if(auth()->user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                    @can('isSecretario', \App\Models\User::class)
                         <x-jet-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                             {{ __('Usuários') }}
                         </x-jet-nav-link>
-                    @endif
-                    @if(auth()->user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                        <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
+                            {{ __('Setores') }}
+                        </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('documentos.index')}}" :active="request()->routeIs('documentos.*')">
                             {{ __('Documentos') }}
                         </x-jet-nav-link>
-                    @endif
+                    @endcan
+                    @can('isRequerenteOrSecretario', \App\Models\User::class)
+                        <x-jet-nav-link href="{{route('requerimentos.index')}}" :active="request()->routeIs('requerimentos.*')">
+                            {{ __('Requerimentos') }}
+                        </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -155,6 +161,9 @@
             <x-jet-responsive-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                 {{ __('Usuários') }}
             </x-jet-responsive-nav-link>
+                <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
+                    {{ __('Setores') }}
+                </x-jet-nav-link>
             @endif
         </div>
 

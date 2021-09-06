@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
-    
+
     public $fillable = [
         'nome',
         'cnpj',
         'porte',
-        'potencial_poluidor',
     ];
 
     public function endereco()
@@ -36,9 +35,9 @@ class Empresa extends Model
         return $this->hasMany(Requerimento::class, 'empresa_id');
     }
 
-    public function cnae() 
+    public function cnaes()
     {
-        return $this->belongsTo(Cnae::class, 'cnae_id');
+        return $this->belongsToMany(Cnae::class, 'cnae_empresa', 'empresa_id', 'cnae_id');
     }
 
     public function notificacoes()

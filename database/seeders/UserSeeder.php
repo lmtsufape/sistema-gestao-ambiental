@@ -23,5 +23,21 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'email_verified_at' => now(),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Analista',
+            'email' => 'analista@analista.com',
+            'role' => User::ROLE_ENUM['analista'],
+            'password' => Hash::make('12345678'),
+            'email_verified_at' => now(),
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Empresario',
+            'email' => 'empresa@empresa.com',
+            'role' => User::ROLE_ENUM['requerente'],
+            'password' => Hash::make('12345678'),
+            'email_verified_at' => now(),
+        ]);
     }
 }

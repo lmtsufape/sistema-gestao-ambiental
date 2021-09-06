@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('isSecretario', User::class);
         $users = User::orderBy('name')->get();
         return view('user.index', compact('users'));
     }
@@ -28,6 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('isSecretario', User::class);
         return view('user.create');
     }
 
@@ -39,6 +41,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('isSecretario', User::class);
         $request->validated();
         $user = new User();
         $user->setAtributes($request);
@@ -131,6 +134,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSecretario', User::class);
         $user = User::find($id);
         $user->delete();
 

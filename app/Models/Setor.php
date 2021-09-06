@@ -14,8 +14,14 @@ class Setor extends Model
         'descricao',
     ];
 
-    public function canes()
+    public function cnaes()
     {
         return $this->hasMany(Cnae::class, 'setor_id');
+    }
+
+    public function setAtributes($input)
+    {
+        $this->nome = $input['nome'];
+        $this->descricao = $input['descricao'];
     }
 }

@@ -1,9 +1,12 @@
 <?php
 
+
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\CnaeController;
+use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\RequerimentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,5 +28,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
+
     Route::resource('documentos', DocumentoController::class);
+
+    Route::resource('requerimentos', RequerimentoController::class);
+    Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
+    Route::resource('setores', SetorController::class);
+    Route::resource('cnaes', CnaeController::class);
+    Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
+        ->name('cnaes.create');
 });
+
+Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
+    ->name("ajax.listar.cnaes");

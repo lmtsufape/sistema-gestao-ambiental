@@ -9,6 +9,12 @@ class Cnae extends Model
 {
     use HasFactory;
 
+    public const POTENCIAL_POLUIDOR_ENUM = [
+        'baixo'     => 1,
+        'medio'     => 2,
+        'alto'      => 3,
+    ];
+
     protected $fillable = [
         'nome',
         'codigo',
@@ -20,8 +26,14 @@ class Cnae extends Model
         return $this->belongsTo(Setor::class, 'setor_id');
     }
 
-    public function empresas() 
+    public function empresas()
     {
-        return $this->hasMany(Empresa::class, 'cnae_id');
+        return $this->belongsToMany(Empresa::class, 'cnae_empresa', 'cnae_id', 'empresa_id');
+    }
+
+    public function setAtributes($input)
+    {
+        $this->nome = $input['nome'];
+        $this->codigo = $input['codigo'];
     }
 }

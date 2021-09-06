@@ -1,0 +1,167 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class CnaeSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        \App\Models\Cnae::create([ 'codigo' => '8511200', 'nome' => 'Educação infantil – creche', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8512100', 'nome' => 'Educação infantil – pré-escola', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8513900', 'nome' => 'Ensino fundamental', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8520100', 'nome' => 'Ensino médio', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8531700', 'nome' => 'Educação superior – Graduação', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8532500', 'nome' => 'Educação superior – graduação e pós-graduação', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8533300', 'nome' => 'Educação superior – Pós-graduação e extensão', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8541400', 'nome' => 'Educação profissional de nível técnico', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8542200', 'nome' => 'Educação profissional de nível tecnológico', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8591100', 'nome' => 'Ensino de esportes', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8592901', 'nome' => 'Ensino de dança', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8593700', 'nome' => 'Ensino de Idiomas', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8599604', 'nome' => 'Treinamento em desenvolvimento profissional e geracional', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8599605', 'nome' => 'Cursos preparatórios para concursos', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8599699', 'nome' => 'Outras atividades de ensino não especificadas anteriormente', 'setor_id' => '1', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '3250706', 'nome' => 'Serviço de prótese dentária', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '3250709', 'nome' => 'Serviço de laboratório óptico', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8122200', 'nome' => 'Imunização e controle de pragas urbanas', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8610101', 'nome' => 'Atividades de atendimento hospitalar, exceto pronto-socorro e unidades para atendimento a urgências', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8621601', 'nome' => 'UTI móvel', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8621602', 'nome' => 'Serviços móveis de atendimento a urgências, exceto por UTI móvel', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8622400', 'nome' => 'Serviços de remoção de pacientes, exceto os serviços móveis de atendimento a urgências', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630501', 'nome' => 'Atividades médica ambulatorial com recursos para realização de procedimentos cirúrgicos', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630502', 'nome' => 'Atividades médica ambulatorial com recursos para realização de exames complementares', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630503', 'nome' => 'Atividade médica ambulatorial restrita a consultas', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630504', 'nome' => 'Atividade odontológica', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630506', 'nome' => 'Serviços de vacinação e imunização humana', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8630599', 'nome' => 'Atividades de atenção ambulatorial não especificadas anteriormente', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640204', 'nome' => 'Serviço de tomografia', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640205', 'nome' => 'Serviço de diagnóstico por imagem com uso de radiação ionizante, exceto tomografia', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640206', 'nome' => 'Serviço de Ressonância Magnética', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640207', 'nome' => 'Serviço de diagnóstico por imagem sem uso de radiação ionizante, exceto ressonância magnética', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640208', 'nome' => 'Serviço de diagnóstico por registro gráfico- ECG, EEG e outros exames análogos', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640209', 'nome' => 'Serviço de diagnóstico por métodos ópticos-endoscopia e outros exames análogos', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8640299', 'nome' => 'Atividades de serviços de complementação diagnóstica e terapêutica não especificada anteriormente', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650001', 'nome' => 'Atividades de enfermagem', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650002', 'nome' => 'Atividades de profissionais da nutrição', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650003', 'nome' => 'Atividades de psicologia e psicanálise', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650004', 'nome' => 'Atividades de fisioterapia', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650005', 'nome' => 'Atividades de terapia ocupacional', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650006', 'nome' => 'Atividade de fonoaudiologia', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8650007', 'nome' => 'Atividade de terapia, de nutrição enteral e parenteral', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8690903', 'nome' => 'Atividade de acupuntura', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8690904', 'nome' => 'Atividade de podologia', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8690999', 'nome' => 'Outras atividades de atenção à saúde humana não especificadas anteriormente', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8711501', 'nome' => 'Clínicas e residências geriátricas', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8711502', 'nome' => 'Instituições de longa permanência para idosos', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8711503', 'nome' => 'Atividades de assistência a deficientes físicos, imunodeprimidos e convalescentes', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8711505', 'nome' => 'Condomínios residenciais para idosos', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8712300', 'nome' => 'Atividades de fornecimento de infra-estrutura de apoio e assistência a paciente no domicílio', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8720401', 'nome' => 'Atividade de centros de assistência psicossocial', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8720499', 'nome' => 'Atividades de assistência psicossocial e à saúde a portadores de distúrbios psíquicos, deficiência mental e dependência química não especificadas anteriormente', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9603302', 'nome' => 'Serviços de cremação', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9603303', 'nome' => 'Serviços de sepultamento', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9603304', 'nome' => 'Serviços de funerárias', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9603399', 'nome' => 'Atividades funerárias e serviços relacionados não especificados anteriormente', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4664800', 'nome' => 'Comércio atacadista de máquinas, aparelhos e equipamentos para uso odonto-médico-hospitalar; partes e peças', 'setor_id' => '2', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4644301', 'nome' => 'Comércio atacadista de medicamentos e droga de uso humano', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4644302', 'nome' => 'Comércio atacadista de medicamentos e drogas de uso veterinário', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4645101', 'nome' => 'Comércio atacadista de instrumentos e materiais para uso médico, cirúrgico, hospitalar e de laboratórios', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4645102', 'nome' => 'Comércio atacadista de próteses e artigos de ortopedia', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4645103', 'nome' => 'Comércio atacadista de produtos odontológicos', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4773300', 'nome' => 'Comércio varejista de artigos médicos e ortopédicos', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4774100', 'nome' => 'Comércio varejista de artigos de óptica', 'setor_id' => '3', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '3600602', 'nome' => 'Distribuição de água por caminhões', 'setor_id' => '4', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '3600601', 'nome' => 'Captação, tratamento e distribuição de água', 'setor_id' => '5', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4623101', 'nome' => 'Comércio atacadista de animais vivos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4623199', 'nome' => 'Comércio atacadista de matérias-primas agrícolas não especificadas anteriormente', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4646001', 'nome' => 'Comércio atacadista de cosméticos e produtos de perfumaria', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4646002', 'nome' => 'Comércio atacadista de produtos de higiene pessoal', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4647801', 'nome' => 'Comércio atacadista de artigos de escritório e de papelaria', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4649408', 'nome' => 'Comércio atacadista de produtos de higiene, limpeza e conservação domiciliar', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4649409', 'nome' => 'Comércio atacadista de produtos de higiene, limpeza e conservação domiciliar, com atividade de fracionamento e acondicionamento associada', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4692300', 'nome' => 'Comércio atacadista de mercadorias em geral, com predominância de insumo agropecuários', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4693100', 'nome' => 'Comércio atacadista de mercadorias em geral, sem predominância de alimentos ou de insumos agropecuários', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4724500', 'nome' => 'Comércio varejista de hortifrutigranjeiros', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4729602', 'nome' => 'Comércio varejista de mercadorias em lojas de conveniência', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4761003', 'nome' => 'Comércio varejista de artigos de papelaria', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4771704', 'nome' => 'Comércio varejista de medicamentos veterinários', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4772500', 'nome' => 'Comércio varejista de cosméticos, produtos de perfumaria e de higiene pessoal', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4789004', 'nome' => 'Comércio varejista de animais vivos e de artigos e alimentos para animais de estimação', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4789005', 'nome' => 'Comércio varejista de produtos saneantes domissanitários', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5510801', 'nome' => 'Hotéis', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5510802', 'nome' => 'Apart-hotéis', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5510803', 'nome' => 'Motéis', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5590601', 'nome' => 'Albergues, exceto assistenciais', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5590603', 'nome' => 'Pensões (alojamento)', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5590699', 'nome' => 'Outros alojamentos não especificados anteriormente', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8129000', 'nome' => 'Atividades de limpeza não especificadas anteriormente', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8230001', 'nome' => 'Serviço de organização de feiras, congressos,exposições e festas', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8230002', 'nome' => 'Casas das festas e eventos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8730101', 'nome' => 'Orfanatos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8730102', 'nome' => 'Albergues assistenciais', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9312300', 'nome' => 'Clubes sociais, esportivos e similares', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9313100', 'nome' => 'Atividades de condicionamento físico', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9319199', 'nome' => 'Outras atividades esportivas não especificadas anteriormente', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9329801', 'nome' => 'Discotecas, danceterias, salões de danças e similares', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9329899', 'nome' => 'Outras atividades de recreação e lazer não especificadas anteriormente', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9430800', 'nome' => 'Atividades de associações de defesa de direitos sociais', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9602501', 'nome' => 'Cabeleireiros, manicures e pedicure', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9602502', 'nome' => 'Atividades de estética e outros serviços de cuidados com a beleza', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9609205', 'nome' => 'Atividades de sauna e banhos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9609206', 'nome' => 'Serviços de tatuagem e colocação de piercing', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9609207', 'nome' => 'Alojamento de animais domésticos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '9609208', 'nome' => 'Higiene e embelezamento de animais domésticos', 'setor_id' => '7', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4712100', 'nome' => 'Comércio varejista de mercadorias em geral, com predominância de produtos alimentícios – minimercados, mercearias e armazéns', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4721102', 'nome' => 'Padaria e confeitaria com predominância de revenda', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5612100', 'nome' => 'Serviços ambulantes de alimentação', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5620101', 'nome' => 'Fornecimento de alimentos preparados preponderantemente para empresas', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5620102', 'nome' => 'Serviços de alimentação para eventos e recepções - bufê', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5620103', 'nome' => 'Cantinas – serviços de alimentação privativos', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5620104', 'nome' => 'Fornecimento de alimentos preparados preponderantemente para consumo domiciliar', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '7500100', 'nome' => 'Atividades Veterinárias', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '8121400', 'nome' => 'Limpeza de prédios e em domicílios', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4623109', 'nome' => 'Comércio atacadista de alimentos para animais', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4631100', 'nome' => 'Comércio atacadista de leite e laticínios', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4632001', 'nome' => 'Comércio atacadista de cereais e leguminosas beneficiados', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4632002', 'nome' => 'Comércio atacadista de farinhas, amidos e féculas', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4632003', 'nome' => 'Comércio atacadista de cereais e leguminosas beneficiados, farinhas, amidos e féculas, com atividades de fracionamento e acondicionamento associada', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4633801', 'nome' => 'Comércio atacadista de frutas, verduras, raízes, tubérculos, hortaliças e legumes frescos', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4633802', 'nome' => 'Comércio atacadista de aves vivas e ovos', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4633803', 'nome' => 'Comércio atacadista de coelhos e outros pequenos animais vivos para alimentação', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4634601', 'nome' => 'Comércio atacadista de carnes bovinas e suínas e derivados', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4634602', 'nome' => 'Comércio atacadista de aves abatidas e derivados', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4634603', 'nome' => 'Comércio atacadista de pescados e frutos do mar', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4634699', 'nome' => 'Comércio atacadista de carne e derivados de outros animais', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4635401', 'nome' => 'Comércio atacadista de água mineral', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4635403', 'nome' => 'Comércio atacadista de bebidas com atividade de fracionamento e acondicionamento associada', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4635499', 'nome' => 'Comércio atacadista de bebidas não especificadas anteriormente', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637101', 'nome' => 'Comércio atacadista de café torrado, moído e solúvel', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637102', 'nome' => 'Comércio atacadista de açúcar', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637103', 'nome' => 'Comércio atacadista de óleos e gorduras', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637104', 'nome' => 'Comércio atacadista de pães, bolos, biscoitos e Similares', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637105', 'nome' => 'Comércio atacadista de massas alimentícias', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637106', 'nome' => 'Comércio atacadista de sorvetes', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637107', 'nome' => 'Comércio atacadista de chocolates, confeitos, balas, bombons e semelhantes', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4637199', 'nome' => 'Comércio atacadista especializado em outros produtos alimentícios não especificados anteriormente', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4639701', 'nome' => 'Comércio atacadista de produtos alimentícios em geral', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4691500', 'nome' => 'Comércio atacadista de mercadorias em geral, com predominância de produtos alimentícios', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4711301', 'nome' => 'Comércio varejista de mercadorias em geral, com predominância de produtos alimentícios - hipermercados', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4711302', 'nome' => 'Comércio varejista de mercadorias em geral, com predominância de produtos alimentícios – supermercados', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4721103', 'nome' => 'Comércio varejista de laticínios e frios', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4721104', 'nome' => 'Comércio varejista de doces, balas, bombons e semelhantes', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4722901', 'nome' => 'Comércio varejista de carnes - açougues', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4722902', 'nome' => 'Peixaria', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4723700', 'nome' => 'Comércio varejista de bebidas', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '4729699', 'nome' => 'Comércio varejista de produtos alimentícios em geral ou especializado em produtos alimentícios não especificados anteriormente', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5611201', 'nome' => 'Restaurantes e similares', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5611202', 'nome' => 'Bares e outros estabelecimentos especializados em servir bebidas', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+        \App\Models\Cnae::create([ 'codigo' => '5611203', 'nome' => 'Lanchonetes, casas de chá, de sucos e similares', 'setor_id' => '8', 'potencial_poluidor' => '1']);
+    }
+}
