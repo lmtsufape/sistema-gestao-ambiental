@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +25,12 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
+
+    Route::resource('documentos', DocumentoController::class);
+
     Route::resource('requerimentos', RequerimentoController::class);
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::resource('setores', SetorController::class);
