@@ -15,7 +15,7 @@
                                 <h5 class="card-title">
                                     @can('isSecretario', \App\Models\User::class)
                                         {{__('Requerimentos')}}
-                                    @elsecan('create', $post)
+                                    @elsecan('isRequerente', \App\Models\User::class)
                                         {{__('Requerimentos criados por você')}}
                                     @endcan
                                 </h5>
