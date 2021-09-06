@@ -19,12 +19,15 @@
                         <x-jet-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                             {{ __('Usuários') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
+                            {{ __('Setores') }}
+                        </x-jet-nav-link>
                     @endcan
                     @can('isRequerenteOrSecretario', \App\Models\User::class)
                         <x-jet-nav-link href="{{route('requerimentos.index')}}" :active="request()->routeIs('requerimentos.*')">
                             {{ __('Requerimentos') }}
                         </x-jet-nav-link>
-                    @endcan
+                    @endif
                 </div>
             </div>
 
@@ -155,6 +158,9 @@
             <x-jet-responsive-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                 {{ __('Usuários') }}
             </x-jet-responsive-nav-link>
+                <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
+                    {{ __('Setores') }}
+                </x-jet-nav-link>
             @endif
         </div>
 

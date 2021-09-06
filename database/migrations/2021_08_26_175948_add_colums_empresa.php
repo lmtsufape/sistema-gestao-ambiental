@@ -13,9 +13,9 @@ class AddColumsEmpresa extends Migration
      */
     public function up()
     {
-        Schema::table('empresas', function (Blueprint $table) { 
-            $table->unsignedBigInteger('cnae_id')->nullable();
-            $table->foreign('cnae_id')->references('id')->on('cnaes');
+        Schema::table('empresas', function (Blueprint $table) {
+            //$table->unsignedBigInteger('cnae_id')->nullable();
+            //$table->foreign('cnae_id')->references('id')->on('cnaes');
             $table->unsignedBigInteger('represetante_legal_id')->nullable();
             $table->foreign('represetante_legal_id')->references('id')->on('represetante_legals');
         });
