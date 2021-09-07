@@ -92,6 +92,17 @@
                                                     Analisar
                                                 </a>
                                                 @endcan
+                                                @can('isRequerente', \App\Models\User::class)
+                                                    @if ($requerimento->status == 2)
+                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                            Enviar documentação
+                                                        </a>
+                                                    @elseif($requerimento->status == 3)
+                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                            Documentação em análise
+                                                        </a>
+                                                    @endif
+                                                @endcan
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
                                                     Cancelar
                                                 </button>
@@ -130,7 +141,7 @@
                                 <option value="3">{{__('Autorização')}}</option>
                             @endif
                         </select>
-                    
+
                         @error('tipo')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
@@ -162,7 +173,7 @@
                     <form id="cancelar-requerimento-form-{{$requerimento->id}}" method="POST" action="{{route('requerimentos.destroy', ['requerimento' => $requerimento])}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja cancelar esse requerimento?  
+                        Tem certeza que deseja cancelar esse requerimento?
                     </form>
                 </div>
                 <div class="modal-footer">
