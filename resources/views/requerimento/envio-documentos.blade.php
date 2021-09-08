@@ -70,7 +70,7 @@
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6" style="text-align: right">
-                                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
+                                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                         <button type="submit" class="btn btn-success" form="enviar-documentos" style="width: 100%">Enviar</button>
                                     @endif
                                 </div>
