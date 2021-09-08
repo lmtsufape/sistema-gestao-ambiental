@@ -267,7 +267,7 @@ class RequerimentoController extends Controller
                 $id++;
             }
         }
-        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
         return redirect(route('requerimentos.index'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }

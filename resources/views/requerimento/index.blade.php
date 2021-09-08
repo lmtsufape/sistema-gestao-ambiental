@@ -65,6 +65,8 @@
                                                     {{__('Em andamento')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                     {{__('Documentos requeridos')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                    {{__('Documentos enviados')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif
@@ -93,11 +95,11 @@
                                                 </a>
                                                 @endcan
                                                 @can('isRequerente', \App\Models\User::class)
-                                                    @if ($requerimento->status == 2)
+                                                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                         <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
                                                             Enviar documentação
                                                         </a>
-                                                    @elseif($requerimento->status == 3)
+                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
                                                         <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
                                                             Documentação em análise
                                                         </a>
