@@ -110,4 +110,16 @@ class RequerimentoPolicy
 
         return false;
     }
+
+    public function requerimentoDocumentacao(User $user, Requerimento $requerimento)
+    {
+        $userPolicy = new UserPolicy();
+        if ($userPolicy->isRequerente($user)) {
+            return $requerimento->empresa->user_id == $user->id;
+        }elseif($userPolicy->isSecretario($user)){
+            return true;
+        }else{
+            return $this->analises($user, $requerimento);
+        }
+    }
 }
