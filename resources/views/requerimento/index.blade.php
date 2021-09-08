@@ -15,6 +15,8 @@
                                 <h5 class="card-title">
                                     @can('isSecretario', \App\Models\User::class)
                                         {{__('Requerimentos')}}
+                                    @elsecan('isAnalista', \App\Models\User::class)
+                                        {{__('Requerimentos atribuidos a você')}}
                                     @elsecan('isRequerente', \App\Models\User::class)
                                         {{__('Requerimentos criados por você')}}
                                     @endcan

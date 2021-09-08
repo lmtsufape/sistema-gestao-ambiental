@@ -23,7 +23,7 @@ class RequerimentoController extends Controller
         $requerimentos = null;
         $primeiroRequerimento = $this->primeiroRequerimento();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where('empresa_id', $user->empresa->id)->get();
+            $requerimentos = Requerimento::where([['empresa_id', $user->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
         } else {
             $requerimentos = Requerimento::all();
         }
@@ -62,8 +62,8 @@ class RequerimentoController extends Controller
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
-        $primeiroRequerimento = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['tipo', $request->tipo, ['status', Requerimento::STATUS_ENUM['requerida']]]])->get();
-        if ($primeiroRequerimento->count() > 0) {
+        $requerimentos = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
@@ -132,6 +132,8 @@ class RequerimentoController extends Controller
 
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
         $requerimento->update();
+
+        return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento cancelado com sucesso.']);
     }
 
     /**
@@ -173,6 +175,7 @@ class RequerimentoController extends Controller
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
         }
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
