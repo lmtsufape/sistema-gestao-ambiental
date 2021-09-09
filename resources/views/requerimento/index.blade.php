@@ -15,6 +15,8 @@
                                 <h5 class="card-title">
                                     @can('isSecretario', \App\Models\User::class)
                                         {{__('Requerimentos')}}
+                                    @elsecan('isAnalista', \App\Models\User::class)
+                                        {{__('Requerimentos atribuidos a você')}}
                                     @elsecan('isRequerente', \App\Models\User::class)
                                         {{__('Requerimentos criados por você')}}
                                     @endcan
@@ -65,6 +67,8 @@
                                                     {{__('Em andamento')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                     {{__('Documentos requeridos')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                    {{__('Documentos enviados')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif
@@ -91,6 +95,17 @@
                                                 <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
                                                     Analisar
                                                 </a>
+                                                @endcan
+                                                @can('isRequerente', \App\Models\User::class)
+                                                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                            Enviar documentação
+                                                        </a>
+                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                            Documentação em análise
+                                                        </a>
+                                                    @endif
                                                 @endcan
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
                                                     Cancelar
@@ -130,7 +145,7 @@
                                 <option value="3">{{__('Autorização')}}</option>
                             @endif
                         </select>
-                    
+
                         @error('tipo')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
@@ -162,7 +177,7 @@
                     <form id="cancelar-requerimento-form-{{$requerimento->id}}" method="POST" action="{{route('requerimentos.destroy', ['requerimento' => $requerimento])}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja cancelar esse requerimento?  
+                        Tem certeza que deseja cancelar esse requerimento?
                     </form>
                 </div>
                 <div class="modal-footer">

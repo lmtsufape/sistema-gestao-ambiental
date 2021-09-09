@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Requerimento de  
+                                <h5 class="card-title">Requerimento de
                                     @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
                                         {{__('primeira licença')}}
                                     @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
@@ -44,7 +44,7 @@
                                         </button>
                                     </h2>
                                 </div>
-                          
+
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="form-row">
@@ -216,7 +216,7 @@
                                                                     @break
                                                                 @case(3)
                                                                     Alto
-                                                                    @break                                                                    
+                                                                    @break
                                                             @endswitch
                                                         </p>
                                                         </div>
@@ -242,26 +242,26 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            
+
                         </div>
                         <br>
                         @can('isAnalista', \App\Models\User::class)
                         <div class="form-row">
                             @if ($requerimento->documentos->count() > 0)
                                 <div class="col-md-6">
-                                    <a class="btn btn-primary" style="width: 100%;">Analisar documentos</a>
+                                    <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
                                 </div>
                                 <div class="col-md-6">
                                     <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
-                                </div> 
-                            @else 
+                                </div>
+                            @else
                                 <div class="col-md-6">
                                     <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos</a>
                                 </div>
                                 <div class="col-md-6">
                                 </div>
                             @endif
-                            
+
                         </div>
                         @endcan
                         @can('isSecretario', \App\Models\User::class)

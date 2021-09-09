@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Requerimento;
 use App\Models\Documento;
 use App\Http\Requests\RequerimentoRequest;
+use App\Models\Checklist;
 
 class RequerimentoController extends Controller
 {
@@ -21,7 +23,7 @@ class RequerimentoController extends Controller
         $requerimentos = null;
         $primeiroRequerimento = $this->primeiroRequerimento();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where('empresa_id', $user->empresa->id)->get();
+            $requerimentos = Requerimento::where([['empresa_id', $user->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
         } else {
             $requerimentos = Requerimento::all();
         }
@@ -33,11 +35,11 @@ class RequerimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function analista() 
+    public function analista()
     {
         $user = auth()->user();
         $requerimentos = $user->requerimentos;
-        
+
         return view('requerimento.index', compact('requerimentos'));
     }
 
@@ -60,8 +62,8 @@ class RequerimentoController extends Controller
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
-        $primeiroRequerimento = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['tipo', $request->tipo, ['status', Requerimento::STATUS_ENUM['requerida']]]])->get();
-        if ($primeiroRequerimento->count() > 0) {
+        $requerimentos = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
@@ -127,9 +129,11 @@ class RequerimentoController extends Controller
         if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
             return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
         }
-        
+
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
         $requerimento->update();
+
+        return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento cancelado com sucesso.']);
     }
 
     /**
@@ -138,14 +142,14 @@ class RequerimentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function atribuirAnalista(Request $request) 
+    public function atribuirAnalista(Request $request)
     {
         $this->authorize('isSecretario', User::class);
         $validated = $request->validate([
             'analista' => 'required',
             'requerimento' => 'required',
         ]);
-        
+
         $analista = User::find($request->analista);
         $requerimento = Requerimento::find($request->requerimento);
         $requerimento->analista_id = $analista->id;
@@ -162,7 +166,7 @@ class RequerimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function storeChecklist(Request $request)
-    {   
+    {
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
         }
@@ -171,6 +175,7 @@ class RequerimentoController extends Controller
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
         }
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
@@ -181,7 +186,7 @@ class RequerimentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function updateChecklist(Request $request) 
+    public function updateChecklist(Request $request)
     {
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
@@ -190,12 +195,12 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($request->requerimento);
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
         $requerimento->update();
-        
+
         // Documentos desmarcados
         foreach ($requerimento->documentos as $documento) {
             if (!in_array($documento->id, $request->documentos)) {
                 $requerimento->documentos()->detach($documento->id);
-            } 
+            }
         }
 
         // Documentos marcados
@@ -219,9 +224,63 @@ class RequerimentoController extends Controller
             $requerimentos = Requerimento::where('empresa_id', auth()->user()->empresa->id)->get();
             if ($requerimentos->count() > 0) {
                 return false;
-            } 
+            }
             return true;
-        } 
+        }
         return false;
     }
+
+    public function showRequerimentoDocumentacao($id)
+    {
+        $requerimento = Requerimento::find($id);
+        $this->authorize('requerimentoDocumentacao', $requerimento);
+        $documentos = $requerimento->documentos;
+        return view('requerimento.envio-documentos', compact('requerimento', 'documentos'));
+    }
+
+    public function enviarDocumentos(Request $request)
+    {
+        $requerimento = Requerimento::find($request->requerimento_id);
+        $this->authorize('requerimentoDocumentacao', $requerimento);
+
+        if ($request->documentos == null) {
+            return redirect()->back()->withErrors(['error' => 'Anexe os documentos que devem ser enviados.'])->withInput($request->all());
+        }
+
+        foreach ($request->documentos_id as $documento_id) {
+            if (!$requerimento->documentos->contains('id', $documento_id)) {
+                return redirect()->back()->withErrors(['error' => 'Anexe os documentos que devem ser enviados.'])->withInput($request->all());
+            }
+        }
+
+        $id = 0;
+        foreach ($request->documentos_id as $documento_id) {
+            $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == null){
+                if (Storage::disk()->exists('public/' . $documento->caminho)) {
+                    Storage::delete('public/' . $documento->caminho);
+                }
+                $arquivo = $request->documentos[$id];
+                $path = 'documentos/requerimentos/'. $requerimento->id .'/';
+                $nome = $arquivo->getClientOriginalName();
+                Storage::putFileAs('public/'.$path, $arquivo, $nome);
+                $documento->caminho = $path . $nome;
+                $documento->status = Checklist::STATUS_ENUM['enviado'];
+                $documento->update();
+                $id++;
+            }
+        }
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
+        $requerimento->update();
+        return redirect(route('requerimentos.index'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
+    }
+
+    public function showDocumento($requerimento_id, $documento_id)
+    {
+        $requerimento = Requerimento::find($requerimento_id);
+        $this->authorize('requerimentoDocumentacao', $requerimento);
+        $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+        return Storage::disk()->exists('public/' . $documento->caminho) ? response()->file('storage/' . $documento->caminho) : abort(404);
+    }
+
 }

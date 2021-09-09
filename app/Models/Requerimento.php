@@ -13,8 +13,9 @@ class Requerimento extends Model
         'requerida'     => 1,
         'em_andamento'  => 2,
         'documentos_requeridos' => 3,
-        'finalizada'    => 4,
-        'cancelada'     => 5,
+        'documentos_enviados' => 4,
+        'finalizada'    => 5,
+        'cancelada'     => 6,
     ];
 
     public const TIPO_ENUM = [
