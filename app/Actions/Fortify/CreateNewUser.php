@@ -36,6 +36,7 @@ class CreateNewUser implements CreatesNewUsers
             'cnpj'                      => ['required', 'string', 'cnpj'],
             'celular'                   => ['required', 'string', 'celular_com_ddd', 'max:255'],
             'celular_da_empresa'        => ['required', 'string', 'celular_com_ddd', 'max:255'],
+            'porte'                     => ['required'],
             'rg'                        => ['required', 'string', 'max:255'],
             'orgão_emissor'             => ['required', 'string', 'max:255'],
             'cep'                       => ['required', 'string', 'max:255'],
@@ -52,7 +53,7 @@ class CreateNewUser implements CreatesNewUsers
             'cidade_da_empresa'         => ['required', 'string', 'max:255'],
             'estado_da_empresa'         => ['required', 'string', 'max:255'],
             'complemento_da_empresa'    => ['nullable', 'string', 'max:255'],
-            'cnaes_id'                  => ['required'],
+            'cnaes_id.*'                => ['required'],
 
         ])->validate();
 

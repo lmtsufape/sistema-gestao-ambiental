@@ -17,6 +17,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
+                                    
                                     <div class="col-md-6 form-group">
                                         <label for="name">{{ __('Name') }}</label>
                                         <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name">
@@ -57,7 +58,7 @@
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="cpf">{{ __('CPF') }}</label>
-                                        <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{old('cpf')}}" required autofocus autocomplete="cpf">
+                                        <input id="cpf" class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{old('cpf')}}" required autofocus autocomplete="cpf" data-mask="000.000.000-00">
 
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -220,12 +221,17 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="setor">{{ __('Setor de atuação') }}</label>
-                                        <select id="setor" class="form-control @error('setor') is-invalid @enderror" type="text" name="setor" required autofocus autocomplete="setor">
-                                            <option value="{{old('setor', 1)}}">Teste</option>
+                                        <label for="porte">{{ __('Porte') }}</label>
+                                        <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
+                                            <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
+                                            <option @if(old('porte') == 1) selected @endif value="1">Micro</option>
+                                            <option @if(old('porte') == 2) selected @endif value="2">Pequeno</option>
+                                            <option @if(old('porte') == 3) selected @endif value="3">Médio</option>
+                                            <option @if(old('porte') == 4) selected @endif value="4">Grande</option>
+                                            <option @if(old('porte') == 5) selected @endif value="5">Especial</option>
                                         </select>
 
-                                        @error('setor')
+                                        @error('porte')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -320,12 +326,18 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12" >
                                                 <label for="setor">{{ __('Setor') }}</label>
-                                                <select required class="form-control" id="idSelecionarSetor" onChange="selecionarSetor(this)">
+                                                <select required class="form-control @error('setor') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                                     <option value="">-- Selecionar o Setor --</option>
                                                     @foreach ($setores as $setor)
                                                         <option value={{$setor->id}}>{{$setor->nome}}</option>
                                                     @endforeach
                                                 </select>
+
+                                                @error('setor')
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="btn-group col-md-12">
                                                 <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>

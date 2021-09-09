@@ -9,6 +9,14 @@ class Empresa extends Model
 {
     use HasFactory;
 
+    public const PORTE_ENUM = [
+        'micro' => 1,
+        'pequeno' => 2,
+        'medio' => 3,
+        'grande' => 4,
+        'especial' => 5,
+    ];
+
     public $fillable = [
         'nome',
         'cnpj',
