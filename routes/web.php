@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
+use App\Http\Controllers\VisitaController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
     Route::get('/requerimentos/{requerimento_id}/documentacao', [RequerimentoController::class, 'showRequerimentoDocumentacao'])->name('requerimento.documentacao');
     Route::post('/requerimentos/{requerimento_id}/enviar-documentos', [RequerimentoController::class, 'enviarDocumentos'])->name('requerimento.enviar.documentos');
+    Route::post('/requerimentos/{requerimento_id}/analisar-documentos', [RequerimentoController::class, 'analisarDocumentos'])->name('requerimento.analisar.documentos');
     Route::get('/requerimentos/{requerimento_id}/documentacao/{documento_id}', [RequerimentoController::class, 'showDocumento'])->name('requerimento.documento');
 
     Route::resource('usuarios', UserController::class);
@@ -41,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
+    Route::resource('visitas', VisitaController::class);
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
         ->name('cnaes.create');
 });
