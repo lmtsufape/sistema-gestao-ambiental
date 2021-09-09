@@ -69,6 +69,12 @@
                                                     {{__('Documentos requeridos')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
                                                     {{__('Documentos enviados')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                    {{__('Documentos aceitos')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
+                                                    {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->visita->data_marcada))}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
+                                                    {{__('Visita feita em')}}{{date('d/m/Y', strtotime($requerimento->visita->data_realizada))}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif
@@ -97,14 +103,20 @@
                                                 </a>
                                                 @endcan
                                                 @can('isRequerente', \App\Models\User::class)
-                                                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
-                                                            Enviar documentação
-                                                        </a>
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
-                                                            Documentação em análise
-                                                        </a>
+                                                    @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                        @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                            <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                                Enviar documentação
+                                                            </a>
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                            <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                                Documentação em análise
+                                                            </a>
+                                                        @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                            <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
+                                                                Documentação aceita
+                                                            </a>
+                                                        @endif
                                                     @endif
                                                 @endcan
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
