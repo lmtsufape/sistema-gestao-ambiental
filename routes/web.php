@@ -9,6 +9,7 @@ use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RequerimentoController;
+use App\Http\Controllers\ValorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,9 +44,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
+    Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
+    Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
-    Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
-        ->name('cnaes.create');
 });
 
 Route::resource('denuncias', DenunciaController::class);

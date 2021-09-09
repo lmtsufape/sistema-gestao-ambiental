@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RequerenteSeeder::class,
             EmpresaSeeder::class,
+            ValoresSeeder::class,
         ]);
     }
 }

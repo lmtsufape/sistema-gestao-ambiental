@@ -25,6 +25,9 @@
                         <x-jet-nav-link href="{{route('documentos.index')}}" :active="request()->routeIs('documentos.*')">
                             {{ __('Documentos') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('valores.index')}}" :active="request()->routeIs('valores.*')">
+                            {{ __('Valores de licenças') }}
+                        </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('visitas.index')}}" :active="request()->routeIs('vosotas.*')">
                             {{ __('Programação') }}
                         </x-jet-nav-link>
