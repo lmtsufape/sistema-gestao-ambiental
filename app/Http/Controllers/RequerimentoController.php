@@ -318,7 +318,7 @@ class RequerimentoController extends Controller
         if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
         }else{
-            $requerimento->status = Requerimento::STATUS_ENUM['finalizada'];
+            $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
         }
         $requerimento->update();
         return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);

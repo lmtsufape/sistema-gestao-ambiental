@@ -13,13 +13,19 @@ class Visita extends Model
         'data_marcada',
         'data_realizada',
     ];
-    
+
+    public function setAtributesRequerimento($input)
+    {
+        $this->data_marcada = $input['data_marcada'];
+        $this->requerimento_id = $input['requerimento'];
+    }
+
     public function denuncia()
     {
         return $this->belongsTo(Denuncia::class, 'denuncia_id');
     }
 
-    public function requerimento() 
+    public function requerimento()
     {
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
     }

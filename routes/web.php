@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
+use App\Http\Controllers\VisitaController;
 use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -41,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
+    Route::resource('visitas', VisitaController::class);
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
         ->name('cnaes.create');
 });
