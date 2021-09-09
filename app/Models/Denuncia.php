@@ -16,6 +16,7 @@ class Denuncia extends Model
     ];
 
     protected $fillable = [
+        'empresa_id',
         'empresa',
         'endereco',
         'texto',
@@ -31,5 +32,4 @@ class Denuncia extends Model
     {
         return $this->hasMany(FotoDenuncia::class, 'denuncia_id');
     }
-
 }
