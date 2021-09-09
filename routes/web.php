@@ -4,6 +4,7 @@
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\VisitaController;
+use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\SetorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -46,6 +47,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])
         ->name('cnaes.create');
 });
+
+Route::resource('denuncias', DenunciaController::class);
 
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");

@@ -29,37 +29,37 @@
                             @endif
                         </div>
                         <table class="table">
-                                <thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($documentos as $documento)
                                     <tr>
-                                        <th scope="col">Nome</th>
-                                        <th scope="col">Opções</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($documentos as $documento)
-                                        <tr>
-                                            <td>{{$documento->nome}}</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
+                                        <td>{{$documento->nome}}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                    <a type="button" class="btn btn-primary dropdown-item" target="_blank" href="{{ route("documentos.show", $documento->id) }}">
+                                                        Visualizar
+                                                    </a>
+                                                    <a type="button" class="btn btn-primary dropdown-item" href="{{ route("documentos.edit", $documento->id) }}">
+                                                        Editar
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}">
+                                                        Deletar
                                                     </button>
-                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                        <a type="button" class="btn btn-primary dropdown-item" target="_blank" href="{{ route("documentos.show", $documento->id) }}">
-                                                            Visualizar
-                                                        </a>
-                                                        <a type="button" class="btn btn-primary dropdown-item" href="{{ route("documentos.edit", $documento->id) }}">
-                                                            Editar
-                                                        </a>
-                                                        <button type="button" class="btn btn-danger dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}">
-                                                            Deletar
-                                                        </button>
-                                                    </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
