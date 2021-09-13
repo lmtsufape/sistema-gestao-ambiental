@@ -17,7 +17,7 @@ class CreateEmpresasTable extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cnpj');
-            $table->string('porte')->nullable();
+            $table->integer('porte')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

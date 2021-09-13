@@ -174,8 +174,12 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($request->requerimento);
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
+            $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+            $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
+            $documento->update();
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
@@ -207,6 +211,9 @@ class RequerimentoController extends Controller
         foreach ($request->documentos as $documento_id) {
             if (!$requerimento->documentos->contains('id', $documento_id)) {
                 $requerimento->documentos()->attach($documento_id);
+                $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+                $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
+                $documento->update();
             }
         }
 
@@ -233,8 +240,11 @@ class RequerimentoController extends Controller
     public function showRequerimentoDocumentacao($id)
     {
         $requerimento = Requerimento::find($id);
-        $this->authorize('requerimentoDocumentacao', $requerimento);
+        $this->authorize('verDocumentacao', $requerimento);
         $documentos = $requerimento->documentos;
+        if(auth()->user()->role == User::ROLE_ENUM['analista']){
+            return view('requerimento.analise-documentos', compact('requerimento', 'documentos'));
+        }
         return view('requerimento.envio-documentos', compact('requerimento', 'documentos'));
     }
 
@@ -256,7 +266,7 @@ class RequerimentoController extends Controller
         $id = 0;
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == null){
+            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == \App\Models\Checklist::STATUS_ENUM['recusado']){
                 if (Storage::disk()->exists('public/' . $documento->caminho)) {
                     Storage::delete('public/' . $documento->caminho);
                 }
@@ -278,9 +288,41 @@ class RequerimentoController extends Controller
     public function showDocumento($requerimento_id, $documento_id)
     {
         $requerimento = Requerimento::find($requerimento_id);
-        $this->authorize('requerimentoDocumentacao', $requerimento);
+        $this->authorize('verDocumentacao', $requerimento);
         $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
         return Storage::disk()->exists('public/' . $documento->caminho) ? response()->file('storage/' . $documento->caminho) : abort(404);
+    }
+
+    public function analisarDocumentos(Request $request)
+    {
+        $data = $request->all();
+        if ($request->documentos_id == null) {
+            return redirect()->back()->withErrors(['error' => 'Envie o parecer dos documentos que devem ser analisados.'])->withInput($request->all());
+        }
+
+        $id = 0;
+        $requerimento = Requerimento::find($request->requerimento_id);
+        foreach ($request->documentos_id as $documento_id) {
+            $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+            if($documento->status != Checklist::STATUS_ENUM['nao_enviado']){
+                $documento->status = $data['analise_'.$documento_id];
+                if($data['comentario_'.$documento_id] != null){
+                    $documento->comentario = $data['comentario_'.$documento_id];
+                }else{
+                    $documento->comentario = null;
+                }
+                $documento->update();
+                $id++;
+            }
+        }
+        if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
+            $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        }else{
+            $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
+        }
+        $requerimento->update();
+        return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);
+
     }
 
 }

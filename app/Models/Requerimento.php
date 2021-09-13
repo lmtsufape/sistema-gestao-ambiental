@@ -14,8 +14,11 @@ class Requerimento extends Model
         'em_andamento'  => 2,
         'documentos_requeridos' => 3,
         'documentos_enviados' => 4,
-        'finalizada'    => 5,
-        'cancelada'     => 6,
+        'documentos_aceitos' => 5,
+        'visita_marcada' => 6,
+        'visita_realizada' => 7,
+        'finalizada'    => 8,
+        'cancelada'     => 9,
     ];
 
     public const TIPO_ENUM = [
@@ -50,12 +53,12 @@ class Requerimento extends Model
         return $this->hasOne(Licenca::class, 'requerimento_id');
     }
 
-    public function documentos() 
+    public function documentos()
     {
         return $this->belongsToMany(Documento::class, 'checklists', 'requerimento_id', 'documento_id')->withPivot('caminho', 'comentario', 'status');
-    } 
+    }
 
-    public function visita() 
+    public function visita()
     {
         return $this->hasOne(Visita::class, 'requerimento_id');
     }

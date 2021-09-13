@@ -118,6 +118,17 @@ class RequerimentoPolicy
             return $requerimento->empresa->user_id == $user->id;
         }elseif($userPolicy->isSecretario($user)){
             return true;
+        }
+        return false;
+    }
+
+    public function verDocumentacao(User $user, Requerimento $requerimento)
+    {
+        $userPolicy = new UserPolicy();
+        if ($userPolicy->isRequerente($user)) {
+            return $requerimento->empresa->user_id == $user->id;
+        }elseif($userPolicy->isSecretario($user)){
+            return true;
         }else{
             return $this->analises($user, $requerimento);
         }

@@ -47,8 +47,44 @@
                                                     <label for="documento_{{$documento->id}}" style="color: black; font-weight: bolder;"><span style="color: red; font-weight: bold;">*</span> {{$documento->nome}} </label>
                                                     @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->caminho != null) <a href="{{route('requerimento.documento', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="arquivo atual" style="width: 16px;"></a> @endif
 
+                                                    @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['nao_enviado'])
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                Aguardando envio do documento
+                                                            </div>
+                                                        </div>
+                                                    @elseif($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['recusado'])
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                Documento recusado
+                                                            </div>
+                                                            @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario != null)
+                                                                <div class="card-body">
+                                                                    Motivo: {{$requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario}}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @elseif($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['enviado'])
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                Documento enviado
+                                                            </div>
+                                                        </div>
+                                                    @elseif($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['aceito'])
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                Documento aceito
+                                                            </div>
+                                                            @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario != null)
+                                                                <div class="card-body">
+                                                                    Motivo: {{$requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario}}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endif
+
                                                     @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['nao_enviado']
-                                                        || $requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == null)
+                                                        || $requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['recusado'])
                                                         <input id="documento_{{$documento->id}}" class="form-control @error('documento_{{$documento->id}}') is-invalid @enderror" type="file" accept=".pdf"
                                                         name="documentos[]" value="{{$documento->id}}" required autofocus autocomplete="documento_{{$documento->id}}">
                                                         <input type="hidden" name="documentos_id[]" value="{{$documento->id}}">
