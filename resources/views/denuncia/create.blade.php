@@ -29,21 +29,27 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <label for="empresa">Empresas:</label>
-                                    <select class="form-control @error('empresa_id') is-invalid @enderror @error('empresa') is-invalid @enderror @error('endereco') is-invalid @enderror" 
-                                            name="empresa_id" id="empresas" onChange="showEndereco(this)">
-                                        <option disable="" selected="" hidden="" value="none">-- Selecionar Empresa --</option>
+                                    <label for="empresa">Empresas cadastradas:</label>
+                                    <select class="form-control @error('empresa_id') is-invalid @enderror @error('empresa_nao_cadastrada') is-invalid @enderror @error('endereco') is-invalid @enderror" 
+                                            name="empresa_id" id="empresas" onChange="showRadioBts(this)">
+                                        <option disable="" selected="" hidden="">-- Selecionar Empresa --</option>
                                         @foreach ($empresas as $empresa)
                                             <option value="{{$empresa->id}}">{{$empresa->nome}}</option>
                                         @endforeach
                                         <option value="none">Outro</option>
                                     </select>
-                                    @error('empresa_id')
+                                    <div id="group-radio-btn" class="form-group" style="display: none;">
+                                        <label class="radio-inline">
+                                        <input type="radio" id="radio_empresa_nao_cadastrada" name="crime_ambiental" value="false" onclick="verificaRadioBtnEvent(this);" checked> Empresa não cadastrada</label>
+                                        <label class="radio-inline">
+                                        <input type="radio" id="radio_crime_ambiental" name="crime_ambiental" value="true" onclick="verificaRadioBtnEvent(this);"> Crime Ambiental</label>
+                                    </div>
+                                    @error('empresa_nao_cadastrada')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    @error('empresa')
+                                    @error('empresa_id')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -55,15 +61,15 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-row" id="empresa_info" style="display: none;">
-                                <div class="col-md-6 form-group">
-                                    <label for="empresa">{{ __('Nome da empresa') }}</label>
-                                    <input id="empresa" class="form-control @error('empresa') is-invalid @enderror" type="text" 
-                                        name="empresa" value="{{old('empresa')}}">
+                            <div class="form-row" id="empresa_info">
+                                <div id="empresa_nao_cadastrada_nome" class="col-md-6 form-group" style="display: none;">
+                                    <label for="empresa_nao_cadastrada">{{ __('Nome da empresa') }}</label>
+                                    <input id="empresa_nao_cadastrada" class="form-control" type="text" 
+                                        name="empresa_nao_cadastrada" value="{{old('empresa_nao_cadastrada')}}">
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="endereco">{{ __('Endereço da empresa') }}</label>
-                                    <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" 
+                                <div id="div_endereco" class="col-md-6 form-group" style="display: none;">
+                                    <label for="endereco">{{ __('Endereço') }}</label>
+                                    <input id="endereco" class="form-control" type="text" 
                                         name="endereco" value="{{old('endereco')}}">
                                 </div>
                             </div>
@@ -199,20 +205,41 @@
         $('#imagens').append(campo_imagem);
     }
 
-    function showEndereco(){
+    function showRadioBts(){
         let select_empresas = $('select#empresas');
         let id_empresa = $('option:selected', select_empresas).val();
 
-        if (id_empresa == 'none') {
-            document.getElementById('endereco').value = '';
-            document.getElementById('empresa').value = '';
-            document.getElementById('empresa_info').style.display = '';
+        if (id_empresa == "none") {
+            document.getElementById('group-radio-btn').style.display = '';
+            document.getElementById('empresa_nao_cadastrada_nome').style.display = '';
+            document.getElementById('div_endereco').style.display = '';
         }
         else{
-            document.getElementById('endereco').value = '';
-            document.getElementById('empresa').value = '';
-            document.getElementById('empresa_info').style.display = 'none';
+            document.getElementById('group-radio-btn').style.display = 'none';
+            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
+            document.getElementById('div_endereco').style.display = 'none';
         }
     }
+
+    function verificaRadioBtnEvent(radio){
+        let select_empresas = $('select#empresas');
+        let id_empresa = $('option:selected', select_empresas).val();
+
+        if (id_empresa == "none" && radio.value == "false") {
+            document.getElementById('empresa_nao_cadastrada_nome').style.display = '';
+            document.getElementById('div_endereco').style.display = '';
+        }
+        else if(id_empresa == "none" && radio.value == "true"){
+            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
+            document.getElementById('div_endereco').style.display = '';
+        } else {
+            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
+            document.getElementById('div_endereco').style.display = 'none';
+        }
+    }
+
+    $(function() {
+        showRadioBts();
+    });
 </script>
 </x-guest-layout>

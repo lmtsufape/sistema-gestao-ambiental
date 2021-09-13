@@ -17,7 +17,8 @@ class Denuncia extends Model
 
     protected $fillable = [
         'empresa_id',
-        'empresa',
+        'empresa_nao_cadastrada',
+        'crime_ambiental',
         'endereco',
         'texto',
         'aprovacao',
