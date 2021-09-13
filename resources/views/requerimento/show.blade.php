@@ -356,7 +356,7 @@
                         @foreach ($documentos as $documento)
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}">
+                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($documento->padrao) checked @endif>
                                     <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
                                 </div>
                             </div>

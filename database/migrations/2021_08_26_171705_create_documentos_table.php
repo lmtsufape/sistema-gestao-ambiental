@@ -17,6 +17,7 @@ class CreateDocumentosTable extends Migration
             $table->id();
             $table->string('nome', 290);
             $table->string('documento_modelo')->nullable();
+            $table->boolean('padrao')->nullable();
             $table->timestamps();
         });
     }

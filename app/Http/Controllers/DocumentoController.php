@@ -25,11 +25,15 @@ class DocumentoController extends Controller
         $documento = new Documento();
         $documento->nome = $data["nome"];
 
-        $caminho_licencas = "documentos/licencas/";
-        $documento_nome = $data["documento_modelo"]->getClientOriginalName();
-        Storage::putFileAs('public/' . $caminho_licencas, $data["documento_modelo"], $documento_nome);
-
-        $documento->documento_modelo = $caminho_licencas . $data["documento_modelo"]->getClientOriginalName();
+        if ($request->input('documento_modelo') != null) {
+            $caminho_licencas = "documentos/licencas/";
+            $documento_nome = $data["documento_modelo"]->getClientOriginalName();
+            Storage::putFileAs('public/' . $caminho_licencas, $data["documento_modelo"], $documento_nome);
+            $documento->documento_modelo = $caminho_licencas . $data["documento_modelo"]->getClientOriginalName();
+        }
+        
+        $documento->padrao = $request->input('padrão') != null;
+        
         $documento->save();
 
         return redirect(route('documentos.index'))->with(['success' => 'Documento cadastrado com sucesso!']);
@@ -54,13 +58,18 @@ class DocumentoController extends Controller
     {
         $data = $request->validated();
         $documento = Documento::find($id);
+        $documento->nome =  $data["nome"];
 
-        $caminho_licencas = "documentos/licencas/";
-        $documento_nome = $data["documento_modelo"]->getClientOriginalName();
-        Storage::delete('public/' . $documento->documento_modelo);
-        Storage::putFileAs('public/' . $caminho_licencas, $data["documento_modelo"], $documento_nome);
+        if ($request->input('documento_modelo') != null) {
+            $caminho_licencas = "documentos/licencas/";
+            $documento_nome = $data["documento_modelo"]->getClientOriginalName();
+            Storage::delete('public/' . $documento->documento_modelo);
+            Storage::putFileAs('public/' . $caminho_licencas, $data["documento_modelo"], $documento_nome);
 
-        $documento->documento_modelo = $caminho_licencas . $data["documento_modelo"]->getClientOriginalName();
+            $documento->documento_modelo = $caminho_licencas . $data["documento_modelo"]->getClientOriginalName();
+        }
+
+        $documento->padrao = $request->input('padrão') != null;
         $documento->save();
 
         return redirect(route('documentos.index'))->with(['success' => 'Documento editado com sucesso!']);
