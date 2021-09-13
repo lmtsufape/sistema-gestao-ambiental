@@ -28,21 +28,24 @@ class DenunciaController extends Controller
         $denuncia = new Denuncia();
         $denuncia->texto = $data['texto'];
         $denuncia->empresa_id = strcmp($data['empresa_id'], "none") == 0 || empty($data['empresa_id']) ? null : $data['empresa_id'];
-        $denuncia->empresa = $data['empresa'] ?? "";
+        $denuncia->empresa_nao_cadastrada = $data['empresa_nao_cadastrada'] ?? "";
+        $denuncia->endereco = $data['endereco'] ?? "";
+        $denuncia->crime_ambiental = $data['crime_ambiental'] ?? false;
         $denuncia->aprovacao = Denuncia::APROVACAO_ENUM["registrada"];
         $denuncia->save();
 
-        for ($i = 0; $i < count($data['imagem']); $i++) {
-            $foto_denuncia = new FotoDenuncia();
-            $foto_denuncia->denuncia_id = $denuncia->id;
-            $foto_denuncia->comentario = $data['comentario'][$i] ?? "";
+        if (array_key_exists("imagem", $data))
+            for ($i = 0; $i < count($data['imagem']); $i++) {
+                $foto_denuncia = new FotoDenuncia();
+                $foto_denuncia->denuncia_id = $denuncia->id;
+                $foto_denuncia->comentario = $data['comentario'][$i] ?? "";
 
-            $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-            $path = 'denuncias/' . $denuncia->id . '/';
-            Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
-            $foto_denuncia->caminho = $path . $nomeImg;
-            $foto_denuncia->save();
-        }
+                $nomeImg = $data['imagem'][$i]->getClientOriginalName();
+                $path = 'denuncias/' . $denuncia->id . '/';
+                Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
+                $foto_denuncia->caminho = $path . $nomeImg;
+                $foto_denuncia->save();
+            }
 
         return redirect()->back()->with(['success' => 'Denúncia cadastrada com sucesso!']);
     }
