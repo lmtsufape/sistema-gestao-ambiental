@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Requerimento;
 use App\Models\Documento;
+use App\Models\ValorRequerimento;
 use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
 
@@ -166,12 +167,18 @@ class RequerimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function storeChecklist(Request $request)
-    {
+    { 
+        $validated = $request->validate([
+            'licença' => 'required',
+        ]);        
+        
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
         }
 
         $requerimento = Requerimento::find($request->requerimento);
+        $this->atribuirValor($request, $requerimento);
+
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
@@ -218,6 +225,22 @@ class RequerimentoController extends Controller
         }
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
+    }
+
+    /**
+     * Atribui o valor do requerimento que deve ser pago.
+     *
+     * @param Request $request
+     * @param Requerimento $requerimento
+     * @return void
+     */
+
+    private function atribuirValor(Request $request, Requerimento $requerimento)
+    {
+        $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
+        $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+        
+        $requerimento->valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
     }
 
     /**

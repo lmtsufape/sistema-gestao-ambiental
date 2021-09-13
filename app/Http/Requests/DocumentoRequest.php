@@ -26,7 +26,8 @@ class DocumentoRequest extends FormRequest
     {
         return [
             'nome'              => 'required|string|min:10|max:290',
-            'documento_modelo'  => 'required|file|mimes:pdf|max:2048',
+            'documento_modelo'  => 'nullable|file|mimes:pdf|max:2048',
+            'padrão'            => 'nullable',
         ];
     }
 

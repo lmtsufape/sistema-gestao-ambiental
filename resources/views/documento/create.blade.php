@@ -32,8 +32,20 @@
                                 <div class="col-md-6 form-group">
                                     <label for="documento_modelo">{{ __('Modelo do documento') }}</label>
                                     <input id="documento_modelo" class="form-control @error('documento_modelo') is-invalid @enderror" type="file" accept=".pdf" 
-                                        name="documento_modelo" value="{{old('documento_modelo')}}" required autofocus autocomplete="documento_modelo">
+                                        name="documento_modelo" value="{{old('documento_modelo')}}" autofocus autocomplete="documento_modelo">
                                 
+                                    @error('documento_modelo')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <input type="checkbox" name="padrão" id="padrão" @if(old('padrão') != null) checked @endif>
+                                    <label for="padrão">{{ __('Padrão em todas as solicitações de requerimentos') }}</label>
+
                                     @error('documento_modelo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}

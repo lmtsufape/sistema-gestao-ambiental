@@ -7,7 +7,7 @@
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="form-row">
@@ -92,7 +92,7 @@
                                                 @if($requerimento->valor == null)
                                                     {{__('Em definição')}}
                                                 @else
-                                                    {{$requerimento->valor}}
+                                                    R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
                                                 @endif
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>

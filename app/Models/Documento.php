@@ -12,6 +12,7 @@ class Documento extends Model
     protected $fillable = [
         'nome',
         'documento_modelo',
+        'padrao',
     ];
 
     public function requerimentos() 
