@@ -92,7 +92,7 @@
                                                 @if($requerimento->valor == null)
                                                     {{__('Em definição')}}
                                                 @else
-                                                    {{$requerimento->valor}}
+                                                    R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
                                                 @endif
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>

@@ -149,7 +149,33 @@
                                             <div class="col-md-6 form-group">
                                                 <label for="setor">{{ __('Setor de atuação') }}</label>
                                                 <select id="setor" class="form-control @error('setor') is-invalid @enderror" type="text" name="setor" required autofocus autocomplete="setor" disabled>
-                                                    <option value="{{old('setor', 1)}}">Teste</option>
+                                                    <option value="">{{$requerimento->empresa->cnaes[0]->setor->nome}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-6 form-group">
+                                                <label for="porte">{{ __('Porte') }}</label>
+                                                <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="setor" disabled>
+                                                    <option value="">
+                                                        @switch($requerimento->empresa->porte)
+                                                            @case(\App\Models\Empresa::PORTE_ENUM['micro'])
+                                                                {{__('Micro')}}
+                                                                @break
+                                                            @case(\App\Models\Empresa::PORTE_ENUM['pequeno'])
+                                                                {{__('Pequeno')}}
+                                                                @break
+                                                            @case(\App\Models\Empresa::PORTE_ENUM['medio'])
+                                                                {{__('Médio')}}
+                                                                @break 
+                                                            @case(\App\Models\Empresa::PORTE_ENUM['grande'])
+                                                                {{__('Grande')}}
+                                                                @break
+                                                            @case(\App\Models\Empresa::PORTE_ENUM['especial'])
+                                                                {{__('Especial')}}
+                                                                @break   
+                                                        @endswitch
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -256,7 +282,7 @@
                                 </div>
                             @else
                                 <div class="col-md-6">
-                                    <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos</a>
+                                    <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
                                 </div>
                                 <div class="col-md-6">
                                 </div>
@@ -277,8 +303,6 @@
                                                 <option value="{{$analista->id}}">{{$analista->name}}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="col-md-6">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -309,6 +333,25 @@
                 <div class="modal-body">
                     <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
                         @csrf
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
+                                    <option disabled selected value="">-- Selecione o tipo de licença --</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                </select>
+
+                                @error('licença')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                         @foreach ($documentos as $documento)
                             <div class="form-row">
@@ -343,6 +386,23 @@
                         @csrf
                         <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                </select>
+
+                                @error('licença')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
                         @foreach ($documentos as $documento)
                             <div class="form-row">
                                 <div class="col-md-12 form-group">

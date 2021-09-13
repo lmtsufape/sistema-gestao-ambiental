@@ -398,8 +398,6 @@
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <script>
         window.selecionarSetor = function(){
             //setor
@@ -418,6 +416,7 @@
                         $('#tabelaCnaes tbody').append(html);
                     }
                 },*/
+
                 complete: function(data) {
                     if(data.responseJSON.success){
                         for(var i = 0; i < data.responseJSON.cnaes.length; i++){
