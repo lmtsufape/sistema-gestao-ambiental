@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\EmpresaNaoCadastradaRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DenunciaRequest extends FormRequest
@@ -31,25 +32,27 @@ class DenunciaRequest extends FormRequest
     public function rules()
     {
         return [
-            "empresa_id"        => request()->has('empresa_id') && strcmp($this->empresa_id, "none") == 0 ? 'nullable' : "nullable|integer",
-            "empresa"           => "nullable|string|min:5|max:255|required_if:empresa_id,none",
-            "endereco"          => "nullable|string|min:5|max:255|required_if:empresa_id,none",
-            "texto"             => "required|string|min:10|max:500",
-            "imagem.*"          => "nullable|file|mimes:jpg,bmp,png|max:2048",
-            "comentario.*"      => "nullable|string|min:5|max:255",
+            "empresa_id"              => request()->has('empresa_id') && strcmp($this->empresa_id, "none") == 0 ? 'nullable' : "nullable|integer",
+            "crime_ambiental"         => "nullable|in:true,false",
+            "empresa_nao_cadastrada"  => ["nullable", "string", "min:5", "max:255", new EmpresaNaoCadastradaRule($this->empresa_id, $this->crime_ambiental)],
+            "endereco"                => "nullable|string|min:5|max:255|required_if:empresa_id,none",
+            "texto"                   => "required|string|min:10|max:500",
+            "imagem.*"                => "nullable|file|mimes:jpg,bmp,png|max:2048",
+            "comentario.*"            => "nullable|string|min:5|max:255",
         ];
     }
 
     public function messages()
     {
         return [
-            "empresa_id.integer"    => "Selecione uma empresa",
-            "imagem.*.max"          => "A imagem não pode ter mais de 2MB",
-            "imagem.*.mimes"        => "A imagem deve estar no formato jpg, bmp ou png",
-            "comentario.*.min"      => "O comentário deve ter no mínimo 5 caracteres",
-            "comentario.*.max"      => "O comentário deve ter no máximo 255 caracteres",
-            "empresa.required_if"   => "O campo nome da empresa é obrigatório quando nenhuma empresa é seleciona",
-            "endereco.required_if"  => "O campo endereco da empresa é obrigatório quando nenhuma empresa é seleciona",
+            "empresa_id.integer"           => "Selecione uma empresa",
+            "imagem.*.max"                 => "A imagem não pode ter mais de 2MB",
+            "imagem.*.mimes"               => "A imagem deve estar no formato jpg, bmp ou png",
+            "comentario.*.min"             => "O comentário deve ter no mínimo 5 caracteres",
+            "comentario.*.max"             => "O comentário deve ter no máximo 255 caracteres",
+            "empresa_nao_cadastrada.min"   => "O campo nome da empresa é deve ter no mínimo 5 caracteres",
+            "empresa_nao_cadastrada.max"   => "O campo nome da empresa é deve ter no máximo 255 caracteres",
+            "endereco.required_if"         => "O campo endereco é obrigatório quando nenhuma empresa é selecionada",
         ];
     }
 }

@@ -16,8 +16,9 @@ class CreateDenunciasTable extends Migration
         Schema::create('denuncias', function (Blueprint $table) {
             $table->id();
             $table->integer('empresa_id')->nullable();
-            $table->string('empresa')->nullable();
+            $table->string('empresa_nao_cadastrada')->nullable();
             $table->string('endereco')->nullable();
+            $table->boolean('crime_ambiental')->nullable();
             $table->text('texto');
             $table->integer('aprovacao')->nullable();
 
