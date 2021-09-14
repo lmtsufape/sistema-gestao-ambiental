@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Requerimento;
 use App\Models\Visita;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class VisitaController extends Controller
@@ -15,7 +16,13 @@ class VisitaController extends Controller
      */
     public function index()
     {
-        $visitas = Visita::all()->sortBy('data_marcada');
+        $visitas = collect();
+        if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
+            $visitas = Visita::orderBy('data_marcada')->get();
+        } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
+            $visitas = auth()->user()->visitasAnalista();
+        }
+        
         return view('visita.index', compact('visitas'));
     }
 
