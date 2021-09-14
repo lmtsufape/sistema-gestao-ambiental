@@ -12,12 +12,18 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Visitas cadastradas no sistema</h5>
+                                @can('isSecretario', \App\Models\User::class)
+                                    <h5 class="card-title">Visitas cadastradas no sistema</h5>
+                                @else   
+                                    <h5 class="card-title">Visitas programadas para você</h5>
+                                @endcan
                                 <h6 class="card-subtitle mb-2 text-muted">Visitas</h6>
                             </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('visitas.create')}}">Criar visita</a>
-                            </div>
+                            @can('isSecretario', \App\Models\User::class)
+                                <div class="col-md-4" style="text-align: right">
+                                    <a class="btn btn-primary" href="{{route('visitas.create')}}">Criar visita</a>
+                                </div>
+                            @endif
                         </div>
                         <div div class="form-row">
                             @if(session('success'))
@@ -35,7 +41,9 @@
                                         <th scope="col">Data realizada</th>
                                         <th scope="col">Requerimento</th>
                                         <th scope="col">Empresa</th>
-                                        <th scope="col">Analista</th>
+                                        @can('isSecretario', \App\Models\User::class)
+                                            <th scope="col">Analista</th>
+                                        @endcan
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -57,19 +65,29 @@
                                                 <td>Autorização</td>
                                             @endif
                                             <td>{{$visita->requerimento->empresa->nome}}</td>
-                                            <td>{{$visita->requerimento->analista->name}}</td>
+                                            @can('isSecretario', \App\Models\User::class)
+                                                <td>{{$visita->requerimento->analista->name}}</td>
+                                            @endcan
                                             <td>
-                                                <div class="btn-group">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
-                                                            <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
+                                                @can('isSecretario', \App\Models\User::class)
+                                                    <div class="btn-group">
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                <a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>
+                                                                <hr>
+                                                                <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
+                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
+                                                                
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @else
+                                                    <a class="btn btn-primary">Notificar</a>
+                                                    <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="btn btn-primary">Relatório</a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -81,31 +99,34 @@
         </div>
     </div>
 
-
-    @foreach ($visitas as $visita)
-    <!-- Modal deletar visita -->
-    <div class="modal fade" id="modalStaticDeletarVisita_{{$visita->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #dc3545;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="deletar-visita-form-{{$visita->id}}" method="POST" action="{{route('visitas.destroy', ['visita' => $visita])}}">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja deletar a visita à empresa {{$visita->requerimento->empresa->nome}}?
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" form="deletar-visita-form-{{$visita->id}}">Sim</button>
+    @can('isSecretario', \App\Models\User::class)
+        @foreach ($visitas as $visita)
+        <!-- Modal deletar visita -->
+        <div class="modal fade" id="modalStaticDeletarVisita_{{$visita->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #dc3545;">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deletar-visita-form-{{$visita->id}}" method="POST" action="{{route('visitas.destroy', ['visita' => $visita])}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            Tem certeza que deseja deletar a visita à empresa {{$visita->requerimento->empresa->nome}}?
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" form="deletar-visita-form-{{$visita->id}}">Sim</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @endforeach
+        @endforeach
+    @else 
+
+    @endcan
 </x-app-layout>

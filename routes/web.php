@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RequerimentoController;
 use App\Http\Controllers\ValorController;
+use App\Http\Controllers\RelatorioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
+
+    Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
+    Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
+    Route::get('/relatorio/{relatorio}/edit', [RelatorioController::class, 'edit'])->name('relatorios.edit');
+    Route::put('/relatorio/{relatorio}/update', [RelatorioController::class, 'update'])->name('relatorios.update');
+    Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
+    Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
 });
 
 Route::resource('denuncias', DenunciaController::class);

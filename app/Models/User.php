@@ -94,4 +94,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->email = $input['email'];
         $this->password = Hash::make($input['password']);
     }
+
+    public function visitasAnalista()
+    {
+        $visitas = collect();
+        $requerimentos = $this->requerimentos;
+        
+        foreach ($requerimentos as $requerimento) {
+            $visitas_requerimento = $requerimento->visitas;
+            if ($visitas_requerimento->count() > 0) {
+                foreach ($visitas_requerimento as $visita) {
+                    $visitas->push($visita);
+                }
+            }
+        }
+        
+        return $visitas;
+    }
 }
