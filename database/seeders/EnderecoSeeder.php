@@ -19,7 +19,7 @@ class EnderecoSeeder extends Seeder
             'numero' => '807',
             'bairro' => 'Miranda',
             'cidade' => 'Garanhuns',
-            'estado' => 'Pernambuco',
+            'estado' => 'PE',
             'complemento' => 'Casa',
             'cep' => '55292-000',
         ]);
@@ -29,7 +29,7 @@ class EnderecoSeeder extends Seeder
             'numero' => '588',
             'bairro' => 'Jardim Monte Líbano',
             'cidade' => 'Garanhuns',
-            'estado' => 'Pernambuco',
+            'estado' => 'PE',
             'complemento' => 'Casa',
             'cep' => '55292-000',
         ]);

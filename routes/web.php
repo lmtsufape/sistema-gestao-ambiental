@@ -11,6 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RequerimentoController;
 use App\Http\Controllers\ValorController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\BoletoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +57,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/relatorio/{relatorio}/update', [RelatorioController::class, 'update'])->name('relatorios.update');
     Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
     Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
+
+    Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
 });
 
 Route::resource('denuncias', DenunciaController::class);

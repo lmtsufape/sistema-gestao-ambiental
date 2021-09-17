@@ -62,4 +62,27 @@ class Requerimento extends Model
     {
         return $this->hasMany(Visita::class, 'requerimento_id');
     }
+
+    public function boleto()
+    {
+        return $this->hasOne(BoletoCobranca::class, 'requerimento_id');
+    }
+
+    public function tipoString() 
+    {
+        switch ($this->tipo) {
+            case $this::TIPO_ENUM['primeira_licenca']:
+                return 'primeira licença';
+                break;
+            case $this::TIPO_ENUM['renovacao']:
+                return 'renovação';
+                break;
+            case $this::TIPO_ENUM['autorizacao']:
+                return 'autorização';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
 }
