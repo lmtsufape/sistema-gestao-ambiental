@@ -58,6 +58,11 @@ class Empresa extends Model
         return $this->belongsTo(RepresetanteLegal::class, 'represetante_legal_id');
     }
 
+    public function denuncias()
+    {
+        return $this->hasMany(Denuncia::class, 'empresa_id');
+    }
+
     public function setAtributes($input)
     {
         $this->nome = $input['nome_da_empresa'];

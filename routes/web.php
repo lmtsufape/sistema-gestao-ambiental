@@ -55,9 +55,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/relatorio/{relatorio}/update', [RelatorioController::class, 'update'])->name('relatorios.update');
     Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
     Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
+
+    Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
+    Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
+    Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
 });
 
-Route::resource('denuncias', DenunciaController::class);
+Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
+Route::post('/denuncias/store', [DenunciaController::class, 'store'])->name('denuncias.store');
 
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");

@@ -6,13 +6,18 @@ use App\Http\Requests\DenunciaRequest;
 use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\FotoDenuncia;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class DenunciaController extends Controller
 {
     public function index()
     {
-        return redirect()->route("denuncias.create");
+        $denuncias_registradas   = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_aprovadas     = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_arquivadas    = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
+
+        return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas'));
     }
 
     public function create()
@@ -30,7 +35,7 @@ class DenunciaController extends Controller
         $denuncia->empresa_id = strcmp($data['empresa_id'], "none") == 0 || empty($data['empresa_id']) ? null : $data['empresa_id'];
         $denuncia->empresa_nao_cadastrada = $data['empresa_nao_cadastrada'] ?? "";
         $denuncia->endereco = $data['endereco'] ?? "";
-        $denuncia->crime_ambiental = $data['crime_ambiental'] ?? false;
+        $denuncia->denunciante = $data['denunciante'] ?? "";
         $denuncia->aprovacao = Denuncia::APROVACAO_ENUM["registrada"];
         $denuncia->save();
 
@@ -58,5 +63,39 @@ class DenunciaController extends Controller
     public function update()
     {
         return redirect()->route("denuncias.create");
+    }
+
+    public function imagensDenuncia(Request $request)
+    {
+        $imagens = FotoDenuncia::where('denuncia_id', $request->id)->get();
+        $caminhos = [];
+
+        foreach ($imagens as $key) {
+            array_push($caminhos, $key->caminho);
+        }
+
+        $data = array(
+            'success'    => true,
+            'table_data' => $caminhos,
+        );
+        echo json_encode($data);
+    }
+
+    public function avaliarDenuncia(Request $request)
+    {
+        if ($request->aprovar == "true") {
+            $denuncia = Denuncia::find($request->denunciaId);
+            $denuncia->aprovacao = 2;
+            $denuncia->save();
+
+            return redirect()->back()->with(['success' => 'Denuncia aprovada com sucesso!']);
+        } else if ($request->aprovar == "false") {
+
+            $denuncia = Denuncia::find($request->denunciaId);
+            $denuncia->aprovacao = 3;
+            $denuncia->save();
+
+            return redirect()->back()->with(['success' => 'Denuncia arquivada com sucesso!']);
+        }
     }
 }
