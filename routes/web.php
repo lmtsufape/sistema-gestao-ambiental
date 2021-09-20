@@ -11,6 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RequerimentoController;
 use App\Http\Controllers\ValorController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\BoletoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +61,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
     Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
+    Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
