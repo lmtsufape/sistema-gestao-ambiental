@@ -18,9 +18,9 @@ class Denuncia extends Model
     protected $fillable = [
         'empresa_id',
         'empresa_nao_cadastrada',
-        'crime_ambiental',
         'endereco',
         'texto',
+        'denunciante',
         'aprovacao',
     ];
 
@@ -32,5 +32,10 @@ class Denuncia extends Model
     public function fotos()
     {
         return $this->hasMany(FotoDenuncia::class, 'denuncia_id');
+    }
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 }

@@ -30,31 +30,15 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="empresa">Empresas cadastradas:</label>
-                                    <select class="form-control @error('empresa_id') is-invalid @enderror @error('empresa_nao_cadastrada') is-invalid @enderror @error('endereco') is-invalid @enderror" 
-                                            name="empresa_id" id="empresas" onChange="showRadioBts(this)">
-                                        <option disable="" selected="" hidden="">-- Selecionar Empresa --</option>
+                                    <select class="form-control @error('empresa_id') is-invalid @enderror" 
+                                            name="empresa_id" id="empresas" onChange="showCampoEmpresaNaoCadastrada(this)">
+                                        <option disable="" hidden="" selected>-- Selecionar Empresa --</option>
                                         @foreach ($empresas as $empresa)
-                                            <option value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                                            <option value="{{$empresa->id}}" {{old("empresa_id") == $empresa->id ? 'selected' : ""}}>{{$empresa->nome}}</option>
                                         @endforeach
-                                        <option value="none">Outro</option>
+                                        <option value="none" {{old("empresa_id") == 'none' ? 'selected' : ""}}>Outro</option>
                                     </select>
-                                    <div id="group-radio-btn" class="form-group" style="display: none;">
-                                        <label class="radio-inline">
-                                        <input type="radio" id="radio_empresa_nao_cadastrada" name="crime_ambiental" value="false" onclick="verificaRadioBtnEvent(this);" checked> Empresa não cadastrada</label>
-                                        <label class="radio-inline">
-                                        <input type="radio" id="radio_crime_ambiental" name="crime_ambiental" value="true" onclick="verificaRadioBtnEvent(this);"> Crime Ambiental</label>
-                                    </div>
-                                    @error('empresa_nao_cadastrada')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
                                     @error('empresa_id')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    @error('endereco')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -62,15 +46,38 @@
                                 </div>
                             </div>
                             <div class="form-row" id="empresa_info">
-                                <div id="empresa_nao_cadastrada_nome" class="col-md-6 form-group" style="display: none;">
-                                    <label for="empresa_nao_cadastrada">{{ __('Nome da empresa') }}</label>
-                                    <input id="empresa_nao_cadastrada" class="form-control" type="text" 
-                                        name="empresa_nao_cadastrada" value="{{old('empresa_nao_cadastrada')}}">
+                                <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif 
+                                        class="col-md-6 form-group">
+                                    <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}</label>
+                                    <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada" 
+                                        value="{{old('empresa_nao_cadastrada')}}">
+                                    @error('empresa_nao_cadastrada')
+                                        <div id="validationServer02Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
-                                <div id="div_endereco" class="col-md-6 form-group" style="display: none;">
+                                <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif  
+                                        class="col-md-6 form-group">
                                     <label for="endereco">{{ __('Endereço') }}</label>
-                                    <input id="endereco" class="form-control" type="text" 
-                                        name="endereco" value="{{old('endereco')}}">
+                                    <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
+                                     @error('endereco')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="denunciante">{{ __('Seu nome (Opcional)') }}</label>
+                                    <input id="denunciante" class="form-control @error('denunciante') is-invalid @enderror" type="text" name="denunciante" 
+                                        value="{{old('denunciante')}}">
+                                    @error('denunciante')
+                                        <div id="validationServer02Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-row">
@@ -179,7 +186,6 @@
     ClassicEditor
         .create( document.querySelector( '#denuncia-ckeditor' ) )
         .then( editor => {   
-
              document.querySelector( '#submit-denuncia' ).addEventListener( 'click', (event) => {
                 const editorData = editor.getData();
                 
@@ -205,41 +211,26 @@
         $('#imagens').append(campo_imagem);
     }
 
-    function showRadioBts(){
+    function showCampoEmpresaNaoCadastrada(){
         let select_empresas = $('select#empresas');
         let id_empresa = $('option:selected', select_empresas).val();
 
         if (id_empresa == "none") {
-            document.getElementById('group-radio-btn').style.display = '';
-            document.getElementById('empresa_nao_cadastrada_nome').style.display = '';
-            document.getElementById('div_endereco').style.display = '';
+            document.getElementById('campo_empresa_nao_cadastrada').style.display = '';
+            document.getElementById('campo_endereco_empresa_nao_cadastrada').style.display = '';
+            document.getElementById('empresa_nao_cadastrada').required = true;
+            document.getElementById('endereco').required = true;
         }
         else{
-            document.getElementById('group-radio-btn').style.display = 'none';
-            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
-            document.getElementById('div_endereco').style.display = 'none';
-        }
-    }
-
-    function verificaRadioBtnEvent(radio){
-        let select_empresas = $('select#empresas');
-        let id_empresa = $('option:selected', select_empresas).val();
-
-        if (id_empresa == "none" && radio.value == "false") {
-            document.getElementById('empresa_nao_cadastrada_nome').style.display = '';
-            document.getElementById('div_endereco').style.display = '';
-        }
-        else if(id_empresa == "none" && radio.value == "true"){
-            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
-            document.getElementById('div_endereco').style.display = '';
-        } else {
-            document.getElementById('empresa_nao_cadastrada_nome').style.display = 'none';
-            document.getElementById('div_endereco').style.display = 'none';
+            document.getElementById('campo_empresa_nao_cadastrada').style.display = 'none';
+            document.getElementById('campo_endereco_empresa_nao_cadastrada').style.display = 'none';
+            document.getElementById('empresa_nao_cadastrada').required = false;
+            document.getElementById('endereco').required = false;
         }
     }
 
     $(function() {
-        showRadioBts();
+        showCampoEmpresaNaoCadastrada();
     });
 </script>
 </x-guest-layout>
