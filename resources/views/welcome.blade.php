@@ -31,9 +31,7 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 <body>
-    @component('layouts.nav_bar')
-        
-    @endcomponent
+    @component('layouts.nav_bar')@endcomponent
     <div class="container conteudo">
         <div class="row">
             <div class="col-md-12">
@@ -154,9 +152,7 @@
             </div>
         </div>
     </div>
-    @component('layouts.footer')
-        
-    @endcomponent
+    @component('layouts.footer')@endcomponent
     <script>
         function mostrarContato(tipo, texto, img){
             if(tipo == "mostrar1"){
