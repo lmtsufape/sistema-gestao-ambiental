@@ -18,8 +18,8 @@ class CreateDenunciasTable extends Migration
             $table->integer('empresa_id')->nullable();
             $table->string('empresa_nao_cadastrada')->nullable();
             $table->string('endereco')->nullable();
-            $table->boolean('crime_ambiental')->nullable();
             $table->text('texto');
+            $table->string('denunciante')->nullable();
             $table->integer('aprovacao')->nullable();
 
             $table->timestamps();
