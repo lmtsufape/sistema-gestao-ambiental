@@ -1,4 +1,8 @@
 <x-guest-layout>
+    @component('layouts.nav_bar')
+        
+    @endcomponent
+
     <div style="background-color: rgb(236, 236, 243)">
         <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
             <div class="form-row justify-content-center">
@@ -398,6 +402,10 @@
         </div>
     </div>
 
+    @component('layouts.footer')
+        
+    @endcomponent
+
     <script>
         window.selecionarSetor = function(){
             //setor
@@ -442,13 +450,21 @@
         window.add_Lista = function($setor, $id) {
             var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
             var naTabela = document.getElementById('dentroTabelaCnaes');
+            var divBtn = elemento.children[2].children[0].children[0];
+            
             if(elemento.parentElement == naTabela){
                 $('#listaCnaes').append(elemento);
+                divBtn.style.backgroundColor = "#dc3545";
+                divBtn.style.borderColor = "#dc3545";
+                divBtn.textContent = "Remover";
             }else{
                 var historySelectList = $('select#idSelecionarSetor');
                 var $setor_id = $('option:selected', historySelectList).val();
                 if($setor == $setor_id){
                     $('#dentroTabelaCnaes').append(elemento);
+                    divBtn.style.backgroundColor = "#28a745";
+                    divBtn.style.borderColor = "#28a745";
+                    divBtn.textContent = "Adicionar";
                 }else{
                     document.getElementById('listaCnaes').removeChild(elemento);
                 }
