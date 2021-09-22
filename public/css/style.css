@@ -11,6 +11,26 @@ nav img {
     border-style: none;
 }
 
+.color-default {
+    color: #203318;
+}
+
+.btn-color-dafault {
+    background-color: #4A7836;
+    border-color: #4A7836;
+}
+
+.btn-color-dafault:hover {
+    background-color: #203318;
+    border-color: #203318;
+}
+
+.btn-color-dafault:focus {
+    background-color: #203318;
+    border-color: #203318;
+    box-shadow: 0 0 0 0.2rem #203318;
+}
+
 /* NAV BAR */
 
 .bg-light {
@@ -94,9 +114,12 @@ nav img {
 .conteudo .card-home {
     margin-top: 10px;
     background-color: #4A7836;
+    height: 150px;
+    max-height: 150px;
     color: white;
     box-shadow: 1px 1px 5px rgb(83, 83, 83);
     transition: 0.5s;
+    border-radius: 10px;
 }
 
 .conteudo .card-home:hover {
@@ -106,7 +129,14 @@ nav img {
 }
 
 .conteudo .card-home .espaco {
-    padding-top: 3rem;
+    position: relative;
+    margin-top: 30px;
+    bottom: 0px;
+    text-decoration: none;
+}
+
+.conteudo a {
+    text-decoration: none;
 }
 
 .conteudo .card-home .alinhar-direita {

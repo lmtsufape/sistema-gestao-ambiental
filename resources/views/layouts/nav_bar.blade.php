@@ -15,8 +15,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Legislação</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contato</a>
+                <li class="nav-item @if(request()->routeIs('contato')) active @endif">
+                    <a class="nav-link" href="{{route('contato')}}">Contato</a>
                 </li>
                 @guest
                     <li class="nav-item @if(request()->routeIs('login')) active @endif">

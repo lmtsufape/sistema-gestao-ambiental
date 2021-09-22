@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Cadastre sua empresa</div>
+                                <div class="col-md-12">Cadastre sua <br>Empresa</div>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,22 @@
                             </div>
                         </div>
                         <div class="row espaco">
-                            <div class="col-md-12">Emissão de licenças</div>
+                            <div class="col-md-12">Emissão de <br>Licenças</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-home">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4 alinhar-direita">
+                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
+                            </div>
+                        </div>
+                        <div class="row espaco">
+                            <div class="col-md-12">Renovação de <br>Licenças</div>
                         </div>
                     </div>
                 </div>
@@ -78,31 +93,85 @@
                             <div class="row">
                                 <div class="col-md-8"></div>
                                 <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 67.png')}}" alt="Denúnciar" width="49px;">
+                                    <img src="{{asset('img/Group 67.png')}}" alt="Contato" width="49px;">
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Denúnciar</div>
+                                <div class="col-md-12">Registro de <br>Denúncias</div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-md-3">
-                <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 alinhar-direita">
-                                <img src="{{asset('img/Group 66.png')}}" alt="Contato" width="37px;">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 116.png')}}" alt="Contato" width="37px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Consulta de <br>Licenças ambientais</div>
                             </div>
                         </div>
-                        <div class="row espaco">
-                            <div class="col-md-12">Contato</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 115.png')}}" alt="Contato" width="33px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Acompanhamento <br>de solicitações</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Icon awesome-tree.png')}}" alt="Denúnciar" width="30px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Solicitações de poda<br>ou supressão de árvores</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 116.png')}}" alt="Denúnciar" width="37px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Pagamentos de multas <br>ou taxas administrativas</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
         </div>
 
         <div class="row" style="margin-top: 20px;">
@@ -134,17 +203,17 @@
                             <div class="d-flex">
                                 <div class="mr-auto p-2">
                                     <div class="btn-group">
-                                        <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-family:'Roboto'; font-weight:bold; color:#707070">Secretaria de Saúde de Garanhuns - PE</div>
+                                        <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-family:'arial'; font-weight:bold; color:#707070">Secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE</div>
                                     </div>
                                 </div>
                                 <div class="p-2">
                                     <div style="margin-right:10px; cursor:pointer;" onclick="mostrarContato('mostrar1','texto1','img1')"><span id="texto1">Fechar</span></div>
                                 </div>
                             </div>
-                            <div id="mostrar1" style="display:block;">
-                                <div class="container" style="margin-left:3px; font-family:arial;">R. Amauri de Medeiros, 215-387 - Heliópolis, Garanhuns - PE, 55295-430</div>
-                                <div class="container" style="margin-left:3px; font-family:arial; color:red">Segunda a Sexta - 08:00-14:00</div>
-                                <div class="container" style="margin-left:3px; margin-bottom:10px; font-family:arial;"></div>
+                            <div id="mostrar1" style="display:block; font-size:14px; font-family:'arial';">
+                                <div class="container" style="margin-left:3px; color:#707070">Centro Administrativo II Avenida Irga, s/n - Novo Heliópolis, Garanhuns - PE, 55297-256</div>
+                                <div class="container" style="margin-left:3px; color:#4a7836da;">Segunda a Sexta das 6h às 18h</div>
+                                <div class="container" style="margin-left:3px; color:#707070; margin-bottom:10px;">(87) 3761-0697</div>
                             </div>
                         </div>
                     </div>
