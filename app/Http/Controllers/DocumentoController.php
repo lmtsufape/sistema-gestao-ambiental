@@ -78,6 +78,10 @@ class DocumentoController extends Controller
     public function destroy($id)
     {
         $documento = Documento::find($id);
+        if ($documento->existemRequerimentos()) {
+            return redirect()->back()->withErrors(['error' => 'Existem requerimentos que utilizam desde documento, logo o mesmo não pode ser deletado.']);
+        }
+
         Storage::delete('public/' . $documento->documento_modelo);
         $documento->delete();
 

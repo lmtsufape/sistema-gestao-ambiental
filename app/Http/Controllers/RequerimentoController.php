@@ -215,13 +215,13 @@ class RequerimentoController extends Controller
         }
 
         $requerimento = Requerimento::find($request->requerimento);
-        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-        $requerimento->update();
 
         // Documentos desmarcados
         foreach ($requerimento->documentos as $documento) {
             if (!in_array($documento->id, $request->documentos)) {
                 $requerimento->documentos()->detach($documento->id);
+
+                $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
             }
         }
 
@@ -232,8 +232,12 @@ class RequerimentoController extends Controller
                 $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
                 $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
                 $documento->update();
+
+                $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
             }
         }
+
+        $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
     }
