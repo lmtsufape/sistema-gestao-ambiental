@@ -1,9 +1,11 @@
 <x-guest-layout>
-    <x-slot name="header">
+    @component('layouts.nav_bar')@endcomponent
+
+    {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Denúncias') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
@@ -12,8 +14,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Cadastrar denúncia</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Denúncias > Criar denúncia</h6>
+                                <h5 class="card-title">Realizar denúncia</h5>
+                                {{-- <h6 class="card-subtitle mb-2 text-muted">Denúncias > Criar denúncia</h6> --}}
                             </div>
                         </div>
                         <div div class="form-row">
@@ -182,6 +184,7 @@
             </div>
         </div>
     </div>
+    @component('layouts.footer')@endcomponent
 <script>
     ClassicEditor
         .create( document.querySelector( '#denuncia-ckeditor' ) )
