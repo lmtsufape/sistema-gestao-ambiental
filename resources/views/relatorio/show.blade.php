@@ -108,15 +108,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="card-footer">
                         <div class="form-row">
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio">Reprovar</button>
+                                <button class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Reprovado' : 'Reprovar' }}</button>
                             </div>
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio">Aprovar</button>
+                                <button class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
         </div>
     </div>
 
-  
+
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop-aprovar-relatorio" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">

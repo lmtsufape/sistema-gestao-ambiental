@@ -48,6 +48,7 @@ class RelatorioController extends Controller
 
         $requerimento = $visita->requerimento;
         $requerimento->status = Requerimento::STATUS_ENUM['visita_realizada'];
+        $visita->update(['data_realizada' => now()]);
         $requerimento->update();
 
         return redirect(route('visitas.index'))->with(['success' => 'Relátorio salvo com sucesso!']);
@@ -90,7 +91,7 @@ class RelatorioController extends Controller
         $request->validated();
         $relatorio->setAtributes($request);
         $relatorio->update();
-        
+
         return redirect(route('visitas.index'))->with(['success' => 'Relátorio atualizado com sucesso!']);
     }
 
@@ -105,11 +106,11 @@ class RelatorioController extends Controller
         //
     }
 
-    public function resultado(Request $request, $id) 
+    public function resultado(Request $request, $id)
     {
         $relatorio = Relatorio::find($id);
         $resultado = (boolean)$request->aprovacao;
-    
+
         $msg = "";
         if ($resultado) {
             $relatorio->aprovacao = Relatorio::APROVACAO_ENUM['aprovado'];
