@@ -17,11 +17,13 @@ class CreateVisitasTable extends Migration
             $table->id();
             $table->date('data_marcada');
             $table->date('data_realizada')->nullable();
-            
+
             $table->unsignedBigInteger('requerimento_id')->nullable();
             $table->foreign('requerimento_id')->references('id')->on('requerimentos');
             $table->unsignedBigInteger('denuncia_id')->nullable();
             $table->foreign('denuncia_id')->references('id')->on('denuncias');
+            $table->unsignedBigInteger('analista_id');
+            $table->foreign('analista_id')->references('id')->on('users');
 
             $table->timestamps();
         });

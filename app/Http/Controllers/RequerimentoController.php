@@ -37,7 +37,7 @@ class RequerimentoController extends Controller
         $this->authorize('requerimentoDocumentacao', $requerimento);
         $visitas = $requerimento->visitas;
 
-        return view('visita.visitasRequerimento', compact('visitas'));
+        return view('visita.visitasRequerimento', compact('visitas', 'requerimento'));
     }
 
     /**
@@ -162,8 +162,10 @@ class RequerimentoController extends Controller
 
         $analista = User::find($request->analista);
         $requerimento = Requerimento::find($request->requerimento);
+        if($requerimento->analista_id == null){
+            $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+        }
         $requerimento->analista_id = $analista->id;
-        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->update();
 
         return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
@@ -311,6 +313,7 @@ class RequerimentoController extends Controller
                 $nome = $arquivo->getClientOriginalName();
                 Storage::putFileAs('public/'.$path, $arquivo, $nome);
                 $documento->caminho = $path . $nome;
+                $documento->comentario = null;
                 $documento->status = Checklist::STATUS_ENUM['enviado'];
                 $documento->update();
                 $id++;

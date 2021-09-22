@@ -78,37 +78,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Empresa::class, 'user_id');
     }
 
-    public function represetanteLegal() 
+    public function represetanteLegal()
     {
         return $this->hasOne(RepresetanteLegal::class, 'user_id');
     }
 
-    public function requerimentos() 
+    public function requerimentos()
     {
         return $this->hasMany(Requerimento::class, 'analista_id');
     }
 
-    public function setAtributes($input) 
+    public function setAtributes($input)
     {
         $this->name = $input['name'];
         $this->email = $input['email'];
         $this->password = Hash::make($input['password']);
     }
 
-    public function visitasAnalista()
+    public function visitas()
     {
-        $visitas = collect();
-        $requerimentos = $this->requerimentos;
-        
-        foreach ($requerimentos as $requerimento) {
-            $visitas_requerimento = $requerimento->visitas;
-            if ($visitas_requerimento->count() > 0) {
-                foreach ($visitas_requerimento as $visita) {
-                    $visitas->push($visita);
-                }
-            }
-        }
-        
-        return $visitas;
+        return $this->hasMany(Visita::class, 'analista_id');
     }
 }
