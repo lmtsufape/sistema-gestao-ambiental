@@ -105,6 +105,12 @@ class SetorController extends Controller
     public function destroy($id)
     {
         $setor = Setor::find($id);
+
+        if ($setor->existemEmpresas()) {
+            return redirect()->back()->withErrors(['error' => 'Existem cnaes deste setor que estão ligados a empresas, logo o setor não pode ser deletado.']);
+        }
+
+        $setor->deletarCnaes();
         $setor->delete();
 
         return redirect(route('setores.index'))->with(['success' => 'Setor deletado com sucesso!']);
