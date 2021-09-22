@@ -31,6 +31,15 @@ class RequerimentoController extends Controller
         return view('requerimento.index', compact('requerimentos', 'primeiroRequerimento'));
     }
 
+    public function indexVisitasRequerimento($id)
+    {
+        $requerimento = Requerimento::find($id);
+        $this->authorize('requerimentoDocumentacao', $requerimento);
+        $visitas = $requerimento->visitas;
+
+        return view('visita.visitasRequerimento', compact('visitas'));
+    }
+
     /**
      * Retorna a view dos requerimentos do analista logado.
      *
@@ -167,11 +176,11 @@ class RequerimentoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function storeChecklist(Request $request)
-    { 
+    {
         $validated = $request->validate([
             'licença' => 'required',
-        ]);        
-        
+        ]);
+
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
         }
@@ -239,7 +248,7 @@ class RequerimentoController extends Controller
     {
         $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
         $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
-        
+
         $requerimento->valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
     }
 

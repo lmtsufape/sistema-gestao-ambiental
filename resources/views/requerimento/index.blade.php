@@ -49,6 +49,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Empresa</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Tipo</th>
                                         <th scope="col">Valor</th>
@@ -60,6 +61,7 @@
                                     @foreach ($requerimentos as $i => $requerimento)
                                         <tr>
                                             <th scope="row">{{($i+1)}}</th>
+                                            <td>{{$requerimento->empresa->nome}}</td>
                                             <td>
                                                 @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
                                                     {{__('Requerida')}}
@@ -72,9 +74,9 @@
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
                                                     {{__('Documentos aceitos')}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
-                                                    {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->visita->data_marcada))}}
+                                                    {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                    {{__('Visita feita em')}}{{date('d/m/Y', strtotime($requerimento->visita->data_realizada))}}
+                                                    {{__('Visita feita em')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif
@@ -98,9 +100,20 @@
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                             <td>
                                                 @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
-                                                    Analisar
-                                                </a>
+                                                    <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
+                                                        Analisar
+                                                    </a>
+                                                @endcan
+                                                @can('isSecretario', \App\Models\User::class)
+                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
+                                                        Visitas
+                                                    </a>
+                                                @else
+                                                    @can('isRequerente', \App\Models\User::class)
+                                                        <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
+                                                            Visitas
+                                                        </a>
+                                                    @endcan
                                                 @endcan
                                                 @can('isRequerente', \App\Models\User::class)
                                                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])

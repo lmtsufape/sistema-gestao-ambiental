@@ -68,7 +68,7 @@ class Requerimento extends Model
         return $this->hasOne(BoletoCobranca::class, 'requerimento_id');
     }
 
-    public function tipoString() 
+    public function tipoString()
     {
         switch ($this->tipo) {
             case $this::TIPO_ENUM['primeira_licenca']:
@@ -84,5 +84,10 @@ class Requerimento extends Model
                 return '';
                 break;
         }
+    }
+
+    public function ultimaVisitaMarcada()
+    {
+        return $this->visitas()->latest('data_marcada')->first();
     }
 }

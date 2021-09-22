@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Visitas') }}
+            {{ __('Visitas do requerimento') }}
         </h2>
     </x-slot>
 
@@ -12,18 +12,9 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                @can('isSecretario', \App\Models\User::class)
-                                    <h5 class="card-title">Visitas cadastradas no sistema</h5>
-                                @else
-                                    <h5 class="card-title">Visitas programadas para você</h5>
-                                @endcan
-                                <h6 class="card-subtitle mb-2 text-muted">Visitas</h6>
+                                <h5 class="card-title">Visitas à empresa {{$visitas->first()->requerimento->empresa->nome}} cadastradas no sistema</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Visitas > Requerimento: @if($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
                             </div>
-                            @can('isSecretario', \App\Models\User::class)
-                                <div class="col-md-4" style="text-align: right">
-                                    <a class="btn btn-primary" href="{{route('visitas.create')}}">Criar visita</a>
-                                </div>
-                            @endif
                         </div>
                         <div div class="form-row">
                             @if(session('success'))
@@ -39,12 +30,10 @@
                                     <tr>
                                         <th scope="col">Data marcada</th>
                                         <th scope="col">Data realizada</th>
-                                        <th scope="col">Requerimento</th>
-                                        <th scope="col">Empresa</th>
+                                        <th scope="col">Analista</th>
                                         @can('isSecretario', \App\Models\User::class)
-                                            <th scope="col">Analista</th>
+                                            <th scope="col">Opções</th>
                                         @endcan
-                                        <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,40 +45,27 @@
                                             @else
                                                 <td>{{$visita->data_realizada}}</td>
                                             @endif
-
-                                            @if($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                <td> Primeira licença</td>
-                                            @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                <td>Renovação</td>
-                                            @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                <td>Autorização</td>
-                                            @endif
-                                            <td>{{$visita->requerimento->empresa->nome}}</td>
+                                            <td>{{$visita->requerimento->analista->name}}</td>
                                             @can('isSecretario', \App\Models\User::class)
-                                                <td>{{$visita->requerimento->analista->name}}</td>
-                                            @endcan
-                                            <td>
-                                                @can('isSecretario', \App\Models\User::class)
+                                                <td>
                                                     <div class="btn-group">
                                                         <div class="dropdown">
                                                             <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                @if($visita->relatorio!=null)<a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>@endif
+                                                                @if ($visita->relatorio != null)
+                                                                    <a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>
+                                                                @endif
                                                                 <hr>
                                                                 <a class="dropdown-item">Notificar</a>
                                                                 <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
-
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @else
-                                                    <a class="btn btn-primary">Notificar</a>
-                                                    <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="btn btn-primary">Relatório</a>
-                                                @endcan
-                                            </td>
+                                                </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -100,9 +76,8 @@
         </div>
     </div>
 
-    @can('isSecretario', \App\Models\User::class)
-        @foreach ($visitas as $visita)
-        <!-- Modal deletar visita -->
+    @foreach ($visitas as $visita)
+    <!-- Modal deletar visita -->
         <div class="modal fade" id="modalStaticDeletarVisita_{{$visita->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -126,8 +101,5 @@
                 </div>
             </div>
         </div>
-        @endforeach
-    @else
-
-    @endcan
+    @endforeach
 </x-app-layout>
