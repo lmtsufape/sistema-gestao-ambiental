@@ -104,17 +104,19 @@
                                                         Analisar
                                                     </a>
                                                 @endcan
-                                                @can('isSecretario', \App\Models\User::class)
-                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
-                                                        Visitas
-                                                    </a>
-                                                @else
-                                                    @can('isRequerente', \App\Models\User::class)
+                                                @if($requerimento->visitas->count() > 0)
+                                                    @can('isSecretario', \App\Models\User::class)
                                                         <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
                                                             Visitas
                                                         </a>
+                                                    @else
+                                                        @can('isRequerente', \App\Models\User::class)
+                                                            <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
+                                                                Visitas
+                                                            </a>
+                                                        @endcan
                                                     @endcan
-                                                @endcan
+                                                @endif
                                                 @can('isRequerente', \App\Models\User::class)
                                                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                         @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
