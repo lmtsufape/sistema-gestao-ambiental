@@ -18,6 +18,8 @@ class Visita extends Model
     {
         $this->data_marcada = $input['data_marcada'];
         $this->requerimento_id = $input['requerimento'];
+        $requerimento = Requerimento::find($input['requerimento']);
+        $this->analista_id = $requerimento->analista->id;
     }
 
     public function denuncia()
@@ -38,5 +40,10 @@ class Visita extends Model
     public function relatorio()
     {
         return $this->hasOne(Relatorio::class, 'visita_id');
+    }
+
+    public function analista()
+    {
+        return $this->belongsTo(User::class, 'analista_id');
     }
 }

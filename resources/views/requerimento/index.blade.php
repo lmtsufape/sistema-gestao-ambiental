@@ -76,7 +76,7 @@
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
                                                     {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                    {{__('Visita feita em')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
+                                                    {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                     {{__('Finalizada')}}
                                                 @endif

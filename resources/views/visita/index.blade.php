@@ -66,7 +66,7 @@
                                             @endif
                                             <td>{{$visita->requerimento->empresa->nome}}</td>
                                             @can('isSecretario', \App\Models\User::class)
-                                                <td>{{$visita->requerimento->analista->name}}</td>
+                                                <td>{{$visita->analista->name}}</td>
                                             @endcan
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
