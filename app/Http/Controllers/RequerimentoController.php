@@ -37,7 +37,7 @@ class RequerimentoController extends Controller
         $this->authorize('requerimentoDocumentacao', $requerimento);
         $visitas = $requerimento->visitas;
 
-        return view('visita.visitasRequerimento', compact('visitas'));
+        return view('visita.visitasRequerimento', compact('visitas', 'requerimento'));
     }
 
     /**

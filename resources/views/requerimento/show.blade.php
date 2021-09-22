@@ -167,13 +167,13 @@
                                                                 @break
                                                             @case(\App\Models\Empresa::PORTE_ENUM['medio'])
                                                                 {{__('Médio')}}
-                                                                @break 
+                                                                @break
                                                             @case(\App\Models\Empresa::PORTE_ENUM['grande'])
                                                                 {{__('Grande')}}
                                                                 @break
                                                             @case(\App\Models\Empresa::PORTE_ENUM['especial'])
                                                                 {{__('Especial')}}
-                                                                @break   
+                                                                @break
                                                         @endswitch
                                                     </option>
                                                 </select>
@@ -336,7 +336,7 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
-                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
+                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required>
                                     <option disabled selected value="">-- Selecione o tipo de licença --</option>
                                     <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
                                     <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>

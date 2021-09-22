@@ -20,9 +20,9 @@ class VisitaController extends Controller
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $visitas = Visita::orderBy('data_marcada')->get();
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
-            $visitas = auth()->user()->visitasAnalista();
+            $visitas = auth()->user()->visitas;
         }
-        
+
         return view('visita.index', compact('visitas'));
     }
 
@@ -33,7 +33,7 @@ class VisitaController extends Controller
      */
     public function create()
     {
-        $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
+        $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
         return view('visita.create', compact('requerimentos'));
     }
 
