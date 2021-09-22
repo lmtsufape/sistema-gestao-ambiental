@@ -76,9 +76,7 @@
                                                                 <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                @if ($visita->relatorio != null)
-                                                                    <a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>
-                                                                @endif
+                                                                @if($visita->relatorio!=null)<a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>@endif
                                                                 <hr>
                                                                 <a class="dropdown-item">Notificar</a>
                                                                 <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
