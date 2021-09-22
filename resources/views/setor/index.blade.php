@@ -28,6 +28,15 @@
                                 </div>
                             @endif
                         </div>
+                        <div div class="form-row">
+                            @error('error')
+                                <div class="col-md-12" style="margin-top: 5px;">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p>{{$message}}</p>
+                                    </div>
+                                </div>
+                            @enderror
+                        </div>
                         <table class="table">
                                 <thead>
                                     <tr>
