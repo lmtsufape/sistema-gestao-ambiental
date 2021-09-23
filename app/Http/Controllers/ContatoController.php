@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\ContatoMail;
 use Illuminate\Support\Facades\Mail;
-use App\Models\User;
 
 class ContatoController extends Controller
 {
-    public function contato() {
+    public function contato()
+    {
         return view('contato');
     }
 
-    public function enviar(Request $request) {
-        
-        $validated = $request->validate([
-            'nome_completo' => 'required|string|max:255',
+    public function enviar(Request $request)
+    {
+        $request->validate([
+            'nome_completo' => 'required|string|min:10|max:255',
             'email'         => 'required|email',
             'mensagem'      => 'required|min:25|max:2000',
         ]);

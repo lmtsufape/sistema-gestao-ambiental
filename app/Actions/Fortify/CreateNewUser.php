@@ -8,7 +8,6 @@ use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\Empresa;
 use App\Models\Requerente;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
@@ -26,8 +25,8 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name'                      => ['required', 'string', 'max:255'],
-            'nome_da_empresa'           => ['required', 'string', 'max:255'],
+            'name'                      => ['required', 'string', 'min:10', 'max:255'],
+            'nome_da_empresa'           => ['required', 'string', 'min:10', 'max:255'],
             'email'                     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'                  => $this->passwordRules(),
             'terms'                     => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
@@ -53,8 +52,17 @@ class CreateNewUser implements CreatesNewUsers
             'cidade_da_empresa'         => ['required', 'string', 'max:255'],
             'estado_da_empresa'         => ['required', 'string', 'max:255'],
             'complemento_da_empresa'    => ['nullable', 'string', 'max:255'],
-            'cnaes_id.*'                => ['required'],
-
+            'cnaes_id'                  => ['required', 'array', 'min:1'],
+            'cnaes_id.*'                => ['required', 'integer', 'min:0'],
+        ], [
+            'cpf.cpf'                               => 'O campo CPF não é um CPF válido.',
+            'cnpj.cnpj'                             => 'O campo CNPJ não é um CPF válido.',
+            'celular.celular_com_ddd'               => 'O campo contato não é um contato com DDD válido.',
+            'celular_da_empresa.celular_com_ddd'    => 'O campo contato não é um contato com DDD válido.',
+            'cnaes_id.required'                     => 'Escolha no mínimo um CNAE da lista de CNAES.',
+            'cnaes_id.*.required'                   => 'Escolha no mínimo um CNAE da lista de CNAES.',
+            'cnaes_id.*.integer'                    => 'Informe um CNAE valido.',
+            'cnaes_id.*.min'                        => 'Informe um CNAE valido.'
         ])->validate();
 
         $user = new User();
@@ -92,7 +100,7 @@ class CreateNewUser implements CreatesNewUsers
         $empresa->save();
 
         $cnaes_id = $input['cnaes_id'];
-        foreach($cnaes_id as $cnae_id){
+        foreach ($cnaes_id as $cnae_id) {
             $empresa->cnaes()->attach((Cnae::find($cnae_id)));
         }
         return $user;
