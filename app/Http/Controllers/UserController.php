@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('isSecretario', User::class);
-        $users = User::orderBy('name')->get();
+        $users = User::where('role', '!=', User::ROLE_ENUM['secretario'])->orderBy('name')->get();
         return view('user.index', compact('users'));
     }
 
