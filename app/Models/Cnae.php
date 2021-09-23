@@ -36,4 +36,12 @@ class Cnae extends Model
         $this->nome = $input['nome'];
         $this->codigo = $input['codigo'];
     }
+
+    public function existemEmpresas() 
+    {
+        if ($this->empresas->count() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

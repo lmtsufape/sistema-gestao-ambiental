@@ -117,7 +117,12 @@ class CnaeController extends Controller
     public function destroy($id)
     {
         $cnae = Cnae::find($id);
-        $setor = Setor::find($cnae->setor_id);
+        $setor = $cnae->setor;
+
+        if ($cnae->existemEmpresas()) {
+            return redirect()->back()->withErrors(['error' => 'Existem empresas ligadas a este cnae, logo o cnae não pode ser deletado.']);
+        }
+
         $cnae->delete();
 
         return redirect(route('setores.show', ['setore' => $setor->id]))->with(['success' => 'Cnae deletado com sucesso!']);
