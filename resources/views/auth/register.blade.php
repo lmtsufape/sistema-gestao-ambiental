@@ -399,7 +399,76 @@
             </div>
         </div>
     </div>
+    <div style="display: none;">
+            <!-- Button trigger modal -->
+        <button id="btn-modal-aviso" type="button" class="btn btn-primary" data-toggle="modal" data-target="#aviso-modal-fora">
+            Launch demo modal
+        </button>
 
+        <button id="btn-modal-cep-nao-encontrado" type="button" class="btn btn-primary" data-toggle="modal" data-target="#aviso-modal-cep-nao-encontrado">
+            Launch demo modal
+        </button>
+        <button id="btn-modal-cep-invalido" type="button" class="btn btn-primary" data-toggle="modal" data-target="#aviso-modal-cep-invalido">
+            Launch demo modal
+        </button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="aviso-modal-fora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #4A7836;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    O cadastro não está disponivel para empresas fora do municipio de garanhuns!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal -->
+     <div class="modal fade" id="aviso-modal-cep-nao-encontrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dc3545;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    CEP não encontrado!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="aviso-modal-cep-invalido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dc3545;">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    Formato do CEP inválido!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @component('layouts.footer')@endcomponent
 
     <script>
@@ -521,13 +590,13 @@
                 document.getElementById('rua').value=(conteudo.logradouro);
                 document.getElementById('bairro').value=(conteudo.bairro);
                 if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    alert('O cadastro não está disponivel para empresas fora do municipio de garanhuns!');
+                    exibirModal();
                 }
             } //end if.
             else {
                 //CEP não Encontrado.
                 limpa_formulário_cep();
-                alert("CEP não encontrado.");
+                exibirModalCep();
             }
         }
 
@@ -538,13 +607,13 @@
                 document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
                 document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
                 if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    alert('O cadastro não está disponivel para empresas fora do municipio de garanhuns!');
+                    exibirModal();
                 }
             } //end if.
             else {
                 //CEP não Encontrado.
                 limpa_formulário_cep_empresa();
-                alert("CEP não encontrado.");
+                exibirModalCep();
             }
         }
 
@@ -570,7 +639,7 @@
                 else {
                     //cep é inválido.
                     limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
+                    exibirModalCepInvalido();;
                 }
             } //end if.
             else {
@@ -601,13 +670,25 @@
                 else {
                     //cep é inválido.
                     limpa_formulário_cep_empresa();
-                    alert("Formato de CEP inválido.");
+                    exibirModalCepInvalido();
                 }
             } //end if.
             else {
                 //cep sem valor, limpa formulário.
                 limpa_formulário_cep_empresa();
             }
+        }
+
+        function exibirModal() {
+            $('#btn-modal-aviso').click();
+        }
+
+        function exibirModalCep() {
+            $('#btn-modal-cep-nao-encontrado').click();
+        }
+
+        function exibirModalCepInvalido() {
+            $('#btn-modal-cep-invalido').click();
         }
     </script>
 </x-guest-layout>
