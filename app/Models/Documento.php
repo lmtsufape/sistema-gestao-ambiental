@@ -19,4 +19,11 @@ class Documento extends Model
     {
         return $this->belongsToMany(Requerimento::class, 'checklists', 'documento_id', 'requerimento_id')->withPivot('caminho', 'comentario', 'status');
     } 
+
+    public function existemRequerimentos() {
+        if ($this->requerimentos->count() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

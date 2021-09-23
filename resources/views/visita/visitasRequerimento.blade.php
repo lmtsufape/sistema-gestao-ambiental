@@ -12,8 +12,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Visitas à empresa {{$visitas->first()->requerimento->empresa->nome}} cadastradas no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Visitas > Requerimento: @if($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($visitas->first()->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
+                                <h5 class="card-title">Visitas à empresa {{$requerimento->empresa->nome}} cadastradas no sistema</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Visitas > Requerimento: @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
                             </div>
                         </div>
                         <div div class="form-row">

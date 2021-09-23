@@ -31,6 +31,24 @@ nav img {
     box-shadow: 0 0 0 0.2rem #203318;
 }
 
+.btn-color-dafault.disabled, .btn-color-dafault:disabled {
+    color: #fff;
+    background-color: #4a7836d8;
+    border-color: #4a7836d8;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: #4A7836;
+    border-color:#4A7836;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem #4a7836a2;
+}
+
 /* NAV BAR */
 
 .bg-light {

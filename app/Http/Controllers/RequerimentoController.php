@@ -37,7 +37,7 @@ class RequerimentoController extends Controller
         $this->authorize('requerimentoDocumentacao', $requerimento);
         $visitas = $requerimento->visitas;
 
-        return view('visita.visitasRequerimento', compact('visitas'));
+        return view('visita.visitasRequerimento', compact('visitas', 'requerimento'));
     }
 
     /**
@@ -162,8 +162,10 @@ class RequerimentoController extends Controller
 
         $analista = User::find($request->analista);
         $requerimento = Requerimento::find($request->requerimento);
+        if($requerimento->analista_id == null){
+            $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+        }
         $requerimento->analista_id = $analista->id;
-        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->update();
 
         return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
@@ -213,13 +215,13 @@ class RequerimentoController extends Controller
         }
 
         $requerimento = Requerimento::find($request->requerimento);
-        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-        $requerimento->update();
 
         // Documentos desmarcados
         foreach ($requerimento->documentos as $documento) {
             if (!in_array($documento->id, $request->documentos)) {
                 $requerimento->documentos()->detach($documento->id);
+
+                $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
             }
         }
 
@@ -230,8 +232,12 @@ class RequerimentoController extends Controller
                 $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
                 $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
                 $documento->update();
+
+                $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
             }
         }
+
+        $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
     }
@@ -307,6 +313,7 @@ class RequerimentoController extends Controller
                 $nome = $arquivo->getClientOriginalName();
                 Storage::putFileAs('public/'.$path, $arquivo, $nome);
                 $documento->caminho = $path . $nome;
+                $documento->comentario = null;
                 $documento->status = Checklist::STATUS_ENUM['enviado'];
                 $documento->update();
                 $id++;
