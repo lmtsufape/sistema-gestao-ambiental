@@ -10,6 +10,10 @@ use App\Models\Documento;
 use App\Models\ValorRequerimento;
 use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\DocumentosNotification;
+use App\Notifications\DocumentosEnviadosNotification;
+use App\Notifications\DocumentosAnalisadosNotification;
 
 class RequerimentoController extends Controller
 {
@@ -199,6 +203,8 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
         $requerimento->update();
 
+        Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
+
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
@@ -321,6 +327,9 @@ class RequerimentoController extends Controller
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
+
+        Notification::send($requerimento->analista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
+
         return redirect(route('requerimentos.index'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }
 
@@ -356,8 +365,10 @@ class RequerimentoController extends Controller
         }
         if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento recusado'));
         }else{
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento aceitos'));
         }
         $requerimento->update();
         return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);

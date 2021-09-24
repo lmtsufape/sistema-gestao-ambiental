@@ -535,6 +535,7 @@
 
         $(document).ready(function($) {
             $('#cpf').mask('000.000.000-00');
+            $('#rg').mask('00000000');
             $('#cnpj').mask('00.000.000/0000-00');
             var SPMaskBehavior = function(val) {
                     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
