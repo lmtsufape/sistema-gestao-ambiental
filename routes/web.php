@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\VisitaController;

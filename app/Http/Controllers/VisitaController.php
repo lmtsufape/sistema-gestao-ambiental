@@ -45,7 +45,7 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
         ]);
@@ -55,7 +55,6 @@ class VisitaController extends Controller
         $visita->save();
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita programada com sucesso!']);
-
     }
 
     /**
@@ -94,12 +93,12 @@ class VisitaController extends Controller
     {
         $visita = Visita::find($id);
 
-        $validator = $request->validate([
+        $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
         ]);
 
-        if($visita->requerimento_id != $request->requerimento){
+        if ($visita->requerimento_id != $request->requerimento) {
             $visita->requerimento->update(['status' => Requerimento::STATUS_ENUM['documentos_aceitos']]);
         }
         $visita->setAtributesRequerimento($request);

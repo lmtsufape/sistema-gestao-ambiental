@@ -12,18 +12,18 @@
                             @endphp
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
-
                                 <div class="form-row">
-                                    <div class="col-md-12 form-group">
+                                    <div class="col-md-6 form-group">
                                         <h4>Informações do requerente</h4>
+                                    </div>
+                                     <div class="col-md-6 form-group" style="padding-top: 5px; text-align: end">
+                                        <h6><span style="color: red; font-weight: bold;">*</span> Campos obrigatórios</h6>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    
                                     <div class="col-md-6 form-group">
-                                        <label for="name">{{ __('Name') }}</label>
+                                        <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name">
-
                                         @error('name')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -31,9 +31,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="email">{{ __('Email') }}</label>
+                                        <label for="email">{{ __('Email') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="email">
-
                                         @error('email')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -43,9 +42,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="password">{{ __('Password') }}</label>
+                                        <label for="password">{{ __('Password') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autofocus autocomplete="new-password">
-
                                         @error('password')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -53,15 +51,14 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                                        <label for="password_confirmation">{{ __('Confirm Password') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cpf">{{ __('CPF') }}</label>
+                                        <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="cpf" class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{old('cpf')}}" required autofocus autocomplete="cpf" data-mask="000.000.000-00">
-
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -69,9 +66,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="celular">{{ __('Contato') }}</label>
+                                        <label for="celular">{{ __('Contato') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" required autocomplete="celular">
-
                                         @error('celular')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -81,9 +77,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rg">{{ __('RG') }}</label>
+                                        <label for="rg">{{ __('RG') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{old('rg')}}" required autofocus autocomplete="rg">
-
                                         @error('rg')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -91,9 +86,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}</label>
+                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{old('orgão_emissor')}}" required autocomplete="orgão_emissor">
-
                                         @error('orgão_emissor')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -103,9 +97,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}</label>
+                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
-
                                         @error('cep')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -113,9 +106,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}</label>
+                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" required autofocus autocomplete="bairro">
-
                                         @error('bairro')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -125,9 +117,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}</label>
+                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" required autocomplete="rua">
-
                                         @error('rua')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -135,9 +126,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}</label>
+                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="numero" class="form-control  @error('número') is-invalid @enderror" type="text" name="número" value="{{old('número')}}" required autocomplete="número">
-
                                         @error('número')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -150,7 +140,6 @@
                                         <label for="cidade">{{ __('Cidade') }}</label>
                                         <input type="hidden" name="cidade" value="Garanhuns">
                                         <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade">
-
                                         @error('cidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -175,7 +164,6 @@
                                     <div class="col-md-12 form-group">
                                         <label for="complemento">{{ __('Complemento') }}</label>
                                         <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5">{{old('complemento')}}</textarea>
-
                                         @error('complemento')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -191,9 +179,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="nome_empresa">{{ __('Name') }}</label>
+                                        <label for="nome_empresa">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="nome_empresa" class="form-control apenas_letras @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa')}}" required autofocus autocomplete="nome_empresa">
-
                                         @error('nome_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -201,9 +188,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="cnpj">{{ __('CNPJ') }}</label>
+                                        <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{old('cnpj')}}" required autocomplete="cnpj">
-
                                         @error('cnpj')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -213,9 +199,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="celular_da_empresa">{{ __('Contato') }}</label>
+                                        <label for="celular_da_empresa">{{ __('Contato') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{old('celular_da_empresa')}}" required autocomplete="celular">
-
                                         @error('celular_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -223,7 +208,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="porte">{{ __('Porte') }}</label>
+                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                             <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
                                             <option @if(old('porte') == 1) selected @endif value="1">Micro</option>
@@ -232,7 +217,6 @@
                                             <option @if(old('porte') == 4) selected @endif value="4">Grande</option>
                                             <option @if(old('porte') == 5) selected @endif value="5">Especial</option>
                                         </select>
-
                                         @error('porte')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -242,9 +226,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep_da_empresa">{{ __('CEP') }}</label>
+                                        <label for="cep_da_empresa">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="cep_da_empresa" class="form-control cep @error('cep_da_empresa') is-invalid @enderror" type="text" name="cep_da_empresa" value="{{old('cep_da_empresa')}}" required autofocus autocomplete="cep_da_empresa" onblur="pesquisacepEmpresa(this.value);">
-
                                         @error('cep_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -252,9 +235,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro_da_empresa">{{ __('Bairro') }}</label>
+                                        <label for="bairro_da_empresa">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="bairro_da_empresa" class="form-control @error('bairro_da_empresa') is-invalid @enderror" type="text" name="bairro_da_empresa" value="{{old('bairro_da_empresa')}}" required autofocus autocomplete="bairro_da_empresa">
-
                                         @error('bairro_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -264,9 +246,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua_da_empresa">{{ __('Rua') }}</label>
+                                        <label for="rua_da_empresa">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="rua_da_empresa" class="form-control @error('rua_da_empresa') is-invalid @enderror" type="text" name="rua_da_empresa" value="{{old('rua_da_empresa')}}" required autocomplete="rua_da_empresa">
-
                                         @error('rua_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -274,9 +255,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero_da_empresa">{{ __('Número') }}</label>
+                                        <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                         <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{old('número_da_empresa')}}" required autocomplete="número_da_empresa">
-
                                         @error('número_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -289,7 +269,6 @@
                                         <label for="cidade_da_empresa">{{ __('Cidade') }}</label>
                                         <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
                                         <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
-
                                         @error('cidade_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -303,7 +282,6 @@
                                             <option value=""  hidden>-- Selecione o UF --</option>
                                             <option selected value="PE">Pernambuco</option>
                                         </select>
-
                                         @error('estado_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -315,7 +293,6 @@
                                     <div class="col-md-12 form-group">
                                         <label for="complemento_da_empresa">{{ __('Complemento') }}</label>
                                         <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5">{{old('complemento_da_empresa')}}</textarea>
-
                                         @error('complemento_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -327,15 +304,25 @@
                                     <div class="form-group col-md-6">
                                         <div class="form-row">
                                             <div class="form-group col-md-12" >
-                                                <label for="setor">{{ __('Setor') }}</label>
-                                                <select required class="form-control @error('setor') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                                <label for="setor">{{ __('Setor') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                                <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror 
+                                                        @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                                     <option value="">-- Selecionar o Setor --</option>
                                                     @foreach ($setores as $setor)
                                                         <option value={{$setor->id}}>{{$setor->nome}}</option>
                                                     @endforeach
                                                 </select>
-
                                                 @error('setor')
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @error('cnaes_id')
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @error('cnaes_id.*')
                                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
@@ -343,17 +330,12 @@
                                             </div>
                                             <div class="btn-group col-md-12">
                                                 <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
-                                                <div class="col-md-12 input-group input-group-sm mb-2">
-                                                    {{-- <input type="text" class="form-control" placeholder="Nome ou código do CNAE"> --}}
-                                                </div>
-
+                                                <div class="col-md-12 input-group input-group-sm mb-2"></div>
                                             </div>
                                             <div class="form-row col-md-12">
                                                 <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
                                                     <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                        <tbody id="dentroTabelaCnaes">
-
-                                                        </tbody>
+                                                        <tbody id="dentroTabelaCnaes"></tbody>
                                                     </table>
                                                 </div>
                                             </div>
@@ -361,9 +343,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                        <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes">
-
-                                        </div>
+                                        <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes"></div>
                                     </div>
                                 </div>
                                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
@@ -489,13 +469,11 @@
                         $('#tabelaCnaes tbody').append(html);
                     }
                 },*/
-
                 complete: function(data) {
                     if(data.responseJSON.success){
                         for(var i = 0; i < data.responseJSON.cnaes.length; i++){
                             var naLista = document.getElementById('listaCnaes');
                             var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                            <input hidden name="cnaes_id[]" value="`+data.responseJSON.cnaes[i].id+`">
                                             <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
                                             <div style="width:140px; height:25px; text-align:right;">
                                                 <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
@@ -514,9 +492,15 @@
 
         window.add_Lista = function($setor, $id) {
             var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var naTabela = document.getElementById('dentroTabelaCnaes');
-            var divBtn = elemento.children[2].children[0].children[0];
+            var cnae_id = document.createElement('input');
+            cnae_id.setAttribute('type', 'hidden');
+            cnae_id.setAttribute('name', 'cnaes_id[]');
+            cnae_id.setAttribute('value', $id );
+            elemento.appendChild(cnae_id);
             
+            var naTabela = document.getElementById('dentroTabelaCnaes');
+            var divBtn = elemento.children[1].children[0].children[0];
+        
             if(elemento.parentElement == naTabela){
                 $('#listaCnaes').append(elemento);
                 divBtn.style.backgroundColor = "#dc3545";
@@ -546,9 +530,7 @@
                 tempIdCard.style.display = "none";
                 document.getElementById("cardSelecionado"+valor).style.display = "block";
                 this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-
             }
-
         }
 
         $(document).ready(function($) {
