@@ -33,6 +33,24 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'name' => 'Protocolista',
+            'email' => 'protocolista@protocolista.com',
+            'role' => User::ROLE_ENUM['analista'],
+            'password' => Hash::make('12345678'),
+            'email_verified_at' => now(),
+        ]);
+
+        DB::table('tipo_analista_user')->insert([
+            'user_id' => 2,
+            'tipo_analista_id' => 2,
+        ]);
+
+        DB::table('tipo_analista_user')->insert([
+            'user_id' => 3,
+            'tipo_analista_id' => 1,
+        ]);
+
+        DB::table('users')->insert([
             'name' => 'Empresario',
             'email' => 'empresa@empresa.com',
             'role' => User::ROLE_ENUM['requerente'],
