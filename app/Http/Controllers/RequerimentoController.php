@@ -81,6 +81,8 @@ class RequerimentoController extends Controller
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
+        dd($requerimentos);
+
         $requerimento = new Requerimento;
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['requerida'];
@@ -271,6 +273,7 @@ class RequerimentoController extends Controller
      */
     private function primeiroRequerimento()
     {
+       
         if (auth()->user()->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = Requerimento::where('empresa_id', auth()->user()->empresa->id)->get();
             if ($requerimentos->count() > 0) {

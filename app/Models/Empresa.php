@@ -19,7 +19,8 @@ class Empresa extends Model
 
     public $fillable = [
         'nome',
-        'cnpj',
+        'cpf_cnpj',
+        'eh_cnpj',
         'porte',
     ];
 
@@ -66,7 +67,8 @@ class Empresa extends Model
     public function setAtributes($input)
     {
         $this->nome = $input['nome_da_empresa'];
-        $this->cnpj = $input['cnpj'];
+        $this->cpf_cnpj = $input['cnpj'] != null ? $input['cnpj'] : $input['cpf'];
+        $this->eh_cnpj = $input['cnpj'] != null;
         $this->porte = array_key_exists('porte', $input) ? $input['porte'] : null;
     }
 }

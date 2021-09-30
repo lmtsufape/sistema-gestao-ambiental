@@ -137,6 +137,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'cpf' => [
+            'cpf' => 'O campo CPF não é um CPF válido.',
+        ],
+        'cnpj' => [
+            'cnpj' => 'O campo CNPJ não é um CPF válido.',
+        ],
     ],
 
     /*

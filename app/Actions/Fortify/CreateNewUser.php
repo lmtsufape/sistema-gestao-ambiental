@@ -47,42 +47,22 @@ class CreateNewUser implements CreatesNewUsers
 
         $user = new User();
         $endereco = new Endereco();
-        // $enderecoEmpresa = new Endereco();
         $telefone = new Telefone();
-        // $telefoneEmpresa = new Telefone();
-        // $empresa = new Empresa();
         $requerente = new Requerente();
 
         $user->setAtributes($input);
         $user->role = User::ROLE_ENUM['requerente'];
         $user->save();
-
         $endereco->setAtributes($input);
         $endereco->save();
-        // $enderecoEmpresa->setAtributesEmpresa($input);
-        // $enderecoEmpresa->save();
-
         $telefone->setNumero($input['celular']);
         $telefone->save();
-        // $telefoneEmpresa->setNumero($input['celular_da_empresa']);
-        // $telefoneEmpresa->save();
-
         $requerente->setAtributes($input);
         $requerente->user_id = $user->id;
         $requerente->endereco_id = $endereco->id;
         $requerente->telefone_id = $telefone->id;
         $requerente->save();
 
-        // $empresa->setAtributes($input);
-        // $empresa->user_id = $user->id;
-        // $empresa->endereco_id = $enderecoEmpresa->id;
-        // $empresa->telefone_id = $telefoneEmpresa->id;
-        // $empresa->save();
-
-        // $cnaes_id = $input['cnaes_id'];
-        // foreach ($cnaes_id as $cnae_id) {
-        //     $empresa->cnaes()->attach((Cnae::find($cnae_id)));
-        // }
         return $user;
     }
 }

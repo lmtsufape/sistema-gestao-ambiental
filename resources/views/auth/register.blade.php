@@ -242,25 +242,6 @@
             Launch demo modal
         </button>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="aviso-modal-fora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4A7836;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    O cadastro não está disponivel para empresas fora do municipio de garanhuns!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
      <!-- Modal -->
      <div class="modal fade" id="aviso-modal-cep-nao-encontrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -302,87 +283,6 @@
     @component('layouts.footer')@endcomponent
 
     <script>
-        window.selecionarSetor = function(){
-            //setor
-            var historySelectList = $('select#idSelecionarSetor');
-            var $setor_id = $('option:selected', historySelectList).val();
-
-            $.ajax({
-                url:'setor/ajax-listar-cnaes',
-                type:"get",
-                data: {"setor_id": $setor_id},
-                dataType:'json',
-                /*success: function(response){
-                    console.log(response.responseJSON);
-                    for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                        var html = data.responseJSON.cnaes[i];
-                        $('#tabelaCnaes tbody').append(html);
-                    }
-                },*/
-                complete: function(data) {
-                    if(data.responseJSON.success){
-                        for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                            var naLista = document.getElementById('listaCnaes');
-                            var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                            <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
-                                            <div style="width:140px; height:25px; text-align:right;">
-                                                <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
-                                                    <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
-                                                </div>
-                                            </div>
-                                        </div>`;
-                            if(document.getElementById('cnaeCard_'+$setor_id+'_'+data.responseJSON.cnaes[i].id) == null){
-                                $('#tabelaCnaes tbody').append(html);
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        window.add_Lista = function($setor, $id) {
-            var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var cnae_id = document.createElement('input');
-            cnae_id.setAttribute('type', 'hidden');
-            cnae_id.setAttribute('name', 'cnaes_id[]');
-            cnae_id.setAttribute('value', $id );
-            elemento.appendChild(cnae_id);
-            
-            var naTabela = document.getElementById('dentroTabelaCnaes');
-            var divBtn = elemento.children[1].children[0].children[0];
-        
-            if(elemento.parentElement == naTabela){
-                $('#listaCnaes').append(elemento);
-                divBtn.style.backgroundColor = "#dc3545";
-                divBtn.style.borderColor = "#dc3545";
-                divBtn.textContent = "Remover";
-            }else{
-                var historySelectList = $('select#idSelecionarSetor');
-                var $setor_id = $('option:selected', historySelectList).val();
-                if($setor == $setor_id){
-                    $('#dentroTabelaCnaes').append(elemento);
-                    divBtn.style.backgroundColor = "#28a745";
-                    divBtn.style.borderColor = "#28a745";
-                    divBtn.textContent = "Adicionar";
-                }else{
-                    document.getElementById('listaCnaes').removeChild(elemento);
-                }
-            }
-
-        }
-
-        var tempIdCard = -1;
-        window.mostrarBotaoAdicionar = function(valor){
-            if(tempIdCard == -1){
-                document.getElementById("cardSelecionado"+valor).style.display = "block";
-                this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-            }else if(tempIdCard != -1){
-                tempIdCard.style.display = "none";
-                document.getElementById("cardSelecionado"+valor).style.display = "block";
-                this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-            }
-        }
-
         $(document).ready(function($) {
             $('#cpf').mask('000.000.000-00');
             $('#rg').mask('00000000');
