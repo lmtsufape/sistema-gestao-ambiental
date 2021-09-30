@@ -27,9 +27,9 @@ class EmpresaRequest extends FormRequest
         $this->validarDocumentos();
         return [
             'nome_da_empresa'           => ['required', 'string', 'min:5', 'max:255'],
+            'tipo_de_pessoa'            => ['nullable'],
             'cpf'                       => ['required_if:tipo_de_pessoa,física'],
             'cnpj'                      => ['required_if:tipo_de_pessoa,jurídica'],
-            'tipo_de_pessoa'            => ['required'],
             'setor'                     => ['required', 'string'],
             'celular_da_empresa'        => ['required', 'string', 'celular_com_ddd', 'max:255'],
             'porte'                     => ['required'],

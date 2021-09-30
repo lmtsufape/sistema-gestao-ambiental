@@ -87,19 +87,50 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $this->authorize('update', $empresa);
+        $setores = Setor::orderBy('nome')->get();
+        
+        return view('empresa.edit', compact('setores', 'empresa'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EmpresaRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmpresaRequest $request, $id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $endereco = $empresa->endereco;
+        $telefone = $empresa->telefone;
+
+        //Adicionando
+        foreach ($request->cnaes_id as $cnae_id) {
+            
+            if ($empresa->cnaes()->where('cnae_id', $cnae_id)->first() == null) {
+                $empresa->cnaes()->attach((Cnae::find($cnae_id)));
+            }
+        }
+
+        //Excluindo
+        foreach ($empresa->cnaes as $cnae) {
+            if (!(in_array($cnae->id, $request->cnaes_id))) {
+                $empresa->cnaes()->detach($cnae->id);
+            }
+        }
+
+        $endereco->setAtributesEmpresa($request->all());
+        $endereco->update();
+        $telefone->setNumero($request->celular_da_empresa);
+        $telefone->update();
+
+        $empresa->setAtributes($request->all());
+        $empresa->update();
+
+        return redirect(route('empresas.index'))->with(['success' => 'Empresa editada com sucesso!']);
     }
 
     /**

@@ -46,6 +46,9 @@
                                             <td>{{$empresa->cpf_cnpj}}</td>
                                             <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
                                             <td>
+                                                <a href="{{route('empresas.edit', ['empresa' => $empresa])}}" class="btn btn-info">
+                                                    Editar
+                                                </a>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarUser_{{$empresa->id}}">
                                                     Deletar
                                                 </button>
