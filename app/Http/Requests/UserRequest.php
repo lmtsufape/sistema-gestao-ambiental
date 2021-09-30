@@ -30,6 +30,15 @@ class UserRequest extends FormRequest
             'email'     => 'required|string|email|max:255|unique:users',
             'password'  => 'required|string|min:8|confirmed',
             'terms'     => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            'tipos_analista' => 'required',
+            'tipos_analista.*' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'tipos_analista.required'     => "Selecione ao menos um cargo para o analista",
         ];
     }
 }

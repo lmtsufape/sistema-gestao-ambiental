@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CnaeSeeder::class,
             EnderecoSeeder::class,
             TelefoneSeeder::class,
+            TipoAnalistaSeeder::class,
             UserSeeder::class,
             RequerenteSeeder::class,
             EmpresaSeeder::class,

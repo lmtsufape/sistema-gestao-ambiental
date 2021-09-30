@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Models\TipoAnalista;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +31,8 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('isSecretario', User::class);
-        return view('user.create');
+        $tipos = TipoAnalista::all();
+        return view('user.create', compact('tipos'));
     }
 
     /**
@@ -48,7 +50,9 @@ class UserController extends Controller
         $user->role = User::ROLE_ENUM['analista'];
         $user->email_verified_at = now();
         $user->save();
-        
+        foreach($request->tipos_analista as $tipo_id){
+            $user->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+        }
         return redirect(route('usuarios.index'))->with(['success' => 'Analista cadastrado com sucesso!']);
     }
 
@@ -136,6 +140,9 @@ class UserController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $user = User::find($id);
+        foreach($user->tipo_analista()->get() as $tipo){
+            $tipo->pivot->delete();
+        }
         $user->delete();
 
         return redirect(route('usuarios.index'))->with(['success' => 'Analista deletado com sucesso!']);
@@ -146,7 +153,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function perfil() 
+    public function perfil()
     {
         return view('user.perfil');
     }
