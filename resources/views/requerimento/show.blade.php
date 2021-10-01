@@ -137,8 +137,13 @@
                                                 <input id="nome_empresa" class="form-control apenas_letras @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{$requerimento->empresa->nome}}" disabled autofocus autocomplete="nome_empresa">
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label for="cnpj">{{ __('CNPJ') }}</label>
-                                                <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{$requerimento->empresa->cnpj}}" disabled autocomplete="cnpj">
+                                                @if ($requerimento->empresa->eh_cnpj)
+                                                    <label for="cnpj">{{ __('CNPJ') }}</label>
+                                                    <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cnpj">
+                                                @else 
+                                                    <label for="cpf">{{ __('CPF') }}</label>
+                                                    <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cpf">
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-row">

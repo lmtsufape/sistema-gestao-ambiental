@@ -111,7 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $requerimentos = collect();
 
         foreach ($empresas as $empresa) {
-            $requerimentos = $requerimentos->concat($empresa->requerimentos);
+            $requerimentos = $requerimentos->concat($empresa->requerimentos()->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->get());
         }
         
         return $requerimentos;

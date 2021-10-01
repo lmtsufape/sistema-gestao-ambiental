@@ -25,7 +25,7 @@
                             </div>
                             @can('isRequerente', \App\Models\User::class)
                                 <div class="col-md-4" style="text-align: right">
-                                    <a class="btn btn-primary" data-toggle="modal" data-target="#novo_requerimento">Novo requerimento</a>
+                                    <button id="btn-novo-requerimento" class="btn btn-primary" data-toggle="modal" data-target="#novo_requerimento">Novo requerimento</button>
                                 </div>
                             @endcan
                         </div>
@@ -162,14 +162,14 @@
                 <form id="novo-requerimento-form" method="POST" action="{{route('requerimentos.store')}}">
                     <div class="col-md-12 form-group">
                         <label for="empresa">{{ __('Empresa') }}</label>
-                        <select name="empresa" id="empresa" class="form-control @error('tipo') is-invalid @enderror" required onchange="tiposPossiveis(this)">
+                        <select name="empresa" id="empresa" class="form-control @error('empresa') is-invalid @enderror" required onchange="tiposPossiveis(this)">
                             <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
                             @foreach (auth()->user()->empresas as $empresa)
                                 <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
                             @endforeach
                         </select>
 
-                        @error('tipo')
+                        @error('empresa')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -239,9 +239,9 @@
             </div>
         </div>
     @endforeach
-    @error('error_modal')
+    @error('tipo')
     <script>
-        $('#novo_requerimento').modal('show');
+        $('#btn-novo-requerimento').click();
     </script>
     @enderror
     <script>

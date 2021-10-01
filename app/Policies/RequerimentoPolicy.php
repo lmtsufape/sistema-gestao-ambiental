@@ -67,7 +67,8 @@ class RequerimentoPolicy
     public function delete(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
-        return $requerimento->empresa->id == $user->empresa->id || $userPolicy->isSecretario($user);
+        
+        return $user->empresas->contains('id', $requerimento->empresa->id) || $userPolicy->isSecretario($user);
     }
 
     /**

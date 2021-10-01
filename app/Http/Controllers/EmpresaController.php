@@ -170,7 +170,7 @@ class EmpresaController extends Controller
     {
         $empresa = Empresa::find($request->empresa_id);
 
-        if ($empresa->requerimentos->count() == 0) {
+        if ($empresa->requerimentos()->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->get()->count() == 0) {
             return response()->json([
                 [
                     'tipo' => 'Primeira licença',

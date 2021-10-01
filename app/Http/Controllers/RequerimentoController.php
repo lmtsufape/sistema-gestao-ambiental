@@ -15,6 +15,7 @@ use App\Notifications\DocumentosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosAnalisadosNotification;
 use App\Models\Empresa;
+use App\Models\TipoAnalista;
 
 class RequerimentoController extends Controller
 {
@@ -77,15 +78,18 @@ class RequerimentoController extends Controller
     {
         $request->validated();
         $empresa = Empresa::find($request->empresa);
-        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        
+        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+
         if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
         $requerimento = new Requerimento;
         $requerimento->tipo = $request->tipo;
-        $requerimento->status = Requerimento::STATUS_ENUM['requerida'];
+        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
+        $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
         $requerimento->save();
 
         return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento realizado com sucesso.']);
@@ -377,4 +381,43 @@ class RequerimentoController extends Controller
 
     }
 
+    /**
+     * Retorna o protocolista com menos requerimentos.
+     *
+     * @return App\Models\User $protocolistaComMenosRequerimentos
+     */
+    private function protocolistaComMenosRequerimentos()
+    {
+        $protocolistas = $this->protocolistas();
+        $protocolistaComMenosRequerimentos = null;
+        $min = 30000;
+        foreach ($protocolistas as $protocolista) {
+            $quantRequerimentos = $protocolista->requerimentos()->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos'])->get()->count();
+            if ($quantRequerimentos < $min) {
+                $min = $quantRequerimentos;
+                $protocolistaComMenosRequerimentos = $protocolista;
+            }
+        }
+
+        return $protocolistaComMenosRequerimentos;
+    }
+
+    /**
+     * Retorna os protocolistas cadastrados.
+     *
+     * @return App\Models\User $protocolistas
+     */
+    private function protocolistas() 
+    {
+        $protocolistas = collect();
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+        
+        foreach ($analistas as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
+                $protocolistas->push($analista);
+            }
+        }
+
+        return $protocolistas;
+    }
 }

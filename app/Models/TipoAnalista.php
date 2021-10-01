@@ -18,4 +18,16 @@ class TipoAnalista extends Model
     {
         return $this->belongsToMany(User::class, 'tipo_analista_user', 'tipo_analista_id', 'user_id');
     }
+
+    public function getTipo() 
+    {
+        switch ($this->tipo) {
+            case $this::TIPO_ENUM['protocolista']:
+                return "Protocolista";
+                break;
+            case $this::TIPO_ENUM['processo']:
+                return "Analista de processos";
+                break;
+        }
+    }
 }
