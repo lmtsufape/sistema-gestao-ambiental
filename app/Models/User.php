@@ -104,4 +104,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(TipoAnalista::class, 'tipo_analista_user', 'user_id', 'tipo_analista_id');
     }
+
+    public function requerimentosRequerente()
+    {
+        $empresas = $this->empresas;
+        $requerimentos = collect();
+
+        foreach ($empresas as $empresa) {
+            $requerimentos = $requerimentos->concat($empresa->requerimentos);
+        }
+        
+        return $requerimentos;
+    }
 }

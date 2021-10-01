@@ -73,3 +73,4 @@ Route::get('/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('enviar.mensagem');
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
+Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');

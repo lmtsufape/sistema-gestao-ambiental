@@ -161,15 +161,39 @@
             <div class="modal-body">
                 <form id="novo-requerimento-form" method="POST" action="{{route('requerimentos.store')}}">
                     <div class="col-md-12 form-group">
+                        <label for="empresa">{{ __('Empresa') }}</label>
+                        <select name="empresa" id="empresa" class="form-control @error('tipo') is-invalid @enderror" required onchange="tiposPossiveis(this)">
+                            <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
+                            @foreach (auth()->user()->empresas as $empresa)
+                                <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                            @endforeach
+                        </select>
+
+                        @error('tipo')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-md-12 form-group">
                         @csrf
                         <label for="name">{{ __('Tipo de requerimento') }}</label>
-                        <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" required>
+                        <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" required >
                             <option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>
-                            @if (isset($primeiroRequerimento) && $primeiroRequerimento)
-                                <option value="1">{{__('Primeira licença')}}</option>
-                            @else
-                                <option value="2">{{__('Renovação')}}</option>
-                                <option value="3">{{__('Autorização')}}</option>
+                            @if (old('tipo') != null)
+                                @foreach ($tipos as $tipo)
+                                    @switch($tipo)
+                                        @case(\App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                            <option @if(old('tipo') == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) selected @endif value="{{\App\Models\Requerimento::TIPO_ENUM['primeira_licenca']}}">{{__('Primeira licença')}}</option>
+                                            @break
+                                        @case(\App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                            <option @if(old('tipo') == \App\Models\Requerimento::TIPO_ENUM['renovacao']) selected @endif value="{{\App\Models\Requerimento::TIPO_ENUM['renovacao']}}">{{__('Renovação')}}</option>
+                                            @break
+                                        @case(\App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                            <option @if(old('tipo') == \App\Models\Requerimento::TIPO_ENUM['autorizacao']) selected @endif value="{{\App\Models\Requerimento::TIPO_ENUM['autorizacao']}}">{{__('Autorização')}}</option>
+                                            @break
+                                    @endswitch
+                                @endforeach
                             @endif
                         </select>
 
@@ -220,4 +244,25 @@
         $('#novo_requerimento').modal('show');
     </script>
     @enderror
+    <script>
+        function tiposPossiveis(select) {
+            $.ajax({
+                url:"{{route('status.requerimento')}}",
+                type:"get",
+                data: {"empresa_id": select.value},
+                dataType:'json',
+                success: function(data) {
+                    $("#tipo").html("");
+                    opt = `<option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>`;
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            opt += `<option value="${data[i].enum_tipo}">${data[i].tipo}</option>`;
+                        }
+                    } 
+
+                    $("#tipo").append(opt);
+                }
+            });
+        }
+    </script>
 </x-app-layout>

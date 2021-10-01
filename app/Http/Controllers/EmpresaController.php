@@ -165,4 +165,28 @@ class EmpresaController extends Controller
 
         return redirect(route('empresas.index'))->with(['success' => 'Empresa deletada com sucesso!']);
     }
+
+    public function statusRequerimento(Request $request) 
+    {
+        $empresa = Empresa::find($request->empresa_id);
+
+        if ($empresa->requerimentos->count() == 0) {
+            return response()->json([
+                [
+                    'tipo' => 'Primeira licença',
+                    'enum_tipo' => Requerimento::TIPO_ENUM['primeira_licenca'],
+                ],
+            ]);
+        } 
+        return response()->json([
+            [
+                'tipo' => 'Renovação',
+                'enum_tipo' => Requerimento::TIPO_ENUM['renovacao'],
+            ],
+            [
+                'tipo' => 'Autorização',
+                'enum_tipo' => Requerimento::TIPO_ENUM['autorizacao'],
+            ],
+        ]);
+    }
 }

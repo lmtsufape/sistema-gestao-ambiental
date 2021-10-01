@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\DocumentosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosAnalisadosNotification;
+use App\Models\Empresa;
 
 class RequerimentoController extends Controller
 {
@@ -26,13 +27,12 @@ class RequerimentoController extends Controller
     {
         $user = auth()->user();
         $requerimentos = null;
-        $primeiroRequerimento = $this->primeiroRequerimento();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where([['empresa_id', $user->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+            $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             $requerimentos = Requerimento::all();
         }
-        return view('requerimento.index', compact('requerimentos', 'primeiroRequerimento'));
+        return view('requerimento.index')->with(['requerimentos' => $requerimentos, 'tipos' => Requerimento::TIPO_ENUM]);
     }
 
     public function indexVisitasRequerimento($id)
@@ -76,17 +76,16 @@ class RequerimentoController extends Controller
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
-        $requerimentos = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        $empresa = Empresa::find($request->empresa);
+        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
         if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
-        dd($requerimentos);
-
         $requerimento = new Requerimento;
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['requerida'];
-        $requerimento->empresa_id = auth()->user()->empresa->id;
+        $requerimento->empresa_id = $empresa->id;
         $requerimento->save();
 
         return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento realizado com sucesso.']);
