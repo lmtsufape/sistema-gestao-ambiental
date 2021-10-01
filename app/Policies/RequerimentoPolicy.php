@@ -31,7 +31,7 @@ class RequerimentoPolicy
     public function view(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
-        return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user);
+        return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
     }
 
     /**

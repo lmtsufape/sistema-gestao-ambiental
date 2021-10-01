@@ -49,7 +49,7 @@
                                                 <a href="{{route('empresas.edit', ['empresa' => $empresa])}}" class="btn btn-info">
                                                     Editar
                                                 </a>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarUser_{{$empresa->id}}">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}">
                                                     Deletar
                                                 </button>
                                             </td>
@@ -62,4 +62,30 @@
             </div>
         </div>
     </div>
+    @foreach ($empresas as $empresa)
+    <!-- Modal deletar user -->
+    <div class="modal fade" id="modalStaticDeletarEmpresa_{{$empresa->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dc3545;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="deletar-empresa-form-{{$empresa->id}}" method="POST" action="{{route('empresas.destroy', ['empresa' => $empresa])}}">
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        Tem certeza que deseja deletar a empresa {{$empresa->nome}}?
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger" form="deletar-empresa-form-{{$empresa->id}}">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
 </x-app-layout>

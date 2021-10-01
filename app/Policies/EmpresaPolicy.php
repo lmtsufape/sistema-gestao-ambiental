@@ -53,7 +53,7 @@ class EmpresaPolicy
      */
     public function update(User $user, Empresa $empresa)
     {
-        return $empresa->user_id == $user->id;
+        return $this->ehDono($user, $empresa);
     }
 
     /**
@@ -65,7 +65,7 @@ class EmpresaPolicy
      */
     public function delete(User $user, Empresa $empresa)
     {
-        //
+        return $this->ehDono($user, $empresa);
     }
 
     /**
@@ -90,5 +90,9 @@ class EmpresaPolicy
     public function forceDelete(User $user, Empresa $empresa)
     {
         //
+    }
+
+    private function ehDono(User $user, Empresa $empresa) {
+        return $empresa->user_id == $user->id;
     }
 }

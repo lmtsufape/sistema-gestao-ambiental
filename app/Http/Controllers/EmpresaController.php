@@ -10,6 +10,7 @@ use App\Models\Empresa;
 use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\Cnae;
+use App\Models\Requerimento;
 
 class EmpresaController extends Controller
 {
@@ -104,6 +105,8 @@ class EmpresaController extends Controller
     public function update(EmpresaRequest $request, $id)
     {
         $empresa = Empresa::find($id);
+        $this->authorize('update', $empresa);
+
         $endereco = $empresa->endereco;
         $telefone = $empresa->telefone;
 
@@ -141,6 +144,25 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $this->authorize('delete', $empresa);
+
+        $requerimentosPendentes = $empresa->requerimentos()->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        if ($requerimentosPendentes->count() > 0) {
+            return redirect()->back()->with(['error' => 'Essa empresa tem requerimentos pendentes e não pode ser deletada.']);
+        }
+
+        $endereco = $empresa->endereco;
+        $telefone = $empresa->telefone;
+
+        foreach ($empresa->cnaes as $cnae) {
+            $empresa->cnaes()->detach($cnae->id);
+        }
+
+        $empresa->delete();
+        $endereco->delete();
+        $telefone->delete();        
+
+        return redirect(route('empresas.index'))->with(['success' => 'Empresa deletada com sucesso!']);
     }
 }
