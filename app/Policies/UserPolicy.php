@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\TipoAnalista;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -24,7 +25,7 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isSecretario(User $user) 
+    public function isSecretario(User $user)
     {
         return $user->role == User::ROLE_ENUM['secretario'];
     }
@@ -34,9 +35,21 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isAnalista(User $user) 
+    public function isAnalista(User $user)
     {
         return $user->role == User::ROLE_ENUM['analista'];
+    }
+
+    public function isProtocolista(User $user)
+    {
+        if($this->isAnalista($user)){
+            $protocolista = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->first();
+            if($user->tipo_analista()->where('tipo_analista_id', $protocolista->id)->first() != null){
+                return True;
+            }else{
+                return False;
+            }
+        }
     }
 
     /**
@@ -44,7 +57,7 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isRequerente(User $user) 
+    public function isRequerente(User $user)
     {
         return $user->role == User::ROLE_ENUM['requerente'];
     }
@@ -64,7 +77,7 @@ class UserPolicy
      *
      * @return boolean
      */
-    public function isSecretarioOrAnalista(User $user) 
+    public function isSecretarioOrAnalista(User $user)
     {
         return $this->isSecretario($user) || $this->isAnalista($user);
     }

@@ -10,6 +10,7 @@ use App\Models\Documento;
 use App\Models\ValorRequerimento;
 use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
+use App\Models\Setor;
 
 class RequerimentoController extends Controller
 {
@@ -364,4 +365,26 @@ class RequerimentoController extends Controller
 
     }
 
+    public function editEmpresa($id)
+    {
+        $requerimento = Requerimento::find($id);
+        $this->authorize('view', $requerimento);
+        $setores = Setor::all();
+
+        $setoresSelecionados = collect();
+        foreach($requerimento->empresa->cnaes as $cnae){
+            if(!$setoresSelecionados->contains($cnae->setor)){
+                $setoresSelecionados->push($cnae->setor);
+            }
+        }
+
+        return view('empresa.edit', compact('requerimento', 'setores', 'setoresSelecionados'));
+    }
+
+    public function updateEmpresa(Request $request, $id)
+    {
+        $requerimento = Requerimento::find($id);
+        dd($requerimento);
+
+    }
 }

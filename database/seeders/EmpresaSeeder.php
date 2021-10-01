@@ -18,7 +18,7 @@ class EmpresaSeeder extends Seeder
             'nome' => 'Info mundo tecnologia',
             'cnpj' => '32.970.478/0001-30',
             'porte' => 1,
-            'user_id' => 3,
+            'user_id' => 4,
             'telefone_id' => 2,
             'endereco_id' => 2,
         ]);

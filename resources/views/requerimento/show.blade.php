@@ -284,9 +284,12 @@
                                 <div class="col-md-6">
                                     <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
                                 </div>
-                                <div class="col-md-6">
-                                </div>
                             @endif
+                            @can('isProtocolista', \App\Models\User::class)
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da empresa</a>
+                                </div>
+                            @endcan
 
                         </div>
                         @endcan
