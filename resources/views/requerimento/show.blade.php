@@ -344,10 +344,12 @@
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                 <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required>
                                     <option disabled selected value="">-- Selecione o tipo de licença --</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')
@@ -396,10 +398,12 @@
                             <div class="col-md-12">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                 <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')

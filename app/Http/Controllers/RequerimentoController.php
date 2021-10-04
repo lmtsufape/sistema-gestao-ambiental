@@ -215,6 +215,7 @@ class RequerimentoController extends Controller
             $documento->update();
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
 
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
@@ -230,12 +231,17 @@ class RequerimentoController extends Controller
      */
     public function updateChecklist(Request $request)
     {
+        $validated = $request->validate([
+            'licença' => 'required',
+        ]);
+
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
         }
 
         $requerimento = Requerimento::find($request->requerimento);
-
+        $this->atribuirValor($request, $requerimento);
+        
         // Documentos desmarcados
         foreach ($requerimento->documentos as $documento) {
             if (!in_array($documento->id, $request->documentos)) {
@@ -257,6 +263,7 @@ class RequerimentoController extends Controller
             }
         }
 
+        $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
