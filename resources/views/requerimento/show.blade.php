@@ -277,47 +277,48 @@
                         </div>
                         <br>
                         @can('isAnalista', \App\Models\User::class)
-                        <div class="form-row">
-                            @if ($requerimento->documentos->count() > 0)
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
-                                </div>
-                            @else
-                                <div class="col-md-6">
-                                    <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
-                                </div>
-                                <div class="col-md-6">
-                                </div>
-                            @endif
-
-                        </div>
+                            <div class="form-row">
+                                @if ($requerimento->documentos->count() > 0)
+                                    <div class="col-md-6">
+                                        <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
+                                    </div>
+                                @else
+                                    <div class="col-md-6">
+                                        <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                @endif
+                            </div>
                         @endcan
                         @can('isSecretario', \App\Models\User::class)
-                            <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
-                                @csrf
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                        <label for="analista">{{__('Selecione um analista')}}</label>
-                                        <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                            <option value="">-- {{__('Selecione um analista')}} --</option>
-                                            @foreach ($analistas as $analista)
-                                                <option value="{{$analista->id}}">{{$analista->name}}</option>
-                                            @endforeach
-                                        </select>
+                            @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                            <label for="analista">{{__('Selecione um analista')}}</label>
+                                            <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                                <option value="">-- {{__('Selecione um analista')}} --</option>
+                                                @foreach ($protocolistas as $protocolista)
+                                                    <option value="{{$protocolista->id}}">{{$protocolista->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            @endif
                         @endcan
                     </div>
                 </div>

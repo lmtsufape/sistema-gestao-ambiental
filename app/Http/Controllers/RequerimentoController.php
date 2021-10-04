@@ -27,13 +27,20 @@ class RequerimentoController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $requerimentos = null;
+        $requerimentos = collect();
+        $requerimentosCancelados = collect();
+        $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
-            $requerimentos = Requerimento::all();
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->get();
+            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->get();
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->get();
         }
-        return view('requerimento.index')->with(['requerimentos' => $requerimentos, 'tipos' => Requerimento::TIPO_ENUM]);
+        return view('requerimento.index')->with(['requerimentos' => $requerimentos,
+                                                 'requerimentosFinalizados' => $requerimentosFinalizados,
+                                                 'requerimentosCancelados' => $requerimentosCancelados, 
+                                                 'tipos' => Requerimento::TIPO_ENUM]);
     }
 
     public function indexVisitasRequerimento($id)
@@ -105,10 +112,10 @@ class RequerimentoController extends Controller
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('view', $requerimento);
-        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+        $protocolistas = $this->protocolistas();
         $documentos = Documento::orderBy('nome')->get();
 
-        return view('requerimento.show', compact('requerimento', 'analistas', 'documentos'));
+        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos'));
     }
 
     /**
@@ -145,8 +152,10 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
 
-        if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
-            return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
+        if (auth()->user()->role != User::ROLE_ENUM['secretario']) {
+            if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
+                return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
+            }
         }
 
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
