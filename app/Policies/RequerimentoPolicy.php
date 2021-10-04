@@ -131,7 +131,7 @@ class RequerimentoPolicy
         }elseif($userPolicy->isSecretario($user)){
             return true;
         }else{
-            return $this->analises($user, $requerimento);
+            return $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
         }
     }
 }

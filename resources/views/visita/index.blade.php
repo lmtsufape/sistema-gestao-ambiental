@@ -86,8 +86,17 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <a class="btn btn-primary">Notificar</a>
-                                                    <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="btn btn-primary">Relatório</a>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-ligth dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <img src="{{asset('img/icon_acoes.svg')}}" alt="ações" style="margin-right: 10px;">
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item">Notificar</a>
+                                                            <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
+                                                        </div>
+                                                    </div>
                                                 @endcan
                                             </td>
                                         </tr>
