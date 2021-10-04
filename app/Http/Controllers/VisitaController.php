@@ -85,7 +85,9 @@ class VisitaController extends Controller
         $visita = Visita::find($id);
         $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
         $requerimentos->push($visita->requerimento);
-        return view('visita.edit', compact('visita', 'requerimentos'));
+        $analistas = $this->analistas();
+
+        return view('visita.edit', compact('visita', 'requerimentos', 'analistas'));
     }
 
     /**
@@ -102,12 +104,14 @@ class VisitaController extends Controller
         $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
+            'analista'     => 'required',
         ]);
 
         if ($visita->requerimento_id != $request->requerimento) {
             $visita->requerimento->update(['status' => Requerimento::STATUS_ENUM['documentos_aceitos']]);
         }
         $visita->setAtributesRequerimento($request);
+        $visita->analista_id = $request->analista;
         $visita->update();
 
         $requerimento = Requerimento::find($visita->requerimento_id);
