@@ -18,7 +18,7 @@ class RequerenteSeeder extends Seeder
             'cpf' => '872.117.185-87',
             'rg' => '38.291.584-7',
             'orgao_emissor' => 'SDS-PE',
-            'user_id' => 3,
+            'user_id' => 4,
             'telefone_id' => 1,
             'endereco_id' => 1,
         ]);

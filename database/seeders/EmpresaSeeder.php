@@ -16,9 +16,10 @@ class EmpresaSeeder extends Seeder
     {
         DB::table('empresas')->insert([
             'nome' => 'Info mundo tecnologia',
-            'cnpj' => '32.970.478/0001-30',
+            'cpf_cnpj' => '32.970.478/0001-30',
+            'eh_cnpj' => true,
             'porte' => 1,
-            'user_id' => 3,
+            'user_id' => 4,
             'telefone_id' => 2,
             'endereco_id' => 2,
         ]);

@@ -138,8 +138,7 @@
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="cidade">{{ __('Cidade') }}</label>
-                                        <input type="hidden" name="cidade" value="Garanhuns">
-                                        <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade">
+                                        <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" name="cidade" value="Garanhuns" required autofocus autocomplete="cidade">
                                         @error('cidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -147,13 +146,38 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="estado">{{ __('Estado') }}</label>
-                                        <input type="hidden" name="estado" value="PE">
-                                        <select id="estado" class="form-control @error('estado') is-invalid @enderror" type="text" required autocomplete="estado" disabled>
-                                            <option value=""  hidden>-- Selecione o UF --</option>
-                                            <option selected value="PE">Pernambuco</option>
+                                        <label for="uf">{{ __('Estado') }}</label>
+                                        <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" required autocomplete="estado" name="uf">
+                                            <option value="" selected disabled >-- Selecione o UF --</option>
+                                            <option @if(old('uf') == 'AC') selected @endif value="AC">Acre</option>
+                                            <option @if(old('uf') == 'AL') selected @endif value="AL">Alagoas</option>
+                                            <option @if(old('uf') == 'AP') selected @endif value="AP">Amapá</option>
+                                            <option @if(old('uf') == 'AM') selected @endif value="AM">Amazonas</option>
+                                            <option @if(old('uf') == 'BA') selected @endif value="BA">Bahia</option>
+                                            <option @if(old('uf') == 'CE') selected @endif value="CE">Ceará</option>
+                                            <option @if(old('uf') == 'DF') selected @endif value="DF">Distrito Federal</option>
+                                            <option @if(old('uf') == 'ES') selected @endif value="ES">Espírito Santo</option>
+                                            <option @if(old('uf') == 'GO') selected @endif value="GO">Goiás</option>
+                                            <option @if(old('uf') == 'MA') selected @endif value="MA">Maranhão</option>
+                                            <option @if(old('uf') == 'MT') selected @endif value="MT">Mato Grosso</option>
+                                            <option @if(old('uf') == 'MS') selected @endif value="MS">Mato Grosso do Sul</option>
+                                            <option @if(old('uf') == 'MG') selected @endif value="MG">Minas Gerais</option>
+                                            <option @if(old('uf') == 'PA') selected @endif value="PA">Pará</option>
+                                            <option @if(old('uf') == 'PB') selected @endif value="PB">Paraíba</option>
+                                            <option @if(old('uf') == 'PR') selected @endif value="PR">Paraná</option>
+                                            <option @if(old('uf') == 'PE') selected @endif value="PE">Pernambuco</option>
+                                            <option @if(old('uf') == 'PI') selected @endif value="PI">Piauí</option>
+                                            <option @if(old('uf') == 'RJ') selected @endif value="RJ">Rio de Janeiro</option>
+                                            <option @if(old('uf') == 'RN') selected @endif value="RN">Rio Grande do Norte</option>
+                                            <option @if(old('uf') == 'RS') selected @endif value="RS">Rio Grande do Sul</option>
+                                            <option @if(old('uf') == 'RO') selected @endif value="RO">Rondônia</option>
+                                            <option @if(old('uf') == 'RR') selected @endif value="RR">Roraima</option>
+                                            <option @if(old('uf') == 'SC') selected @endif value="SC">Santa Catarina</option>
+                                            <option @if(old('uf') == 'SP') selected @endif value="SP">São Paulo</option>
+                                            <option @if(old('uf') == 'SE') selected @endif value="SE">Sergipe</option>
+                                            <option @if(old('uf') == 'TO') selected @endif value="TO">Tocantins</option>
                                         </select>
-                                        @error('estado')
+                                        @error('uf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -172,180 +196,6 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <h4>Informações da empresa</h4>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="nome_empresa">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="nome_empresa" class="form-control apenas_letras @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa')}}" required autofocus autocomplete="nome_empresa">
-                                        @error('nome_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{old('cnpj')}}" required autocomplete="cnpj">
-                                        @error('cnpj')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="celular_da_empresa">{{ __('Contato') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{old('celular_da_empresa')}}" required autocomplete="celular">
-                                        @error('celular_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
-                                            <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
-                                            <option @if(old('porte') == 1) selected @endif value="1">Micro</option>
-                                            <option @if(old('porte') == 2) selected @endif value="2">Pequeno</option>
-                                            <option @if(old('porte') == 3) selected @endif value="3">Médio</option>
-                                            <option @if(old('porte') == 4) selected @endif value="4">Grande</option>
-                                            <option @if(old('porte') == 5) selected @endif value="5">Especial</option>
-                                        </select>
-                                        @error('porte')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="cep_da_empresa">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="cep_da_empresa" class="form-control cep @error('cep_da_empresa') is-invalid @enderror" type="text" name="cep_da_empresa" value="{{old('cep_da_empresa')}}" required autofocus autocomplete="cep_da_empresa" onblur="pesquisacepEmpresa(this.value);">
-                                        @error('cep_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="bairro_da_empresa">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="bairro_da_empresa" class="form-control @error('bairro_da_empresa') is-invalid @enderror" type="text" name="bairro_da_empresa" value="{{old('bairro_da_empresa')}}" required autofocus autocomplete="bairro_da_empresa">
-                                        @error('bairro_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="rua_da_empresa">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="rua_da_empresa" class="form-control @error('rua_da_empresa') is-invalid @enderror" type="text" name="rua_da_empresa" value="{{old('rua_da_empresa')}}" required autocomplete="rua_da_empresa">
-                                        @error('rua_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                        <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{old('número_da_empresa')}}" required autocomplete="número_da_empresa">
-                                        @error('número_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="cidade_da_empresa">{{ __('Cidade') }}</label>
-                                        <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
-                                        <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
-                                        @error('cidade_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="estado_da_empresa">{{ __('Estado') }}</label>
-                                        <input type="hidden" name="estado_da_empresa" value="PE">
-                                        <select id="estado_da_empresa" class="form-control @error('estado_da_empresa') is-invalid @enderror" type="text" required autocomplete="estado_da_empresa" disabled>
-                                            <option value=""  hidden>-- Selecione o UF --</option>
-                                            <option selected value="PE">Pernambuco</option>
-                                        </select>
-                                        @error('estado_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="complemento_da_empresa">{{ __('Complemento') }}</label>
-                                        <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5">{{old('complemento_da_empresa')}}</textarea>
-                                        @error('complemento_da_empresa')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12" >
-                                                <label for="setor">{{ __('Setor') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                                <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror 
-                                                        @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                    <option value="">-- Selecionar o Setor --</option>
-                                                    @foreach ($setores as $setor)
-                                                        <option value={{$setor->id}}>{{$setor->nome}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('setor')
-                                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                                @error('cnaes_id')
-                                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                                @error('cnaes_id.*')
-                                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            <div class="btn-group col-md-12">
-                                                <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
-                                                <div class="col-md-12 input-group input-group-sm mb-2"></div>
-                                            </div>
-                                            <div class="form-row col-md-12">
-                                                <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
-                                                    <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                        <tbody id="dentroTabelaCnaes"></tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                        <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes"></div>
-                                    </div>
-                                </div>
                                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                                     <div class="mt-4">
                                         <x-jet-label for="terms">
@@ -392,25 +242,6 @@
             Launch demo modal
         </button>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="aviso-modal-fora" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4A7836;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    O cadastro não está disponivel para empresas fora do municipio de garanhuns!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
      <!-- Modal -->
      <div class="modal fade" id="aviso-modal-cep-nao-encontrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -452,87 +283,6 @@
     @component('layouts.footer')@endcomponent
 
     <script>
-        window.selecionarSetor = function(){
-            //setor
-            var historySelectList = $('select#idSelecionarSetor');
-            var $setor_id = $('option:selected', historySelectList).val();
-
-            $.ajax({
-                url:'setor/ajax-listar-cnaes',
-                type:"get",
-                data: {"setor_id": $setor_id},
-                dataType:'json',
-                /*success: function(response){
-                    console.log(response.responseJSON);
-                    for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                        var html = data.responseJSON.cnaes[i];
-                        $('#tabelaCnaes tbody').append(html);
-                    }
-                },*/
-                complete: function(data) {
-                    if(data.responseJSON.success){
-                        for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                            var naLista = document.getElementById('listaCnaes');
-                            var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                            <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
-                                            <div style="width:140px; height:25px; text-align:right;">
-                                                <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
-                                                    <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
-                                                </div>
-                                            </div>
-                                        </div>`;
-                            if(document.getElementById('cnaeCard_'+$setor_id+'_'+data.responseJSON.cnaes[i].id) == null){
-                                $('#tabelaCnaes tbody').append(html);
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        window.add_Lista = function($setor, $id) {
-            var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var cnae_id = document.createElement('input');
-            cnae_id.setAttribute('type', 'hidden');
-            cnae_id.setAttribute('name', 'cnaes_id[]');
-            cnae_id.setAttribute('value', $id );
-            elemento.appendChild(cnae_id);
-            
-            var naTabela = document.getElementById('dentroTabelaCnaes');
-            var divBtn = elemento.children[1].children[0].children[0];
-        
-            if(elemento.parentElement == naTabela){
-                $('#listaCnaes').append(elemento);
-                divBtn.style.backgroundColor = "#dc3545";
-                divBtn.style.borderColor = "#dc3545";
-                divBtn.textContent = "Remover";
-            }else{
-                var historySelectList = $('select#idSelecionarSetor');
-                var $setor_id = $('option:selected', historySelectList).val();
-                if($setor == $setor_id){
-                    $('#dentroTabelaCnaes').append(elemento);
-                    divBtn.style.backgroundColor = "#28a745";
-                    divBtn.style.borderColor = "#28a745";
-                    divBtn.textContent = "Adicionar";
-                }else{
-                    document.getElementById('listaCnaes').removeChild(elemento);
-                }
-            }
-
-        }
-
-        var tempIdCard = -1;
-        window.mostrarBotaoAdicionar = function(valor){
-            if(tempIdCard == -1){
-                document.getElementById("cardSelecionado"+valor).style.display = "block";
-                this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-            }else if(tempIdCard != -1){
-                tempIdCard.style.display = "none";
-                document.getElementById("cardSelecionado"+valor).style.display = "block";
-                this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-            }
-        }
-
         $(document).ready(function($) {
             $('#cpf').mask('000.000.000-00');
             $('#rg').mask('00000000');
@@ -559,6 +309,8 @@
             //Limpa valores do formulário de cep.
             document.getElementById('rua').value=("");
             document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
         }
 
         function limpa_formulário_cep_empresa() {
@@ -572,14 +324,13 @@
                 //Atualiza os campos com os valores.
                 document.getElementById('rua').value=(conteudo.logradouro);
                 document.getElementById('bairro').value=(conteudo.bairro);
-                if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    exibirModal();
-                }
+                document.getElementById('cidade').value=(conteudo.localidade);
+                document.getElementById('uf').value=(conteudo.uf);
             } //end if.
             else {
                 //CEP não Encontrado.
                 limpa_formulário_cep();
-                exibirModalCep();
+                // exibirModalCep();
             }
         }
 
