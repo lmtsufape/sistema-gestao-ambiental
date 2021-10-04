@@ -65,6 +65,9 @@ nav img {
 .navbar .nav-item:hover {
     transition: 0.5s;
     background-color: #4A7836;
+}
+
+.navbar .nav-item:hover > .nav-link {
     color: white;
 }
 
@@ -82,6 +85,18 @@ nav img {
 .navbar .navbar-light .navbar-nav .nav-item .nav-link {
     font-size: 16px;
     color: black;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: #4A7836;
+}
+
+.navbar-light .navbar-nav .active:hover>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color:white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color:white;
 }
 
 .navbar .navbar-light .navbar-nav .nav-item .login {
