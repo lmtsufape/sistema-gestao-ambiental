@@ -10,6 +10,8 @@ use App\Models\Documento;
 use App\Models\ValorRequerimento;
 use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
+use App\Models\Cnae;
+use App\Models\Empresa;
 use App\Models\Setor;
 
 class RequerimentoController extends Controller
@@ -384,7 +386,23 @@ class RequerimentoController extends Controller
     public function updateEmpresa(Request $request, $id)
     {
         $requerimento = Requerimento::find($id);
-        dd($requerimento);
+        if($request->cnaes_id == null){
+            return redirect()->back()->with(['error' => 'Selecione ao menos um cnae.']);
+        }
+        foreach($request->cnaes_id as $cnae_id){
+            $cnae = Cnae::find($cnae_id);
+            if(!$requerimento->empresa->cnaes->contains($cnae)){
+                $requerimento->empresa->cnaes()->attach($cnae);
+            }
+        }
+        foreach($requerimento->empresa->cnaes as $cnae){
+            if(!in_array($cnae->id, $request->cnaes_id)){
+                $requerimento->empresa->cnaes()->detach($cnae);
+            }
+        }
+        $requerimento->empresa->porte = Empresa::PORTE_ENUM[$request->porte];
+        $requerimento->empresa->update();
 
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Informações atualizadas com sucesso.']);
     }
 }

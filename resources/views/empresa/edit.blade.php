@@ -15,15 +15,17 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Requerimentos > analisar requerimento > editar empresa</h6>
                             </div>
                         </div>
-                        @error('error')
-                            <div class="alert alert-danger" role="alert">
-                                {{$message}}
-                            </div>
-                        @enderror
                         @if(session('success'))
                             <div class="col-md-12" style="margin-top: 5px;">
                                 <div class="alert alert-success" role="alert">
                                     <p>{{session('success')}}</p>
+                                </div>
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-danger" role="alert">
+                                    <p>{{session('error')}}</p>
                                 </div>
                             </div>
                         @endif
@@ -36,17 +38,17 @@
                                         <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                             @if(old('porte') != null)
                                                 <option value="">-- Selecionar o porte da empresa --</option>
-                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['micro']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['micro']}}">Micro</option>
-                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['pequeno']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['pequeno']}}">Pequeno</option>
-                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['medio']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['medio']}}">Médio</option>
-                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['grande']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['grande']}}">Grande</option>
-                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['especial']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['especial']}}">Especial</option>
+                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['micro']) selected @endif value="micro">Micro</option>
+                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['pequeno']) selected @endif value="pequeno">Pequeno</option>
+                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['medio']) selected @endif value="medio">Médio</option>
+                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['grande']) selected @endif value="grande">Grande</option>
+                                                <option @if(old('porte') == \App\Models\Empresa::PORTE_ENUM['especial']) selected @endif value="especial">Especial</option>
                                             @else
-                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['micro']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['micro']}}">Micro</option>
-                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['pequeno']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['pequeno']}}">Pequeno</option>
-                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['medio']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['medio']}}">Médio</option>
-                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['grande']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['grande']}}">Grande</option>
-                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['especial']) selected @endif value="{{\App\Models\Empresa::PORTE_ENUM['especial']}}">Especial</option>
+                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['micro']) selected @endif value="micro">Micro</option>
+                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['pequeno']) selected @endif value="pequeno">Pequeno</option>
+                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['medio']) selected @endif value="medio">Médio</option>
+                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['grande']) selected @endif value="grande">Grande</option>
+                                                <option @if($requerimento->empresa->porte == \App\Models\Empresa::PORTE_ENUM['especial']) selected @endif value="especial">Especial</option>
                                             @endif
                                         </select>
                                     </div>
@@ -107,13 +109,13 @@
                                         <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes">
                                             @foreach ($requerimento->empresa->cnaes as $cnae)
                                                 <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar({{$cnae->id}})">
-                                                    <input hidden name="cnaes_id[]" value="{{$cnae->id}}">
                                                     <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
                                                     <div style="width:140px; height:25px; text-align:right;">
                                                         <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
                                                             <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-danger btn-sm"  onclick="add_Lista({{$cnae->setor->id}}, {{$cnae->id}})" >Remover</div>
                                                         </div>
                                                     </div>
+                                                    <input id ="inputCnae_{{$cnae->id}}" hidden name="cnaes_id[]" value="{{$cnae->id}}">
                                                 </div>
                                             @endforeach
                                         </div>
@@ -160,7 +162,6 @@
                     for(var i = 0; i < data.responseJSON.cnaes.length; i++){
                         var naLista = document.getElementById('listaCnaes');
                         var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                        <input hidden name="cnaes_id[]" value="`+data.responseJSON.cnaes[i].id+`">
                                         <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
                                         <div style="width:140px; height:25px; text-align:right;">
                                             <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
@@ -180,13 +181,15 @@
     window.add_Lista = function($setor, $id) {
         var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
         var naTabela = document.getElementById('dentroTabelaCnaes');
-        var divBtn = elemento.children[2].children[0].children[0];
+        var divBtn = elemento.children[1].children[0].children[0];
 
         if(elemento.parentElement == naTabela){
             $('#listaCnaes').append(elemento);
             divBtn.style.backgroundColor = "#dc3545";
             divBtn.style.borderColor = "#dc3545";
             divBtn.textContent = "Remover";
+            var html = `<input id ="inputCnae_`+$id+`" hidden name="cnaes_id[]" value="`+$id+`">`;
+            $('#cnaeCard_'+$setor+'_'+$id).append(html);
         }else{
             var historySelectList = $('select#idSelecionarSetor');
             var $setor_id = $('option:selected', historySelectList).val();
@@ -195,6 +198,7 @@
                 divBtn.style.backgroundColor = "#28a745";
                 divBtn.style.borderColor = "#28a745";
                 divBtn.textContent = "Adicionar";
+                $('#inputCnae_'+$id).remove();
             }else{
                 document.getElementById('listaCnaes').removeChild(elemento);
             }
