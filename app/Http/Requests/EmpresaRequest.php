@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
+use App\Rules\CEPGaranhuns;
 
 class EmpresaRequest extends FormRequest
 {
@@ -33,7 +34,7 @@ class EmpresaRequest extends FormRequest
             'setor'                     => ['required', 'string'],
             'celular_da_empresa'        => ['required', 'string', 'celular_com_ddd', 'max:255'],
             'porte'                     => ['required'],
-            'cep_da_empresa'            => ['required', 'string', 'max:255'],
+            'cep_da_empresa'            => ['required', 'string', 'max:255', new CEPGaranhuns],
             'bairro_da_empresa'         => ['required', 'string', 'max:255'],
             'rua_da_empresa'            => ['required', 'string', 'max:255'],
             'número_da_empresa'         => ['required', 'string', 'max:255'],
@@ -60,7 +61,7 @@ class EmpresaRequest extends FormRequest
 
     public function validarDocumentos() {
         switch ($this->tipo_de_pessoa) {
-            case "física": 
+            case "física":
                 $this->validate([
                     'cpf' => 'cpf',
                 ]);
