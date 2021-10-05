@@ -113,7 +113,7 @@
                     <div class="card-footer">
                         <div class="form-row">
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Reprovado' : 'Reprovar' }}</button>
+                                <button class="btn btn-warning" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Revisar' : 'Revisar' }}</button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <button class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
@@ -155,8 +155,8 @@
     <div class="modal fade" id="staticBackdrop-reprovar-relatorio" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #dc3545;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Reprovar relátorio</h5>
+                <div class="modal-header" style="background-color: #e0a800;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Revisar relátorio</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -165,12 +165,29 @@
                     <form id="form-relatorio-reprovar" method="POST" action="{{route('relatorios.resultado', ['relatorio' => $relatorio->id])}}">
                         @csrf
                         <input type="hidden" name="aprovacao" value="0">
-                        Tem certeza que deseja reprovar esse relátorio?
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                Tem certeza que deseja mandar esse relátorio para revisão?
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="motivo">Motivo da revisão</label>
+                                <textarea class="form-control" name="motivo" id="motivo" cols="30" rows="5" placeholder="Digite aqui..."></textarea>
+                            
+                                @error('motivo')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" form="form-relatorio-reprovar">Reprovar</button>
+                    <button type="submit" class="btn btn-warning" form="form-relatorio-reprovar">Revisar</button>
                 </div>
             </div>
         </div>
