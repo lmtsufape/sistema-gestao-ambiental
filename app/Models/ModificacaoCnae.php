@@ -17,4 +17,9 @@ class ModificacaoCnae extends Model
     {
         return $this->belongsTo(Historico::class, 'historico_id');
     }
+
+    public function cnae()
+    {
+        return $this->belongsTo(Cnae::class, 'cnae_id');
+    }
 }

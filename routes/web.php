@@ -13,6 +13,8 @@ use App\Http\Controllers\ValorController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\HistoricoController;
+use App\Models\Historico;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'editEmpresa'])->name('requerimentos.editar.empresa');
     Route::post('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'updateEmpresa'])->name('requerimentos.update.empresa');
     Route::get('requerimentos/{id}/setor/ajax-listar-cnaes', [SetorController::class, 'ajaxCnaes'])->name("ajax.listar.cnaes.editar");
+    Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');

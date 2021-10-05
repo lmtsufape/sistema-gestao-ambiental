@@ -61,7 +61,15 @@
                                     @foreach ($requerimentos as $i => $requerimento)
                                         <tr>
                                             <th scope="row">{{($i+1)}}</th>
-                                            <td>{{$requerimento->empresa->nome}}</td>
+                                            <td>
+                                                @can('isSecretario', \App\Models\User::class)
+                                                    <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                        {{$requerimento->empresa->nome}}
+                                                    </a>
+                                                @else
+                                                    {{$requerimento->empresa->nome}}
+                                                @endcan
+                                            </td>
                                             <td>
                                                 @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
                                                     {{__('Requerida')}}
