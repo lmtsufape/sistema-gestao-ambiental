@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DocumentoRequest;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Models\Licenca;
 
 class DocumentoController extends Controller
 {
     public function index()
     {
-        $documentos = Documento::all();
+        $documentos = Documento::orderBy('nome')->get();
         return view('documento.index', compact('documentos'));
     }
 
@@ -72,5 +74,69 @@ class DocumentoController extends Controller
         $documento->deletar();
 
         return redirect(route('documentos.index'))->with(['success' => 'Documento deletado com sucesso!']);
+    }
+
+    public function documentosPadrao(Request $request)
+    {
+        $documentos = Documento::orderBy('nome')->get();
+        $json = $this->gerarJson($request, $documentos);
+        
+        return response()->json($json);
+    }
+
+    private function gerarJson(Request $request, $documentos) 
+    {
+        $docs = collect();
+        switch ($request->licenca_enum) {
+            case Licenca::TIPO_ENUM['previa']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_previa,
+                    ]);
+                }
+                break;
+            case Licenca::TIPO_ENUM['instalacao']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_instalacao,
+                    ]);
+                }
+                break;
+            case Licenca::TIPO_ENUM['operacao']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_operacao,
+                    ]);
+                }
+                break;
+            case Licenca::TIPO_ENUM['simplificada']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_simplificada,
+                    ]);
+                }
+                break;
+            case Licenca::TIPO_ENUM['autorizacao_ambiental']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_autorizacao_ambiental,
+                    ]);
+                }
+                break;
+            case Licenca::TIPO_ENUM['regularizacao']:
+                foreach ($documentos as $doc) {
+                    $docs->push([
+                        'id' => $doc->id,
+                        'padrao' => $doc->padrao_regularizacao,
+                    ]);
+                }
+                break;
+        }
+        return $docs;
     }
 }
