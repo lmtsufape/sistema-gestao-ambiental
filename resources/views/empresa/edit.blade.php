@@ -58,7 +58,7 @@
                                 <div class="col-md-4 form-group" id="div-cnpj" style="@if(old('cnpj') != null || $empresa->eh_cnpj) display: block; @else display: none; @endif">
                                     <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                     <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="@if($empresa->eh_cnpj){{old('cnpj', $empresa->cpf_cnpj)}}@else{{old('cnpj')}}@endif" autocomplete="cnpj">
-                                    
+
                                     @error('cnpj')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -186,7 +186,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-12" >
                                             <label for="setor">{{ __('Setor') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror 
+                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                     @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                                 <option value="">-- Selecionar o Setor --</option>
                                                 @foreach ($setores as $setor)
@@ -238,7 +238,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </form>
                     </div>
@@ -347,7 +347,7 @@
                 }
             });
         });
-        
+
         window.selecionarSetor = function(){
             //setor
             var historySelectList = $('select#idSelecionarSetor');
@@ -393,10 +393,10 @@
             cnae_id.setAttribute('name', 'cnaes_id[]');
             cnae_id.setAttribute('value', $id );
             elemento.appendChild(cnae_id);
-            
+
             var naTabela = document.getElementById('dentroTabelaCnaes');
             var divBtn = elemento.children[1].children[0].children[0];
-        
+
             if(elemento.parentElement == naTabela){
                 $('#listaCnaes').append(elemento);
                 divBtn.style.backgroundColor = "#dc3545";

@@ -140,7 +140,7 @@
                                                 @if ($requerimento->empresa->eh_cnpj)
                                                     <label for="cnpj">{{ __('CNPJ') }}</label>
                                                     <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cnpj">
-                                                @else 
+                                                @else
                                                     <label for="cpf">{{ __('CPF') }}</label>
                                                     <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cpf">
                                                 @endif
@@ -277,6 +277,31 @@
                         </div>
                         <br>
                         @can('isAnalista', \App\Models\User::class)
+                        <div class="form-row">
+                            @if ($requerimento->documentos->count() > 0)
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
+                                </div>
+                            @else
+                                <div class="col-md-6">
+                                    <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
+                                </div>
+                            @endif
+                            @can('isProtocolista', \App\Models\User::class)
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da empresa</a>
+                                </div>
+                            @endcan
+
+                        </div>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
+                                @csrf
+                                <div class="form-row">
                             <div class="form-row">
                                 @if ($requerimento->documentos->count() > 0)
                                     <div class="col-md-6">
@@ -447,7 +472,7 @@
                                 documento.checked = true;
                             } else {
                                 documento.checked = false;
-                            }                         
+                            }
                         }
                     }
                 }
