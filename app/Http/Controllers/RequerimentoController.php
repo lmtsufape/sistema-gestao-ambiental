@@ -12,6 +12,9 @@ use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
 use App\Models\Cnae;
 use App\Models\Empresa;
+use App\Models\Historico;
+use App\Models\ModificacaoCnae;
+use App\Models\ModificacaoPorte;
 use App\Models\Setor;
 
 class RequerimentoController extends Controller
@@ -389,20 +392,88 @@ class RequerimentoController extends Controller
         if($request->cnaes_id == null){
             return redirect()->back()->with(['error' => 'Selecione ao menos um cnae.']);
         }
+
+        if($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)){
+            $historico = new Historico;
+            $historico->user_id = auth()->user()->id;
+            $historico->empresa_id = $requerimento->empresa->id;
+            $historico->save();
+            if($this->possuiModificacaoCnae($request, $id)){
+                foreach($request->cnaes_id as $cnae_id){
+                    $cnae = Cnae::find($cnae_id);
+                    if(!$requerimento->empresa->cnaes->contains($cnae)){
+                        $requerimento->empresa->cnaes()->attach($cnae);
+                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae->novo = true;
+                        $modifcacaoCnae->cnae_id = $cnae_id;
+                        $modifcacaoCnae->historico_id = $historico->id;
+                        $modifcacaoCnae->save();
+                    }else{
+                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae->novo = true;
+                        $modifcacaoCnae->cnae_id = $cnae_id;
+                        $modifcacaoCnae->historico_id = $historico->id;
+                        $modifcacaoCnae->save();
+
+                        $modifcacaoCnae3 = new ModificacaoCnae;
+                        $modifcacaoCnae3->novo = false;
+                        $modifcacaoCnae3->cnae_id = $cnae_id;
+                        $modifcacaoCnae3->historico_id = $historico->id;
+                        $modifcacaoCnae3->save();
+                    }
+                }
+                foreach($requerimento->empresa->cnaes as $cnae){
+                    if(!in_array($cnae->id, $request->cnaes_id)){
+                        $requerimento->empresa->cnaes()->detach($cnae);
+                        $modifcacaoCnae2 = new ModificacaoCnae;
+                        $modifcacaoCnae2->novo = false;
+                        $modifcacaoCnae2->cnae_id = $cnae->id;
+                        $modifcacaoCnae2->historico_id = $historico->id;
+                        $modifcacaoCnae2->save();
+                    }
+                }
+            }
+            if($this->possuiModificacaoPorte($request, $id)){
+                $modifcacaoPorte = new ModificacaoPorte;
+                $modifcacaoPorte->porte_antigo = $requerimento->empresa->porte;
+                $modifcacaoPorte->porte_atual = Empresa::PORTE_ENUM[$request->porte];
+                $modifcacaoPorte->historico_id = $historico->id;
+                $modifcacaoPorte->save();
+                $requerimento->empresa->porte = Empresa::PORTE_ENUM[$request->porte];
+                $requerimento->empresa->update();
+            }
+
+            return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Informações atualizadas com sucesso.']);
+        }
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Nenhuma modificação feita.']);
+    }
+
+    public function possuiModificacaoCnae($request, $id)
+    {
+        $requerimento = Requerimento::find($id);
         foreach($request->cnaes_id as $cnae_id){
             $cnae = Cnae::find($cnae_id);
             if(!$requerimento->empresa->cnaes->contains($cnae)){
-                $requerimento->empresa->cnaes()->attach($cnae);
+                return true;
             }
         }
+
         foreach($requerimento->empresa->cnaes as $cnae){
             if(!in_array($cnae->id, $request->cnaes_id)){
-                $requerimento->empresa->cnaes()->detach($cnae);
+                return true;
             }
         }
-        $requerimento->empresa->porte = Empresa::PORTE_ENUM[$request->porte];
-        $requerimento->empresa->update();
 
-        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Informações atualizadas com sucesso.']);
+        return false;
+    }
+
+    public function possuiModificacaoPorte($request, $id)
+    {
+        $requerimento = Requerimento::find($id);
+        if($requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte]){
+            return true;
+        }
+        return false;
+
     }
 }
