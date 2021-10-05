@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Histórico de modificações da empresa</h5>
+                                <h5 class="card-title">Histórico de modificações da empresa {{$empresa->nome}}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Empresa > Histórico</h6>
                             </div>
                         </div>

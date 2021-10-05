@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Historico;
 use Illuminate\Http\Request;
 
@@ -85,8 +86,9 @@ class HistoricoController extends Controller
 
     public function historicoEmpresa($id){
         $this->authorize('isSecretario', User::class);
+        $empresa = Empresa::find($id);
         $historico = Historico::where('empresa_id', $id)->orderBy('created_at', 'DESC')->get();
 
-        return view('historico.historico-empresa', compact('historico'));
+        return view('historico.historico-empresa', compact('historico', 'empresa'));
     }
 }

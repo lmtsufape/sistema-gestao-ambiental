@@ -52,11 +52,11 @@
                                         type="button" role="tab" aria-controls="requerimnetos-atuais" aria-selected="true">Atuais</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="requerimnetos-finalizados-tab" data-toggle="tab" role="tab" type="button" 
+                                    <a class="nav-link" id="requerimnetos-finalizados-tab" data-toggle="tab" role="tab" type="button"
                                         aria-controls="requerimnetos-finalizados" aria-selected="false" href="#requerimnetos-finalizados">Finalizados</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="equerimnetos-cancelados-tab" data-toggle="tab" role="tab" type="button" 
+                                    <a class="nav-link" id="equerimnetos-cancelados-tab" data-toggle="tab" role="tab" type="button"
                                         aria-controls="equerimnetos-cancelados" aria-selected="false" href="#requerimnetos-cancelados">Cancelados</a>
                                 </li>
                             </ul>
@@ -78,7 +78,15 @@
                                             @foreach ($requerimentos as $i => $requerimento)
                                                 <tr>
                                                     <th scope="row">{{($i+1)}}</th>
-                                                    <td>{{$requerimento->empresa->nome}}</td>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
+                                                            {{$requerimento->empresa->nome}}
+                                                        @endcan
+                                                    </td>
                                                     <td>
                                                         @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
                                                             {{__('Requerida')}}
@@ -152,7 +160,15 @@
                                             @foreach ($requerimentosFinalizados as $i => $requerimento)
                                                 <tr>
                                                     <th scope="row">{{($i+1)}}</th>
-                                                    <td>{{$requerimento->empresa->nome}}</td>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
+                                                            {{$requerimento->empresa->nome}}
+                                                        @endcan
+                                                    </td>
                                                     <td>
                                                         @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
                                                             {{__('Requerida')}}
@@ -190,7 +206,7 @@
                                                     </td>
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                     <td>
-                                                        
+
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -214,7 +230,15 @@
                                             @foreach ($requerimentosCancelados as $i => $requerimento)
                                                 <tr>
                                                     <th scope="row">{{($i+1)}}</th>
-                                                    <td>{{$requerimento->empresa->nome}}</td>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
+                                                            {{$requerimento->empresa->nome}}
+                                                        @endcan
+                                                    </td>
                                                     <td>
                                                         @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
                                                             {{__('Requerida')}}
@@ -262,7 +286,7 @@
                                     </table>
                                 </div>
                             </div>
-                        @else 
+                        @else
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -369,7 +393,7 @@
                                 </tbody>
                             </table>
                         @endcan
-                       
+
                     </div>
                 </div>
             </div>
@@ -486,7 +510,7 @@
                         for (var i = 0; i < data.length; i++) {
                             opt += `<option value="${data[i].enum_tipo}">${data[i].tipo}</option>`;
                         }
-                    } 
+                    }
 
                     $("#tipo").append(opt);
                 }
