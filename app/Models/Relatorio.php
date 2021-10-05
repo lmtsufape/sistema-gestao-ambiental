@@ -19,6 +19,7 @@ class Relatorio extends Model
     protected $fillable = [
         'texto',
         'aprovacao',
+        'motivo_edicao',
     ];
 
     public function visita()

@@ -17,6 +17,7 @@ class CreateRelatoriosTable extends Migration
             $table->id();
             $table->text('texto')->nullable();
             $table->integer('aprovacao')->nullable();
+            $table->text('motivo_edicao')->nullable();
 
             $table->unsignedBigInteger('visita_id');
             $table->foreign('visita_id')->references('id')->on('visitas');

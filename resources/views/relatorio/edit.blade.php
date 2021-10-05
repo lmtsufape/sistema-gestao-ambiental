@@ -25,10 +25,10 @@
                                         <p class="mb-0">Esse relatório já foi aprovado, logo edições estão desativadas.</p>
                                     </div>
                                 @elseif($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado']) 
-                                    <div class="alert alert-danger" role="alert">
-                                        <h4 class="alert-heading">Relatório reprovado</h4>
+                                    <div class="alert alert-warning" role="alert">
+                                        <h4 class="alert-heading">Necessária revisão</h4>
                                         <hr>
-                                        <p class="mb-0">Converse com seu superior para alterar o que é necessário.</p>
+                                        <p class="mb-0">{{$relatorio->motivo_edicao}}</p>
                                     </div>
                                 @endif
                             </div>
