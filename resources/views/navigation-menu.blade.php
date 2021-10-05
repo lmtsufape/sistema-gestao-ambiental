@@ -37,6 +37,11 @@
                             {{ __('Requerimentos') }}
                         </x-jet-nav-link>
                     @endcan
+                    @can('isRequerente', \App\Models\User::class)
+                        <x-jet-nav-link href="{{route('empresas.index')}}" :active="request()->routeIs('empresas.*')">
+                            {{ __('Empresas') }}
+                        </x-jet-nav-link>
+                    @endcan
                     @can('isAnalista', \App\Models\User::class)
                         <x-jet-nav-link href="{{route('requerimentos.analista')}}" :active="request()->routeIs('requerimentos.*')">
                             {{ __('Requerimentos') }}

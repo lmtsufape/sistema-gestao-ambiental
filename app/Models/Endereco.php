@@ -34,7 +34,7 @@ class Endereco extends Model
         $this->cep          = $input['cep'];
         $this->numero       = $input['número'];
         $this->cidade       = $input['cidade'];
-        $this->estado       = $input['estado'];
+        $this->estado       = $input['uf'];
         $this->bairro       = $input['bairro'];
         $this->rua          = $input['rua'];
         $this->complemento  = array_key_exists('complemento', $input) ? $input['complemento'] : null;

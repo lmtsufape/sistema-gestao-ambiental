@@ -137,8 +137,13 @@
                                                 <input id="nome_empresa" class="form-control apenas_letras @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{$requerimento->empresa->nome}}" disabled autofocus autocomplete="nome_empresa">
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label for="cnpj">{{ __('CNPJ') }}</label>
-                                                <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{$requerimento->empresa->cnpj}}" disabled autocomplete="cnpj">
+                                                @if ($requerimento->empresa->eh_cnpj)
+                                                    <label for="cnpj">{{ __('CNPJ') }}</label>
+                                                    <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cnpj">
+                                                @else
+                                                    <label for="cpf">{{ __('CPF') }}</label>
+                                                    <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$requerimento->empresa->cpf_cnpj}}" disabled autocomplete="cpf">
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -297,25 +302,48 @@
                             <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
                                 @csrf
                                 <div class="form-row">
+                            <div class="form-row">
+                                @if ($requerimento->documentos->count() > 0)
                                     <div class="col-md-6">
-                                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                        <label for="analista">{{__('Selecione um analista')}}</label>
-                                        <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                            <option value="">-- {{__('Selecione um analista')}} --</option>
-                                            @foreach ($analistas as $analista)
-                                                <option value="{{$analista->id}}">{{$analista->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6">
+                                        <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
                                     </div>
                                     <div class="col-md-6">
-                                        <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
                                     </div>
-                                </div>
-                            </form>
+                                @else
+                                    <div class="col-md-6">
+                                        <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                @endif
+                            </div>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                <form method="POST" action="{{route('requerimentos.atribuir.analista')}}">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                            <label for="analista">{{__('Selecione um analista')}}</label>
+                                            <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                                <option value="">-- {{__('Selecione um analista')}} --</option>
+                                                @foreach ($protocolistas as $protocolista)
+                                                    <option value="{{$protocolista->id}}">{{$protocolista->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
                         @endcan
                     </div>
                 </div>
@@ -339,12 +367,14 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
-                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required>
+                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                     <option disabled selected value="">-- Selecione o tipo de licença --</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')
@@ -356,10 +386,10 @@
                         </div>
 
                         <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                        @foreach ($documentos as $documento)
+                        @foreach ($documentos as $i => $documento)
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($documento->padrao) checked @endif>
+                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
                                     <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
                                 </div>
                             </div>
@@ -393,10 +423,12 @@
                             <div class="col-md-12">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                 <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')
@@ -423,4 +455,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function defaultDocs(select) {
+            $.ajax({
+                url:"{{route('documentos.default')}}",
+                type:"get",
+                data: {"licenca_enum": select.value},
+                dataType:'json',
+                success: function(data) {
+                    var documento = null;
+                    if(data.length > 0){
+                        for(var i = 0; i < data.length; i++){
+                            documento = document.getElementById('documento-'+data[i].id);
+                            if (data[i].padrao) {
+                                documento.checked = true;
+                            } else {
+                                documento.checked = false;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </x-app-layout>

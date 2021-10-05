@@ -90,6 +90,7 @@ class RelatorioController extends Controller
         $relatorio = Relatorio::find($id);
         $request->validated();
         $relatorio->setAtributes($request);
+        $relatorio->motivo_edicao = null;
         $relatorio->update();
 
         return redirect(route('visitas.index'))->with(['success' => 'Relátorio atualizado com sucesso!']);
@@ -110,6 +111,7 @@ class RelatorioController extends Controller
     {
         $relatorio = Relatorio::find($id);
         $resultado = (boolean)$request->aprovacao;
+        $relatorio->motivo_edicao = $request->motivo;
 
         $msg = "";
         if ($resultado) {

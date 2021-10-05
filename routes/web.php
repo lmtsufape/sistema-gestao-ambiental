@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\VisitaController;
@@ -14,7 +13,7 @@ use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
-use App\Models\Historico;
+use App\Http\Controllers\EmpresaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +69,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
     Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
+    Route::resource('empresas', EmpresaController::class);
+
+    Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
@@ -78,3 +80,4 @@ Route::get('/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('enviar.mensagem');
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
+Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');

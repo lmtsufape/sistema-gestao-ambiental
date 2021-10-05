@@ -58,9 +58,11 @@
                                                     <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                    <a type="button" class="btn btn-primary dropdown-item" target="_blank" href="{{ route("documentos.show", $documento->id) }}">
-                                                        Visualizar
-                                                    </a>
+                                                    @if ($documento->documento_modelo != null)
+                                                        <a type="button" class="btn btn-primary dropdown-item" target="_blank" href="{{route("documentos.show", $documento->id)}}">
+                                                            Visualizar
+                                                        </a>
+                                                    @endif
                                                     <a type="button" class="btn btn-primary dropdown-item" href="{{ route("documentos.edit", $documento->id) }}">
                                                         Editar
                                                     </a>

@@ -27,6 +27,8 @@ class Requerimento extends Model
         'autorizacao'      => 3,
     ];
 
+    public const TIPO_LICENCA_ENUM = Licenca::TIPO_ENUM;
+
     protected $fillable = [
         'status',
         'tipo',

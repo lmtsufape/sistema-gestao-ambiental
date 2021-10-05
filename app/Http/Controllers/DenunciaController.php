@@ -13,9 +13,9 @@ class DenunciaController extends Controller
 {
     public function index()
     {
-        $denuncias_registradas   = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
-        $denuncias_aprovadas     = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
-        $denuncias_arquivadas    = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
 
         return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas'));
     }

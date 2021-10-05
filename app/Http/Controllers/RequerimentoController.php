@@ -15,7 +15,12 @@ use App\Models\Empresa;
 use App\Models\Historico;
 use App\Models\ModificacaoCnae;
 use App\Models\ModificacaoPorte;
+use App\Models\TipoAnalista;
 use App\Models\Setor;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\DocumentosNotification;
+use App\Notifications\DocumentosEnviadosNotification;
+use App\Notifications\DocumentosAnalisadosNotification;
 
 class RequerimentoController extends Controller
 {
@@ -27,14 +32,20 @@ class RequerimentoController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $requerimentos = null;
-        $primeiroRequerimento = $this->primeiroRequerimento();
+        $requerimentos = collect();
+        $requerimentosCancelados = collect();
+        $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where([['empresa_id', $user->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+            $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
-            $requerimentos = Requerimento::all();
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->get();
+            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->get();
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->get();
         }
-        return view('requerimento.index', compact('requerimentos', 'primeiroRequerimento'));
+        return view('requerimento.index')->with(['requerimentos' => $requerimentos,
+                                                 'requerimentosFinalizados' => $requerimentosFinalizados,
+                                                 'requerimentosCancelados' => $requerimentosCancelados,
+                                                 'tipos' => Requerimento::TIPO_ENUM]);
     }
 
     public function indexVisitasRequerimento($id)
@@ -78,15 +89,19 @@ class RequerimentoController extends Controller
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
-        $requerimentos = Requerimento::where([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']]])->orWhere([['empresa_id', auth()->user()->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        $empresa = Empresa::find($request->empresa);
+
+        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+
         if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
         $requerimento = new Requerimento;
         $requerimento->tipo = $request->tipo;
-        $requerimento->status = Requerimento::STATUS_ENUM['requerida'];
-        $requerimento->empresa_id = auth()->user()->empresa->id;
+        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+        $requerimento->empresa_id = $empresa->id;
+        $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
         $requerimento->save();
 
         return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento realizado com sucesso.']);
@@ -102,10 +117,10 @@ class RequerimentoController extends Controller
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('view', $requerimento);
-        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+        $protocolistas = $this->protocolistas();
         $documentos = Documento::orderBy('nome')->get();
 
-        return view('requerimento.show', compact('requerimento', 'analistas', 'documentos'));
+        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos'));
     }
 
     /**
@@ -142,8 +157,10 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
 
-        if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
-            return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
+        if (auth()->user()->role != User::ROLE_ENUM['secretario']) {
+            if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
+                return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
+            }
         }
 
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
@@ -203,7 +220,10 @@ class RequerimentoController extends Controller
             $documento->update();
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+        $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
+
+        Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
@@ -216,11 +236,16 @@ class RequerimentoController extends Controller
      */
     public function updateChecklist(Request $request)
     {
+        $validated = $request->validate([
+            'licença' => 'required',
+        ]);
+
         if ($request->documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Selecione os documentos que devem ser enviados pelo requerente.'])->withInput($request->all());
         }
 
         $requerimento = Requerimento::find($request->requerimento);
+        $this->atribuirValor($request, $requerimento);
 
         // Documentos desmarcados
         foreach ($requerimento->documentos as $documento) {
@@ -243,6 +268,7 @@ class RequerimentoController extends Controller
             }
         }
 
+        $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
@@ -271,6 +297,7 @@ class RequerimentoController extends Controller
      */
     private function primeiroRequerimento()
     {
+
         if (auth()->user()->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = Requerimento::where('empresa_id', auth()->user()->empresa->id)->get();
             if ($requerimentos->count() > 0) {
@@ -327,6 +354,9 @@ class RequerimentoController extends Controller
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
+
+        Notification::send($requerimento->analista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
+
         return redirect(route('requerimentos.index'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }
 
@@ -362,8 +392,10 @@ class RequerimentoController extends Controller
         }
         if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento recusado'));
         }else{
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento aceitos'));
         }
         $requerimento->update();
         return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);
@@ -383,7 +415,7 @@ class RequerimentoController extends Controller
             }
         }
 
-        return view('empresa.edit', compact('requerimento', 'setores', 'setoresSelecionados'));
+        return view('empresa.edit-protocolista', compact('requerimento', 'setores', 'setoresSelecionados'));
     }
 
     public function updateEmpresa(Request $request, $id)
@@ -474,6 +506,45 @@ class RequerimentoController extends Controller
             return true;
         }
         return false;
+    }
 
+    /**
+     * Retorna o protocolista com menos requerimentos.
+     *
+     * @return App\Models\User $protocolistaComMenosRequerimentos
+     */
+    private function protocolistaComMenosRequerimentos()
+    {
+        $protocolistas = $this->protocolistas();
+        $protocolistaComMenosRequerimentos = null;
+        $min = 30000;
+        foreach ($protocolistas as $protocolista) {
+            $quantRequerimentos = $protocolista->requerimentos()->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos'])->get()->count();
+            if ($quantRequerimentos < $min) {
+                $min = $quantRequerimentos;
+                $protocolistaComMenosRequerimentos = $protocolista;
+            }
+        }
+
+        return $protocolistaComMenosRequerimentos;
+    }
+
+    /**
+     * Retorna os protocolistas cadastrados.
+     *
+     * @return App\Models\User $protocolistas
+     */
+    private function protocolistas()
+    {
+        $protocolistas = collect();
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+
+        foreach ($analistas as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
+                $protocolistas->push($analista);
+            }
+        }
+
+        return $protocolistas;
     }
 }

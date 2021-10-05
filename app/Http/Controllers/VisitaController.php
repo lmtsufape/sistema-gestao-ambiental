@@ -6,6 +6,8 @@ use App\Models\Requerimento;
 use App\Models\Visita;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\TipoAnalista;
+use App\Models\Documento;
 
 class VisitaController extends Controller
 {
@@ -34,7 +36,9 @@ class VisitaController extends Controller
     public function create()
     {
         $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
-        return view('visita.create', compact('requerimentos'));
+        $analistas = $this->analistas();
+        
+        return view('visita.create', compact('requerimentos', 'analistas'));
     }
 
     /**
@@ -45,17 +49,19 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = $request->validate([
+        $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
+            'analista'     => 'required',
         ]);
+
         $visita = new Visita();
         $visita->setAtributesRequerimento($request);
         $visita->requerimento->update(['status' => Requerimento::STATUS_ENUM['visita_marcada']]);
+        $visita->analista_id = $request->analista;
         $visita->save();
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita programada com sucesso!']);
-
     }
 
     /**
@@ -80,7 +86,9 @@ class VisitaController extends Controller
         $visita = Visita::find($id);
         $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
         $requerimentos->push($visita->requerimento);
-        return view('visita.edit', compact('visita', 'requerimentos'));
+        $analistas = $this->analistas();
+
+        return view('visita.edit', compact('visita', 'requerimentos', 'analistas'));
     }
 
     /**
@@ -94,15 +102,17 @@ class VisitaController extends Controller
     {
         $visita = Visita::find($id);
 
-        $validator = $request->validate([
+        $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
+            'analista'     => 'required',
         ]);
 
-        if($visita->requerimento_id != $request->requerimento){
+        if ($visita->requerimento_id != $request->requerimento) {
             $visita->requerimento->update(['status' => Requerimento::STATUS_ENUM['documentos_aceitos']]);
         }
         $visita->setAtributesRequerimento($request);
+        $visita->analista_id = $request->analista;
         $visita->update();
 
         $requerimento = Requerimento::find($visita->requerimento_id);
@@ -123,5 +133,24 @@ class VisitaController extends Controller
         $visita->delete();
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita deletada com sucesso!']);
+    }
+
+    /**
+     * Retorna todos os analistas do sistema.
+     *
+     * @return collect \App\Models\User $analistas
+     */
+    private function analistas() 
+    {
+        $analistas = collect();
+        $users = User::where('role', User::ROLE_ENUM['analista'])->get();
+        
+        foreach ($users as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
+                $analistas->push($analista);
+            }
+        }
+
+        return $analistas;
     }
 }

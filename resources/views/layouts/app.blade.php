@@ -53,5 +53,6 @@
         @stack('modals')
 
         @livewireScripts
+        @component('layouts.footer')@endcomponent
     </body>
 </html>
