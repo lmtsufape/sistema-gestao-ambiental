@@ -25,9 +25,14 @@ class DocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'              => 'required|string|min:10|max:290',
-            'documento_modelo'  => 'nullable|file|mimes:pdf|max:2048',
-            'padrão'            => 'nullable',
+            'nome'                  => 'required|string|min:10|max:290',
+            'documento_modelo'      => 'nullable|file|mimes:pdf|max:2048',
+            'prêvia'                => 'nullable',
+            'instalação'            => 'nullable',
+            'operação'              => 'nullable',
+            'simplificada'          => 'nullable',
+            'autorização_ambiental' => 'nullable',
+            'regularização'         => 'nullable',
         ];
     }
 

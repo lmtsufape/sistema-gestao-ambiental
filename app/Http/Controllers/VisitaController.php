@@ -7,6 +7,7 @@ use App\Models\Visita;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\TipoAnalista;
+use App\Models\Documento;
 
 class VisitaController extends Controller
 {

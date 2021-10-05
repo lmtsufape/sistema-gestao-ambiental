@@ -342,12 +342,14 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
-                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required>
+                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                     <option disabled selected value="">-- Selecione o tipo de licença --</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')
@@ -359,10 +361,10 @@
                         </div>
 
                         <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                        @foreach ($documentos as $documento)
+                        @foreach ($documentos as $i => $documento)
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($documento->padrao) checked @endif>
+                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
                                     <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
                                 </div>
                             </div>
@@ -396,10 +398,12 @@
                             <div class="col-md-12">
                                 <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                 <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
                                 </select>
 
                                 @error('licença')
@@ -426,4 +430,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function defaultDocs(select) {
+            $.ajax({
+                url:"{{route('documentos.default')}}",
+                type:"get",
+                data: {"licenca_enum": select.value},
+                dataType:'json',
+                success: function(data) {
+                    var documento = null;
+                    if(data.length > 0){
+                        for(var i = 0; i < data.length; i++){
+                            documento = document.getElementById('documento-'+data[i].id);
+                            if (data[i].padrao) {
+                                documento.checked = true;
+                            } else {
+                                documento.checked = false;
+                            }                         
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </x-app-layout>

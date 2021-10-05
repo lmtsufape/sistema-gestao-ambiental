@@ -42,11 +42,61 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <input type="checkbox" name="padrão" id="padrão" @if(old('padrão') != null) checked @endif>
-                                    <label for="padrão">{{ __('Padrão em todas as solicitações de requerimentos') }}</label>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="simplificada" id="simplificada" @if(old('simplificada') != null) checked @endif>
+                                    <label for="simplificada">{{ __('Padrão na licença simplificada') }}</label>
 
-                                    @error('documento_modelo')
+                                    @error('simplificada')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="prêvia" id="prêvia" @if(old('prêvia') != null) checked @endif>
+                                    <label for="prêvia">{{ __('Padrão na licença prêvia') }}</label>
+
+                                    @error('prêvia')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="instalação" id="instalação" @if(old('instalação') != null) checked @endif>
+                                    <label for="instalação">{{ __('Padrão na licença de instalação') }}</label>
+
+                                    @error('instalação')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="operação" id="operação" @if(old('operação') != null) checked @endif>
+                                    <label for="operação">{{ __('Padrão na licença de operação') }}</label>
+
+                                    @error('operação')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="regularização" id="regularização" @if(old('regularização') != null) checked @endif>
+                                    <label for="regularização">{{ __('Padrão na licença de operação') }}</label>
+
+                                    @error('regularização')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input type="checkbox" name="autorização_ambiental" id="autorização_ambiental" @if(old('autorização_ambiental') != null) checked @endif>
+                                    <label for="autorização_ambiental">{{ __('Padrão na licença de autorização ambiental') }}</label>
+
+                                    @error('operação')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
