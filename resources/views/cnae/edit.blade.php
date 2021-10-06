@@ -12,7 +12,7 @@
                         <div class="form-row">
                             <div class="col-md-8">
                                 <h5 class="card-title">Editar o cnae {{$cnae->nome}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Setor > Cnae > Editar cnae</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">Tipologia > Cnae > Editar cnae</h6>
                             </div>
                         </div>
                         <div div class="form-row">

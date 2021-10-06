@@ -57,7 +57,7 @@
                                 <div class="col-md-4 form-group" id="div-cnpj" style="@if(old('cnpj') != null && old('tipo_de_pessoa') == "jurídica") display: block; @else display: none; @endif">
                                     <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                     <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{old('cnpj')}}" autocomplete="cnpj">
-                                    
+
                                     @error('cnpj')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -184,10 +184,10 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-12" >
-                                            <label for="setor">{{ __('Setor') }}<span style="color: red; font-weight: bold;"> *</span></label>
-                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror 
+                                            <label for="setor">{{ __('Tipologia') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                     @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                <option value="">-- Selecionar o Setor --</option>
+                                                <option value="">-- Selecionar a Tipologia --</option>
                                                 @foreach ($setores as $setor)
                                                     <option value={{$setor->id}}>{{$setor->nome}}</option>
                                                 @endforeach
@@ -225,7 +225,7 @@
                                     <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
                                     <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes"></div>
                                 </div>
-                            
+
                             </div>
                         </form>
                     </div>
@@ -333,7 +333,7 @@
                 }
             });
         });
-        
+
         window.selecionarSetor = function(){
             //setor
             var historySelectList = $('select#idSelecionarSetor');
@@ -379,10 +379,10 @@
             cnae_id.setAttribute('name', 'cnaes_id[]');
             cnae_id.setAttribute('value', $id );
             elemento.appendChild(cnae_id);
-            
+
             var naTabela = document.getElementById('dentroTabelaCnaes');
             var divBtn = elemento.children[1].children[0].children[0];
-        
+
             if(elemento.parentElement == naTabela){
                 $('#listaCnaes').append(elemento);
                 divBtn.style.backgroundColor = "#dc3545";
