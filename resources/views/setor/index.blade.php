@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Setores') }}
+            {{ __('Tipologias') }}
         </h2>
     </x-slot>
 
@@ -12,11 +12,11 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Setores cadastrados no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Setores</h6>
+                                <h5 class="card-title">Tipologias cadastradas no sistema</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Tipologias</h6>
                             </div>
                             <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('setores.create')}}">Criar setor</a>
+                                <a class="btn btn-primary" href="{{route('setores.create')}}">Criar tipologia</a>
                             </div>
                         </div>
                         <div div class="form-row">
@@ -58,9 +58,9 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                             @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                                                                <a class="dropdown-item" href="{{route('setores.show', ['setore' => $setor->id])}}">Visualizar Setor</a>
-                                                                <a class="dropdown-item" href="{{route('setores.edit', ['setore' => $setor->id])}}">Editar Setor</a>
-                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="color: red; cursor: pointer;">Deletar setor</a>
+                                                                <a class="dropdown-item" href="{{route('setores.show', ['setore' => $setor->id])}}">Visualizar Tipologia</a>
+                                                                <a class="dropdown-item" href="{{route('setores.edit', ['setore' => $setor->id])}}">Editar Tipologia</a>
+                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="color: red; cursor: pointer;">Deletar Tipologia</a>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -92,7 +92,7 @@
                     <form id="deletar-setor-form-{{$setor->id}}" method="POST" action="{{route('setores.destroy', ['setore' => $setor])}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja deletar o setor {{$setor->nome}}?
+                        Tem certeza que deseja deletar a tipologia {{$setor->nome}}?
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Criar setor') }}
+            {{ __('Criar tipologia') }}
         </h2>
     </x-slot>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Cadastrar uma nova setor</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Setores > Criar setor</h6>
+                                <h5 class="card-title">Cadastrar uma nova tipologia</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Tipologias > Criar tipologia</h6>
                             </div>
                         </div>
                         <form method="POST" id="criar-setor" action="{{route('setores.store')}}">
