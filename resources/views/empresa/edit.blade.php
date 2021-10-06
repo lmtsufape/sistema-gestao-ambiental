@@ -28,11 +28,6 @@
                                 </div>
                             @endif
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <h4>Informações da empresa</h4>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="nome_empresa">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                     <input id="nome_empresa" class="form-control @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa', $empresa->nome)}}" required autofocus autocomplete="nome_empresa">
