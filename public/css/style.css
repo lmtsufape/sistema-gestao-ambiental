@@ -253,3 +253,12 @@ nav img {
 }
 
 /* X FOOTER X */
+
+.texto-denuncia {
+    border: solid 1px #ced4da;
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+    color: #495057;
+}

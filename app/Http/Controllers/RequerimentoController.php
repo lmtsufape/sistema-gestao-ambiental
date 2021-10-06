@@ -117,7 +117,7 @@ class RequerimentoController extends Controller
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('view', $requerimento);
-        $protocolistas = $this->protocolistas();
+        $protocolistas = User::protocolistas();
         $documentos = Documento::orderBy('nome')->get();
 
         return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos'));
@@ -515,7 +515,7 @@ class RequerimentoController extends Controller
      */
     private function protocolistaComMenosRequerimentos()
     {
-        $protocolistas = $this->protocolistas();
+        $protocolistas = User::protocolistas();
         $protocolistaComMenosRequerimentos = null;
         $min = 30000;
         foreach ($protocolistas as $protocolista) {
@@ -529,22 +529,4 @@ class RequerimentoController extends Controller
         return $protocolistaComMenosRequerimentos;
     }
 
-    /**
-     * Retorna os protocolistas cadastrados.
-     *
-     * @return App\Models\User $protocolistas
-     */
-    private function protocolistas()
-    {
-        $protocolistas = collect();
-        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
-
-        foreach ($analistas as $analista) {
-            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
-                $protocolistas->push($analista);
-            }
-        }
-
-        return $protocolistas;
-    }
 }

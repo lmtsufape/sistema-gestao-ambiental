@@ -8,6 +8,7 @@ use App\Models\Empresa;
 use App\Models\FotoDenuncia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class DenunciaController extends Controller
 {
@@ -17,7 +18,10 @@ class DenunciaController extends Controller
         $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
         $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
 
-        return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas'));
+        $denuncias = $denuncias_registradas->concat($denuncias_aprovadas)->concat($denuncias_arquivadas);
+        $analistas = User::analistas();
+        
+        return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas', 'denuncias', 'analistas'));
     }
 
     public function create()
@@ -83,19 +87,20 @@ class DenunciaController extends Controller
 
     public function avaliarDenuncia(Request $request)
     {
+        $denuncia = Denuncia::find($request->denunciaId);
+        $this->authorize('isSecretario', User::class);
+        
         if ($request->aprovar == "true") {
-            $denuncia = Denuncia::find($request->denunciaId);
-            $denuncia->aprovacao = 2;
-            $denuncia->save();
+            $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
+            $msg = 'Denuncia aprovada com sucesso!';
 
-            return redirect()->back()->with(['success' => 'Denuncia aprovada com sucesso!']);
         } else if ($request->aprovar == "false") {
+            $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['arquivada'];
+            $msg = 'Denuncia arquivada com sucesso!';
 
-            $denuncia = Denuncia::find($request->denunciaId);
-            $denuncia->aprovacao = 3;
-            $denuncia->save();
-
-            return redirect()->back()->with(['success' => 'Denuncia arquivada com sucesso!']);
         }
+        $denuncia->update();
+
+        return redirect()->back()->with(['success' => $msg]);
     }
 }

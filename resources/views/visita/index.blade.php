@@ -57,14 +57,21 @@
                                                 <td>{{$visita->data_realizada}}</td>
                                             @endif
 
-                                            @if($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                <td> Primeira licença</td>
-                                            @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                <td>Renovação</td>
-                                            @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                <td>Autorização</td>
+                                            @if($visita->requerimento != null)
+                                                @if($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                    <td> Primeira licença</td>
+                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                    <td>Renovação</td>
+                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                    <td>Autorização</td>
+                                                @endif
+                                                <td>{{$visita->requerimento->empresa->nome}}</td>
+                                            @elseif($visita->denuncia != null)
+                                                <td>Denúncia</td>
+                                                <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @endif
-                                            <td>{{$visita->requerimento->empresa->nome}}</td>
+
+                                            
                                             @can('isSecretario', \App\Models\User::class)
                                                 <td>{{$visita->analista->name}}</td>
                                             @endcan
@@ -79,7 +86,7 @@
                                                                 @if($visita->relatorio!=null)<a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>@endif
                                                                 <hr>
                                                                 <a class="dropdown-item">Notificar</a>
-                                                                <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
+                                                                @if($visita->requerimento != null)<a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>@endif
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
 
                                                             </div>
@@ -125,7 +132,7 @@
                         <form id="deletar-visita-form-{{$visita->id}}" method="POST" action="{{route('visitas.destroy', ['visita' => $visita])}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
-                            Tem certeza que deseja deletar a visita à empresa {{$visita->requerimento->empresa->nome}}?
+                            Tem certeza que deseja deletar a visita à empresa {{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}?
                         </form>
                     </div>
                     <div class="modal-footer">
