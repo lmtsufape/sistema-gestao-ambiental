@@ -350,112 +350,112 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal documentos -->
-    <div class="modal fade" id="documentos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #28a745;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Requisitar documentos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
-                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
-                                    <option disabled selected value="">-- Selecione o tipo de licença --</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
-                                    <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
-                                </select>
-
-                                @error('licença')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                        @foreach ($documentos as $i => $documento)
+    @if ($requerimento->documentos->count() <= 0)
+        <!-- Modal documentos -->
+        <div class="modal fade" id="documentos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #28a745;">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Requisitar documentos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
+                            @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
-                                    <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                    <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
+                                        <option disabled selected value="">-- Selecione o tipo de licença --</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
+                                    </select>
+
+                                    @error('licença')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
-                        @endforeach
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="documentos-form">Enviar</button>
+
+                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                            @foreach ($documentos as $i => $documento)
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
+                                        <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" form="documentos-form">Enviar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal documentos -->
-    <div class="modal fade" id="documentos-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #28a745;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Editar checklist de documentos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="documentos-form-edit" method="POST" action="{{route('requerimento.checklist.edit')}}">
-                        @csrf
-                        <input type="hidden" name="_method" value="PUT">
-                        <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
-                                <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror">
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
-                                    <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
-                                </select>
-
-                                @error('licença')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        @foreach ($documentos as $documento)
+    @else 
+        <!-- Modal documentos -->
+        <div class="modal fade" id="documentos-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #28a745;">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Editar checklist de documentos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="documentos-form-edit" method="POST" action="{{route('requerimento.checklist.edit')}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
-                                    <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                <div class="col-md-12">
+                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                    <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" onchange="defaultDocs(this)">
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['autorizacao_ambiental']}}">Autorização</option>
+                                    </select>
+
+                                    @error('licença')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
-                        @endforeach
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
+                            @foreach ($documentos as $documento)
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
+                                        <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    @endif
     <script>
         function defaultDocs(select) {
             $.ajax({
@@ -468,8 +468,11 @@
                     if(data.length > 0){
                         for(var i = 0; i < data.length; i++){
                             documento = document.getElementById('documento-'+data[i].id);
+                            console.log(documento);
                             if (data[i].padrao) {
                                 documento.checked = true;
+                            } else if (data[i].padrao == null) {
+                                documento.checked = false;
                             } else {
                                 documento.checked = false;
                             }
