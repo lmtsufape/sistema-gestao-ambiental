@@ -34,6 +34,11 @@ class Denuncia extends Model
         return $this->hasMany(FotoDenuncia::class, 'denuncia_id');
     }
 
+    public function videos()
+    {
+        return $this->hasMany(VideoDenuncia::class, 'denuncia_id');
+    }
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');

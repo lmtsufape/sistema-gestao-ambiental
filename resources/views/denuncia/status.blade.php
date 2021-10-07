@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Acompanhamento da denúncia</h5>
+                                <h5 class="card-title">Denúncia</h5>
                             </div>
                         </div>
                         <div div class="form-row">
@@ -30,6 +30,7 @@
                                         <input id="empresa" class="form-control @error('empresa') is-invalid @enderror" type="text" name="empresa" value="{{$denuncia->empresa_nao_cadastrada}}" disabled autocomplete="empresa">
                                     @endif
                                 </div>
+
                                 @if ($denuncia->empresa_id == null)
                                     <div class="col-md-6">
                                         <label for="endereco">Endereço:</label>
@@ -51,6 +52,47 @@
                                     <textarea id="denuncia" name="denuncia" disabled>{{$denuncia->texto}}</textarea>
                                 </div>
                             </div>
+                            @if ($denuncia->fotos->first() != null)
+                                <br><div class="row">
+                                    <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas junto a denúncia:</div>
+                                </div>
+                                <div class="row">
+                                    @foreach ($denuncia->fotos as $foto)
+                                        <div class="col-md-6">
+                                            <div class="card" style="width: 100%;">
+                                                <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                                @if ($foto->comentario != null)
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{$foto->comentario}}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if ($denuncia->videos->first() != null)
+                                <br><div class="row">
+                                    <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Vídeos anexados junto a denúncia:</div>
+                                </div>
+                                <div class="row">
+                                    @foreach ($denuncia->videos as $video)
+                                        <div class="col-md-6">
+                                            <video width="320" height="240" controls>
+                                                <source src="{{asset('storage/' . $video->caminho)}}" >
+                                                Seu navegador não suporta o tipo de vídeo.
+                                            </video>
+                                            <div class="card" style="width: 100%;">
+                                                @if ($video->comentario != null)
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{$video->comentario}}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -62,7 +104,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
-                                        <h4 class="card-title mb-0" style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">Status da denúncia</h4>
+                                        <h5 class="card-title mb-0" style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">Status da denúncia</h5>
                                     </div>
                                     <div class="col-md-12">
                                         @switch($denuncia->aprovacao)

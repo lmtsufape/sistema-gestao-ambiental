@@ -188,6 +188,84 @@
                                     @endif
                                 @endif
                             </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="video">{{ __('Anexar videos') }}</label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button type="button" id="btn-add-video" onclick="addVideo()" class="btn btn-primary"
+                                    style="margin-top:10px; margin-bottom:10px;">
+                                    Adicionar Video
+                                </button>
+                            </div>
+
+                            <div id="videos" class="form-row">
+                                @if ($errors->has('video.*') && $errors->has('comentario.*'))
+                                    @foreach ($errors->get('video.*') as $i => $videos)
+                                        @foreach ($videos as $b => $opcao)
+                                            <div class="col-md-5" style="margin: 10px 10px 0 0;">
+                                                <label for="video">{{ __('Selecione o video') }}</label>
+                                                <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
+                                                @error('video.*'.$b)
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $opcao }}
+                                                    </div>
+                                                @enderror
+                                        @endforeach
+                                    @endforeach
+                                    @foreach ($errors->get('comentario.*') as $i => $comentarios)
+                                        @foreach ($comentarios as $b => $opcao)
+                                                <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
+                                                <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
+                                                @error('comentario.'.$b)
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $opcao }}
+                                                    </div>
+                                                @enderror
+                                                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
+                                            </div>
+                                        @endforeach
+                                    @endforeach
+                                @else
+                                    @if($errors->has('video.*'))
+                                        @foreach ($errors->get('video.*') as $i => $videos)
+                                            @foreach ($videos as $b => $opcao)
+                                                <div class="col-md-5" style="margin: 10px 10px 0 0;">
+                                                    <label for="video">{{ __('Selecione o video') }}</label>
+                                                    <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
+                                                    @error('video.*'.$b)
+                                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                                            {{ $opcao }}
+                                                        </div>
+                                                    @enderror
+                                                    <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                                    <input type="text" class="form-control" name="comentario[]" id="comentario">
+                                                    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach ($errors->get('comentario.*') as $i => $comentarios)
+                                            @foreach ($comentarios as $b => $opcao)
+                                                <div class="col-md-5" style="margin: 10px 10px 0 0;">
+                                                    <label for="video">{{ __('Selecione o video') }}</label>
+                                                    <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
+                                                    <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
+                                                    <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
+                                                    @error('comentario.'.$b)
+                                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                                            {{ $opcao }}
+                                                        </div>
+                                                    @enderror
+                                                    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+                                @endif
+                            </div>
                         </form>
                     </div>
                     <div class="card-footer">
@@ -263,6 +341,7 @@
     </div>
 
 <script>
+    var $videoId = 1;
     ClassicEditor
         .create( document.querySelector( '#denuncia-ckeditor' ) )
         .then( editor => {
@@ -280,15 +359,42 @@
         } );
 
     function addImagem() {
-        var campo_imagem = `<div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                    <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                    <input type="file" name="imagem[]" id="imagem">
+        var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
+                                <div class="card-body">
+                                    <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
+                                    <input type="file" name="imagem[]" id="imagem"><br>
                                     <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                    <input type="text" class="form-control" name="comentario[]" id="comentario">
-                                    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                    <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
+                                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                </div>
                             </div>`;
 
         $('#imagens').append(campo_imagem);
+    }
+
+    function addVideo() {
+        var campo_video = `<div class="card shadow bg-white style="width: 50%;">
+                                <div class="card-body">
+                                    <label for="video">{{ __('Selecione o video') }}</label><br>
+                                    <input type="file" name="video[]" id="video`+$videoId+`" onChange="checarTamanho(`+$videoId+`)"><br>
+                                    <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                    <textarea type="text" class="form-control" name="comentario[]" id="comentario" ></textarea>
+                                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
+                                </div>
+                            </div>`;
+        $videoId += 1;
+        $('#videos').append(campo_video);
+    }
+
+    function checarTamanho(id){
+        console.log(id);
+        let video = $('#video'+id);
+        if(video){
+            if(video[0].files[0].size > 52428800){
+                alert("Mídias não podem ultrapassar o valor máximo de 50MB!");
+                video[0].value = "";
+            }
+        }
     }
 
     function showCampoEmpresaNaoCadastrada(){

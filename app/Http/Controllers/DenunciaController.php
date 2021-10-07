@@ -6,6 +6,7 @@ use App\Http\Requests\DenunciaRequest;
 use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\FotoDenuncia;
+use App\Models\VideoDenuncia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -34,7 +35,7 @@ class DenunciaController extends Controller
 
         $denuncias = $denuncias_registradas->concat($denuncias_aprovadas)->concat($denuncias_arquivadas);
         $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
-        
+
         return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas', 'denuncias', 'analistas'));
     }
 
@@ -66,11 +67,25 @@ class DenunciaController extends Controller
                 $foto_denuncia->comentario = $data['comentario'][$i] ?? "";
 
                 $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-                $path = 'denuncias/' . $denuncia->id . '/';
+                $path = 'denuncias/' . $denuncia->id .'/imagens'.'/';
                 Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
                 $foto_denuncia->caminho = $path . $nomeImg;
                 $foto_denuncia->save();
             }
+
+        if (array_key_exists("video", $data)){
+            for ($i = 0; $i < count($data['video']); $i++) {
+                $video_denuncia = new VideoDenuncia();
+                $video_denuncia->denuncia_id = $denuncia->id;
+                $video_denuncia->comentario = $data['comentario'][$i] ?? "";
+
+                $nomeVideo = $data['video'][$i]->getClientOriginalName();
+                $path = 'denuncias/' . $denuncia->id .'/videos'.'/';
+                Storage::putFileAs('public/' . $path, $data['video'][$i], $nomeVideo);
+                $video_denuncia->caminho = $path . $nomeVideo;
+                $video_denuncia->save();
+            }
+        }
 
         return redirect()->back()->with(['success' => 'Denúncia cadastrada com sucesso!', 'protocolo' => $protocolo]);
     }
@@ -105,7 +120,7 @@ class DenunciaController extends Controller
     {
         $denuncia = Denuncia::find($request->denunciaId);
         $this->authorize('isSecretario', User::class);
-        
+
         if ($request->aprovar == "true") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
             $msg = 'Denuncia aprovada com sucesso!';
