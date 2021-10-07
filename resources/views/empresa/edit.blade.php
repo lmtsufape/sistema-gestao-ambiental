@@ -28,11 +28,6 @@
                                 </div>
                             @endif
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <h4>Informações da empresa</h4>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="nome_empresa">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                     <input id="nome_empresa" class="form-control @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa', $empresa->nome)}}" required autofocus autocomplete="nome_empresa">
@@ -89,7 +84,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;"> *</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck"><img src="{{asset('img/interrogacao.png')}}" alt="Como definir o porte?" style="width: 15px; display: inline; padding-bottom: 5px;"></a>
                                     <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                         <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
                                         <option @if(old('porte', $empresa->porte) == 1) selected @endif value="1">Micro</option>

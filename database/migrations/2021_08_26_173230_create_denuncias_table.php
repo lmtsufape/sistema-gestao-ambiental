@@ -23,6 +23,9 @@ class CreateDenunciasTable extends Migration
             $table->integer('aprovacao')->nullable();
             $table->string('protocolo');
 
+            $table->unsignedBigInteger('analista_id')->nullable();
+            $table->foreign('analista_id')->references('id')->on('users');
+            
             $table->timestamps();
         });
     }

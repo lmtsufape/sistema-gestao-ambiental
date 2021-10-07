@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Cadastre sua <br>Empresa</div>
+                                <div class="col-md-12">Cadastro de <br> Empreendedor</div>
                             </div>
                         </div>
                     </div>

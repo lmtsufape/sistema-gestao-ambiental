@@ -25,4 +25,9 @@ class ContatoController extends Controller
 
         return redirect(route('contato'))->with(['success' => 'Obrigado por entrar em contato, sua mensagem foi enviada com sucesso!']);
     }
+
+    public function infoPorte() 
+    {
+        return view('info_porte');
+    }
 }

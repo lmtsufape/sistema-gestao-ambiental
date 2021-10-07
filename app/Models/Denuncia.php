@@ -38,4 +38,9 @@ class Denuncia extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');
     }
+
+    public function analista()
+    {
+        return $this->belongsTo(User::class, 'analista_id');
+    }
 }
