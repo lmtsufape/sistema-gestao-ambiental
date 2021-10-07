@@ -27,16 +27,16 @@
                         </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
-                                    type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</a>
+                                <button class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
+                                    type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button" 
-                                    aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</a>
+                                <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button" 
+                                    aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab" 
-                                    aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</a>
+                                <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab" 
+                                    aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -62,12 +62,16 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denuncia('{{$denuncia->texto}}')" data-toggle="modal" data-target="#exampleModalCenter">Descrição</button>
+                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denunciaId('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelB">Avaliar</button>
+                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="abrirImagens('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelC">Imagens</button>
+                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -98,12 +102,16 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
+                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                    data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denuncia('{{$denuncia->texto}}')" data-toggle="modal" data-target="#exampleModalCenter">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denunciaId('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelB">Avaliar</button>
+                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="abrirImagens('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelC">Imagens</button>
+                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -134,12 +142,16 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denuncia('{{$denuncia->texto}}')" data-toggle="modal" data-target="#exampleModalCenter">Descrição</button>
+                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="denunciaId('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelB">Avaliar</button>
+                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                onclick="abrirImagens('{{$denuncia->id}}')" data-toggle="modal" data-target="#exampleModalLabelC">Imagens</button>
+                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -155,135 +167,228 @@
         </div>
     </div>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#2a9df4;">
-                    <img src="{{ asset('img/logo_atencao3.png') }}" width="30px;" alt="Logo" style=" margin-right:15px; margin-top:10px;"/>
-                        <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white; 
-                            font-weight:bold; font-family: 'Roboto', sans-serif;">
-                            Descrição
-                        </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    @foreach ($denuncias as $denuncia)
+        <div class="modal fade" id="modal-texto-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#2a9df4;">
+                            <img src="{{ asset('img/logo_atencao3.png') }}" width="30px;" alt="Logo" style=" margin-right:15px; margin-top:10px;"/>
+                                <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white; 
+                                    font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                    Descrição
+                                </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="formRequerimento" method="POST" action="">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row form-row">
+                                <div id="avisoReq" class="col-12" style="font-family: 'Roboto', sans-serif; margin-bottom:10px;">Relato descrito pelo denunciante:</div>
+                                <div class="col-md-12 form-group">
+                                    <div class="texto-denuncia">
+                                        {!! $denuncia->texto !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                @if ($denuncia->denunciante != null)
+                                    <div class="col-md-12 form-group">
+                                        <label for="denunciante">{{__('Denunciante')}}</label>
+                                        <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form id="formRequerimento" method="POST" action="">
-                @csrf
+        </div>
+        
+        <div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#2a9df4;">
+                            <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
+                                <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                    Imagens da Denúncia
+                                </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a denúncia:</div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            @foreach ($denuncia->fotos as $foto)
+                                <div class="col-md-6">
+                                    <div class="card" style="width: 100%;">
+                                        <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                        @if ($foto->comentario != null)
+                                            <div class="card-body">
+                                                <p class="card-text">{{$foto->comentario}}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modal-avaliar-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-imagens-{{$denuncia->id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#2a9df4;">
+                            <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
+                                <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; 
+                                    font-family: 'Roboto', sans-serif;">
+                                Avaliar Denúncia
+                            </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12" style="font-family: 'Roboto', sans-serif;">
+                                Você deseja aprovar ou arquivar esta denúncia 
+                                <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <form method="POST" action="{{route('denuncias.avaliar')}}">
+                            @csrf
+                            <input type="hidden" name="denunciaId" id="denunciaId" value="{{$denuncia->id}}">
+                            <div class="form-row">
+                                <div class="col-md-6 form-group" style="padding-right: 20px">
+                                    <button type="submit" class="btn btn-success botao-form" style="width:100%"
+                                        name="aprovar" value="true">Aprovar</button>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <button type="submit" class="btn btn-danger botao-form" style="width:100px;"
+                                        name="aprovar" value="false">Arquivar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agendar visita para a denúcia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div id="avisoReq" class="col-12" style="font-family: 'Roboto', sans-serif; margin-bottom:10px;">Relato descrito pelo denunciante:</div>
-                        <div class="col-12"><textarea name="modalDenuncia" class="denuncia-ckeditor" value="" disabled></textarea></div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade bd-example-modal-lg" id="exampleModalLabelC" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#2a9df4;">
-                    <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                        <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
-                            Imagens da Denúncia
-                        </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a denúncia:</div>
-                </div>
-                <div id="tbody_imagens"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModalLabelB" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelB" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:#2a9df4;">
-                    <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                        <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; 
-                            font-family: 'Roboto', sans-serif;">
-                        Avaliar Denúncia
-                    </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12" style="font-family: 'Roboto', sans-serif;">
-                        Você deseja aprovar ou arquivar esta denúncia 
-                        <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>?
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <form method="POST" action="{{ route('denuncias.avaliar') }}">
-                    @csrf
-                    <input type="hidden" name="denunciaId" id="denunciaId" value="">
-                    <div class="form-row">
-                        <div class="col-md-6 form-group" style="padding-right: 20px">
-                            <button type="submit" class="btn btn-success botao-form" style="width:100%"
-                                name="aprovar" value="true">Aprovar</button>
+                    <form id="form-criar-visita-denuncia" method="POST" action="{{route('denuncias.visita.create')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                <label for="data">{{__('Data da visita')}}</label>
+                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}">
+                            
+                                @error('data')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <button type="submit" class="btn btn-danger botao-form" style="width:100px;"
-                                name="aprovar" value="false">Arquivar</button>
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                 <input type="hidden" name="denuncia_id" id="denuncia_id" value="">
+                                <label for="analista">{{__('Selecione o analista da visita')}}</label>
+                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                    <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                    @foreach ($analistas as $analista)
+                                        <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('analista')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                    <button type="submit" class="btn btn-success" form="form-criar-visita-denuncia">Criar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-atribuir" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Atribuir denúcia a um analista</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-atribuir-analista-denuncia" method="POST" action="{{route('denuncias.atribuir.analista')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="denuncia_id_analista" id="denuncia_id_analista" value="">
+                                    <label for="analista">{{__('Selecione o analista')}}</label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                        <option value="" selected disabled>-- {{__('Selecione o analista')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
 
-<script>
-    var editorCkeditor = null;
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="btn btn-success" form="form-atribuir-analista-denuncia">Criar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+    @if (old('denuncia_id') != null)
+        <script>
+            $(document).ready(function() {
+                $('#link-denuncias-aprovados').click();
+                $("#btn-criar-visita-{{old('denuncia_id')}}").click();
+            });
+        </script>
+    @endif
+    <script>
+        function adicionarId(id) {
+            document.getElementById('denuncia_id').value = id;
+        }
 
-    ClassicEditor
-        .create(document.querySelector( '.denuncia-ckeditor' ))
-        .then(editor => {   
-            editor.isReadOnly = true;
-            editorCkeditor = editor;
-        } )
-        .catch(error => {
-            console.error( error );
-        } );
-
-    window.denuncia = function(descricao){
-        editorCkeditor.setData(descricao);
-    }
-
-    window.abrirImagens = function(id){
-        $.ajax({
-            url:'/denuncias/imagens',
-            type:"get",
-            dataType:'json',
-            data: {"id": id },
-            success: function(response){
-                caminho = '<img style="margin-top: 10px; margin-bottom: 10px;" src="{{asset("storage/$")}}">';
-                var element = document.getElementById('tbody_imagens');
-                element.innerHTML = "";
-                for (let index = 0; index < response.table_data.length; index++) {
-                    resultado = caminho.replace("$", response.table_data[index]);
-                    element.innerHTML += resultado;   
-                }
-            }
-        });        
-    }
-
-    window.denunciaId = function(id){
-        document.getElementById("denunciaId").value = id;
-    }
-</script>
+        function adicionarIdAtribuir(id) {
+            document.getElementById('denuncia_id_analista').value = id;
+        }
+    </script>
 </x-app-layout>

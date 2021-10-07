@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\TipoAnalista;
 use App\Models\Documento;
+use Illuminate\Support\Facades\Redirect;
 
 class VisitaController extends Controller
 {
@@ -36,7 +37,7 @@ class VisitaController extends Controller
     public function create()
     {
         $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
-        $analistas = $this->analistas();
+        $analistas = User::analistas();
         
         return view('visita.create', compact('requerimentos', 'analistas'));
     }
@@ -86,7 +87,7 @@ class VisitaController extends Controller
         $visita = Visita::find($id);
         $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
         $requerimentos->push($visita->requerimento);
-        $analistas = $this->analistas();
+        $analistas = User::analistas();
 
         return view('visita.edit', compact('visita', 'requerimentos', 'analistas'));
     }
@@ -136,21 +137,24 @@ class VisitaController extends Controller
     }
 
     /**
-     * Retorna todos os analistas do sistema.
+     * Cria uma visita para o analista especificado da denúncia selecionada.
      *
-     * @return collect \App\Models\User $analistas
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    private function analistas() 
+    public function createVisitaDenuncia(Request $request) 
     {
-        $analistas = collect();
-        $users = User::where('role', User::ROLE_ENUM['analista'])->get();
-        
-        foreach ($users as $analista) {
-            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
-                $analistas->push($analista);
-            }
-        }
+        $request->validate([
+            'data' => 'required',
+            'analista' => 'required'
+        ]);
 
-        return $analistas;
+        $visita = new Visita();
+        $visita->data_marcada = $request->data;
+        $visita->denuncia_id = $request->denuncia_id;
+        $visita->analista_id = $request->analista;
+        $visita->save();
+
+        return redirect(route('denuncias.index'))->with(['success' => 'Visita agendada com sucesso!']);
     }
 }

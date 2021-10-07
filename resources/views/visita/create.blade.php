@@ -50,7 +50,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="requerimento">{{__('Selecione um requerimento')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="requerimento" id="requerimento" class="form-control @error('requerimento') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um requerimento')}} --</option>
                                         @foreach ($requerimentos as $requerimento)

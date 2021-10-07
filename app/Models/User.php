@@ -116,4 +116,47 @@ class User extends Authenticatable implements MustVerifyEmail
         
         return $requerimentos;
     }
+
+    /**
+     * Retorna todos os analistas do sistema.
+     *
+     * @return collect \App\Models\User $analistas
+     */
+    public static function analistas() 
+    {
+        $analistas = collect();
+        $users = User::where('role', User::ROLE_ENUM['analista'])->get();
+        
+        foreach ($users as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
+                $analistas->push($analista);
+            }
+        }
+
+        return $analistas;
+    }
+
+    /**
+     * Retorna os protocolistas cadastrados.
+     *
+     * @return App\Models\User $protocolistas
+     */
+    public static function protocolistas()
+    {
+        $protocolistas = collect();
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+
+        foreach ($analistas as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
+                $protocolistas->push($analista);
+            }
+        }
+
+        return $protocolistas;
+    }
+
+    public function denuncias()
+    {
+        return $this->hasMany(Denuncia::class, 'analista_id');
+    }
 }
