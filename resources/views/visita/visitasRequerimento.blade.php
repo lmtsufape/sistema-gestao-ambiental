@@ -58,7 +58,7 @@
                                                                     <a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>
                                                                 @endif
                                                                 <hr>
-                                                                <a class="dropdown-item">Notificar</a>
+                                                                <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
                                                                 <a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
                                                             </div>
