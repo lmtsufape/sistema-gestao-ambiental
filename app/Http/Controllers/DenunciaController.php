@@ -14,12 +14,25 @@ class DenunciaController extends Controller
 {
     public function index()
     {
-        $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
-        $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
-        $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
+        $denuncias_registradas = collect();
+        $denuncias_aprovadas = collect();
+        $denuncias_arquivadas = collect();
+        $user = auth()->user();
+        switch ($user->role) {
+            case User::ROLE_ENUM['secretario']:
+                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
+                break;
+            case User::ROLE_ENUM['analista']:
+                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
+                break;
+        }
 
         $denuncias = $denuncias_registradas->concat($denuncias_aprovadas)->concat($denuncias_arquivadas);
-        $analistas = User::analistas();
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
         
         return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas', 'denuncias', 'analistas'));
     }
@@ -102,5 +115,25 @@ class DenunciaController extends Controller
         $denuncia->update();
 
         return redirect()->back()->with(['success' => $msg]);
+    }
+
+    /**
+     * Atribuir uma denúncia a um analaista.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function atribuirAnalistaDenuncia(Request $request)
+    {
+        $request->validate([
+            'denuncia_id_analista' => 'required',
+            'analista'             => 'required',
+        ]);
+
+        $denuncia = Denuncia::find($request->denuncia_id_analista);
+        $denuncia->analista_id = $request->analista;
+        $denuncia->update();
+
+        return redirect(route('denuncias.index'))->with(['success' => 'Denúncia atribuida com sucesso ao analista.']);
     }
 }

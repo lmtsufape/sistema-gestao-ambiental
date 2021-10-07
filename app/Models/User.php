@@ -154,4 +154,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $protocolistas;
     }
+
+    public function denuncias()
+    {
+        return $this->hasMany(Denuncia::class, 'analista_id');
+    }
 }

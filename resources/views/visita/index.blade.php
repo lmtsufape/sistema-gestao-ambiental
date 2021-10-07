@@ -88,7 +88,6 @@
                                                                 <a class="dropdown-item">Notificar</a>
                                                                 @if($visita->requerimento != null)<a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>@endif
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
-
                                                             </div>
                                                         </div>
                                                     </div>

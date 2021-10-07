@@ -62,6 +62,10 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
@@ -98,10 +102,14 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
+                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                    data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
                                                                 data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
@@ -134,6 +142,10 @@
                                                             <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                            @can('isSecretario', \App\Models\User::class)
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
+                                                            @endcan
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
                                                             <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
@@ -274,7 +286,7 @@
             </div>
         </div>
     @endforeach
-    <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens-{{$denuncia->id}}" aria-hidden="true">
+    <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -323,6 +335,45 @@
             </div>
         </div>
     </div>
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-atribuir" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Atribuir denúcia a um analista</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-atribuir-analista-denuncia" method="POST" action="{{route('denuncias.atribuir.analista')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="denuncia_id_analista" id="denuncia_id_analista" value="">
+                                    <label for="analista">{{__('Selecione o analista')}}</label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                        <option value="" selected disabled>-- {{__('Selecione o analista')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="btn btn-success" form="form-atribuir-analista-denuncia">Criar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
     @if (old('denuncia_id') != null)
         <script>
             $(document).ready(function() {
@@ -334,6 +385,10 @@
     <script>
         function adicionarId(id) {
             document.getElementById('denuncia_id').value = id;
+        }
+
+        function adicionarIdAtribuir(id) {
+            document.getElementById('denuncia_id_analista').value = id;
         }
     </script>
 </x-app-layout>
