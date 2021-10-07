@@ -76,6 +76,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
 Route::post('/denuncias/store', [DenunciaController::class, 'store'])->name('denuncias.store');
+Route::get('/denuncias/acompanhar', [DenunciaController::class, 'statusDenuncia'])->name('denuncias.acompanhar');
 Route::get('/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('enviar.mensagem');
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])

@@ -21,6 +21,7 @@ class CreateDenunciasTable extends Migration
             $table->text('texto');
             $table->string('denunciante')->nullable();
             $table->integer('aprovacao')->nullable();
+            $table->string('protocolo');
 
             $table->timestamps();
         });

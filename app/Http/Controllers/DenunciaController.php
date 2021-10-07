@@ -7,6 +7,7 @@ use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\FotoDenuncia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class DenunciaController extends Controller
@@ -37,6 +38,8 @@ class DenunciaController extends Controller
         $denuncia->endereco = $data['endereco'] ?? "";
         $denuncia->denunciante = $data['denunciante'] ?? "";
         $denuncia->aprovacao = Denuncia::APROVACAO_ENUM["registrada"];
+        $protocolo = Hash::make('texto');
+        $denuncia->protocolo = $protocolo;
         $denuncia->save();
 
         if (array_key_exists("imagem", $data))
@@ -52,7 +55,7 @@ class DenunciaController extends Controller
                 $foto_denuncia->save();
             }
 
-        return redirect()->back()->with(['success' => 'Denúncia cadastrada com sucesso!']);
+        return redirect()->back()->with(['success' => 'Denúncia cadastrada com sucesso!', 'protocolo' => $protocolo]);
     }
 
     public function edit()
@@ -98,4 +101,15 @@ class DenunciaController extends Controller
             return redirect()->back()->with(['success' => 'Denuncia arquivada com sucesso!']);
         }
     }
+
+    public function statusDenuncia(Request $request)
+    {
+        $denuncia = Denuncia::where('protocolo', $request->protocolo)->first();
+        if($denuncia == null){
+            return redirect()->back()->with(['error' => 'A denúncia informada não se encontra no banco de registro de denúncias.']);
+        }else{
+            return view('denuncia.status', compact('denuncia'));
+        }
+    }
+
 }
