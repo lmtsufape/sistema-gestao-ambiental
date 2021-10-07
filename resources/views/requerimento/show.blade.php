@@ -152,7 +152,7 @@
                                                 <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{$requerimento->empresa->telefone->numero}}" disabled autocomplete="celular">
                                             </div>
                                             <div class="col-md-6 form-group">
-                                                <label for="setor">{{ __('Setor de atuação') }}</label>
+                                                <label for="setor">{{ __('Tipologia da empresa') }}</label>
                                                 <select id="setor" class="form-control @error('setor') is-invalid @enderror" type="text" name="setor" required autofocus autocomplete="setor" disabled>
                                                     <option value="">{{$requerimento->empresa->cnaes[0]->setor->nome}}</option>
                                                 </select>

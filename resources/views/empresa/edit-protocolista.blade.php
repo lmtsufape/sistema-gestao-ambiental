@@ -60,7 +60,7 @@
                                             <div class="form-group col-md-12" >
                                                 <label for="setor">{{ __('Tipologia') }}</label>
                                                 <select class="form-control @error('setor') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                    <option value="">-- Selecionar uma Tipologia --</option>
+                                                    <option value="">-- Selecionar a Tipologia --</option>
                                                     @foreach ($setores as $setor)
                                                         <option value={{$setor->id}}>{{$setor->nome}}</option>
                                                     @endforeach

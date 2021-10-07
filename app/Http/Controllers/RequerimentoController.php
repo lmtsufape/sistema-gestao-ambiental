@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\DocumentosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosAnalisadosNotification;
+use App\Notifications\EmpresaModificadaNotification;
 
 class RequerimentoController extends Controller
 {
@@ -474,7 +475,7 @@ class RequerimentoController extends Controller
                 $requerimento->empresa->porte = Empresa::PORTE_ENUM[$request->porte];
                 $requerimento->empresa->update();
             }
-
+            Notification::send($requerimento->empresa->user, new EmpresaModificadaNotification($historico, 'Informações modificadas da empresa'));
             return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Informações atualizadas com sucesso.']);
         }
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Nenhuma modificação feita.']);

@@ -51,101 +51,122 @@
                                                 <h6 style="color: rgb(202, 28, 28)">Modificações feitas por {{$modificacao->user->name}}</h6>
                                             </div><hr>
                                             @if ($modificacao->porte != null)
-                                                <hr><div class="col-md-6">
-                                                    <h5>Porte</h5>
-                                                </div><hr>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Porte modificado</th>
-                                                            <th scope="col">Porte anterior</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            @switch($modificacao->porte()->first()->porte_atual)
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['micro'])
-                                                                    <td>{{__('Micro')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['pequeno'])
-                                                                    <td>{{__('Pequeno')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['medio'])
-                                                                    <td>{{__('Médio')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['grande'])
-                                                                    <td>{{__('Grande')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['especial'])
-                                                                    <td>{{__('Especial')}}</td>
-                                                                    @break
-                                                            @endswitch
-                                                            @switch($modificacao->porte()->first()->porte_antigo)
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['micro'])
-                                                                    <td>{{__('Micro')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['pequeno'])
-                                                                    <td>{{__('Pequeno')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['medio'])
-                                                                    <td>{{__('Médio')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['grande'])
-                                                                    <td>{{__('Grande')}}</td>
-                                                                    @break
-                                                                @case(\App\Models\Empresa::PORTE_ENUM['especial'])
-                                                                    <td>{{__('Especial')}}</td>
-                                                                    @break
-                                                            @endswitch
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            @endif
-                                            @if($modificacao->cnaes()->first() != null)
-                                                <div class="col-md-6">
-                                                    <h5>Cnaes modificados</h5>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="mb-0">
+                                                                {{__('Porte')}}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Porte modificado</th>
+                                                                    <th scope="col">Porte anterior</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    @switch($modificacao->porte()->first()->porte_atual)
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['micro'])
+                                                                            <td>{{__('Micro')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['pequeno'])
+                                                                            <td>{{__('Pequeno')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['medio'])
+                                                                            <td>{{__('Médio')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['grande'])
+                                                                            <td>{{__('Grande')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['especial'])
+                                                                            <td>{{__('Especial')}}</td>
+                                                                            @break
+                                                                    @endswitch
+                                                                    @switch($modificacao->porte()->first()->porte_antigo)
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['micro'])
+                                                                            <td>{{__('Micro')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['pequeno'])
+                                                                            <td>{{__('Pequeno')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['medio'])
+                                                                            <td>{{__('Médio')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['grande'])
+                                                                            <td>{{__('Grande')}}</td>
+                                                                            @break
+                                                                        @case(\App\Models\Empresa::PORTE_ENUM['especial'])
+                                                                            <td>{{__('Especial')}}</td>
+                                                                            @break
+                                                                    @endswitch
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Cnae</th>
-                                                            <th scope="col">Código</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($modificacao->cnaes as $cnae_modificado)
-                                                            @if ($cnae_modificado->novo == true)
-                                                                <tr>
-                                                                    <td>{{$cnae_modificado->cnae->nome}}</td>
-                                                                    <td>{{$cnae_modificado->cnae->codigo}}</td>
-                                                                </tr>
-                                                            @endif
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                <br>
                                             @endif
                                             @if($modificacao->cnaes()->first() != null)
-                                                <div class="col-md-6">
-                                                    <h5>Cnaes anteriores</h5>
-                                                </div><hr>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Cnae</th>
-                                                            <th scope="col">Código</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($modificacao->cnaes as $cnae_modificado)
-                                                            @if ($cnae_modificado->novo == false)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="mb-0">
+                                                                {{__('Cnaes foram modificados para os seguintes')}}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table class="table">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td>{{$cnae_modificado->cnae->nome}}</td>
-                                                                    <td>{{$cnae_modificado->cnae->codigo}}</td>
+                                                                    <th scope="col">Cnae</th>
+                                                                    <th scope="col">Código</th>
                                                                 </tr>
-                                                            @endif
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($modificacao->cnaes as $cnae_modificado)
+                                                                    @if ($cnae_modificado->novo == true)
+                                                                        <tr>
+                                                                            <td>{{$cnae_modificado->cnae->nome}}</td>
+                                                                            <td>{{$cnae_modificado->cnae->codigo}}</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            @endif
+                                            @if($modificacao->cnaes()->first() != null)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="mb-0">
+                                                                {{__('Cnaes anteriores')}}
+                                                        </h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Cnae</th>
+                                                                    <th scope="col">Código</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($modificacao->cnaes as $cnae_modificado)
+                                                                    @if ($cnae_modificado->novo == false)
+                                                                        <tr>
+                                                                            <td>{{$cnae_modificado->cnae->nome}}</td>
+                                                                            <td>{{$cnae_modificado->cnae->codigo}}</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br>
                                             @endif
                                         </div>
                                     </div>

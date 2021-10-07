@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Setor') }}
+            {{ __('Tipologia') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Cnaes do setor {{$setor->nome}} cadastrados no sistema</h5>
+                                <h5 class="card-title">Cnaes da tipologia {{$setor->nome}} cadastrados no sistema</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Cnaes</h6>
                             </div>
                             <div class="col-md-4" style="text-align: right">
@@ -109,7 +109,7 @@
                         <form id="deletar-cnae-form-{{$cnae->id}}" method="POST" action="{{route('cnaes.destroy', ['cnae' => $cnae])}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
-                            Tem certeza que deseja deletar o cnae {{$cnae->nome}} do setor {{$setor->nome}}?
+                            Tem certeza que deseja deletar o cnae {{$cnae->nome}} da tipologia {{$setor->nome}}?
                         </form>
                     </div>
                     <div class="modal-footer">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar setor') }}
+            {{ __('Editar tipologia') }}
         </h2>
     </x-slot>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Editar o setor {{$setor->nome}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Setor > Editar setor</h6>
+                                <h5 class="card-title">Editar a tipologia {{$setor->nome}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Tipologia > Editar tipologia</h6>
                             </div>
                         </div>
                         <div div class="form-row">

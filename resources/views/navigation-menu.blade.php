@@ -20,7 +20,7 @@
                             {{ __('Usuários') }}
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
-                            {{ __('Setores') }}
+                            {{ __('Tipologias') }}
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('documentos.index')}}" :active="request()->routeIs('documentos.*')">
                             {{ __('Documentos') }}
@@ -185,9 +185,6 @@
             <x-jet-responsive-nav-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                 {{ __('Usuários') }}
             </x-jet-responsive-nav-link>
-                <x-jet-nav-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
-                    {{ __('Setores') }}
-                </x-jet-nav-link>
             @endif
         </div>
 
