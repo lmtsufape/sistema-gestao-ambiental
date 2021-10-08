@@ -45,6 +45,12 @@ class NotificacaoCriadaNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        $comentarios = [];
+        foreach ($this->notificacao->fotos as $index => $foto)
+        {
+            $comentarios[$index]  = "Comentário da foto" . ($index + 1) . ": " . $foto->comentario;
+        }
+
         $message = (new MailMessage)
             ->markdown(
                 'mail.notificacao_criada',
@@ -52,6 +58,7 @@ class NotificacaoCriadaNotification extends Notification implements ShouldQueue
                     'empresa' => $this->empresa->nome,
                     'imagens' => !$this->notificacao->fotos->isEmpty(),
                     'texto' => $this->notificacao->texto,
+                    'comentarios' => $comentarios,
                 ]
             )->subject('Notificação da Secretária de Meio Ambiente');
         foreach ($this->notificacao->fotos as $index => $foto) {

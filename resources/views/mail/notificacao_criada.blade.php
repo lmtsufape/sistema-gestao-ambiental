@@ -10,6 +10,12 @@
         Foi criada uma notificação para a empresa {{ $empresa }} @if ($imagens), as imagens seguem em anexo.@endif
     </p>
     <div>{!! $texto !!}</div>
+    @if ($comentarios)
+        <div>Comentário das imagens</div>
+        @foreach ($comentarios as $comentario)
+            <div>{{$comentario}}</div>
+        @endforeach
+    @endif
     <p style="'Times New Roman', Times, serif; font-size: 12px;">
         Atenciosamente, <br>
         {{ config('app.name') }} <br>

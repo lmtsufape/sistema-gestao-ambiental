@@ -28,6 +28,7 @@ class NotificacaoRequest extends FormRequest
         return [
             'texto'    => ['required', 'min:20', 'string'],
             "imagem.*" => ['nullable', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
+            "comentario.*" => ['nullable', 'string'],
         ];
     }
 }
