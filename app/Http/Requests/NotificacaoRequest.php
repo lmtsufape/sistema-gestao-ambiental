@@ -14,7 +14,8 @@ class NotificacaoRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->role == User::ROLE_ENUM['analista'];
+        $role = auth()->user()->role;
+        return $role == User::ROLE_ENUM['analista'] || $role == User::ROLE_ENUM['secretario'];
     }
 
     /**
