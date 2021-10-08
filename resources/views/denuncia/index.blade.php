@@ -31,11 +31,11 @@
                                     type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button" 
+                                <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button"
                                     aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab" 
+                                <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab"
                                     aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</button>
                             </li>
                         </ul>
@@ -63,15 +63,15 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                             @can('isSecretario', \App\Models\User::class)
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
                                                             @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
+                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
+                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens e vídeos</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -103,14 +103,14 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                             @can('isSecretario', \App\Models\User::class)
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                     data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                     data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
                                                             @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
                                                     </div>
@@ -143,14 +143,14 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                             @can('isSecretario', \App\Models\User::class)
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
                                                             @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;" 
+                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
                                                                 data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
                                                         </div>
                                                     </div>
@@ -173,7 +173,7 @@
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#2a9df4;">
                             <img src="{{ asset('img/logo_atencao3.png') }}" width="30px;" alt="Logo" style=" margin-right:15px; margin-top:10px;"/>
-                                <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white; 
+                                <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white;
                                     font-weight:bold; font-family: 'Roboto', sans-serif;">
                                     Descrição
                                 </h5>
@@ -205,14 +205,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#2a9df4;">
                             <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
                                 <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
-                                    Imagens da Denúncia
+                                    Mídias da Denúncia
                                 </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -237,6 +237,31 @@
                                 </div>
                             @endforeach
                         </div>
+
+                        @if ($denuncia->videos->first() != null)
+                            <div class="row">
+                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Vídeos anexados junto a denúncia:</div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                @foreach ($denuncia->videos as $video)
+                                    <div class="col-md-6">
+                                        <video width="320" height="240" controls>
+                                            <source src="{{asset('storage/' . $video->caminho)}}" >
+                                            Seu navegador não suporta o tipo de vídeo.
+                                        </video>
+                                        <div class="card" style="width: 100%;">
+                                            @if ($video->comentario != null)
+                                                <div class="card-body">
+                                                    <p class="card-text">{{$video->comentario}}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -244,13 +269,13 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="modal fade" id="modal-avaliar-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-imagens-{{$denuncia->id}}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#2a9df4;">
                             <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                                <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; 
+                                <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold;
                                     font-family: 'Roboto', sans-serif;">
                                 Avaliar Denúncia
                             </h5>
@@ -261,7 +286,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12" style="font-family: 'Roboto', sans-serif;">
-                                Você deseja aprovar ou arquivar esta denúncia 
+                                Você deseja aprovar ou arquivar esta denúncia
                                 <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>?
                             </div>
                         </div>
@@ -300,7 +325,7 @@
                             <div class="col-md-12 form-group">
                                 <label for="data">{{__('Data da visita')}}</label>
                                 <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}">
-                            
+
                                 @error('data')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                         {{ $message }}
