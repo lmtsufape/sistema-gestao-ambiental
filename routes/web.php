@@ -14,6 +14,7 @@ use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\NotificacaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::put('/relatorio/{relatorio}/update', [RelatorioController::class, 'update'])->name('relatorios.update');
     Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
     Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
+
+    Route::resource('empresas.notificacoes', NotificacaoController::class)
+        ->shallow()
+        ->parameters(['notificacoes' => 'notificacao']);
 
     Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
