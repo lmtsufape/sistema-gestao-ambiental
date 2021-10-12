@@ -35,6 +35,14 @@
                                 </div>
                             </div>
                         @endif
+                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])                         
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Atenção!</strong> Todos os documentos devem estar autenticados!
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <form method="POST" id="enviar-documentos" action="{{route('requerimento.enviar.documentos', $requerimento->id)}}" enctype="multipart/form-data">
                             <input type="hidden" name="requerimento_id" value="{{$requerimento->id}}">
                             @csrf
