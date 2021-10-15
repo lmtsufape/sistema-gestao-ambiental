@@ -69,6 +69,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::resource('empresas.notificacoes', NotificacaoController::class)
         ->shallow()
         ->parameters(['notificacoes' => 'notificacao']);
+    Route::get('/notificacoes-get', [NotificacaoController::class, 'get'])->name('notificacoes.get');
 
     Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
