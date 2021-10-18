@@ -159,4 +159,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Denuncia::class, 'analista_id');
     }
+
+    public function ehAnalista() 
+    {
+        if ($this->role == User::ROLE_ENUM['analista']) {
+            return $this->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count()  > 0;
+        }
+
+        return false;
+    }
 }
