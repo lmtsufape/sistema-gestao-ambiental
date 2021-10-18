@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Requerimento;
 use App\Http\Requests\LicencaRequest;
 use App\Models\Licenca;
+use App\Models\Visita;
 
 class LicencaController extends Controller
 {
@@ -27,9 +28,12 @@ class LicencaController extends Controller
      */
     public function create($id)
     {
-        $requerimento = Requerimento::find($id);
-        
-        return view('licenca.create', compact('requerimento'));
+        $visita = Visita::find($id);
+        $this->authorize('analistaDaVisita', $visita);
+
+        $requerimento = $visita->requerimento;
+
+        return view('licenca.create', compact('requerimento', 'visita'));
     }
 
     /**
@@ -40,8 +44,11 @@ class LicencaController extends Controller
      */
     public function store(LicencaRequest $request)
     {
+        $visita = Visita::find($request->visita);
+        $this->authorize('analistaDaVisita', $visita);
+
         $requerimento = Requerimento::find($request->requerimento);
-        
+
         $licenca = new Licenca();
         $licenca->setAtributes($request, $requerimento);
 

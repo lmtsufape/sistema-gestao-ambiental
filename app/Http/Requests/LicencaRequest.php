@@ -24,10 +24,11 @@ class LicencaRequest extends FormRequest
     public function rules()
     {   
         return [
-            'requerimento' => 'required',
-            'licença' => 'required|file|mimes:pdf|max:2048',
-            'data_de_validade' => 'required|date',
-            'tipo_de_licença' => 'required',
+            'visita'            => 'required',
+            'requerimento'      => 'required',
+            'licença'           => 'required|file|mimes:pdf|max:2048',
+            'data_de_validade'  => 'required|date',
+            'tipo_de_licença'   => 'required',
         ];
     }
 }
