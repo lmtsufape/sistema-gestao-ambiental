@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                    <h5 class="card-title">Notificações cadastradas</h5>
+                                <h5 class="card-title">Notificações à empresa {{$empresa->nome}} cadastradas no sistema</h5>
                             </div>
                             @can('create', App\Models\Notificacao::class)
                                 <div class="col-md-4" style="text-align: right">
@@ -31,16 +31,16 @@
                         <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">#</th>
                                         <th scope="col">Data</th>
-                                        <th scope="col">Empresa</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($empresa->notificacoes as $notificacao)
+                                    @foreach ($empresa->notificacoes as $i => $notificacao)
                                         <tr>
+                                            <th>{{$i+1}}</th>
                                             <td>{{date('d/m/Y', strtotime($notificacao->created_at))}}</td>
-                                            <td>{{$notificacao->empresa->nome}}</td>
                                             <td>
                                                 <a href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}">Visualizar</a>
                                             </td>
