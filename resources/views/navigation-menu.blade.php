@@ -31,6 +31,9 @@
                         <x-jet-nav-link href="{{route('denuncias.index')}}" :active="request()->routeIs('denuncias.*')">
                             {{ __('Denúncias') }}
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('mudas.index')}}" :active="request()->routeIs('solicitacoes.mudas.*')">
+                            Solicitações
+                        </x-jet-nav-link>
                     @endcan
                     @can('isRequerenteOrSecretario', \App\Models\User::class)
                         <x-jet-nav-link href="{{route('requerimentos.index')}}" :active="request()->routeIs('requerimentos.*')">
@@ -48,6 +51,9 @@
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('requerimentos.analista')}}" :active="request()->routeIs('requerimentos.*')">
                             {{ __('Requerimentos') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('mudas.index')}}" :active="request()->routeIs('solicitacoes.mudas.*')">
+                            Solicitações
                         </x-jet-nav-link>
                     @endcan
                     @can('isSecretarioOrAnalista', \App\Models\User::class)
