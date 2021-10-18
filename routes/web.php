@@ -15,6 +15,7 @@ use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\NotificacaoController;
+use App\Http\Controllers\SolicitacaoMudaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +80,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');
     Route::post('/denuncias/atribuir/analista', [DenunciaController::class, 'atribuirAnalistaDenuncia'])->name('denuncias.atribuir.analista');
+
+    Route::get('/solicitacoes/mudas/{solicitacao}/show', [SolicitacaoMudaController::class, 'show'])->name('mudas.show');
+    Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
 });
+
+Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
+Route::view('/solicitacoes/mudas/create', '/solicitacoes/mudas/create')->name('mudas.create');
+Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
 Route::post('/denuncias/store', [DenunciaController::class, 'store'])->name('denuncias.store');
