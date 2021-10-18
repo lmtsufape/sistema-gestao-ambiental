@@ -101,6 +101,7 @@
                                                             <div class="dropdown-divider"></div>
                                                             <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
                                                             <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
+                                                            @if($visita->requerimento->licenca != null) <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> @elseif($visita->relatorioAceito()) <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->requerimento->id])}}">Emitir licença</a> @endif
                                                         </div>
                                                     </div>
                                                 @endcan

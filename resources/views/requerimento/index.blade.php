@@ -344,7 +344,11 @@
                                                 @if($requerimento->valor == null)
                                                     {{__('Em definição')}}
                                                 @else
-                                                    R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                        Pago
+                                                    @else
+                                                        R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
@@ -368,7 +372,11 @@
                                                     @endcan
                                                 @endif
                                                 @can('isRequerente', \App\Models\User::class)
-                                                    @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                        <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}">
+                                                            Visualizar licença
+                                                        </a>
+                                                    @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                         @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                             <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
                                                                 Enviar documentação
