@@ -72,7 +72,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="valor">{{__('Valor')}}</label>
                                     <input type="text" value="{{old('valor')}}" name="valor" id="valor" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
-                                
+
                                     @error('valor')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -87,7 +87,7 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" class="btn btn-success" style="width: 100%;" form="valor-form">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="valor-form">Salvar</button>
                             </div>
                         </div>
                     </div>

@@ -78,7 +78,7 @@
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>
                                     <div class="col-md-6" style="text-align: right">
-                                        <button type="submit" class="btn btn-success" form="analisar-documentos" style="width: 100%">Enviar análise</button>
+                                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="analisar-documentos" style="width: 100%">Enviar análise</button>
                                     </div>
                             </div>
                         </div>

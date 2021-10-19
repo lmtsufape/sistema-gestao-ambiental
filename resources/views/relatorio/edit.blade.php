@@ -24,7 +24,7 @@
                                         <hr>
                                         <p class="mb-0">Esse relatório já foi aprovado, logo edições estão desativadas.</p>
                                     </div>
-                                @elseif($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado']) 
+                                @elseif($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'])
                                     <div class="alert alert-warning" role="alert">
                                         <h4 class="alert-heading">Necessária revisão</h4>
                                         <hr>
@@ -132,13 +132,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="card-footer">
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-success" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
+                                <button  id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
                             </div>
                         </div>
                     </div>

@@ -145,7 +145,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="form-relatorio-aprovar">Aprovar</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-relatorio-aprovar">Aprovar</button>
                 </div>
             </div>
         </div>
@@ -175,7 +175,7 @@
                             <div class="col-md-12">
                                 <label for="motivo">Motivo da revisão</label>
                                 <textarea class="form-control" name="motivo" id="motivo" cols="30" rows="5" placeholder="Digite aqui..."></textarea>
-                            
+
                                 @error('motivo')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                         {{ $message }}
@@ -187,7 +187,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning" form="form-relatorio-reprovar">Revisar</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-warning" form="form-relatorio-reprovar">Revisar</button>
                 </div>
             </div>
         </div>

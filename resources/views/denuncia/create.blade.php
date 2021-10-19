@@ -272,7 +272,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" id="submit-denuncia" class="btn btn-success" form="cria-denuncia" style="width: 100%">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success" form="cria-denuncia" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
@@ -334,7 +334,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="status-denuncia">Ir</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-success" form="status-denuncia">Ir</button>
                 </div>
             </div>
         </div>
@@ -345,7 +345,7 @@
     ClassicEditor
         .create( document.querySelector( '#denuncia-ckeditor' ) )
         .then( editor => {
-             document.querySelector( '#submit-denuncia' ).addEventListener( 'click', (event) => {
+             document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
                 const editorData = editor.getData();
 
                 if(editorData == ""){

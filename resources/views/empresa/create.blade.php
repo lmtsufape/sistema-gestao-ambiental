@@ -228,7 +228,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" class="btn btn-success" style="width: 100%;" form="form-cadastrar-empresa">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="form-cadastrar-empresa">Salvar</button>
                             </div>
                         </div>
                     </div>

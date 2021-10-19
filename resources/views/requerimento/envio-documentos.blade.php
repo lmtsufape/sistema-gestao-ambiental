@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])                         
+                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong>Atenção!</strong> Todos os documentos devem estar autenticados!
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -141,7 +141,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning" form="enviar-documentos">Enviar</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-warning" form="enviar-documentos">Enviar</button>
                 </div>
             </div>
         </div>

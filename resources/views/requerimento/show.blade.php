@@ -339,7 +339,7 @@
                                         <div class="col-md-6">
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
+                                            <button id="submeterFormBotao" class="btn btn-success" style="width: 100%;">Atribuir ao analista</button>
                                         </div>
                                     </div>
                                 </form>
@@ -398,12 +398,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" form="documentos-form">Enviar</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form">Enviar</button>
                     </div>
                 </div>
             </div>
         </div>
-    @else 
+    @else
         <!-- Modal documentos -->
         <div class="modal fade" id="documentos-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -450,7 +450,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
                     </div>
                 </div>
             </div>
