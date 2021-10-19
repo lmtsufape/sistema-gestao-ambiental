@@ -25,9 +25,13 @@
                                 </div>
                             @endif
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="texto">{{ __('Texto') }}</label>
-                                    <textarea class="form-control" id="texto" disabled rows="5" name="texto">{{$notificacao->texto}}</textarea>
+                                <div class="col-md-12" style="margin-bottom:20px">
+                                    <div class="card-body">
+                                        <div class="alert alert-warning" role="alert">
+                                            <div id="notificacao" style="margin-top: 10px">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -48,7 +52,21 @@
 
 
 
-    <script>
-        CKEDITOR.replace('texto');
-    </script>
+
 </x-app-layout>
+<script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "{{route('notificacoes.get')}}",
+            method: 'get',
+            type: 'get',
+            data: {"notificacao_id": "{{$notificacao->id}}"},
+            dataType:'json',
+            success: function(notificacao){
+                var divNificacao = document.getElementById('notificacao');
+                divNificacao.innerHTML = notificacao.texto;
+            },
+        });
+    });
+</script>

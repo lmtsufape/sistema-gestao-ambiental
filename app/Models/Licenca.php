@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\LicencaRequest;
+use Illuminate\Support\Facades\Storage;
 
 class Licenca extends Model
 {
@@ -28,10 +30,51 @@ class Licenca extends Model
         'status',
         'tipo',
         'validade',
+        'caminho'
     ];
 
     public function requerimento()
     {
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
+    }
+
+    public function setAtributes(LicencaRequest $request, Requerimento $requerimento) 
+    {
+        $this->status = Licenca::STATUS_ENUM['aprovada'];
+        $this->tipo = $request->input('tipo_de_licença');
+        $this->validade = $request->data_de_validade;
+        $this->requerimento_id = $requerimento->id;
+        $this->protocolo = $this->gerarProtocolo();
+        $this->save();
+        $this->caminho = $this->salvarLicenca($request->file('licença'), $requerimento);
+        $this->update();
+    }
+
+    public function salvarLicenca($file, Requerimento $requerimento) 
+    {
+        if ($this->caminho != null) {
+            if (Storage::disk()->exists('public/'. $this->caminho)) {
+                Storage::delete('public/'. $this->caminho);
+            }
+        }
+        
+        $caminho_licencas = "requerimentos/" . $requerimento->id . "/licenca/" . $this->id . "/";
+        $documento_nome = $file->getClientOriginalName();
+        Storage::putFileAs('public/' . $caminho_licencas, $file, $documento_nome);
+        return $caminho_licencas . $file->getClientOriginalName();
+    }
+
+    public function gerarProtocolo() 
+    {
+        $max = 9999999999;
+        $min = 1000000000;
+
+        $protocolo = null;
+        do {    
+            $protocolo = rand($min, $max);
+            $checagem = Licenca::where('protocolo',$protocolo)->first();
+        } while ($checagem != null);
+
+        return $protocolo;
     }
 }

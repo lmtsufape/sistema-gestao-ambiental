@@ -16,6 +16,8 @@ use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\SolicitacaoMudaController;
+use App\Http\Controllers\LicencaController;
+use App\Models\Licenca;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,7 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
@@ -70,6 +72,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::resource('empresas.notificacoes', NotificacaoController::class)
         ->shallow()
         ->parameters(['notificacoes' => 'notificacao']);
+    Route::get('/notificacoes-get', [NotificacaoController::class, 'get'])->name('notificacoes.get');
 
     Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
@@ -85,6 +88,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
     Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
     Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
+    
+    Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
+    Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
+    Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 });
 
 Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');

@@ -1,3 +1,3 @@
-# Privacy Policy
+# Política de privacidade
 
-Edit this file to define the privacy policy for your application.
+Edite esse arquivo para definir a política de privacidade de sua aplicação.
