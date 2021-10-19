@@ -46,4 +46,14 @@ class Visita extends Model
     {
         return $this->belongsTo(User::class, 'analista_id');
     }
+
+    public function relatorioAceito() 
+    {
+        if ($this->relatorio != null) {
+            return $this->relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado'];
+        } 
+
+        return false;
+    }
+
 }

@@ -15,6 +15,8 @@ use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\NotificacaoController;
+use App\Http\Controllers\LicencaController;
+use App\Models\Licenca;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
@@ -80,6 +82,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');
     Route::post('/denuncias/atribuir/analista', [DenunciaController::class, 'atribuirAnalistaDenuncia'])->name('denuncias.atribuir.analista');
+
+    Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
+    Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
+    Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
