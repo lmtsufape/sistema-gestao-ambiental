@@ -49,7 +49,7 @@
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
                                         <h5 class="card-title mb-0"
                                             style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">
-                                            Status da denúncia</h5>
+                                            Status da solicitação</h5>
                                     </div>
                                     <div class="col-md-12">
                                         @switch($solicitacao->status)
@@ -61,6 +61,7 @@
                                             @break
                                             @case(\App\Models\SolicitacaoMuda::STATUS_ENUM['indeferido'])
                                                 <h5>Solicitação indeferida</h5>
+                                                <p>Motivo: {{$solicitacao->motivo_indeferimento}}</p>
                                             @break
                                         @endswitch
                                     </div>

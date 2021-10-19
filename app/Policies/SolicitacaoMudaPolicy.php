@@ -33,7 +33,7 @@ class SolicitacaoMudaPolicy
      * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function view(User $user)
     {
         return true;
     }
@@ -49,6 +49,11 @@ class SolicitacaoMudaPolicy
         return true;
     }
 
+    public function edit(User $user)
+    {
+        return $this->index($user);
+    }
+
     /**
      * Determine whether the user can update the model.
      *
@@ -56,9 +61,9 @@ class SolicitacaoMudaPolicy
      * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function avaliar(User $user)
     {
-        return false;
+        return $this->index($user);
     }
 
     /**

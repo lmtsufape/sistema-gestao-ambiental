@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SolicitacaoMudaAvaliarRequest;
 use App\Http\Requests\SolicitacaoMudaRequest;
 use App\Models\SolicitacaoMuda;
 use Illuminate\Http\Request;
@@ -62,17 +63,25 @@ class SolicitacaoMudaController extends Controller
             return view('solicitacoes.mudas.status', compact('solicitacao'));
         }
     }
+    public function edit(SolicitacaoMuda $solicitacao)
+    {
+        $this->authorize('edit', SolicitacaoMuda::class);
+        return view('solicitacoes.mudas.edit', ['solicitacao' => $solicitacao]);
+    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SolicitacaoMudaAvaliarRequest  $request
      * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SolicitacaoMuda $solicitacaoMuda)
+    public function avaliar(SolicitacaoMudaAvaliarRequest $request, SolicitacaoMuda $solicitacao)
     {
-        //
+        $this->authorize('avaliar', SolicitacaoMuda::class);
+        $solicitacao->fill($request->validated());
+        $solicitacao->update();
+        return redirect()->action([SolicitacaoMudaController::class, 'index'])->with('success', 'Solicitação de muda avalida com sucesso');
     }
 
     /**

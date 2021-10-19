@@ -54,7 +54,8 @@
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
-                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" class="btn btn-success btn-default">Visualizar</a>
+                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" >Visualizar</a>
+                                                    <a href=" {{route('mudas.edit', $solicitacao)}} " type="submit" >Avaliar</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -76,23 +77,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
-                                                    {{-- <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
-                                                            @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
-                                                        </div>
-                                                    </div> --}}
+                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" >Visualizar</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -114,23 +99,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
-                                                    {{-- <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                            @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
-                                                        </div>
-                                                    </div> --}}
+                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" >Visualizar</a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -82,6 +82,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     Route::post('/denuncias/atribuir/analista', [DenunciaController::class, 'atribuirAnalistaDenuncia'])->name('denuncias.atribuir.analista');
 
     Route::get('/solicitacoes/mudas/{solicitacao}/show', [SolicitacaoMudaController::class, 'show'])->name('mudas.show');
+    Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
+    Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
     Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
 });
 
