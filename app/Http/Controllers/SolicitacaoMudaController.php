@@ -35,7 +35,11 @@ class SolicitacaoMudaController extends Controller
         $data = $request->validated();
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
-        $protocolo = Hash::make(date("Y-m-d H:i:s"));
+        $protocolo = null;
+        do {
+            $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
+            $check = SolicitacaoMuda::where('protocolo', $protocolo)->first();
+        } while($check != null);
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
         return redirect()->back()->with(['success' => 'Solicitação de muda realizada com sucesso!', 'protocolo' => $protocolo]);
