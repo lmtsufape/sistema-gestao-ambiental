@@ -4,7 +4,7 @@
             {{ __('Empresas') }}
         </h2>
     </x-slot>
-    
+
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
@@ -52,6 +52,7 @@
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}">
                                                     Deletar
                                                 </button>
+                                                <a class="btn btn-primary" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">Notificações</a>
                                             </td>
                                         </tr>
                                     @endforeach

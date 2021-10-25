@@ -119,4 +119,13 @@ class NotificacaoController extends Controller
     {
         //
     }
+
+    public function get(Request $request) {
+        $notificacao = Notificacao::find($request->notificacao_id);
+        $notificacaoInfo = [
+            'id' => $notificacao->id,
+            'texto' => $notificacao->texto,
+        ];
+        return response()->json($notificacaoInfo);
+    }
 }
