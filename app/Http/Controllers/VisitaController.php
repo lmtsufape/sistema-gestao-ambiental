@@ -19,7 +19,7 @@ class VisitaController extends Controller
      */
     public function index()
     {
-        $this->authorize('isSecretario', User::class);
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $visitas = collect();
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $visitas = Visita::orderBy('data_marcada')->get();
