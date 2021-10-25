@@ -16,6 +16,8 @@ class DenunciaController extends Controller
 {
     public function index()
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
+
         $denuncias_registradas = collect();
         $denuncias_aprovadas = collect();
         $denuncias_arquivadas = collect();
@@ -119,7 +121,7 @@ class DenunciaController extends Controller
     public function avaliarDenuncia(Request $request)
     {
         $denuncia = Denuncia::find($request->denunciaId);
-        $this->authorize('isSecretario', User::class);
+        $this->authorize('isSecretarioOrAnalista', User::class);
 
         if ($request->aprovar == "true") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
@@ -143,6 +145,8 @@ class DenunciaController extends Controller
      */
     public function atribuirAnalistaDenuncia(Request $request)
     {
+        $this->authorize('isSecretario', User::class);
+
         $request->validate([
             'denuncia_id_analista' => 'required',
             'analista'             => 'required',

@@ -15,6 +15,8 @@ class SetorController extends Controller
      */
     public function index()
     {
+        $this->authorize('isSecretario', User::class);
+
         $setores = Setor::orderBy('nome')->get();
         return view('setor.index', compact('setores'));
     }
@@ -26,6 +28,8 @@ class SetorController extends Controller
      */
     public function create()
     {
+        $this->authorize('isSecretario', User::class);
+
         return view('setor.create');
     }
 
@@ -37,6 +41,8 @@ class SetorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('isSecretario', User::class);
+
         $validator = $request->validate([
             'nome'      => 'required|string',
             'descricao' => 'required|string',
@@ -57,6 +63,8 @@ class SetorController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('isSecretario', User::class);
+
         $setor = Setor::find($id);
         $cnaes = Cnae::where('setor_id', '=', $setor->id)->orderBy('nome', 'ASC')->get();
         return view('setor.show', compact('setor', 'cnaes'));
@@ -70,6 +78,8 @@ class SetorController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('isSecretario', User::class);
+
         $setor = Setor::find($id);
         return view('setor.edit', compact('setor'));
     }
@@ -83,6 +93,8 @@ class SetorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isSecretario', User::class);
+
         $setor = Setor::find($id);
 
         $validator = $request->validate([
@@ -104,6 +116,8 @@ class SetorController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSecretario', User::class);
+        
         $setor = Setor::find($id);
 
         if ($setor->existemEmpresas()) {

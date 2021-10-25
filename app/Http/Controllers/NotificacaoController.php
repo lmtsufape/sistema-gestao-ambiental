@@ -24,6 +24,7 @@ class NotificacaoController extends Controller
      */
     public function index(Empresa $empresa)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         return view('notificacao.index', ['empresa' => $empresa]);
     }
 
@@ -36,6 +37,7 @@ class NotificacaoController extends Controller
      */
     public function create(Empresa $empresa)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         return view('notificacao.create')->with('empresa', $empresa);
     }
 
@@ -49,6 +51,7 @@ class NotificacaoController extends Controller
      */
     public function store(NotificacaoRequest $request, Empresa $empresa)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $notificacao = new Notificacao();
         $data = $request->validated();
         $notificacao->fill($data);

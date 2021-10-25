@@ -12,17 +12,20 @@ class DocumentoController extends Controller
 {
     public function index()
     {
+        $this->authorize('isSecretario', User::class);
         $documentos = Documento::orderBy('nome')->get();
         return view('documento.index', compact('documentos'));
     }
 
     public function create()
     {
+        $this->authorize('isSecretario', User::class);
         return view('documento.create');
     }
 
     public function store(DocumentoRequest $request)
     {
+        $this->authorize('isSecretario', User::class);
         $documento = new Documento();
         $documento->setAtributes($request);
 
@@ -37,6 +40,7 @@ class DocumentoController extends Controller
 
     public function show($id)
     {
+        $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
 
         if ($documento)
@@ -45,6 +49,7 @@ class DocumentoController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
 
         return view('documento.edit', compact("documento"));
@@ -52,6 +57,7 @@ class DocumentoController extends Controller
 
     public function update(DocumentoRequest $request, $id)
     {
+        $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
         $documento->setAtributes($request);
         
@@ -66,6 +72,7 @@ class DocumentoController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
         if ($documento->existemRequerimentos()) {
             return redirect()->back()->withErrors(['error' => 'Existem requerimentos que utilizam desde documento, logo o mesmo não pode ser deletado.']);
