@@ -14,7 +14,7 @@
                     <div class="col-md-3" style="margin-top: 30px;">
                         <div class="row">
                             <div class="col-md-12">
-                                <img class="img" src="{{asset('img/icon-logo.png')}}" alt="Sistema de gestão ambiental">
+                                <img class="img" src="{{asset('img/icon-logo.png')}}" alt="Sistema de gestão ambiental" style="width: 240px; height: auto;">
                             </div>
                         </div>
                     </div>
@@ -45,12 +45,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 alinhar-centro">
-                                <a href="https://instagram.com/lmts_ufape?utm_medium=copy_link" target="_blank">
-                                    <img class="img" class="img-rede-social" src="{{asset('img/Icon awesome-instagram.png')}}" alt="Instagram do LMTS" style="height: 80%; display:inline;"/>               
-                                </a>
-                                <a href="https://www.facebook.com/LMTSUFAPE" target="_blank">
-                                    <img class="img" class="img-rede-social" src="{{asset('img/Icon awesome-facebook.png')}}" alt="Facebook do LMTS" style="height: 80%; display:inline;"/>
-                                </a>
+                                <a href="https://instagram.com/lmts_ufape?utm_medium=copy_link" target="_blank"><img class="img" class="img-rede-social" src="{{asset('img/Icon awesome-instagram.png')}}" alt="Instagram do LMTS" style="height: 80%; display:inline;"/></a>
+                                <a href="https://www.facebook.com/LMTSUFAPE" target="_blank"><img class="img" class="img-rede-social" src="{{asset('img/Icon awesome-facebook.png')}}" alt="Facebook do LMTS" style="height: 80%; display:inline;"/></a>
                             </div>
                         </div>
                         <div class="row">
