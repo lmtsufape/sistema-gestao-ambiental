@@ -295,14 +295,13 @@
                         <form method="POST" action="{{route('denuncias.avaliar')}}">
                             @csrf
                             <input type="hidden" name="denunciaId" id="denunciaId" value="{{$denuncia->id}}">
+                            <input type="hidden" name="aprovar" id="inputAprovar" value="">
                             <div class="form-row">
                                 <div class="col-md-6 form-group" style="padding-right: 20px">
-                                    <button type="submit" class="btn btn-success botao-form" style="width:100%"
-                                        name="aprovar" value="true">Aprovar</button>
+                                    <button type="submit" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar()">Aprovar</button>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-danger botao-form" style="width:100px;"
-                                        name="aprovar" value="false">Arquivar</button>
+                                    <button type="submit" class="btn btn-danger botao-form" style="width:100px;" onclick="atualizarInputReprovar()">Arquivar</button>
                                 </div>
                             </div>
                         </form>
@@ -393,7 +392,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success" form="form-atribuir-analista-denuncia">Criar</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-atribuir-analista-denuncia">Criar</button>
                     </div>
                 </div>
             </div>
@@ -414,6 +413,14 @@
 
         function adicionarIdAtribuir(id) {
             document.getElementById('denuncia_id_analista').value = id;
+        }
+
+        function atualizarInputAprovar(){
+            document.getElementById('inputAprovar').value = true;
+        }
+
+        function atualizarInputReprovar(){
+            document.getElementById('inputAprovar').value = false;
         }
     </script>
 </x-app-layout>

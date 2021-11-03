@@ -132,13 +132,13 @@
                         <form id="deletar-visita-form-{{$visita->id}}" method="POST" action="{{route('visitas.destroy', ['visita' => $visita])}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
-                            Tem certeza que deseja deletar a visita à empresa 
+                            Tem certeza que deseja deletar a visita à empresa
                             @if ($visita->denuncia != null)@if ($visita->denuncia->empresa_id != null){{$visita->denuncia->empresa->nome}}@else{{$visita->denuncia->empresa_nao_cadastrada}}@endif @elseif($visita->requerimento != null){{$visita->requerimento->empresa->nome}}@endif?
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger" form="deletar-visita-form-{{$visita->id}}">Sim</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-danger" form="deletar-visita-form-{{$visita->id}}">Sim</button>
                     </div>
                 </div>
             </div>

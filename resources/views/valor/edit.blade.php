@@ -30,7 +30,7 @@
                                             <option @if(old('porte') == $portes['medio']) selected @endif value="{{$portes['medio']}}">Médio</option>
                                             <option @if(old('porte') == $portes['grande']) selected @endif value="{{$portes['grande']}}">Grande</option>
                                             <option @if(old('porte') == $portes['especial']) selected @endif value="{{$portes['especial']}}">Especial</option>
-                                        @else 
+                                        @else
                                             <option @if($valor->porte == $portes['micro']) selected @endif value="{{$portes['micro']}}">Micro</option>
                                             <option @if($valor->porte == $portes['pequeno']) selected @endif value="{{$portes['pequeno']}}">Pequeno</option>
                                             <option @if($valor->porte == $portes['medio']) selected @endif value="{{$portes['medio']}}">Médio</option>
@@ -53,7 +53,7 @@
                                             <option @if(old('potencial_poluidor') == $potenciais_poluidores['baixo']) selected @endif value="{{$potenciais_poluidores['baixo']}}">Baixo</option>
                                             <option @if(old('potencial_poluidor') == $potenciais_poluidores['medio']) selected @endif value="{{$potenciais_poluidores['medio']}}">Médio</option>
                                             <option @if(old('potencial_poluidor') == $potenciais_poluidores['alto']) selected @endif value="{{$potenciais_poluidores['alto']}}">Alto</option>
-                                        @else 
+                                        @else
                                             <option @if($valor->potencial_poluidor == $potenciais_poluidores['baixo']) selected @endif value="{{$potenciais_poluidores['baixo']}}">Baixo</option>
                                             <option @if($valor->potencial_poluidor == $potenciais_poluidores['medio']) selected @endif value="{{$potenciais_poluidores['medio']}}">Médio</option>
                                             <option @if($valor->potencial_poluidor == $potenciais_poluidores['alto']) selected @endif value="{{$potenciais_poluidores['alto']}}">Alto</option>
@@ -77,13 +77,13 @@
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prêvia</option>
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['instalacao']) selected @endif value="{{$tipos_licenca['instalacao']}}">Instalação</option>
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['operacao']) selected @endif value="{{$tipos_licenca['operacao']}}">Operação</option>
-                                        @else 
+                                        @else
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['simplificada']) selected @endif value="{{$tipos_licenca['simplificada']}}">Simplificada</option>
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prêvia</option>
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['instalacao']) selected @endif value="{{$tipos_licenca['instalacao']}}">Instalação</option>
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['operacao']) selected @endif value="{{$tipos_licenca['operacao']}}">Operação</option>
                                         @endif
-                                        
+
                                     </select>
 
                                     @error('tipo_de_licença')
@@ -95,7 +95,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="valor">{{__('Valor')}}</label>
                                     <input type="text" value="{{old('valor', $valor->valor)}}" name="valor" id="valor" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
-                                
+
                                     @error('valor')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -110,7 +110,7 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" class="btn btn-success" style="width: 100%;" form="valor-form">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="valor-form">Salvar</button>
                             </div>
                         </div>
                     </div>

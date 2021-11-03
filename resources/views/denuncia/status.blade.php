@@ -22,7 +22,7 @@
                         </div>
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="empresa">Empresa denunciada:</label>
                                     @if ($denuncia->empresa_id != null)
                                         <input id="empresa" class="form-control @error('empresa') is-invalid @enderror" type="text" name="empresa" value="{{$denuncia->empresa->nome}}" disabled autocomplete="empresa">
@@ -32,7 +32,7 @@
                                 </div>
 
                                 @if ($denuncia->empresa_id == null)
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="endereco">Endereço:</label>
                                         <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{$denuncia->endereco}}" disabled autocomplete="endereco">
                                     </div>
@@ -40,7 +40,7 @@
                             </div>
                             @if ($denuncia->denunciante != null)
                                 <div class="form-row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="denunciante">Denunciante:</label>
                                         <input id="denunciante" class="form-control @error('denunciante') is-invalid @enderror" type="text" name="denunciante" value="{{$denuncia->denunciante}}" disabled autocomplete="denunciante">
                                     </div>
@@ -48,8 +48,11 @@
                             @endif
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <label for="denunciante">Relato:</label>
-                                    <textarea id="denuncia" name="denuncia" disabled>{{$denuncia->texto}}</textarea>
+                                    <label for="relato">Relato:</label>
+                                    <div class="alert alert-warning" role="alert">
+                                        <div id="relato">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             @if ($denuncia->fotos->first() != null)
@@ -100,7 +103,7 @@
             <div class="col-md-4">
                 <div class="form-row">
                     <div class="col-md-12" style="margin-bottom:20px">
-                        <div class="card shadow bg-white" style="border-radius:12px; border-width:0px;">
+                        <div class="card shadow" style="background-color: rgb(225, 255, 219); border-radius:12px; border-width:0px;">
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
@@ -128,7 +131,21 @@
         </div>
     </div>
     @component('layouts.footer')@endcomponent
-    <script>
-        CKEDITOR.replace('denuncia');
-    </script>
 </x-guest-layout>
+
+<script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "{{route('denuncias.get')}}",
+            method: 'get',
+            type: 'get',
+            data: {"denuncia_id": "{{$denuncia->id}}"},
+            dataType:'json',
+            success: function(denuncia){
+                var divDenuncia = document.getElementById('relato');
+                divDenuncia.innerHTML = denuncia.texto;
+            },
+        });
+    });
+</script>

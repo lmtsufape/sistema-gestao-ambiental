@@ -4,7 +4,7 @@
             {{ __('Emitir licença') }}
         </h2>
     </x-slot>
-    
+
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
@@ -67,7 +67,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" class="btn btn-success" form="emitir-licenca-form" style="width: 100%">Emitir</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success" form="emitir-licenca-form" style="width: 100%">Emitir</button>
                             </div>
                         </div>
                     </div>

@@ -58,7 +58,7 @@ class DenunciaController extends Controller
         $denuncia->endereco = $data['endereco'] ?? "";
         $denuncia->denunciante = $data['denunciante'] ?? "";
         $denuncia->aprovacao = Denuncia::APROVACAO_ENUM["registrada"];
-        $protocolo = Hash::make('texto');
+        $protocolo = $this->gerarProtocolo($data['texto']);
         $denuncia->protocolo = $protocolo;
         $denuncia->save();
 
@@ -169,4 +169,22 @@ class DenunciaController extends Controller
         }
     }
 
+    private function gerarProtocolo($texto)
+    {
+        $protocolo = null;
+        do {
+            $protocolo = substr(str_shuffle(Hash::make($texto)), 0, 20);
+            $check = Denuncia::where('protocolo', $protocolo)->first();
+        } while($check != null);
+        return $protocolo;
+    }
+
+    public function get(Request $request) {
+        $denuncia = Denuncia::find($request->denuncia_id);
+        $denunciaInfo = [
+            'id' => $denuncia->id,
+            'texto' => $denuncia->texto,
+        ];
+        return response()->json($denunciaInfo);
+    }
 }
