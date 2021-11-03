@@ -15,6 +15,7 @@ class ValorController extends Controller
      */
     public function index()
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $valores = ValorRequerimento::orderBy('created_at')->get();
 
         $potenciais_poluidores = ValorRequerimento::POTENCIAL_POLUIDOR_ENUM;
@@ -31,6 +32,7 @@ class ValorController extends Controller
      */
     public function create()
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $potenciais_poluidores = ValorRequerimento::POTENCIAL_POLUIDOR_ENUM;
         $portes = ValorRequerimento::PORTE_ENUM;
         $tipos_licenca = ValorRequerimento::TIPO_LICENCA_ENUM;
@@ -46,6 +48,7 @@ class ValorController extends Controller
      */
     public function store(ValorRequest $request)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $request->validated();
         $valor = new ValorRequerimento();
         $valor->setAtributes($request);
@@ -73,6 +76,7 @@ class ValorController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $potenciais_poluidores = ValorRequerimento::POTENCIAL_POLUIDOR_ENUM;
         $portes = ValorRequerimento::PORTE_ENUM;
         $tipos_licenca = ValorRequerimento::TIPO_LICENCA_ENUM;
@@ -90,6 +94,7 @@ class ValorController extends Controller
      */
     public function update(ValorRequest $request, $id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $request->validated();
         $valor = ValorRequerimento::find($id);
         $valor->setAtributes($request);
@@ -106,6 +111,7 @@ class ValorController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $valor = ValorRequerimento::find($id);
         $valor->delete();
 

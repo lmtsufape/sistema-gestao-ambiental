@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Mail\ContatoMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ContatoNotification;
+use App\Models\User;
 
 class ContatoController extends Controller
 {
@@ -21,7 +24,10 @@ class ContatoController extends Controller
             'mensagem'      => 'required|min:25|max:2000',
         ]);
 
-        Mail::to(env('MAIL_CONTATO'))->send(new ContatoMail($request));
+        $user = new User();
+        $user->email = env('MAIL_CONTATO');
+
+        Notification::send($user, new ContatoNotification($request, 'Contato público'));
 
         return redirect(route('contato'))->with(['success' => 'Obrigado por entrar em contato, sua mensagem foi enviada com sucesso!']);
     }

@@ -19,6 +19,7 @@ class VisitaController extends Controller
      */
     public function index()
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $visitas = collect();
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $visitas = Visita::orderBy('data_marcada')->get();
@@ -36,6 +37,7 @@ class VisitaController extends Controller
      */
     public function create()
     {
+        $this->authorize('isSecretario', User::class);
         $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
         $analistas = User::analistas();
         
@@ -50,6 +52,7 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('isSecretario', User::class);
         $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
@@ -84,6 +87,7 @@ class VisitaController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
         $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
         $requerimentos->push($visita->requerimento);
@@ -101,6 +105,7 @@ class VisitaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
 
         $request->validate([
@@ -130,6 +135,7 @@ class VisitaController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
         $visita->delete();
 
@@ -144,6 +150,7 @@ class VisitaController extends Controller
      */
     public function createVisitaDenuncia(Request $request) 
     {
+        $this->authorize('isSecretario', User::class);
         $request->validate([
             'data' => 'required',
             'analista' => 'required'

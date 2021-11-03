@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cnae;
 use App\Models\Setor;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class CnaeController extends Controller
 {
@@ -15,6 +16,8 @@ class CnaeController extends Controller
      */
     public function index()
     {
+        $this->authorize('isSecretario', User::class);
+
         $cnaes = Cnae::orderBy('nome')->get();
         return view('cnae.index', compact('cnaes'));
     }
@@ -26,6 +29,8 @@ class CnaeController extends Controller
      */
     public function create($id)
     {
+        $this->authorize('isSecretario', User::class);
+
         $setor = Setor::find($id);
         return view('cnae.create', compact('setor'));
     }
@@ -38,6 +43,8 @@ class CnaeController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('isSecretario', User::class);
+
         if (strlen($request->codigo) < 7) {
             return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
         }
@@ -76,6 +83,8 @@ class CnaeController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('isSecretario', User::class);
+
         $cnae = Cnae::find($id);
         return view('cnae.edit', compact('cnae'));
     }
@@ -89,6 +98,8 @@ class CnaeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('isSecretario', User::class);
+
         if (strlen($request->codigo) < 7) {
             return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
         }
@@ -116,6 +127,8 @@ class CnaeController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isSecretario', User::class);
+        
         $cnae = Cnae::find($id);
         $setor = $cnae->setor;
 
