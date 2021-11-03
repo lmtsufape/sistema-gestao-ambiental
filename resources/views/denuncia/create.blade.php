@@ -18,7 +18,7 @@
                                 {{-- <h6 class="card-subtitle mb-2 text-muted">Denúncias > Criar denúncia</h6> --}}
                             </div>
                             <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
+                                <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
                             </div>
                         </div>
                         <div div class="form-row">
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button type="button" id="btn-add-imagem" onclick="addImagem()" class="btn btn-primary"
+                                <button type="button" id="btn-add-imagem" onclick="addImagem()" class="btn btn-primary btn-color-dafault"
                                     style="margin-top:10px; margin-bottom:10px;">
                                     Adicionar Imagem
                                 </button>
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button type="button" id="btn-add-video" onclick="addVideo()" class="btn btn-primary"
+                                <button type="button" id="btn-add-video" onclick="addVideo()" class="btn btn-primary btn-color-dafault"
                                     style="margin-top:10px; margin-bottom:10px;">
                                     Adicionar Video
                                 </button>
@@ -272,7 +272,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success" form="cria-denuncia" style="width: 100%">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="cria-denuncia" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
