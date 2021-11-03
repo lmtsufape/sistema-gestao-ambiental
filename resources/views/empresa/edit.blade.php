@@ -228,7 +228,7 @@
                                                         <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-danger btn-sm"  onclick="add_Lista('{{$cnae->setor->id}}', '{{$cnae->id}}')" >Remover</div>
                                                     </div>
                                                 </div>
-                                                <input type="hidden" name="cnaes_id[]" value="{{$cnae->id}}">
+                                                <input id ="inputCnae_{{$cnae->id}}" type="hidden" name="cnaes_id[]" value="{{$cnae->id}}">
                                             </div>
                                         @endforeach
                                     </div>
@@ -383,12 +383,6 @@
 
         window.add_Lista = function($setor, $id) {
             var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var cnae_id = document.createElement('input');
-            cnae_id.setAttribute('type', 'hidden');
-            cnae_id.setAttribute('name', 'cnaes_id[]');
-            cnae_id.setAttribute('value', $id );
-            elemento.appendChild(cnae_id);
-
             var naTabela = document.getElementById('dentroTabelaCnaes');
             var divBtn = elemento.children[1].children[0].children[0];
 
@@ -397,6 +391,8 @@
                 divBtn.style.backgroundColor = "#dc3545";
                 divBtn.style.borderColor = "#dc3545";
                 divBtn.textContent = "Remover";
+                var html = `<input id ="inputCnae_`+$id+`" hidden name="cnaes_id[]" value="`+$id+`">`;
+                $('#cnaeCard_'+$setor+'_'+$id).append(html);
             }else{
                 var historySelectList = $('select#idSelecionarSetor');
                 var $setor_id = $('option:selected', historySelectList).val();
@@ -405,6 +401,7 @@
                     divBtn.style.backgroundColor = "#28a745";
                     divBtn.style.borderColor = "#28a745";
                     divBtn.textContent = "Adicionar";
+                    $('#inputCnae_'+$id).remove();
                 }else{
                     document.getElementById('listaCnaes').removeChild(elemento);
                 }
