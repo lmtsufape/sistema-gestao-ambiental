@@ -28,6 +28,7 @@ class RelatorioController extends Controller
      */
     public function create($id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $visita = Visita::find($id);
         return view('relatorio.create', compact('visita'));
     }
@@ -40,6 +41,7 @@ class RelatorioController extends Controller
      */
     public function store(RelatorioRequest $request)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $visita = Visita::find($request->visita);
         $request->validated();
         $relatorio = new Relatorio();
@@ -62,6 +64,7 @@ class RelatorioController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
         return view('relatorio.show', compact('relatorio'));
     }
@@ -74,6 +77,7 @@ class RelatorioController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
         return view('relatorio.edit', compact('relatorio'));
     }
@@ -87,6 +91,7 @@ class RelatorioController extends Controller
      */
     public function update(RelatorioRequest $request, $id)
     {
+        $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
         $request->validated();
         $relatorio->setAtributes($request);
@@ -109,6 +114,7 @@ class RelatorioController extends Controller
 
     public function resultado(Request $request, $id)
     {
+        $this->authorize('isSecretario', User::class);
         $relatorio = Relatorio::find($id);
         $resultado = (boolean)$request->aprovacao;
         $relatorio->motivo_edicao = $request->motivo;
