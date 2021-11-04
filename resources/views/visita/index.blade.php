@@ -97,11 +97,22 @@
                                                             <img src="{{asset('img/icon_acoes.svg')}}" alt="ações" style="margin-right: 10px;">
                                                         </button>
                                                         <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
-                                                            <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
-                                                            @if($visita->requerimento->licenca != null) <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> @elseif($visita->relatorioAceito()) <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Emitir licença</a> @endif
+                                                            @if ($visita->requerimento != null)
+                                                                <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
+                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
+                                                                @if($visita->requerimento->licenca != null) <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> @elseif($visita->relatorioAceito()) <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Emitir licença</a> @endif
+                                                            @elseif ($visita->denuncia != null)
+                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
+                                                                @if ($visita->denuncia->empresa != null)
+                                                                    <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}">Notificações</a>
+                                                                @endif
+                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
+                                                                    data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}">Descrição</button>
+                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
+                                                                    data-toggle="modal" data-target="#modal-imagens-{{$visita->denuncia->id}}">Imagens</button>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 @endcan
@@ -147,4 +158,112 @@
     @else
 
     @endcan
+
+    @foreach ($visitas as $visita)
+        @if ($visita->denuncia != null)
+            @php
+                $denuncia = $visita->denuncia;
+            @endphp
+            <div class="modal fade" id="modal-texto-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#2a9df4;">
+                                <img src="{{ asset('img/logo_atencao3.png') }}" width="30px;" alt="Logo" style=" margin-right:15px; margin-top:10px;"/>
+                                    <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white;
+                                        font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                        Descrição
+                                    </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="formRequerimento" method="POST" action="">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="row form-row">
+                                    <div id="avisoReq" class="col-12" style="font-family: 'Roboto', sans-serif; margin-bottom:10px;">Relato descrito pelo denunciante:</div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="texto-denuncia">
+                                            {!! $denuncia->texto !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    @if ($denuncia->denunciante != null)
+                                        <div class="col-md-12 form-group">
+                                            <label for="denunciante">{{__('Denunciante')}}</label>
+                                            <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color:#2a9df4;">
+                                <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
+                                    <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                        Mídias da Denúncia
+                                    </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a denúncia:</div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                @foreach ($denuncia->fotos as $foto)
+                                    <div class="col-md-6">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                            @if ($foto->comentario != null)
+                                                <div class="card-body">
+                                                    <p class="card-text">{{$foto->comentario}}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            @if ($denuncia->videos->first() != null)
+                                <div class="row">
+                                    <div class="col-12" style="font-family: 'Roboto', sans-serif;">Vídeos anexados junto a denúncia:</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    @foreach ($denuncia->videos as $video)
+                                        <div class="col-md-6">
+                                            <video width="320" height="240" controls>
+                                                <source src="{{asset('storage/' . $video->caminho)}}" >
+                                                Seu navegador não suporta o tipo de vídeo.
+                                            </video>
+                                            <div class="card" style="width: 100%;">
+                                                @if ($video->comentario != null)
+                                                    <div class="card-body">
+                                                        <p class="card-text">{{$video->comentario}}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
 </x-app-layout>

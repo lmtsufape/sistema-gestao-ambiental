@@ -252,8 +252,6 @@ class RequerimentoController extends Controller
         foreach ($requerimento->documentos as $documento) {
             if (!in_array($documento->id, $request->documentos)) {
                 $requerimento->documentos()->detach($documento->id);
-
-                $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
             }
         }
 
@@ -264,10 +262,10 @@ class RequerimentoController extends Controller
                 $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
                 $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
                 $documento->update();
-
-                $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
             }
         }
+
+        $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
 
         $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();

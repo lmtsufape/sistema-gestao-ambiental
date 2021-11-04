@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Licença com nº de protocolo {{$licenca->protocolo}}</h5>
+                                <h5 class="card-title">Licença com nº de referência {{$licenca->protocolo}}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Programação > Visualizar licença</h6>
                             </div>
                         </div>

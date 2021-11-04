@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class NotificacaoController extends Controller
 {
@@ -24,8 +25,22 @@ class NotificacaoController extends Controller
      */
     public function index(Empresa $empresa)
     {
-        $this->authorize('isSecretarioOrAnalista', User::class);
-        return view('notificacao.index', ['empresa' => $empresa]);
+        $user = auth()->user();
+        switch ($user->role) {
+            case User::ROLE_ENUM['requerente']:
+                $this->authorize('view', $empresa);
+                $notificacoes = $empresa->notificacoes;
+                return view('notificacao.visualizar_notificacoes', compact('notificacoes', 'empresa'));
+                break;
+            case User::ROLE_ENUM['analista']:
+                $this->authorize('isSecretarioOrAnalista', User::class);
+                return view('notificacao.index', ['empresa' => $empresa]);
+                break;
+            case User::ROLE_ENUM['secretario']:
+                $this->authorize('isSecretarioOrAnalista', User::class);
+                return view('notificacao.index', ['empresa' => $empresa]);
+                break;
+        }
     }
 
     /**
