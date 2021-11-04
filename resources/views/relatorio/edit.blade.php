@@ -12,7 +12,11 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Editar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h5>
+                                @if ($relatorio->visita->requerimento != null)
+                                    <h5 class="card-title">Editar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h5>
+                                @elseif ($relatorio->visita->denuncia != null)
+                                    <h5 class="card-title">Editar relátorio do denúncia nº {{$relatorio->visita->denuncia->id}}</h5>
+                                @endif
                                 <h6 class="card-subtitle mb-2 text-muted">Programação > Relátorio</h6>
                             </div>
                         </div>

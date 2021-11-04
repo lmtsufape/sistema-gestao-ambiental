@@ -392,9 +392,11 @@
                                                         @endif
                                                     @endif
                                                 @endcan
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
-                                                    Cancelar
-                                                </button>
+                                                @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
+                                                        Cancelar
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

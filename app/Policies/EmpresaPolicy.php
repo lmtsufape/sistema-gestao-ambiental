@@ -30,7 +30,7 @@ class EmpresaPolicy
      */
     public function view(User $user, Empresa $empresa)
     {
-        //
+        return $this->ehDono($user, $empresa);
     }
 
     /**

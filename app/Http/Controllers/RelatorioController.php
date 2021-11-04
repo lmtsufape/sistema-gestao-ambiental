@@ -48,10 +48,13 @@ class RelatorioController extends Controller
         $relatorio->setAtributes($request);
         $relatorio->save();
 
-        $requerimento = $visita->requerimento;
-        $requerimento->status = Requerimento::STATUS_ENUM['visita_realizada'];
+        if ($visita->requerimento != null) {
+            $requerimento = $visita->requerimento;
+            $requerimento->status = Requerimento::STATUS_ENUM['visita_realizada'];
+            $requerimento->update();
+        }
+
         $visita->update(['data_realizada' => now()]);
-        $requerimento->update();
 
         return redirect(route('visitas.index'))->with(['success' => 'Relátorio salvo com sucesso!']);
     }
@@ -125,7 +128,7 @@ class RelatorioController extends Controller
             $msg = "Relatório aprovado com sucesso!";
         } else {
             $relatorio->aprovacao = Relatorio::APROVACAO_ENUM['reprovado'];
-            $msg = "Relatório reprovado com sucesso!";
+            $msg = "Relatório enviado para revisão do analista.";
         }
 
         $relatorio->update();
