@@ -40,7 +40,7 @@
                                         <th scope="col">Data marcada</th>
                                         <th scope="col">Data realizada</th>
                                         <th scope="col">Requerimento</th>
-                                        <th scope="col">Empresa</th>
+                                        <th scope="col">Empresa/serviço</th>
                                         @can('isSecretario', \App\Models\User::class)
                                             <th scope="col">Analista</th>
                                         @endcan

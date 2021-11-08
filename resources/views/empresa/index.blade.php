@@ -12,11 +12,11 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Suas empresas cadastradas</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Empresas</h6>
+                                <h5 class="card-title">Suas empresas/serviços cadastradas(os)</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Empresas/serviços</h6>
                             </div>
                             <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('empresas.create')}}">Criar empresa</a>
+                                <a class="btn btn-primary" href="{{route('empresas.create')}}">Criar empresa/serviço</a>
                             </div>
                         </div>
                         <div div class="form-row">

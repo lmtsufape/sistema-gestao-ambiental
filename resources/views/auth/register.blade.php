@@ -14,7 +14,7 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <h4>Cadastro de empresário</h4>
+                                        <h4>Cadastro de empreendedor</h4>
                                     </div>
                                      <div class="col-md-6 form-group" style="padding-top: 5px; text-align: end">
                                         <h6><span style="color: red; font-weight: bold;">*</span> Campos obrigatórios</h6>

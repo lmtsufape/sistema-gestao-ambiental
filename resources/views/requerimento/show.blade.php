@@ -125,7 +125,7 @@
                                 <div class="card-header" id="headingTwo">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Informações da empresa
+                                            Informações da empresa/serviço
                                         </button>
                                     </h2>
                                 </div>
@@ -292,7 +292,7 @@
                             @endif
                             @can('isProtocolista', \App\Models\User::class)
                                 <div class="col-md-6">
-                                    <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da empresa</a>
+                                    <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da empresa/serviço</a>
                                 </div>
                             @endcan
 
