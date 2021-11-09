@@ -83,9 +83,18 @@
                                                                 <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                                @if($visita->requerimento->licenca != null) 
+                                                                    @if ($visita->requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                                        <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> 
+                                                                    @else
+                                                                        <a class="dropdown-item" href="{{route('licenca.revisar', ['visita' => $visita, 'licenca' => $visita->requerimento->licenca])}}">Editar licença</a> 
+                                                                    @endif
+                                                                @elseif($visita->relatorioAceito()) 
+                                                                    <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a> 
+                                                                @endif
+                                                                @if($visita->notificacao != null)<a class="dropdown-item" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}">Notificação</a>@endif
                                                                 @if($visita->relatorio!=null)<a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>@endif
                                                                 <hr>
-                                                                @if($visita->notificacao != null)<a class="dropdown-item" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}">Notificação</a>@endif
                                                                 @if($visita->requerimento != null)<a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>@endif
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
                                                             </div>
@@ -98,11 +107,13 @@
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             @if ($visita->requerimento != null)
-                                                                <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
-                                                                <div class="dropdown-divider"></div>
                                                                 <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
-                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
-                                                                @if($visita->requerimento->licenca != null) <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> @elseif($visita->relatorioAceito()) <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Emitir licença</a> @endif
+                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a> 
+                                                                @if($visita->requerimento->licenca != null) 
+                                                                    <a class="dropdown-item" href="{{route('licenca.revisar', ['licenca' => $visita->requerimento->licenca, 'visita' => $visita])}}">Revisar licença</a>
+                                                                @endif
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
                                                             @elseif ($visita->denuncia != null)
                                                                 <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
                                                                 @if ($visita->denuncia->empresa != null)

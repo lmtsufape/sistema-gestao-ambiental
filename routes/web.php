@@ -92,6 +92,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
     Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
+    Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
+    Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
+    Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
 });
 
 Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
