@@ -36,7 +36,7 @@ class DenunciaController extends Controller
         }
 
         $denuncias = $denuncias_registradas->concat($denuncias_aprovadas)->concat($denuncias_arquivadas);
-        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+        $analistas = User::analistas();
 
         return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas', 'denuncias', 'analistas'));
     }
