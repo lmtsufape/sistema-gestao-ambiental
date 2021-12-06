@@ -1,24 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tipologias') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Tipologias cadastradas no sistema</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <a title="Nova tipologia" href="{{route('setores.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar tipologia">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Tipologias cadastradas no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Tipologias</h6>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('setores.create')}}">Criar tipologia</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -40,31 +37,24 @@
                         <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">#</th>
                                         <th scope="col">Nome</th>
                                         <th scope="col">Descrição</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($setores as $setor)
+                                    @foreach ($setores as $i => $setor)
                                         <tr>
+                                            <td scope="row">{{$i+1}}</td>
                                             <td>{{$setor->nome}}</td>
                                             <td>{{$setor->descricao}}</td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                                                                <a class="dropdown-item" href="{{route('setores.show', ['setore' => $setor->id])}}">Visualizar Tipologia</a>
-                                                                <a class="dropdown-item" href="{{route('setores.edit', ['setore' => $setor->id])}}">Editar Tipologia</a>
-                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="color: red; cursor: pointer;">Deletar Tipologia</a>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                                                    <a title="Visualizar cnaes da tipologia" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar setor"></a>
+                                                    <a title="Editar tipologia" href="{{route('setores.edit', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar setor"></a>
+                                                    <a title="Deletar tipologia" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar setor"></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

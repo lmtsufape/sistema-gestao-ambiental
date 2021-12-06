@@ -242,12 +242,11 @@ nav img {
 }
 
 .checkbox-licenciamento {
-    all: unset;
     min-height: 15px;
     min-width: 15px;
     background-color: white;
     border: 1px solid rgb(179, 179, 179);
-    border-radius: 7px;
+    border-radius: 2px;
 }
 
 .checkbox-licenciamento:checked {
@@ -289,7 +288,8 @@ nav img {
 }
 
 .btn-voltar {
-    height: 40px;
+    display: inline-block;
+    height: 36px;
 }
 
 .table tbody {

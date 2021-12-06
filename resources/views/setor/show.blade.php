@@ -1,24 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tipologia') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Cnaes da tipologia {{$setor->nome}} cadastrados no sistema</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Tipologias > Cnaes da tipologia {{$setor->nome}}</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
+                        <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar cnae"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Cnaes da tipologia {{$setor->nome}} cadastrados no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Cnaes</h6>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('cnaes.create', $setor->id)}}">Criar novo cnae</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -44,6 +41,7 @@
                         <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">#</th>
                                         <th scope="col">Nome</th>
                                         <th scope="col">Código</th>
                                         <th scope="col">Potencial Poluidor</th>
@@ -51,9 +49,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cnaes as $cnae)
+                                    @foreach ($cnaes as $i => $cnae)
                                         <tr>
-                                            <td> {{$cnae->nome}}</td>
+                                            <td scope="row">{{$i+1}}</td>
+                                            <td>{{$cnae->nome}}</td>
                                             <td>{{$cnae->codigo}}</td>
                                             <td>
                                                 @switch($cnae->potencial_poluidor)
@@ -69,19 +68,10 @@
                                                 @endswitch
                                             </td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                                                                <a class="dropdown-item" href="{{route('cnaes.edit', ['cnae' => $cnae->id])}}">Editar Cnae</a>
-                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarCnae_{{$cnae->id}}" style="color: red; cursor: pointer;">Deletar cnae</a>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
+                                                    <a title="Editar cnae"  href="{{route('cnaes.edit', ['cnae' => $cnae->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar cnae"></a>
+                                                    <a title="Deletar cnae"  data-toggle="modal" data-target="#modalStaticDeletarCnae_{{$cnae->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone deletar cnae"></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
