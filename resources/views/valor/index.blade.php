@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Novo valor de licença" href="{{route('valores.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar licenciamento">
                         </a>
                     </div>
                 </div>
@@ -16,7 +16,6 @@
             <div class="col-md-10">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -92,7 +91,7 @@
                                             <td>{{'R$ ' . number_format($valor->valor, 2, ',', ' ')}}</td>
                                             <td>
                                                 <a href="{{route('valores.edit', ['valore' => $valor->id])}}" title="Editar valor de licença"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar valor de licença"></a>
-                                                <button type="button" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar valor de licença"></button>
+                                                <button title="Deletar valor de licença"  type="button" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar valor de licença"></button>
                                             </td>
                                         </tr>
                                     @endforeach

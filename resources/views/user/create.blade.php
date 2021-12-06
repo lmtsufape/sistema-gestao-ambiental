@@ -7,20 +7,27 @@
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Cadastrar um novo analista</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Usuários > Criar analista</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" href="{{route('usuarios.index')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Cadastrar um novo analista</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Usuários > Criar analista</h6>
-                            </div>
-                        </div>
                         <form method="POST" id="cria-analista" action="{{route('usuarios.store')}}">
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="name">{{ __('Name') }}</label>
-                                    <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name">
+                                    <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite o nome do usuário...">
 
                                     @error('name')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -30,7 +37,7 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="email">{{ __('Email') }}</label>
-                                    <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="email">
+                                    <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="email" placeholder="Digite o e-mail do usuário...">
 
                                     @error('email')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -43,7 +50,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="password">{{ __('Password') }}</label>
                                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autofocus autocomplete="new-password">
-
+                                    <small>Deve ter no mínimo 8 caracteres</small>
                                     @error('password')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -61,7 +68,7 @@
                                     <input type="hidden" class="checkbox_tipo @error('tipos_analista') is-invalid @enderror">
                                     @foreach ($tipos as $tipo)
                                         <div class="form-check">
-                                            <input class="checkbox_tipo" type="checkbox" name="tipos_analista[]" value="{{$tipo->id}}" id="tipo_{{$tipo->id}}">
+                                            <input class="checkbox_tipo checkbox-licenciamento" type="checkbox" name="tipos_analista[]" value="{{$tipo->id}}" id="tipo_{{$tipo->id}}">
                                             <label class="form-check-label" for="tipo_{{$tipo->id}}">
                                                 @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])
                                                     Protocolista
@@ -84,7 +91,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success" form="cria-analista" style="width: 100%">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="cria-analista" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
