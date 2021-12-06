@@ -220,6 +220,38 @@ nav img {
     transition: 0.5s;
 }
 
+.form-control {
+    border: 2px solid black;
+    border-radius: 7px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
+    border-color: rgb(85, 85, 85);
+}
+
+.divisor {
+    background-color: black;
+    height: 1px;
+}
+
+.checkbox-licenciamento {
+    all: unset;
+    min-height: 15px;
+    min-width: 15px;
+    background-color: white;
+    border: 1px solid rgb(179, 179, 179);
+    border-radius: 7px;
+}
+
+.checkbox-licenciamento:checked {
+    background-color: #4A7836;
+}
+
+.card {
+    background-color: #f8f9fa;
+}
+
 /* X CONTEUDO X */
 
 /* FOOTER */

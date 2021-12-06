@@ -17,6 +17,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\SolicitacaoMudaController;
 use App\Http\Controllers\LicencaController;
+use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 use App\Models\Licenca;
 
 /*
@@ -111,5 +112,3 @@ Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
-
-
