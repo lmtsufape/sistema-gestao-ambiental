@@ -4,7 +4,7 @@
             <x-jet-authentication-card-logo />
         </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-gray-600" style="text-align: justify;">
             {{ __('Obrigado por inscrever-se! Antes de começar, você poderia verificar seu endereço de e-mail clicando no link que acabamos de enviar para você? Se você não recebeu o e-mail, teremos o prazer de enviar outro.') }}
         </div>
 
@@ -19,9 +19,9 @@
                 @csrf
 
                 <div>
-                    <x-jet-button type="submit">
+                    <button type="submit" class="btn btn-success btn-color-dafault">
                         {{ __('Reenviar email de verificação') }}
-                    </x-jet-button>
+                    </button>
                 </div>
             </form>
 

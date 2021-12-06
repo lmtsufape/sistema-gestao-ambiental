@@ -38,7 +38,7 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="text-align: center">Empresa</th>
+                                            <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
@@ -70,7 +70,7 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="text-align: center">Empresa</th>
+                                            <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
@@ -102,7 +102,7 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="text-align: center">Empresa</th>
+                                            <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>

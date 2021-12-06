@@ -8,6 +8,7 @@ use Barryvdh\DomPDF\Facade as DomPDF;
 use Eduardokum\LaravelBoleto\Pessoa;
 use Eduardokum\LaravelBoleto\Boleto\Banco\Caixa;
 use Eduardokum\LaravelBoleto\Boleto\Render\Pdf;
+use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 use App\Models\Requerimento;
 use App\Models\Empresa;
 use App\Models\BoletoCobranca;
@@ -25,17 +26,23 @@ class BoletoController extends Controller
      */
     public function create($id)
     {
+        $xmlBoletoController = new XMLCoderController();
         $requerimento = Requerimento::find($id);
         $boleto = $requerimento->boleto;
         if (is_null($boleto)) {
-            $boleto = $this->gerarBoleto($requerimento);
-            return $this->exibirBoleto($boleto);
+            $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
+            return $xmlBoletoController->enviar_remessa($boleto);
+            // dd($boleto);
+            // return $this->exibirBoleto($boleto);
         } else {
+            $resposta = $xmlBoletoController->consultar_remessa($boleto);
+            dd($resposta);
             if (now() >= $boleto->data_vencimento) {
-                $this->gerarNovoBoleto($boleto);
-                return $this->exibirBoleto($boleto);
+                dd($boleto);
+                return $xmlBoletoController->enviar_remessa($boleto);
             } else {
-                return $this->exibirBoleto($boleto);
+                dd($boleto);
+                return $xmlBoletoController->enviar_remessa($boleto);
             }
         }
     }

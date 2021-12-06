@@ -12,8 +12,9 @@ class Licenca extends Model
     use HasFactory;
 
     public const STATUS_ENUM = [
-        'aprovada'   => 1,
-        'negada'     => 2,
+        'gerada'    => 1,
+        'aprovada'   => 2,
+        'revisar'     => 3,
     ];
 
     public const TIPO_ENUM = [
@@ -40,7 +41,7 @@ class Licenca extends Model
 
     public function setAtributes(LicencaRequest $request, Requerimento $requerimento) 
     {
-        $this->status = Licenca::STATUS_ENUM['aprovada'];
+        $this->status = Licenca::STATUS_ENUM['gerada'];
         $this->tipo = $request->input('tipo_de_licença');
         $this->validade = $request->data_de_validade;
         $this->requerimento_id = $requerimento->id;
@@ -77,4 +78,5 @@ class Licenca extends Model
 
         return $protocolo;
     }
+
 }

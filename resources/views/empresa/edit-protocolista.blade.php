@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-8">
-                                <h5 class="card-title">Editando a empresa {{$requerimento->empresa->nome}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Requerimentos > analisar requerimento > editar empresa</h6>
+                                <h5 class="card-title">Editando a empresa/serviço {{$requerimento->empresa->nome}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Requerimentos > analisar requerimento > editar empresa/serviço</h6>
                             </div>
                         </div>
                         @if(session('success'))

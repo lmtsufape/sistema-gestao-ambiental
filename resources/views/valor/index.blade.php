@@ -1,24 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Valores de licenças') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h3 class="card-title">Valores das licenças</h3>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <a title="Novo valor de licença" href="{{route('valores.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar licenciamento">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Valores das licenças cadastradas</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Valores de licenças</h6>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('valores.create')}}">Criar novo valor</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -93,10 +90,8 @@
                                             </td>
                                             <td>{{'R$ ' . number_format($valor->valor, 2, ',', ' ')}}</td>
                                             <td>
-                                                <a class="btn btn-info" href="{{route('valores.edit', ['valore' => $valor->id])}}">Editar</a>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}">
-                                                    Deletar
-                                                </button>
+                                                <a href="{{route('valores.edit', ['valore' => $valor->id])}}" title="Editar valor de licença"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar valor de licença"></a>
+                                                <button title="Deletar valor de licença"  type="button" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar valor de licença"></button>
                                             </td>
                                         </tr>
                                     @endforeach
