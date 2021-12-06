@@ -7,7 +7,9 @@
                         <h3 class="card-title">Valores das licenças</h3>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a class="btn btn-primary" href="{{route('valores.create')}}">Criar novo valor</a>
+                        <a title="Novo valor de licença" href="{{route('valores.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -89,10 +91,8 @@
                                             </td>
                                             <td>{{'R$ ' . number_format($valor->valor, 2, ',', ' ')}}</td>
                                             <td>
-                                                <a class="btn btn-info" href="{{route('valores.edit', ['valore' => $valor->id])}}">Editar</a>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}">
-                                                    Deletar
-                                                </button>
+                                                <a href="{{route('valores.edit', ['valore' => $valor->id])}}" title="Editar valor de licença"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar valor de licença"></a>
+                                                <button type="button" data-toggle="modal" data-target="#deletar_valor_{{$valor->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar valor de licença"></button>
                                             </td>
                                         </tr>
                                     @endforeach

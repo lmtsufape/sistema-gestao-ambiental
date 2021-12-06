@@ -277,6 +277,25 @@ nav img {
     color: var(--primaria);
 }
 
+.icon-licenciamento {
+    height: 20px;
+    display: inline-block;
+}
+
+.add-card-btn {
+    background-color: var(--primaria);
+    border-radius: 50px;
+    height: 35px;
+}
+
+.btn-voltar {
+    height: 40px;
+}
+
+.table tbody {
+    color: black;
+}
+
 /* X CONTEUDO X */
 
 /* FOOTER */

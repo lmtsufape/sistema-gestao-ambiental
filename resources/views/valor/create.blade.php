@@ -1,21 +1,22 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Criar um novo valor') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Criar um novo valor de licença</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Valores de licenças > Criar valor</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" href="{{route('valores.index')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Criar um novo valor</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Valores de licenças > Criar valor</h6>
-                            </div>
-                        </div>
                         <form id="valor-form" method="POST" action="{{route('valores.store')}}">
                             @csrf
                             <div class="form-row">
@@ -87,7 +88,7 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="valor-form">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" style="width: 100%;" form="valor-form">Salvar</button>
                             </div>
                         </div>
                     </div>
