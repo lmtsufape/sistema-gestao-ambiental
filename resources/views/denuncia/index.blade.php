@@ -38,14 +38,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_registradas as $denuncia)
+                                        @foreach ($denuncias_registradas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
@@ -70,14 +72,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_aprovadas as $denuncia)
+                                        @foreach ($denuncias_aprovadas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
@@ -102,14 +106,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_arquivadas as $denuncia)
+                                        @foreach ($denuncias_arquivadas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}

@@ -37,14 +37,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($registradas as $solicitacao)
+                                        @foreach ($registradas as $i => $solicitacao)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
@@ -60,14 +62,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($deferidas as $solicitacao)
+                                        @foreach ($deferidas as $i => $solicitacao)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
@@ -82,14 +86,16 @@
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($indeferidas as $solicitacao)
+                                        @foreach ($indeferidas as $i => $solicitacao)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">

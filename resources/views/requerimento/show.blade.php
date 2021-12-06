@@ -2,9 +2,9 @@
     <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-sm-10">
-                <div class="row">
-                    <div class="col-md-12" style="text-align: left">
-                        <a  class="btn my-2"  href="{{route('requerimentos.index')}}" style="cursor: pointer;"><img  width="30" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                <div class="form-row">
+                    <div class="col-md-12" style="text-align: right; padding-top: 15px;">
+                        <a class="btn my-2" href="{{route('requerimentos.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>
@@ -34,6 +34,7 @@
                                         {{__('autorização')}}
                                     @endif
                                 </h5>
+                                <span class="linha"></span>
                             </div>
                             <div class="col-md-2">
                                 @can('isSecretario', \App\Models\User::class)
@@ -50,7 +51,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="titulo-nav-tab-custom">Empresa</h5>
+                                <h5 class="titulo-nav-tab-custom">Empresa/Serviço</h5>
                                 <h6 class="titulo-nav-tab-custom" style="color: #4A7836;">{{$requerimento->empresa->nome}}</h6>
                             </div>
                         </div>
@@ -158,7 +159,7 @@
                                 <div class="col-md-11">
                                     <h5>
                                         <button class="titulo-nav-tab-custom btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Informações da Empresa
+                                            Informações da Empresa/Serviço
                                         </button>
                                     </h5>
                                 </div>
@@ -331,7 +332,7 @@
                                 @endif
                                 @can('isProtocolista', \App\Models\User::class)
                                     <div class="col-md-6">
-                                        <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da empresa</a>
+                                        <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da Empresa/Serviço</a>
                                     </div>
                                 @endcan
                             </div>
@@ -345,6 +346,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="col-md-10">
                                         <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista</h5>
+                                        <span class="linha"></span>
                                     </div>
                                     <div class="col-md-2">
                                         <a data-toggle="modal" data-target="#atribuir-analista" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista" title="Atribuir analista"></a>

@@ -382,10 +382,15 @@ table.mytable{
 .mytable th{
     color: #4A7836;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
 }
 
 .mytable td{
     text-align: center;
+}
+
+.linha{
+    border-bottom: 2px solid #ccc;
+    display: block;
 }
