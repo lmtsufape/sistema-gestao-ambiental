@@ -19,9 +19,9 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-jet-button class="ml-4">
+                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
                     {{ __('Confirm') }}
-                </x-jet-button>
+                </button>
             </div>
         </form>
     </x-jet-authentication-card>

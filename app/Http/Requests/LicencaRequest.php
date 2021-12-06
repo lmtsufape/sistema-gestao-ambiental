@@ -13,7 +13,7 @@ class LicencaRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->ehAnalista();
+        return true;
     }
 
     /**

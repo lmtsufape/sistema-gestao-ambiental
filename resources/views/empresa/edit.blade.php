@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <h5 class="card-title">Editar uma empresa</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Empresas > Editar empresa</h6>
+                                <h5 class="card-title">Editar uma empresa/serviço</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Empresas > Editar empresa/serviço</h6>
                             </div>
                         </div>
                         <form id="form-editar-empresa" method="POST" action="{{route('empresas.update', ['empresa' => $empresa])}}">

@@ -66,7 +66,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Empresa</th>
+                                                <th scope="col">Empresa/serviço</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Tipo</th>
                                                 <th scope="col">Valor</th>
@@ -148,7 +148,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Empresa</th>
+                                                <th scope="col">Empresa/serviço</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Tipo</th>
                                                 <th scope="col">Valor</th>
@@ -218,7 +218,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Empresa</th>
+                                                <th scope="col">Empresa/serviço</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Tipo</th>
                                                 <th scope="col">Valor</th>
@@ -291,7 +291,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Empresa</th>
+                                        <th scope="col">Empresa/serviço</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Tipo</th>
                                         <th scope="col">Valor</th>

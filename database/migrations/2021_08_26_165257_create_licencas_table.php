@@ -20,6 +20,7 @@ class CreateLicencasTable extends Migration
             $table->integer('tipo');
             $table->string('validade');
             $table->string('caminho')->nullable();
+            $table->text('comentario_revisao')->nullable();
 
             $table->unsignedBigInteger('requerimento_id');
             $table->foreign('requerimento_id')->references('id')->on('requerimentos');

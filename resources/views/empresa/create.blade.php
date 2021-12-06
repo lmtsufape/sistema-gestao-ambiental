@@ -11,8 +11,8 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <h5 class="card-title">Cadastrar uma empresa</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Empresas > Criar empresa</h6>
+                                <h5 class="card-title">Cadastrar uma empresa/serviço</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Empresas > Criar empresa/serviço</h6>
                             </div>
                         </div>
                         <form id="form-cadastrar-empresa" method="POST" action="{{route('empresas.store')}}">

@@ -45,7 +45,7 @@
                                             @else
                                                 <td>{{$visita->data_realizada}}</td>
                                             @endif
-                                            <td>{{$visita->requerimento->analista->name}}</td>
+                                            <td>{{$visita->analista->name}}</td>
                                             @can('isSecretario', \App\Models\User::class)
                                                 <td>
                                                     <div class="btn-group">

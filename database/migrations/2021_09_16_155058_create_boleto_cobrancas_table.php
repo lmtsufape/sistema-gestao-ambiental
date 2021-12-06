@@ -16,8 +16,15 @@ class CreateBoletoCobrancasTable extends Migration
         Schema::create('boleto_cobrancas', function (Blueprint $table) {
             $table->id();
             $table->date('data_vencimento');
-            $table->string('caminho_boleto');
-            $table->integer('resposta_remessa')->nullable();
+            $table->string('caminho_arquivo_remessa')->nullable();
+            $table->string('resposta_incluir_boleto')->nullable();
+            $table->string('resposta_aleterar_boleto')->nullable();
+            $table->string('resposta_baixar_boleto')->nullable();
+            $table->string('resposta_consultar_boleto')->nullable();
+            $table->string('codigo_de_barras')->nullable();
+            $table->string('linha_digitavel')->nullable();
+            $table->string('nosso_numero')->nullable(); 
+            $table->string('URL')->nullable();
 
             $table->bigInteger('requerimento_id');
             $table->foreign('requerimento_id')->references('id')->on('requerimentos');
