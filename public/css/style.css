@@ -343,54 +343,27 @@ nav img {
 
 /* ELEMENTOS */
 
-.titulo-nav-tab-custom{
-    color: black;
-    font-weight: 700;
-}
 
 .nav-tab-custom .nav-item {
     margin-right: 10px;
-    color: #4A7836;
+    color: white
 }
 
-.nav-tab-custom .nav-item:hover > .nav-link {
-    color: #4A7836;
-}
-
-.nav-tab-custom .active:hover > .nav-link {
-    color: #4A7836;
-}
-
-.nav-tab-custom .nav-item > .nav-link {
-    color: rgb(255, 255, 255);
-}
-
-.nav-tab-custom .nav-item > button{
+.nav-tab-custom .nav-item button{
     background-color: #4A7836;
 }
 
 .nav-tab-custom .nav-item:hover > button{
     transition: 0.5s;
     background-color: white;
-}
-
-
-table.mytable{
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.mytable th{
-    color: #4A7836;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-}
-
-.mytable td{
-    text-align: center;
+    color: var(--secondaria);
 }
 
 .linha{
     border-bottom: 2px solid #ccc;
     display: block;
+} 
+
+.nav-item .active {
+    color: black;
 }
