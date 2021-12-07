@@ -3,8 +3,14 @@
     <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="row">
             <div class="col-sm-12">
-                <div class="row">
-                    <div class="col-md-12" style="text-align: right; padding-top: 15px;">
+                <div class="form-row">
+                    <div class="col-md-8" style="padding-top: 30px;">
+                        <h4 class="card-title">Visualizar solicitação de muda {{$solicitacao->protocolo}}</h4>
+                        @can('usuarioInterno', \App\Models\User::class)
+                            <h6 class="card-subtitle mb-2 text-muted">Mudas > Visualizar solicitação de muda {{$solicitacao->protocolo}}</h6>
+                        @endcan
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
@@ -14,36 +20,37 @@
             <div class="col-md-8">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Solicitação de mudas</h5>
-                            </div>
-                        </div>
                         <div class="card-body">
-                            <div class="col-md-12 form-group">
-                                <label for="nome">Nome<span style="color: red; font-weight: bold;">
-                                        *</span></label>
-                                <input id="nome" class="form-control" type="text" name="nome"
-                                    value="{{ $solicitacao->nome }}" autocomplete="nome" disabled>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="nome">Nome<span style="color: red; font-weight: bold;">
+                                            *</span></label>
+                                    <input id="nome" class="form-control" type="text" name="nome"
+                                        value="{{ $solicitacao->nome }}" autocomplete="nome" disabled>
+                                </div>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
-                                        *</span></label>
-                                <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
-                                    value="{{ $solicitacao->cpf }}" autofocus autocomplete="cpf"
-                                    data-mask="000.000.000-00" disabled>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
+                                            *</span></label>
+                                    <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
+                                        value="{{ $solicitacao->cpf }}" autofocus autocomplete="cpf"
+                                        data-mask="000.000.000-00" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="area">Área em m²<span style="color: red; font-weight: bold;">
+                                            *</span></label>
+                                    <input id="area" class="form-control" type="number" step="0.01" name="area"
+                                        value="{{ $solicitacao->area }}" autocomplete="area" disabled>
+                                </div>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="area">Área em m²<span style="color: red; font-weight: bold;">
-                                        *</span></label>
-                                <input id="area" class="form-control" type="number" step="0.01" name="area"
-                                    value="{{ $solicitacao->area }}" autocomplete="area" disabled>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="endereco">Endereço<span style="color: red; font-weight: bold;">
-                                        *</span></label>
-                                <input id="endereco" class="form-control" type="text" name="endereco"
-                                    value="{{ $solicitacao->endereco }}" autocomplete="endereco" disabled>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="endereco">Endereço<span style="color: red; font-weight: bold;">
+                                            *</span></label>
+                                    <input id="endereco" class="form-control" type="text" name="endereco"
+                                        value="{{ $solicitacao->endereco }}" autocomplete="endereco" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>

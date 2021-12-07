@@ -3,7 +3,11 @@
         <div class="form-row justify-content-center">
             <div class="col-sm-10">
                 <div class="form-row">
-                    <div class="col-md-12" style="text-align: right; padding-top: 15px;">
+                    <div class="col-md-8" style="padding-top: 15px;">
+                        <h4 class="card-title">Visualizar requerimento nº {{$requerimento->id}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento nº {{$requerimento->id}}</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('requerimentos.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>

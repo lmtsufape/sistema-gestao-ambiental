@@ -5,7 +5,7 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h5 class="titulo-nav-tab-custom">Denúncias</h5>
+                        <h4 class="card-title">Denúncias</h4>
                     </div>
                 </div>
                 <div div class="form-row">

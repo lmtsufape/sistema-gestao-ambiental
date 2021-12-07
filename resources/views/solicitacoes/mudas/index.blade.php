@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h5 class="titulo-nav-tab-custom">Mudas</h5>
+                        <h4 class="card-title">Mudas</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -50,8 +50,8 @@
                                                 <td style="text-align: center">{{ $solicitacao->nome }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->endereco }}</td>
                                                 <td style="text-align: center">
-                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
-                                                    <a href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                    <a title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
