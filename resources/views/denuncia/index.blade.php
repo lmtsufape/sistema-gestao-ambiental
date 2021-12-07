@@ -1,78 +1,66 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Denúncias') }}
-        </h2>
-    </x-slot>
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Denúncias cadastrados no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Denúncias</h6>
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h5 class="titulo-nav-tab-custom">Denúncias</h5>
+                    </div>
+                </div>
+                <div div class="form-row">
+                    @if(session('success'))
+                        <div class="col-md-12" style="margin-top: 5px;">
+                            <div class="alert alert-success" role="alert">
+                                <p>{{session('success')}}</p>
                             </div>
                         </div>
-                        <div div class="form-row">
-                            @if(session('success'))
-                                <div class="col-md-12" style="margin-top: 5px;">
-                                    <div class="alert alert-success" role="alert">
-                                        <p>{{session('success')}}</p>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
-                                    type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                                    aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab"
-                                    aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
+                    @endif
+                </div>
+                <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
+                            type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button"
+                            aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab"
+                            aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</button>
+                    </li>
+                </ul>
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <div class="tab-content tab-content-custom" id="myTabContent">
                             <div class="tab-pane fade show active" id="denuncias-pendentes" role="tabpanel" aria-labelledby="denuncias-pendentes-tab">
-                                <table class="table">
+                                <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_registradas as $denuncia)
+                                        @foreach ($denuncias_registradas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                            @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens e vídeos</button>
-                                                        </div>
+                                                    <div class="btn-group">
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                        @endcan
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -81,38 +69,32 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
-                                <table class="table">
+                                <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_aprovadas as $denuncia)
+                                        @foreach ($denuncias_aprovadas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                                <button id="btn-criar-visita-{{$denuncia->id}}" type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})">Agendar uma visita</button>
-                                                            @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
-                                                        </div>
+                                                    <div class="btn-group">
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
+                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img width="25" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
+                                                        @endcan
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -121,38 +103,32 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="denuncias-arquivadas" role="tabpanel" aria-labelledby="denuncias-arquivadas-tab">
-                                <table class="table">
+                                <table class="table mytable">
                                     <thead>
                                         <tr>
+                                            <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_arquivadas as $denuncia)
+                                        @foreach ($denuncias_arquivadas as $i => $denuncia)
                                             <tr>
+                                                <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})">Atribuir a um analista</button>
-                                                            @endcan
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}">Descrição</button>
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}">Avaliar</button>
-                                                           <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}">Imagens</button>
-                                                        </div>
+                                                    <div class="btn-group">
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                        @endcan
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -1,11 +1,15 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitações de mudas') }}
-        </h2>
-    </x-slot>
 
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: right; padding-top: 15px;">
+                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-row justify-content-center">
             <div class="col-md-8">
                 <div class="card" style="width: 100%;">
