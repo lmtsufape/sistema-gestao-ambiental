@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h5 class="titulo-nav-tab-custom">
+                        <h4 class="card-title">
                             @can('isSecretario', \App\Models\User::class)
                                 {{__('Requerimentos')}}
                             @elsecan('isAnalista', \App\Models\User::class)
@@ -12,7 +12,7 @@
                             @elsecan('isRequerente', \App\Models\User::class)
                                 {{__('Requerimentos criados por você')}}
                             @endcan
-                        </h5>
+                        </h4>
                     </div>
                     @can('isRequerente', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right">

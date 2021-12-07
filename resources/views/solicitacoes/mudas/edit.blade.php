@@ -1,20 +1,22 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitações de mudas') }}
-        </h2>
-    </x-slot>
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-row">
+                    <div class="col-md-8" style="padding-top: 15px;">
+                        <h4 class="card-title">Avaliar solicitação de muda {{$solicitacao->protocolo}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Mudas > Avaliar solicitação de muda {{$solicitacao->protocolo}}</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <h5 class="card-title">Solicitação de mudas</h5>
-                            </div>
-                        </div>
+                        
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="nome">Nome<span style="color: red; font-weight: bold;">
@@ -22,6 +24,8 @@
                                 <input id="nome" class="form-control" type="text" name="nome"
                                     value="{{ $solicitacao->nome }}" autocomplete="nome" disabled>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="col-md-6 form-group">
                                 <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
                                         *</span></label>
@@ -35,6 +39,8 @@
                                 <input id="area" class="form-control" type="number" step="0.01" name="area"
                                     value="{{ $solicitacao->area }}" autocomplete="area" disabled>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="endereco">Endereço<span style="color: red; font-weight: bold;">
                                         *</span></label>
@@ -42,7 +48,7 @@
                                     value="{{ $solicitacao->endereco }}" autocomplete="endereco" disabled>
                             </div>
                         </div>
-                        <div class="form-row col-md-12">
+                        <div class="form-row">
                             <div class="col-md-6" >
                                 <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
                             </div>
