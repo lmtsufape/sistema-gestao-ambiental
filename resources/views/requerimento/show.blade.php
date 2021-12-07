@@ -42,13 +42,26 @@
                             </div>
                             <div class="col-md-2">
                                 @can('isSecretario', \App\Models\User::class)
-                                    <div class="btn-group">                                        
+                                    <div class="btn-group align-items-center">                                        
                                         @if ($requerimento->documentos->count() > 0)
-                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                             <a class="btn" data-toggle="modal" data-target="#documentos-edit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
                                         @else
                                             <a class="btn" data-toggle="modal" data-target="#documentos" style="cursor: pointer;"><img width="30" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                         @endif
+                                    </div>
+                                @endcan
+                                @can('isAnalista', \App\Models\User::class)
+                                    <div class="btn-group align-items-center">
+                                        @if ($requerimento->documentos->count() > 0)
+                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                            <a class="btn" data-toggle="modal" data-target="#documentos-edit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
+                                        @else
+                                            <a class="btn" data-toggle="modal" data-target="#documentos" style="cursor: pointer;"><img width="30" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
+                                        @endif
+                                        @can('isProtocolista', \App\Models\User::class)
+                                            <a  href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/building-svgrepo-com.svg')}}"  alt="Editar empresa" title="Editar Informações da Empresa/Serviço"></a>
+                                        @endcan
                                     </div>
                                 @endcan
                             </div>
@@ -318,31 +331,7 @@
                         </div>
                     </div>
                 </div>
-                @can('isAnalista', \App\Models\User::class)
-                    <div class="shadow card" style="width: 50%; margin-top: 1rem;">
-                        <div class="card-body">
-                            <div class="form-row">
-                                @if ($requerimento->documentos->count() > 0)
-                                    <div class="col-md-6">
-                                        <a class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="width: 100%;">Analisar documentos</a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <a class="btn btn-primary" data-toggle="modal" data-target="#documentos-edit" style="width: 100%;">Editar documentos</a>
-                                    </div>
-                                @else
-                                    <div class="col-md-12">
-                                        <a class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#documentos">Requisitar documentos e pagamento</a>
-                                    </div>
-                                @endif
-                                @can('isProtocolista', \App\Models\User::class)
-                                    <div class="col-md-6">
-                                        <a class="btn btn-primary" href="{{route('requerimentos.editar.empresa', $requerimento->id)}}" style="width: 100%;">Editar Informações da Empresa/Serviço</a>
-                                    </div>
-                                @endcan
-                            </div>
-                        </div>
-                    </div>
-                @endcan
+                
                 @can('isSecretario', \App\Models\User::class)
                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                         <div class="shadow card" style="width: 50%; margin-top: 1rem;">
