@@ -33,7 +33,8 @@
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+            {{-- @livewire('navigation-menu') --}}
+            @component('layouts.nav_bar')@endcomponent
 
             <!-- Page Heading -->
             @if (isset($header))
