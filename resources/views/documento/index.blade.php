@@ -1,24 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Documentos') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Documentos cadastrados no sistema</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right;">
+                        <a title="Adicionar documento" href="{{route('documentos.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar documento">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Documentos cadastrados no sistema</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Documentos</h6>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('documentos.create')}}">Criar Documento</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -44,33 +41,22 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
-                                    <th scope="col">Opções</th>
+                                    <th scope="col" style="width: 125px;">Opções</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($documentos as $documento)
+                                @foreach ($documentos as $i => $documento)
                                     <tr>
+                                        <td scope="row">{{$i+1}}</td>
                                         <td>{{$documento->nome}}</td>
                                         <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                    @if ($documento->documento_modelo != null)
-                                                        <a type="button" class="btn btn-primary dropdown-item" target="_blank" href="{{route("documentos.show", $documento->id)}}">
-                                                            Visualizar
-                                                        </a>
-                                                    @endif
-                                                    <a type="button" class="btn btn-primary dropdown-item" href="{{ route("documentos.edit", $documento->id) }}">
-                                                        Editar
-                                                    </a>
-                                                    <button type="button" class="btn btn-danger dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}">
-                                                        Deletar
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            @if ($documento->documento_modelo != null)
+                                                <a title="Visualizar documento" target="_blank" href="{{route("documentos.show", $documento->id)}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar documento"></a>
+                                            @endif
+                                            <a title="Editar documento" href="{{route("documentos.edit", $documento->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar documento"></a>
+                                            <a title="Deletar documento" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar documento"></a>
                                         </td>
                                     </tr>
                                 @endforeach
