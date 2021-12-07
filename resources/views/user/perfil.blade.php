@@ -1,13 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Minha conta') }}
         </h2>
-    </x-slot>
+    </x-slot> --}}
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <form method="POST" action="{{route('usuarios.update', ['usuario' => auth()->user()->id])}}">
             @csrf
+            <div class="form-row">
+                <div class="col-md-8">
+                    <h2 class="card-title">{{ __('Minha conta') }}</h2>
+                </div>
+            </div>
             <input type="hidden" name="_method" value="PUT">
             <div div class="form-row">
                 @if(session('success'))
@@ -20,7 +25,7 @@
             </div>
             <div class="form-row justify-content-center" style="margin-bottom: 100px;">
                 <div class="col-md-5" style="margin-bottom: 20px;">
-                    <h4>
+                    <h4 class="card-title">
                         {{ __('Informações de Perfil') }}
                     </h4>
                 
@@ -29,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-md-7">
-                    <div class="card" style="width: 100%; padding: 20px;">
+                    <div class="card card-borda-esquerda" style="width: 100%; padding: 20px;">
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
@@ -58,7 +63,7 @@
                             <div class="form-row">
                                 <div class="col-md-9"></div>
                                 <div class="col-md-3 form-group" style="text-align: right;">
-                                    <button class="btn btn-success">Salvar</button>
+                                    <button class="btn btn-success btn-color-dafault">Salvar</button>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +72,7 @@
             </div>
             <div class="form-row justify-content-center">
                 <div class="col-md-5" style="margin-bottom: 20px;">
-                    <h4>
+                    <h4 class="card-title">
                         {{ __('Atualizar senha') }}
                     </h4>
                 
@@ -76,7 +81,7 @@
                     </div>
                 </div>
                 <div class="col-md-7">
-                    <div class="card" style="width: 100%; padding: 20px;">
+                    <div class="card card-borda-esquerda" style="width: 100%; padding: 20px;">
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
@@ -117,7 +122,7 @@
                             <div class="form-row">
                                 <div class="col-md-9"></div>
                                 <div class="col-md-3 form-group" style="text-align: right;">
-                                    <button class="btn btn-success">Salvar</button>
+                                    <button class="btn btn-success btn-color-dafault">Salvar</button>
                                 </div>
                             </div>
                         </div>
