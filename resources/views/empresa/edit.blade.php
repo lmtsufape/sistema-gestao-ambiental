@@ -1,20 +1,17 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar uma empresa') }}
-        </h2>
-    </x-slot>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <h4 class="card-title">Editar uma empresa/serviço</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Empresas > Editar empresa/serviço</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <h5 class="card-title">Editar uma empresa/serviço</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Empresas > Editar empresa/serviço</h6>
-                            </div>
-                        </div>
                         <form id="form-editar-empresa" method="POST" action="{{route('empresas.update', ['empresa' => $empresa])}}">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
@@ -221,7 +218,7 @@
                                     <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
                                     <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes">
                                         @foreach ($empresa->cnaes as $cnae)
-                                            <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar('{{$cnae->id}}')">
+                                            <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar('{{$cnae->id}}')">
                                                 <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
                                                 <div style="width:140px; height:25px; text-align:right;">
                                                     <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
@@ -241,7 +238,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="form-editar-empresa">Salvar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" style="width: 100%;" form="form-editar-empresa">Salvar</button>
                             </div>
                         </div>
                     </div>
@@ -364,7 +361,7 @@
                     if(data.responseJSON.success){
                         for(var i = 0; i < data.responseJSON.cnaes.length; i++){
                             var naLista = document.getElementById('listaCnaes');
-                            var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
+                            var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
                                             <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
                                             <div style="width:140px; height:25px; text-align:right;">
                                                 <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">

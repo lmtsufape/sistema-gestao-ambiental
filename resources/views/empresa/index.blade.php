@@ -1,24 +1,21 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Empresas') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Suas empresas/serviços cadastradas(os)</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <a title="Adicionar empresa/serviço" href="{{route('empresas.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar empresa/serviço">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Suas empresas/serviços cadastradas(os)</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Empresas/serviços</h6>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary" href="{{route('empresas.create')}}">Criar empresa/serviço</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -46,13 +43,9 @@
                                             <td>{{$empresa->cpf_cnpj}}</td>
                                             <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
                                             <td>
-                                                <a href="{{route('empresas.edit', ['empresa' => $empresa])}}" class="btn btn-info">
-                                                    Editar
-                                                </a>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}">
-                                                    Deletar
-                                                </button>
                                                 <a class="btn btn-primary" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">Notificações</a>
+                                                <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
+                                                <a title="Deletar empresa/serviço" type="button" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar empresa/serviço"></a>
                                             </td>
                                         </tr>
                                     @endforeach
