@@ -352,16 +352,16 @@
                                                 <td>
                                                     <div class="btn-group align-items-center"> 
                                                         @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos" title="Analisar requerimentos"></a>
+                                                            <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos"></a>
                                                         @endcan
                                                         @if($requerimento->visitas->count() > 0)
                                                             @can('isSecretario', \App\Models\User::class)
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="margin-left: 2px; margin-right: 2px;">
+                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
                                                                     Visitas
                                                                 </a>
                                                             @else
                                                                 @can('isRequerente', \App\Models\User::class)
-                                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="margin-left: 2px; margin-right: 2px;">
+                                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
                                                                         Visitas
                                                                     </a>
                                                                 @endcan
@@ -369,16 +369,16 @@
                                                         @endif
                                                         @can('isRequerente', \App\Models\User::class)
                                                             @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}" style="margin-left: 2px; margin-right: 2px;">
+                                                                <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}">
                                                                     Visualizar licença
                                                                 </a>
                                                             @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @endif
                                                             @endif
                                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
