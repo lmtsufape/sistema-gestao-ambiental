@@ -296,6 +296,10 @@ nav img {
     color: black;
 }
 
+.dropdown .dropdown-item:active {
+    background-color: var(--primaria);
+}
+
 /* X CONTEUDO X */
 
 /* FOOTER */
