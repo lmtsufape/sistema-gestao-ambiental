@@ -44,7 +44,7 @@
                                 @can('isSecretario', \App\Models\User::class)
                                     <div class="btn-group align-items-center">                                        
                                         @if ($requerimento->documentos->count() > 0)
-                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                             <a class="btn" data-toggle="modal" data-target="#documentos-edit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
                                         @else
                                             <a class="btn" data-toggle="modal" data-target="#documentos" style="cursor: pointer;"><img width="30" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
@@ -54,7 +54,7 @@
                                 @can('isAnalista', \App\Models\User::class)
                                     <div class="btn-group align-items-center">
                                         @if ($requerimento->documentos->count() > 0)
-                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                            <a href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                             <a class="btn" data-toggle="modal" data-target="#documentos-edit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
                                         @else
                                             <a class="btn" data-toggle="modal" data-target="#documentos" style="cursor: pointer;"><img width="30" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>

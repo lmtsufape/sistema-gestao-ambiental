@@ -1,6 +1,6 @@
 :root { 
     --primaria: #4A7836;
-    --secondaria: #203318;
+    --secundaria: #203318;
     --dafault: #4a7836d8;
 }
 
@@ -18,7 +18,7 @@ nav img {
 }
 
 .color-default {
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 .btn-color-dafault {
@@ -27,14 +27,14 @@ nav img {
 }
 
 .btn-color-dafault:hover {
-    background-color: var(--secondaria);
-    border-color: var(--secondaria);
+    background-color: var(--secundaria);
+    border-color: var(--secundaria);
 }
 
 .btn-color-dafault:focus {
-    background-color: var(--secondaria);
-    border-color: var(--secondaria);
-    box-shadow: 0 0 0 0.2rem var(--secondaria);
+    background-color: var(--secundaria);
+    border-color: var(--secundaria);
+    box-shadow: 0 0 0 0.2rem var(--secundaria);
 }
 
 .btn-color-dafault.disabled, .btn-color-dafault:disabled {
@@ -147,7 +147,7 @@ nav img {
 
 .conteudo {
     margin-top: 70px;
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 .conteudo .card-home {
@@ -264,7 +264,7 @@ nav img {
 
 .card-title {
     font-weight: bolder;
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 .table {
@@ -303,11 +303,11 @@ nav img {
     background-color: #f8f9fa;
     padding-bottom: 1rem; 
     padding-top: 2rem;
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 #appRodape .link-email {
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 #appRodape  .alinhar-centro {
@@ -320,7 +320,7 @@ nav img {
 }
 
 #appRodape .hr-lateral {
-    border-right: solid 1px var(--secondaria);
+    border-right: solid 1px var(--secundaria);
 }
 
 #appRodape .img {
@@ -356,7 +356,7 @@ nav img {
 .nav-tab-custom .nav-item:hover > button{
     transition: 0.5s;
     background-color: white;
-    color: var(--secondaria);
+    color: var(--secundaria);
 }
 
 .linha{

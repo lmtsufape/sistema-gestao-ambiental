@@ -8,15 +8,17 @@
                             @can('isSecretario', \App\Models\User::class)
                                 {{__('Requerimentos')}}
                             @elsecan('isAnalista', \App\Models\User::class)
-                                {{__('Requerimentos atribuidos a você')}}
+                                {{__('Requerimentos atribuídos a você')}}
                             @elsecan('isRequerente', \App\Models\User::class)
                                 {{__('Requerimentos criados por você')}}
                             @endcan
                         </h4>
                     </div>
                     @can('isRequerente', \App\Models\User::class)
-                        <div class="col-md-4" style="text-align: right">
-                            <button id="btn-novo-requerimento" class="btn btn-primary" data-toggle="modal" data-target="#novo_requerimento">Novo requerimento</button>
+                        <div class="col-md-4" style="text-align: right;">
+                            <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
+                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar novo requerimento">
+                            </button>
                         </div>
                     @endcan
                 </div>
@@ -280,7 +282,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="card" style="width: 100%;">
+                        <div class="card card-borda-esquerda" style="width: 100%;">
                             <div class="card-body">
                                 <table class="table mytable">
                                     <thead>
@@ -348,50 +350,44 @@
                                                 </td>
                                                 <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                 <td>
-                                                    @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                        <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
-                                                            Analisar
-                                                        </a>
-                                                    @endcan
-                                                    @if($requerimento->visitas->count() > 0)
-                                                        @can('isSecretario', \App\Models\User::class)
-                                                            <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
-                                                                Visitas
-                                                            </a>
-                                                        @else
-                                                            @can('isRequerente', \App\Models\User::class)
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
+                                                    <div class="btn-group align-items-center"> 
+                                                        @can('isSecretarioOrAnalista', \App\Models\User::class)
+                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos" title="Analisar requerimentos"></a>
+                                                        @endcan
+                                                        @if($requerimento->visitas->count() > 0)
+                                                            @can('isSecretario', \App\Models\User::class)
+                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="margin-left: 2px; margin-right: 2px;">
                                                                     Visitas
                                                                 </a>
+                                                            @else
+                                                                @can('isRequerente', \App\Models\User::class)
+                                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="margin-left: 2px; margin-right: 2px;">
+                                                                        Visitas
+                                                                    </a>
+                                                                @endcan
                                                             @endcan
-                                                        @endcan
-                                                    @endif
-                                                    @can('isRequerente', \App\Models\User::class)
-                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                            <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}">
-                                                                Visualizar licença
-                                                            </a>
-                                                        @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                                                            @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
-                                                                    Enviar documentação
-                                                                </a>
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
-                                                                    Documentação em análise
-                                                                </a>
-                                                            @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.documentacao', $requerimento->id)}}">
-                                                                    Documentação aceita
-                                                                </a>
-                                                            @endif
                                                         @endif
-                                                    @endcan
-                                                    @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
-                                                            Cancelar
-                                                        </button>
-                                                    @endif
+                                                        @can('isRequerente', \App\Models\User::class)
+                                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                                <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}" style="margin-left: 2px; margin-right: 2px;">
+                                                                    Visualizar licença
+                                                                </a>
+                                                            @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                                @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="30" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                                @endif
+                                                            @endif
+                                                            @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
+                                                                    Cancelar
+                                                                </button>
+                                                            @endif
+                                                        @endcan
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
