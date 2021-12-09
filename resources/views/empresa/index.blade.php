@@ -43,7 +43,7 @@
                                             <td>{{$empresa->cpf_cnpj}}</td>
                                             <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">Notificações</a>
+                                                <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/Icon bell.svg')}}" alt="Icone de notificações da empresa/serviço"></a>
                                                 <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
                                                 <a title="Deletar empresa/serviço" type="button" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar empresa/serviço"></a>
                                             </td>
