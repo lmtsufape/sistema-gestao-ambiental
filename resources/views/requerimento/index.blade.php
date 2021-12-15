@@ -123,11 +123,6 @@
                                                                 @can('isSecretarioOrAnalista', \App\Models\User::class)
                                                                     <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                                 @endcan
-                                                                @if($requerimento->visitas->count() > 0)
-                                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
-                                                                        Visitas
-                                                                    </a>
-                                                                @endif
                                                                 <a data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                             </div>
                                                         </td>

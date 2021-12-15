@@ -49,6 +49,10 @@
                                         @else
                                             <a class="btn" data-toggle="modal" data-target="#documentos" style="cursor: pointer;"><img width="30" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                         @endif
+                                        @if($requerimento->visitas->count() > 0)
+                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+
+                                        @endif
                                     </div>
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)

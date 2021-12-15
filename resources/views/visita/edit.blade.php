@@ -8,7 +8,7 @@
                         <h6 class="card-subtitle mb-2 text-muted"> Visita > Editar visita</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('visitas.index')}}">
+                        <a title="Voltar" @if ($verRequerimento ?? '') href="{{route('requerimento.visitas', ['id' => $visita->requerimento])}}" @else href="{{route('visitas.index')}}" @endif>
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
                     </div>
