@@ -5,9 +5,9 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         @if ($relatorio->visita->requerimento != null)
-                            <h5 class="card-title">Avaliar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h5>
+                            <h4 class="card-title">Avaliar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h4>
                         @elseif ($relatorio->visita->denuncia != null)
-                            <h5 class="card-title">Cria relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h5>
+                            <h4 class="card-title">Cria relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
                         @endif
                         <h6 class="card-subtitle mb-2 text-muted">Programação > Visitas > Relátorio</h6>
                     </div>
