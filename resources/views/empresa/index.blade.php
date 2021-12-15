@@ -52,7 +52,7 @@
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}">
                                                     Deletar
                                                 </button>
-                                                <a class="btn btn-primary" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">Notificações</a>
+                                                <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                             </td>
                                         </tr>
                                     @endforeach

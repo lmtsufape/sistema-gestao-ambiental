@@ -1,25 +1,26 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar relatório') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @if ($relatorio->visita->requerimento != null)
+                            <h5 class="card-title">Avaliar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h5>
+                        @elseif ($relatorio->visita->denuncia != null)
+                            <h5 class="card-title">Cria relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h5>
+                        @endif
+                        <h6 class="card-subtitle mb-2 text-muted">Programação > Visitas > Relátorio</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <a title="Voltar" href="{{route('visitas.index')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                @if ($relatorio->visita->requerimento != null)
-                                    <h5 class="card-title">Editar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h5>
-                                @elseif ($relatorio->visita->denuncia != null)
-                                    <h5 class="card-title">Cria relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h5>
-                                @endif
-                                <h6 class="card-subtitle mb-2 text-muted">Programação > Relátorio</h6>
-                            </div>
-                        </div>
                         <div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">

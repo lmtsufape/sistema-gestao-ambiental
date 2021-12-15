@@ -351,14 +351,10 @@
                                                         @endcan
                                                         @if($requerimento->visitas->count() > 0)
                                                             @can('isSecretario', \App\Models\User::class)
-                                                                <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
-                                                                    Visitas
-                                                                </a>
+                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                             @else
                                                                 @can('isRequerente', \App\Models\User::class)
-                                                                    <a type="button" class="btn btn-primary" href="{{route('requerimento.visitas', ['id' => $requerimento])}}">
-                                                                        Visitas
-                                                                    </a>
+                                                                    <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                                 @endcan
                                                             @endcan
                                                         @endif
