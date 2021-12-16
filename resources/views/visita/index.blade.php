@@ -90,7 +90,8 @@
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
                                                 @else
                                                     @if ($visita->requerimento != null)
-                                                        <a title="Visualizar requerimento" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de analisar requerimento"></a>
+                                                        <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de analisar requerimento"></a>
+                                                        
                                                         <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
                                                         @if($visita->requerimento->licenca != null) 
@@ -101,7 +102,7 @@
                                                         @if ($visita->denuncia->empresa != null)
                                                             <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         @endif
-                                                        <a title="Descição" data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
                                                         <a title="Mídia" data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     @endif
                                                 @endcan

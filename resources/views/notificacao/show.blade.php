@@ -17,30 +17,28 @@
             <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            @if(session('success'))
-                                <div class="col-md-12" style="margin-top: 5px;">
-                                    <div class="alert alert-success" role="alert">
-                                        <p>{{session('success')}}</p>
-                                    </div>
+                        @if(session('success'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-success" role="alert">
+                                    <p>{{session('success')}}</p>
                                 </div>
-                            @endif
-                            <div class="form-row">
-                                <div class="col-md-12" style="margin-bottom:20px">
-                                    <div class="card-body">
-                                        <div class="alert alert-warning" role="alert">
-                                            <div id="notificacao" style="margin-top: 10px">
-                                            </div>
+                            </div>
+                        @endif
+                        <div class="form-row">
+                            <div class="col-md-12" style="margin-bottom:20px">
+                                <div class="card-body">
+                                    <div class="alert alert-warning" role="alert">
+                                        <div id="notificacao" style="margin-top: 10px">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    @foreach ($notificacao->fotos as $foto)
-                                        <img class="img-fluid" src="{{Storage::url($foto->caminho)}}" alt="foto">
-                                    @endforeach
-                                </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                @foreach ($notificacao->fotos as $foto)
+                                    <img class="img-fluid" src="{{Storage::url($foto->caminho)}}" alt="foto">
+                                @endforeach
                             </div>
                         </div>
                     </div>
