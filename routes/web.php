@@ -113,6 +113,3 @@ Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
-
-Route::get("/boleto", [XMLCoderController::class, 'teste'])->name('tratar.boleto');
-Route::post("/boleto-enviar", [XMLCoderController::class, 'ler_xml'])->name('enviar.resposta');
