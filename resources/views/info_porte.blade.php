@@ -3,7 +3,7 @@
     <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row">
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO I</h5>
                         <h6 class="card-subtitle mb-2 text-muted">INDÚSTRIAS</h6>
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO II</h5>
                         <h6 class="card-subtitle mb-2 text-muted">PESQUISA E EXTRAÇÃO DE MINERAIS</h6>
@@ -113,7 +113,7 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO III</h5>
                         <h6 class="card-subtitle mb-2 text-muted">TRATAMENTO,  TRANSPORTE  E  DISPOSIÇÃO 
@@ -169,7 +169,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO IV</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - CONJUNTOS HABITACIONAIS/EDIFICAÇÕES UNI OU 
@@ -215,7 +215,7 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO IV</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - LOTEAMENTOS</h6>
@@ -264,7 +264,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
@@ -310,7 +310,7 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
@@ -362,7 +362,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO VI</h5>
                         <h6 class="card-subtitle mb-2 text-muted">OBRAS DIVERSAS</h6>
@@ -416,7 +416,7 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO VII</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - ATIVIDADE  QUE  UTILIZAR  MADEIRA,  LENHA,  CARVÃO 
@@ -459,7 +459,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card" style="width: 100%;">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO VII</h5>
                         <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - DEMAIS ATIVIDADES</h6>
