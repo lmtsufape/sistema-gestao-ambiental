@@ -17,6 +17,7 @@ use App\Models\ModificacaoCnae;
 use App\Models\ModificacaoPorte;
 use App\Models\TipoAnalista;
 use App\Models\Setor;
+use App\Models\Visita;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DocumentosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
@@ -55,7 +56,19 @@ class RequerimentoController extends Controller
         $this->authorize('requerimentoDocumentacao', $requerimento);
         $visitas = $requerimento->visitas;
 
-        return view('visita.visitasRequerimento', compact('visitas', 'requerimento'));
+        return view('requerimento.visitasRequerimento', compact('visitas', 'requerimento'));
+    }
+
+    public function requerimentoVisitasEdit($requerimento_id, $visita_id)
+    {
+        $this->authorize('isSecretario', User::class);
+        $visita = Visita::find($visita_id);
+        $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
+        $requerimentos->push($visita->requerimento);
+        $analistas = User::analistas();
+        $verRequerimento = true;
+
+        return view('visita.edit', compact('visita', 'requerimentos', 'analistas', 'verRequerimento'));
     }
 
     /**
@@ -192,7 +205,7 @@ class RequerimentoController extends Controller
         $requerimento->analista_id = $analista->id;
         $requerimento->update();
 
-        return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuido com sucesso a " . $analista->name]);
+        return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuído com sucesso a " . $analista->name]);
     }
 
     /**

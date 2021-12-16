@@ -30,7 +30,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">e-mail</th>
+                                        <th scope="col">E-mail</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
