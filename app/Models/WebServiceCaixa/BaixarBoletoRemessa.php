@@ -6,6 +6,8 @@ use App\Models\WebServiceCaixa\Remessa;
 
 class BaixarBoletoRemessa extends Remessa
 {
+    public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
+    
     // OPERACAO : char[50]
     public $operacao = "BAIXA_BOLETO";
 
@@ -34,7 +36,10 @@ class BaixarBoletoRemessa extends Remessa
     public function gerar_remessa() 
     {
         return "<?xml version='1.0' encoding='UTF-8'?>
-                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:sibar_base='http://caixa.gov.br/sibar'>
+                <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
+                <soapenv:Header/>
+                <soapenv:Body>
+                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
                 \t<sibar_base:HEADER>
                 \t\t<VERSAO>".$this->versao."</VERSAO>
                 \t\t<AUTENTICACAO>".$this->gerar_autenticacao()."</AUTENTICACAO>
@@ -50,7 +55,8 @@ class BaixarBoletoRemessa extends Remessa
                 \t\t</BAIXA_BOLETO>
                 \t</DADOS>
                 </manutencaocobrancabancaria:SERVICO_ENTRADA>
-                ";
+                </soapenv:Body>
+                </soapenv:Envelope>";
     }
 
     /** Gera a hash de atutenticação do cabeçalho do arquivo.

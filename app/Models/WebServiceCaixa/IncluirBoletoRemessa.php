@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class IncluirBoletoRemessa extends Remessa
 {
+    public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
+
     protected $table = 'boleto_cobrancas';
 
     // OPERACAO : char[50]
