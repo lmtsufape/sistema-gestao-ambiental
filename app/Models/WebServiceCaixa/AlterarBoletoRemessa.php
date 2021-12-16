@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class AlterarBoletoRemessa extends Remessa
 {
+    public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
+
     // OPERACAO : char[50]
     public $operacao = "ALTERA_BOLETO";
 
@@ -182,8 +184,11 @@ class AlterarBoletoRemessa extends Remessa
     */
     public function gerar_remessa() 
     {
-        return "<?xml version='1.0' encoding='UTF-8'?>
-                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:sibar_base='http://caixa.gov.br/sibar'>
+        return "<?xml version='1.0' encoding='ISO8859-1'?>
+                <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
+                <soapenv:Header/>
+                <soapenv:Body>
+                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
                 \t<sibar_base:HEADER>
                 \t\t<VERSAO>".$this->versao."</VERSAO>
                 \t\t<AUTENTICACAO>".$this->gerar_autenticacao()."</AUTENTICACAO>
@@ -212,18 +217,18 @@ class AlterarBoletoRemessa extends Remessa
                 \t\t\t\t\t<NUMERO_DIAS>".$this->numero_dias_pos_vencimento."</NUMERO_DIAS>
                 \t\t\t\t</POS_VENCIMENTO>" : "")."
                 \t\t\t\t<PAGADOR>
-                \t\t\t\t\t".($this->pagador->cpf ? "<NOME>".$this->pagador->nome."</NOME>" : "<RAZAO_SOCIAL>".$this->pagador->razao_social."</RAZAO_SOCIAL>")."
+                \t\t\t\t\t".($this->pagador->cpf ? "<NOME>".$this->validar_formartar_tamanho($this->pagador->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->pagador->razao_social, 40)."</RAZAO_SOCIAL>")."
                 \t\t\t\t\t<ENDERECO>
-                \t\t\t\t\t\t<LOGRADOURO>".$this->pagador->logradouro."</LOGRADOURO>
-                \t\t\t\t\t\t<BAIRRO>".$this->pagador->bairro."</BAIRRO>
-                \t\t\t\t\t\t<CIDADE>".$this->pagador->cidade."</CIDADE>
-                \t\t\t\t\t\t<UF>".$this->pagador->uf."</UF>
+                \t\t\t\t\t\t<LOGRADOURO>".$this->validar_formartar_tamanho($this->pagador->logradouro, 40)."</LOGRADOURO>
+                \t\t\t\t\t\t<BAIRRO>".$this->validar_formartar_tamanho($this->pagador->bairro, 15)."</BAIRRO>
+                \t\t\t\t\t\t<CIDADE>".$this->validar_formartar_tamanho($this->pagador->cidade, 15)."</CIDADE>
+                \t\t\t\t\t\t<UF>".$this->validar_formartar_tamanho($this->pagador->uf, 2)."</UF>
                 \t\t\t\t\t\t<CEP>".$this->retirar_formatacao($this->pagador->cep)."</CEP>
                 \t\t\t\t\t</ENDERECO>
                 \t\t\t\t</PAGADOR>".($this->sacador_avalista != null ? 
                 "\t\t\t\t<SACADOR_AVALISTA>
                 \t\t\t\t\t".($this->sacador_avalista->cpf ? "<CPF>".$this->retirar_formatacao($this->sacador_avalista->cpf)."</CPF>" : "<CNPJ>".$this->retirar_formatacao($this->sacador_avalista->cnpj)."</CNPJ>") ."
-                \t\t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->sacador_avalista->nome."</NOME>" : "<RAZAO_SOCIAL>".$this->sacador_avalista->razao_social."</RAZAO_SOCIAL>")."
+                \t\t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->validar_formartar_tamanho($this->sacador_avalista->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40)."</RAZAO_SOCIAL>")."
                 \t\t\t\t</SACADOR_AVALISTA>"
                 : "")."".($this->multa ? "
                 \t\t\t\t<MULTA>
@@ -235,7 +240,8 @@ class AlterarBoletoRemessa extends Remessa
                 \t\t</ALTERA_BOLETO>
                 \t</DADOS>
                 </manutencaocobrancabancaria:SERVICO_ENTRADA>
-                ";
+                </soapenv:Body>
+                </soapenv:Envelope>";
     }
 
     /** Gera a hash de atutenticação do cabeçalho do arquivo.
