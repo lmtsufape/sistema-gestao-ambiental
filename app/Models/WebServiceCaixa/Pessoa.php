@@ -54,7 +54,7 @@ class Pessoa
         $this->logradouro = $empresa->endereco->rua;
         $this->cidade = $empresa->endereco->cidade;
         $this->bairro = $empresa->endereco->bairro;
-        $this->uf = $empresa->endereco->uf;
+        $this->uf = $empresa->endereco->estado;
         $this->cep = $empresa->endereco->cep;
     }
 

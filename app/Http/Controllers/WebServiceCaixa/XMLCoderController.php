@@ -24,7 +24,7 @@ class XMLCoderController extends Controller
         $data_vencimento = now()->addDays(3)->format('Y-m-d');
         $boleto->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
-            'nosso_numero' => '14202101696260000',
+            'nosso_numero' => '14000000000002169',
             'data_vencimento' => $data_vencimento,
             'valor' => 40.50,
             'pagador' => $pagador,
@@ -42,23 +42,30 @@ class XMLCoderController extends Controller
 
     public function enviar_remessa(BoletoCobranca $boleto)
     {
-        // dd(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa);
         $curl = curl_init();
-        
-        curl_setopt_array($curl, [
-            CURLOPT_URL => env('URL_API_WEB_SERVICE'),
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => [
-                "file" => curl_file_create(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa, "xml"),
-            ]
-        ]);
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa),
+            CURLOPT_HTTPHEADER => array(
+                'SoapAction: INCLUI_BOLETO',
+                'Content-Type: text/plain'
+            ),
+        ));
         
         $response = curl_exec($curl);
         
         curl_close($curl);
 
-        dd($response);
+        // dd($response);
     }
 
     public function consultar_remessa(BoletoCobranca $boleto)
@@ -69,6 +76,12 @@ class XMLCoderController extends Controller
     }
 
     public function teste(Request $request) {
-        dd($request);
+        return view('teste');
+    }
+
+    public function ler_xml(Request $request) {
+        $boleto = new IncluirBoletoRemessa();
+        $array_resposta = $boleto->to_array(file_get_contents($request->file));
+        dd($array_resposta);
     }
 }

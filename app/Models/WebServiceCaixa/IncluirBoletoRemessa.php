@@ -198,7 +198,10 @@ class IncluirBoletoRemessa extends Remessa
     */
     public function gerar_remessa() 
     {
-        return "<?xml version='1.0' encoding='UTF-8'?>
+        return "<?xml version='1.0' encoding='ISO8859-1'?>
+                <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
+                <soapenv:Header/>
+                <soapenv:Body>
                 <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
                 \t<sibar_base:HEADER xmlns:sibar_base='http://caixa.gov.br/sibar' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar MensagensBarramento.xsd'>
                 \t\t<VERSAO>".$this->versao."</VERSAO>
@@ -231,18 +234,18 @@ class IncluirBoletoRemessa extends Remessa
                 \t\t\t<CODIGO_MOEDA>".$this->codigo_moeda."</CODIGO_MOEDA>
                 \t\t\t<PAGADOR>
                 \t\t\t\t".($this->pagador->cpf ? "<CPF>".$this->retirar_formatacao($this->pagador->cpf)."</CPF>" : "<CNPJ>".$this->retirar_formatacao($this->pagador->cnpj)."</CNPJ>")."
-                \t\t\t\t".($this->pagador->cpf ? "<NOME>".$this->pagador->nome."</NOME>" : "<RAZAO_SOCIAL>".$this->pagador->razao_social."</RAZAO_SOCIAL>")."
+                \t\t\t\t".($this->pagador->cpf ? "<NOME>".$this->validar_formartar_tamanho($this->pagador->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->pagador->razao_social, 40)."</RAZAO_SOCIAL>")."
                 \t\t\t\t<ENDERECO>
-                \t\t\t\t\t<LOGRADOURO>".$this->pagador->logradouro."</LOGRADOURO>
-                \t\t\t\t\t<BAIRRO>".$this->pagador->bairro."</BAIRRO>
-                \t\t\t\t\t<CIDADE>".$this->pagador->cidade."</CIDADE>
-                \t\t\t\t\t<UF>".$this->pagador->uf."</UF>
+                \t\t\t\t\t<LOGRADOURO>".$this->validar_formartar_tamanho($this->pagador->logradouro, 40)."</LOGRADOURO>
+                \t\t\t\t\t<BAIRRO>".$this->validar_formartar_tamanho($this->pagador->bairro, 15)."</BAIRRO>
+                \t\t\t\t\t<CIDADE>".$this->validar_formartar_tamanho($this->pagador->cidade, 15)."</CIDADE>
+                \t\t\t\t\t<UF>".$this->validar_formartar_tamanho($this->pagador->uf, 2)."</UF>
                 \t\t\t\t\t<CEP>".$this->retirar_formatacao($this->pagador->cep)."</CEP>
                 \t\t\t\t</ENDERECO>
                 \t\t\t</PAGADOR>".($this->sacador_avalista != null ? 
                 "\t\t\t<SACADOR_AVALISTA>
                 \t\t\t\t".($this->sacador_avalista->cpf ? "<CPF>".$this->retirar_formatacao($this->sacador_avalista->cpf)."</CPF>" : "<CNPJ>".$this->retirar_formatacao($this->sacador_avalista->cnpj)."</CNPJ>") ."
-                \t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->sacador_avalista->nome."</NOME>" : "<RAZAO_SOCIAL>".$this->sacador_avalista->razao_social."</RAZAO_SOCIAL>")."
+                \t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->validar_formartar_tamanho($this->sacador_avalista->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40)."</RAZAO_SOCIAL>")."
                 \t\t\t</SACADOR_AVALISTA>"
                 : "")."".($this->multa ? "
                 \t\t\t<MULTA>
@@ -254,7 +257,8 @@ class IncluirBoletoRemessa extends Remessa
                 \t\t</INCLUI_BOLETO>
                 \t</DADOS>
                 </manutencaocobrancabancaria:SERVICO_ENTRADA>
-                ";
+                </soapenv:Body>
+                </soapenv:Envelope>";
     }
 
     /** Gera a hash de atutenticação do cabeçalho do arquivo.
@@ -266,7 +270,7 @@ class IncluirBoletoRemessa extends Remessa
     {
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format("dmY");
         $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj); 
-        var_dump($autenticacao);
+
         $hash = hash("sha256", $autenticacao);
         return base64_encode($hash);
     }
