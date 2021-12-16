@@ -300,6 +300,23 @@ nav img {
     background-color: var(--primaria);
 }
 
+.card-cnae {
+    background-color: white;
+    border: 1px solid var(--primaria);
+    border-radius: 7px;
+    margin: 7px;
+    padding: 7px;
+}
+
+.div-tabelaCnaes {
+    border: 2px solid black;
+    border-radius: 7px; 
+    overflow: auto;
+    width: 95%; 
+    height: 250px; 
+    display: inline-block;
+}
+
 /* X CONTEUDO X */
 
 /* FOOTER */
