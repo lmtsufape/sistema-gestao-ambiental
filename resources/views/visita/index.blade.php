@@ -1,30 +1,28 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Visitas') }}
-        </h2>
-    </x-slot>
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                @can('isSecretario', \App\Models\User::class)
-                                    <h5 class="card-title">Visitas cadastradas no sistema</h5>
-                                @else
-                                    <h5 class="card-title">Visitas programadas para você</h5>
-                                @endcan
-                                <h6 class="card-subtitle mb-2 text-muted">Visitas</h6>
-                            </div>
-                            @can('isSecretario', \App\Models\User::class)
-                                <div class="col-md-4" style="text-align: right">
-                                    <a class="btn btn-primary" href="{{route('visitas.create')}}">Criar visita</a>
-                                </div>
-                            @endif
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @can('isSecretario', \App\Models\User::class)
+                            <h4 class="card-title">Visitas</h4>
+                        @else
+                            <h4 class="card-title">Visitas programadas para você</h4>
+                        @endcan
+                    </div>
+                    @can('isSecretario', \App\Models\User::class)
+                        <div class="col-md-4" style="text-align: right;">
+                            <a title="Criar visita" href="{{route('visitas.create')}}">
+                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar documento">
+                            </a>
                         </div>
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
+                    <div class="card-body">
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -77,55 +75,35 @@
                                             @endcan
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
-                                                    <div class="btn-group">
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-light dropdown-toggle shadow-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <img class="filter-green" src="{{asset('img/icon_acoes.svg')}}" style="width: 4px;">
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                                @if($visita->requerimento->licenca != null) 
-                                                                    @if ($visita->requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                                        <a class="dropdown-item" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> 
-                                                                    @else
-                                                                        <a class="dropdown-item" href="{{route('licenca.revisar', ['visita' => $visita, 'licenca' => $visita->requerimento->licenca])}}">Editar licença</a> 
-                                                                    @endif
-                                                                @elseif($visita->relatorioAceito()) 
-                                                                    <a class="dropdown-item" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a> 
-                                                                @endif
-                                                                @if($visita->notificacao != null)<a class="dropdown-item" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}">Notificação</a>@endif
-                                                                @if($visita->relatorio!=null)<a class="dropdown-item" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">Relatório</a>@endif
-                                                                <hr>
-                                                                @if($visita->requerimento != null)<a class="dropdown-item" href="{{route('visitas.edit', ['visita' => $visita->id])}}">Editar visita</a>@endif
-                                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="color: red; cursor: pointer;">Deletar visita</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @if($visita->requerimento->licenca != null) 
+                                                        @if ($visita->requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a> 
+                                                        @else
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $visita, 'licenca' => $visita->requerimento->licenca])}}">Editar licença</a> 
+                                                        @endif
+                                                    @elseif($visita->relatorioAceito()) 
+                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a> 
+                                                    @endif
+                                                    @if($visita->notificacao != null)<a title="Notificações" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
+                                                    @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                    @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
+                                                    <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
                                                 @else
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-ligth dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <img src="{{asset('img/icon_acoes.svg')}}" alt="ações" style="margin-right: 10px;">
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            @if ($visita->requerimento != null)
-                                                                <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}">Notificações</a>
-                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a> 
-                                                                @if($visita->requerimento->licenca != null) 
-                                                                    <a class="dropdown-item" href="{{route('licenca.revisar', ['licenca' => $visita->requerimento->licenca, 'visita' => $visita])}}">Revisar licença</a>
-                                                                @endif
-                                                                <div class="dropdown-divider"></div>
-                                                                <a class="dropdown-item" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}">Visualizar</a>
-                                                            @elseif ($visita->denuncia != null)
-                                                                <a href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif" class="dropdown-item">Relatório</a>
-                                                                @if ($visita->denuncia->empresa != null)
-                                                                    <a class="dropdown-item" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}">Notificações</a>
-                                                                @endif
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}">Descrição</button>
-                                                                <button type="button" class="btn btn-primary btn-sm dropdown-item" style="font-size:15px;"
-                                                                    data-toggle="modal" data-target="#modal-imagens-{{$visita->denuncia->id}}">Imagens</button>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+                                                    @if ($visita->requerimento != null)
+                                                        <a title="Visualizar requerimento" href="{{route('requerimentos.show', ['requerimento' => $visita->requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de analisar requerimento"></a>
+                                                        <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                        @if($visita->requerimento->licenca != null) 
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['licenca' => $visita->requerimento->licenca, 'visita' => $visita])}}">Revisar licença</a>
+                                                        @endif
+                                                    @elseif ($visita->denuncia != null)
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
+                                                        @if ($visita->denuncia->empresa != null)
+                                                            <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
+                                                        @endif
+                                                        <a title="Descição" data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a title="Mídia" data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
+                                                    @endif
                                                 @endcan
                                             </td>
                                         </tr>

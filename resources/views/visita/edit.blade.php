@@ -1,33 +1,35 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editar programação de visita') }}
-        </h2>
-    </x-slot>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="width: 100%;">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Editar a visita à empresa {{$visita->requerimento->empresa->nome}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted"> Visita > Editar visita</h6>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" @if ($verRequerimento ?? '') href="{{route('requerimento.visitas', ['id' => $visita->requerimento])}}" @else href="{{route('visitas.index')}}" @endif>
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
+                    </div>
+                </div>
+                <div div class="form-row">
+                    <div class="col-sm-12">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Editar a visita à empresa {{$visita->requerimento->empresa->nome}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Programação > Visita > Editar visita</h6>
-                            </div>
-                        </div>
-                        <div div class="form-row">
-                            <div class="col-sm-12">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
                         <form method="POST" id="editar-visita" action="{{route('visitas.update', $visita->id)}}">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
@@ -42,7 +44,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="analista">{{__('Selecione o analista da visita')}} <span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um analista')}} --</option>
                                         @foreach ($analistas as $analista)
@@ -57,7 +59,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}} <span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="requerimento"  id="requerimento" required class="form-control @error('requerimento') is-invalid @enderror">
                                         <option value="">-- {{__('Selecione um requerimento')}} --</option>
                                         @if (old('requerimento') != null)

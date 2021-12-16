@@ -1,30 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @can('isSecretario', auth()->user())
-                {{ __('Editar licença') }}
-            @elsecan('isAnalista', auth()->user())
-                {{ __('Revisar licença') }}
-            @endcan
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        @can('isSecretario', auth()->user())
+                            <h4 class="card-title">Editar licença</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Programação > Editar licença</h6>
+                        @elsecan ('isAnalista', auth()->user())
+                            <h4 class="card-title">Revisar licença</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Programação > Revisar licença</h6>
+                        @endcan
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <a title="Voltar" href="{{route('visitas.index')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                @can('isSecretario', auth()->user())
-                                    <h5 class="card-title">Editar licença</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Programação > Editar licença</h6>
-                                @elsecan ('isAnalista', auth()->user())
-                                    <h5 class="card-title">Revisar licença</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Programação > Revisar licença</h6>
-                                @endcan
-                            </div>
-                        </div>
                         @can('isSecretario', auth()->user()) <form method="POST" action="{{route('licenca.update', ['licenca' => $licenca])}}" enctype="multipart/form-data"> @endif
                             @csrf
                             @if ($licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
