@@ -48,4 +48,18 @@ class BoletoCobranca extends Model
         
         fclose($file);
     }
+
+    public function salvar_arquivo_resposta($string)
+    {
+        if ($this->caminho_arquivo_resposta != null) {
+            if (Storage::disk()->exists('public/'. $this->caminho_arquivo_resposta)) {
+                Storage::delete('public/'. $this->caminho_arquivo_resposta);
+            }
+        }
+
+        $caminho_arquivo = "remessas/";
+        $documento_nome = "resposta_incluir_boleto_remessa_".$this->requerimento->id.".xml";
+        $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
+        $this->caminho_arquivo_resposta = $caminho_arquivo . $documento_nome;
+    }
 }
