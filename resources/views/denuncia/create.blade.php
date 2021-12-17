@@ -1,26 +1,24 @@
 <x-guest-layout>
     @component('layouts.nav_bar')@endcomponent
 
-    {{-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Denúncias') }}
-        </h2>
-    </x-slot> --}}
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Registrar denúncia</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" href="{{route('welcome')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
+                        <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Realizar denúncia</h5>
-                                {{-- <h6 class="card-subtitle mb-2 text-muted">Denúncias > Criar denúncia</h6> --}}
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if(session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
@@ -189,7 +187,7 @@
                                 @endif
                             </div>
 
-                            <div class="form-row">
+                            {{--<div class="form-row">
                                 <div class="col-md-6">
                                     <label for="video">{{ __('Anexar videos') }}</label>
                                 </div>
@@ -265,6 +263,16 @@
                                         @endforeach
                                     @endif
                                 @endif
+                            </div>--}}
+
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        <h5 class="alert-heading">Envio de vídeos</h5>
+                                        <hr>
+                                        <p class="mb-0">Caso precise enviar algum vídeo, pedimos para que seja enviado no endereço exemplo@gov.com.br. Manteremos o anonimato do denunciante.</p>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
