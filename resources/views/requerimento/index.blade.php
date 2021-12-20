@@ -355,9 +355,7 @@
                                                             @endcan
                                                         @endif
                                                         @can('isRequerente', \App\Models\User::class)
-                                                            @if($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
-                                                            @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                            @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                                     <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
@@ -365,6 +363,9 @@
                                                                 @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
                                                                     <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @endif
+                                                            @endif
+                                                            @if($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
                                                             @endif
                                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
