@@ -244,12 +244,10 @@
         </div>
 
         <div class="modal fade" id="modal-avaliar-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-imagens-{{$denuncia->id}}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color:#2a9df4;">
-                            <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                                <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold;
-                                    font-family: 'Roboto', sans-serif;">
+                    <div class="modal-header">
+                            <h5 class="modal-title">
                                 Avaliar Denúncia
                             </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -259,8 +257,8 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12" style="font-family: 'Roboto', sans-serif;">
-                                Você deseja aprovar ou arquivar esta denúncia
-                                <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>?
+                                Você deseja aprovar ou arquivar esta denúncia?
+                                <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>
                             </div>
                         </div>
                     </div>

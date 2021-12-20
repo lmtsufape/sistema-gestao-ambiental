@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h5 class="card-title">Analisar documentação do requerimento de
+                        <h4 class="card-title">Analisar documentação do requerimento de
                             @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
                                 {{__('primeira licença')}}
                             @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
@@ -12,7 +12,7 @@
                             @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
                                 {{__('autorização')}}
                             @endif
-                        </h5>
+                        </h4>
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Analisar documentação</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">

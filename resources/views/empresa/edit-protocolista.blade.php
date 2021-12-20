@@ -4,7 +4,7 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Editando a empresa/serviço {{$requerimento->empresa->nome}}</h4>
+                        <h4 class="card-title">Editar a empresa/serviço {{$requerimento->empresa->nome}} como protocolista</h4>
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento  nº {{$requerimento->id}} > Editar empresa/serviço do requerimento</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
@@ -61,10 +61,11 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12" >
                                                 <label for="setor">{{ __('Tipologia') }}</label>
-                                                <select class="form-control @error('setor') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                                <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
+                                                        @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                                     <option value="">-- Selecionar a Tipologia --</option>
                                                     @foreach ($setores as $setor)
-                                                        <option value={{$setor->id}}>{{$setor->nome}}</option>
+                                                        <option @if($requerimento->empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                                     @endforeach
                                                 </select>
 
@@ -73,34 +74,25 @@
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
+                                                @error('cnaes_id')
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                                @error('cnaes_id.*')
+                                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="btn-group col-md-12">
                                                 <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
-                                                <div class="col-md-12 input-group input-group-sm mb-2">
-                                                    {{-- <input type="text" class="form-control" placeholder="Nome ou código do CNAE"> --}}
-                                                </div>
-
+                                                <div class="col-md-12 input-group input-group-sm mb-2"></div>
                                             </div>
                                             <div class="form-row col-md-12">
                                                 <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
                                                     <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                        <tbody id="dentroTabelaCnaes">
-                                                            {{--@foreach ($setoresSelecionados as $setor)
-                                                                @foreach ($setor->cnaes as $cnae)
-                                                                    @if (!$requerimento->empresa->cnaes->contains($cnae))
-                                                                        <div  id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar({{$cnae->id}})">
-                                                                            <input hidden name="cnaes_id[]" value="{{$cnae->id}}">
-                                                                            <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
-                                                                            <div style="width:140px; height:25px; text-align:right;">
-                                                                                <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
-                                                                                    <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-success btn-sm"  onclick="add_Lista({{$cnae->setor->id}}, {{$cnae->id}})" >Adicionar</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
-                                                                @endforeach
-                                                            @endforeach--}}
-                                                        </tbody>
+                                                        <tbody id="dentroTabelaCnaes"></tbody>
                                                     </table>
                                                 </div>
                                             </div>
@@ -110,7 +102,7 @@
                                         <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
                                         <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes">
                                             @foreach ($requerimento->empresa->cnaes as $cnae)
-                                                <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar({{$cnae->id}})">
+                                                <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar({{$cnae->id}})">
                                                     <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
                                                     <div style="width:140px; height:25px; text-align:right;">
                                                         <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
@@ -141,11 +133,15 @@
 </x-app-layout>
 
 <script>
+    $(document).ready(function($) {
+        selecionarSetor();
+    });
+    
     window.selecionarSetor = function(){
         //setor
         var historySelectList = $('select#idSelecionarSetor');
         var $setor_id = $('option:selected', historySelectList).val();
-
+        limparLista()
         $.ajax({
             url:'setor/ajax-listar-cnaes',
             type:"get",
@@ -163,7 +159,7 @@
                 if(data.responseJSON.success){
                     for(var i = 0; i < data.responseJSON.cnaes.length; i++){
                         var naLista = document.getElementById('listaCnaes');
-                        var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center cardMeuCnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
+                        var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
                                         <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
                                         <div style="width:140px; height:25px; text-align:right;">
                                             <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
@@ -220,5 +216,10 @@
 
         }
 
+    }
+
+    function limparLista() {
+        var cnaes = document.getElementById('tabelaCnaes').children[0];
+        cnaes.innerHTML = "";
     }
 </script>

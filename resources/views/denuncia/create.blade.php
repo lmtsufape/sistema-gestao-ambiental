@@ -99,10 +99,9 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
+                                <div class="col-md-12">
                                     <label for="texto">{{ __('Denúncia') }}</label>
-                                    <textarea class="form-control @error('texto') is-invalid @enderror" id="denuncia-ckeditor"
-                                        rows="5" name="texto"></textarea>
+                                    <textarea id="denuncia-ckeditor" name="texto"></textarea>
                                     @error('texto')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -127,7 +126,7 @@
                                         @foreach ($images as $b => $opcao)
                                             <div class="col-md-5" style="margin: 10px 10px 0 0;">
                                                 <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem">
+                                                <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
                                                 @error('imagem.*'.$b)
                                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                                         {{ $opcao }}
@@ -154,7 +153,7 @@
                                             @foreach ($images as $b => $opcao)
                                                 <div class="col-md-5" style="margin: 10px 10px 0 0;">
                                                     <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem">
+                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
                                                     @error('imagem.*'.$b)
                                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                                             {{ $opcao }}
@@ -171,7 +170,7 @@
                                             @foreach ($comentarios as $b => $opcao)
                                                 <div class="col-md-5" style="margin: 10px 10px 0 0;">
                                                     <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem">
+                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
                                                     <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
                                                     <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
                                                     @error('comentario.'.$b)
@@ -370,7 +369,7 @@
         var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
                                 <div class="card-body">
                                     <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
-                                    <input type="file" name="imagem[]" id="imagem"><br>
+                                    <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
                                     <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
                                     <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
                                     <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
