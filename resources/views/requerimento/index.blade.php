@@ -364,7 +364,7 @@
                                                                     <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @endif
                                                             @endif
-                                                            @if($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                            @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
                                                             @endif
                                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
