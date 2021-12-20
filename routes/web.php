@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
+    Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
 
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');

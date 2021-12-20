@@ -137,6 +137,18 @@ class RequerimentoController extends Controller
         return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos'));
     }
 
+
+    public function verRequerimentoVisita($visita_id, $requerimento_id)
+    {
+        $requerimento = Requerimento::find($requerimento_id);
+        $this->authorize('view', $requerimento);
+        $protocolistas = User::protocolistas();
+        $documentos = Documento::orderBy('nome')->get();
+        $visita = true;
+
+        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

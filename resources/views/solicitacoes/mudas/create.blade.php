@@ -4,17 +4,22 @@
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Realizar solicitação de mudas</h4>
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a title="Voltar" href="{{route('welcome')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
+                        <a class="btn btn-success btn-color-dafault" data-toggle="modal"
+                            data-target="#modalAcompanharSolicitacao">Acompanhar solicitação</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Realizar solicitação de mudas</h5>
-                            </div>
-                            <div class="col-md-4" style="text-align: right">
-                                <a class="btn btn-success btn-color-dafault" data-toggle="modal"
-                                    data-target="#modalAcompanharSolicitacao">Acompanhar solicitação</a>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if (session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">

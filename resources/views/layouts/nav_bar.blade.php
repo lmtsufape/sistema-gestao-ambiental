@@ -11,7 +11,7 @@
             <ul class="navbar-nav ml-auto">
                 @guest
                     <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
-                        <a class="nav-link" href="{{route('welcome')}}">Inicio</a> 
+                        <a class="nav-link" href="{{route('welcome')}}">Início</a> 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Legislação</a>

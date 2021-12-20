@@ -119,12 +119,10 @@
                                                         </td>
                                                         <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                         <td>
-                                                            <div class="btn-group">
-                                                                @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                                    <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
-                                                                @endcan
-                                                                <a data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
-                                                            </div>
+                                                            @can('isSecretarioOrAnalista', \App\Models\User::class)
+                                                                <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
+                                                            @endcan
+                                                            <a data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -264,9 +262,7 @@
                                                         </td>
                                                         <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                         <td>
-                                                            <a type="button" class="btn btn-primary" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}">
-                                                                Visualizar
-                                                            </a>
+                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
