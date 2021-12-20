@@ -355,10 +355,8 @@
                                                             @endcan
                                                         @endif
                                                         @can('isRequerente', \App\Models\User::class)
-                                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                <a type="button" class="btn btn-primary" href="{{route('licenca.show', $requerimento->licenca->id)}}">
-                                                                    Visualizar licença
-                                                                </a>
+                                                            @if($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
                                                             @elseif ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                                                                     <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
