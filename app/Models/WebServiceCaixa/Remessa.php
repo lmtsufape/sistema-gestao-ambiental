@@ -143,10 +143,9 @@ abstract class Remessa extends BoletoCobranca
         $dom_document = new DOMDocument();
         $dom_document->loadXML($string_response);
         $conteudo = $dom_document->childNodes[0]->childNodes[0]->childNodes[0];
-        
         $arvore_conteudo = $this->gerar_arvore_de_conteudo($conteudo);
-        $array_conteudo = $this->passa_para_array($arvore_conteudo);
-        
+        $array_conteudo = $this->passa_para_array($arvore_conteudo); 
+
         return $array_conteudo;
     }
 
@@ -158,16 +157,18 @@ abstract class Remessa extends BoletoCobranca
     private function gerar_arvore_de_conteudo($lista_de_nos)
     {
         $arvore = [];
-        
+
         if ($lista_de_nos != null) {
-            if ($lista_de_nos->childNodes->length == 1 && $lista_de_nos->childNodes[0]->childNodes->length == 0) {
+            if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length == 1 && $lista_de_nos->childNodes[0]->childNodes == null) {                
                 return [$lista_de_nos->tagName => $lista_de_nos->childNodes->item(0)->data];
-            } else if ($lista_de_nos->childNodes->length > 1) {
+            } else if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length > 1) {
                 for ($i = 0; $i < $lista_de_nos->childNodes->length; $i++) {
                     array_push($arvore, $this->gerar_arvore_de_conteudo($lista_de_nos->childNodes[$i]));
                 }
             } else {
-                return $this->gerar_arvore_de_conteudo($lista_de_nos->childNodes[0]);
+                if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length > 0) {
+                    return $this->gerar_arvore_de_conteudo($lista_de_nos->childNodes[0]);
+                }
             }
         }
 
