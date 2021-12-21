@@ -149,7 +149,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-relatorio-aprovar">Aprovar</button>
+                    <button type="submit" class="btn btn-success submeterFormBotao" form="form-relatorio-aprovar">Aprovar</button>
                 </div>
             </div>
         </div>
@@ -191,7 +191,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-warning" form="form-relatorio-reprovar">Revisar</button>
+                    <button type="submit" class="btn btn-warning submeterFormBotao" form="form-relatorio-reprovar">Revisar</button>
                 </div>
             </div>
         </div>

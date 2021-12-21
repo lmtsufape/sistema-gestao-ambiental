@@ -243,7 +243,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" style="width: 100%;" form="form-editar-empresa">Salvar</button>
+                                <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" style="width: 100%;" form="form-editar-empresa">Salvar</button>
                             </div>
                         </div>
                     </div>

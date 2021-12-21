@@ -60,6 +60,9 @@
                             @csrf
                             @foreach ($documentos as $documento)
                                 <div class="form-row">
+                                    <div class="col-sm-12">
+                                        <hr style="background-color: black; border: 1px solid black;">
+                                    </div>
                                     <div class="form-group col-md-12">
                                         @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['nao_enviado'])
                                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -113,16 +116,16 @@
                             @endforeach
                         </form>
                     </div>
-                    <div class="card-footer">
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6" style="text-align: right">
-                                @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                    <button data-toggle="modal" data-target="#modalStaticConfirmarEnvio" class="btn btn-success" style="width: 100%">Enviar</button>
-                                @endif
+                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                        <div class="card-footer">
+                            <div class="form-row justify-content-center">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modalStaticConfirmarEnvio" class="btn btn-success btn-color-dafault" style="width: 100%">Enviar</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -143,7 +146,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-warning" form="enviar-documentos">Enviar</button>
+                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos">Enviar</button>
                 </div>
             </div>
         </div>

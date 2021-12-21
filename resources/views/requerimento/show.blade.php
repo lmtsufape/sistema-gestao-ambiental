@@ -410,7 +410,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form">Enviar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -462,7 +462,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form-edit">Atualizar</button>
                     </div>
                 </div>
             </div>
@@ -497,7 +497,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-success" form="atribuir-analista-form">Atribuir ao analista</button>
+                    <button type="submit" class="btn btn-success submeterFormBotao" form="atribuir-analista-form">Atribuir ao analista</button>
                 </div>
             </div>
         </div>

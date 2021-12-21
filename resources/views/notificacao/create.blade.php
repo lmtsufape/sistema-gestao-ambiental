@@ -122,7 +122,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success" form="cria-notificacao" style="width: 100%">Salvar</button>
+                                <button type="submit" class="btn btn-success submeterFormBotao" form="cria-notificacao" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
