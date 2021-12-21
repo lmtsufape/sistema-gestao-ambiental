@@ -317,6 +317,38 @@ nav img {
     display: inline-block;
 }
 
+.form-envia-documentos [type='file'] {
+    display: none;
+}
+
+.form-envia-documentos .label-input {
+    border: 1px solid var(--primaria);
+    color: white;
+    background-color: var(--primaria);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px var(--primaria);
+    transition: 0.3s;
+}
+
+.form-envia-documentos .label-input:hover {
+    transition: 0.3s;
+    background-color: var(--secundaria);
+    cursor: pointer;
+    padding: 8px;
+    box-shadow: 1px 2px 3px var(black);
+}
+
+.form-envia-documentos .label-input:after {
+    content: "Enviar arquivo";
+}
+
+.form-envia-documentos .titulo-documento {
+    color: var(--secundaria); 
+    font-weight: bolder;
+}
+
 /* X CONTEUDO X */
 
 /* FOOTER */
