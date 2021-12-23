@@ -16,8 +16,8 @@ class CreateCnaesTable extends Migration
         Schema::create('cnaes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('codigo');
-            $table->double('potencial_poluidor');
+            $table->string('codigo')->nullable();
+            $table->double('potencial_poluidor')->nullable();
 
             $table->unsignedBigInteger('setor_id');
             $table->foreign('setor_id')->references('id')->on('setors');
