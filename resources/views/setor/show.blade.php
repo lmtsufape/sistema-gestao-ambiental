@@ -65,6 +65,9 @@
                                                     @case(3)
                                                         Alto
                                                         @break
+                                                    @case(4)
+                                                        A definir
+                                                        @break
                                                 @endswitch
                                             </td>
                                             <td>

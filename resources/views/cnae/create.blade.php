@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="codigo">{{ __('Código') }}</label>
-                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" required autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
+                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
 
                                     @error('codigo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -59,6 +59,7 @@
                                         <option value="baixo">Baixo</option>
                                         <option value="medio">Médio</option>
                                         <option value="alto">Alto</option>
+                                        <option value="a_definir">A definir</option>
                                     </select>
                                 </div>
                             </div>

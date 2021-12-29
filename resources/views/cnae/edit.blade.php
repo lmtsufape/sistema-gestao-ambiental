@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="codigo">{{ __('Código') }}</label>
-                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo"  value="{{old('codigo')!=null ? old('codigo') : $cnae->codigo}}" required autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
+                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo"  value="{{old('codigo')!=null ? old('codigo') : $cnae->codigo}}" autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
 
                                     @error('codigo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -60,10 +60,12 @@
                                             <option @if(old('potencial_poluidor') == "baixo") selected @endif value="baixo">Baixo</option>
                                             <option @if(old('potencial_poluidor') == "medio") selected @endif value="medio">Médio</option>
                                             <option @if(old('potencial_poluidor') == "alto") selected @endif value="alto">Alto</option>
+                                            <option @if(old('potencial_poluidor') == "a_definir") selected @endif value="a_definir">A definir</option>
                                         @else
                                             <option @if($cnae->potencial_poluidor == 1) selected @endif value="baixo">Baixo</option>
                                             <option @if($cnae->potencial_poluidor == 2) selected @endif value="medio">Médio</option>
                                             <option @if($cnae->potencial_poluidor == 3) selected @endif value="alto">Alto</option>
+                                            <option @if($cnae->potencial_poluidor == 4) selected @endif value="a_definir">A definir</option>
                                         @endif
                                     </select>
                                 </div>
