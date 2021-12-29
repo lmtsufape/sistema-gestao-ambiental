@@ -31,7 +31,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
                                         <th scope="col">CPF/CNPJ</th>
-                                        <th scope="col">Tipologia</th>
+                                        <th scope="col">Grupo</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>

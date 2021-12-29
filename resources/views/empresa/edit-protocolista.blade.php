@@ -60,10 +60,10 @@
                                     <div class="form-group col-md-6">
                                         <div class="form-row">
                                             <div class="form-group col-md-12" >
-                                                <label for="setor">{{ __('Tipologia') }}</label>
+                                                <label for="setor">{{ __('Grupo') }}</label>
                                                 <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                         @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                    <option value="">-- Selecionar a Tipologia --</option>
+                                                    <option value="">-- Selecionar o Grupo --</option>
                                                     @foreach ($setores as $setor)
                                                         <option @if($requerimento->empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                                     @endforeach

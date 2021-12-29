@@ -181,10 +181,10 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-12" >
-                                            <label for="setor">{{ __('Tipologia') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                            <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                             <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                     @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                <option value="" disabled selected>-- Selecionar a Tipologia --</option>
+                                                <option value="" disabled selected>-- Selecionar o Grupo --</option>
                                                 @foreach ($setores as $setor)
                                                     <option value={{$setor->id}}>{{$setor->nome}}</option>
                                                 @endforeach

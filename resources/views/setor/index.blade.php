@@ -4,11 +4,11 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Tipologias cadastradas no sistema</h4>
+                        <h4 class="card-title">Grupos cadastradas no sistema</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Nova tipologia" href="{{route('setores.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar tipologia">
+                        <a title="Novo grupo" href="{{route('setores.create')}}">
+                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar grupo">
                         </a>
                     </div>
                 </div>
@@ -51,9 +51,9 @@
                                             <td>{{$setor->descricao}}</td>
                                             <td>
                                                 @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                                                    <a title="Visualizar cnaes da tipologia" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar setor"></a>
-                                                    <a title="Editar tipologia" href="{{route('setores.edit', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar setor"></a>
-                                                    <a title="Deletar tipologia" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar setor"></a>
+                                                    <a title="Visualizar cnaes do grupo" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar setor"></a>
+                                                    <a title="Editar grupo" href="{{route('setores.edit', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar setor"></a>
+                                                    <a title="Deletar grupo" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar setor"></a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -82,7 +82,7 @@
                     <form id="deletar-setor-form-{{$setor->id}}" method="POST" action="{{route('setores.destroy', ['setore' => $setor])}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja deletar a tipologia {{$setor->nome}}?
+                        Tem certeza que deseja deletar o grupo {{$setor->nome}}?
                     </form>
                 </div>
                 <div class="modal-footer">
