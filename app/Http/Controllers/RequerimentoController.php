@@ -308,10 +308,15 @@ class RequerimentoController extends Controller
 
     private function atribuirValor(Request $request, Requerimento $requerimento)
     {
-        $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-        $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
-
-        $requerimento->valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
+        if($requerimento->potencial_poluidor_atribuido != null){
+            $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $requerimento->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
+            $requerimento->valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
+        }else{
+            $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
+            $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+    
+            $requerimento->valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
+        }
     }
 
     /**
@@ -551,6 +556,23 @@ class RequerimentoController extends Controller
         }
 
         return $protocolistaComMenosRequerimentos;
+    }
+
+    public function atribuirPotencialPoluidor(Request $request, $id){
+        $this->authorize('isSecretarioOrProtocolista', User::class);
+
+        $validator = $request->validate([
+            'potencial_poluidor' => 'required',
+        ]);
+
+        $requerimento = Requerimento::find($id);
+        $requerimento->potencial_poluidor_atribuido = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
+        $requerimento->update();
+
+        $this->atribuirValor($request, $requerimento);
+        $requerimento->update();
+
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Potencial poluidor atribuído ao requerimento com sucesso.']);
     }
 
 }

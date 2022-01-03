@@ -33,6 +33,7 @@ class Requerimento extends Model
         'status',
         'tipo',
         'valor',
+        'potencial_poluidor_atribuido'
     ];
 
     public function analista()
