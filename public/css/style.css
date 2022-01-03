@@ -37,12 +37,12 @@ nav img {
     box-shadow: 0 0 0 0.2rem var(--secundaria);
 }
 
-.btn-color-dafault.disabled, .btn-color-dafault:disabled {
+/* .btn-color-dafault.disabled, .btn-color-dafault:disabled {
     color: #fff;
     background-color: var(--default);
     border-color: var(--default);
-}
-
+} */
+/* 
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle {
     color: #fff;
@@ -53,7 +53,7 @@ nav img {
 .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-secondary.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem #4a7836a2;
-}
+} */
 
 /* NAV BAR */
 
@@ -315,6 +315,46 @@ nav img {
     width: 95%; 
     height: 250px; 
     display: inline-block;
+}
+
+.form-envia-documentos {
+    width: 100%;
+}
+
+.form-envia-documentos [type='file'] {
+    display: none;
+}
+
+.form-envia-documentos .label-input {
+    border: 1px solid var(--primaria);
+    color: white;
+    background-color: var(--primaria);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px var(--primaria);
+    transition: 0.3s;
+}
+
+.form-envia-documentos .label-input:hover {
+    transition: 0.3s;
+    background-color: var(--secundaria);
+    cursor: pointer;
+    padding: 8px;
+    box-shadow: 1px 2px 3px var(black);
+}
+
+.form-envia-documentos .label-input:after {
+    content: "Enviar arquivo";
+}
+
+.form-envia-documentos .titulo-documento {
+    color: var(--secundaria); 
+    font-weight: bolder;
+}
+
+.form-envia-documentos .form-input-radio:checked {
+    background-color: var(--primaria);
 }
 
 /* X CONTEUDO X */

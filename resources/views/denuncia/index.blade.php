@@ -363,7 +363,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-atribuir-analista-denuncia">Criar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-atribuir-analista-denuncia">Criar</button>
                     </div>
                 </div>
             </div>

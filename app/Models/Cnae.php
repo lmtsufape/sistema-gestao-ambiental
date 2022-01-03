@@ -13,6 +13,7 @@ class Cnae extends Model
         'baixo'     => 1,
         'medio'     => 2,
         'alto'      => 3,
+        'a_definir' => 4,
     ];
 
     protected $fillable = [
