@@ -323,13 +323,13 @@ class RequerimentoController extends Controller
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
                 break;
@@ -576,6 +576,23 @@ class RequerimentoController extends Controller
         }
 
         return $protocolistaComMenosRequerimentos;
+    }
+
+    public function atribuirPotencialPoluidor(Request $request, $id){
+        $this->authorize('isSecretarioOrProtocolista', User::class);
+
+        $validator = $request->validate([
+            'potencial_poluidor' => 'required',
+        ]);
+
+        $requerimento = Requerimento::find($id);
+        $requerimento->potencial_poluidor_atribuido = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
+        $requerimento->update();
+
+        $this->atribuirValor($request, $requerimento);
+        $requerimento->update();
+
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Potencial poluidor atribuído ao requerimento com sucesso.']);
     }
 
 }

@@ -76,10 +76,10 @@
                     </div>
                 </div>
                 
-                <div class="shadow card" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="cursor: pointer; width: 100%; margin-top: 1rem;">
+                <div class="shadow card"  style="width: 100%; margin-top: 1rem;">
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="cursor: pointer;">
                                 <div class="col-md-11">
                                     <h5>
                                         <button type="button" class="titulo-nav-tab-custom btn-block text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
@@ -170,10 +170,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="shadow card" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="cursor: pointer; width: 100%; margin-top: 1rem;">
+                <div class="shadow card"  style="width: 100%; margin-top: 1rem;">
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-between"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="cursor: pointer; ">
                                 <div class="col-md-11">
                                     <h5>
                                         <button class="titulo-nav-tab-custom btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -283,8 +283,11 @@
                                     </div>
                                     @can('isAnalista', \App\Models\User::class)
                                     <div class="form-row">
-                                        <div class="col-md-12 form-group">
+                                        <div class="col-md-8 form-group">
                                             <h3>Cnaes</h3>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <a class="btn btn-success btn-color-dafault" data-toggle="modal" data-target="#atribuir_potencial_poluidor" style="float: right;">Atribuir potencial poluidor</a>
                                         </div>
                                     </div>
                                         <div class="form-row">
@@ -587,6 +590,50 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="atribuir_potencial_poluidor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Atribuir potencial poluidor ao requerimento</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form id="atribuir-potencial-poluidor-form" method="POST" action="{{route('requerimentos.atribuir.potencial.poluidor', $requerimento)}}">
+                    @csrf
+                    <input type="hidden" name="licença" value="{{$requerimento->tipo_licenca}}">
+                    <div class="col-md-12 form-group">
+                        <label for="potencial_poluidor">{{ __('Potencial poluidor') }}</label>
+                        <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
+                            <option value="">-- Selecione o potencial poluidor --</option>
+                            @if(old('potencial_poluidor') != null)
+                                <option @if(old('potencial_poluidor') == "baixo") selected @endif value="baixo">Baixo</option>
+                                <option @if(old('potencial_poluidor') == "medio") selected @endif value="medio">Médio</option>
+                                <option @if(old('potencial_poluidor') == "alto") selected @endif value="alto">Alto</option>
+                            @else
+                                <option @if($requerimento->potencial_poluidor_atribuido == 1) selected @endif value="baixo">Baixo</option>
+                                <option @if($requerimento->potencial_poluidor_atribuido == 2) selected @endif value="medio">Médio</option>
+                                <option @if($requerimento->potencial_poluidor_atribuido == 3) selected @endif value="alto">Alto</option>
+                            @endif
+                        </select>
+                        @error('potencial_poluidor')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" id="submeterFormBotao" class="btn btn-primary" form="atribuir-potencial-poluidor-form">Salvar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <script>
         function defaultDocs(select) {
             $.ajax({

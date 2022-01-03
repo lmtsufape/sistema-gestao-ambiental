@@ -366,6 +366,7 @@
                                                             @endif
                                                             @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+
                                                             @endif
                                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
