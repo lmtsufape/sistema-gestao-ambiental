@@ -364,7 +364,7 @@
                                                                     <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                                 @endif
                                                             @endif
-                                                            @if($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                            @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
                                                             @endif
                                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
@@ -446,7 +446,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="submeterFormBotao" class="btn btn-primary" form="novo-requerimento-form">Salvar</button>
+              <button type="submit" class="btn btn-primary submeterFormBotao" form="novo-requerimento-form">Salvar</button>
             </div>
           </div>
         </div>
@@ -472,7 +472,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="submeterFormBotao" class="btn btn-danger" form="cancelar-requerimento-form-{{$requerimento->id}}">Salvar</button>
+                <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-requerimento-form-{{$requerimento->id}}">Salvar</button>
                 </div>
             </div>
             </div>

@@ -45,13 +45,13 @@ class CnaeController extends Controller
     {
         $this->authorize('isSecretario', User::class);
 
-        if (strlen($request->codigo) < 7) {
-            return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
-        }
+        // if (strlen($request->codigo) < 7) {
+        //     return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
+        // }
 
         $validator = $request->validate([
             'nome'      => 'required|string',
-            'codigo'    => 'required|string|unique:cnaes,codigo',
+            'codigo'    => 'nullable|string|unique:cnaes,codigo',
             'potencial_poluidor' => 'required',
         ]);
 
@@ -100,14 +100,14 @@ class CnaeController extends Controller
     {
         $this->authorize('isSecretario', User::class);
 
-        if (strlen($request->codigo) < 7) {
-            return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
-        }
+        // if (strlen($request->codigo) < 7) {
+        //     return redirect()->back()->withErrors(['error' => 'O tamanho do código é menor que 8 dígitos!']);
+        // }
         $cnae = Cnae::find($id);
 
         $validator = $request->validate([
             'nome'      => 'required|string',
-            'codigo'    => 'required|string|unique:cnaes,codigo,'.$cnae->id,
+            'codigo'    => 'nullable|string|unique:cnaes,codigo,'.$cnae->id,
             'potencial_poluidor' => 'required',
         ]);
 

@@ -4,8 +4,8 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Cnaes da tipologia {{$setor->nome}} cadastrados no sistema</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Tipologias > Cnaes da tipologia {{$setor->nome}}</h6>
+                        <h4 class="card-title">Cnaes do grupo {{$setor->nome}} cadastrados no sistema</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Grupos > Cnaes do grupo {{$setor->nome}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
@@ -65,6 +65,9 @@
                                                     @case(3)
                                                         Alto
                                                         @break
+                                                    @case(4)
+                                                        A definir
+                                                        @break
                                                 @endswitch
                                             </td>
                                             <td>
@@ -99,12 +102,12 @@
                         <form id="deletar-cnae-form-{{$cnae->id}}" method="POST" action="{{route('cnaes.destroy', ['cnae' => $cnae])}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
-                            Tem certeza que deseja deletar o cnae {{$cnae->nome}} da tipologia {{$setor->nome}}?
+                            Tem certeza que deseja deletar o cnae {{$cnae->nome}} do grupo {{$setor->nome}}?
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-danger" form="deletar-cnae-form-{{$cnae->id}}">Sim</button>
+                        <button type="submit" class="btn btn-danger submeterFormBotao" form="deletar-cnae-form-{{$cnae->id}}">Sim</button>
                     </div>
                 </div>
             </div>

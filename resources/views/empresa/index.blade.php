@@ -31,7 +31,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
                                         <th scope="col">CPF/CNPJ</th>
-                                        <th scope="col">Tipologia</th>
+                                        <th scope="col">Grupo</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-danger" form="deletar-empresa-form-{{$empresa->id}}">Sim</button>
+                    <button type="submit" class="btn btn-danger submeterFormBotao" form="deletar-empresa-form-{{$empresa->id}}">Sim</button>
                 </div>
             </div>
         </div>

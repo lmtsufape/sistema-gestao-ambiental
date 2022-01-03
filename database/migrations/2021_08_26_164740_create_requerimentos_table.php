@@ -19,6 +19,8 @@ class CreateRequerimentosTable extends Migration
             $table->integer('tipo');
             $table->integer('tipo_licenca')->nullable();
             $table->double('valor')->nullable();
+            $table->string('definicao_valor')->nullable();
+            $table->double('valor_juros')->nullable();
 
             $table->unsignedBigInteger('analista_id')->nullable();
             $table->foreign('analista_id')->references('id')->on('users');

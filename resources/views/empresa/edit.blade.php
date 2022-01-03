@@ -182,10 +182,10 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-12" >
-                                            <label for="setor">{{ __('Tipologia') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                            <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;"> *</span></label>
                                             <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                     @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                <option value="">-- Selecionar a Tipologia --</option>
+                                                <option value="">-- Selecionar o Grupo --</option>
                                                 @foreach ($setores as $setor)
                                                     <option @if($empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                                 @endforeach
@@ -243,7 +243,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" style="width: 100%;" form="form-editar-empresa">Salvar</button>
+                                <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" style="width: 100%;" form="form-editar-empresa">Salvar</button>
                             </div>
                         </div>
                     </div>
