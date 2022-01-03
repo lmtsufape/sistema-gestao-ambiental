@@ -377,7 +377,12 @@
                         <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
                             @csrf
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
+                                <div class="col-md-12">
+                                    <h6 style="font-weight: bolder;">Informações básicas</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
                                     <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                         <option disabled selected value="">-- Selecione o tipo de licença --</option>
@@ -395,8 +400,50 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
 
+                                <div class="col-md-6 form-group">
+                                    <label for="opcão_taxa_serviço">{{__('Taxa de serviço de emissão de licença')}}</label>
+                                    <select name="opcão_taxa_serviço" id="opcão_taxa_serviço" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInput(this)">
+                                        <option selected disabled value="">-- Selecione uma opção --</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['manual']) selected @endif value="{{$definir_valor['manual']}}">Definir de forma manual</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['automatica']) selected @endif value="{{$definir_valor['automatica']}}">Definir de forma automática</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['automatica_com_juros']) selected @endif value="{{$definir_valor['automatica_com_juros']}}">Definir de forma automática com juros</option>
+                                    </select>
+
+                                    @error('opcão_taxa_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_manual" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else display: none;  @endif">
+                                    <label for="valor_da_taxa_de_serviço">{{__('Valor da taxa de serviço')}}</label>
+                                    <input type="number" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço')}}">
+                                
+                                    @error('valor_da_taxa_de_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_juros" class="col-md-6 form-group" style="@error('valor_do_juros') display: block; @else display: none; @endif">
+                                    <label for="valor_do_juros">{{__('Valor do juros cobrado em porcentagem')}}</label>
+                                    <input type="number" name="valor_do_juros" class="form-control" @error('valor_do_juros') is-invalid @enderror placeholder="Digite a porcentagem cobrada a mais" value="{{old('valor_do_juros')}}">
+                                
+                                    @error('valor_do_juros')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <h6 style="font-weight: bolder;">Documentos que o empresário deve enviar</h6>
+                                </div>
+                            </div>
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             @foreach ($documentos as $i => $documento)
                                 <div class="form-row">
@@ -526,6 +573,26 @@
                     }
                 }
             });
+        }
+
+        function mostrarInput(select) {
+            var div_taxa_servico = document.getElementById('div_taxa_servico_manual');
+            var div_taxa_juros = document.getElementById('div_taxa_servico_juros');
+
+            switch (select.value) {
+                case "{{$definir_valor['manual']}}":
+                    div_taxa_servico.style.display = "block";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica_com_juros']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "block";
+                    break;
+            }
         }
     </script>
 </x-app-layout>
