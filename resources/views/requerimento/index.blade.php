@@ -401,6 +401,14 @@
             </div>
             <div class="modal-body">
                 <form id="novo-requerimento-form" method="POST" action="{{route('requerimentos.store')}}">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" role="alert">
+                                <h5 class="alert-heading">Aviso!</h5>
+                                <p class="mb-0">Poderão ser cobradas taxas adicionais para emitir a nova licença, caso a empresa/serviço tenha estado funcionando com uma licença inválida ou nenhuma.</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12 form-group">
                         <label for="empresa">{{ __('Empresa') }}</label>
                         <select name="empresa" id="empresa" class="form-control @error('empresa') is-invalid @enderror" required onchange="tiposPossiveis(this)">
