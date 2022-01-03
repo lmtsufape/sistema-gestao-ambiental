@@ -99,16 +99,16 @@
                                    
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button type="submit" id="submeterFormBotao" class="btn btn-success" style="width: 100%" @if ($licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada']) dissabled @endif>Atualizar</button>
+                                    <button type="submit" class="btn btn-success submeterFormBotao" style="width: 100%" @if ($licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada']) dissabled @endif>Atualizar</button>
                                 </div>
                             </div>
                         @else 
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <button type="button" id="submeterFormBotao" class="btn btn-warning" data-toggle="modal" data-target="#staticBackdrop-revisar-licenca" style="width: 100%">Revisar</button>
+                                    <button type="button" class="btn btn-warning submeterFormBotao" data-toggle="modal" data-target="#staticBackdrop-revisar-licenca" style="width: 100%">Revisar</button>
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button type="button" id="submeterFormBotao" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop-aprovar-licenca" style="width: 100%">Aprovar</button>
+                                    <button type="button" class="btn btn-success submeterFormBotao" data-toggle="modal" data-target="#staticBackdrop-aprovar-licenca" style="width: 100%">Aprovar</button>
                                 </div>
                             </div>
                         @endcan
@@ -155,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-warning" form="form-licenca-revisar">Revisar</button>
+                        <button type="submit" class="btn btn-warning submeterFormBotao" form="form-licenca-revisar">Revisar</button>
                     </div>
                 </div>
             </div>
@@ -180,7 +180,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-licenca-aprovar">Aprovar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-licenca-aprovar">Aprovar</button>
                     </div>
                 </div>
             </div>
