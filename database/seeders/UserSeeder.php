@@ -57,5 +57,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'email_verified_at' => now(),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'Cidadao',
+            'email' => 'cidadao@cidadao.com',
+            'role' => User::ROLE_ENUM['cidadao'],
+            'password' => Hash::make('12345678'),
+            'email_verified_at' => now(),
+        ]);
     }
 }
