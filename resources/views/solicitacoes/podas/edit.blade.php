@@ -5,38 +5,33 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8" style="padding-top: 15px;">
-                        <h4 class="card-title">Avaliar solicitação de muda {{$solicitacao->protocolo}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('mudas.index')}}">Mudas</a> > Avaliar solicitação de muda {{$solicitacao->protocolo}}</h6>
+                        <h4 class="card-title">Avaliar solicitação de poda/corte {{$solicitacao->protocolo}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Podas</a> > Avaliar solicitação de poda/corte {{$solicitacao->protocolo}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2" href="{{route('podas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>
             <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5 class="card-title">Solicitação de poda/corte</h5>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="nome">Nome</label>
                                 <input id="nome" class="form-control" type="text" name="nome"
                                     value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <div class="col-md-6 ml-0 pl-0">
-                                    <label for="qtd_mudas">Quantidade de mudas</label>
-                                    <input id="qtd_mudas" class="form-control" type="number" step="0.01" name="qtd_mudas"
-                                        value="{{ $solicitacao->qtd_mudas }}" autocomplete="qtd_mudas" disabled>
-                                </div>
-                            </div>
                             <div class="col-md-6 form-group">
                                 <label for="email">E-mail</label>
                                 <input id="email" class="form-control" type="text" name="email"
                                     value="{{ $solicitacao->cidadao->user->email }}" autocomplete="email" disabled>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="col-md-6 form-group">
                                 <label for="cpf">{{ __('CPF') }}</label>
                                 <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
@@ -45,19 +40,19 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cep">{{ __('CEP') }}</label>
-                                <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->cidadao->endereco->cep}}" disabled>
+                                <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->endereco->cep}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="bairro">{{ __('Bairro') }}</label>
-                                <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->cidadao->endereco->bairro}}" disabled>
+                                <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->endereco->bairro}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="rua">{{ __('Rua') }}</label>
-                                <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->cidadao->endereco->rua}}" disabled>
+                                <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->endereco->rua}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="numero">{{ __('Número') }}</label>
-                                <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->cidadao->endereco->numero}}" disabled>
+                                <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->endereco->numero}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cidade">{{ __('Cidade') }}</label>
@@ -69,14 +64,26 @@
                                     <option selected value="PE">Pernambuco</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="complemento">{{ __('Complemento') }}</label>
-                                <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                                <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                @empty($solicitacao->ficha)
+                                    <a href="{{route('podas.ficha', $solicitacao)}}">Ficha de Análise de Risco em árvore</a>
+                                @else
+                                    <a href="{{route('podas.fichas.show', $solicitacao->ficha)}}">Ficha de Análise de Risco em árvore</a>
+                                @endempty
+                            </div>
+                            <div class="col-md-12 form-group">
+                                @empty($solicitacao->laudo)
+                                    <a href="{{route('podas.laudo', $solicitacao)}}">Laudo Técnico Ambiental</a>
+                                @else
+                                    <a href="{{route('podas.laudos.show', $solicitacao->laudo)}}">Laudo Técnico Ambiental</a>
+                                @endempty
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row col-md-12">
                             <div class="col-md-6" >
                                 <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
                             </div>
@@ -94,17 +101,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #278b45;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja deferir a solicitação de muda?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja deferir a solicitação de poda/corte?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="deferir-solicitacao" method="POST" enctype="multipart/form-data" action="{{ route('mudas.avaliar', $solicitacao) }}">
+                    <form id="deferir-solicitacao" method="POST" action="{{ route('podas.avaliar', $solicitacao) }}">
                         @method('PUT')
                         @csrf
-                        <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoMuda::STATUS_ENUM['deferido'] }}">
-                        <input type="file" name="arquivo" id="arquivo">
+                        <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoPoda::STATUS_ENUM['deferido'] }}">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -120,18 +126,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #278b45;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja indeferir a solicitação da muda?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja indeferir a solicitação de poda/corte?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="status-solicitacao" method="POST" action="{{ route('mudas.avaliar', $solicitacao) }}">
+                    <form id="status-solicitacao" method="POST" action="{{ route('podas.avaliar', $solicitacao) }}">
                         @method('PUT')
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoMuda::STATUS_ENUM['indeferido'] }}">
+                                <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoPoda::STATUS_ENUM['indeferido'] }}">
                                 <label for="motivo_indeferimento">Motivo</label>
                                 <textarea id="motivo_indeferimento" class="form-control @error('motivo_indeferimento') is-invalid @enderror"
                                     name="motivo_indeferimento"

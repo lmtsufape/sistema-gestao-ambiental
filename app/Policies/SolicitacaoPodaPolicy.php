@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\SolicitacaoMuda;
+use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SolicitacaoMudaPolicy
+class SolicitacaoPodaPolicy
 {
     use HandlesAuthorization;
 
@@ -35,12 +35,12 @@ class SolicitacaoMudaPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
+     * @param  \App\Models\SolicitacaoPoda  $solicitacaoPoda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function view(User $user)
     {
-        return $solicitacaoMuda->cidadao->user->id == $user->id;
+        return true;
     }
 
     /**
@@ -51,7 +51,7 @@ class SolicitacaoMudaPolicy
      */
     public function create(User $user)
     {
-        return $this->cidadaoIndex($user);
+        return true;
     }
 
     public function edit(User $user)
@@ -63,7 +63,7 @@ class SolicitacaoMudaPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
+     * @param  \App\Models\SolicitacaoPoda  $solicitacaoPoda
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function avaliar(User $user)
@@ -75,10 +75,10 @@ class SolicitacaoMudaPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
+     * @param  \App\Models\SolicitacaoPoda  $solicitacaoPoda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function delete(User $user, SolicitacaoPoda $solicitacaoPoda)
     {
         return false;
     }
@@ -87,10 +87,10 @@ class SolicitacaoMudaPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
+     * @param  \App\Models\SolicitacaoPoda  $solicitacaoPoda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function restore(User $user, SolicitacaoPoda $solicitacaoPoda)
     {
         return true;
     }
@@ -99,10 +99,10 @@ class SolicitacaoMudaPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
+     * @param  \App\Models\SolicitacaoPoda  $solicitacaoPoda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, SolicitacaoMuda $solicitacaoMuda)
+    public function forceDelete(User $user, SolicitacaoPoda $solicitacaoPoda)
     {
         return false;
     }

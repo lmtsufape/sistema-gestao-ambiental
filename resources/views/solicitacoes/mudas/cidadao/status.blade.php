@@ -1,34 +1,39 @@
-<x-app-layout>
-
-    <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
-        <div class="row">
-            <div class="col-sm-12">
+<x-guest-layout>
+    @component('layouts.nav_bar')@endcomponent
+    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+        <div class="form-row justify-content-center">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8" style="padding-top: 30px;">
-                        <h4 class="card-title">Visualizar solicitação de muda {{$solicitacao->protocolo}}</h4>
-                        @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted">Mudas > Visualizar solicitação de muda {{$solicitacao->protocolo}}</h6>
-                        @endcan
+                    <div class="col-md-8">
+                        <h4 class="card-title">Solicitação de mudas</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a title="Voltar" href="{{route('mudas.cidadao.index')}}">
+                            <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-row justify-content-center">
             <div class="col-md-8">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="card-body">
-                            <div class="form-row">
+                           <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="nome">Nome</label>
                                     <input id="nome" class="form-control" type="text" name="nome"
                                         value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
                                 </div>
+                           </div>
+                           <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="qtd_mudas">{{ __('Quantidade de mudas') }}</label>
+                                    <input id="qtd_mudas" class="form-control simple-field-data-mask" type="text" name="qtd_mudas"
+                                        value="{{ $solicitacao->qtd_mudas }}" autofocus autocomplete="qtd_mudas"
+                                        disabled>
+                                </div>
                             </div>
-                            <div class="form-row">
+                           <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="email">E-mail</label>
                                     <input id="email" class="form-control" type="text" name="email"
@@ -39,13 +44,6 @@
                                     <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
                                         value="{{ $solicitacao->cidadao->cpf }}" autofocus autocomplete="cpf"
                                         data-mask="000.000.000-00" disabled>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas</label>
-                                    <input id="qtd_mudas" class="form-control" type="number" step="0.01" name="qtd_mudas"
-                                        value="{{ $solicitacao->qtd_mudas }}" autocomplete="qtd_mudas" disabled>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -69,12 +67,6 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
-                                    <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="cidade">{{ __('Cidade') }}</label>
                                     <input id="cidade" class="form-control" type="text" name="cidade" value="Garanhuns" disabled>
@@ -88,8 +80,14 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }}</label>
-                                    <textarea id="comentario" class="form-control" type="text" name="comentario" value="Garanhuns" disabled>{{$solicitacao->comentario}}
+                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="complemento">{{ __('Comentário') }}</label>
+                                    <textarea class="form-control" type="text" disabled>{{$solicitacao->comentario}}
                                     </textarea>
                                 </div>
                             </div>
@@ -137,4 +135,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+    @component('layouts.footer')@endcomponent
+</x-guest-layout>

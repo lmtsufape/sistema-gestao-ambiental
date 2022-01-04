@@ -1,34 +1,29 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Solicitações de poda/corte') }}
+        </h2>
+    </x-slot>
 
-    <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-row">
-                    <div class="col-md-8" style="padding-top: 30px;">
-                        <h4 class="card-title">Visualizar solicitação de muda {{$solicitacao->protocolo}}</h4>
-                        @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted">Mudas > Visualizar solicitação de muda {{$solicitacao->protocolo}}</h6>
-                        @endcan
-                    </div>
-                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-8">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Solicitação de poda/corte</h5>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="nome">Nome</label>
                                     <input id="nome" class="form-control" type="text" name="nome"
                                         value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="email">E-mail</label>
                                     <input id="email" class="form-control" type="text" name="email"
@@ -41,40 +36,27 @@
                                         data-mask="000.000.000-00" disabled>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas</label>
-                                    <input id="qtd_mudas" class="form-control" type="number" step="0.01" name="qtd_mudas"
-                                        value="{{ $solicitacao->qtd_mudas }}" autocomplete="qtd_mudas" disabled>
-                                </div>
-                            </div>
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="cep">{{ __('CEP') }}</label>
-                                    <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->cidadao->endereco->cep}}" disabled>
+                                    <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->endereco->cep}}" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="bairro">{{ __('Bairro') }}</label>
-                                    <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->cidadao->endereco->bairro}}" disabled>
+                                    <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->endereco->bairro}}" disabled>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="rua">{{ __('Rua') }}</label>
-                                    <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->cidadao->endereco->rua}}" disabled>
+                                    <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->endereco->rua}}" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="numero">{{ __('Número') }}</label>
-                                    <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->cidadao->endereco->numero}}" disabled>
+                                    <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->endereco->numero}}" disabled>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
-                                    <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
-                                </div>
-                            </div>
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="cidade">{{ __('Cidade') }}</label>
                                     <input id="cidade" class="form-control" type="text" name="cidade" value="Garanhuns" disabled>
@@ -86,11 +68,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }}</label>
-                                    <textarea id="comentario" class="form-control" type="text" name="comentario" value="Garanhuns" disabled>{{$solicitacao->comentario}}
-                                    </textarea>
+                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
                                 </div>
                             </div>
                         </div>
@@ -121,13 +102,6 @@
                                                 <p>Motivo: {{$solicitacao->motivo_indeferimento}}</p>
                                             @break
                                         @endswitch
-                                    </div>
-                                    <div class="col-md-12">
-                                        @if(isset($solicitacao->arquivo))
-                                            <div style="margin-top: 20px; margin-bottom: 10px;">
-                                                <a href="{{route('mudas.documento', ['id' => $solicitacao->id])}}" target="_new">Baixar solicitação</a>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>

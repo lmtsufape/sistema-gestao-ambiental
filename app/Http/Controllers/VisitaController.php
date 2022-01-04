@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\TipoAnalista;
 use App\Models\Documento;
+use App\Models\SolicitacaoPoda;
 use Illuminate\Support\Facades\Redirect;
 
 class VisitaController extends Controller
@@ -40,7 +41,7 @@ class VisitaController extends Controller
         $this->authorize('isSecretario', User::class);
         $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
         $analistas = User::analistas();
-        
+
         return view('visita.create', compact('requerimentos', 'analistas'));
     }
 
@@ -148,7 +149,7 @@ class VisitaController extends Controller
      * @param  Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function createVisitaDenuncia(Request $request) 
+    public function createVisitaDenuncia(Request $request)
     {
         $this->authorize('isSecretario', User::class);
         $request->validate([
@@ -163,5 +164,22 @@ class VisitaController extends Controller
         $visita->save();
 
         return redirect(route('denuncias.index'))->with(['success' => 'Visita agendada com sucesso!']);
+    }
+
+    public function createVisitaSolicitacaoPoda(Request $request)
+    {
+        $request->validate([
+            'data' => 'required',
+            'analista' => 'required',
+            'solicitacao_id' => 'required',
+        ]);
+
+        $visita = new Visita();
+        $visita->data_marcada = $request->data;
+        $visita->solicitacao_poda_id = $request->solicitacao_id;
+        $visita->analista_id = $request->analista;
+        $visita->save();
+
+        return redirect(route('podas.index'))->with(['success' => 'Visita agendada com sucesso!']);
     }
 }

@@ -24,10 +24,8 @@ class SolicitacaoMudaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required', 'string'],
-            'cpf' => ['required', 'cpf'],
-            'endereco' => ['required', 'string'],
-            'area' => ['required', 'numeric'],
+            'comentario' => ['nullable', 'string'],
+            'qtd_mudas' => ['required', 'numeric'],
         ];
     }
 }

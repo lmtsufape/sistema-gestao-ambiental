@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class SolicitacaoMudaAvaliarRequest extends FormRequest
+class SolicitacaoPodaAvaliarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,8 @@ class SolicitacaoMudaAvaliarRequest extends FormRequest
      */
     public function authorize()
     {
-        return$this->user()->can('avaliar', SolicitacaoMuda::class);
+        $user = Auth::user();
+        return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
     }
 
     /**
@@ -28,7 +29,6 @@ class SolicitacaoMudaAvaliarRequest extends FormRequest
         return [
             'status' => ['required'],
             'motivo_indeferimento' => ['required_if:status,3'], // 3 = indeferido
-            'arquivo' => ['required_if:status,2', 'mimes:pdf', 'max:2048', 'file'], // 2 = deferido
         ];
     }
 

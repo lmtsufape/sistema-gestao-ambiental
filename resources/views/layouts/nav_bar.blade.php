@@ -6,12 +6,12 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav ml-auto">
                 @guest
                     <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
-                        <a class="nav-link" href="{{route('welcome')}}">Início</a> 
+                        <a class="nav-link" href="{{route('welcome')}}">Início</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Legislação</a>
@@ -26,6 +26,14 @@
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
                         <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
                     </li> --}}
+                    @can('isCidadao', \App\Models\User::class)
+                        <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
+                            <a class="nav-link" href="{{route('mudas.cidadao.index')}}">{{ __('Solicitações de mudas') }}</a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.cidadao.index')}}">{{ __('Solicitações de podas') }}</a>
+                        </li>
+                    @endcan
                     @can('isRequerente', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimento') }}</a>
@@ -46,6 +54,10 @@
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.index')}}">{{ __('Mudas') }}</a>
                         </li>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.index')}}">{{ __('Podas') }}</a>
+                        </li>
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>
                         </li>
@@ -56,6 +68,9 @@
                         </li>
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.index')}}">{{ __('Mudas') }}</a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.index')}}">{{ __('Podas') }}</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>
