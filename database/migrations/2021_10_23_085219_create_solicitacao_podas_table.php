@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSolicitacaoMudasTable extends Migration
+class CreateSolicitacaoPodasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateSolicitacaoMudasTable extends Migration
      */
     public function up()
     {
-        Schema::create('solicitacoes_mudas', function (Blueprint $table) {
+        Schema::create('solicitacoes_podas', function (Blueprint $table) {
             $table->id();
-            $table->string('arquivo')->nullable();
-            $table->string('comentario')->nullable();
             $table->string('protocolo');
             $table->string('motivo_indeferimento')->nullable();
+            $table->string('autorizacao_ambiental')->nullable();
             $table->integer('status')->default(1);
-            $table->integer('qtd_mudas')->nullable();
+            $table->foreignId('analista_id')->nullable()->constrained('users');
+            $table->foreignId('endereco_id')->constrained('enderecos');
             $table->timestamps();
         });
     }
@@ -32,6 +32,10 @@ class CreateSolicitacaoMudasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitacoes_mudas');
+        Schema::table('solicitacoes_podas', function (Blueprint $table) {
+            $table->dropForeign(['analista_id']);
+            $table->dropForeign(['endereco_id']);
+        });
+        Schema::dropIfExists('solicitacoes_podas');
     }
 }

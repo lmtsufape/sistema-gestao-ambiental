@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSolicitacaoMudasTable extends Migration
+class CreateFotoPodasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateSolicitacaoMudasTable extends Migration
      */
     public function up()
     {
-        Schema::create('solicitacoes_mudas', function (Blueprint $table) {
+        Schema::create('fotos_podas', function (Blueprint $table) {
             $table->id();
-            $table->string('arquivo')->nullable();
+            $table->string('caminho');
             $table->string('comentario')->nullable();
-            $table->string('protocolo');
-            $table->string('motivo_indeferimento')->nullable();
-            $table->integer('status')->default(1);
-            $table->integer('qtd_mudas')->nullable();
+            $table->foreignId('solicitacao_poda_id')->constrained('solicitacoes_podas');
             $table->timestamps();
         });
     }
@@ -32,6 +29,9 @@ class CreateSolicitacaoMudasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitacoes_mudas');
+        Schema::table('fotos_podas', function (Blueprint $table) {
+            $table->dropForeign(['solicitacao_poda_id']);
+        });
+        Schema::dropIfExists('fotos_podas');
     }
 }
