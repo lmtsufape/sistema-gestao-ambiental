@@ -313,5 +313,23 @@ class CnaeSeeder extends Seeder
         \App\Models\Cnae::create(['nome' => 'Implantação ou enriquecimento de florestas plantadas com espécies nativas', 'setor_id' => '15', 'potencial_poluidor' => '1']);
         \App\Models\Cnae::create(['nome' => 'Implantação de florestas com espécies exóticas', 'setor_id' => '15', 'potencial_poluidor' => '1']);
 
+
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '1']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '2']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '3']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '4']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '5']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '6']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '7']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '8']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '9']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '10']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '11']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '12']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '13']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '14']);
+        \App\Models\Cnae::create(['nome' => 'Atividades similares', 'setor_id' => '15']);
+
+
     }
 }
