@@ -6,12 +6,12 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav ml-auto">
                 @guest
                     <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
-                        <a class="nav-link" href="{{route('welcome')}}">Início</a> 
+                        <a class="nav-link" href="{{route('welcome')}}">Início</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Legislação</a>
@@ -66,6 +66,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
                                 <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
+                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
                                 <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>
                                 <a class="dropdown-item" href="{{route('valores.index')}}">{{__('Valores')}}</a>
                                 <a class="dropdown-item" href="{{route('usuarios.index')}}">{{__('Usuários')}}</a>
