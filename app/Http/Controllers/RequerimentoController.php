@@ -323,13 +323,13 @@ class RequerimentoController extends Controller
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
                 break;

@@ -26,6 +26,8 @@ class CreateBoletoCobrancasTable extends Migration
             $table->string('nosso_numero')->nullable(); 
             $table->string('URL')->nullable();
 
+            $table->integer('status_pagamento')->nullable();
+
             $table->bigInteger('requerimento_id');
             $table->foreign('requerimento_id')->references('id')->on('requerimentos');
 
