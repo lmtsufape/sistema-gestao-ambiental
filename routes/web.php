@@ -39,6 +39,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/boletos', [BoletoController::class, 'index'])->name('boletos.index');
+
     Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
@@ -93,7 +95,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
     Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
     Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
-    
+
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
     Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
