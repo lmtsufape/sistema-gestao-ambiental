@@ -16,9 +16,9 @@ class BoletoController extends Controller
     public function index()
     {
         $this->authorize('isSecretario', auth()->user());
-        $vencidos = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['vencido'])->orderBy('created_at');
-        $pendentes = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['pendente'])->orderBy('created_at');
-        $pagos = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['pago'])->orderBy('created_at');
+        $vencidos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])->orderBy('created_at', 'DESC')->get();
+        $pendentes = BoletoCobranca::where('status_pagamento', null)->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'])->orderBy('created_at', 'DESC')->get();
+        $pagos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])->orderBy('created_at', 'DESC')->get();
         return view('boleto.index', compact('vencidos', 'pendentes', 'pagos'));
     }
     

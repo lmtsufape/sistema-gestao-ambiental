@@ -1,33 +1,40 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Console\Commands;
 
 use App\Models\BoletoCobranca;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Command;
 
-class BoletoStatus implements ShouldQueue
+class AtualizarStatusBoletos extends Command
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'atualizar:boletos';
 
     /**
-     * Create a new job instance.
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Atualiza o status de pagamento dos boletos não vencidos ainda não pagos';
+
+    /**
+     * Create a new command instance.
      *
      * @return void
      */
     public function __construct()
     {
+        parent::__construct();
     }
 
     /**
-     * Execute the job.
+     * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
@@ -39,7 +46,6 @@ class BoletoStatus implements ShouldQueue
         foreach($boletos as $boleto){
             $this->atualizarStatusBoleto($boleto);
         }
-                
     }
 
     private function atualizarStatusBoleto(BoletoCobranca $boleto){
