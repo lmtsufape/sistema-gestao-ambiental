@@ -606,6 +606,9 @@
                 <form id="atribuir-potencial-poluidor-form" method="POST" action="{{route('requerimentos.atribuir.potencial.poluidor', $requerimento)}}">
                     @csrf
                     <input type="hidden" name="licença" value="{{$requerimento->tipo_licenca}}">
+                    <input type="hidden" name="opcão_taxa_serviço" value="{{$requerimento->definicao_valor}}">
+                    <input type="hidden" name="valor_da_taxa_de_serviço" value="{{$requerimento->valor}}">
+                    <input type="hidden" name="valor_do_juros" value="{{$requerimento->valor_juros}}">
                     <div class="col-md-12 form-group">
                         <label for="potencial_poluidor">{{ __('Potencial poluidor') }}</label>
                         <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
