@@ -106,6 +106,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="col-md-12 form-group">
+                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <textarea class="form-control" @error('comentario') is-invalid @enderror" type="text" name="comentario" id="comentario">{{old('comentario', '')}}</textarea>
+                                    @error('comentario')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -121,7 +130,7 @@
                                 </button>
                             </div>
                             <div id="imagens" class="form-row">
-                                @if ($errors->has('imagem.*') && $errors->has('comentario.*'))
+                                @if ($errors->has('imagem.*') && $errors->has('comentarios.*'))
                                     @foreach ($errors->get('imagem.*') as $i => $images)
                                         @foreach ($images as $b => $opcao)
                                             <div class="col-md-5" style="margin: 10px 10px 0 0;">
@@ -134,11 +143,11 @@
                                                 @enderror
                                         @endforeach
                                     @endforeach
-                                    @foreach ($errors->get('comentario.*') as $i => $comentarios)
+                                    @foreach ($errors->get('comentarios.*') as $i => $comentarios)
                                         @foreach ($comentarios as $b => $opcao)
                                                 <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
-                                                <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
-                                                @error('comentario.'.$b)
+                                                <input type="text" class="form-control @error('comentarios.'.$b) is-invalid @enderror" name="comentarios[]" id="comentarios">
+                                                @error('comentarios.'.$b)
                                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                                         {{ $opcao }}
                                                     </div>
@@ -160,20 +169,20 @@
                                                         </div>
                                                     @enderror
                                                     <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                                    <input type="text" class="form-control" name="comentario[]" id="comentario">
+                                                    <input type="text" class="form-control" name="comentarios[]" id="comentarios">
                                                     <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
                                                 </div>
                                             @endforeach
                                         @endforeach
                                     @else
-                                        @foreach ($errors->get('comentario.*') as $i => $comentarios)
+                                        @foreach ($errors->get('comentarios.*') as $i => $comentarios)
                                             @foreach ($comentarios as $b => $opcao)
                                                 <div class="col-md-5" style="margin: 10px 10px 0 0;">
                                                     <label for="imagem">{{ __('Selecione a imagem') }}</label>
                                                     <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
                                                     <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
-                                                    <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
-                                                    @error('comentario.'.$b)
+                                                    <input type="text" class="form-control @error('comentarios.'.$b) is-invalid @enderror" name="comentarios[]" id="comentarios">
+                                                    @error('comentarios.'.$b)
                                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                                             {{ $opcao }}
                                                         </div>
@@ -290,7 +299,7 @@
                                         <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
                                         <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
                                         <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                        <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
+                                        <textarea type="text" class="form-control" name="comentarios[]" id="comentarios"></textarea>
                                         <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
                                     </div>
                                 </div>`;

@@ -68,7 +68,7 @@ class SolicitacaoPodaController extends Controller
             for ($i = 0; $i < count($data['imagem']); $i++) {
                 $foto_poda = new FotoPoda();
                 $foto_poda->solicitacao_poda_id = $solicitacao->id;
-                $foto_poda->comentario = $data['comentario'][$i] ?? "";
+                $foto_poda->comentario = $data['comentarios'][$i] ?? "";
                 $nomeImg = $data['imagem'][$i]->getClientOriginalName();
                 $path = 'podas/' . $solicitacao->id .'/imagens'.'/';
                 Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);

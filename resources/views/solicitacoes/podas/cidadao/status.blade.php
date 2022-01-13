@@ -72,6 +72,12 @@
                                      <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text"  id="complemento" disabled/>
                                  </div>
                              </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
+                                </div>
+                            </div>
                          </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ class SolicitacaoPoda extends Model
         'status',
         'analista_id',
         'autorizacao_ambiental',
+        'comentario',
     ];
 
     public const STATUS_ENUM = [
