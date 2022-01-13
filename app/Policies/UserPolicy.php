@@ -31,7 +31,7 @@ class UserPolicy
     }
 
     /**
-     * Checa se o usuário logado é um secretario.
+     * Checa se o usuário logado é um analista.
      *
      * @return boolean
      */
@@ -53,13 +53,23 @@ class UserPolicy
     }
 
     /**
-     * Checa se o usuário logado é um secretario.
+     * Checa se o usuário logado é um requerente.
      *
      * @return boolean
      */
     public function isRequerente(User $user)
     {
         return $user->role == User::ROLE_ENUM['requerente'];
+    }
+
+    /**
+     * Checa se o usuário logado é um cidadão.
+     *
+     * @return boolean
+     */
+    public function isCidadao(User $user)
+    {
+        return $user->role == User::ROLE_ENUM['cidadao'];
     }
 
     /**

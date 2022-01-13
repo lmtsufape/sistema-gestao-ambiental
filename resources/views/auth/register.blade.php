@@ -12,9 +12,26 @@
                             @endphp
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <h4>Cadastro de empreendedor</h4>
+                                        <h4>
+                                            Cadastro de
+                                            @if (isset($cidadao))
+                                                cidadão
+                                                <input type="hidden" name="cidadao" value="true">
+                                            @else
+                                                empresário
+                                            @endif
+                                        </h4>
                                     </div>
                                      <div class="col-md-6 form-group" style="padding-top: 5px; text-align: end">
                                         <h6><span style="color: red; font-weight: bold;">*</span> Campos obrigatórios</h6>
@@ -167,7 +184,7 @@
                                             <option @if(old('uf') == 'PA') selected @endif value="PA">Pará</option>
                                             <option @if(old('uf') == 'PB') selected @endif value="PB">Paraíba</option>
                                             <option @if(old('uf') == 'PR') selected @endif value="PR">Paraná</option>
-                                            <option @if(old('uf') == 'PE') selected @endif value="PE">Pernambuco</option>
+                                            <option @if(old('uf', 'PE') == 'PE') selected @endif value="PE">Pernambuco</option>
                                             <option @if(old('uf') == 'PI') selected @endif value="PI">Piauí</option>
                                             <option @if(old('uf') == 'RJ') selected @endif value="RJ">Rio de Janeiro</option>
                                             <option @if(old('uf') == 'RN') selected @endif value="RN">Rio Grande do Norte</option>
