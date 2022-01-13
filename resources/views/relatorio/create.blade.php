@@ -126,7 +126,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button  id="submeterFormBotao" class="btn btn-success" style="width: 100%;" form="form-relatorio-visita">Salvar</button>
+                                <button class="btn btn-success submeterFormBotao" style="width: 100%;" form="form-relatorio-visita">Salvar</button>
                             </div>
                         </div>
                     </div>

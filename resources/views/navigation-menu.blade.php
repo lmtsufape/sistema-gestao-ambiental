@@ -167,7 +167,7 @@
                                     {{ __('Documentos') }}
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('setores.index')}}" :active="request()->routeIs('setores.*')">
-                                    {{ __('Tipologias') }}
+                                    {{ __('Grupos') }}
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('valores.index')}}" :active="request()->routeIs('valores.*')">
                                     {{ __('Valores de licenças') }}

@@ -12,6 +12,16 @@ use App\Models\WebServiceCaixa\ErrorRemessaException;
 
 class BoletoController extends Controller
 {
+
+    public function index()
+    {
+        $this->authorize('isSecretario', auth()->user());
+        $vencidos = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['vencido'])->orderBy('created_at');
+        $pendentes = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['pendente'])->orderBy('created_at');
+        $pagos = BoletoCobranca::where('status', BoletoCobranca::STATUS_ENUM['pago'])->orderBy('created_at');
+        return view('boleto.index', compact('vencidos', 'pendentes', 'pagos'));
+    }
+    
     /**
      * Cria um boleto para o requerimento.
      *
@@ -54,7 +64,7 @@ class BoletoController extends Controller
     {
         $xmlBoletoController = new XMLCoderController();
         $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
-        
+
         try {
             $xmlBoletoController->incluir_boleto_remessa($boleto);
             return redirect($boleto->URL);
@@ -69,7 +79,7 @@ class BoletoController extends Controller
      * @param  App\Models\BoletoCobranca
      * @return redirect
      */
-    private function alterarBoleto(BoletoCobranca $boleto) 
+    private function alterarBoleto(BoletoCobranca $boleto)
     {
         $xmlBoletoController = new XMLCoderController();
 
@@ -87,7 +97,7 @@ class BoletoController extends Controller
      * @param  string $mensagem
      * @return string $mensagem_formatada
      */
-    private function formatar_mensagem($mensagem) 
+    private function formatar_mensagem($mensagem)
     {
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             return 'WEBSERVICE ERROR: ' . $mensagem;

@@ -145,7 +145,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-danger" form="deletar-visita-form-{{$visita->id}}">Sim</button>
+                        <button type="submit" class="btn btn-danger submeterFormBotao" form="deletar-visita-form-{{$visita->id}}">Sim</button>
                     </div>
                 </div>
             </div>

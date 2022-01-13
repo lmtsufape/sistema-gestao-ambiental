@@ -5,7 +5,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cadastrar um novo cnae</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Tipologias > Cnaes da tipologia {{$setor->nome}} > Criar cnae</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Grupos > Cnaes do grupo {{$setor->nome}} > Criar cnae</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a title="Voltar" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="codigo">{{ __('Código') }}</label>
-                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" required autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
+                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" autofocus autocomplete="codigo" placeholder="Digite o código do cnae">
 
                                     @error('codigo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -59,6 +59,7 @@
                                         <option value="baixo">Baixo</option>
                                         <option value="medio">Médio</option>
                                         <option value="alto">Alto</option>
+                                        <option value="a_definir">A definir</option>
                                     </select>
                                 </div>
                             </div>
@@ -68,7 +69,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="criar-cnae" style="width: 100%">Salvar</button>
+                                <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="criar-cnae" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>

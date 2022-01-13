@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-row justify-content-center" style="">
                         <div class="col-md-4 form-group">
-                            <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault">Enviar mensagem</button>
+                            <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao">Enviar mensagem</button>
                         </div>
                     </div>
                 </form>

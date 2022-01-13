@@ -76,10 +76,10 @@
                     </div>
                 </div>
                 
-                <div class="shadow card" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="cursor: pointer; width: 100%; margin-top: 1rem;">
+                <div class="shadow card"  style="width: 100%; margin-top: 1rem;">
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-between" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="cursor: pointer;">
                                 <div class="col-md-11">
                                     <h5>
                                         <button type="button" class="titulo-nav-tab-custom btn-block text-left" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
@@ -170,10 +170,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="shadow card" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="cursor: pointer; width: 100%; margin-top: 1rem;">
+                <div class="shadow card"  style="width: 100%; margin-top: 1rem;">
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-between"  data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="cursor: pointer; ">
                                 <div class="col-md-11">
                                     <h5>
                                         <button class="titulo-nav-tab-custom btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -208,7 +208,7 @@
                                             <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{$requerimento->empresa->telefone->numero}}" disabled autocomplete="celular">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="setor">{{ __('Tipologia da empresa') }}</label>
+                                            <label for="setor">{{ __('Grupo da empresa') }}</label>
                                             <select id="setor" class="form-control @error('setor') is-invalid @enderror" type="text" name="setor" required autofocus autocomplete="setor" disabled>
                                                 <option value="">{{$requerimento->empresa->cnaes[0]->setor->nome}}</option>
                                             </select>
@@ -283,8 +283,11 @@
                                     </div>
                                     @can('isAnalista', \App\Models\User::class)
                                     <div class="form-row">
-                                        <div class="col-md-12 form-group">
+                                        <div class="col-md-8 form-group">
                                             <h3>Cnaes</h3>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <a class="btn btn-success btn-color-dafault" data-toggle="modal" data-target="#atribuir_potencial_poluidor" style="float: right;">Atribuir potencial poluidor</a>
                                         </div>
                                     </div>
                                         <div class="form-row">
@@ -377,7 +380,12 @@
                         <form id="documentos-form" method="POST" action="{{route('requerimento.checklist')}}">
                             @csrf
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
+                                <div class="col-md-12">
+                                    <h6 style="font-weight: bolder;">Informações básicas</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
                                     <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                         <option disabled selected value="">-- Selecione o tipo de licença --</option>
@@ -395,8 +403,50 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
 
+                                <div class="col-md-6 form-group">
+                                    <label for="opcão_taxa_serviço">{{__('Taxa de serviço de emissão de licença')}}</label>
+                                    <select name="opcão_taxa_serviço" id="opcão_taxa_serviço" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInput(this)">
+                                        <option selected disabled value="">-- Selecione uma opção --</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['manual']) selected @endif value="{{$definir_valor['manual']}}">Definir de forma manual</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['automatica']) selected @endif value="{{$definir_valor['automatica']}}">Definir de forma automática</option>
+                                        <option @if(old('opcão_taxa_serviço') == $definir_valor['automatica_com_juros']) selected @endif value="{{$definir_valor['automatica_com_juros']}}">Definir de forma automática com juros</option>
+                                    </select>
+
+                                    @error('opcão_taxa_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_manual" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else display: none;  @endif">
+                                    <label for="valor_da_taxa_de_serviço">{{__('Valor da taxa de serviço')}}</label>
+                                    <input type="number" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço')}}">
+                                
+                                    @error('valor_da_taxa_de_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_juros" class="col-md-6 form-group" style="@error('valor_do_juros') display: block; @else display: none; @endif">
+                                    <label for="valor_do_juros">{{__('Valor do juros cobrado em porcentagem')}}</label>
+                                    <input type="number" name="valor_do_juros" class="form-control" @error('valor_do_juros') is-invalid @enderror placeholder="Digite a porcentagem cobrada a mais" value="{{old('valor_do_juros')}}">
+                                
+                                    @error('valor_do_juros')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <h6 style="font-weight: bolder;">Documentos que o empresário deve enviar</h6>
+                                </div>
+                            </div>
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             @foreach ($documentos as $i => $documento)
                                 <div class="form-row">
@@ -410,7 +460,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form">Enviar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -432,7 +482,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
-                                <div class="col-md-12">
+                                <div class="col-md-6 form-group">
                                     <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" onchange="defaultDocs(this)">
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
@@ -445,6 +495,44 @@
 
                                     @error('licença')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label for="opcão_taxa_serviço_edit">{{__('Taxa de serviço de emissão de licença')}}</label>
+                                    <select name="opcão_taxa_serviço" id="opcão_taxa_serviço_edit" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInputEdit(this)">
+                                        <option selected disabled value="">-- Selecione uma opção --</option>
+                                        <option @if(old('opcão_taxa_serviço', $requerimento->definicao_valor) == $definir_valor['manual']) selected @endif value="{{$definir_valor['manual']}}">Definir de forma manual</option>
+                                        <option @if(old('opcão_taxa_serviço', $requerimento->definicao_valor) == $definir_valor['automatica']) selected @endif value="{{$definir_valor['automatica']}}">Definir de forma automática</option>
+                                        <option @if(old('opcão_taxa_serviço', $requerimento->definicao_valor) == $definir_valor['automatica_com_juros']) selected @endif value="{{$definir_valor['automatica_com_juros']}}">Definir de forma automática com juros</option>
+                                    </select>
+
+                                    @error('opcão_taxa_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_manual_edit" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else @if($requerimento->definicao_valor == $definir_valor['manual'])  display: block; @else display: none; @endif @endif">
+                                    <label for="valor_da_taxa_de_serviço_edit">{{__('Valor da taxa de serviço')}}</label>
+                                    <input type="number" id="valor_da_taxa_de_serviço_edit" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço', $requerimento->valor)}}">
+                                
+                                    @error('valor_da_taxa_de_serviço')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div id="div_taxa_servico_juros_edit" class="col-md-6 form-group" style="@error('valor_do_juros') display: block; @else @if($requerimento->definicao_valor == $definir_valor['automatica_com_juros'])  display: block; @else display: none; @endif  @endif">
+                                    <label for="valor_do_juros_edit">{{__('Valor do juros cobrado em porcentagem')}}</label>
+                                    <input type="number" id="valor_do_juros_edit" name="valor_do_juros" class="form-control" @error('valor_do_juros') is-invalid @enderror placeholder="Digite a porcentagem cobrada a mais" value="{{old('valor_do_juros', $requerimento->valor_juros)}}">
+                                
+                                    @error('valor_do_juros')
+                                        <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
                                             {{ $message }}
                                         </div>
                                     @enderror
@@ -462,7 +550,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="documentos-form-edit">Atualizar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form-edit">Atualizar</button>
                     </div>
                 </div>
             </div>
@@ -497,11 +585,55 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-success" form="atribuir-analista-form">Atribuir ao analista</button>
+                    <button type="submit" class="btn btn-success submeterFormBotao" form="atribuir-analista-form">Atribuir ao analista</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="atribuir_potencial_poluidor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Atribuir potencial poluidor ao requerimento</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form id="atribuir-potencial-poluidor-form" method="POST" action="{{route('requerimentos.atribuir.potencial.poluidor', $requerimento)}}">
+                    @csrf
+                    <input type="hidden" name="licença" value="{{$requerimento->tipo_licenca}}">
+                    <div class="col-md-12 form-group">
+                        <label for="potencial_poluidor">{{ __('Potencial poluidor') }}</label>
+                        <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
+                            <option value="">-- Selecione o potencial poluidor --</option>
+                            @if(old('potencial_poluidor') != null)
+                                <option @if(old('potencial_poluidor') == "baixo") selected @endif value="baixo">Baixo</option>
+                                <option @if(old('potencial_poluidor') == "medio") selected @endif value="medio">Médio</option>
+                                <option @if(old('potencial_poluidor') == "alto") selected @endif value="alto">Alto</option>
+                            @else
+                                <option @if($requerimento->potencial_poluidor_atribuido == 1) selected @endif value="baixo">Baixo</option>
+                                <option @if($requerimento->potencial_poluidor_atribuido == 2) selected @endif value="medio">Médio</option>
+                                <option @if($requerimento->potencial_poluidor_atribuido == 3) selected @endif value="alto">Alto</option>
+                            @endif
+                        </select>
+                        @error('potencial_poluidor')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" id="submeterFormBotao" class="btn btn-primary" form="atribuir-potencial-poluidor-form">Salvar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <script>
         function defaultDocs(select) {
             $.ajax({
@@ -526,6 +658,46 @@
                     }
                 }
             });
+        }
+
+        function mostrarInput(select) {
+            var div_taxa_servico = document.getElementById('div_taxa_servico_manual');
+            var div_taxa_juros = document.getElementById('div_taxa_servico_juros');
+
+            switch (select.value) {
+                case "{{$definir_valor['manual']}}":
+                    div_taxa_servico.style.display = "block";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica_com_juros']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "block";
+                    break;
+            }
+        }
+
+        function mostrarInputEdit(select) {
+            var div_taxa_servico = document.getElementById('div_taxa_servico_manual_edit');
+            var div_taxa_juros = document.getElementById('div_taxa_servico_juros_edit');
+
+            switch (select.value) {
+                case "{{$definir_valor['manual']}}":
+                    div_taxa_servico.style.display = "block";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "none";
+                    break;
+                case "{{$definir_valor['automatica_com_juros']}}":
+                    div_taxa_servico.style.display = "none";
+                    div_taxa_juros.style.display = "block";
+                    break;
+            }
         }
     </script>
 </x-app-layout>

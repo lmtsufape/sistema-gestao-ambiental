@@ -81,7 +81,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
                                 <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
-                                <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Tipologias')}}</a>
+                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
+                                <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>
                                 <a class="dropdown-item" href="{{route('valores.index')}}">{{__('Valores')}}</a>
                                 <a class="dropdown-item" href="{{route('usuarios.index')}}">{{__('Usuários')}}</a>
                             </div>

@@ -21,6 +21,12 @@ class Requerimento extends Model
         'cancelada'     => 9,
     ];
 
+    public const DEFINICAO_VALOR_ENUM = [
+        'manual'     => 'Definir de forma manual',
+        'automatica'  => 'Definir de forma automática',
+        'automatica_com_juros' => 'Definir de forma automática com juros',
+    ];
+
     public const TIPO_ENUM = [
         'primeira_licenca' => 1,
         'renovacao'        => 2,
@@ -33,6 +39,7 @@ class Requerimento extends Model
         'status',
         'tipo',
         'valor',
+        'potencial_poluidor_atribuido'
     ];
 
     public function analista()
