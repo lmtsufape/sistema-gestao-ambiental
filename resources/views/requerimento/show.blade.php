@@ -286,9 +286,11 @@
                                         <div class="col-md-8 form-group">
                                             <h3>Cnaes</h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <a class="btn btn-success btn-color-dafault" data-toggle="modal" data-target="#atribuir_potencial_poluidor" style="float: right;">Atribuir potencial poluidor</a>
-                                        </div>
+                                        @if($requerimento->empresa->cnaes->first()->nome == "Atividades similares")
+                                            <div class="col-md-4 form-group">
+                                                <a class="btn btn-success btn-color-dafault" data-toggle="modal" data-target="#atribuir_potencial_poluidor" style="float: right;">Atribuir potencial poluidor</a>
+                                            </div>
+                                        @endif
                                     </div>
                                         <div class="form-row">
                                             @foreach ($requerimento->empresa->cnaes as $cnae)
