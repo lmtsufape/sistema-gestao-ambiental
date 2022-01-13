@@ -1,19 +1,24 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Laudo Técnico Ambiental') }}
-        </h2>
-    </x-slot>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <h4 class="card-title">Laudo Técnico Ambiental</h4>
+                        @can('usuarioInterno', \App\Models\User::class)
+                            <h6 class="card-subtitle mb-2 text-muted">Podas > Avaliar solicitação de poda/corte {{$solicitacao->protocolo}} > Laudo</h6>
+                        @endcan
+                    </div>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                        <a class="btn my-2" href="{{route('podas.edit', $solicitacao)}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <h5 class="card-title">Laudo Técnico Ambiental</h5>
-                            </div>
-                        </div>
                         <div div class="form-row">
                             @if (session('success'))
                                 <div class="col-md-12" style="margin-top: 5px;">
