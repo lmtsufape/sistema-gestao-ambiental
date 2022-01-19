@@ -428,3 +428,7 @@ nav img {
 .nav-item .active {
     color: black;
 }
+
+label {
+    font-weight: bold;
+}
