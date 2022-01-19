@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitações de mudas') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
@@ -67,9 +61,7 @@
                                     <label for="comentario">Comentário</label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
-                                        autocomplete="comentario">
-                                        {{old('comentario')}}
-                                    </textarea>
+                                        autocomplete="comentario">{{old('comentario')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}

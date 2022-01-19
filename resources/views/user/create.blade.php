@@ -69,6 +69,8 @@
                                                     Protocolista
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['processo'])
                                                     Processo
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'])
+                                                    Mudas e poda
                                                 @endif
                                             </label>
                                         </div>

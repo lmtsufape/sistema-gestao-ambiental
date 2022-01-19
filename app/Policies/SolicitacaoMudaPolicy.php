@@ -18,7 +18,8 @@ class SolicitacaoMudaPolicy
      */
     public function index(User $user)
     {
-        return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
+        $userPolicy = new UserPolicy();
+        return $userPolicy->isAnalistaPodaOrSecretario($user);
     }
 
     public function cidadaoIndex(User $user)
