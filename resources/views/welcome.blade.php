@@ -39,23 +39,6 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <a href="{{route('register')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 65.png')}}" alt="Cadastre sua empresa" width="36px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Cadastro de <br> Empreendedor</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
                 <div class="card card-home">
                     <div class="card-body">
                         <div class="row">
@@ -175,28 +158,12 @@
 
         <div class="row" style="margin-top: 20px;">
             <div class="form-group col-md-12">
-                <h6>Endereço e Contatos</h6>
+                <h6>Endereço e horário de funcionamento</h6>
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-4">
-                <div  style="padding:1rem; width:350px; height:300px;">
-                    <div class="form-row">
-                        <div id="img1" style="display:block">
-                            <a href="https://www.google.com.br/maps/place/Centro+Administrativo+II+-+Garanhuns%2FPE./@-8.8750303,-36.4646566,17z/data=!4m5!3m4!1s0x7070d3170819ef3:0x3aeb60b2c13599b7!8m2!3d-8.8743494!4d-36.4638736" target="_blanck">
-                                <img class="styleMapa" src="{{asset('img/mapa_ssg.png')}}" alt="Imagem com mapa do local da secretária de meio ambiente" style="width:100%; height:100%;"/>
-                            </a>
-                        </div>
-                        <div id="img2" style="display:none">
-                            <a href="">
-                                <img  class="styleMapa" src="{{asset('img/mapa_sms.png')}}" alt="Imagem com mapa do local da secretária de meio ambiente" style="width:100%; height:100%;"/>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-md-8">
-                <div class="" style="padding:1rem; width:100%; height:100%;">
+            <div class="form-group col-md-12" style="margin-top: -8px;">
+                <div class="" style="width:100%; height:100%;">
                     <div class="form-row">
                         <div class="cardMapa">
                             <div class="d-flex">
@@ -211,8 +178,8 @@
                             </div>
                             <div id="mostrar1" style="display:block; font-size:14px; font-family:'arial';">
                                 <div class="container" style="margin-left:3px; color:#707070">Centro Administrativo II Avenida Irga, s/n - Novo Heliópolis, Garanhuns - PE, 55297-256</div>
-                                <div class="container" style="margin-left:3px; color:#4a7836da;">Segunda a Sexta das 6h às 18h</div>
-                                <div class="container" style="margin-left:3px; color:#707070; margin-bottom:10px;">(87) 3761-0697</div>
+                                <div class="container" style="margin-left:3px; color:#4a7836da; margin-bottom:10px;">Segunda a Sexta das 8h às 14h</div>
+                                {{-- <div class="container" style="margin-left:3px; color:#707070; margin-bottom:10px;">(87) 3761-0697</div> --}}
                             </div>
                         </div>
                     </div>

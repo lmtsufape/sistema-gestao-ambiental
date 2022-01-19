@@ -4,10 +4,14 @@
                 <div class="row" style="text-align:center;">
                     <div class="col-md-3" style="margin-top: 20px;">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <a href="https://garanhuns.pe.gov.br/" target="_blank">
-                                    <img class="img" src="{{asset('img/prefeitura-garanhuns.png')}}" alt="Prefeitura de Garanhuns">
+                                    <img class="img" src="{{asset('img/prefeitura-garanhuns.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px;">
+                                    
                                 </a>
+                            </div>
+                            <div class="col-md-6">
+                                <img class="img" src="{{asset('img/gus-logotipo.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px;">
                             </div>
                         </div>
                     </div>

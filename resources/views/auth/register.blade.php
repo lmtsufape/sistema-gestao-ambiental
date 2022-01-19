@@ -5,6 +5,18 @@
         <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
             <div class="form-row justify-content-center">
                 <div class="col-md-8">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <h4 class="card-title">Cadastre-se</h4>
+                        </div>
+                        <div class="col-md-4" style="text-align: right">
+                            <h6 style="position: relative; top: 8px;"><span style="color: red; font-weight: bold;">*</span> Campos obrigatórios</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-center">
+                <div class="col-md-8">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             @php
@@ -21,22 +33,9 @@
                                         </ul>
                                     </div>
                                 @endif
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <h4>
-                                            Cadastro de
-                                            @if (isset($cidadao))
-                                                cidadão
-                                                <input type="hidden" name="cidadao" value="true">
-                                            @else
-                                                empresário
-                                            @endif
-                                        </h4>
-                                    </div>
-                                     <div class="col-md-6 form-group" style="padding-top: 5px; text-align: end">
-                                        <h6><span style="color: red; font-weight: bold;">*</span> Campos obrigatórios</h6>
-                                    </div>
-                                </div>
+                                @if (isset($cidadao))
+                                    <input type="hidden" name="cidadao" value="true">
+                                @endif
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
@@ -206,7 +205,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="complemento">{{ __('Complemento') }}</label>
-                                        <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5" placeholder="Digite qual o complemento que mora(Casa, Apartamento, etc)">{{old('complemento')}}</textarea>
+                                        <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5" placeholder="Digite qual o complemento que mora (Casa, Apartamento, etc)">{{old('complemento')}}</textarea>
                                         @error('complemento')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
