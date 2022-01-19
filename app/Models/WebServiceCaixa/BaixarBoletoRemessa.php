@@ -68,7 +68,7 @@ class BaixarBoletoRemessa extends Remessa
     {
         $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj); 
 
-        $hash = hash("sha256", $autenticacao);
+        $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
     }
 }

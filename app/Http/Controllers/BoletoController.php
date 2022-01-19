@@ -25,29 +25,28 @@ class BoletoController extends Controller
     /**
      * Cria um boleto para o requerimento.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param App\Models\Requerimento $requerimento
+     * @return string $url do boleto 
      */
-    public function create($id)
+    public function boleto($requerimento)
     {
         $xmlBoletoController = new XMLCoderController();
-        $requerimento = Requerimento::find($id);
         $boleto = $requerimento->boleto;
-        // dd($boleto);
+
         if (is_null($boleto)) {
             return $this->gerarBoleto($requerimento);
         } else {
-            if ($boleto > now()) {
+            if ($boleto->data_vencimento > now()) {
                 return $this->alterarBoleto($boleto);
             } else {
                 if ($boleto->URL != null) {
-                    return redirect($boleto->URL);
+                    return $boleto->URL;
                 } else {
                     try {
                         $xmlBoletoController->incluir_boleto_remessa($boleto);
-                        return redirect($boleto->URL);
+                        return $boleto->URL;
                     } catch (ErrorRemessaException $e) {
-                        return redirect()->back()->withErrors(['error' => $this->formatar_mensagem($e->getMessage())])->withInput();
+                        throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
                     }
                 }
             }
@@ -67,9 +66,9 @@ class BoletoController extends Controller
 
         try {
             $xmlBoletoController->incluir_boleto_remessa($boleto);
-            return redirect($boleto->URL);
+            return $boleto->URL;
         } catch (ErrorRemessaException $e) {
-            return redirect()->back()->withErrors(['error' => $this->formatar_mensagem($e->getMessage())])->withInput();
+            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
         }
     }
 
@@ -87,7 +86,7 @@ class BoletoController extends Controller
             $xmlBoletoController->gerar_alterar_boleto($boleto);
             return redirect($boleto->URL);
         } catch (ErrorRemessaException $e) {
-            return redirect()->back()->withErrors(['error' => $this->formatar_mensagem($e->getMessage())])->withInput();
+            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
         }
     }
 

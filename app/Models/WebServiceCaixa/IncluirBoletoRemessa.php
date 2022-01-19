@@ -3,7 +3,9 @@
 namespace App\Models\WebServiceCaixa;
 
 use App\Models\WebServiceCaixa\Remessa;
+use BaconQrCode\Encoder\ByteMatrix;
 use Carbon\Carbon;
+use ParagonIE\ConstantTime\Binary;
 
 class IncluirBoletoRemessa extends Remessa
 {
@@ -273,7 +275,7 @@ class IncluirBoletoRemessa extends Remessa
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format("dmY");
         $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj); 
 
-        $hash = hash("sha256", $autenticacao);
+        $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
     }
 

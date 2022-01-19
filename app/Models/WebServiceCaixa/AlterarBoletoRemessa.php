@@ -254,7 +254,7 @@ class AlterarBoletoRemessa extends Remessa
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format("dmY");
         $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj); 
 
-        $hash = hash("sha256", $autenticacao);
+        $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
     }
 

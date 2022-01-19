@@ -114,7 +114,10 @@
                                                             @if($requerimento->valor == null)
                                                                 {{__('Em definição')}}
                                                             @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
@@ -187,7 +190,10 @@
                                                             @if($requerimento->valor == null)
                                                                 {{__('Em definição')}}
                                                             @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
@@ -257,7 +263,10 @@
                                                             @if($requerimento->valor == null)
                                                                 {{__('Em definição')}}
                                                             @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}} 
+                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
@@ -335,7 +344,10 @@
                                                         @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
                                                             Pago
                                                         @else
-                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                            @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 </td>

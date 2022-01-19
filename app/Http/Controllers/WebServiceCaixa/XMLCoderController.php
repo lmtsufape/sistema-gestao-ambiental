@@ -31,18 +31,18 @@ class XMLCoderController extends Controller
         $boleto = new IncluirBoletoRemessa();
         $data_vencimento = now()->addDays(3)->format('Y-m-d');
 
+        $boleto->data_vencimento = $data_vencimento;
+        $boleto->requerimento_id = $requerimento->id;
+        $boleto->save();
+
         $boleto->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
-            'nosso_numero' => '14000000000002169',
             'data_vencimento' => $data_vencimento,
             'valor' => $requerimento->valor,
             'pagador' => $pagador,
             'beneficiario' => $beneficiario,
         ]);
 
-        $boleto->data_vencimento = $data_vencimento;
-        $boleto->requerimento_id = $requerimento->id;
-        $boleto->save();
         $boleto->salvar_arquivo($boleto->gerar_remessa(), $requerimento);
         $boleto->update();
 

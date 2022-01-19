@@ -15,7 +15,6 @@ use App\Models\Empresa;
 use App\Models\Historico;
 use App\Models\ModificacaoCnae;
 use App\Models\ModificacaoPorte;
-use App\Models\TipoAnalista;
 use App\Models\Setor;
 use App\Models\Visita;
 use Illuminate\Support\Facades\Notification;
@@ -23,6 +22,7 @@ use App\Notifications\DocumentosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosAnalisadosNotification;
 use App\Notifications\EmpresaModificadaNotification;
+use App\Models\WebServiceCaixa\ErrorRemessaException;
 
 class RequerimentoController extends Controller
 {
@@ -242,7 +242,7 @@ class RequerimentoController extends Controller
 
         $requerimento = Requerimento::find($request->requerimento);
         $this->atribuirValor($request, $requerimento);
-
+        
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
@@ -254,6 +254,16 @@ class RequerimentoController extends Controller
         $requerimento->update();
 
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
+        
+        try {
+            $boletoController = new BoletoController();
+            $boletoController->boleto($requerimento);
+        } catch (ErrorRemessaException $e) {
+            return redirect()->back()
+            ->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.'])
+            ->withErrors(['error' => 'Erro na geração do boleto: '. $e->getMessage()])
+            ->withInput();
+        }
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
@@ -323,18 +333,18 @@ class RequerimentoController extends Controller
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']: 
                 $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor_atribuido], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
                 break;
         }
-        
+
         $requerimento->definicao_valor = $request->input('opcão_taxa_serviço');
         $requerimento->valor = $valor;
     }
