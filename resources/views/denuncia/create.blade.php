@@ -47,7 +47,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <label for="empresa">Empresas cadastradas:</label>
+                                    <label for="empresa">Empresas cadastradas:<span style="color: red; font-weight: bold;">*</span></label>
                                     <select class="form-control @error('empresa_id') is-invalid @enderror"
                                             name="empresa_id" id="empresas" onChange="showCampoEmpresaNaoCadastrada(this)">
                                         <option disable="" hidden="" selected>-- Selecionar Empresa --</option>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <label for="texto">{{ __('Denúncia') }}</label>
+                                    <label for="texto">{{ __('Denúncia') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <textarea id="denuncia-ckeditor" name="texto"></textarea>
                                     @error('texto')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

@@ -37,7 +37,7 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <textarea id="relatorio" name="texto">{{old('texto')}}</textarea>
+                                    <textarea id="relatorio" name="texto" required>{{old('texto')}}</textarea>
                                 </form>
                             </div>
                             <div class="form col-md-3">

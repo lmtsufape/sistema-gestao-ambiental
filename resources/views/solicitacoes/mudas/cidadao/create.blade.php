@@ -46,8 +46,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="qtd_mudas" class="form-control @error('qtd_mudas') is-invalid @enderror"
                                         type="number" name="qtd_mudas" value="{{ old('qtd_mudas') }}"
                                         autocomplete="qtd_mudas">
@@ -123,7 +122,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <label for="protocolo">{{ __('Protocolo') }}</label>
+                                <label for="protocolo">{{ __('Protocolo') }}<span style="color: red; font-weight: bold;">*</span></label>
                                 <input id="protocolo" class="form-control @error('protocolo') is-invalid @enderror"
                                     type="text" name="protocolo" value="{{ old('protocolo') }}" required autofocus
                                     autocomplete="protocolo">

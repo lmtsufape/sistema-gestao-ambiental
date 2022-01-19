@@ -21,7 +21,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="name">{{ __('Name') }}</label>
+                                    <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite o nome do usuário...">
 
                                     @error('name')
@@ -31,7 +31,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="email">{{ __('Email') }}</label>
+                                    <label for="email">{{ __('E-mail') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="email" placeholder="Digite o e-mail do usuário...">
 
                                     @error('email')
@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="password">{{ __('Password') }}</label>
+                                    <label for="password">{{ __('Password') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autofocus autocomplete="new-password">
                                     <small>Deve ter no mínimo 8 caracteres</small>
                                     @error('password')
@@ -53,13 +53,13 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                                    <label for="password_confirmation">{{ __('Confirm Password') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="tipo">{{__('Selecione o(s) cargo(s) do analista')}}</label>
+                                    <label for="tipo">{{__('Selecione o(s) cargo(s) do analista')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input type="hidden" class="checkbox_tipo @error('tipos_analista') is-invalid @enderror">
                                     @foreach ($tipos as $tipo)
                                         <div class="form-check">

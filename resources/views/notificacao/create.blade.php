@@ -30,9 +30,9 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="texto">{{ __('Texto') }}</label>
+                                    <label for="texto">{{ __('Texto') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <textarea class="form-control @error('texto') is-invalid @enderror" id="texto"
-                                        rows="5" name="texto">{{old('texto')}}</textarea>
+                                        rows="5" name="texto" required>{{old('texto')}}</textarea>
                                     @error('texto')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}

@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Cadastro de <br> Empreendedor</div>
+                                <div class="col-md-12">Cadastro de <br> empreendedor</div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="row espaco">
-                            <div class="col-md-12">Emissão de <br>Licenças</div>
+                            <div class="col-md-12">Emissão de <br>licenças</div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="row espaco">
-                            <div class="col-md-12">Renovação de <br>Licenças</div>
+                            <div class="col-md-12">Renovação de <br>licenças</div>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Registro de <br>Denúncias</div>
+                                <div class="col-md-12">Registro de <br>denúncias</div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Consulta de <br>Licenças ambientais</div>
+                                <div class="col-md-12">Consulta de <br>licenças ambientais</div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
 
         <div class="row" style="margin-top: 20px;">
             <div class="form-group col-md-12">
-                <h6>Endereço e Contatos</h6>
+                <h6>Endereço e contatos</h6>
             </div>
         </div>
         <div class="row">

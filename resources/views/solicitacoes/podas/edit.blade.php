@@ -138,7 +138,7 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoPoda::STATUS_ENUM['indeferido'] }}">
-                                <label for="motivo_indeferimento">Motivo</label>
+                                <label for="motivo_indeferimento">Motivo<span style="color: red; font-weight: bold;">*</span></label>
                                 <textarea id="motivo_indeferimento" class="form-control @error('motivo_indeferimento') is-invalid @enderror"
                                     name="motivo_indeferimento"
                                     autocomplete="motivo_indeferimento">{{old('motivo_indeferimento')}}</textarea>

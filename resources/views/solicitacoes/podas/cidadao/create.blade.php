@@ -48,7 +48,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
                                     @error('cep')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -57,7 +57,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" required autofocus autocomplete="bairro">
                                     @error('bairro')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -66,7 +66,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" required autocomplete="rua">
                                     @error('rua')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -75,7 +75,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="numero" class="form-control  @error('numero') is-invalid @enderror" type="text" name="numero" value="{{old('numero')}}" required autocomplete="numero">
                                     @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

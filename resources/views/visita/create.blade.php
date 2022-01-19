@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="data_marcada">{{ __('Data') }} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="data_marcada">{{ __('Data') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input class="form-control @error('data_marcada') is-invalid @enderror" type="date"  id="data_marcada" name="data_marcada" required autofocus autocomplete="data_marcada">
 
                                     @error('data_marcada')
@@ -36,7 +36,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="analista">{{__('Selecione o analista da visita')}} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um analista')}} --</option>
                                         @foreach ($analistas as $analista)
@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento')}} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="requerimento">{{__('Selecione um requerimento')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="requerimento" id="requerimento" class="form-control @error('requerimento') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um requerimento')}} --</option>
                                         @foreach ($requerimentos as $requerimento)

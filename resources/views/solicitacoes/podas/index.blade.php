@@ -190,8 +190,8 @@
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <label for="data">{{__('Data da visita')}}</label>
-                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}">
+                                <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}" required>
 
                                 @error('data')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
@@ -203,8 +203,8 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                  <input type="hidden" name="solicitacao_id" id="solicitacao_id" value="">
-                                <label for="analista">{{__('Selecione o analista da visita')}}</label>
-                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                     <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
                                     @foreach ($analistas as $analista)
                                         <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
@@ -241,8 +241,8 @@
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <input type="hidden" name="solicitacao_id_analista" id="solicitacao_id_analista" value="">
-                                    <label for="analista">{{__('Selecione o analista')}}</label>
-                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                    <label for="analista">{{__('Selecione o analista')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="" selected disabled>-- {{__('Selecione o analista')}} --</option>
                                         @foreach ($analistas as $analista)
                                             <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>

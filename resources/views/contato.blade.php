@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 form-group">
-                            <label for="nome_completo" style="margin-right: 5px;">Nome completo</label><span style="color: red; font-weight: bold;"> *</span>Campo obrigatório
+                            <label for="nome_completo" style="margin-right: 5px;">Nome completo</label><span style="color: red; font-weight: bold;">*</span>Campo obrigatório
                             <input type="text" class="form-control @error('nome_completo') is-invalid @enderror" name="nome_completo" placeholder="Fulano de tal" required>
                             @error('nome_completo')
                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 form-group">
-                            <label for="email" style="margin-right: 5px;">E-mail</label><span style="color: red; font-weight: bold;"> *</span>Campo obrigatório
+                            <label for="email" style="margin-right: 5px;">E-mail</label><span style="color: red; font-weight: bold;">*</span>Campo obrigatório
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="exemplo@gmail.com" required>
                             @error('email')
                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 form-group">
-                            <label for="mensagem" style="margin-right: 5px;">Mensagem</label><span style="color: red; font-weight: bold;"> *</span>Campo obrigatório
+                            <label for="mensagem" style="margin-right: 5px;">Mensagem</label><span style="color: red; font-weight: bold;">*</span>Campo obrigatório
                             <textarea class="form-control @error('mensagem') is-invalid @enderror" name="mensagem" placeholder="Escreva sua mensagem aqui..." cols="30" rows="10" required></textarea>
                             @error('mensagem')
                                 <div id="validationServer03Feedback" class="invalid-feedback">

@@ -409,7 +409,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 form-group">
-                        <label for="empresa">{{ __('Empresa') }}</label>
+                        <label for="empresa">{{ __('Empresa') }}<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="empresa" id="empresa" class="form-control @error('empresa') is-invalid @enderror" required onchange="tiposPossiveis(this)">
                             <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
                             @foreach (auth()->user()->empresas as $empresa)
@@ -425,7 +425,7 @@
                     </div>
                     <div class="col-md-12 form-group">
                         @csrf
-                        <label for="name">{{ __('Tipo de requerimento') }}</label>
+                        <label for="name">{{ __('Tipo de requerimento') }}<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="tipo" id="tipo" class="form-control @error('tipo') is-invalid @enderror" required >
                             <option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>
                             @if (old('tipo') != null)

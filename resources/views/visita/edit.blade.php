@@ -35,7 +35,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="data_marcada">{{ __('Data') }} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="data_marcada">{{ __('Data') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input type="date" class="form-control @error('data_marcada') is-invalid @enderror" id="data_marcada" name="data_marcada" value="{{old('data_marcada')!=null ? old('data_marcada') : $visita->data_marcada}}" required autofocus autocomplete="data_marcada">
                                     @error('data_marcada')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -44,7 +44,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="analista">{{__('Selecione o analista da visita')}} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um analista')}} --</option>
                                         @foreach ($analistas as $analista)
@@ -59,7 +59,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}} <span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="requerimento"  id="requerimento" required class="form-control @error('requerimento') is-invalid @enderror">
                                         <option value="">-- {{__('Selecione um requerimento')}} --</option>
                                         @if (old('requerimento') != null)
