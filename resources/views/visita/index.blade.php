@@ -118,6 +118,15 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        @if($visitas->first() == null)
+                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                @can('isSecretario', \App\Models\User::class)
+                                    {{__('Nenhuma visita criada')}}
+                                @else
+                                    {{__('Nenhuma visita programada para você')}}
+                                @endcan
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -128,6 +128,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        @if($requerimentos->first() == null)
+                                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                                Nenhum requerimento atual
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
                                         <table class="table mytable">
@@ -198,6 +203,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        @if($requerimentosFinalizados->first() == null)
+                                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                                Nenhum requerimento finalizado
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
                                         <table class="table mytable">
@@ -268,6 +278,11 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        @if($requerimentosCancelados->first() == null)
+                                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                                Nenhum requerimento cancelado
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -380,6 +395,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($requerimentos->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        @can('isAnalista', \App\Models\User::class)
+                                            {{__('Nenhum requerimento foi atribuído a você')}}
+                                        @elsecan('isRequerente', \App\Models\User::class)
+                                            {{__('Nenhum requerimento foi criado por você')}}
+                                        @endcan
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endcan

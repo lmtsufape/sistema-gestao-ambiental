@@ -67,6 +67,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($denuncias_registradas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma denúncia pendente
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
                                 <table class="table mytable">
@@ -101,6 +106,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($denuncias_aprovadas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma denúncia aprovada
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="denuncias-arquivadas" role="tabpanel" aria-labelledby="denuncias-arquivadas-tab">
                                 <table class="table mytable">
@@ -135,6 +145,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($denuncias_arquivadas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma denúncia arquivada
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
