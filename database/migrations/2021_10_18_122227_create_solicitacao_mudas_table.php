@@ -15,14 +15,12 @@ class CreateSolicitacaoMudasTable extends Migration
     {
         Schema::create('solicitacoes_mudas', function (Blueprint $table) {
             $table->id();
-            $table->string('cpf');
-            $table->string('nome');
-            $table->string('endereco');
-            $table->float('area');
+            $table->string('arquivo')->nullable();
+            $table->string('comentario')->nullable();
             $table->string('protocolo');
             $table->string('motivo_indeferimento')->nullable();
             $table->integer('status')->default(1);
-            $table->integer('quantidade_mudas')->nullable();
+            $table->integer('qtd_mudas')->nullable();
             $table->timestamps();
         });
     }

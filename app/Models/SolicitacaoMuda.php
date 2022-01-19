@@ -10,13 +10,10 @@ class SolicitacaoMuda extends Model
     use HasFactory;
     protected $table = 'solicitacoes_mudas';
     protected $fillable = [
-        'nome',
-        'cpf',
-        'endereco',
-        'area',
         'protocolo',
+        'comentario',
         'motivo_indeferimento',
-        'quantidade_mudas',
+        'qtd_mudas',
         'status',
     ];
 
@@ -25,4 +22,14 @@ class SolicitacaoMuda extends Model
         'deferido'   => 2,
         'indeferido' => 3,
     ];
+
+    public function cidadao()
+    {
+        return $this->belongsTo(Cidadao::class);
+    }
+    
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class);
+    }
 }

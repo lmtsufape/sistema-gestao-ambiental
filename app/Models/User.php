@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'represetante_legal' => 2,
         'analista' => 3,
         'secretario' => 4,
+        'cidadao' => 5,
     ];
 
     /**
@@ -88,6 +89,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Requerimento::class, 'analista_id');
     }
 
+    public function cidadao()
+    {
+        return $this->hasOne(Cidadao::class, 'user_id');
+    }
+
     public function setAtributes($input)
     {
         $this->name = $input['name'];
@@ -113,7 +119,7 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($empresas as $empresa) {
             $requerimentos = $requerimentos->concat($empresa->requerimentos()->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->get());
         }
-        
+
         return $requerimentos;
     }
 
@@ -122,11 +128,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return collect \App\Models\User $analistas
      */
-    public static function analistas() 
+    public static function analistas()
     {
         $analistas = collect();
         $users = User::where('role', User::ROLE_ENUM['analista'])->get();
-        
+
         foreach ($users as $analista) {
             if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
                 $analistas->push($analista);
@@ -160,7 +166,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Denuncia::class, 'analista_id');
     }
 
-    public function ehAnalista() 
+    public function ehAnalista()
     {
         if ($this->role == User::ROLE_ENUM['analista']) {
             return $this->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count()  > 0;

@@ -241,6 +241,9 @@ class RequerimentoController extends Controller
         }
 
         $requerimento = Requerimento::find($request->requerimento);
+        if ($requerimento->empresa->cnaes->first()->nome == 'Atividades similares' && $requerimento->potencial_poluidor_atribuido == null) {
+            return redirect()->back()->withErrors(['error' => 'É necessário atribuir um potencial poluidor ao requerimento.'])->withInput($request->all());
+        }
         $this->atribuirValor($request, $requerimento);
         
         foreach ($request->documentos as $documento_id) {
@@ -326,20 +329,25 @@ class RequerimentoController extends Controller
     private function atribuirValor(Request $request, Requerimento $requerimento)
     {
         $valor = null;
+        $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
+        if($cnae_maior_poluidor->potencial_poluidor == null){
+            $maiorPotencialPoluidor = $requerimento->potencial_poluidor_atribuido;
+        }else{
+            $maiorPotencialPoluidor = $cnae_maior_poluidor->potencial_poluidor;
+        }
+
         switch ($request->input('opcão_taxa_serviço')) {
             case Requerimento::DEFINICAO_VALOR_ENUM['manual']: 
                 $valor = $request->input('valor_da_taxa_de_serviço');
                 $requerimento->valor_juros = null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica']: 
-                $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']: 
-                $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $cnae_maior_poluidor->potencial_poluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
                 break;
@@ -599,7 +607,9 @@ class RequerimentoController extends Controller
         $requerimento->potencial_poluidor_atribuido = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
         $requerimento->update();
 
-        $this->atribuirValor($request, $requerimento);
+        if($requerimento->valor != null){
+            $this->atribuirValor($request, $requerimento);
+        }
         $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Potencial poluidor atribuído ao requerimento com sucesso.']);

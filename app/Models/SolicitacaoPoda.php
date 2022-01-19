@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class SolicitacaoPoda extends Model
+{
+    use HasFactory;
+    protected $table = 'solicitacoes_podas';
+    protected $fillable = [
+        'protocolo',
+        'motivo_indeferimento',
+        'status',
+        'analista_id',
+        'autorizacao_ambiental',
+        'comentario',
+    ];
+
+    public const STATUS_ENUM = [
+        'registrada' => 1,
+        'deferido'   => 2,
+        'indeferido' => 3,
+    ];
+
+    public function cidadao()
+    {
+        return $this->belongsTo(Cidadao::class);
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(FotoPoda::class, 'solicitacao_poda_id');
+    }
+
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class);
+    }
+
+    public function analista()
+    {
+        return $this->belongsTo(User::class, 'analista_id');
+    }
+
+    public function ficha()
+    {
+        return $this->hasOne(FichaAnalise::class, 'solicitacao_poda_id');
+    }
+
+    public function laudo()
+    {
+        return $this->hasOne(LaudoTecnico::class, 'solicitacao_poda_id');
+    }
+}

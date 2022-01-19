@@ -209,6 +209,14 @@
                                             <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
                                             <div class="col-md-12 input-group input-group-sm mb-2"></div>
                                         </div>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning" role="alert">
+                                                    <h5 class="alert-heading">Aviso!</h5>
+                                                    <p class="mb-0">Caso a sua empresa/serviço não possua um cnae adequado entre os listados, selecione o cnae "Atividades similares" do grupo que ela faz parte.</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-row col-md-12">
                                             <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
                                                 <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >

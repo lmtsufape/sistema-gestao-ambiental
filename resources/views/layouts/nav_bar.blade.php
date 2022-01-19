@@ -26,6 +26,14 @@
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
                         <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
                     </li> --}}
+                    @can('isCidadao', \App\Models\User::class)
+                        <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
+                            <a class="nav-link" href="{{route('mudas.cidadao.index')}}">{{ __('Solicitações de mudas') }}</a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.cidadao.index')}}">{{ __('Solicitações de podas') }}</a>
+                        </li>
+                    @endcan
                     @can('isRequerente', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimento') }}</a>
@@ -46,6 +54,10 @@
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.index')}}">{{ __('Mudas') }}</a>
                         </li>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.index')}}">{{ __('Podas') }}</a>
+                        </li>
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>
                         </li>
@@ -56,6 +68,9 @@
                         </li>
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.index')}}">{{ __('Mudas') }}</a>
+                        </li>
+                        <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
+                            <a class="nav-link" href="{{route('podas.index')}}">{{ __('Podas') }}</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>

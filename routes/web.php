@@ -14,11 +14,15 @@ use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\FichaAnaliseController;
+use App\Http\Controllers\LaudoTecnicoController;
 use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\SolicitacaoMudaController;
 use App\Http\Controllers\LicencaController;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
+use App\Http\Controllers\SolicitacaoPodaController;
 use App\Models\Licenca;
+use App\Models\SolicitacaoPoda;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +99,32 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
     Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
     Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
+    Route::get('/solicitacoes/mudas/cidadao/index', [SolicitacaoMudaController::class, 'cidadaoIndex'])->name('mudas.cidadao.index');
+
+    Route::get('/solicitacoes/podas/{solicitacao}/show', [SolicitacaoPodaController::class, 'show'])->name('podas.show');
+    Route::put('/solicitacoes/podas/{solicitacao}/', [SolicitacaoPodaController::class, 'avaliar'])->name('podas.avaliar');
+    Route::get('/solicitacoes/podas/{solicitacao}/edit', [SolicitacaoPodaController::class, 'edit'])->name('podas.edit');
+    Route::get('/solicitacoes/podas/index', [SolicitacaoPodaController::class, 'index'])->name('podas.index');
+    Route::get('/solicitacoes/podas/cidadao/index', [SolicitacaoPodaController::class, 'cidadaoIndex'])->name('podas.cidadao.index');
+    Route::get('/solicitacoes/podas/{solicitacao}/ficha', [SolicitacaoPodaController::class, 'ficha'])->name('podas.ficha');
+    Route::get('/solicitacoes/podas/{solicitacao}/laudo', [SolicitacaoPodaController::class, 'laudo'])->name('podas.laudo');
+    Route::post('/solicitacoes/podas/{solicitacao}/laudo', [LaudoTecnicoController::class, 'store'])->name('podas.laudos.store');
+    Route::post('/solicitacoes/podas/{solicitacao}/ficha', [FichaAnaliseController::class, 'store'])->name('podas.fichas.store');
+    Route::get('/solicitacoes/podas/laudo/{laudo}', [LaudoTecnicoController::class, 'show'])->name('podas.laudos.show');
+    Route::get('/solicitacoes/podas/ficha/{ficha}', [FichaAnaliseController::class, 'show'])->name('podas.fichas.show');
+    Route::post('/solicitacoes/atribuir/analista', [SolicitacaoPodaController::class, 'atribuirAnalistaSolicitacao'])->name('solicitacoes.atribuir.analista');
+    Route::post('/solicitacoes/create/visita', [VisitaController::class, 'createVisitaSolicitacaoPoda'])->name('solicitacoes.visita.create');
+
+    Route::get('/solicitacoes/mudas/mostrar/{solicitacao}', [SolicitacaoMudaController::class, 'mostrar'])->name('mudas.mostrar');
+    Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
+    Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
+    Route::view('/solicitacoes/mudas/create', '/solicitacoes/mudas/cidadao/create')->name('mudas.create');
+    Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
+
+    Route::get('/solicitacoes/podas/mostrar/{solicitacao}', [SolicitacaoPodaController::class, 'mostrar'])->name('podas.mostrar');
+    Route::get('/solicitacoes/podas/status', [SolicitacaoPodaController::class, 'status'])->name('podas.status');
+    Route::view('/solicitacoes/podas/create', '/solicitacoes/podas/cidadao/create')->name('podas.create');
+    Route::post('/solicitacoes/podas', [SolicitacaoPodaController::class, 'store'])->name('podas.store');
 
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
@@ -104,9 +134,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
 });
 
-Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
-Route::view('/solicitacoes/mudas/create', '/solicitacoes/mudas/create')->name('mudas.create');
-Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
+Route::view('/register/cidadao', 'auth.register', ['cidadao' => true])->name('register.cidadao');
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
 Route::post('/denuncias/store', [DenunciaController::class, 'store'])->name('denuncias.store');

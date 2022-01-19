@@ -15,8 +15,7 @@ class SolicitacaoMudaAvaliarRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = Auth::user();
-        return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
+        return$this->user()->can('avaliar', SolicitacaoMuda::class);
     }
 
     /**
@@ -29,6 +28,7 @@ class SolicitacaoMudaAvaliarRequest extends FormRequest
         return [
             'status' => ['required'],
             'motivo_indeferimento' => ['required_if:status,3'], // 3 = indeferido
+            'arquivo' => ['required_if:status,2', 'mimes:pdf', 'max:2048', 'file'], // 2 = deferido
         ];
     }
 

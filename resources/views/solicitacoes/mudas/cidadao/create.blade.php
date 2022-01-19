@@ -1,5 +1,9 @@
-<x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Solicitações de mudas') }}
+        </h2>
+    </x-slot>
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
@@ -9,7 +13,7 @@
                         <h4 class="card-title">Realizar solicitação de mudas</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('welcome')}}">
+                        <a title="Voltar" href="{{route('mudas.cidadao.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
                         <a class="btn btn-success btn-color-dafault" data-toggle="modal"
@@ -48,49 +52,25 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="nome">Nome<span style="color: red; font-weight: bold;">
+                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">
                                             *</span></label>
-                                    <input id="nome" class="form-control @error('nome') is-invalid @enderror"
-                                        type="text" name="nome" value="{{ old('nome') }}"
-                                        autocomplete="nome">
-                                    @error('nome')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="cpf"
-                                        class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror"
-                                        type="text" name="cpf" value="{{ old('cpf') }}" autofocus autocomplete="cpf"
-                                        data-mask="000.000.000-00">
-                                    @error('cpf')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="area">Área em m²<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="area" class="form-control @error('area') is-invalid @enderror"
-                                        type="number" step="0.01" name="area" value="{{ old('area') }}"
-                                        autocomplete="area">
-                                    @error('area')
+                                    <input id="qtd_mudas" class="form-control @error('qtd_mudas') is-invalid @enderror"
+                                        type="number" name="qtd_mudas" value="{{ old('qtd_mudas') }}"
+                                        autocomplete="qtd_mudas">
+                                    @error('qtd_mudas')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="endereco">Endereço<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="endereco" class="form-control @error('endereco') is-invalid @enderror"
-                                        type="text" name="endereco" value="{{ old('endereco') }}"
-                                        autocomplete="endereco">
-                                    @error('endereco')
+                                    <label for="comentario">Comentário</label>
+                                    <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
+                                        name="comentario" value="{{ old('comentario') }}"
+                                        autocomplete="comentario">
+                                        {{old('comentario')}}
+                                    </textarea>
+                                    @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -109,14 +89,6 @@
             </div>
         </div>
     </div>
-
-    @component('layouts.footer')@endcomponent
-
-    <script>
-        $(document).ready(function($) {
-                    $('#cpf').mask('000.000.000-00');
-                }
-    </script>
 
     <div class="modal fade" id="modalProtocolo" role="dialog" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -179,5 +151,4 @@
             </div>
         </div>
     </div>
-
-</x-guest-layout>
+</x-app-layout>

@@ -28,6 +28,14 @@
                             {{ __('Programação') }}
                         </x-jet-nav-link>
                     @endcan
+                    @can('isCidadao', \App\Models\User::class)
+                    <x-jet-nav-link href="{{route('mudas.cidadao.index')}}" :active="request()->routeIs('mudas.*')">
+                        {{ __('Solicitações de mudas') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('podas.cidadao.index')}}" :active="request()->routeIs('podas.*')">
+                        {{ __('Solicitações de podas') }}
+                    </x-jet-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -102,6 +110,9 @@
                                 <x-jet-dropdown-link href="{{route('mudas.index')}}" :active="request()->routeIs('solicitacoes.mudas.*')">
                                     {{__('Mudas')}}
                                 </x-jet-dropdown-link>
+                                <x-jet-dropdown-link href="{{route('podas.index')}}" :active="request()->routeIs('solicitacoes.podas.*')">
+                                    {{__('Podas')}}
+                                </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('requerimentos.analista')}}" :active="request()->routeIs('requerimentos.*')">
                                     {{ __('Requerimentos') }}
                                 </x-jet-dropdown-link>
@@ -129,6 +140,9 @@
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('mudas.index')}}">
                                     {{__('Mudas')}}
+                                </x-jet-dropdown-link>
+                                <x-jet-dropdown-link href="{{route('podas.index')}}" :active="request()->routeIs('solicitacoes.podas.*')">
+                                    {{__('Podas')}}
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('requerimentos.index')}}">
                                     {{ __('Requerimentos') }}
@@ -160,7 +174,7 @@
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{route('usuarios.index')}}" :active="request()->routeIs('usuarios.*')">
                                     {{ __('Usuários') }}
-                                </x-jet-dropdown-link>                                
+                                </x-jet-dropdown-link>
                             </x-slot>
                         </x-jet-dropdown>
                     </div>

@@ -21,6 +21,11 @@ class SolicitacaoMudaPolicy
         return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
     }
 
+    public function cidadaoIndex(User $user)
+    {
+        return $user->role == User::ROLE_ENUM['cidadao'];
+    }
+
     public function viewAny(User $user)
     {
         return $this->index($user);
@@ -33,9 +38,9 @@ class SolicitacaoMudaPolicy
      * @param  \App\Models\SolicitacaoMuda  $solicitacaoMuda
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view(User $user, SolicitacaoMuda $solicitacaoMuda)
     {
-        return true;
+        return $solicitacaoMuda->cidadao->user->id == $user->id;
     }
 
     /**
@@ -46,7 +51,7 @@ class SolicitacaoMudaPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $this->cidadaoIndex($user);
     }
 
     public function edit(User $user)

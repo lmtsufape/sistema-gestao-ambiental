@@ -23,33 +23,74 @@
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="nome">Nome<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                    <label for="nome">Nome</label>
                                     <input id="nome" class="form-control" type="text" name="nome"
-                                        value="{{ $solicitacao->nome }}" autocomplete="nome" disabled>
+                                        value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
-                                        value="{{ $solicitacao->cpf }}" autofocus autocomplete="cpf"
-                                        data-mask="000.000.000-00" disabled>
+                                    <label for="email">E-mail</label>
+                                    <input id="email" class="form-control" type="text" name="email"
+                                        value="{{ $solicitacao->cidadao->user->email }}" autocomplete="email" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="area">Área em m²<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="area" class="form-control" type="number" step="0.01" name="area"
-                                        value="{{ $solicitacao->area }}" autocomplete="area" disabled>
+                                    <label for="cpf">{{ __('CPF') }}</label>
+                                    <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
+                                        value="{{ $solicitacao->cidadao->cpf }}" autofocus autocomplete="cpf"
+                                        data-mask="000.000.000-00" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="qtd_mudas">Quantidade de mudas</label>
+                                    <input id="qtd_mudas" class="form-control" type="number" step="0.01" name="qtd_mudas"
+                                        value="{{ $solicitacao->qtd_mudas }}" autocomplete="qtd_mudas" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="cep">{{ __('CEP') }}</label>
+                                    <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->cidadao->endereco->cep}}" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="bairro">{{ __('Bairro') }}</label>
+                                    <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->cidadao->endereco->bairro}}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="rua">{{ __('Rua') }}</label>
+                                    <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->cidadao->endereco->rua}}" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="numero">{{ __('Número') }}</label>
+                                    <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->cidadao->endereco->numero}}" disabled>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="endereco">Endereço<span style="color: red; font-weight: bold;">
-                                            *</span></label>
-                                    <input id="endereco" class="form-control" type="text" name="endereco"
-                                        value="{{ $solicitacao->endereco }}" autocomplete="endereco" disabled>
+                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="cidade">{{ __('Cidade') }}</label>
+                                    <input id="cidade" class="form-control" type="text" name="cidade" value="Garanhuns" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="estado">{{ __('Estado') }}</label>
+                                    <select id="estado" class="form-control" type="text" disabled name="estado">
+                                        <option selected value="PE">Pernambuco</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <textarea id="comentario" class="form-control" type="text" name="comentario" value="Garanhuns" disabled>{{$solicitacao->comentario}}
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -80,6 +121,13 @@
                                                 <p>Motivo: {{$solicitacao->motivo_indeferimento}}</p>
                                             @break
                                         @endswitch
+                                    </div>
+                                    <div class="col-md-12">
+                                        @if(isset($solicitacao->arquivo))
+                                            <div style="margin-top: 20px; margin-bottom: 10px;">
+                                                <a href="{{route('mudas.documento', ['id' => $solicitacao->id])}}" target="_new">Baixar solicitação</a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

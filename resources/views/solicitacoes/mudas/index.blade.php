@@ -47,11 +47,11 @@
                                         @foreach ($registradas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->nome }}</td>
-                                                <td style="text-align: center">{{ $solicitacao->endereco }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
-                                                    <a title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -72,10 +72,10 @@
                                         @foreach ($deferidas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->nome }}</td>
-                                                <td style="text-align: center">{{ $solicitacao->endereco }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -96,10 +96,10 @@
                                         @foreach ($indeferidas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->nome }}</td>
-                                                <td style="text-align: center">{{ $solicitacao->endereco }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach

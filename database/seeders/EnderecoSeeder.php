@@ -33,5 +33,15 @@ class EnderecoSeeder extends Seeder
             'complemento' => 'Casa',
             'cep' => '55292-000',
         ]);
+
+        DB::table('enderecos')->insert([
+            'rua' => '1ª Travessa Monte Sinai',
+            'numero' => '154',
+            'bairro' => 'Severiano de Moraes Filho',
+            'cidade' => 'Garanhuns',
+            'estado' => 'PE',
+            'complemento' => 'Casa',
+            'cep' => '55299-406',
+        ]);
     }
 }
