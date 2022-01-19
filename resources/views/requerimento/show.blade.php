@@ -13,18 +13,16 @@
                 </div>
             </div>
             <div class="col-md-10">
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{session('success')}}
+                    </div>
+                @endif
                 @error('error')
                     <div class="alert alert-danger" role="alert">
                         {{$message}}
                     </div>
                 @enderror
-                @if(session('success'))
-                    <div class="col-md-12" style="margin-top: 5px;">
-                        <div class="alert alert-success" role="alert">
-                            <p>{{session('success')}}</p>
-                        </div>
-                    </div>
-                @endif
                 <div class="shadow card" style="width: 100%;">
                     <div class="card-body">
                         <div class="row align-items-center justify-content-between">

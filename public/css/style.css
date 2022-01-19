@@ -184,17 +184,19 @@ nav img {
 }
 
 .styleMapa{
-    border-radius: 35px;
-    -webkit-box-shadow: 0px 1px 14px 5px rgb(83, 83, 83);
-    box-shadow: 1px 1px 5px rgb(83, 83, 83);
+    border: 1px solid rgb(53, 53, 53); 
+    padding: 2px; 
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 14px 5px rgba(168, 168, 168, 0.45);
+    box-shadow: 3px 3px 10px rgba(168, 168, 168, 0.45);
     transition: 0.5s;
 }
 
 .styleMapa:hover{
     transition: 0.5s;
-    border-radius: 35px;
-    -webkit-box-shadow: 0px 1px 14px 5px rgba(0,0,0,0.45);
-    box-shadow: 3px 3px 10px black;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 1px 14px 5px rgba(71, 71, 71, 0.45);
+    box-shadow: 3px 3px 10px rgba(71, 71, 71, 0.45);
     cursor:pointer;
 }
 
@@ -227,7 +229,7 @@ nav img {
 }
 
 .form-control {
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 7px;
 }
 

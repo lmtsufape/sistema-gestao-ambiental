@@ -72,7 +72,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2 form-group" id="div-btn-troca" style="display: block; top: 32px; margin-bottom: 50px;">
-                                    <button type="button" class="btn btn-dark" style="width: 100%;" onclick="trocar()">Trocar</button>
+                                    <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%;" onclick="trocar()">Trocar</button>
                                 </div>
                             </div>
                             <div class="form-row">

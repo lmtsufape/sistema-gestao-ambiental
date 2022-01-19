@@ -207,4 +207,19 @@ abstract class Remessa extends BoletoCobranca
 
         return $array;
     }
+
+    /** Converte uma string para bytes respeitando o valor da tabela ASCII.
+     *
+     * @param string $string : string a qual vai ser convertida
+     * @return string $resultado : resultado em string com os valores de cada caracter concatenados
+    */
+    protected function string_to_bytes($string) {
+        $resultado = '';
+        
+        for($i = 0; $i < strlen($string); $i++){
+            $resultado .= ord($string[$i]);
+        }
+
+        return $resultado;
+    }
 }
