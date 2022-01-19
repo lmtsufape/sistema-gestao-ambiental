@@ -36,4 +36,8 @@ class ContatoController extends Controller
     {
         return view('info_porte');
     }
+
+    public function sobre() {
+        return view('sobre');
+    }
 }
