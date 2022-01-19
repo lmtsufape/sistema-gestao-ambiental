@@ -39,23 +39,6 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <a href="{{route('register')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 65.png')}}" alt="Cadastre sua empresa" width="36px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Cadastro de <br> Empreendedor</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
                 <div class="card card-home">
                     <div class="card-body">
                         <div class="row">
