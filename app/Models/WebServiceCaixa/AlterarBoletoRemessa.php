@@ -144,8 +144,8 @@ class AlterarBoletoRemessa extends Remessa
 
         $this->nosso_numero = array_key_exists("nosso_numero", $data) ? $data["nosso_numero"] : "00000000000000000";
         $this->numero_do_documento = array_key_exists("numero_do_documento", $data) ? $data["numero_do_documento"] : $this->id;
-        $this->tipo_especie = array_key_exists("tipo_especie", $data) ? $data["tipo_especie"] : "04";
-        $this->flag_aceite = "S";
+        $this->tipo_especie = array_key_exists("tipo_especie", $data) ? $data["tipo_especie"] : "02";
+        $this->flag_aceite = "N";
         $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO" ? true : false;
         $this->tipo_juros_mora = array_key_exists("tipo_juros_mora", $data) ? $data["tipo_juros_mora"] : "ISENTO";
         $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(3)->format("Y-m-d");
@@ -153,7 +153,7 @@ class AlterarBoletoRemessa extends Remessa
         $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : "00000000000.00000";
         $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : "0000000000000.00";
         $this->acao_pos_vecimento = array_key_exists("acao_pos_vecimento", $data) ? $data["acao_pos_vecimento"] : "DEVOLVER";
-        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : "00";
+        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : "15";
         $this->data_hora = now()->format("YmdHms");
         $this->sacador_avalista = array_key_exists("sacador_avalista", $data) ? $data['sacador_avalista'] : null;
         $this->multa = array_key_exists("data_multa", $data);

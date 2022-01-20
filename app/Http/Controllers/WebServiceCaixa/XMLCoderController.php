@@ -41,8 +41,13 @@ class XMLCoderController extends Controller
             'valor' => $requerimento->valor,
             'pagador' => $pagador,
             'beneficiario' => $beneficiario,
+            'tipo_juros_mora' => 'VALOR_POR_DIA',
+            'valor_juros_mora' => '0000000000000.01',
+            'data_multa' => $data_vencimento,
+            'valor_multa' => '0000000000000.79',
+            'mensagens_compensacao' => $requerimento->gerarMensagemCompesacao(),
         ]);
-
+    
         $boleto->salvar_arquivo($boleto->gerar_remessa(), $requerimento);
         $boleto->update();
 
@@ -149,6 +154,11 @@ class XMLCoderController extends Controller
             'valor' => $boleto->requerimento->valor,
             'pagador' => $pagador,
             'beneficiario' => $beneficiario,
+            'tipo_juros_mora' => 'VALOR_POR_DIA',
+            'valor_juros_mora' => '0000000000000.01',
+            'data_multa' => $data_vencimento,
+            'valor_multa' => '0000000000000.79',
+            'mensagens_compensacao' => $boleto->requerimento->gerarMensagemCompesacao(),
         ]);
 
         $boleto->salvar_arquivo($remessa_alterar_boleto->gerar_remessa(), $boleto->requerimento);
