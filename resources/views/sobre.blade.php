@@ -17,8 +17,8 @@
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
                                     Apresentação:
                                 </div> 
-                                <div style="color: var(--textcolor2); font-size: 15px;">
-                                    O sistema Ingressa foi pensado para atender a demanda da UFAPE em gerir, de forma independente, todos os processos de matrícula do SiSU.
+                                <div style="color: var(--textcolor2); font-size: 15px; text-align: justify;">
+                                    O sistema de gestão ambiental (SGA) foi pensado para atender a demanda da secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE (SDRMA). Sendo um sistema de protocolização dos serviços que a SDRMA oferece, como emissão de licença ambietal para empresas, autorização de plantil de muda e poda, podendo também realizar denúncias e acompanhar os projetos da SDRMA.
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
                                     Principais funções:
@@ -82,7 +82,7 @@
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
-                                        <li><a href="#" target="_blanck" class="link-dark" style="font-size: 15px;">Ana Beatriz Almeida Vanderlei</a></li>
+                                        <li><a href="#" target="_blanck" class="link-dark" style="font-size: 15px;">Leonardo Lima</a></li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
