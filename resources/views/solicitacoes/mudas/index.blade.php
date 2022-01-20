@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
-        <div class="form-row justify-content-center">
-            <div class="col-md-10">
+        <div class="form-row justify-content-between">
+            <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Mudas</h4>
@@ -50,8 +50,8 @@
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -80,7 +80,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -109,7 +109,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->cidadao->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -123,6 +123,31 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                    </div>
+                    <ul class="list-group list-unstyled">
+                        <li>
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Visualizar solicitação
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/file-warning-svgrepo-com.svg')}}" alt="Avaliar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

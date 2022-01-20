@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
-        <div class="form-row justify-content-center">
-            <div class="col-md-12">
+        <div class="form-row justify-content-between">
+            <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">
@@ -38,387 +38,470 @@
                         </div>
                     @endif
                 </div>
-                    @can('isSecretario', \App\Models\User::class)
-                        <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="requerimnetos-atuais-tab" data-toggle="tab" href="#requerimnetos-atuais"
-                                    type="button" role="tab" aria-controls="requerimnetos-atuais" aria-selected="true">Atuais</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="requerimnetos-finalizados-tab" data-toggle="tab" role="tab" type="button"
-                                    aria-controls="requerimnetos-finalizados" aria-selected="false" href="#requerimnetos-finalizados">Finalizados</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="equerimnetos-cancelados-tab" data-toggle="tab" role="tab" type="button"
-                                    aria-controls="equerimnetos-cancelados" aria-selected="false" href="#requerimnetos-cancelados">Cancelados</button>
-                            </li>
-                        </ul>
-                        <div class="card" style="width: 100%;">
-                            <div class="card-body">
-                                <div class="tab-content tab-content-custom" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="requerimnetos-atuais" role="tabpanel" aria-labelledby="requerimnetos-atuais-tab">
-                                        <table class="table mytable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Empresa/serviço</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Valor</th>
-                                                    <th scope="col">Data</th>
-                                                    <th scope="col">Opções</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($requerimentos as $i => $requerimento)
-                                                    <tr>
-                                                        <th scope="row">{{($i+1)}}</th>
-                                                        <td>
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
-                                                                    {{$requerimento->empresa->nome}}
-                                                                </a>
-                                                            @else
-                                                                {{$requerimento->empresa->nome}}
-                                                            @endcan
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
-                                                                {{__('Requerida')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
-                                                                {{__('Em andamento')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                {{__('Documentos requeridos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                {{__('Documentos enviados')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                {{__('Documentos aceitos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
-                                                                {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                                {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                {{__('Finalizada')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                                {{__('Primeira licença')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                                {{__('Renovação')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                                {{__('Autorização')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->valor == null)
-                                                                {{__('Em definição')}}
-                                                            @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
-                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
-                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
-                                                                @endif
-                                                            @endif
-                                                        </td>
-                                                        <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                        <td>
-                                                            @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                                <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
-                                                            @endcan
-                                                            <a data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        @if($requerimentos->first() == null)
-                                            <div class="col-md-12 text-center" style="font-size: 18px;">
-                                                Nenhum requerimento atual
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
-                                        <table class="table mytable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Empresa/serviço</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Valor</th>
-                                                    <th scope="col">Data</th>
-                                                    <th scope="col">Opções</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($requerimentosFinalizados as $i => $requerimento)
-                                                    <tr>
-                                                        <td>{{($i+1)}}</td>
-                                                        <td>
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
-                                                                    {{$requerimento->empresa->nome}}
-                                                                </a>
-                                                            @else
-                                                                {{$requerimento->empresa->nome}}
-                                                            @endcan
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
-                                                                {{__('Requerida')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
-                                                                {{__('Em andamento')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                {{__('Documentos requeridos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                {{__('Documentos enviados')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                {{__('Documentos aceitos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
-                                                                {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                                {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                {{__('Finalizada')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                                {{__('Primeira licença')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                                {{__('Renovação')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                                {{__('Autorização')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->valor == null)
-                                                                {{__('Em definição')}}
-                                                            @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
-                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
-                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
-                                                                @endif
-                                                            @endif
-                                                        </td>
-                                                        <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                        <td>
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        @if($requerimentosFinalizados->first() == null)
-                                            <div class="col-md-12 text-center" style="font-size: 18px;">
-                                                Nenhum requerimento finalizado
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
-                                        <table class="table mytable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Empresa/serviço</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Valor</th>
-                                                    <th scope="col">Data</th>
-                                                    <th scope="col">Opções</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($requerimentosCancelados as $i => $requerimento)
-                                                    <tr>
-                                                        <th scope="row">{{($i+1)}}</th>
-                                                        <td>
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
-                                                                    {{$requerimento->empresa->nome}}
-                                                                </a>
-                                                            @else
-                                                                {{$requerimento->empresa->nome}}
-                                                            @endcan
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
-                                                                {{__('Requerida')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
-                                                                {{__('Em andamento')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                {{__('Documentos requeridos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                {{__('Documentos enviados')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                {{__('Documentos aceitos')}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
-                                                                {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                                {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
-                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                {{__('Finalizada')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                                {{__('Primeira licença')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                                {{__('Renovação')}}
-                                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                                {{__('Autorização')}}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($requerimento->valor == null)
-                                                                {{__('Em definição')}}
-                                                            @else
-                                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}} 
-                                                                @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
-                                                                    <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
-                                                                @endif
-                                                            @endif
-                                                        </td>
-                                                        <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                        <td>
-                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        @if($requerimentosCancelados->first() == null)
-                                            <div class="col-md-12 text-center" style="font-size: 18px;">
-                                                Nenhum requerimento cancelado
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="card card-borda-esquerda" style="width: 100%;">
-                            <div class="card-body">
-                                <table class="table mytable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Empresa/serviço</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Tipo</th>
-                                            <th scope="col">Valor</th>
-                                            <th scope="col">Data</th>
-                                            <th scope="col">Opções</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($requerimentos as $i => $requerimento)
+                @can('isSecretario', \App\Models\User::class)
+                    <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="requerimnetos-atuais-tab" data-toggle="tab" href="#requerimnetos-atuais"
+                                type="button" role="tab" aria-controls="requerimnetos-atuais" aria-selected="true">Atuais</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="requerimnetos-finalizados-tab" data-toggle="tab" role="tab" type="button"
+                                aria-controls="requerimnetos-finalizados" aria-selected="false" href="#requerimnetos-finalizados">Finalizados</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="equerimnetos-cancelados-tab" data-toggle="tab" role="tab" type="button"
+                                aria-controls="equerimnetos-cancelados" aria-selected="false" href="#requerimnetos-cancelados">Cancelados</button>
+                        </li>
+                    </ul>
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <div class="tab-content tab-content-custom" id="myTabContent">
+                                <div class="tab-pane fade show active" id="requerimnetos-atuais" role="tabpanel" aria-labelledby="requerimnetos-atuais-tab">
+                                    <table class="table mytable">
+                                        <thead>
                                             <tr>
-                                                <th scope="row">{{($i+1)}}</th>
-                                                <td>
-                                                    @can('isSecretario', \App\Models\User::class)
-                                                        <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                <th scope="col">#</th>
+                                                <th scope="col">Empresa/serviço</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Tipo</th>
+                                                <th scope="col">Valor</th>
+                                                <th scope="col">Data</th>
+                                                <th scope="col">Opções</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($requerimentos as $i => $requerimento)
+                                                <tr>
+                                                    <th scope="row">{{($i+1)}}</th>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
                                                             {{$requerimento->empresa->nome}}
-                                                        </a>
-                                                    @else
-                                                        {{$requerimento->empresa->nome}}
-                                                    @endcan
-                                                </td>
-                                                <td>
-                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
-                                                        {{__('Requerida')}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
-                                                        {{__('Em andamento')}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                        {{__('Documentos requeridos')}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                        {{__('Documentos enviados')}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                        {{__('Documentos aceitos')}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
-                                                        {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
-                                                        {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
-                                                    @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                        {{__('Finalizada')}}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                        {{__('Primeira licença')}}
-                                                    @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                        {{__('Renovação')}}
-                                                    @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                        {{__('Autorização')}}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($requerimento->valor == null)
-                                                        {{__('Em definição')}}
-                                                    @else
-                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                            Pago
+                                                        @endcan
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
+                                                            {{__('Requerida')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
+                                                            {{__('Em andamento')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                            {{__('Documentos requeridos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                            {{__('Documentos enviados')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                            {{__('Documentos aceitos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
+                                                            {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
+                                                            {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                            {{__('Finalizada')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                            {{__('Primeira licença')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                            {{__('Renovação')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                            {{__('Autorização')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->valor == null)
+                                                            {{__('Em definição')}}
                                                         @else
                                                             R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
                                                             @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
                                                                 <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
                                                             @endif
                                                         @endif
-                                                    @endif
-                                                </td>
-                                                <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                <td>
-                                                    <div class="btn-group align-items-center"> 
+                                                    </td>
+                                                    <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                                    <td>
                                                         @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                            <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos"></a>
+                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                         @endcan
-                                                        @if($requerimento->visitas->count() > 0)
-                                                            @can('isSecretario', \App\Models\User::class)
-                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
-                                                            @else
-                                                                @can('isRequerente', \App\Models\User::class)
-                                                                    <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
-                                                                @endcan
-                                                            @endcan
-                                                        @endif
-                                                        @can('isRequerente', \App\Models\User::class)
-                                                            @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                                                                @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                                @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                                @endif
-                                                            @endif
-                                                            @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
-
-                                                            @endif
-                                                            @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
-                                                                    Cancelar
-                                                                </button>
-                                                            @endif
-                                                        @endcan
-                                                    </div>
-                                                </td>
+                                                        <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @if($requerimentos->first() == null)
+                                        <div class="col-md-12 text-center" style="font-size: 18px;">
+                                            Nenhum requerimento atual
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
+                                    <table class="table mytable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Empresa/serviço</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Tipo</th>
+                                                <th scope="col">Valor</th>
+                                                <th scope="col">Data</th>
+                                                <th scope="col">Opções</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                @if($requerimentos->first() == null)
-                                    <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        @can('isAnalista', \App\Models\User::class)
-                                            {{__('Nenhum requerimento foi atribuído a você')}}
-                                        @elsecan('isRequerente', \App\Models\User::class)
-                                            {{__('Nenhum requerimento foi criado por você')}}
-                                        @endcan
-                                    </div>
-                                @endif
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($requerimentosFinalizados as $i => $requerimento)
+                                                <tr>
+                                                    <td>{{($i+1)}}</td>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
+                                                            {{$requerimento->empresa->nome}}
+                                                        @endcan
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
+                                                            {{__('Requerida')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
+                                                            {{__('Em andamento')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                            {{__('Documentos requeridos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                            {{__('Documentos enviados')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                            {{__('Documentos aceitos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
+                                                            {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
+                                                            {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                            {{__('Finalizada')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                            {{__('Primeira licença')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                            {{__('Renovação')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                            {{__('Autorização')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->valor == null)
+                                                            {{__('Em definição')}}
+                                                        @else
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                            @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                            @endif
+                                                        @endif
+                                                    </td>
+                                                    <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @if($requerimentosFinalizados->first() == null)
+                                        <div class="col-md-12 text-center" style="font-size: 18px;">
+                                            Nenhum requerimento finalizado
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
+                                    <table class="table mytable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Empresa/serviço</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Tipo</th>
+                                                <th scope="col">Valor</th>
+                                                <th scope="col">Data</th>
+                                                <th scope="col">Opções</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($requerimentosCancelados as $i => $requerimento)
+                                                <tr>
+                                                    <th scope="row">{{($i+1)}}</th>
+                                                    <td>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                                {{$requerimento->empresa->nome}}
+                                                            </a>
+                                                        @else
+                                                            {{$requerimento->empresa->nome}}
+                                                        @endcan
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
+                                                            {{__('Requerida')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
+                                                            {{__('Em andamento')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                            {{__('Documentos requeridos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                            {{__('Documentos enviados')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                            {{__('Documentos aceitos')}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
+                                                            {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
+                                                            {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
+                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                            {{__('Finalizada')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                            {{__('Primeira licença')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                            {{__('Renovação')}}
+                                                        @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                            {{__('Autorização')}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->valor == null)
+                                                            {{__('Em definição')}}
+                                                        @else
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}} 
+                                                            @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                                <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                            @endif
+                                                        @endif
+                                                    </td>
+                                                    <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                                    <td>
+                                                        <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @if($requerimentosCancelados->first() == null)
+                                        <div class="col-md-12 text-center" style="font-size: 18px;">
+                                            Nenhum requerimento cancelado
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    @endcan
+                    </div>
+                @else
+                    <div class="card card-borda-esquerda" style="width: 100%;">
+                        <div class="card-body">
+                            <table class="table mytable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Empresa/serviço</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($requerimentos as $i => $requerimento)
+                                        <tr>
+                                            <th scope="row">{{($i+1)}}</th>
+                                            <td>
+                                                @can('isSecretario', \App\Models\User::class)
+                                                    <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
+                                                        {{$requerimento->empresa->nome}}
+                                                    </a>
+                                                @else
+                                                    {{$requerimento->empresa->nome}}
+                                                @endcan
+                                            </td>
+                                            <td>
+                                                @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['requerida'])
+                                                    {{__('Requerida')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['em_andamento'])
+                                                    {{__('Em andamento')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                    {{__('Documentos requeridos')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                    {{__('Documentos enviados')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                    {{__('Documentos aceitos')}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_marcada'])
+                                                    {{__('Visita marcada para ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_marcada))}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['visita_realizada'])
+                                                    {{__('Visita feita em ')}}{{date('d/m/Y', strtotime($requerimento->ultimaVisitaMarcada()->data_realizada))}}
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                    {{__('Finalizada')}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                    {{__('Primeira licença')}}
+                                                @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                    {{__('Renovação')}}
+                                                @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                    {{__('Autorização')}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($requerimento->valor == null)
+                                                    {{__('Em definição')}}
+                                                @else
+                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                        Pago
+                                                    @else
+                                                        R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                        @if ($requerimento->boleto != null && $requerimento->boleto->URL != null)
+                                                            <a href="{{$requerimento->boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                            </td>
+                                            <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                            <td>
+                                                <div class="btn-group align-items-center"> 
+                                                    @can('isSecretarioOrAnalista', \App\Models\User::class)
+                                                        <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos"></a>
+                                                    @endcan
+                                                    @if($requerimento->visitas->count() > 0)
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                        @else
+                                                            @can('isRequerente', \App\Models\User::class)
+                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                            @endcan
+                                                        @endcan
+                                                    @endif
+                                                    @can('isRequerente', \App\Models\User::class)
+                                                        @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                            @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                                <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                            @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                                <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                            @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                                <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                            @endif
+                                                        @endif
+                                                        @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+
+                                                        @endif
+                                                        @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
+                                                                Cancelar
+                                                            </button>
+                                                        @endif
+                                                    @endcan
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @if($requerimentos->first() == null)
+                                <div class="col-md-12 text-center" style="font-size: 18px;">
+                                    @can('isAnalista', \App\Models\User::class)
+                                        {{__('Nenhum requerimento foi atribuído a você')}}
+                                    @elsecan('isRequerente', \App\Models\User::class)
+                                        {{__('Nenhum requerimento foi criado por você')}}
+                                    @endcan
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endcan
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                    </div>
+                    <ul class="list-group list-unstyled">
+                        @can('isSecretarioOrAnalista', \App\Models\User::class)
+                            <li>
+                                <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Analisar requerimento">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Analisar requerimento
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Cancelar requerimento
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @if(\App\Models\Visita::select('visitas.*')
+                                    ->whereIn('requerimento_id', $requerimentos->pluck('id')->toArray())
+                                    ->get()->count() > 0)
+                            @can('isSecretario', \App\Models\User::class)
+                                <li>
+                                    <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visitas a empresa">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Visitas à empresa
+                                        </div>
+                                    </div>
+                                </li>
+                            @else
+                                @can('isRequerente', \App\Models\User::class)
+                                    <li>
+                                        <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                            <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visitas a empresa">
+                                            <div style="font-size: 15px;" class="aling-middle mx-3">
+                                                Visitas à empresa
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endcan
+                            @endcan
+                        @endif
+                        @can('isRequerente', \App\Models\User::class)
+                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']))
+                                <li>
+                                    <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Enviar documentação
+                                        </div>
+                                    </div>
+                                </li>
+                            @elseif($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados']))
+                                <li>
+                                    <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Documentação em análise
+                                        </div>
+                                    </div>
+                                </li>
+                            @elseif($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos']))
+                                <li>
+                                    <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Documentação aceita
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                        @endcan
+                    </ul>
                 </div>
             </div>
         </div>
