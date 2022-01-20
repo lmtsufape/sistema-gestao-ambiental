@@ -40,13 +40,13 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="condicoes">Condições da árvore<span style="color: red; font-weight: bold;">
-                                        *</span></label>
+                                       *</span></label>
                                 <input id="condicoes" class="form-control" disabled
                                     type="text" name="condicoes" value="{{ $ficha->condicoes }}" autocomplete="condicoes">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="localizacao">Localização<span style="color: red; font-weight: bold;">
-                                        *</span></label>
+                                       *</span></label>
                                 <input id="localizacao"
                                     class="form-control simple-field-data-mask" disabled
                                     type="text" name="localizacao" value="{{ $ficha->localizacao }}">

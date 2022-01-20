@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="row espaco">
-                            <div class="col-md-12">Emissão de <br>Licenças</div>
+                            <div class="col-md-12">Emissão de <br>licenças</div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="row espaco">
-                            <div class="col-md-12">Renovação de <br>Licenças</div>
+                            <div class="col-md-12">Renovação de <br>licenças</div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Registro de <br>Denúncias</div>
+                                <div class="col-md-12">Registro de <br>denúncias</div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="row espaco">
-                                <div class="col-md-12">Consulta de <br>Licenças ambientais</div>
+                                <div class="col-md-12">Consulta de <br>licenças ambientais</div>
                             </div>
                         </div>
                     </div>

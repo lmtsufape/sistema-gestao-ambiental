@@ -22,7 +22,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="porte">{{__('Porte')}}</label>
+                                    <label for="porte">{{__('Porte')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="porte" id="porte" class="form-control @error('porte') is-invalid @enderror" required autofocus>
                                         <option selected disabled value="">-- Selecione o porte da empresa --</option>
                                         @if (old('porte') != null)
@@ -47,7 +47,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="potencial_poluidor">{{__('Potencial poluidor')}}</label>
+                                    <label for="potencial_poluidor">{{__('Potencial poluidor')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required>
                                         <option selected disabled value="">-- Selecione o potencial poluidor da empresa --</option>
                                         @if (old('potencial_poluidor') != null)
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="tipo_de_licenca">{{__('Tipo de licença')}}</label>
+                                    <label for="tipo_de_licenca">{{__('Tipo de licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="tipo_de_licença" id="tipo_de_licenca" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
                                         <option selected disabled value="">-- Selecione o tipo de licenças --</option>
                                         @if (old('tipo_de_licença') !=null)
@@ -94,7 +94,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="valor">{{__('Valor')}}</label>
+                                    <label for="valor">{{__('Valor')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input type="text" value="{{old('valor', $valor->valor)}}" name="valor" id="valor" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
 
                                     @error('valor')

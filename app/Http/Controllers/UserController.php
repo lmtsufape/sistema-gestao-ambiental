@@ -38,13 +38,21 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\UserRequest  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('isSecretario', User::class);
-        $request->validated();
+
+        $request->validate([
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:8|confirmed',
+            'tipos_analista' => 'required',
+            'tipos_analista.*' => 'required',
+        ]);
+
         $user = new User();
         $user->setAtributes($request);
         $user->role = User::ROLE_ENUM['analista'];

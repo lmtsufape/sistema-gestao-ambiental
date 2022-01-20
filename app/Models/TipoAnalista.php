@@ -12,6 +12,7 @@ class TipoAnalista extends Model
     public const TIPO_ENUM = [
         'protocolista' => 1,
         'processo' => 2,
+        'poda' => 3,
     ];
 
     public function users()
@@ -27,6 +28,9 @@ class TipoAnalista extends Model
                 break;
             case $this::TIPO_ENUM['processo']:
                 return "Analista de processos";
+                break;
+            case $this::TIPO_ENUM['poda']:
+                return "Analista de podas e mudas";
                 break;
         }
     }

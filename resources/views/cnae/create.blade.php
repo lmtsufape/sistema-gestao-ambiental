@@ -33,7 +33,7 @@
                             <input type="hidden" name="setor" value="{{$setor->id}}">
                             <div class="form-row">
                                 <div class="col-md-4 form-group">
-                                    <label for="nome">{{ __('Nome') }}</label>
+                                    <label for="nome">{{ __('Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome" class="form-control @error('nome') is-invalid @enderror" type="text" name="nome" value="{{old('nome')}}" required autofocus autocomplete="nome" placeholder="Digite o nome do cnae...">
 
                                     @error('nome')

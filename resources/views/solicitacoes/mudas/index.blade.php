@@ -57,6 +57,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($registradas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de muda pendente
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
                                 <table class="table mytable">
@@ -81,6 +86,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($deferidas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de muda deferida
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-arquivadas" role="tabpanel" aria-labelledby="solicitacoes-arquivadas-tab">
                                 <table class="table mytable">
@@ -105,6 +115,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($indeferidas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de muda indeferida
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

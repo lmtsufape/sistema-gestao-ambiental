@@ -79,7 +79,7 @@
                                             @endcan
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
-                                                    @if($visita->requerimento->licenca != null)
+                                                    @if($visita->requerimento != null && $visita->requerimento->licenca != null)
                                                         @if ($visita->requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                             <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a>
                                                         @else
@@ -118,6 +118,15 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        @if($visitas->first() == null)
+                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                @can('isSecretario', \App\Models\User::class)
+                                    {{__('Nenhuma visita criada')}}
+                                @else
+                                    {{__('Nenhuma visita programada para você')}}
+                                @endcan
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

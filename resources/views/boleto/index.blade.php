@@ -67,6 +67,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($pendentes->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhum boleto pendente
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="boletos-aprovadas" role="tabpanel" aria-labelledby="boletos-aprovadas-tab">
                                 <table class="table mytable">
@@ -101,6 +106,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($pagos->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhum boleto pago
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="boletos-arquivadas" role="tabpanel" aria-labelledby="boletos-arquivadas-tab">
                                 <table class="table mytable">
@@ -135,6 +145,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($vencidos->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhum boleto vencido
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

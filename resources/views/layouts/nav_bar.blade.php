@@ -48,15 +48,18 @@
                             <a class="nav-link" href="{{route('empresas.index')}}">{{ __('Empresas/Serviços') }}</a>
                         </li>
                     @endcan
-                    @can('isSecretarioOrAnalista', \App\Models\User::class)
+                    @can('isProcessoOrProtocolista', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('visitas.*')) active @endif">
                             <a class="nav-link" href="{{route('visitas.index')}}">{{ __('Programação') }}</a>
                         </li>
-                    @endcan
-                    @can('isAnalista', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('denuncias.*')) active @endif">
                             <a class="nav-link" href="{{route('denuncias.index')}}">{{ __('Denúncias') }}</a>
                         </li>
+                        <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
+                            <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>
+                        </li>
+                    @endcan
+                    @can('isAnalistaPoda', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.index')}}">{{ __('Mudas') }}</a>
                         </li>
@@ -64,11 +67,11 @@
                         <li class="nav-item @if(request()->routeIs('podas.*')) active @endif">
                             <a class="nav-link" href="{{route('podas.index')}}">{{ __('Podas') }}</a>
                         </li>
-                        <li class="nav-item @if(request()->routeIs('requerimentos.*')) active @endif">
-                            <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimentos') }}</a>
-                        </li>
                     @endcan
                     @can('isSecretario', \App\Models\User::class)
+                        <li class="nav-item @if(request()->routeIs('visitas.*')) active @endif">
+                            <a class="nav-link" href="{{route('visitas.index')}}">{{ __('Programação') }}</a>
+                        </li>
                         <li class="nav-item @if(request()->routeIs('denuncias.*')) active @endif">
                             <a class="nav-link" href="{{route('denuncias.index')}}">{{ __('Denúncias') }}</a>
                         </li>

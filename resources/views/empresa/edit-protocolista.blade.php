@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="porte">{{ __('Porte') }}</label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck"><img src="{{asset('img/interrogacao.png')}}" alt="Como definir o porte?" style="width: 15px; display: inline; padding-bottom: 5px;"></a>
+                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck"><img src="{{asset('img/interrogacao.png')}}" alt="Como definir o porte?" style="width: 15px; display: inline; padding-bottom: 5px;"></a>
                                         <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                             @if(old('porte') != null)
                                                 <option value="">-- Selecionar o porte da empresa --</option>
@@ -60,7 +60,7 @@
                                     <div class="form-group col-md-6">
                                         <div class="form-row">
                                             <div class="form-group col-md-12" >
-                                                <label for="setor">{{ __('Grupo') }}</label>
+                                                <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
                                                 <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
                                                         @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                                     <option value="">-- Selecionar o Grupo --</option>
@@ -86,7 +86,7 @@
                                                 @enderror
                                             </div>
                                             <div class="btn-group col-md-12">
-                                                <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
+                                                <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE<span style="color: red; font-weight: bold;">*</span></div>
                                                 <div class="col-md-12 input-group input-group-sm mb-2"></div>
                                             </div>
                                             <div class="form-row col-md-12">

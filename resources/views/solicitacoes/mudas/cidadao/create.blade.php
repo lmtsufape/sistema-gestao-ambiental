@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitações de mudas') }}
-        </h2>
-    </x-slot>
-
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
@@ -52,8 +46,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="qtd_mudas" class="form-control @error('qtd_mudas') is-invalid @enderror"
                                         type="number" name="qtd_mudas" value="{{ old('qtd_mudas') }}"
                                         autocomplete="qtd_mudas">
@@ -67,9 +60,7 @@
                                     <label for="comentario">Comentário</label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
-                                        autocomplete="comentario">
-                                        {{old('comentario')}}
-                                    </textarea>
+                                        autocomplete="comentario">{{old('comentario')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -131,7 +122,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <label for="protocolo">{{ __('Protocolo') }}</label>
+                                <label for="protocolo">{{ __('Protocolo') }}<span style="color: red; font-weight: bold;">*</span></label>
                                 <input id="protocolo" class="form-control @error('protocolo') is-invalid @enderror"
                                     type="text" name="protocolo" value="{{ old('protocolo') }}" required autofocus
                                     autocomplete="protocolo">

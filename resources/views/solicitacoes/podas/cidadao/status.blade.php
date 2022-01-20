@@ -23,7 +23,7 @@
                         <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="nome">Nome<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                           *</span></label>
                                     <input id="nome" class="form-control" type="text"
                                         value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
                                 </div>
@@ -31,13 +31,13 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for="email">E-mail<span style="color: red; font-weight: bold;">
-                                        *</span></label>
+                                       *</span></label>
                                 <input id="email" class="form-control" type="text"
                                     value="{{ $solicitacao->cidadao->user->email }}" autocomplete="email" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
-                                        *</span></label>
+                                       *</span></label>
                                 <input id="cpf" class="form-control simple-field-data-mask" type="text"
                                     value="{{ $solicitacao->cidadao->cpf }}" autofocus autocomplete="cpf"
                                     data-mask="000.000.000-00" disabled>
@@ -45,21 +45,21 @@
                     </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" class="form-control cep" type="text"  value="{{$solicitacao->endereco->cep}}" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="bairro" class="form-control" type="text"  value="{{$solicitacao->endereco->bairro}}" disabled>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" class="form-control" type="text"  value="{{$solicitacao->endereco->rua}}" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                    <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="numero" class="form-control " type="text"  value="{{$solicitacao->endereco->numero}}" disabled>
                                 </div>
                             </div>

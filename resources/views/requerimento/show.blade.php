@@ -386,7 +386,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                         <option disabled selected value="">-- Selecione o tipo de licença --</option>
                                         <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
@@ -405,7 +405,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="opcão_taxa_serviço">{{__('Taxa de serviço de emissão de licença')}}</label>
+                                    <label for="opcão_taxa_serviço">{{__('Taxa de serviço de emissão de licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="opcão_taxa_serviço" id="opcão_taxa_serviço" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInput(this)">
                                         <option selected disabled value="">-- Selecione uma opção --</option>
                                         <option @if(old('opcão_taxa_serviço') == $definir_valor['manual']) selected @endif value="{{$definir_valor['manual']}}">Definir de forma manual</option>
@@ -483,7 +483,7 @@
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}</label>
+                                    <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" onchange="defaultDocs(this)">
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
@@ -501,7 +501,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="opcão_taxa_serviço_edit">{{__('Taxa de serviço de emissão de licença')}}</label>
+                                    <label for="opcão_taxa_serviço_edit">{{__('Taxa de serviço de emissão de licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="opcão_taxa_serviço" id="opcão_taxa_serviço_edit" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInputEdit(this)">
                                         <option selected disabled value="">-- Selecione uma opção --</option>
                                         <option @if(old('opcão_taxa_serviço', $requerimento->definicao_valor) == $definir_valor['manual']) selected @endif value="{{$definir_valor['manual']}}">Definir de forma manual</option>
@@ -572,7 +572,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                <label for="analista">{{__('Selecione um analista')}}</label>
+                                <label for="analista">{{__('Selecione um analista')}}<span style="color: red; font-weight: bold;">*</span></label>
                                 <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                     <option value="">-- {{__('Selecione um analista')}} --</option>
                                     @foreach ($protocolistas as $protocolista)
@@ -608,7 +608,7 @@
                     <input type="hidden" name="valor_da_taxa_de_serviço" value="{{$requerimento->valor}}">
                     <input type="hidden" name="valor_do_juros" value="{{$requerimento->valor_juros}}">
                     <div class="col-md-12 form-group">
-                        <label for="potencial_poluidor">{{ __('Potencial poluidor') }}</label>
+                        <label for="potencial_poluidor">{{ __('Potencial poluidor') }}<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
                             <option value="">-- Selecione o potencial poluidor --</option>
                             @if(old('potencial_poluidor') != null)

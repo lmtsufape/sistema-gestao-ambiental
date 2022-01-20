@@ -74,6 +74,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($registradas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de poda pendente
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
                                 <table class="table mytable">
@@ -106,6 +111,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($deferidas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de poda deferida
+                                    </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-arquivadas" role="tabpanel" aria-labelledby="solicitacoes-arquivadas-tab">
                                 <table class="table mytable">
@@ -132,6 +142,11 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @if($indeferidas->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        Nenhuma solicitação de poda indeferida
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -190,8 +205,8 @@
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <label for="data">{{__('Data da visita')}}</label>
-                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}">
+                                <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}" required>
 
                                 @error('data')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
@@ -203,8 +218,8 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                  <input type="hidden" name="solicitacao_id" id="solicitacao_id" value="">
-                                <label for="analista">{{__('Selecione o analista da visita')}}</label>
-                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                     <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
                                     @foreach ($analistas as $analista)
                                         <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
@@ -241,8 +256,8 @@
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <input type="hidden" name="solicitacao_id_analista" id="solicitacao_id_analista" value="">
-                                    <label for="analista">{{__('Selecione o analista')}}</label>
-                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror">
+                                    <label for="analista">{{__('Selecione o analista')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="" selected disabled>-- {{__('Selecione o analista')}} --</option>
                                         @foreach ($analistas as $analista)
                                             <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>

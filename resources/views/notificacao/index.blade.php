@@ -51,6 +51,11 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        @if($empresa->notificacoes->first() == null)
+                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                Nenhuma notificação registrada
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

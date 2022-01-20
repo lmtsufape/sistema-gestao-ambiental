@@ -49,6 +49,11 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        @if($solicitacoes->first() == null)
+                            <div class="col-md-12 text-center" style="font-size: 18px;">
+                                Nenhuma solicitação feita
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

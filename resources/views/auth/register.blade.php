@@ -38,7 +38,7 @@
                                 @endif
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite seu nome aqui...">
                                         @error('name')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -47,7 +47,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="email">{{ __('Email') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="email">{{ __('Email') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{old('email')}}" required autocomplete="email" placeholder="email@gmail.com">
                                         @error('email')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="password">{{ __('Password') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="password">{{ __('Password') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autofocus autocomplete="new-password">
                                         <small>Deve ter no mínimo 8 caracteres</small>
                                         @error('password')
@@ -68,13 +68,13 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="password_confirmation">{{ __('Confirm Password') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="password_confirmation">{{ __('Confirm Password') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="cpf" class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{old('cpf')}}" required autofocus autocomplete="cpf" data-mask="000.000.000-00" placeholder="000.000.000-00">
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -83,7 +83,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="celular">{{ __('Contato') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="celular">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" required autocomplete="celular" placeholder="(00) 00000-0000">
                                         @error('celular')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rg">{{ __('RG') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="rg">{{ __('RG') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{old('rg')}}" required autofocus autocomplete="rg" placeholder="Digite o número de seu RG...">
                                         @error('rg')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -103,7 +103,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{old('orgão_emissor')}}" required autocomplete="orgão_emissor" placeholder="O orgão emissor do RG...">
                                         @error('orgão_emissor')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -115,7 +115,7 @@
                                 <hr class="divisor">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
                                         @error('cep')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -124,7 +124,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" required autofocus autocomplete="bairro" placeholder="Digite o bairro onde mora...">
                                         @error('bairro')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" required autocomplete="rua" placeholder="Digite a rua onde mora...">
                                         @error('rua')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -144,7 +144,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;"> *</span></label>
+                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="numero" class="form-control  @error('número') is-invalid @enderror" type="text" name="número" value="{{old('número')}}" required autocomplete="número" placeholder="Digite o número de sua casa...">
                                         @error('número')
                                             <div id="validationServer03Feedback" class="invalid-feedback">

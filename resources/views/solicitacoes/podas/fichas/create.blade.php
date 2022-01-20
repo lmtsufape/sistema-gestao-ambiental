@@ -39,8 +39,7 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="condicoes">Condições da árvore<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                    <label for="condicoes">Condições da árvore<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="condicoes" class="form-control @error('condicoes') is-invalid @enderror"
                                         type="text" name="condicoes" value="{{ old('condicoes') }}" autocomplete="condicoes">
                                     @error('condicoes')
@@ -50,8 +49,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="localizacao">Localização<span style="color: red; font-weight: bold;">
-                                            *</span></label>
+                                    <label for="localizacao">Localização<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="localizacao"
                                         class="form-control simple-field-data-mask @error('localizacao') is-invalid @enderror"
                                         type="text" name="localizacao" value="{{ old('localizacao') }}">

@@ -35,7 +35,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="nome">{{ __('Nome') }}</label>
+                                    <label for="nome">{{ __('Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome" class="form-control @error('nome') is-invalid @enderror" type="text" name="nome" value="{{old('nome')!=null ? old('nome') : $setor->nome}}" required autofocus autocomplete="nome" placeholder="Digite o nome do grupo...">
 
                                     @error('nome')
@@ -45,7 +45,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="descricao">{{ __('Código') }}</label>
+                                    <label for="descricao">{{ __('Descrição') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="descricao" class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao"  value="{{old('descricao')!=null ? old('descricao') : $setor->descricao}}" required autofocus autocomplete="descricao" placeholder="Descrição do grupo...">
 
                                     @error('descricao')

@@ -23,7 +23,7 @@
                             <input type="hidden" name="requerimento" id="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="licenca">{{__('Tipo de licença')}}</label>
+                                    <label for="licenca">{{__('Tipo de licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="tipo_de_licença" id="tipo_de_licença" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
                                         <option @if(old('tipo_de_licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
                                         <option @if(old('tipo_de_licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
@@ -40,7 +40,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="data_de_validade">{{__('Data de validade')}}</label>
+                                    <label for="data_de_validade">{{__('Data de validade')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input type="date" class="form-control @error('data_de_validade') is-invalid @enderror" name="data_de_validade" id="data_de_validade" value="{{old('data_de_validade')}}" required>
 
                                     @error('data_de_validade')
@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="licenca">{{__('Licença')}}</label>
+                                    <label for="licenca">{{__('Licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input type="file" name="licença" id="licença" class="form-control" required accept=".pdf">
 
                                     @error('licença')
