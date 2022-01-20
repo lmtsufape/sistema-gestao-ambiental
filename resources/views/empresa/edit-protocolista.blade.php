@@ -36,7 +36,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck"><img src="{{asset('img/interrogacao.png')}}" alt="Como definir o porte?" style="width: 15px; display: inline; padding-bottom: 5px;"></a>
+                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">clique aqui para saber como classificar o porte</a>
                                         <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                             @if(old('porte') != null)
                                                 <option value="">-- Selecionar o porte da empresa --</option>
