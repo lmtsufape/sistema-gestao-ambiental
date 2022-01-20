@@ -34,17 +34,35 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <button type="submit" class="btn btn-success btn-color-dafault" style="margin-left: 15px;">
+            <div class="block mt-2" style="align-content: center; text-align: center;">
+                <button type="submit" class="btn btn-success btn-color-dafault" style="margin-left: 15px; width: 40%;">
                     {{ __('Entrar') }}
                 </button>
             </div>
+
+            <div class="block mt-2" style="align-content: center; text-align: center;">
+                <span class="text-sm text-gray-600" style="font-size: 16px;">
+                    {{ __('Ou') }} 
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" style="font-size: 16px;" href="{{ route('register') }}">
+                        {{ __('cadastre-se') }}
+                    </a>
+                </span>
+            </div>
+
+            <div class="block mt-2" style="align-content: center; text-align: center;">
+                @if (Route::has('password.request'))
+                    <span class="text-sm text-gray-600">
+                        {{ __('Forgot your password?') }} 
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                            {{ __('clique aqui') }}
+                        </a>
+                    </span>
+                @endif
+            </div>
+
+            {{-- <div class="flex items-center justify-end mt-4">
+                
+            </div> --}}
         </form>
     </x-jet-authentication-card>
 
