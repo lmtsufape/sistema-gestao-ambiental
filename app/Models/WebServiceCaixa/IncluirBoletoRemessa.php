@@ -160,17 +160,17 @@ class IncluirBoletoRemessa extends Remessa
 
         $this->nosso_numero = array_key_exists("nosso_numero", $data) ? $data["nosso_numero"] : "00000000000000000";
         $this->numero_do_documento = array_key_exists("numero_do_documento", $data) ? $data["numero_do_documento"] : $this->id;
-        $this->tipo_especie = array_key_exists("tipo_especie", $data) ? $data["tipo_especie"] : "04";
-        $this->flag_aceite = "S";
+        $this->tipo_especie = array_key_exists("tipo_especie", $data) ? $data["tipo_especie"] : "02";
+        $this->flag_aceite = "N";
         $this->data_emissao = now()->format("Y-m-d");
         $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO" ? true : false;
         $this->tipo_juros_mora = array_key_exists("tipo_juros_mora", $data) ? $data["tipo_juros_mora"] : "ISENTO";
-        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(3)->format("Y-m-d");
+        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? $data["data_juros_mora"] : now()->addDays(4)->format("Y-m-d");
         $this->valor_juros_mora = array_key_exists("valor_juros_mora", $data) ? $data["valor_juros_mora"] : "0000000000000.00";
         $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : "00000000000.00000";
         $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : "0000000000000.00";
         $this->acao_pos_vecimento = array_key_exists("acao_pos_vecimento", $data) ? $data["acao_pos_vecimento"] : "DEVOLVER";
-        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : "00";
+        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : "15";
         $this->data_hora = now()->format("YmdHms");
         $this->codigo_moeda = array_key_exists("codigo_moeda", $data) ? $data['codigo_moeda'] : "09";
         $this->sacador_avalista = array_key_exists("sacador_avalista", $data) ? $data['sacador_avalista'] : null;
@@ -299,8 +299,9 @@ class IncluirBoletoRemessa extends Remessa
     private function gerar_mensagens()
     {
         $retorno = "\t\t\t\t<FICHA_COMPENSACAO>\t\t\t\t\t<MENSAGENS>";
-        for($i = 0; $i < $this->descontos; $i++) {
-            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->mensagens_compensacao[$i]."</MENSAGEM>";
+        
+        foreach ($this->mensagens_compensacao as $mensagem) {
+            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$mensagem."</MENSAGEM>";
         }
         return $retorno . "\t\t\t\t\t</MENSAGENS>\t\t\t\t</FICHA_COMPENSACAO>";
     }
