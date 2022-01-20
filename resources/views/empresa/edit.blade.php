@@ -180,62 +180,64 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12" >
-                                            <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
-                                                    @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                <option value="">-- Selecionar o Grupo --</option>
-                                                @foreach ($setores as $setor)
-                                                    <option @if($empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('setor')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            @error('cnaes_id')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            @error('cnaes_id.*')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="btn-group col-md-12">
-                                            <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
-                                            <div class="col-md-12 input-group input-group-sm mb-2"></div>
-                                        </div>
-                                        <div class="form-row col-md-12">
-                                            <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
-                                                <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                    <tbody id="dentroTabelaCnaes"></tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                    <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes">
-                                        @foreach ($empresa->cnaes as $cnae)
-                                            <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar('{{$cnae->id}}')">
-                                                <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
-                                                <div style="width:140px; height:25px; text-align:right;">
-                                                    <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
-                                                        <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-danger btn-sm"  onclick="add_Lista('{{$cnae->setor->id}}', '{{$cnae->id}}')" >Remover</div>
-                                                    </div>
-                                                </div>
-                                                <input id ="inputCnae_{{$cnae->id}}" type="hidden" name="cnaes_id[]" value="{{$cnae->id}}">
-                                            </div>
+                                    <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
+                                            @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                        <option value="">-- Selecionar o Grupo --</option>
+                                        @foreach ($setores as $setor)
+                                            <option @if($empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                         @endforeach
+                                    </select>
+                                    @error('setor')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    @error('cnaes_id')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    @error('cnaes_id.*')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="row col-md-12">
+                                        <label class="styleTituloDoInputCadastro">Lista de CNAE</label>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <div style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                            <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
+                                                <tbody id="dentroTabelaCnaes"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-6">
+                                    <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
+                                    <div style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                        <table cellspacing="0" cellpadding="1"width="100%" >
+                                            <tbody class="areaMeusCnaes" id="listaCnaes">
+                                                @foreach ($empresa->cnaes as $cnae)
+                                                    <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar('{{$cnae->id}}')">
+                                                        <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
+                                                        <div style="width:140px; height:25px; text-align:right;">
+                                                            <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
+                                                                <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-danger btn-sm"  onclick="add_Lista('{{$cnae->setor->id}}', '{{$cnae->id}}')" >Remover</div>
+                                                            </div>
+                                                        </div>
+                                                        <input id ="inputCnae_{{$cnae->id}}" type="hidden" name="cnaes_id[]" value="{{$cnae->id}}">
+                                                    </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

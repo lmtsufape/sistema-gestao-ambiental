@@ -179,58 +179,59 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12" >
-                                            <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
-                                                    @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
-                                                <option value="" disabled selected>-- Selecionar o Grupo --</option>
-                                                @foreach ($setores as $setor)
-                                                    <option value={{$setor->id}}>{{$setor->nome}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('setor')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            @error('cnaes_id')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            @error('cnaes_id.*')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                    <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
+                                            @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                        <option value="" disabled selected>-- Selecionar o Grupo --</option>
+                                        @foreach ($setores as $setor)
+                                            <option value={{$setor->id}}>{{$setor->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('setor')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                        <div class="btn-group col-md-12">
-                                            <div class="col-md-6 styleTituloDoInputCadastro" style="margin-left:-15px;margin-right:30px;margin-bottom:10px;">Lista de CNAE</div>
-                                            <div class="col-md-12 input-group input-group-sm mb-2"></div>
+                                    @enderror
+                                    @error('cnaes_id')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                        <div class="form-row">
-                                            <div class="col-md-12">
-                                                <div class="alert alert-warning" role="alert">
-                                                    <h5 class="alert-heading">Aviso!</h5>
-                                                    <p class="mb-0">Caso a sua empresa/serviço não possua um cnae adequado entre os listados, selecione o cnae "Atividades similares" do grupo que ela faz parte.</p>
-                                                </div>
-                                            </div>
+                                    @enderror
+                                    @error('cnaes_id.*')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                        <div class="form-row col-md-12">
-                                            <div style="width:100%; height:250px; display: inline-block; border: 1.5px solid #f2f2f2; border-radius: 2px; overflow:auto;">
-                                                <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                    <tbody id="dentroTabelaCnaes"></tbody>
-                                                </table>
-                                            </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="row col-md-12">
+                                        <label class="styleTituloDoInputCadastro">Lista de CNAE</label>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <div class="alert alert-warning" role="alert" style="width: 100%;">
+                                            <h5 class="alert-heading">Aviso!</h5>
+                                            <p class="mb-0">Caso a sua empresa/serviço não possua um cnae adequado entre os listados, selecione o cnae "Atividades similares" do grupo que ela faz parte.</p>
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        <div style="width:100%; height:250px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                            <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
+                                                <tbody id="dentroTabelaCnaes"></tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="col-md-6">
                                     <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                    <div class="form-group col-md-12 areaMeusCnaes" id="listaCnaes"></div>
+                                    <div style="width:100%; height:396px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                        <table cellspacing="0" cellpadding="1"width="100%" >
+                                            <tbody class="areaMeusCnaes" id="listaCnaes">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>
