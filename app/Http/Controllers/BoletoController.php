@@ -63,7 +63,7 @@ class BoletoController extends Controller
     {
         $xmlBoletoController = new XMLCoderController();
         $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
-
+        
         try {
             $xmlBoletoController->incluir_boleto_remessa($boleto);
             return $boleto->URL;

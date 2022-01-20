@@ -19,8 +19,14 @@
                     <li class="nav-item @if(request()->routeIs('contato')) active @endif">
                         <a class="nav-link" href="{{route('contato')}}">Contato</a>
                     </li>
+                    <li class="nav-item @if(request()->routeIs('sobre')) active @endif">
+                        <a class="nav-link" href="{{route('sobre')}}">Sobre</a>
+                    </li>
                     <li class="nav-item @if(request()->routeIs('login')) active @endif">
                         <a class="nav-link" href="{{route('login')}}">Entrar</a>
+                    </li>
+                    <li class="nav-item @if(request()->routeIs('register')) active @endif">
+                        <a class="nav-link" href="{{route('register')}}">Cadastre-se</a>
                     </li>
                 @else
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
@@ -39,7 +45,7 @@
                             <a class="nav-link" href="{{route('requerimentos.index')}}">{{ __('Requerimento') }}</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('empresas.*')) active @endif">
-                            <a class="nav-link" href="{{route('empresas.index')}}">{{ __('Empresas') }}</a>
+                            <a class="nav-link" href="{{route('empresas.index')}}">{{ __('Empresas/Serviços') }}</a>
                         </li>
                     @endcan
                     @can('isProcessoOrProtocolista', \App\Models\User::class)

@@ -99,4 +99,47 @@ class Requerimento extends Model
     {
         return $this->visitas()->latest('data_marcada')->first();
     }
+
+    public function gerarMensagemCompesacao() {
+        switch ($this->tipo) {
+            case $this::TIPO_ENUM['primeira_licenca']:
+                return [
+                    'TAXA DE PRIMEIRA LICENCA ' . $this->tipoDeLicencaCompensacao(),
+                ];
+                break;
+            case $this::TIPO_ENUM['renovacao']:
+                return [
+                    'TAXA DE RENOVACAO DA LICENCA ' . $this->tipoDeLicencaCompensacao(),
+                ];
+                break;
+            case $this::TIPO_ENUM['autorizacao']:
+                return [
+                    'TAXA DE ' . $this->tipoDeLicencaCompensacao(),
+                ];
+                break;
+        }
+    }
+
+    private function tipoDeLicencaCompensacao() {
+        switch ($this->tipo_licenca) {
+            case $this::TIPO_LICENCA_ENUM['previa']: 
+                return 'PREVIA';
+                break;
+            case $this::TIPO_LICENCA_ENUM['instalacao']: 
+                return 'INSTALACAO';
+                break;
+            case $this::TIPO_LICENCA_ENUM['operacao']: 
+                return 'OPERACAO';
+                break;
+            case $this::TIPO_LICENCA_ENUM['simplificada']:
+                return 'SIMPLIFICADA'; 
+                break;
+            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']: 
+                return 'AUTORIZACAO AMBIENTAL';
+                break;
+            case $this::TIPO_LICENCA_ENUM['regularizacao']: 
+                return 'REGULARIZACAO';
+                break;
+        }
+    }
 }
