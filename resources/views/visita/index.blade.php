@@ -2,7 +2,7 @@
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         @can('isSecretario', \App\Models\User::class)
@@ -19,8 +19,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-            <div class="col-md-10">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
@@ -128,6 +126,127 @@
                             </div>
                         @endif
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                    </div>
+                    <ul class="list-group list-unstyled">
+                        @can('isSecretario', \App\Models\User::class)
+                            {{--consulta necessaria pra verificar se tem notificacao feitas--}}
+                            <li>
+                                <div title="Visualizar notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Visualizar notificações">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Visualizar notificações
+                                    </div>
+                                </div>
+                            </li>
+                            @if(\App\Models\Relatorio::select('relatorios.*')
+                                    ->whereIn('visita_id', $visitas->pluck('id')->toArray())
+                                    ->get()->count() > 0)
+                                <li>
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Visualizar relatório
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            @if($visitas->where('requerimento_id', '!=', null))
+                                <li>
+                                    <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Deletar visita
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                        @else
+                            @if($visitas->where('requerimento_id', '!=', null))
+                                <li>
+                                    <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar requerimento">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Visualizar requerimento
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar/editar relatório
+                                        </div>
+                                    </div>
+                                </li>
+                            @elseif($visitas->where('denuncia_id', '!=', null) && $visitas->where('requerimento_id', '=', null))
+                                <li>
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar/editar relatório
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            @if($visitas->where('denuncia_id', '!=', null))
+                                <li>
+                                    <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Relato da denúncia
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Mídia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia anexada">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Mídia anexada
+                                        </div>
+                                    </div>
+                                </li>
+                            @elseif ($visitas->where('denuncia_id', '=', null) && $visitas->where('requerimento_id', '=', null) && $visitas->where('solicitacao_poda', '!=', null))
+                                <li>
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar/editar relatório
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Mídia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia anexada a denúncia">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Mídia anexada
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                        @endcan
+                    </ul>
                 </div>
             </div>
         </div>

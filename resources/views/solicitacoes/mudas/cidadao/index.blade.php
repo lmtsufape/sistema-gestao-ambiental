@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
-        <div class="form-row justify-content-center">
-            <div class="col-md-10">
+        <div class="form-row justify-content-between">
+            <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Suas solicitações de mudas</h4>
@@ -12,8 +12,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-10">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
@@ -55,6 +53,23 @@
                             </div>
                         @endif
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                    </div>
+                    <ul class="list-group list-unstyled">
+                        <li>
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Visualizar solicitação
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

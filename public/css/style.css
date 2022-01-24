@@ -434,3 +434,10 @@ nav img {
 label {
     font-weight: bold;
 }
+
+.tituloModal{
+    color: var(--primaria);
+    font-weight: bolder;
+    font-size: 23px;
+    border-bottom: solid 2px var(--primaria);
+}
