@@ -82,7 +82,7 @@
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
-                                        <li><a href="#" target="_blanck" class="link-dark" style="font-size: 15px;">Leonardo Lima</a></li>
+                                        <li><a href="https://www.linkedin.com/in/jleonardolima" target="_blanck" class="link-dark" style="font-size: 15px;">José Leonardo Santos de Lima</a></li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
