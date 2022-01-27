@@ -10,7 +10,7 @@
 @endif
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Podas</h4>
@@ -61,14 +61,14 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento"" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     @can('isSecretario', \App\Models\User::class)
-                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
                                                         <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img width="25" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
+                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
                                                     @endcan
-                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -99,13 +99,13 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     @can('isSecretario', \App\Models\User::class)
-                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
                                                         <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img width="25" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
+                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
                                                     @endcan
-                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -136,7 +136,7 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  width="25" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -150,6 +150,57 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                    </div>
+                    <ul class="list-group list-unstyled">
+                        <li>
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Visualizar solicitação
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/file-warning-svgrepo-com.svg')}}" alt="Avaliar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div title="Mídia da solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia da solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Mídia da solicitação
+                                </div>
+                            </div>
+                        </li>
+                        @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/task-svgrepo-com.svg')}}" alt="Atribuir analista">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Atribuir a um analista
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/agenda-svgrepo-com.svg')}}" alt="Agendar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Agendar visita
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                    </ul>
                 </div>
             </div>
         </div>
