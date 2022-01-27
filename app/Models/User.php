@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -173,5 +175,31 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return false;
+    }
+
+    /**
+     * salva a foto do perfil do usuário.
+     * 
+     * @param Request $request
+     * @return boolean
+     */
+    public function salvarFoto(Request $request)
+    {
+        $file = $request->foto_de_perfil;
+
+        if ($file != null) {
+            if ($this->profile_photo_path != null) {
+                if (Storage::disk()->exists('public/'. $this->profile_photo_path)) {
+                    Storage::delete('public/'. $this->profile_photo_path);
+                }
+            } 
+            
+            $caminho = 'users/' . $this->id . '/';
+            $nome = $file->getClientOriginalName();
+            Storage::putFileAs('public/' . $caminho, $file, $nome);
+            $this->profile_photo_path = $caminho . $file->getClientOriginalName();
+        }
+
+        return $this->update();
     }
 }

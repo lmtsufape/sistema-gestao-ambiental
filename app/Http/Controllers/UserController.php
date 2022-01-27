@@ -99,7 +99,6 @@ class UserController extends Controller
         $input = $request->all();
 
         $validated = $request->validate([
-            'name'          => ['required', 'string', 'max:255'],
             'email'         => ['required', 'string', 'email','max:255'],
             'password_atual'=> ['nullable','string','min:8'],
         ]);
@@ -126,7 +125,6 @@ class UserController extends Controller
             }
         }
 
-        $user->name     = $input['name'];
         $user->email    = $input['email'];
         if ($input['password_atual'] != null || $input['password'] != null || $input['password_confirmation'] != null) {
             $user->forceFill([
@@ -164,5 +162,70 @@ class UserController extends Controller
     public function perfil()
     {
         return view('user.perfil');
+    }
+
+    /**
+     * Salva os dados básicos do usuário.
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function atualizarDadosBasicos(Request $request)
+    {
+        $user = auth()->user();
+        $requerente = $user->requerente;
+        $telefone = $requerente->telefone;
+
+        $request->validate([
+            'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
+            'cpf'                       => ['required', 'string', 'cpf'],
+            'telefone'                  => ['required', 'string', 'celular_com_ddd', 'max:255'],
+            'rg'                        => ['required', 'string', 'max:255'],
+            'orgão_emissor'             => ['required', 'string', 'max:255'],
+            'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
+        ], [
+            'cpf.cpf'                   => 'O campo CPF não é um CPF válido.',
+            'telefone.celular_com_ddd'  => 'O campo contato não é um contato com DDD válido.',
+        ]);
+
+        $user->name = $request->input('nome_de_exibição');
+        $requerente->cpf = $request->cpf;
+        $telefone->numero = $request->telefone;
+        $requerente->rg = $request->rg;
+        $requerente->orgao_emissor = $request->input('orgão_emissor');
+        $user->salvarFoto($request);
+
+        $user->update();
+        $requerente->update();
+        $telefone->update();
+
+        return redirect(route('perfil'))->with(['success_dados_basicos' => 'Dados básicos atualizados com sucesso!']);
+    }
+
+    /**
+     * Atualiza o endereço do requerente.
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function atualizarEndereco(Request $request) 
+    {
+        $user = auth()->user();
+        $endereco = $user->requerente->endereco;
+
+        $request->validate([
+            'cep'                       => ['required', 'string', 'max:255'],
+            'bairro'                    => ['required', 'string', 'max:255'],
+            'rua'                       => ['required', 'string', 'max:255'],
+            'número'                    => ['required', 'string', 'max:255'],
+            'cidade'                    => ['required', 'string', 'max:255'],
+            'uf'                        => ['required', 'string', 'max:255'],
+            'complemento'               => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $endereco->setAtributes($request->all());
+        $endereco->save();
+
+        return redirect(route('perfil'))->with(['success_dados_basicos' => 'Endereço atualizado com sucesso!']);
     }
 }
