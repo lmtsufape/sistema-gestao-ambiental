@@ -120,18 +120,21 @@ class DenunciaController extends Controller
 
     public function avaliarDenuncia(Request $request)
     {
+        $msg = '';
         $denuncia = Denuncia::find($request->denunciaId);
         $this->authorize('isSecretarioOrAnalista', User::class);
-
+        
         if ($request->aprovar == "true") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
             $msg = 'Denuncia aprovada com sucesso!';
+            
 
         } else if ($request->aprovar == "false") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['arquivada'];
             $msg = 'Denuncia arquivada com sucesso!';
 
         }
+
         $denuncia->update();
 
         return redirect()->back()->with(['success' => $msg]);
