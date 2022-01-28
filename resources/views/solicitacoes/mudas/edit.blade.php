@@ -21,7 +21,7 @@
                             <div class="col-md-12 form-group">
                                 <label for="nome">Nome</label>
                                 <input id="nome" class="form-control" type="text" name="nome"
-                                    value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
+                                    value="{{ $solicitacao->requerente->user->name }}" autocomplete="nome" disabled>
                             </div>
                             <div class="col-md-12 form-group">
                                 <div class="col-md-6 ml-0 pl-0">
@@ -33,31 +33,31 @@
                             <div class="col-md-6 form-group">
                                 <label for="email">E-mail</label>
                                 <input id="email" class="form-control" type="text" name="email"
-                                    value="{{ $solicitacao->cidadao->user->email }}" autocomplete="email" disabled>
+                                    value="{{ $solicitacao->requerente->user->email }}" autocomplete="email" disabled>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-6 form-group">
                                 <label for="cpf">{{ __('CPF') }}</label>
                                 <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
-                                    value="{{ $solicitacao->cidadao->cpf }}" autofocus autocomplete="cpf"
+                                    value="{{ $solicitacao->requerente->cpf }}" autofocus autocomplete="cpf"
                                     data-mask="000.000.000-00" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cep">{{ __('CEP') }}</label>
-                                <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->cidadao->endereco->cep}}" disabled>
+                                <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->requerente->endereco->cep}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="bairro">{{ __('Bairro') }}</label>
-                                <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->cidadao->endereco->bairro}}" disabled>
+                                <input id="bairro" class="form-control" type="text" name="bairro" value="{{$solicitacao->requerente->endereco->bairro}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="rua">{{ __('Rua') }}</label>
-                                <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->cidadao->endereco->rua}}" disabled>
+                                <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->requerente->endereco->rua}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="numero">{{ __('Número') }}</label>
-                                <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->cidadao->endereco->numero}}" disabled>
+                                <input id="numero" class="form-control " type="text" name="numero" value="{{$solicitacao->requerente->endereco->numero}}" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cidade">{{ __('Cidade') }}</label>
@@ -73,7 +73,7 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="complemento">{{ __('Complemento') }}</label>
-                                <input class="form-control" value="{{$solicitacao->cidadao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                                <input class="form-control" value="{{$solicitacao->requerente->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
                             </div>
                         </div>
                         <div class="form-row">

@@ -21,9 +21,5 @@ class TelefoneSeeder extends Seeder
         DB::table('telefones')->insert([
             'numero' => '(34) 98192-2518',
         ]);
-
-        DB::table('telefones')->insert([
-            'numero' => '(96) 98583-3686',
-        ]);
     }
 }

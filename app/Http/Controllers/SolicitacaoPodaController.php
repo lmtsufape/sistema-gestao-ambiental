@@ -33,11 +33,11 @@ class SolicitacaoPodaController extends Controller
     }
 
 
-    public function cidadaoIndex()
+    public function requerenteIndex()
     {
-        $this->authorize('cidadaoIndex', SolicitacaoPoda::class);
-        $solicitacoes = SolicitacaoPoda::where('cidadao_id', auth()->user()->cidadao->id)->get();
-        return view('solicitacoes.podas.cidadao.index', compact('solicitacoes'));
+        $this->authorize('requerenteIndex', SolicitacaoPoda::class);
+        $solicitacoes = SolicitacaoPoda::where('requerente_id', auth()->user()->requerente->id)->get();
+        return view('solicitacoes.podas.requerente.index', compact('solicitacoes'));
     }
 
     /**
@@ -55,7 +55,7 @@ class SolicitacaoPodaController extends Controller
         $endereco->fill($data);
         $endereco->save();
         $solicitacao->endereco()->associate($endereco);
-        $solicitacao->cidadao_id = auth()->user()->cidadao->id;
+        $solicitacao->requerente_id = auth()->user()->requerente->id;
         $protocolo = null;
         do {
             $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
@@ -76,7 +76,7 @@ class SolicitacaoPodaController extends Controller
                 $foto_poda->save();
             }
         }
-        Mail::to($solicitacao->cidadao->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
+        Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
         return redirect()->back()->with(['success' => 'Solicitação de poda/corte realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
@@ -99,14 +99,14 @@ class SolicitacaoPodaController extends Controller
         if($solicitacao == null){
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
         }else{
-            return view('solicitacoes.podas.cidadao.status', compact('solicitacao'));
+            return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
         }
     }
 
     public function mostrar(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('view', $solicitacao);
-        return view('solicitacoes.podas.cidadao.status', compact('solicitacao'));
+        return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
     }
 
     public function edit(SolicitacaoPoda $solicitacao)

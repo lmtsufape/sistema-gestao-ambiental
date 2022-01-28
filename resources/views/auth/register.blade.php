@@ -33,9 +33,6 @@
                                         </ul>
                                     </div>
                                 @endif
-                                @if (isset($cidadao))
-                                    <input type="hidden" name="cidadao" value="true">
-                                @endif
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>

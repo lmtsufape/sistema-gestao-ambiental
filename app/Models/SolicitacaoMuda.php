@@ -23,11 +23,11 @@ class SolicitacaoMuda extends Model
         'indeferido' => 3,
     ];
 
-    public function cidadao()
+    public function requerente()
     {
-        return $this->belongsTo(Cidadao::class);
+        return $this->belongsTo(Requerente::class);
     }
-    
+
     public function endereco()
     {
         return $this->belongsTo(Endereco::class);

@@ -57,7 +57,7 @@
                                         @foreach ($registradas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
@@ -95,7 +95,7 @@
                                         @foreach ($deferidas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
@@ -132,7 +132,7 @@
                                         @foreach ($indeferidas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
-                                                <td style="text-align: center">{{ $solicitacao->cidadao->user->name }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
