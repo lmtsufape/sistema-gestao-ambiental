@@ -501,3 +501,21 @@ label {
 }
 
 /* x MEU PERFIL x */
+
+/* LEGISLAÇÃO */
+
+.list-ordenada ol {
+    list-style-type: upper-roman;
+    font-size: 20px;
+}
+
+.list-ordenada ol .scope {
+    font-weight: bolder;
+}
+
+.list-ordenada ol .scope ol {
+    list-style-type: decimal;
+    font-weight: normal;
+}
+
+/* X LEGISLAÇÃO X */

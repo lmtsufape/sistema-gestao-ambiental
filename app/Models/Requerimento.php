@@ -95,6 +95,30 @@ class Requerimento extends Model
         }
     }
 
+    public function tipoDeLicenca()
+    {
+        switch ($this->tipo_licenca) {
+            case $this::TIPO_LICENCA_ENUM['previa']: 
+                return 'prévia';
+                break;
+            case $this::TIPO_LICENCA_ENUM['instalacao']: 
+                return 'instalação';
+                break;
+            case $this::TIPO_LICENCA_ENUM['operacao']: 
+                return 'operação';
+                break;
+            case $this::TIPO_LICENCA_ENUM['simplificada']:
+                return 'simplificada'; 
+                break;
+            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']: 
+                return 'autorização ambiental';
+                break;
+            case $this::TIPO_LICENCA_ENUM['regularizacao']: 
+                return 'regularização';
+                break;
+        }
+    }
+
     public function ultimaVisitaMarcada()
     {
         return $this->visitas()->latest('data_marcada')->first();

@@ -6,10 +6,7 @@ use App\Models\Requerimento;
 use App\Models\Visita;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\TipoAnalista;
-use App\Models\Documento;
-use App\Models\SolicitacaoPoda;
-use Illuminate\Support\Facades\Redirect;
+use PDF;
 
 class VisitaController extends Controller
 {
@@ -181,5 +178,18 @@ class VisitaController extends Controller
         $visita->save();
 
         return redirect(route('podas.index'))->with(['success' => 'Visita agendada com sucesso!']);
+    }
+
+    /**
+     * Gera o relátorio das visitas do dia.
+     *
+     * @return PDF
+     */
+    public function gerarRelatorioVisitas()
+    {
+        $visitas = Visita::all();
+        
+        $pdf = PDF::loadview('pdf/visitas', ['visitas' => $visitas]);
+        return $pdf->setPaper('a4')->stream('visitas.pdf');
     }
 }
