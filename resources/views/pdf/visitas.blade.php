@@ -182,10 +182,76 @@
                     </table>
                 </div>
             @elseif ($visita->solicitacao_poda != null)
-
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Solicitação de poda de protocolo {{$visita->solicitacao_poda->protocolo}}</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        @if ($visita->solicitacao_poda->requerente != null)
+                            <div>
+                                <strong>Requerente:</strong> {{$visita->solicitacao_poda->requerente->user->name}}
+                            </div>
+                            <div>
+                                <strong>CNPJ/CPF:</strong> {{$visita->solicitacao_poda->requerente->user->cpf_cnpj}}
+                            </div>
+                            <div>
+                                <strong>E-mail:</strong> {{$visita->solicitacao_poda->requerente->user->email}}
+                            </div>
+                            <div>
+                                <strong>Contato:</strong> {{$visita->solicitacao_poda->requerente->telefone->numero}}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-6" style="margin-left: 400px;">
+                        @if ($visita->solicitacao_poda->endereco != null)
+                            <div>
+                                <strong>CEP:</strong> {{$visita->solicitacao_poda->endereco->cep}}
+                            </div>
+                            <div>
+                                <strong>Bairro:</strong> {{$visita->solicitacao_poda->endereco->bairro}}
+                            </div>
+                            <div>
+                                <strong>Rua:</strong> {{$visita->solicitacao_poda->endereco->rua}}
+                            </div>
+                            <div>
+                                <strong>Complemento:</strong> {{$visita->solicitacao_poda->endereco->complemento}}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                @if($visita->solicitacao_poda->comentario != null)
+                    <hr class="line-title-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <strong>Comentário: </strong>{{ $visita->solicitacao_poda->comentario }}
+                        </div>
+                    </div>
+                @endif
+                <hr class="line-title-3">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Data prevista</th>
+                                <th scope="col">Data de realização</th>
+                                <th scope="col">Analista</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
+                                <td>{{$visita->data_realizada != null ? date('d/m/Y', strtotime($visita->data_realizada)) : 'Não realizada'}}</td>
+                                <td>{{$visita->analista->name}}</td>
+                                <td>{{$visita->status()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             @endif
-
-            @if ($i % 2 == 1)
+            @if ($i != $visitas->count() - 1 && $i % 2 == 1)
                 <br/><div class="quebrar_pagina"></div>
             @endif
         @endforeach
