@@ -2,7 +2,6 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\Cidadao;
 use App\Models\Cnae;
 use App\Models\User;
 use App\Models\Endereco;
@@ -41,7 +40,6 @@ class CreateNewUser implements CreatesNewUsers
             'cidade'                    => ['required', 'string', 'max:255'],
             'uf'                        => ['required', 'string', 'max:255'],
             'complemento'               => ['nullable', 'string', 'max:255'],
-            'cidadao'                   => ['nullable'],
         ], [
             'cpf.cpf'                               => 'O campo CPF não é um CPF válido.',
             'celular.celular_com_ddd'               => 'O campo contato não é um contato com DDD válido.',
@@ -50,13 +48,8 @@ class CreateNewUser implements CreatesNewUsers
         $user = new User();
         $endereco = new Endereco();
         $telefone = new Telefone();
-        if (isset($input['cidadao'])) {
-            $usuario = new Cidadao();
-            $user->role = User::ROLE_ENUM['cidadao'];
-        } else {
-            $usuario = new Requerente();
-            $user->role = User::ROLE_ENUM['requerente'];
-        }
+        $usuario = new Requerente();
+        $user->role = User::ROLE_ENUM['requerente'];
 
         $user->setAtributes($input);
         $user->save();

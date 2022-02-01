@@ -28,11 +28,11 @@ class SolicitacaoMudaController extends Controller
         return view('solicitacoes.mudas.index', compact('registradas','deferidas', 'indeferidas'));
     }
 
-    public function cidadaoIndex()
+    public function requerenteIndex()
     {
-        $this->authorize('cidadaoIndex', SolicitacaoMuda::class);
-        $solicitacoes = SolicitacaoMuda::where('cidadao_id', auth()->user()->cidadao->id)->get();
-        return view('solicitacoes.mudas.cidadao.index', compact('solicitacoes'));
+        $this->authorize('requerenteIndex', SolicitacaoMuda::class);
+        $solicitacoes = SolicitacaoMuda::where('requerente_id', auth()->user()->requerente->id)->get();
+        return view('solicitacoes.mudas.requerente.index', compact('solicitacoes'));
     }
 
     /**
@@ -47,7 +47,7 @@ class SolicitacaoMudaController extends Controller
         $data = $request->validated();
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
-        $solicitacao->cidadao_id = auth()->user()->cidadao->id;
+        $solicitacao->requerente_id = auth()->user()->requerente->id;
         $protocolo = null;
         do {
             $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
@@ -55,7 +55,7 @@ class SolicitacaoMudaController extends Controller
         } while($check != null);
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
-        Mail::to($solicitacao->cidadao->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
+        Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
         return redirect()->back()->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
@@ -87,14 +87,14 @@ class SolicitacaoMudaController extends Controller
         if($solicitacao == null){
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
         }else{
-            return view('solicitacoes.mudas.cidadao.status', compact('solicitacao'));
+            return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
         }
     }
 
     public function mostrar(SolicitacaoMuda $solicitacao)
     {
         $this->authorize('view', $solicitacao);
-        return view('solicitacoes.mudas.cidadao.status', compact('solicitacao'));
+        return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
     }
 
     public function edit(SolicitacaoMuda $solicitacao)

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cidadao;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,7 +26,6 @@ class DatabaseSeeder extends Seeder
             RequerenteSeeder::class,
             EmpresaSeeder::class,
             ValoresSeeder::class,
-            CidadaoSeeder::class,
         ]);
     }
 }

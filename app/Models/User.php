@@ -26,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'represetante_legal' => 2,
         'analista' => 3,
         'secretario' => 4,
-        'cidadao' => 5,
     ];
 
     /**
@@ -89,11 +88,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function requerimentos()
     {
         return $this->hasMany(Requerimento::class, 'analista_id');
-    }
-
-    public function cidadao()
-    {
-        return $this->hasOne(Cidadao::class, 'user_id');
     }
 
     public function setAtributes($input)
@@ -179,7 +173,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * salva a foto do perfil do usuário.
-     * 
+     *
      * @param Request $request
      * @return boolean
      */
@@ -192,8 +186,8 @@ class User extends Authenticatable implements MustVerifyEmail
                 if (Storage::disk()->exists('public/'. $this->profile_photo_path)) {
                     Storage::delete('public/'. $this->profile_photo_path);
                 }
-            } 
-            
+            }
+
             $caminho = 'users/' . $this->id . '/';
             $nome = $file->getClientOriginalName();
             Storage::putFileAs('public/' . $caminho, $file, $nome);

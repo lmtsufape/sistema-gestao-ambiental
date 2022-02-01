@@ -59,14 +59,6 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Cidadao',
-            'email' => 'cidadao@cidadao.com',
-            'role' => User::ROLE_ENUM['cidadao'],
-            'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
-        ]);
-        
-        DB::table('users')->insert([
             'name' => 'Poda',
             'email' => 'analistapoda@analistapoda.com',
             'role' => User::ROLE_ENUM['analista'],
@@ -75,7 +67,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('tipo_analista_user')->insert([
-            'user_id' => 6,
+            'user_id' => 5,
             'tipo_analista_id' => 3,
         ]);
     }

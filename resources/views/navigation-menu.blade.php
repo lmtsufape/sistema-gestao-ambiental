@@ -28,11 +28,11 @@
                             {{ __('Programação') }}
                         </x-jet-nav-link>
                     @endcan
-                    @can('isCidadao', \App\Models\User::class)
-                    <x-jet-nav-link href="{{route('mudas.cidadao.index')}}" :active="request()->routeIs('mudas.*')">
+                    @can('isRequerente', \App\Models\User::class)
+                    <x-jet-nav-link href="{{route('mudas.requerente.index')}}" :active="request()->routeIs('mudas.*')">
                         {{ __('Solicitações de mudas') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{route('podas.cidadao.index')}}" :active="request()->routeIs('podas.*')">
+                    <x-jet-nav-link href="{{route('podas.requerente.index')}}" :active="request()->routeIs('podas.*')">
                         {{ __('Solicitações de podas') }}
                     </x-jet-nav-link>
                     @endcan
