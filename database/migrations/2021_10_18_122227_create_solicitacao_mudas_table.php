@@ -19,6 +19,7 @@ class CreateSolicitacaoMudasTable extends Migration
             $table->string('comentario')->nullable();
             $table->string('protocolo');
             $table->string('motivo_indeferimento')->nullable();
+            $table->foreignId('requerente_id')->constrained('requerentes');
             $table->integer('status')->default(1);
             $table->integer('qtd_mudas')->nullable();
             $table->timestamps();
@@ -32,6 +33,9 @@ class CreateSolicitacaoMudasTable extends Migration
      */
     public function down()
     {
+        Schema::table('solicitacoes_mudas', function (Blueprint $table) {
+            $table->dropForeign(['requerente_id']);
+        });
         Schema::dropIfExists('solicitacoes_mudas');
     }
 }

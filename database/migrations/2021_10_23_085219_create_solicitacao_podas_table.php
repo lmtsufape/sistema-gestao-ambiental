@@ -21,6 +21,7 @@ class CreateSolicitacaoPodasTable extends Migration
             $table->integer('status')->default(1);
             $table->foreignId('analista_id')->nullable()->constrained('users');
             $table->foreignId('endereco_id')->constrained('enderecos');
+            $table->foreignId('requerente_id')->constrained('requerentes');
             $table->timestamps();
         });
     }
@@ -35,6 +36,7 @@ class CreateSolicitacaoPodasTable extends Migration
         Schema::table('solicitacoes_podas', function (Blueprint $table) {
             $table->dropForeign(['analista_id']);
             $table->dropForeign(['endereco_id']);
+            $table->dropForeign(['requerente_id']);
         });
         Schema::dropIfExists('solicitacoes_podas');
     }

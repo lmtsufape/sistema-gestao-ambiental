@@ -22,9 +22,9 @@ class SolicitacaoPodaPolicy
         return $userPolicy->isAnalistaPodaOrSecretario($user);
     }
 
-    public function cidadaoIndex(User $user)
+    public function requerenteIndex(User $user)
     {
-        return $user->role == User::ROLE_ENUM['cidadao'];
+        return $user->role == User::ROLE_ENUM['requerente'];
     }
 
     public function viewAny(User $user)

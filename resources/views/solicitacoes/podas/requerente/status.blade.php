@@ -11,7 +11,7 @@
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('podas.cidadao.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2" href="{{route('podas.requerente.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                                     <label for="nome">Nome<span style="color: red; font-weight: bold;">
                                            *</span></label>
                                     <input id="nome" class="form-control" type="text"
-                                        value="{{ $solicitacao->cidadao->user->name }}" autocomplete="nome" disabled>
+                                        value="{{ $solicitacao->requerente->user->name }}" autocomplete="nome" disabled>
                                 </div>
                         </div>
                         <div class="row">
@@ -33,13 +33,13 @@
                                 <label for="email">E-mail<span style="color: red; font-weight: bold;">
                                        *</span></label>
                                 <input id="email" class="form-control" type="text"
-                                    value="{{ $solicitacao->cidadao->user->email }}" autocomplete="email" disabled>
+                                    value="{{ $solicitacao->requerente->user->email }}" autocomplete="email" disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">
                                        *</span></label>
                                 <input id="cpf" class="form-control simple-field-data-mask" type="text"
-                                    value="{{ $solicitacao->cidadao->cpf }}" autofocus autocomplete="cpf"
+                                    value="{{ $solicitacao->requerente->cpf }}" autofocus autocomplete="cpf"
                                     data-mask="000.000.000-00" disabled>
                             </div>
                     </div>

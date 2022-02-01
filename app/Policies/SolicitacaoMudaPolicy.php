@@ -22,9 +22,9 @@ class SolicitacaoMudaPolicy
         return $userPolicy->isAnalistaPodaOrSecretario($user);
     }
 
-    public function cidadaoIndex(User $user)
+    public function requerenteIndex(User $user)
     {
-        return $user->role == User::ROLE_ENUM['cidadao'];
+        return $user->role == User::ROLE_ENUM['requerente'];
     }
 
     public function viewAny(User $user)
@@ -41,7 +41,7 @@ class SolicitacaoMudaPolicy
      */
     public function view(User $user, SolicitacaoMuda $solicitacaoMuda)
     {
-        return $solicitacaoMuda->cidadao->user->id == $user->id;
+        return $solicitacaoMuda->requerente->user->id == $user->id;
     }
 
     /**
@@ -52,7 +52,7 @@ class SolicitacaoMudaPolicy
      */
     public function create(User $user)
     {
-        return $this->cidadaoIndex($user);
+        return $this->requerenteIndex($user);
     }
 
     public function edit(User $user)

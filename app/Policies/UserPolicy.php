@@ -122,16 +122,6 @@ class UserPolicy
     }
 
     /**
-     * Checa se o usuário logado é um cidadão.
-     *
-     * @return boolean
-     */
-    public function isCidadao(User $user)
-    {
-        return $user->role == User::ROLE_ENUM['cidadao'];
-    }
-
-    /**
      * Checa se o usuário logado é um secretario ou requerente.
      *
      * @return boolean

@@ -7,7 +7,7 @@
                         <h4 class="card-title">Realizar solicitação de mudas</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('mudas.cidadao.index')}}">
+                        <a title="Voltar" href="{{route('mudas.requerente.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
                         <a class="btn btn-success btn-color-dafault" data-toggle="modal"
