@@ -13,8 +13,8 @@
                     <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
                         <a class="nav-link" href="{{route('welcome')}}">Início</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Legislação</a>
+                    <li class="nav-item @if(request()->routeIs('legislacao')) active @endif">
+                        <a class="nav-link" href="{{route('legislacao')}}">Legislação</a>
                     </li>
                     <li class="nav-item @if(request()->routeIs('contato')) active @endif">
                         <a class="nav-link" href="{{route('contato')}}">Contato</a>

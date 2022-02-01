@@ -30,6 +30,11 @@
                                 </div>
                             @endif
                         </div>
+                        <div div class="form-row">
+                            <div class="col-md-12 form-group" style="text-align: right">
+                                <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
+                            </div>
+                        </div>
                         <table class="table">
                                 <thead>
                                     <tr>

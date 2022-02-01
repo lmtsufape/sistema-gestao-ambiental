@@ -45,4 +45,22 @@ class Cnae extends Model
         }
         return false;
     }
+
+    /**
+     * Retorna o maior potencial poluidor entre um conjunto de cnaes.
+     * 
+     * @param collect $canes
+     * @return integer
+     */
+    public static function maiorPontencial($cnaes) 
+    {
+        $max = 0;
+        foreach ($cnaes as $cnae) {
+            if ($cnae->potencial_poluidor > $max) {
+                $max = $cnae->potencial_poluidor;
+            }
+        }
+
+        return $max;
+    }
 }

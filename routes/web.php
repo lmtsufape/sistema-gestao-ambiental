@@ -65,6 +65,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('requerimentos/{id}/setor/ajax-listar-cnaes', [SetorController::class, 'ajaxCnaes'])->name("ajax.listar.cnaes.editar");
     Route::post('requerimentos/{id}/atribuir-potencial-poluidor', [RequerimentoController::class, 'atribuirPotencialPoluidor'])->name('requerimentos.atribuir.potencial.poluidor');
 
+    Route::get('/visitas/baixar-relatorio', [VisitaController::class, 'gerarRelatorioVisitas'])->name('gerar.pdf.visitas');
     Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
@@ -72,6 +73,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
     Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
+    
 
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
@@ -145,3 +147,4 @@ Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
+Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');

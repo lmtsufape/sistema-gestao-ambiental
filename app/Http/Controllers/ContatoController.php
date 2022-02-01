@@ -40,4 +40,8 @@ class ContatoController extends Controller
     public function sobre() {
         return view('sobre');
     }
+
+    public function legislacao() {
+        return view('legislacao');
+    }
 }

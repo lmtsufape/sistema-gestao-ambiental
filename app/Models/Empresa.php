@@ -71,4 +71,30 @@ class Empresa extends Model
         $this->eh_cnpj = $input['cnpj'] != null;
         $this->porte = array_key_exists('porte', $input) ? $input['porte'] : null;
     }
+
+    /**
+     * Retorna o maior pontecial poluidor da empresa.
+     * 
+     * @return string $string
+     */
+    public function potencialPoluidor()
+    {
+        $canes = $this->cnaes;
+        $maior = Cnae::maiorPontencial($canes);
+
+        switch ($maior) {
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['baixo']:
+                return 'Baixo';
+                break;
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['medio']:
+                return 'Médio';
+                break;
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['alto']:
+                return 'Alto';
+                break;
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['a_definir']:
+                return 'A definir';
+                break;
+        }
+    }
 }

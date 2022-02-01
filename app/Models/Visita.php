@@ -61,4 +61,16 @@ class Visita extends Model
         return false;
     }
 
+    /**
+     * Retorna se a visita foi realizada ou está pendente.
+     * 
+     * @return string $string
+     */
+    public function status()
+    {
+        if ($this->data_realizada != null) {
+            return 'Realizada';
+        }
+        return 'Pendente';
+    }
 }

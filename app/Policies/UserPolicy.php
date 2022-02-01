@@ -83,7 +83,7 @@ class UserPolicy
     {
         if($this->isAnalista($user)){
             $analistaPoda = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['poda'])->first();
-            if($user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null){
+            if($analistaPoda != null && $user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null){
                 return True;
             }else{
                 return False;
