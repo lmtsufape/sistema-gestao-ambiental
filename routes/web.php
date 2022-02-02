@@ -20,6 +20,7 @@ use App\Http\Controllers\NotificacaoController;
 use App\Http\Controllers\SolicitacaoMudaController;
 use App\Http\Controllers\LicencaController;
 use App\Http\Controllers\SolicitacaoPodaController;
+use App\Http\Controllers\NoticiaController;
 
 
 /*
@@ -134,6 +135,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
+
+    Route::resource('noticias', NoticiaController::class);
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');

@@ -15,11 +15,12 @@ class CreateNoticiasTable extends Migration
     {
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
-            $table->string('imagem_principal');
+            $table->string('imagem_principal')->nullable(true);
             $table->string('titulo');
             $table->longText('texto');
             $table->string('link');
             $table->boolean('publicada')->default(false);
+            $table->boolean('destaque')->default(false);
             $table->unsignedBigInteger('autor_id');
             $table->timestamps();
 
