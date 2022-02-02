@@ -519,3 +519,13 @@ label {
 }
 
 /* X LEGISLAÇÃO X */
+
+/* NOTICIAS */
+
+.retirar-formatacao {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+/* x NOTICIAS x */

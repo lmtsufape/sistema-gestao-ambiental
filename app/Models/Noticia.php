@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Http\Requests\NoticiaRequest;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use DateInterval;
 
 class Noticia extends Model
 {
@@ -59,6 +61,27 @@ class Noticia extends Model
         $documento_nome = $file->getClientOriginalName();
         Storage::putFileAs('public/' . $caminho_noticias, $file, $documento_nome);
         $this->imagem_principal = $caminho_noticias . $file->getClientOriginalName();
+    }
+
+    /**
+     * Retorna a ultima atualização da notícia
+     *
+     * @return string $ultimaAtualizacao
+     */
+    public function ultimaAtualizacao() 
+    {
+        $ultima = now()->diff(new Carbon($this->updated_at));
+        if ($ultima->d >= 1 && $ultima->d) {
+            return 'Atualizado em ' . (new Carbon($this->updated_at))->format('d/m/Y às H:m');
+        } else if ($ultima->h >= 1 && $ultima->h < 2) {
+            return 'Última atualização à ' . $ultima->h . ' hora atrás.';
+        } else if ($ultima->h >= 2) {
+            return 'Última atualização à ' . $ultima->h . ' horas atrás.';
+        } else if ($ultima->m <= 1) {
+            return 'Última atualização à ' . $ultima->m . ' minuto atrás.';
+        } else if ($ultima->m > 1) {
+            return 'Última atualização à ' . $ultima->m . ' minutos atrás.';
+        }
     }
 
     /**

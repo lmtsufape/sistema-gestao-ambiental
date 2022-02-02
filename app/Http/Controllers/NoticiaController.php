@@ -41,6 +41,7 @@ class NoticiaController extends Controller
         $noticia->setAtributes($request);
         $noticia->save();
         $noticia->salvarImagem($request->imagem_principal);
+        $noticia->update();
 
         return redirect(route('noticias.index'))->with(['success' => 'Notícia salva com sucesso!']);
     }
