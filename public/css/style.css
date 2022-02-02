@@ -1,4 +1,4 @@
-:root { 
+:root {
     --primaria: #4A7836;
     --secundaria: #203318;
     --dafault: #4a7836d8;
@@ -42,7 +42,7 @@ nav img {
     background-color: var(--default);
     border-color: var(--default);
 } */
-/* 
+/*
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle {
     color: #fff;
@@ -185,8 +185,8 @@ nav img {
 }
 
 .styleMapa{
-    border: 1px solid rgb(53, 53, 53); 
-    padding: 2px; 
+    border: 1px solid rgb(53, 53, 53);
+    padding: 2px;
     border-radius: 5px;
     -webkit-box-shadow: 0px 1px 14px 5px rgba(168, 168, 168, 0.45);
     box-shadow: 3px 3px 10px rgba(168, 168, 168, 0.45);
@@ -313,10 +313,10 @@ nav img {
 
 .div-tabelaCnaes {
     border: 2px solid black;
-    border-radius: 7px; 
+    border-radius: 7px;
     overflow: auto;
-    width: 95%; 
-    height: 250px; 
+    width: 95%;
+    height: 250px;
     display: inline-block;
 }
 
@@ -352,7 +352,7 @@ nav img {
 }
 
 .form-envia-documentos .titulo-documento {
-    color: var(--secundaria); 
+    color: var(--secundaria);
     font-weight: bolder;
 }
 
@@ -365,7 +365,7 @@ nav img {
 /* FOOTER */
 #appRodape {
     background-color: #f8f9fa;
-    padding-bottom: 1rem; 
+    padding-bottom: 1rem;
     padding-top: 2rem;
     color: var(--secundaria);
 }
@@ -426,7 +426,7 @@ nav img {
 .linha{
     border-bottom: 2px solid #ccc;
     display: block;
-} 
+}
 
 .nav-item .active {
     color: black;
@@ -505,7 +505,7 @@ label {
 /* LEGISLAÇÃO */
 
 .list-ordenada ol {
-    list-style-type: upper-roman;
+    list-style-type: decimal;
     font-size: 20px;
 }
 
@@ -516,6 +516,46 @@ label {
 .list-ordenada ol .scope ol {
     list-style-type: decimal;
     font-weight: normal;
+}
+
+ol.nested-counter-list {
+    counter-reset: item;
+}
+
+ol.nested-counter-list li {
+    display: block;
+    padding-bottom: 10px;
+}
+
+ol.nested-counter-list li:last-child {
+    display: block;
+    padding-bottom: 0px;
+}
+
+ol.nested-counter-list li::before {
+    content: counters(item, ".") ". ";
+    counter-increment: item;
+}
+
+ol.nested-counter-list > li > ol > li::before {
+    width: 35px;
+    display: inline-block;
+}
+
+ol.nested-counter-list ol {
+    counter-reset: item;
+    padding-top: 10px;
+}
+
+ol.nested-counter-list ol>li {
+    display: block;
+    line-height: 1.1;
+    padding-bottom: 10px;
+}
+
+ol.nested-counter-list ol>li::before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
 }
 
 /* X LEGISLAÇÃO X */

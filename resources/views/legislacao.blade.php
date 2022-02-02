@@ -10,13 +10,13 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="card" style="padding-left: 40px; padding-right: 30px; text-align: justify;">
+                <div class="card" style="padding-left: 30px; padding-right: 30px; text-align: justify;">
                     <div class="card-body">
                         <div class="row justify-content-start">
                             <div class="col-md-12 list-ordenada">
-                                <ol>
+                                <ol class="nested-counter-list">
                                     <li class="scope">LEGISLAÇÃO MUNICIPAL
-                                        <ol>
+                                        <ol class="pl-3">
                                             <li>Lei nº 4619/2019 – Dispõe sobre o licenciamento ambiental no Município de Garanhuns e dá outras providências;</li>
                                             <li>Lei nº 4224/2015 – Institui a política ambiental e o sistema municipal de meio ambiente e desenvolvimento sustentável para a proteção, controle e licenciamento ambiental no município de Garanhuns, e dá outras providências;</li>
                                             <li>Lei nº 4692/2020 – Obriga os novos prédios residenciais e comerciais a incluírem vegetação em seus telhados, com o intuito de reduzir as ilhas de calor e preservar a biodiversidade;</li>
@@ -28,13 +28,13 @@
                                         </ol>
                                     </li>
                                     <li class="scope">LEGISLAÇÃO ESTADUAL
-                                        <ol>
+                                        <ol class="pl-3">
                                             <li>Lei nº 14.236/2010 – Dispõe sobre a Política Estadual de Resíduos Sólidos, e dá outras providências;</li>
                                             <li>Lei nº 14.249/2010 (alterada pela lei 14.549, de 21 de dezembro de 2011) – Dispõe sobre licenciamento ambiental, infrações e sanções administrativas ao meio ambiente, e dá outras providências;</li>
                                         </ol>
                                     </li>
                                     <li class="scope">LEGISLAÇÃO FEDERAL
-                                        <ol>
+                                        <ol class="pl-3">
                                             <li>Lei nº 12.305/2010 – Institui a Política Nacional de Resíduos Sólidos; altera a Lei nº 9.605, de 2 de fevereiro de 1988; e dá outras providências;</li>
                                             <li>Lei nº 6.938/1981 – Dispõe sobre a Política Nacional do Meio Ambiente, seus fins e mecanismos de formulação e aplicação, e dá outras providências;</li>
                                             <li>Lei nº 12.651/2012 – Dispõe sobre a proteção da vegetação nativa e dá outras providências (Código Florestal);</li>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     @component('layouts.footer')@endcomponent
 </x-guest-layout>
