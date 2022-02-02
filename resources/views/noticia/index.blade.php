@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                    <h5 class="card-title">{{$noticia->titulo}}</h5>
+                                    <a href="{{$noticia->link}}" style="text-decoration-color: black;"><h5 class="card-title">{{$noticia->titulo}}</h5></a>
                                     <p class="card-text">{!! mb_strimwidth($noticia->texto, 0, 100, "...") !!}</p>
                                     <p class="card-text"><small class="text-muted retirar-formatacao" style="text-decoration: none;">{{$noticia->ultimaAtualizacao()}}</small></p>
                                     </div>

@@ -41,6 +41,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () {
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
+
+Route::get('/noticias/{titulo}', [NoticiaController::class, 'visualizar'])->name('noticias.visualizar');
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/boletos', [BoletoController::class, 'index'])->name('boletos.index');
 

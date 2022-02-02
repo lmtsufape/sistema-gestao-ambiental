@@ -90,4 +90,17 @@ class NoticiaController extends Controller
     {
         //
     }
+
+    /**
+     * Visualizar notícia.
+     *
+     * @param  string $titulo
+     * @return \Illuminate\Http\Response
+     */
+    public function visualizar($titulo) 
+    {
+        $noticia = Noticia::where('link', route('noticias.visualizar', ['titulo' => $titulo]))->first();
+        
+        return view('noticia.visualizar', compact('noticia'));
+    }
 }
