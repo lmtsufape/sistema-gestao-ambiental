@@ -76,7 +76,7 @@
                                                 <p class="card-text"><small class="text-muted retirar-formatacao" style="text-decoration: none;">{{$noticia->exibirDatas() ? $noticia->dataPublicado() : $noticia->dataPublicado() . ' - ' . $noticia->ultimaAtualizacao()}}</small></p>
                                             </div>
                                         </div>
-                                        @can('isSecretarioOrAnalista')
+                                        @can('isSecretarioOrAnalista', app\Models\User::class)
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <a href="{{route('noticias.edit', ['noticia' => $noticia])}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar notícia"></a>
