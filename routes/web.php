@@ -21,6 +21,7 @@ use App\Http\Controllers\SolicitacaoMudaController;
 use App\Http\Controllers\LicencaController;
 use App\Http\Controllers\SolicitacaoPodaController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\WelcomeController;
 
 
 /*
@@ -34,9 +35,7 @@ use App\Http\Controllers\NoticiaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () {
     return redirect(route('requerimentos.index'));
@@ -137,7 +136,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
 
-    Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
     Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
     Route::post('/noticias/create', [NoticiaController::class, 'store'])->name('noticias.store');
     Route::get('/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
@@ -158,4 +156,5 @@ Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.p
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
 Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');
 
+Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
 Route::get('/noticias/{titulo}', [NoticiaController::class, 'visualizar'])->name('noticias.visualizar');

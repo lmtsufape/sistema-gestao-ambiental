@@ -31,7 +31,60 @@
 </head>
 <body>
     @component('layouts.nav_bar')@endcomponent
-    <div class="container conteudo">
+    <div class="container conteudo" style="margin-top: 40px;">
+        @if ($noticias->count() > 0)  
+            <div class="row">
+                <div class="col-md-12">
+                    Notícias em destaque
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
+                        <div class="row">
+                            <div class="col">
+                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
+                            </div>
+                            <div class="col-11">
+                                <ol class="carousel-indicators">
+                                    @foreach ($noticias as $i => $noticia)
+                                      @if ($i == 0)
+                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                      @else
+                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
+                                      @endif
+                                    @endforeach
+                                </ol>
+                                <div class="carousel-inner">
+                                    @foreach ($noticias as $i => $noticia)
+                                        @if ($i == 0)
+                                            <div class="carousel-item active">
+                                                <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <a class="link-carousel" href="{{$noticia->link}}"><h5>{{$noticia->titulo}}</h5></a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="carousel-item">
+                                                <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                <a class="link-carousel" href="{{$noticia->link}}"><h5>{{$noticia->titulo}}</h5></a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="col">
+                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-svgrepo-com.svg')}}" alt="">
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        @endif
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <h6>Principais serviços</h6>

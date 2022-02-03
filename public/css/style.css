@@ -528,4 +528,33 @@ label {
     text-decoration: none;
 }
 
+#icon-prev-carousel { 
+    width: 100%;
+    display: block;
+}
+
+#icon-next-carousel {
+    width: 100%;
+    display: block;
+}
+
+.alinhar-verticalmente {
+    margin-top: 11rem;
+}
+
+.img-carousel {
+    min-height: 400px; 
+    min-width: 100%; 
+    max-height: 400px; 
+    max-width: 100%;
+}
+
+.link-carousel {
+    color: white;
+}
+
+.link-carousel:hover {
+    text-decoration: underline;
+    color: white;
+}
 /* x NOTICIAS x */
