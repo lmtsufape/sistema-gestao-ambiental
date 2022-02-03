@@ -65,19 +65,28 @@ class NoticiaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $noticia = Noticia::find($id);
+        return view('noticia.edit', compact('noticia'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\NoticiaRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NoticiaRequest $request, $id)
     {
-        //
+        $noticia = Noticia::find($id);
+        $noticia->setAtributes($request);
+
+        if ($request->imagem_principal != null) {
+            $noticia->salvarImagem($request->imagem_principal);
+        }
+
+        $noticia->update();
+        return redirect(route('noticias.index'))->with(['success' => 'Notícia atualizada com sucesso!']);
     }
 
     /**

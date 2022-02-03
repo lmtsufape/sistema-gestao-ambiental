@@ -29,7 +29,7 @@ class NoticiaRequest extends FormRequest
             'destaque'          => 'nullable',
             'texto'             => 'required|string|min:50',
             'link'              => 'nullable',
-            'imagem_principal'  => 'required|file|mimes:png,jpg|max:2048',
+            'imagem_principal'  => 'nullable|file|mimes:png,jpg|max:2048',
         ];
     }
 }

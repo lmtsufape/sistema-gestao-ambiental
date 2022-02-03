@@ -37,7 +37,7 @@ class Noticia extends Model
     {
         $this->titulo = $request->input('título');
         $this->texto = $request->texto;
-        $this->publicada = $request->publicada == "on";
+        $this->publicada = $request->publicar == "on";
         $this->destaque = $request->destaque == "on";
         $this->link = $this->gerarLinkDivulgacao($request->input('título'));
         $this->autor_id = auth()->user()->id;
@@ -78,7 +78,7 @@ class Noticia extends Model
         } else if ($ultima->h >= 2) {
             return 'Última atualização à ' . $ultima->h . ' horas atrás.';
         } else if ($ultima->m <= 1) {
-            return 'Última atualização à ' . $ultima->m . ' minuto atrás.';
+            return 'Publicado agora.';
         } else if ($ultima->m > 1) {
             return 'Última atualização à ' . $ultima->m . ' minutos atrás.';
         }

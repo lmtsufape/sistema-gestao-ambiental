@@ -42,8 +42,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
 
-Route::get('/noticias/{titulo}', [NoticiaController::class, 'visualizar'])->name('noticias.visualizar');
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/boletos', [BoletoController::class, 'index'])->name('boletos.index');
 
@@ -139,7 +137,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
 
-    Route::resource('noticias', NoticiaController::class);
+    Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
+    Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
+    Route::post('/noticias/create', [NoticiaController::class, 'store'])->name('noticias.store');
+    Route::get('/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
+    Route::put('/noticias/{noticia}/update', [NoticiaController::class, 'update'])->name('noticias.update');
+    Route::delete('/noticias/{noticia}/destroy', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
@@ -154,3 +157,5 @@ Route::get('/status/requerimento', [EmpresaController::class, 'statusRequeriment
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
 Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');
+
+Route::get('/noticias/{titulo}', [NoticiaController::class, 'visualizar'])->name('noticias.visualizar');

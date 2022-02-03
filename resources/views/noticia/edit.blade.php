@@ -4,8 +4,8 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Criar notícia</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Notícias > Criar notícia</h6>
+                        <h4 class="card-title">Editar notícia</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Notícias > Editar notícia</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- @can('create', App\Models\Noticia::class) --}}
@@ -28,21 +28,22 @@
                                 </div>
                             @endif
                         </div>
-                        <form method="POST" class="form-envia-documentos" id="cria-noticia" action="{{route('noticias.store')}}" enctype="multipart/form-data">
+                        <form method="POST" class="form-envia-documentos" id="editar-noticia" action="{{route('noticias.update', ['noticia' => $noticia])}}" enctype="multipart/form-data">
                             @csrf
+                            @method('put')
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="titulo">Título<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="titulo" name="título" type="text" class="form-control" value="{{old('título')}}">
+                                    <input id="titulo" name="título" type="text" class="form-control" value="{{old('título', $noticia->titulo)}}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label> <a href="{{asset('storage/'.$noticia->imagem_principal)}}" target="_blanck">Imagem atual</a>
                                     <br>
                                     <label class="label-input" for="enviar_arquivo"></label>
                                     <label for="label-input-arquivo" for="enviar_arquivo">Nenhum arquivo selecionado</label>
-                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal" required>
+                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal">
                                 
                                     @error('imagem_principal')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -53,11 +54,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <input id="publicar" name="publicar" type="checkbox" @if(old('publicar') == "on") checked @endif>
+                                    <input id="publicar" name="publicar" type="checkbox" @if(old('publicar', $noticia->publicada) == "on") checked @endif>
                                     <label for="publicar">Publicar</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input id="destaque" name="destaque" type="checkbox" @if(old('destaque') == "on") checked @endif>
+                                    <input id="destaque" name="destaque" type="checkbox" @if(old('destaque', $noticia->destaque) == "on") checked @endif>
                                     <label for="destaque">Notícia em destaque</label>
                                 </div>
                             </div>
@@ -65,7 +66,7 @@
                                 <div class="col-md-12 form-group">
                                     <label for="texto">{{ __('Texto') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <textarea class="form-control @error('texto') is-invalid @enderror" id="texto"
-                                        rows="5" name="texto" required>{{old('texto')}}</textarea>
+                                        rows="5" name="texto" required>{{old('texto', $noticia->texto)}}</textarea>
                                     @error('texto')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -79,7 +80,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" class="btn btn-success submeterFormBotao" form="cria-noticia" style="width: 100%">Salvar</button>
+                                <button type="submit" class="btn btn-success submeterFormBotao" form="editar-noticia" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
