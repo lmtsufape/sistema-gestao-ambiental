@@ -60,6 +60,40 @@ class Noticia extends Model
     }
 
     /**
+     * Chega se a noticia sofreu alguma atualização.
+     *
+     * @return boolean
+     */
+    public function exibirDatas() 
+    {
+        if ((new Carbon($this->created_at)) == (new Carbon($this->updated_at))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retorna a data de criação.
+     *
+     * @return string $ultimaAtualizacao
+     */
+    public function dataPublicado() 
+    {
+        $ultima = now()->diff(new Carbon($this->created_at));
+        if ($ultima->d >= 1) {
+            return 'Publicado em ' . (new Carbon($this->created_at))->format('d/m/Y às H:m');
+        } else if ($ultima->h >= 1 && $ultima->h < 2) {
+            return 'Publicado à ' . $ultima->h . ' hora atrás.';
+        } else if ($ultima->h >= 2) {
+            return 'Publicado à ' . $ultima->h . ' horas atrás.';
+        } else if ($ultima->m <= 1) {
+            return 'Publicado agora.';
+        } else if ($ultima->m > 1) {
+            return 'Publicado à ' . $ultima->m . ' minutos atrás.';
+        }
+    }
+
+    /**
      * Retorna a ultima atualização da notícia
      *
      * @return string $ultimaAtualizacao
@@ -67,14 +101,14 @@ class Noticia extends Model
     public function ultimaAtualizacao() 
     {
         $ultima = now()->diff(new Carbon($this->updated_at));
-        if ($ultima->d >= 1 && $ultima->d) {
+        if ($ultima->d >= 1) {
             return 'Atualizado em ' . (new Carbon($this->updated_at))->format('d/m/Y às H:m');
         } else if ($ultima->h >= 1 && $ultima->h < 2) {
             return 'Última atualização à ' . $ultima->h . ' hora atrás.';
         } else if ($ultima->h >= 2) {
             return 'Última atualização à ' . $ultima->h . ' horas atrás.';
         } else if ($ultima->m <= 1) {
-            return 'Publicado agora.';
+            return 'Atualizado agora.';
         } else if ($ultima->m > 1) {
             return 'Última atualização à ' . $ultima->m . ' minutos atrás.';
         }

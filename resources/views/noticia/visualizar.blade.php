@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$noticia->titulo}}</h5>
                         <p class="card-text">{!! $noticia->texto !!}</p>
-                        <p class="card-text"><small class="text-muted">{{$noticia->autor->name}} - {{$noticia->ultimaAtualizacao()}}</small></p>
+                        <p class="card-text"><small class="text-muted">{{$noticia->autor->name}} - {{$noticia->exibirDatas() ? $noticia->dataPublicado() : $noticia->dataPublicado() . ' - ' . $noticia->ultimaAtualizacao()}}</small></p>
                     </div>
                 </div>
             </div>
