@@ -66,7 +66,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="rg">RG</label>
-                                        <input type="text" id="rg" name="rg" class="form-control @error('rg') is-invalid @enderror" value="{{old('rg', auth()->user()->requerente->rg)}}">
+                                        <input type="text" id="rg" name="rg" class="form-control @error('rg') is-invalid @enderror" @if(auth()->user()->requerente != null) value="{{old('rg', auth()->user()->requerente->rg)}}"@else value="" disabled @endif>
         
                                         @error('rg')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -78,7 +78,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="orgao_emissor">Orgão emissor</label>
-                                        <input type="text" id="orgão_emissor" name="orgão_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" value="{{old('orgão_emissor', auth()->user()->requerente->orgao_emissor)}}">
+                                        <input type="text" id="orgão_emissor" name="orgão_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('orgão_emissor', auth()->user()->requerente->orgao_emissor)}}" @else value="" disabled @endif>
         
                                         @error('orgão_emissor')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -90,7 +90,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="cpf">CPF</label>
-                                        <input type="text" id="cpf" name="cpf" class="form-control @error('cpf') is-invalid @enderror" value="{{old('cpf', auth()->user()->requerente->cpf)}}">
+                                        <input type="text" id="cpf" name="cpf" class="form-control @error('cpf') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('cpf', auth()->user()->requerente->cpf)}}" @else value="" disabled @endif>
         
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -102,7 +102,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="telefone">Telefone</label>
-                                        <input type="text" id="telefone" name="telefone" class="form-control celular @error('telefone') is-invalid @enderror" value="{{old('telefone', auth()->user()->requerente->telefone->numero)}}">
+                                        <input type="text" id="telefone" name="telefone" class="form-control celular @error('telefone') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('telefone', auth()->user()->requerente->telefone->numero)}}" @else value="" disabled @endif>
         
                                         @error('telefone')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -193,6 +193,7 @@
                 </div>
             </div>
             <br>
+            @if(auth()->user()->requerente != null)
             <div class="row">
                 <div class="col-md-12 form-group">
                     <div class="form-row">
@@ -217,17 +218,23 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            {{auth()->user()->requerente->endereco->rua}}
+                                            @if(auth()->user()->requerente != null)
+                                                {{auth()->user()->requerente->endereco->rua}}
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            Número: {{auth()->user()->requerente->endereco->numero}}
+                                            @if(auth()->user()->requerente != null)
+                                                Número: {{auth()->user()->requerente->endereco->numero}}
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            CEP {{auth()->user()->requerente->endereco->cep}} - {{auth()->user()->requerente->endereco->cidade}}, {{auth()->user()->requerente->endereco->estado}}
+                                            @if(auth()->user()->requerente != null)
+                                                CEP {{auth()->user()->requerente->endereco->cep}} - {{auth()->user()->requerente->endereco->cidade}}, {{auth()->user()->requerente->endereco->estado}}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -274,9 +281,11 @@
                     </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 
+    @if(auth()->user()->requerente != null)
     <div class="modal fade" id="modal-editar-endereco" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -412,6 +421,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <script>
         function editarFoto() {
