@@ -174,30 +174,37 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $requerente = $user->requerente;
-        $telefone = $requerente->telefone;
+        if($requerente != null){
+            $telefone = $requerente->telefone;
 
-        $request->validate([
-            'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
-            'cpf'                       => ['required', 'string', 'cpf'],
-            'telefone'                  => ['required', 'string', 'celular_com_ddd', 'max:255'],
-            'rg'                        => ['required', 'string', 'max:255'],
-            'orgão_emissor'             => ['required', 'string', 'max:255'],
-            'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
-        ], [
-            'cpf.cpf'                   => 'O campo CPF não é um CPF válido.',
-            'telefone.celular_com_ddd'  => 'O campo contato não é um contato com DDD válido.',
-        ]);
-
+            $request->validate([
+                'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
+                'cpf'                       => ['required', 'string', 'cpf'],
+                'telefone'                  => ['required', 'string', 'celular_com_ddd', 'max:255'],
+                'rg'                        => ['required', 'string', 'max:255'],
+                'orgão_emissor'             => ['required', 'string', 'max:255'],
+                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
+            ], [
+                'cpf.cpf'                   => 'O campo CPF não é um CPF válido.',
+                'telefone.celular_com_ddd'  => 'O campo contato não é um contato com DDD válido.',
+            ]);
+            $requerente->cpf = $request->cpf;
+            $telefone->numero = $request->telefone;
+            $requerente->rg = $request->rg;
+            $requerente->orgao_emissor = $request->input('orgão_emissor');
+            $requerente->update();
+            $telefone->update();
+        }else{
+            $request->validate([
+                'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
+                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
+            ]);
+        }
+        
         $user->name = $request->input('nome_de_exibição');
-        $requerente->cpf = $request->cpf;
-        $telefone->numero = $request->telefone;
-        $requerente->rg = $request->rg;
-        $requerente->orgao_emissor = $request->input('orgão_emissor');
         $user->salvarFoto($request);
-
         $user->update();
-        $requerente->update();
-        $telefone->update();
+;
 
         return redirect(route('perfil'))->with(['success_dados_basicos' => 'Dados básicos atualizados com sucesso!']);
     }
