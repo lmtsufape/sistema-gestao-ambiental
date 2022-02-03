@@ -27,6 +27,7 @@ class UserPolicy
      */
     public function isSecretario(User $user)
     {
+        // dd($user->role == User::ROLE_ENUM['secretario']);
         return $user->role == User::ROLE_ENUM['secretario'];
     }
 
