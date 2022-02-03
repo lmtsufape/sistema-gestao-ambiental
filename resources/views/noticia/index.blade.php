@@ -1,45 +1,53 @@
 <x-app-layout>
 
-    @foreach ($noticias as $noticia)
-        <!-- Modal -->
-        <div class="modal fade" id="modal-deletar-noticia-{{$noticia->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    @can('isSecretarioOrAnalista')
+        @foreach ($noticias as $noticia)
+            <!-- Modal deletar noticia -->
+            <div class="modal fade" id="modal-deletar-noticia-{{$noticia->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deletar-noticia-{{$noticia->id}}" method="POST" action="{{route('noticias.destroy', ['noticia' => $noticia])}}">
+                            @csrf 
+                            @method('delete')
+                            Tem certeza que desenha deletar {{$noticia->titulo}}?
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-danger" form="deletar-noticia-{{$noticia->id}}">Sim</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="deletar-noticia-{{$noticia->id}}" method="POST" action="{{route('noticias.destroy', ['noticia' => $noticia])}}">
-                        @csrf 
-                        @method('delete')
-                        Tem certeza que desenha deletar {{$noticia->titulo}}?
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <button type="submit" class="btn btn-danger" form="deletar-noticia-{{$noticia->id}}">Sim</button>
                 </div>
             </div>
-            </div>
-        </div>
-    @endforeach
+        @endforeach
+    @endcan
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Notícias escritas</h4>
+                        <h4 class="card-title">
+                            @can('create', App\Models\Noticia::class)
+                                Notícias escritas
+                            @else  
+                                Notícias
+                            @endcan
+                        </h4>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        {{-- @can('create', App\Models\Noticia::class) --}}
+                        @can('create', App\Models\Noticia::class)
                             <a title="Criar notificação" href="{{route('noticias.create')}}">
                                 <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notícia">
                             </a>
-                        {{-- @endif --}}
+                        @endcan
                     </div>
                 </div>
                 <div class="form-row">
@@ -68,12 +76,14 @@
                                                 <p class="card-text"><small class="text-muted retirar-formatacao" style="text-decoration: none;">{{$noticia->exibirDatas() ? $noticia->dataPublicado() : $noticia->dataPublicado() . ' - ' . $noticia->ultimaAtualizacao()}}</small></p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="{{route('noticias.edit', ['noticia' => $noticia])}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar notícia"></a>
-                                                <a style="cursor: pointer;"  data-toggle="modal" data-target="#modal-deletar-noticia-{{$noticia->id}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone deletar notícia"></a>
+                                        @can('isSecretarioOrAnalista')
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <a href="{{route('noticias.edit', ['noticia' => $noticia])}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar notícia"></a>
+                                                    <a style="cursor: pointer;"  data-toggle="modal" data-target="#modal-deletar-noticia-{{$noticia->id}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone deletar notícia"></a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

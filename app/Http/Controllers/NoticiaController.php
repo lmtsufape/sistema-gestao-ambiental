@@ -26,6 +26,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Noticia::class);
         return view('noticia.create');
     }
 
@@ -37,6 +38,7 @@ class NoticiaController extends Controller
      */
     public function store(NoticiaRequest $request)
     {
+        $this->authorize('create', Noticia::class);
         $noticia = new Noticia();
         $noticia->setAtributes($request);
         $noticia->save();
@@ -66,6 +68,8 @@ class NoticiaController extends Controller
     public function edit($id)
     {
         $noticia = Noticia::find($id);
+        $this->authorize('update', $noticia);
+
         return view('noticia.edit', compact('noticia'));
     }
 
@@ -79,6 +83,8 @@ class NoticiaController extends Controller
     public function update(NoticiaRequest $request, $id)
     {
         $noticia = Noticia::find($id);
+        $this->authorize('update', $noticia);
+
         $noticia->setAtributes($request);
 
         if ($request->imagem_principal != null) {
@@ -98,6 +104,8 @@ class NoticiaController extends Controller
     public function destroy($id)
     {
         $noticia = Noticia::find($id);
+        $this->authorize('delete', $noticia);
+
         $noticia->deletar_imagem();
         $noticia->delete();
 
