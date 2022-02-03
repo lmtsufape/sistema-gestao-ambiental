@@ -1,4 +1,32 @@
 <x-app-layout>
+
+    @foreach ($noticias as $noticia)
+        <!-- Modal -->
+        <div class="modal fade" id="modal-deletar-noticia-{{$noticia->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form id="deletar-noticia-{{$noticia->id}}" method="POST" action="{{route('noticias.destroy', ['noticia' => $noticia])}}">
+                        @csrf 
+                        @method('delete')
+                        Tem certeza que desenha deletar {{$noticia->titulo}}?
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="submit" class="btn btn-danger" form="deletar-noticia-{{$noticia->id}}">Sim</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    @endforeach
+
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
@@ -13,6 +41,15 @@
                             </a>
                         {{-- @endif --}}
                     </div>
+                </div>
+                <div class="form-row">
+                    @if(session('success'))
+                        <div class="col-md-12" style="margin-top: 5px;">
+                            <div class="alert alert-success" role="alert">
+                                <p>{{session('success')}}</p>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 @foreach ($noticias as $noticia)
                 <div class="row justify-content-center">
@@ -34,7 +71,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <a href="{{route('noticias.edit', ['noticia' => $noticia])}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar notícia"></a>
-                                                <a href="#" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone deletar notícia"></a>
+                                                <a style="cursor: pointer;"  data-toggle="modal" data-target="#modal-deletar-noticia-{{$noticia->id}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone deletar notícia"></a>
                                             </div>
                                         </div>
                                     </div>

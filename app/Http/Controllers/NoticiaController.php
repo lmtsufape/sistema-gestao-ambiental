@@ -97,7 +97,11 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $noticia = Noticia::find($id);
+        $noticia->deletar_imagem();
+        $noticia->delete();
+
+        return redirect(route('noticias.index'))->with(['success' => 'Notícia deletada com sucesso!']);
     }
 
     /**

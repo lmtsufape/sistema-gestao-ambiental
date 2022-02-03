@@ -51,11 +51,7 @@ class Noticia extends Model
      */
     public function salvarImagem($file) 
     {
-        if ($this->imagem_principal != null) {
-            if (Storage::disk()->exists('public/'. $this->imagem_principal)) {
-                Storage::delete('public/'. $this->imagem_principal);
-            }
-        }
+        $this->deletar_imagem();
         
         $caminho_noticias = "noticias/" . $this->id . "/";
         $documento_nome = $file->getClientOriginalName();
@@ -101,5 +97,19 @@ class Noticia extends Model
             }
         }
         return route('welcome') . '/noticias/' . $complemento;
+    }
+
+    /**
+     * Deleta a imagem principal, se ela existor
+     *
+     * @return void
+     */
+    public function deletar_imagem()
+    {
+        if ($this->imagem_principal != null) {
+            if (Storage::disk()->exists('public/'. $this->imagem_principal)) {
+                Storage::delete('public/'. $this->imagem_principal);
+            }
+        }
     }
 }
