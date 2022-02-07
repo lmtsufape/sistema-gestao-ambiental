@@ -57,6 +57,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
+    Route::get('/informacoes-login', [UserController::class, 'infoLogin'])->name('infoLogin');
     Route::resource('documentos', DocumentoController::class);
     Route::resource('requerimentos', RequerimentoController::class);
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');

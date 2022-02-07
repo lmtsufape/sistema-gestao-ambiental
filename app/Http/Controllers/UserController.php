@@ -165,6 +165,16 @@ class UserController extends Controller
     }
 
     /**
+     * Retorna para a view de informações de login do usuário atual.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function infoLogin()
+    {
+        return view('user.login');
+    }
+
+    /**
      * Salva os dados básicos do usuário.
      * 
      * @param Request $request
