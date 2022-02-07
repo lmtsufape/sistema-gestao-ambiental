@@ -1,8 +1,8 @@
 <x-app-layout>
 
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
-        <div class="form-row justify-content-center">
-            <div class="col-md-10">
+        <div class="form-row justify-content-between">
+            <div class="col-md-8">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Boletos</h4>
@@ -153,6 +153,56 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div class="form-row justify-content-center">
+                        <div class="col-md-5 form-group">
+                            <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.boletos')}}" target="_blanck">Baixar relatório</a>
+                        </div>
+                    </div>
+                    <form id="form-fitrar-boleto" method="GET" action="{{route('boletos.index')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                <label for="filtro">{{__('Filtrar por')}}</label>
+                                <select class="form-select form-select-sm form-control" name="filtro" aria-label=".form-select-sm example">
+                                    <option value="">-- Selecione o tipo de data para a filtragem --</option>
+                                    <option value="criado" @if($filtro != null && $filtro == 'criado') selected @endif>Criação do boleto</option>
+                                    <option value="vencimento" @if($filtro != null && $filtro == 'vencimento') selected @endif>Vencimento</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="dataDe">{{__('De:')}}</label>
+                                <input type="date" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
+
+                                @error('dataDe')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="dataAte">{{__('Até:')}}</label>
+                                <input type="date" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
+
+                                @error('dataAte')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-center">
+                            <div class="col-md-6 form-group">
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Aplicar</button>
+                            </div>
+                        </div>
+                    </form>
+                    
                 </div>
             </div>
         </div>
