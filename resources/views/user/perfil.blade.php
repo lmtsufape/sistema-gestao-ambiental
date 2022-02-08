@@ -122,165 +122,101 @@
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <form id="form-alterar-email-senha" method="POST" action="{{route('usuarios.update', ['usuario' => auth()->user()->id])}}">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-row">
-                            <div class="col-md-11">
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <h4 class="subtitle-form">INFORMAÇÕES DE LOGIN</h4>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="e-mail">E-mail</label>
-                                        <input type="text" id="e-mail" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email', auth()->user()->email)}}">
-            
-                                        @error('email')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="password_atual">Senha atual</label>
-                                        <input type="text" id="password_atual" name="password_atual" class="form-control @error('password_atual') is-invalid @enderror" value="">
-            
-                                        @error('password_atual')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="password">Nova senha</label>
-                                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="">
-            
-                                        @error('password')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="password_confirmation">Confirmar senha</label>
-                                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" value="">
-            
-                                        @error('password_confirmation')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group" style="text-align: right;">
-                                        <button class="btn btn-success btn-color-dafault" style="width: 50%;">Salvar</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-1"></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <br>
-            @if(auth()->user()->requerente != null)
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <h4 class="subtitle-form">ENDEREÇOS</h4>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="col-md-6">
-                    <div class="form-row">
-                        <div class="col-md-11">
-                            <div class="card card-endereco-profile">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h5 class="title-card">Pessoal</h5>
-                                        </div>
-                                        <div class="col-md-3" style="text-align: right;">
-                                           <button class="card-edit" data-toggle="modal" data-target="#modal-editar-endereco" style="cursor: pointer;"><span id="edit-endereco-pessoal">EDITAR</span></button>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @if(auth()->user()->requerente != null)
-                                                {{auth()->user()->requerente->endereco->rua}}
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @if(auth()->user()->requerente != null)
-                                                Número: {{auth()->user()->requerente->endereco->numero}}
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            @if(auth()->user()->requerente != null)
-                                                CEP {{auth()->user()->requerente->endereco->cep}} - {{auth()->user()->requerente->endereco->cidade}}, {{auth()->user()->requerente->endereco->estado}}
-                                            @endif
-                                        </div>
-                                    </div>
+                    @if(auth()->user()->requerente != null)
+                        <div class="col-md-12 form-group">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <h4 class="subtitle-form">ENDEREÇO</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-1"></div>
-                    </div>
-                </div>
-                
-                @foreach (auth()->user()->empresas as $empresa)
-                    <div class="col-md-6">
+                        <br>
                         <div class="form-row">
-                            <div class="col-md-11">
+                            <div class="col-md-12">
                                 <div class="card card-endereco-profile">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-9">
-                                                <h5 class="title-card">{{$empresa->nome}}</h5>
+                                                <h5 class="title-card">Pessoal</h5>
                                             </div>
                                             <div class="col-md-3" style="text-align: right;">
-                                                <button class="card-edit" onclick="window.location='{{route('empresas.edit', ['empresa' => $empresa])}}'"><span>EDITAR</span></button>
+                                            <button class="card-edit" data-toggle="modal" data-target="#modal-editar-endereco" style="cursor: pointer;"><span id="edit-endereco-pessoal">EDITAR</span></button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                {{$empresa->endereco->rua}}
+                                                @if(auth()->user()->requerente != null)
+                                                    {{auth()->user()->requerente->endereco->rua}}
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                Número: {{$empresa->endereco->numero}}
+                                                @if(auth()->user()->requerente != null)
+                                                    Número: {{auth()->user()->requerente->endereco->numero}}
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                CEP {{$empresa->endereco->cep}} - {{$empresa->endereco->cidade}}, {{$empresa->endereco->estado}}
+                                                @if(auth()->user()->requerente != null)
+                                                    CEP {{auth()->user()->requerente->endereco->cep}} - {{auth()->user()->requerente->endereco->cidade}}, {{auth()->user()->requerente->endereco->estado}}
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1"></div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <br>
+            @if(auth()->user()->requerente != null)
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <h5 class="subtitle-form">ENDEREÇO(S) DA(S) EMPRESA(S)/SERVIÇO(S)</h5>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                    @foreach (auth()->user()->empresas as $empresa)
+                        <div class="col-md-6">
+                            <div class="form-row">
+                                <div class="col-md-11">
+                                    <div class="card card-endereco-profile">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-9">
+                                                    <h5 class="title-card">{{$empresa->nome}}</h5>
+                                                </div>
+                                                <div class="col-md-3" style="text-align: right;">
+                                                    <button class="card-edit" onclick="window.location='{{route('empresas.edit', ['empresa' => $empresa])}}'"><span>EDITAR</span></button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{$empresa->endereco->rua}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Número: {{$empresa->endereco->numero}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    CEP {{$empresa->endereco->cep}} - {{$empresa->endereco->cidade}}, {{$empresa->endereco->estado}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             @endif
         </div>
     </div>

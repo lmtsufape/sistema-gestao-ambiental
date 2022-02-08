@@ -8,18 +8,84 @@ use App\Models\User;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use PDF;
 
 
 class BoletoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('isSecretario', auth()->user());
-        $vencidos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])->orderBy('created_at', 'DESC')->get();
-        $pendentes = BoletoCobranca::where('status_pagamento', null)->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'])->orderBy('created_at', 'DESC')->get();
-        $pagos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])->orderBy('created_at', 'DESC')->get();
-        return view('boleto.index', compact('vencidos', 'pendentes', 'pagos'));
+
+        $retorno = $this->filtrarBoletos($request);
+        $vencidos = $retorno[0];
+        $pendentes = $retorno[1];
+        $pagos = $retorno[2];
+        $dataAte = $retorno[3];
+        $dataDe = $retorno[4]; 
+        $filtro = $retorno[5];
+        return view('boleto.index', compact('vencidos', 'pendentes', 'pagos', 'dataAte', 'dataDe', 'filtro'));
+    }
+
+    private function filtrarBoletos(Request $request)
+    {
+        if($request->filtro != null && $request->filtro == "vencimento"){
+            if($request->dataDe != null){
+                if($request->dataAte != null){
+                    $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                    $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                    $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                }else{
+                    $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                    $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '>=', $request->dataDe]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                    $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                }
+            }elseif($request->dataAte != null){
+                $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+            }
+        }else{
+            if($request->dataDe != null){
+                if($request->dataAte != null){
+                    $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                    $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                    $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                }else{
+                    $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                    $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '>=', $request->dataDe]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                    $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->get();
+                }
+            }elseif($request->dataAte != null){
+                $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+                $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->get();
+            }else{
+                $vencidos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])->orderBy('created_at', 'DESC')->get();
+                $pendentes = BoletoCobranca::where('status_pagamento', null)->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'])->orderBy('created_at', 'DESC')->get();
+                $pagos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])->orderBy('created_at', 'DESC')->get();
+            }
+        }
+        $dataAte = $request->dataAte;
+        $dataDe = $request->dataDe;
+        $filtro = $request->filtro;
+
+        return [$vencidos, $pendentes, $pagos, $dataAte, $dataDe, $filtro];
+    }
+
+    /**
+     * Cria um pdf como relatório dos boletos.
+     *
+     */
+
+    public function gerarRelatorioBoletos(Request $request)
+    {
+        $retorno = $this->filtrarBoletos($request);
+        
+        $pdf = PDF::loadview('pdf/boletos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2], 
+            'dataAte' => $retorno[3], 'dataDe' => $retorno[4], 'filtro' => $retorno[5]]);
+        return $pdf->setPaper('a4')->stream('boletos.pdf');
     }
     
     /**

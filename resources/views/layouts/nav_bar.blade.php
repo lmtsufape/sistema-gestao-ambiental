@@ -106,7 +106,8 @@
                             {{Auth::user()->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
-                            <a class="dropdown-item" href="{{route('perfil')}}">{{ __('Minha conta') }}</a>
+                            <a class="dropdown-item" href="{{route('infoLogin')}}">{{ __('Informações de Login') }}</a>
+                            <a class="dropdown-item" href="{{route('perfil')}}">{{ __('Perfil') }}</a>
                             <!-- Authentication -->
                             <form method="POST" action="{{route('logout')}}">
                                 @csrf

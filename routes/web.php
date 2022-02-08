@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/boletos', [BoletoController::class, 'index'])->name('boletos.index');
+    Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
 
     Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
@@ -58,6 +59,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
+    Route::get('/informacoes-login', [UserController::class, 'infoLogin'])->name('infoLogin');
     Route::resource('documentos', DocumentoController::class);
     Route::resource('requerimentos', RequerimentoController::class);
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
