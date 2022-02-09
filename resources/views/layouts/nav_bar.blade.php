@@ -13,6 +13,9 @@
                     <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
                         <a class="nav-link" href="{{route('welcome')}}">Início</a>
                     </li>
+                    <li class="nav-item @if(request()->routeIs('noticias.index')) active @endif">
+                        <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
+                    </li>
                     <li class="nav-item @if(request()->routeIs('legislacao')) active @endif">
                         <a class="nav-link" href="{{route('legislacao')}}">Legislação</a>
                     </li>
@@ -92,6 +95,7 @@
                                 <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
                                 <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
                                 <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>
+                                <a class="dropdown-item" href="{{route('noticias.index')}}">{{__('Notícias')}}</a>
                                 <a class="dropdown-item" href="{{route('valores.index')}}">{{__('Valores')}}</a>
                                 <a class="dropdown-item" href="{{route('usuarios.index')}}">{{__('Usuários')}}</a>
                             </div>
