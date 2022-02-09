@@ -60,16 +60,20 @@
                                     @foreach ($noticias as $i => $noticia)
                                         @if ($i == 0)
                                             <div class="carousel-item active">
-                                                <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                </a>
                                                 <div class="carousel-caption d-none d-md-block">
-                                                    <a class="link-carousel" href="{{$noticia->link}}"><h5>{{$noticia->titulo}}</h5></a>
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>
                                         @else
                                             <div class="carousel-item">
-                                                <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                </a>
                                                 <div class="carousel-caption d-none d-md-block">
-                                                <a class="link-carousel" href="{{$noticia->link}}"><h5>{{$noticia->titulo}}</h5></a>
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>
                                         @endif
