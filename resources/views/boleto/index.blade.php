@@ -183,7 +183,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group">
                                 <label for="dataDe">{{__('De:')}}</label>
-                                <input type="date" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
+                                <input type="datetime-local" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
 
                                 @error('dataDe')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
@@ -193,7 +193,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="dataAte">{{__('Até:')}}</label>
-                                <input type="date" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
+                                <input type="datetime-local" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
 
                                 @error('dataAte')
                                     <div id="validationServer03Feedback" class="invalid-feedback">

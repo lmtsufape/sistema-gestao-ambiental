@@ -43,9 +43,9 @@
         <h4>Secretaria de Desenvolvimento Rural e Meio Ambiente de Garanhuns - PE</h4>
         <h5>Relatório dos boletos</h5>
         @if($filtro != null && $filtro == 'vencimento')
-            <h5>Apuração por data de vencimento de @if($dataDe != null){{date('d/m/Y', strtotime($dataDe))}} @else -/-/- @endif até @if($dataAte != null){{date('d/m/Y', strtotime($dataAte))}}@else -/-/- @endif</h5>
+            <h5>Apuração por data de vencimento de @if($dataDe != null){{date('d/m/Y H:i', strtotime($dataDe))}} @else -/-/- @endif até @if($dataAte != null){{date('d/m/Y H:i', strtotime($dataAte))}}@else -/-/- @endif</h5>
         @else
-            <h5>Apuração por data de criação de @if($dataDe != null){{date('d/m/Y', strtotime($dataDe))}} @else -/-/- @endif até @if($dataAte != null){{date('d/m/Y', strtotime($dataAte))}}@else -/-/- @endif</h5>
+            <h5>Apuração por data de criação de @if($dataDe != null){{date('d/m/Y H:i', strtotime($dataDe))}} @else -/-/- @endif até @if($dataAte != null){{date('d/m/Y H:i', strtotime($dataAte))}}@else -/-/- @endif</h5>
         @endif
     </div>
     <hr class="line-title">
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-md-12" style="text-align: right">
-                Valor total: <strong>R${{$total}}</strong>
+                Valor total: <strong>R${{number_format($total, 2, ',', '.')}}</strong>
             </div>
         </div>
     @else
@@ -133,7 +133,7 @@
         </div>
         <div class="row">
             <div class="col-md-12" style="text-align: right">
-                Valor total: <strong>R${{$total}}</strong>
+                Valor total: <strong>R${{number_format($total, 2, ',', '.')}}</strong>
             </div>
         </div>
     @else
@@ -181,7 +181,7 @@
         </div>
         <div class="row">
             <div class="col-md-12" style="text-align: right">
-                Valor total: <strong>R${{$total}}</strong>
+                Valor total: <strong>R${{number_format($total, 2, ',', '.')}}</strong>
             </div>
         </div>
     @else
