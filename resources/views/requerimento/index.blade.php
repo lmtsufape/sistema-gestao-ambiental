@@ -374,10 +374,10 @@
                                                     @endcan
                                                     @if($requerimento->visitas->count() > 0)
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                         @else
                                                             @can('isRequerente', \App\Models\User::class)
-                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img width="30" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                             @endcan
                                                         @endcan
                                                     @endif
@@ -449,7 +449,7 @@
                         @if(\App\Models\Visita::select('visitas.*')
                                     ->whereIn('requerimento_id', $requerimentos->pluck('id')->toArray())
                                     ->get()->count() > 0)
-                            @can('isSecretario', \App\Models\User::class)
+                            @can('isRequerente', \App\Models\User::class)
                                 <li>
                                     <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visitas a empresa">
@@ -458,17 +458,6 @@
                                         </div>
                                     </div>
                                 </li>
-                            @else
-                                @can('isRequerente', \App\Models\User::class)
-                                    <li>
-                                        <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                            <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visitas a empresa">
-                                            <div style="font-size: 15px;" class="aling-middle mx-3">
-                                                Visitas à empresa
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endcan
                             @endcan
                         @endif
                         @can('isRequerente', \App\Models\User::class)
