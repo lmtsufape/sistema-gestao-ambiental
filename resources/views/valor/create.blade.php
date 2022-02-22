@@ -59,7 +59,7 @@
                                     <select name="tipo_de_licença" id="tipo_de_licenca" class="form-control @error('tipo_de_licença') is-invalid @enderror" required>
                                         <option selected disabled value="">-- Selecione o tipo de licenças --</option>
                                         <option @if(old('tipo_de_licença') == $tipos_licenca['simplificada']) selected @endif value="{{$tipos_licenca['simplificada']}}">Simplificada</option>
-                                        <option @if(old('tipo_de_licença') == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prêvia</option>
+                                        <option @if(old('tipo_de_licença') == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prévia</option>
                                         <option @if(old('tipo_de_licença') == $tipos_licenca['instalacao']) selected @endif value="{{$tipos_licenca['instalacao']}}">Instalação</option>
                                         <option @if(old('tipo_de_licença') == $tipos_licenca['operacao']) selected @endif value="{{$tipos_licenca['operacao']}}">Operação</option>
                                     </select>

@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <input type="checkbox" class="checkbox-licenciamento" name="prêvia" id="prêvia" @if(old('prêvia', $documento->padrao_previa) != null) checked @endif>
-                                    <label for="prêvia">{{ __('Padrão na licença prêvia') }}</label>
+                                    <label for="prêvia">{{ __('Padrão na licença prévia') }}</label>
 
                                     @error('prêvia')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

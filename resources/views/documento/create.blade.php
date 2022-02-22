@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-10">
                 <div class="card card-borda-esquerda" style="width: 100%;">
-                    <div class="card-body">                        
+                    <div class="card-body">
                         <form method="POST" id="cria-documento" action="{{route('documentos.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-row">
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <input type="checkbox" class="checkbox-licenciamento" name="prêvia" id="prêvia" @if(old('prêvia') != null) checked @endif>
-                                    <label for="prêvia">{{ __('Padrão na licença prêvia') }}</label>
+                                    <label for="prêvia">{{ __('Padrão na licença prévia') }}</label>
 
                                     @error('prêvia')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
