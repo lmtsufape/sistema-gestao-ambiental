@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <input type="checkbox" class="checkbox-licenciamento" name="regularização" id="regularização" @if(old('regularização') != null) checked @endif>
-                                    <label for="regularização">{{ __('Padrão na licença de operação') }}</label>
+                                    <label for="regularização">{{ __('Padrão na licença de regularização') }}</label>
 
                                     @error('regularização')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
