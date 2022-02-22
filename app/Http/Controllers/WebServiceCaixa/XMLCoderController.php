@@ -103,67 +103,6 @@ class XMLCoderController extends Controller
     }
 
     /**
-     * Gera e envia o arquivo de remessa consultando o status do boleto passado.
-     *
-     * @param  App\Models\Requerimento $requerimento
-     * @return App\Models\BoletoCobranca $boleto
-     */
-
-    public function consultar_remessa(BoletoCobranca $boleto)
-    {
-        $beneficiario = new Pessoa();
-        $beneficiario->gerar_beneficiario();
-        $consulta = new ConsultarBoletoRemessa();
-        $consulta->setAttributes([
-            'codigo_beneficiario' => $beneficiario->cod_beneficiario,
-            'nosso_numero' => $boleto->nosso_numero,
-            'beneficiario' => $beneficiario,
-        ]);
-        $string = $consulta->gerar_remessa();
-        $caminho_arquivo = "remessas/";
-        $documento_nome = "consultar_boleto_remessa_".$boleto->requerimento->id.".xml";
-
-        $file = fopen(storage_path('').'/app/'.$caminho_arquivo.$documento_nome, 'w+');
-        fwrite($file, $string);
-        fclose($file);
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => ConsultarBoletoRemessa::URL,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$caminho_arquivo.$documento_nome),
-            CURLOPT_HTTPHEADER => array(
-                'SoapAction: CONSULTA_BOLETO',
-                'Content-Type: text/plain'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        $resultado = (new ConsultarBoletoRemessa())->to_array($response);
-        switch ($resultado['COD_RETORNO']) {
-            case '0 – Operação Efetuada EM ABERTO':
-                return BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'];
-            case '0 – Operação Efetuada BAIXA POR DEVOLUCAO':
-                return BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'];
-            case '0 – Operação Efetuada LIQUIDADO':
-                return BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'];
-            default:
-                # tratar excecao
-                break;
-        }
-    }
-
-    /**
      * Salva a resposta de incluir boleto ao boleto objeto.
      *
      * @param App\Models\BoletoCobranca $boleto
