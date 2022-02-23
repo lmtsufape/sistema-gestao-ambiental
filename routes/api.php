@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Api\TokenController;
+use App\Http\Controllers\Api\VisitaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 
@@ -18,26 +16,10 @@ use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/visitas', function (Request $request) {
-    return $request->user()->visitas()->with('requerimento', 'denuncia', 'solicitacao_poda')->get()->toArray();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/visitas', [VisitaController::class, 'index']);
 });
 
-Route::post('/sanctum/token', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-
-    $user = User::where('email', $request->email)->where('role', User::ROLE_ENUM['analista'])->first();
-
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
-    }
-
-    return $user->createToken($request->device_name)->plainTextToken;
-});
+Route::post('/sanctum/token', [TokenController::class, 'create']);
 
 Route::post('/teste/file', [XMLCoderController::class, 'teste'])->name('api.teste');
