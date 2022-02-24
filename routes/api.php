@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TokenController;
+use App\Http\Controllers\Api\VisitaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 
@@ -15,8 +16,10 @@ use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/visitas', [VisitaController::class, 'index']);
 });
+
+Route::post('/sanctum/token', [TokenController::class, 'create']);
 
 Route::post('/teste/file', [XMLCoderController::class, 'teste'])->name('api.teste');
