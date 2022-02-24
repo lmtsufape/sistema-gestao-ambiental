@@ -47,7 +47,7 @@ class XMLCoderController extends Controller
             'valor_multa' => '0000000000000.79',
             'mensagens_compensacao' => $requerimento->gerarMensagemCompesacao(),
         ]);
-    
+
         $boleto->salvar_arquivo($boleto->gerar_remessa(), $requerimento);
         $boleto->update();
 
@@ -55,7 +55,7 @@ class XMLCoderController extends Controller
     }
 
     /**
-     * Envia o arquivo de remessa incluir boleto para o web service da caixa e gera exceções 
+     * Envia o arquivo de remessa incluir boleto para o web service da caixa e gera exceções
      * ou gera a resposta e salva no boleto objeto.
      *
      * @param  App\Models\Requerimento $requerimento
@@ -81,9 +81,9 @@ class XMLCoderController extends Controller
                 'Content-Type: text/plain'
             ),
         ));
-        
+
         $response = curl_exec($curl);
-        
+
         curl_close($curl);
 
         $resultado = (new IncluirBoletoRemessa())->to_array($response);
@@ -100,19 +100,6 @@ class XMLCoderController extends Controller
                 throw new ErrorRemessaException($resultado['RETORNO']);
                 break;
         }
-    }
-
-    /**
-     * Gera e envia o arquivo de remessa consultando o status do boleto passado.
-     *
-     * @param  App\Models\Requerimento $requerimento
-     * @return App\Models\BoletoCobranca $boleto
-     */
-
-    public function consultar_remessa(BoletoCobranca $boleto)
-    {
-        $remessa = new ConsultarBoletoRemessa();
-   
     }
 
     /**
@@ -145,7 +132,7 @@ class XMLCoderController extends Controller
 
         $pagador->gerar_pagador($boleto->requerimento->empresa);
         $beneficiario->gerar_beneficiario();
-        
+
         $data_vencimento = now()->addDays(3)->format('Y-m-d');
 
         $remessa_alterar_boleto->setAttributes([
@@ -182,9 +169,9 @@ class XMLCoderController extends Controller
                 'Content-Type: text/plain'
             ),
         ));
-        
+
         $response = curl_exec($curl);
-        
+
         curl_close($curl);
 
         $resultado = (new IncluirBoletoRemessa())->to_array($response);

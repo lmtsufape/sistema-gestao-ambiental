@@ -159,7 +159,7 @@ abstract class Remessa extends BoletoCobranca
         $arvore = [];
 
         if ($lista_de_nos != null) {
-            if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length == 1 && $lista_de_nos->childNodes[0]->childNodes == null) {                
+            if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length == 1 && $lista_de_nos->childNodes[0]->childNodes->length == 0) {
                 return [$lista_de_nos->tagName => $lista_de_nos->childNodes->item(0)->data];
             } else if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length > 1) {
                 for ($i = 0; $i < $lista_de_nos->childNodes->length; $i++) {
