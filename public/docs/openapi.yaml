@@ -16,7 +16,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer vEhbPdaaf1DVc65gk4eZ863'
+          example: 'Bearer Ed63bgP6f1DaVk54ae8hvZc'
           schema:
             type: string
         -
@@ -35,55 +35,90 @@ paths:
             type: string
       responses:
         200:
-          description: success
+          description: 'visita de requerimento'
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  type: object
                 example:
-                  id: 1
-                  data_marcada: '2022-02-23'
-                  data_realizada: null
-                  requerimento_id: null
-                  denuncia_id: 2
-                  analista_id: 2
-                  created_at: '2022-02-22T18:55:21.000000Z'
-                  updated_at: '2022-02-22T18:55:21.000000Z'
-                  solicitacao_poda_id: null
-                properties:
-                  id:
-                    type: integer
-                    example: 1
-                    description: 'O identificador da visita'
-                  data_marcada:
-                    type: string
-                    example: '2022-02-23'
-                    description: 'A data marcada para realização da visita'
-                  data_realizada:
-                    type: string
-                    example: null
-                    description: 'A data em que a visita foi realizada'
-                  requerimento_id:
-                    type: string
-                    example: null
-                    description: 'O identificador do requerimento, se a visita não for para um requerimento o valor é null'
-                  denuncia_id:
-                    type: integer
-                    example: 2
-                    description: 'O identificador da denúncia, se a visita não for para uma denúncia o valor é null'
-                  analista_id:
-                    type: integer
-                    example: 2
-                  created_at:
-                    type: string
-                    example: '2022-02-22T18:55:21.000000Z'
-                  updated_at:
-                    type: string
-                    example: '2022-02-22T18:55:21.000000Z'
-                  solicitacao_poda_id:
-                    type: string
-                    example: null
-                    description: 'O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null'
+                  -
+                    id: 3
+                    data_marcada: '2022-03-17'
+                    data_realizada: null
+                    requerimento_id: 7
+                    denuncia_id: null
+                    analista_id: 2
+                    created_at: '2022-03-03T11:25:45.000000Z'
+                    updated_at: '2022-03-03T11:25:45.000000Z'
+                    solicitacao_poda_id: null
+                    denuncia: null
+                    requerimento:
+                      id: 7
+                      status: 6
+                      tipo: 1
+                      tipo_licenca: 1
+                      valor: '1'
+                      potencial_poluidor_atribuido: null
+                      definicao_valor: 'Definir de forma manual'
+                      valor_juros: null
+                      analista_id: 3
+                      represetante_id: null
+                      empresa_id: 1
+                      created_at: '2022-02-21T15:19:35.000000Z'
+                      updated_at: '2022-03-03T11:25:45.000000Z'
+                      analista:
+                        id: 3
+                        name: Protocolista
+                        email: protocolista@protocolista.com
+                        email_verified_at: '2022-02-21T14:09:31.000000Z'
+                        role: 3
+                        current_team_id: null
+                        profile_photo_path: null
+                        created_at: null
+                        updated_at: null
+                        profile_photo_url: 'https://ui-avatars.com/api/?name=P&color=7F9CF5&background=EBF4FF'
+                      empresa:
+                        id: 1
+                        nome: 'Info mundo tecnologia'
+                        cpf_cnpj: 32.970.478/0001-30
+                        eh_cnpj: true
+                        porte: 1
+                        user_id: 4
+                        telefone_id: 2
+                        endereco_id: 2
+                        created_at: null
+                        updated_at: null
+                        represetante_legal_id: null
+                        user:
+                          id: 4
+                          name: Empresario
+                          email: empresa@empresa.com
+                          email_verified_at: '2022-02-21T14:09:31.000000Z'
+                          role: 1
+                          current_team_id: null
+                          profile_photo_path: null
+                          created_at: null
+                          updated_at: null
+                          profile_photo_url: 'https://ui-avatars.com/api/?name=E&color=7F9CF5&background=EBF4FF'
+                        endereco:
+                          id: 2
+                          rua: 'Rua do Cateté'
+                          numero: '588'
+                          bairro: 'Jardim Monte Líbano'
+                          cidade: Garanhuns
+                          estado: PE
+                          complemento: Casa
+                          cep: 55292-000
+                          created_at: null
+                          updated_at: null
+                        telefone:
+                          id: 2
+                          numero: '(34) 98192-2518'
+                          created_at: null
+                          updated_at: null
+                    solicitacao_poda: null
         401:
           description: 'usuario nao autenticado'
           content:
@@ -157,15 +192,15 @@ paths:
                 email:
                   type: string
                   description: 'Email do usuário'
-                  example: dolores
+                  example: cupiditate
                 password:
                   type: string
                   description: 'Senha do usuário'
-                  example: est
+                  example: id
                 device_name:
                   type: string
                   description: 'Nome para identificação do token'
-                  example: voluptas
+                  example: aut
               required:
                 - email
                 - password
@@ -180,7 +215,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer b5fP8k3c6a6gV1eadDZ4Ehv'
+          example: 'Bearer bfvkgah683EZcDVed5Pa641'
           schema:
             type: string
         -
@@ -232,7 +267,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer gd8PDEb46Zf6a51eakvV3ch'
+          example: 'Bearer baEeVdgD65Pchk8f1346Zav'
           schema:
             type: string
         -
@@ -330,7 +365,7 @@ paths:
         in: path
         name: id
         description: 'O identificador da denúncia.'
-        example: 13
+        example: 14
         required: true
         schema:
           type: integer
@@ -343,7 +378,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer hfkP14Zbg3aeD65V68advcE'
+          example: 'Bearer dVbD1fh68vE4k5Pc6aeaZg3'
           schema:
             type: string
         -
@@ -431,7 +466,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the visita.'
-        example: 3
+        example: 17
         required: true
         schema:
           type: integer
@@ -444,7 +479,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer f38566evb1agVkdEhc4ZDPa'
+          example: 'Bearer cZ6vDPE81aVbgd3kf5e6h4a'
           schema:
             type: string
         -
@@ -542,7 +577,7 @@ paths:
         in: path
         name: id
         description: 'O identificador da empresa.'
-        example: 2
+        example: 1
         required: true
         schema:
           type: integer
