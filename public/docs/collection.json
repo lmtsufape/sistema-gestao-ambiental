@@ -1,0 +1,280 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8003"
+        }
+    ],
+    "info": {
+        "name": "Sistema de Gest\u00e3o Ambiental",
+        "_postman_id": "f3383885-cc13-407e-a98f-a6758fa155cf",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Visitas",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Consulta todas as visitas do usu\u00e1rio autenticado."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{   \"id\": 1,   \"data_marcada\": \"2022-02-23\",   \"data_realizada\": null,   \"requerimento_id\": null,   \"denuncia_id\": 2,   \"analista_id\": 2,   \"created_at\": \"2022-02-22T18:55:21.000000Z\",   \"updated_at\": \"2022-02-22T18:55:21.000000Z\",   \"solicitacao_poda_id\": null  }",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Autentica\u00e7\u00e3o",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/auth",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/auth"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"dolores\",\"password\":\"est\",\"device_name\":\"voluptas\"}"
+                        },
+                        "description": "Cria um token de autentica\u00e7\u00e3o para o usu\u00e1rio.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\":\"The given data was invalid.\",\"errors\":{\"email\":[\"The provided credentials are incorrect.\"]}}",
+                            "name": "Unprocessable Content"
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "4|ECTth7OLLJCAtH4HQDhhd1y6fiTmogoGvqGr9c6f",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Usu\u00e1rio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Consulta o usu\u00e1rio autenticado."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\": 1,\"name\": \"Margarita Block II\",\"email\": \"klein.turner@example.net\"}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Denuncia",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/denuncias\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/denuncias\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "13",
+                                    "description": "O identificador da den\u00fancia."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Consulta a den\u00fancia pelo id"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\": 1,\"empresa_id\": 1,\"empresa_nao_cadastrada\": \"\",\"endereco\": \"\",\"texto\": \"<p>aaaaaaaaaaaaaaaaaa<\\\/p>\",\"denunciante\": \"Nostrum elit rerum\",\"aprovacao\": 2,\"protocolo\": \"T1NT$yWfMjWL1zIgUbC2\",\"analista_id\": 2,\"created_at\": \"2022-02-22T18:54:31.000000Z\",\"updated_at\": \"2022-02-22T18:55:14.000000Z\"}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "3",
+                                    "description": "The ID of the visita."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Consulta a visita pelo identificador."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{   \"id\": 1,   \"data_marcada\": \"2022-02-23\",   \"data_realizada\": null,   \"requerimento_id\": null,   \"denuncia_id\": 2,   \"analista_id\": 2,   \"created_at\": \"2022-02-22T18:55:21.000000Z\",   \"updated_at\": \"2022-02-22T18:55:21.000000Z\",   \"solicitacao_poda_id\": null  }",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Empresa",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/empresas\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/empresas\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "2",
+                                    "description": "O identificador da empresa."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Consulta a empresa pelo identificador."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\": 1,\"nome\": \"Info mundo tecnologia\",\"cpf_cnpj\": \"32.970.478\\\/0001-30\",\"eh_cnpj\": true,\"porte\": 1,\"user_id\": 4,\"telefone_id\": 2,\"endereco_id\": 2,\"created_at\": null,\"updated_at\": null,\"represetante_legal_id\": null}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer"
+    }
+}
