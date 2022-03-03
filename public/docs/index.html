@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Sistema de Gestão Ambiental</title>
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+    <script>
+        var baseUrl = "http://localhost:8003";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-3.24.0.js"></script>
+
+    <script src="../docs/js/theme-default-3.24.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image" />
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                                                                            <ul id="tocify-header-0" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="introduction">
+                        <a href="#introduction">Introduction</a>
+                    </li>
+                                            
+                                                                    </ul>
+                                                <ul id="tocify-header-1" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="authenticating-requests">
+                        <a href="#authenticating-requests">Authenticating requests</a>
+                    </li>
+                                            
+                                                </ul>
+                    
+                    <ul id="tocify-header-2" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-visitas">
+                        <a href="#endpoints-GETapi-visitas">Visitas</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-users-auth">
+                        <a href="#endpoints-POSTapi-users-auth">Autenticação</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-users">
+                        <a href="#endpoints-GETapi-users">Usuário</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-denuncias--id-">
+                        <a href="#endpoints-GETapi-denuncias--id-">Denuncia</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-visitas--id-">
+                        <a href="#endpoints-GETapi-visitas--id-">Visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-empresas--id-">
+                        <a href="#endpoints-GETapi-empresas--id-">Empresa</a>
+                    </li>
+                                                    </ul>
+                            </ul>
+        
+                        
+            </div>
+
+            <ul class="toc-footer" id="toc-footer">
+                            <li><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                            <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+                    </ul>
+        <ul class="toc-footer" id="last-updated">
+        <li>Last updated: March 2 2022</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+<blockquote>
+<p>Base URL</p>
+</blockquote>
+<pre><code class="language-yaml">http://localhost:8003</code></pre>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer your-token"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
+
+        <h1 id="endpoints">Endpoints</h1>
+
+    
+
+            <h2 id="endpoints-GETapi-visitas">Visitas</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Consulta todas as visitas do usuário autenticado.</p>
+
+<span id="example-requests-GETapi-visitas">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8003/api/visitas" \
+    --header "Authorization: Bearer vEhbPdaaf1DVc65gk4eZ863" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/visitas"
+);
+
+const headers = {
+    "Authorization": "Bearer vEhbPdaaf1DVc65gk4eZ863",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-visitas">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;data_marcada&quot;: &quot;2022-02-23&quot;,
+    &quot;data_realizada&quot;: null,
+    &quot;requerimento_id&quot;: null,
+    &quot;denuncia_id&quot;: 2,
+    &quot;analista_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2022-02-22T18:55:21.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-02-22T18:55:21.000000Z&quot;,
+    &quot;solicitacao_poda_id&quot;: null
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-visitas" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-visitas"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-visitas"></code></pre>
+</span>
+<span id="execution-error-GETapi-visitas" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-visitas"></code></pre>
+</span>
+<form id="form-GETapi-visitas" data-method="GET"
+      data-path="api/visitas"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer vEhbPdaaf1DVc65gk4eZ863","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-visitas"
+                    onclick="tryItOut('GETapi-visitas');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-visitas"
+                    onclick="cancelTryOut('GETapi-visitas');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-visitas" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/visitas</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-visitas" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-visitas"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da visita</p>
+        </p>
+            <p>
+            <b><code>data_marcada</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>A data marcada para realização da visita</p>
+        </p>
+            <p>
+            <b><code>data_realizada</code></b>&nbsp;&nbsp;  &nbsp;
+<br>
+<p>A data em que a visita foi realizada</p>
+        </p>
+            <p>
+            <b><code>requerimento_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador do requerimento, se a visita não for para um requerimento o valor é null</p>
+        </p>
+            <p>
+            <b><code>denuncia_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da denúncia, se a visita não for para uma denúncia o valor é null</p>
+        </p>
+            <p>
+            <b><code>solicitacao_poda_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null</p>
+        </p>
+                <h2 id="endpoints-POSTapi-users-auth">Autenticação</h2>
+
+<p>
+</p>
+
+<p>Cria um token de autenticação para o usuário.</p>
+
+<span id="example-requests-POSTapi-users-auth">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8003/api/users/auth" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"email\": \"dolores\",
+    \"password\": \"est\",
+    \"device_name\": \"voluptas\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/users/auth"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "dolores",
+    "password": "est",
+    "device_name": "voluptas"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-users-auth">
+            <blockquote>
+            <p>Example response (422, Unprocessable Content):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;The given data was invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;The provided credentials are incorrect.&quot;
+        ]
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">4|ECTth7OLLJCAtH4HQDhhd1y6fiTmogoGvqGr9c6f</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-users-auth" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-users-auth"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-users-auth"></code></pre>
+</span>
+<span id="execution-error-POSTapi-users-auth" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-users-auth"></code></pre>
+</span>
+<form id="form-POSTapi-users-auth" data-method="POST"
+      data-path="api/users/auth"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-users-auth', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-users-auth"
+                    onclick="tryItOut('POSTapi-users-auth');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-users-auth"
+                    onclick="cancelTryOut('POSTapi-users-auth');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-users-auth" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/users/auth</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="POSTapi-users-auth"
+               value="dolores"
+               data-component="body" hidden>
+    <br>
+<p>Email do usuário</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTapi-users-auth"
+               value="est"
+               data-component="body" hidden>
+    <br>
+<p>Senha do usuário</p>
+        </p>
+                <p>
+            <b><code>device_name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="device_name"
+               data-endpoint="POSTapi-users-auth"
+               value="voluptas"
+               data-component="body" hidden>
+    <br>
+<p>Nome para identificação do token</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-GETapi-users">Usuário</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Consulta o usuário autenticado.</p>
+
+<span id="example-requests-GETapi-users">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8003/api/users" \
+    --header "Authorization: Bearer b5fP8k3c6a6gV1eadDZ4Ehv" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/users"
+);
+
+const headers = {
+    "Authorization": "Bearer b5fP8k3c6a6gV1eadDZ4Ehv",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-users">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Margarita Block II&quot;,
+    &quot;email&quot;: &quot;klein.turner@example.net&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-users" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-users"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-users"></code></pre>
+</span>
+<span id="execution-error-GETapi-users" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-users"></code></pre>
+</span>
+<form id="form-GETapi-users" data-method="GET"
+      data-path="api/users"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer b5fP8k3c6a6gV1eadDZ4Ehv","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-users', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-users"
+                    onclick="tryItOut('GETapi-users');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-users"
+                    onclick="cancelTryOut('GETapi-users');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-users" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/users</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-users" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-users"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do usuário</p>
+        </p>
+            <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Nome do usuário</p>
+        </p>
+            <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>E-mail do usuário</p>
+        </p>
+                <h2 id="endpoints-GETapi-denuncias--id-">Denuncia</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Consulta a denúncia pelo id</p>
+
+<span id="example-requests-GETapi-denuncias--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8003/api/denuncias/13" \
+    --header "Authorization: Bearer gd8PDEb46Zf6a51eakvV3ch" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/denuncias/13"
+);
+
+const headers = {
+    "Authorization": "Bearer gd8PDEb46Zf6a51eakvV3ch",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-denuncias--id-">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;empresa_id&quot;: 1,
+    &quot;empresa_nao_cadastrada&quot;: &quot;&quot;,
+    &quot;endereco&quot;: &quot;&quot;,
+    &quot;texto&quot;: &quot;&lt;p&gt;aaaaaaaaaaaaaaaaaa&lt;/p&gt;&quot;,
+    &quot;denunciante&quot;: &quot;Nostrum elit rerum&quot;,
+    &quot;aprovacao&quot;: 2,
+    &quot;protocolo&quot;: &quot;T1NT$yWfMjWL1zIgUbC2&quot;,
+    &quot;analista_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2022-02-22T18:54:31.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-02-22T18:55:14.000000Z&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-denuncias--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-denuncias--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-denuncias--id-"></code></pre>
+</span>
+<span id="execution-error-GETapi-denuncias--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-denuncias--id-"></code></pre>
+</span>
+<form id="form-GETapi-denuncias--id-" data-method="GET"
+      data-path="api/denuncias/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer gd8PDEb46Zf6a51eakvV3ch","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-denuncias--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-denuncias--id-"
+                    onclick="tryItOut('GETapi-denuncias--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-denuncias--id-"
+                    onclick="cancelTryOut('GETapi-denuncias--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-denuncias--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/denuncias/{id}</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-denuncias--id-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-denuncias--id-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="GETapi-denuncias--id-"
+               value="13"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da denúncia.</p>
+            </p>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da denúncia</p>
+        </p>
+            <p>
+            <b><code>empresa_nao_cadastrada</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Nome da empresa, caso não esteja cadastrada no sistema.</p>
+        </p>
+            <p>
+            <b><code>endereco</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Endereco da empresa, caso não esteja cadastrada no sistema.</p>
+        </p>
+            <p>
+            <b><code>texto</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Texto informando o motivo da denúncia.</p>
+        </p>
+            <p>
+            <b><code>denunciante</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Nome do denunciante.</p>
+        </p>
+            <p>
+            <b><code>aprovacao</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Estado da avaliação da denúncia.</p>
+        </p>
+            <p>
+            <b><code>protocolo</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Protocolo gerado ao criar a denúncia.</p>
+        </p>
+            <p>
+            <b><code>empresa_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador da empresa, caso esteja cadastrada no sistema.</p>
+        </p>
+            <p>
+            <b><code>analista_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do usuário analista atribuido a denúncia.</p>
+        </p>
+                <h2 id="endpoints-GETapi-visitas--id-">Visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Consulta a visita pelo identificador.</p>
+
+<span id="example-requests-GETapi-visitas--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8003/api/visitas/3" \
+    --header "Authorization: Bearer hfkP14Zbg3aeD65V68advcE" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/visitas/3"
+);
+
+const headers = {
+    "Authorization": "Bearer hfkP14Zbg3aeD65V68advcE",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-visitas--id-">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;data_marcada&quot;: &quot;2022-02-23&quot;,
+    &quot;data_realizada&quot;: null,
+    &quot;requerimento_id&quot;: null,
+    &quot;denuncia_id&quot;: 2,
+    &quot;analista_id&quot;: 2,
+    &quot;created_at&quot;: &quot;2022-02-22T18:55:21.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-02-22T18:55:21.000000Z&quot;,
+    &quot;solicitacao_poda_id&quot;: null
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-visitas--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-visitas--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-visitas--id-"></code></pre>
+</span>
+<span id="execution-error-GETapi-visitas--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-visitas--id-"></code></pre>
+</span>
+<form id="form-GETapi-visitas--id-" data-method="GET"
+      data-path="api/visitas/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer hfkP14Zbg3aeD65V68advcE","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-visitas--id-"
+                    onclick="tryItOut('GETapi-visitas--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-visitas--id-"
+                    onclick="cancelTryOut('GETapi-visitas--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-visitas--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/visitas/{id}</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-visitas--id-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-visitas--id-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="GETapi-visitas--id-"
+               value="3"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the visita.</p>
+            </p>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da visita</p>
+        </p>
+            <p>
+            <b><code>data_marcada</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>A data marcada para realização da visita</p>
+        </p>
+            <p>
+            <b><code>data_realizada</code></b>&nbsp;&nbsp;  &nbsp;
+<br>
+<p>A data em que a visita foi realizada</p>
+        </p>
+            <p>
+            <b><code>analista_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do usuário analista atribuido a visita.</p>
+        </p>
+            <p>
+            <b><code>requerimento_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador do requerimento, se a visita não for para um requerimento o valor é null</p>
+        </p>
+            <p>
+            <b><code>denuncia_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da denúncia, se a visita não for para uma denúncia o valor é null</p>
+        </p>
+            <p>
+            <b><code>solicitacao_poda_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null</p>
+        </p>
+                <h2 id="endpoints-GETapi-empresas--id-">Empresa</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Consulta a empresa pelo identificador.</p>
+
+<span id="example-requests-GETapi-empresas--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8003/api/empresas/2" \
+    --header "Authorization: Bearer f38566evb1agVkdEhc4ZDPa" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8003/api/empresas/2"
+);
+
+const headers = {
+    "Authorization": "Bearer f38566evb1agVkdEhc4ZDPa",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-empresas--id-">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;nome&quot;: &quot;Info mundo tecnologia&quot;,
+    &quot;cpf_cnpj&quot;: &quot;32.970.478/0001-30&quot;,
+    &quot;eh_cnpj&quot;: true,
+    &quot;porte&quot;: 1,
+    &quot;user_id&quot;: 4,
+    &quot;telefone_id&quot;: 2,
+    &quot;endereco_id&quot;: 2,
+    &quot;created_at&quot;: null,
+    &quot;updated_at&quot;: null,
+    &quot;represetante_legal_id&quot;: null
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-empresas--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-empresas--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-empresas--id-"></code></pre>
+</span>
+<span id="execution-error-GETapi-empresas--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-empresas--id-"></code></pre>
+</span>
+<form id="form-GETapi-empresas--id-" data-method="GET"
+      data-path="api/empresas/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer f38566evb1agVkdEhc4ZDPa","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-empresas--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-empresas--id-"
+                    onclick="tryItOut('GETapi-empresas--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-empresas--id-"
+                    onclick="cancelTryOut('GETapi-empresas--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-empresas--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/empresas/{id}</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-empresas--id-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-empresas--id-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="GETapi-empresas--id-"
+               value="2"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da empresa.</p>
+            </p>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da empresa</p>
+        </p>
+            <p>
+            <b><code>nome</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Nome da empresa.</p>
+        </p>
+            <p>
+            <b><code>eh_cnpj</code></b>&nbsp;&nbsp;<small>boolean</small>  &nbsp;
+<br>
+<p>Indica se o campo cpf_cnpj é um cnpj.</p>
+        </p>
+            <p>
+            <b><code>cpf_cnpj</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>CPF ou CNPJ da empresa.</p>
+        </p>
+            <p>
+            <b><code>porte</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Porte da empresa.</p>
+        </p>
+            <p>
+            <b><code>represetante_legal_id</code></b>&nbsp;&nbsp;  &nbsp;
+<br>
+<p>Identificador do representante legal da empresa.</p>
+        </p>
+            <p>
+            <b><code>user_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do usuário que criou a empresa.</p>
+        </p>
+            <p>
+            <b><code>telefone_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do telefone da empresa.</p>
+        </p>
+            <p>
+            <b><code>endereco_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Identificador do endereço da empresa.</p>
+        </p>
+        
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>
