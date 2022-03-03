@@ -12,7 +12,22 @@ use Illuminate\Http\Request;
 class TokenController extends Controller
 {
     /**
-     * Return a listing of the resource.
+     *
+     * Autenticação
+     * 
+     * Cria um token de autenticação para o usuário.
+     *
+     * @unauthenticated
+     *
+     * @response 422 scenario="Unprocessable Content" {"message":"The given data was invalid.","errors":{"email":["The provided credentials are incorrect."]}}
+     *
+     * @response 200 scenario="success" 4|ECTth7OLLJCAtH4HQDhhd1y6fiTmogoGvqGr9c6f
+     *
+     * @bodyParam email string required Email do usuário
+     *
+     * @bodyParam password string required Senha do usuário
+     *
+     * @bodyParam device_name string required Nome para identificação do token
      *
      * @return \Illuminate\Http\Response
      */
