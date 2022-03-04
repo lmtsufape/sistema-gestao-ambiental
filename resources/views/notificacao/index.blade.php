@@ -40,7 +40,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($empresa->notificacoes as $i => $notificacao)
+                                    @foreach ($notificacoes as $i => $notificacao)
                                         <tr>
                                             <th>{{$i+1}}</th>
                                             <td>{{date('d/m/Y', strtotime($notificacao->created_at))}}</td>
@@ -58,6 +58,11 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="col-md-10">
+                {{$notificacoes->links()}}
             </div>
         </div>
     </div>
