@@ -38,12 +38,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label id="labelImagem" for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label>
                                     <br>
                                     <label class="label-input" for="enviar_arquivo"></label>
                                     <label for="label-input-arquivo" for="enviar_arquivo">Nenhum arquivo selecionado</label>
                                     <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal" required>
-                                
+
                                     @error('imagem_principal')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -79,7 +79,10 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" class="btn btn-success submeterFormBotao" form="cria-noticia" style="width: 100%">Salvar</button>
+                                <button id="submeterFormBotao" type="submit" class="btn btn-success submeterFormBotao" form="cria-noticia" style="width: 100%">Salvar</button>
+                                <div id="msgImagemNull" class="invalid-feedback">
+                                  O campo imagem principal é obrigatório.
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -89,6 +92,16 @@
     </div>
     <script>
         CKEDITOR.replace('texto');
+
+        document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+        if (document.getElementById("enviar_arquivo").files.length == 0 ) {
+            $('#labelImagem').focus();
+            $('#msgImagemNull').show();
+            event.preventDefault();
+        } else {
+            $('#msgImagemNull').hide();
+        }
+    });
 
         $(document).ready(function() {
             $(".input-enviar-arquivo").change(function(){
