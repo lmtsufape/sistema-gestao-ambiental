@@ -54,13 +54,25 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" class="form-control" type="text"  value="{{$solicitacao->endereco->rua}}" disabled>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="numero" class="form-control " type="text"  value="{{$solicitacao->endereco->numero}}" disabled>
+                                </div>
+                                @php
+                                    $areas = App\Models\SolicitacaoPoda::AREA_ENUM;
+                                @endphp
+                                <div class="col-md-6 form-group">
+                                    <label for="area">{{ __('Área') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select disabled class="form-control" type="text" name="area" id="area">
+                                        <option @if($solicitacao->area == $areas['publica']) selected @endif>Pública</option>
+                                        <option @if($solicitacao->area == $areas['privada']) selected @endif>Privada</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">

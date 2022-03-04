@@ -16,12 +16,18 @@ class SolicitacaoPoda extends Model
         'analista_id',
         'autorizacao_ambiental',
         'comentario',
+        'area',
     ];
 
     public const STATUS_ENUM = [
         'registrada' => 1,
         'deferido'   => 2,
         'indeferido' => 3,
+    ];
+
+    public const AREA_ENUM = [
+        'publica' => 1,
+        'privada' => 2,
     ];
 
     public function requerente()

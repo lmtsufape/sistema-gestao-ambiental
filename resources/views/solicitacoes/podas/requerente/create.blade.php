@@ -65,7 +65,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" required autocomplete="rua">
                                     @error('rua')
@@ -78,6 +78,22 @@
                                     <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="numero" class="form-control  @error('numero') is-invalid @enderror" type="text" name="numero" value="{{old('numero')}}" required autocomplete="numero">
                                     @error('numero')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                @php
+                                    $areas = App\Models\SolicitacaoPoda::AREA_ENUM;
+                                @endphp
+                                <div class="col-md-6 form-group">
+                                    <label for="area">{{ __('Área') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select class="form-control" @error('area') is-invalid @enderror" type="text" name="area" id="area">
+                                        <option value="" selected disabled >-- Selecione a área --</option>
+                                        <option @if(old('area') == $areas['publica']) selected @endif value="{{ $areas['publica'] }}">Pública</option>
+                                        <option @if(old('area') == $areas['privada']) selected @endif value="{{ $areas['privada'] }}">Privada</option>
+                                    </select>
+                                    @error('area')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
