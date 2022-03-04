@@ -76,7 +76,7 @@
                                                         {{__('Simplificada')}}
                                                         @break
                                                     @case($tipos_licenca['previa'])
-                                                        {{__('Prêvia')}}
+                                                        {{__('Prévia')}}
                                                         @break
                                                     @case($tipos_licenca['instalacao'])
                                                         {{__('Instalação')}}

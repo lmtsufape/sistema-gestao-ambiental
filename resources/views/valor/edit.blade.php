@@ -75,12 +75,12 @@
                                         <option selected disabled value="">-- Selecione o tipo de licenças --</option>
                                         @if (old('tipo_de_licença') !=null)
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['simplificada']) selected @endif value="{{$tipos_licenca['simplificada']}}">Simplificada</option>
-                                            <option @if(old('tipo_de_licença') == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prêvia</option>
+                                            <option @if(old('tipo_de_licença') == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prévia</option>
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['instalacao']) selected @endif value="{{$tipos_licenca['instalacao']}}">Instalação</option>
                                             <option @if(old('tipo_de_licença') == $tipos_licenca['operacao']) selected @endif value="{{$tipos_licenca['operacao']}}">Operação</option>
                                         @else
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['simplificada']) selected @endif value="{{$tipos_licenca['simplificada']}}">Simplificada</option>
-                                            <option @if($valor->tipo_de_licenca == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prêvia</option>
+                                            <option @if($valor->tipo_de_licenca == $tipos_licenca['previa']) selected @endif value="{{$tipos_licenca['previa']}}">Prévia</option>
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['instalacao']) selected @endif value="{{$tipos_licenca['instalacao']}}">Instalação</option>
                                             <option @if($valor->tipo_de_licenca == $tipos_licenca['operacao']) selected @endif value="{{$tipos_licenca['operacao']}}">Operação</option>
                                         @endif

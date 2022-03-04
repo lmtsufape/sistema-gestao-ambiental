@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="shadow card"  style="width: 100%; margin-top: 1rem;">
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
@@ -335,7 +335,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 @can('isSecretario', \App\Models\User::class)
                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                         <div class="shadow card" style="width: 50%; margin-top: 1rem;">
@@ -390,7 +390,7 @@
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" required onchange="defaultDocs(this)">
                                         <option disabled selected value="">-- Selecione o tipo de licença --</option>
                                         <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                        <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prévia</option>
                                         <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
                                         <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
                                         <option @if(old('licença') == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
@@ -423,7 +423,7 @@
                                 <div id="div_taxa_servico_manual" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else display: none;  @endif">
                                     <label for="valor_da_taxa_de_serviço">{{__('Valor da taxa de serviço')}}</label>
                                     <input type="number" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço')}}">
-                                
+
                                     @error('valor_da_taxa_de_serviço')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
                                             {{ $message }}
@@ -434,7 +434,7 @@
                                 <div id="div_taxa_servico_juros" class="col-md-6 form-group" style="@error('valor_do_juros') display: block; @else display: none; @endif">
                                     <label for="valor_do_juros">{{__('Valor do juros cobrado em porcentagem')}}</label>
                                     <input type="number" name="valor_do_juros" class="form-control" @error('valor_do_juros') is-invalid @enderror placeholder="Digite a porcentagem cobrada a mais" value="{{old('valor_do_juros')}}">
-                                
+
                                     @error('valor_do_juros')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
                                             {{ $message }}
@@ -486,7 +486,7 @@
                                     <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" onchange="defaultDocs(this)">
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
-                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prêvia</option>
+                                        <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['previa']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['previa']}}">Prévia</option>
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['instalacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['instalacao']}}">Instalação</option>
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['operacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['operacao']}}">Operação</option>
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['regularizacao']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['regularizacao']}}">Regularização</option>
@@ -519,7 +519,7 @@
                                 <div id="div_taxa_servico_manual_edit" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else @if($requerimento->definicao_valor == $definir_valor['manual'])  display: block; @else display: none; @endif @endif">
                                     <label for="valor_da_taxa_de_serviço_edit">{{__('Valor da taxa de serviço')}}</label>
                                     <input type="number" id="valor_da_taxa_de_serviço_edit" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço', $requerimento->valor)}}">
-                                
+
                                     @error('valor_da_taxa_de_serviço')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
                                             {{ $message }}
@@ -530,7 +530,7 @@
                                 <div id="div_taxa_servico_juros_edit" class="col-md-6 form-group" style="@error('valor_do_juros') display: block; @else @if($requerimento->definicao_valor == $definir_valor['automatica_com_juros'])  display: block; @else display: none; @endif  @endif">
                                     <label for="valor_do_juros_edit">{{__('Valor do juros cobrado em porcentagem')}}</label>
                                     <input type="number" id="valor_do_juros_edit" name="valor_do_juros" class="form-control" @error('valor_do_juros') is-invalid @enderror placeholder="Digite a porcentagem cobrada a mais" value="{{old('valor_do_juros', $requerimento->valor_juros)}}">
-                                
+
                                     @error('valor_do_juros')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
                                             {{ $message }}

@@ -37,13 +37,13 @@ class ConsultarBoletoRemessa extends Remessa
      *
      * @return String $cabeçalho
     */
-    public function gerar_remessa() 
+    public function gerar_remessa()
     {
         return "<?xml version='1.0' encoding='ISO8859-1'?>
                 <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
                 <soapenv:Header/>
                 <soapenv:Body>
-                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
+                <consultacobrancabancaria:SERVICO_ENTRADA xmlns:consultacobrancabancaria='http://caixa.gov.br/sibar/consulta_cobranca_bancaria/boleto' xmlns:sibar_base='http://caixa.gov.br/sibar'>
                 \t<sibar_base:HEADER>
                 \t\t<VERSAO>".$this->versao."</VERSAO>
                 \t\t<AUTENTICACAO>".$this->gerar_autenticacao()."</AUTENTICACAO>
@@ -58,7 +58,7 @@ class ConsultarBoletoRemessa extends Remessa
                 \t\t\t<NOSSO_NUMERO>".$this->nosso_numero."</NOSSO_NUMERO>
                 \t\t</CONSULTA_BOLETO>
                 \t</DADOS>
-                </manutencaocobrancabancaria:SERVICO_ENTRADA>
+                </consultacobrancabancaria:SERVICO_ENTRADA>
                 </soapenv:Body>
                 </soapenv:Envelope>";
     }
@@ -70,7 +70,7 @@ class ConsultarBoletoRemessa extends Remessa
 
     private function gerar_autenticacao()
     {
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj); 
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj);
 
         $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
