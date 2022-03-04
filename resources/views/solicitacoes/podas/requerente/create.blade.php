@@ -113,7 +113,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }} <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar a espécie da muda e o local onde será plantada)</span></label>
+                                    <label for="comentario">{{ __('Comentário') }}</label>
                                     <textarea class="form-control" @error('comentario') is-invalid @enderror" type="text" name="comentario" id="comentario">{{old('comentario', '')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
