@@ -41,6 +41,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Analista</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -52,6 +53,7 @@
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
+                                                <td style="text-align: center">{{$denuncia->analista_id ? $denuncia->analista->name : ''}}</td>
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
@@ -60,7 +62,6 @@
                                                                 data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                         @endcan
                                                         <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
-                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -80,6 +81,8 @@
                                             <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Analista</th>
+                                            <th scope="col" style="text-align: center">Agendada</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -91,6 +94,8 @@
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
+                                                <td style="text-align: center">{{$denuncia->analista_id ? $denuncia->analista->name : ''}}</td>
+                                                <td style="text-align: center">{{$denuncia->visita ? date('d/m/Y', strtotime($denuncia->visita->data_marcada)) : ''}}</td>
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
@@ -99,7 +104,6 @@
                                                                     data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img class="icon-licenciamento" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endcan
                                                         <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
-                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -119,6 +123,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Analista</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -130,6 +135,7 @@
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
                                                 </td>
+                                                <td style="text-align: center">{{$denuncia->analista_id ? $denuncia->analista->name : ''}}</td>
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
@@ -138,7 +144,6 @@
                                                                 data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
                                                         @endcan
                                                         <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
-                                                        <a data-toggle="modal" data-target="#modal-imagens-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -169,6 +174,12 @@
                                         Atribuir denúncia a um analista
                                     </div>
                                 </div>
+                                <div title="Avaliar denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/file-warning-svgrepo-com.svg')}}" alt="Avaliar denúncia">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Avaliar denúncia
+                                    </div>
+                                </div>
                                 <div title="Agendar uma visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                     <img class="aling-middle" width="20" src="{{asset('img/agenda-svgrepo-com.svg')}}" alt="Agendar uma visita">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
@@ -180,12 +191,6 @@
                                 <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Relato da denúncia
-                                </div>
-                            </div>
-                            <div title="Mídia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia anexada a denúncia">
-                                <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Mídia anexada a denúncia
                                 </div>
                             </div>
                         </li>
@@ -207,32 +212,50 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="formRequerimento" method="POST" action="">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="row form-row">
-                                <div id="avisoReq" class="col-12" style="font-family: 'Roboto', sans-serif; margin-bottom:10px;">Relato descrito pelo denunciante:</div>
-                                <div class="col-md-12 form-group">
-                                    <div class="texto-denuncia">
-                                        {!! $denuncia->texto !!}
-                                    </div>
+                    <div class="modal-body">
+                        <div class="row form-row">
+                            <label for="relato">{{__('Relato descrito pelo denunciante:')}}</label>
+                            <div class="col-md-12 form-group">
+                                <div class="texto-denuncia">
+                                    {!! $denuncia->texto !!}
                                 </div>
                             </div>
-                            <div class="form-row">
-                                @if ($denuncia->denunciante != null)
-                                    <div class="col-md-12 form-group">
-                                        <label for="denunciante">{{__('Denunciante')}}</label>
-                                        <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
-                                    </div>
-                                @endif
-                            </div>
                         </div>
-                    </form>
+                        <div class="form-row">
+                            @if ($denuncia->denunciante != null)
+                                <div class="col-md-12 form-group">
+                                    <label for="denunciante">{{__('Denunciante')}}</label>
+                                    <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
+                                </div>
+                            @endif
+                        </div>
+                        @if($denuncia->fotos->first() != null)
+                            <div class="row form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="imagens_anexadas">{{__('Imagens anexadas junto a denúncia:')}}</label>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="row">
+                            @foreach ($denuncia->fotos as $foto)
+                                <div class="col-md-6">
+                                    <div class="card" style="width: 100%;">
+                                        <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                        @if ($foto->comentario != null)
+                                            <div class="card-body">
+                                                <p class="card-text">{{$foto->comentario}}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
+        {{--<div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -293,7 +316,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
 
         <div class="modal fade" id="modal-avaliar-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-imagens-{{$denuncia->id}}" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -377,7 +400,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="form-criar-visita-denuncia">Criar</button>
+                    <button type="submit" class="btn btn-success" form="form-criar-visita-denuncia">Agendar</button>
                 </div>
             </div>
         </div>
@@ -415,7 +438,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-atribuir-analista-denuncia">Criar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
                     </div>
                 </div>
             </div>
