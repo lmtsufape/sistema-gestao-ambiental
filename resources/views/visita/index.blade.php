@@ -98,7 +98,7 @@
                                                     @elseif($visita->relatorioAceito())
                                                         <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a>
                                                     @endif
-                                                    @if($visita->notificacao != null)<a title="Notificações" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
+                                                    @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
                                                     @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
@@ -137,6 +137,11 @@
                         @endif
                     </div>
                 </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$visitas->links()}}
+                    </div>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
@@ -166,7 +171,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($visitas->where('requerimento_id', '!=', null)->first() != null)
+                            @if($visitas->where('requerimento_id', '!=', null)->first() != null || $visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">

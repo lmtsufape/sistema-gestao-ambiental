@@ -17,7 +17,7 @@ class SetorController extends Controller
     {
         $this->authorize('isSecretario', User::class);
 
-        $setores = Setor::orderBy('nome')->get();
+        $setores = Setor::orderBy('nome')->paginate(20);
         return view('setor.index', compact('setores'));
     }
 
@@ -66,7 +66,7 @@ class SetorController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $setor = Setor::find($id);
-        $cnaes = Cnae::where('setor_id', '=', $setor->id)->orderBy('nome', 'ASC')->get();
+        $cnaes = Cnae::where('setor_id', '=', $setor->id)->orderBy('nome', 'ASC')->paginate(20);
         return view('setor.show', compact('setor', 'cnaes'));
     }
 

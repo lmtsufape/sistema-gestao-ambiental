@@ -16,7 +16,7 @@ class ValorController extends Controller
     public function index()
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $valores = ValorRequerimento::orderBy('created_at')->get();
+        $valores = ValorRequerimento::orderBy('created_at')->paginate(20);
 
         $potenciais_poluidores = ValorRequerimento::POTENCIAL_POLUIDOR_ENUM;
         $portes = ValorRequerimento::PORTE_ENUM;

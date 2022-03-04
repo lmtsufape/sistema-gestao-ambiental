@@ -18,7 +18,7 @@ class CnaeController extends Controller
     {
         $this->authorize('isSecretario', User::class);
 
-        $cnaes = Cnae::orderBy('nome')->get();
+        $cnaes = Cnae::orderBy('nome')->paginate(20);
         return view('cnae.index', compact('cnaes'));
     }
 

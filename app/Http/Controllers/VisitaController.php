@@ -20,9 +20,9 @@ class VisitaController extends Controller
         $this->authorize('isSecretarioOrAnalista', User::class);
         $visitas = collect();
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
-            $visitas = Visita::orderBy('data_marcada')->get();
+            $visitas = Visita::orderBy('data_marcada')->paginate(10);
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
-            $visitas = auth()->user()->visitas;
+            $visitas = Visita::where('analista_id', auth()->user()->id)->paginate(10);
         }
 
         return view('visita.index', compact('visitas'));
