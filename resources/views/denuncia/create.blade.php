@@ -349,21 +349,16 @@
 
 <script>
     var $videoId = 1;
-    ClassicEditor
-        .create( document.querySelector( '#denuncia-ckeditor' ) )
-        .then( editor => {
-             document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
-                const editorData = editor.getData();
+    CKEDITOR.replace('denuncia-ckeditor');
 
-                if(editorData == ""){
-                    alert("O campo de denúncia não pode estar vazio");
-                    event.preventDefault();
-                }
-            } );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+    document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+        var messageLength = CKEDITOR.instances['denuncia-ckeditor'].getData().replace(/<[^>]*>/gi, '').length;
+        if(!messageLength){
+            alert("O campo de denúncia não pode estar vazio");
+            event.preventDefault();
+        }
+    });
+
 
     function addImagem() {
         var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
