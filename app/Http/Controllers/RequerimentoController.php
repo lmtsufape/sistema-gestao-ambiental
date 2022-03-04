@@ -146,8 +146,9 @@ class RequerimentoController extends Controller
         $protocolistas = User::protocolistas();
         $documentos = Documento::orderBy('nome')->get();
         $visita = true;
+        $definir_valor = Requerimento::DEFINICAO_VALOR_ENUM;
 
-        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita'));
+        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita', 'definir_valor'));
     }
 
     /**

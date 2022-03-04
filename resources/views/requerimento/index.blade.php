@@ -461,7 +461,7 @@
                             @endcan
                         @endif
                         @can('isRequerente', \App\Models\User::class)
-                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']))
+                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
                                 <li>
                                     <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
@@ -470,7 +470,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados']))
+                            @elseif($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
                                 <li>
                                     <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
@@ -479,7 +479,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos']))
+                            @elseif($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
                                 <li>
                                     <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
@@ -588,8 +588,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-requerimento-form-{{$requerimento->id}}">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-requerimento-form-{{$requerimento->id}}">Cancelar requerimento</button>
                 </div>
             </div>
             </div>

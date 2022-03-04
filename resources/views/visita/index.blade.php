@@ -31,6 +31,13 @@
                                     </div>
                                 </div>
                             @endif
+                            @if(session('error'))
+                                <div class="col-md-12" style="margin-top: 5px;">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p>{{session('error')}}</p>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <table class="table">
                                 <thead>
@@ -88,7 +95,7 @@
                                                     @elseif($visita->relatorioAceito())
                                                         <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a>
                                                     @endif
-                                                    @if($visita->notificacao != null)<a title="Notificações" href="{{route('notificacoes.show', ['notificacao' => $visita->notificacao])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
+                                                    @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
                                                     @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
@@ -106,11 +113,9 @@
                                                         @if ($visita->denuncia->empresa != null)
                                                             <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         @endif
-                                                        <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
-                                                        <a title="Mídia" data-toggle="modal" data-target="#modal-imagens-{{$visita->denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
+                                                        <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
-                                                        <a title="Mídia" data-toggle="modal" style="cursor: pointer;" data-target="#modal-imagens-solicitacao-{{$visita->solicitacao_poda->id}}"><img class="icon-licenciamento" src="{{asset('img/media.svg')}}" alt="Mídia"></a>
                                                     @endif
                                                 @endcan
                                             </td>
@@ -127,6 +132,11 @@
                                 @endcan
                             </div>
                         @endif
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$visitas->links()}}
                     </div>
                 </div>
             </div>
@@ -158,7 +168,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($visitas->where('requerimento_id', '!=', null))
+                            @if($visitas->where('requerimento_id', '!=', null)->first() != null || $visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
@@ -169,7 +179,7 @@
                                 </li>
                             @endif
                         @else
-                            @if($visitas->where('requerimento_id', '!=', null))
+                            @if($visitas->where('requerimento_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar requerimento">
@@ -194,7 +204,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($visitas->where('denuncia_id', '!=', null) && $visitas->where('requerimento_id', '=', null))
+                            @elseif($visitas->where('denuncia_id', '!=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null)
                                 <li>
                                     <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
@@ -212,7 +222,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($visitas->where('denuncia_id', '!=', null))
+                            @if($visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
@@ -221,28 +231,12 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div title="Mídia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia anexada">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Mídia anexada
-                                        </div>
-                                    </div>
-                                </li>
-                            @elseif ($visitas->where('denuncia_id', '=', null) && $visitas->where('requerimento_id', '=', null) && $visitas->where('solicitacao_poda', '!=', null))
+                            @elseif ($visitas->where('denuncia_id', '=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null && $visitas->where('solicitacao_poda', '!=', null)->first() != null)
                                 <li>
                                     <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div title="Mídia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/media.svg')}}" alt="Mídia anexada a denúncia">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Mídia anexada
                                         </div>
                                     </div>
                                 </li>
@@ -293,41 +287,57 @@
             <div class="modal fade" id="modal-texto-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color:#2a9df4;">
-                                <img src="{{ asset('img/logo_atencao3.png') }}" width="30px;" alt="Logo" style=" margin-right:15px; margin-top:10px;"/>
-                                    <h5 class="modal-title" id="exampleModalLabel2" style="font-size:20px; margin-top:7px; color:white;
-                                        font-weight:bold; font-family: 'Roboto', sans-serif;">
-                                        Descrição
-                                    </h5>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">
+                                Descrição
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="formRequerimento" method="POST" action="">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="row form-row">
-                                    <div id="avisoReq" class="col-12" style="font-family: 'Roboto', sans-serif; margin-bottom:10px;">Relato descrito pelo denunciante:</div>
-                                    <div class="col-md-12 form-group">
-                                        <div class="texto-denuncia">
-                                            {!! $denuncia->texto !!}
-                                        </div>
+                        <div class="modal-body">
+                            <div class="row form-row">
+                                <label for="relato">{{__('Relato descrito pelo denunciante:')}}</label>
+                                <div class="col-md-12 form-group">
+                                    <div class="texto-denuncia">
+                                        {!! $denuncia->texto !!}
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    @if ($denuncia->denunciante != null)
-                                        <div class="col-md-12 form-group">
-                                            <label for="denunciante">{{__('Denunciante')}}</label>
-                                            <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
-                                        </div>
-                                    @endif
-                                </div>
                             </div>
-                        </form>
+                            <div class="form-row">
+                                @if ($denuncia->denunciante != null)
+                                    <div class="col-md-12 form-group">
+                                        <label for="denunciante">{{__('Denunciante')}}</label>
+                                        <input class="form-control" type="text" value="{{$denuncia->denunciante}}" disabled>
+                                    </div>
+                                @endif
+                            </div>
+                            @if($denuncia->fotos->first() != null)
+                                <div class="row form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="imagens_anexadas">{{__('Imagens anexadas junto a denúncia:')}}</label>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="row">
+                                @foreach ($denuncia->fotos as $foto)
+                                    <div class="col-md-6">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                            @if ($foto->comentario != null)
+                                                <div class="card-body">
+                                                    <p class="card-text">{{$foto->comentario}}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
+            {{--<div class="modal fade bd-example-modal-lg" id="modal-imagens-{{$denuncia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#2a9df4;">
@@ -389,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         @endif
     @endforeach
 
