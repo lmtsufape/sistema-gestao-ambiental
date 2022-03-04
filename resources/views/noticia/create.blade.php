@@ -79,7 +79,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button id="submeterFormBotao" type="submit" class="btn btn-success submeterFormBotao" form="cria-noticia" style="width: 100%">Salvar</button>
+                                <button id="submeterFormBotao" type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="cria-noticia" style="width: 100%">Salvar</button>
                                 <div id="msgImagemNull" class="invalid-feedback">
                                   O campo imagem principal é obrigatório.
                               </div>
