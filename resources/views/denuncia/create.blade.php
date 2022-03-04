@@ -101,7 +101,7 @@
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <label for="texto">{{ __('Denúncia') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <textarea id="denuncia-ckeditor" name="texto"></textarea>
+                                    <textarea @error('texto') class="is-invalid" @enderror" id="denuncia-ckeditor" name="texto"></textarea>
                                     @error('texto')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
