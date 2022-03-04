@@ -135,6 +135,14 @@ class VisitaController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
+        if($visita->requerimento_id != null){
+            if($visita->requerimento->status == Requerimento::STATUS_ENUM['visita_realizada'] || $visita->requerimento->status == Requerimento::STATUS_ENUM['finalizada']){
+                return redirect()->back()->with(['error' => "As informações desta visita não podem ser excluídas."]);
+            }else{
+                $visita->requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
+                $visita->requerimento->update();
+            }
+        }
         $visita->delete();
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita deletada com sucesso!']);
