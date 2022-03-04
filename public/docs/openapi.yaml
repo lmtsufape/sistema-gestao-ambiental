@@ -1,0 +1,596 @@
+openapi: 3.0.3
+info:
+  title: 'Sistema de Gestão Ambiental'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8003'
+paths:
+  /api/visitas:
+    get:
+      summary: Visitas
+      description: 'Consulta todas as visitas do usuário autenticado.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer Ed63bgP6f1DaVk54ae8hvZc'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'visita de requerimento'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 3
+                    data_marcada: '2022-03-17'
+                    data_realizada: null
+                    requerimento_id: 7
+                    denuncia_id: null
+                    analista_id: 2
+                    created_at: '2022-03-03T11:25:45.000000Z'
+                    updated_at: '2022-03-03T11:25:45.000000Z'
+                    solicitacao_poda_id: null
+                    denuncia: null
+                    requerimento:
+                      id: 7
+                      status: 6
+                      tipo: 1
+                      tipo_licenca: 1
+                      valor: '1'
+                      potencial_poluidor_atribuido: null
+                      definicao_valor: 'Definir de forma manual'
+                      valor_juros: null
+                      analista_id: 3
+                      represetante_id: null
+                      empresa_id: 1
+                      created_at: '2022-02-21T15:19:35.000000Z'
+                      updated_at: '2022-03-03T11:25:45.000000Z'
+                      analista:
+                        id: 3
+                        name: Protocolista
+                        email: protocolista@protocolista.com
+                        email_verified_at: '2022-02-21T14:09:31.000000Z'
+                        role: 3
+                        current_team_id: null
+                        profile_photo_path: null
+                        created_at: null
+                        updated_at: null
+                        profile_photo_url: 'https://ui-avatars.com/api/?name=P&color=7F9CF5&background=EBF4FF'
+                      empresa:
+                        id: 1
+                        nome: 'Info mundo tecnologia'
+                        cpf_cnpj: 32.970.478/0001-30
+                        eh_cnpj: true
+                        porte: 1
+                        user_id: 4
+                        telefone_id: 2
+                        endereco_id: 2
+                        created_at: null
+                        updated_at: null
+                        represetante_legal_id: null
+                        user:
+                          id: 4
+                          name: Empresario
+                          email: empresa@empresa.com
+                          email_verified_at: '2022-02-21T14:09:31.000000Z'
+                          role: 1
+                          current_team_id: null
+                          profile_photo_path: null
+                          created_at: null
+                          updated_at: null
+                          profile_photo_url: 'https://ui-avatars.com/api/?name=E&color=7F9CF5&background=EBF4FF'
+                        endereco:
+                          id: 2
+                          rua: 'Rua do Cateté'
+                          numero: '588'
+                          bairro: 'Jardim Monte Líbano'
+                          cidade: Garanhuns
+                          estado: PE
+                          complemento: Casa
+                          cep: 55292-000
+                          created_at: null
+                          updated_at: null
+                        telefone:
+                          id: 2
+                          numero: '(34) 98192-2518'
+                          created_at: null
+                          updated_at: null
+                    solicitacao_poda: null
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+  /api/users/auth:
+    post:
+      summary: Autenticação
+      description: 'Cria um token de autenticação para o usuário.'
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        422:
+          description: 'Unprocessable Content'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    email:
+                      - 'The provided credentials are incorrect.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    example:
+                      email:
+                        - 'The provided credentials are incorrect.'
+        200:
+          description: success
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 4|ECTth7OLLJCAtH4HQDhhd1y6fiTmogoGvqGr9c6f
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Email do usuário'
+                  example: cupiditate
+                password:
+                  type: string
+                  description: 'Senha do usuário'
+                  example: id
+                device_name:
+                  type: string
+                  description: 'Nome para identificação do token'
+                  example: aut
+              required:
+                - email
+                - password
+                - device_name
+      security: []
+  /api/users:
+    get:
+      summary: Usuário
+      description: 'Consulta o usuário autenticado.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer bfvkgah683EZcDVed5Pa641'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  name: 'Margarita Block II'
+                  email: klein.turner@example.net
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: 'Identificador do usuário'
+                  name:
+                    type: string
+                    example: 'Margarita Block II'
+                    description: 'Nome do usuário'
+                  email:
+                    type: string
+                    example: klein.turner@example.net
+                    description: 'E-mail do usuário'
+      tags:
+        - Endpoints
+  '/api/denuncias/{id}':
+    get:
+      summary: Denuncia
+      description: 'Consulta a denúncia pelo id'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer baEeVdgD65Pchk8f1346Zav'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  empresa_id: 1
+                  empresa_nao_cadastrada: ''
+                  endereco: ''
+                  texto: '<p>aaaaaaaaaaaaaaaaaa</p>'
+                  denunciante: 'Nostrum elit rerum'
+                  aprovacao: 2
+                  protocolo: T1NT$yWfMjWL1zIgUbC2
+                  analista_id: 2
+                  created_at: '2022-02-22T18:54:31.000000Z'
+                  updated_at: '2022-02-22T18:55:14.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: 'O identificador da denúncia'
+                  empresa_id:
+                    type: integer
+                    example: 1
+                    description: 'Identificador da empresa, caso esteja cadastrada no sistema.'
+                  empresa_nao_cadastrada:
+                    type: string
+                    example: ''
+                    description: 'Nome da empresa, caso não esteja cadastrada no sistema.'
+                  endereco:
+                    type: string
+                    example: ''
+                    description: 'Endereco da empresa, caso não esteja cadastrada no sistema.'
+                  texto:
+                    type: string
+                    example: '<p>aaaaaaaaaaaaaaaaaa</p>'
+                    description: 'Texto informando o motivo da denúncia.'
+                  denunciante:
+                    type: string
+                    example: 'Nostrum elit rerum'
+                    description: 'Nome do denunciante.'
+                  aprovacao:
+                    type: integer
+                    example: 2
+                    description: 'Estado da avaliação da denúncia.'
+                  protocolo:
+                    type: string
+                    example: T1NT$yWfMjWL1zIgUbC2
+                    description: 'Protocolo gerado ao criar a denúncia.'
+                  analista_id:
+                    type: integer
+                    example: 2
+                    description: 'Identificador do usuário analista atribuido a denúncia.'
+                  created_at:
+                    type: string
+                    example: '2022-02-22T18:54:31.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2022-02-22T18:55:14.000000Z'
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da denúncia.'
+        example: 14
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}':
+    get:
+      summary: Visita
+      description: 'Consulta a visita pelo identificador.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer dVbD1fh68vE4k5Pc6aeaZg3'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  data_marcada: '2022-02-23'
+                  data_realizada: null
+                  requerimento_id: null
+                  denuncia_id: 2
+                  analista_id: 2
+                  created_at: '2022-02-22T18:55:21.000000Z'
+                  updated_at: '2022-02-22T18:55:21.000000Z'
+                  solicitacao_poda_id: null
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: 'O identificador da visita'
+                  data_marcada:
+                    type: string
+                    example: '2022-02-23'
+                    description: 'A data marcada para realização da visita'
+                  data_realizada:
+                    type: string
+                    example: null
+                    description: 'A data em que a visita foi realizada'
+                  requerimento_id:
+                    type: string
+                    example: null
+                    description: 'O identificador do requerimento, se a visita não for para um requerimento o valor é null'
+                  denuncia_id:
+                    type: integer
+                    example: 2
+                    description: 'O identificador da denúncia, se a visita não for para uma denúncia o valor é null'
+                  analista_id:
+                    type: integer
+                    example: 2
+                    description: 'Identificador do usuário analista atribuido a visita.'
+                  created_at:
+                    type: string
+                    example: '2022-02-22T18:55:21.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2022-02-22T18:55:21.000000Z'
+                  solicitacao_poda_id:
+                    type: string
+                    example: null
+                    description: 'O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null'
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the visita.'
+        example: 17
+        required: true
+        schema:
+          type: integer
+  '/api/empresas/{id}':
+    get:
+      summary: Empresa
+      description: 'Consulta a empresa pelo identificador.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer cZ6vDPE81aVbgd3kf5e6h4a'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  nome: 'Info mundo tecnologia'
+                  cpf_cnpj: 32.970.478/0001-30
+                  eh_cnpj: true
+                  porte: 1
+                  user_id: 4
+                  telefone_id: 2
+                  endereco_id: 2
+                  created_at: null
+                  updated_at: null
+                  represetante_legal_id: null
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                    description: 'O identificador da empresa'
+                  nome:
+                    type: string
+                    example: 'Info mundo tecnologia'
+                    description: 'Nome da empresa.'
+                  cpf_cnpj:
+                    type: string
+                    example: 32.970.478/0001-30
+                    description: 'CPF ou CNPJ da empresa.'
+                  eh_cnpj:
+                    type: boolean
+                    example: true
+                    description: 'Indica se o campo cpf_cnpj é um cnpj.'
+                  porte:
+                    type: integer
+                    example: 1
+                    description: 'Porte da empresa.'
+                  user_id:
+                    type: integer
+                    example: 4
+                    description: 'Identificador do usuário que criou a empresa.'
+                  telefone_id:
+                    type: integer
+                    example: 2
+                    description: 'Identificador do telefone da empresa.'
+                  endereco_id:
+                    type: integer
+                    example: 2
+                    description: 'Identificador do endereço da empresa.'
+                  created_at:
+                    type: string
+                    example: null
+                  updated_at:
+                    type: string
+                    example: null
+                  represetante_legal_id:
+                    type: string
+                    example: null
+                    description: 'Identificador do representante legal da empresa.'
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da empresa.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  -
+    default: []
