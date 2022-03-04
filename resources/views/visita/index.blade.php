@@ -11,13 +11,15 @@
                             <h4 class="card-title">Visitas programadas para você</h4>
                         @endcan
                     </div>
-                    @can('isSecretario', \App\Models\User::class)
-                        <div class="col-md-4" style="text-align: right;">
+
+                    <div class="col-md-4" style="text-align: right;">
+                        <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
+                        @can('isSecretario', \App\Models\User::class)
                             <a title="Criar visita" href="{{route('visitas.create')}}">
                                 <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar documento">
                             </a>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
@@ -29,11 +31,6 @@
                                     </div>
                                 </div>
                             @endif
-                        </div>
-                        <div div class="form-row">
-                            <div class="col-md-12 form-group" style="text-align: right">
-                                <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
-                            </div>
                         </div>
                         <table class="table">
                                 <thead>
