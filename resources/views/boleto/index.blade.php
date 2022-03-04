@@ -51,7 +51,7 @@
                                                 <td>{{($loop->iteration)}}</td>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
                                                 <td style="text-align: center">
-                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $boleto->requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} @if($boleto->URL) <a href="{{$boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a> @endif
                                                 </td>
                                                 <td style="text-align: center">
                                                     @if($boleto->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
@@ -90,7 +90,7 @@
                                                 <td>{{($loop->iteration)}}</td>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
                                                 <td style="text-align: center">
-                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $boleto->requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} @if($boleto->URL) <a href="{{$boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a> @endif
                                                 </td>
                                                 <td style="text-align: center">
                                                     @if($boleto->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
@@ -129,7 +129,7 @@
                                                 <td>{{($loop->iteration)}}</td>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
                                                 <td style="text-align: center">
-                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} <a href="{{route('boleto.create', ['requerimento' => $boleto->requerimento])}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                    R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} @if($boleto->URL) <a href="{{$boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a> @endif
                                                 </td>
                                                 <td style="text-align: center">
                                                     @if($boleto->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -221,6 +221,6 @@
             });
             sleep(2000);
             .then(() => window.location.reload();
-        } 
+        }
     </script>
 </x-app-layout>
