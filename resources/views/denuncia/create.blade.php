@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div class="form-row justify-content-betwceeen">
                                                     <div class="col-md-6" style="text-align: right">
-                                                        <div id="nomeimagem_indice" style="display: none; font-weight: bold;"></div>
+                                                        <div id="nomeimagem_indice" style="display: none; font-style: italic;"></div>
                                                     </div>
                                                     <div class="col-md-6" style="text-align: right">
                                                         <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
@@ -406,7 +406,7 @@
                                 </div>
                                 <div class="form-row justify-content-betwceeen">
                                     <div class="col-md-6" style="text-align: right">
-                                        <div id="nome`+imagem_indice+`" style="display: none; font-weight: bold;"></div>
+                                        <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
                                     </div>
                                     <div class="col-md-6" style="text-align: right">
                                         <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>

@@ -172,7 +172,7 @@
                                 </li>
                             @endif
                         @else
-                            @if($visitas->where('requerimento_id', '!=', null))
+                            @if($visitas->where('requerimento_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar requerimento">
@@ -197,7 +197,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($visitas->where('denuncia_id', '!=', null) && $visitas->where('requerimento_id', '=', null))
+                            @elseif($visitas->where('denuncia_id', '!=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null)
                                 <li>
                                     <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
@@ -215,7 +215,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($visitas->where('denuncia_id', '!=', null))
+                            @if($visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
@@ -232,7 +232,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif ($visitas->where('denuncia_id', '=', null) && $visitas->where('requerimento_id', '=', null) && $visitas->where('solicitacao_poda', '!=', null))
+                            @elseif ($visitas->where('denuncia_id', '=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null && $visitas->where('solicitacao_poda', '!=', null)->first() != null)
                                 <li>
                                     <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
