@@ -449,11 +449,9 @@
                             </div>
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             @foreach ($documentos as $i => $documento)
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
-                                        <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
-                                    </div>
+                                <div class="form-check @if(!$loop->first) mt-3 @endif">
+                                    <input id="documento-{{$documento->id}}" class="form-check-input" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
+                                    <label for="documento-{{$documento->id}}" class="form-check-label">{{$documento->nome}}</label>
                                 </div>
                             @endforeach
                         </form>
@@ -539,11 +537,9 @@
                                 </div>
                             </div>
                             @foreach ($documentos as $documento)
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <input id="documento-{{$documento->id}}" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
-                                        <label for="documento-{{$documento->id}}">{{$documento->nome}}</label>
-                                    </div>
+                                <div class="form-check @if(!$loop->first) mt-3 @endif">
+                                    <input id="documento-{{$documento->id}}" class="form-check-input" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
+                                    <label for="documento-{{$documento->id}}" class="form-check-label">{{$documento->nome}}</label>
                                 </div>
                             @endforeach
                         </form>

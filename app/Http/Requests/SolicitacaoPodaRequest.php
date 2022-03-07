@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\SolicitacaoPoda;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SolicitacaoPodaRequest extends FormRequest
@@ -26,6 +27,7 @@ class SolicitacaoPodaRequest extends FormRequest
         return [
             'cep' => ['required', 'string'],
             'bairro' => ['required', 'string'],
+            'area' => ['required', 'numeric'],
             'rua' => ['required', 'string'],
             'numero' => ['required'],
             'cidade' => ['required', 'in:Garanhuns'],

@@ -506,7 +506,6 @@ label {
 
 .list-ordenada ol {
     list-style-type: decimal;
-    font-size: 20px;
 }
 
 .list-ordenada ol .scope {
@@ -568,7 +567,7 @@ ol.nested-counter-list ol>li::before {
     text-decoration: none;
 }
 
-#icon-prev-carousel { 
+#icon-prev-carousel {
     width: 100%;
     display: block;
 }
@@ -583,9 +582,9 @@ ol.nested-counter-list ol>li::before {
 }
 
 .img-carousel {
-    min-height: 400px; 
-    min-width: 100%; 
-    max-height: 400px; 
+    min-height: 400px;
+    min-width: 100%;
+    max-height: 400px;
     max-width: 100%;
 }
 

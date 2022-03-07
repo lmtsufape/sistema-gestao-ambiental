@@ -103,7 +103,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <label for="texto">{{ __('Descrição') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <textarea id="denuncia-ckeditor" name="texto" cols="30" rows="5"></textarea><br>
+                                            <textarea @error('texto') class="is-invalid" @enderror id="denuncia-ckeditor" name="texto" cols="30" rows="5"></textarea><br>
                                             @error('texto')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                     {{ $message }}
@@ -374,21 +374,16 @@
 
 <script>
     var $videoId = 1;
-    ClassicEditor
-        .create( document.querySelector( '#denuncia-ckeditor' ) )
-        .then( editor => {
-             document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
-                const editorData = editor.getData();
+    CKEDITOR.replace('denuncia-ckeditor');
 
-                if(editorData == ""){
-                    alert("O campo de denúncia não pode estar vazio");
-                    event.preventDefault();
-                }
-            } );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+    document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+        var messageLength = CKEDITOR.instances['denuncia-ckeditor'].getData().replace(/<[^>]*>/gi, '').length;
+        if(!messageLength){
+            alert("O campo de denúncia não pode estar vazio");
+            event.preventDefault();
+        }
+    });
+
 
     function addImagem() {
         var indice = document.getElementById("imagem_indice");

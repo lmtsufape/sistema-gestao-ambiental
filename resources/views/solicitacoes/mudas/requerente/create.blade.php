@@ -57,7 +57,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">Comentário</label>
+                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar a espécie da muda e o local onde será plantada)</span></label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
                                         autocomplete="comentario">{{old('comentario')}}</textarea>
