@@ -57,11 +57,11 @@
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;"src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                             <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
                                                         @endcan
-                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -99,11 +99,11 @@
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                             <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img class="icon-licenciamento" src="{{asset('img/agenda-svgrepo-com.svg')}}"  alt="Agendar uma visita"></a>
+                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endcan
-                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -139,11 +139,11 @@
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/task-svgrepo-com.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                             <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" src="{{asset('img/file-warning-svgrepo-com.svg')}}"  alt="Avaliar"></a>
+                                                                data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
                                                         @endcan
-                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -169,26 +169,26 @@
                         <li>
                             @can('isSecretario', \App\Models\User::class)
                                 <div title="Atribuir denúncia a um analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/task-svgrepo-com.svg')}}" alt="Atribuir a um analista">
+                                    <img class="aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir a um analista">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Atribuir denúncia a um analista
                                     </div>
                                 </div>
                                 <div title="Avaliar denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/file-warning-svgrepo-com.svg')}}" alt="Avaliar denúncia">
+                                    <img class="aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar denúncia">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Avaliar denúncia
                                     </div>
                                 </div>
                                 <div title="Agendar uma visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/agenda-svgrepo-com.svg')}}" alt="Agendar uma visita">
+                                    <img class="aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar uma visita">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Agendar uma visita
                                     </div>
                                 </div>
                             @endcan
                             <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
+                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Relato da denúncia
                                 </div>
