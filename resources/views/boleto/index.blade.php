@@ -156,25 +156,17 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
-                    <form id="baixar-relatorio" method="GET" action="{{route('gerar.pdf.boletos')}}">
-                        @csrf
-                        <input type="hidden" value="{{$filtro}}" name="filtro">
-                        <input type="hidden" value="{{$dataDe}}" name="dataDe">
-                        <input type="hidden" value="{{$dataAte}}" name="dataAte">
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-5 form-group">
-                                <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Baixar relatório</button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
+                    <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
+                        Baixar relatório
+                    </div>
                     <form id="form-fitrar-boleto" method="GET" action="{{route('boletos.index')}}">
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="filtro">{{__('Filtrar por')}}</label>
                                 <select class="form-select form-select-sm form-control" name="filtro" aria-label=".form-select-sm example">
-                                    <option value="">-- Selecione o tipo de data para a filtragem --</option>
+                                    <option value="">-- Selecione o tipo de data --</option>
                                     <option value="criado" @if($filtro != null && $filtro == 'criado') selected @endif>Criação do boleto</option>
                                     <option value="vencimento" @if($filtro != null && $filtro == 'vencimento') selected @endif>Vencimento</option>
                                 </select>
@@ -182,7 +174,7 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-6 form-group">
-                                <label for="dataDe">{{__('De:')}}</label>
+                                <label for="dataDe">{{__('De')}}</label>
                                 <input type="datetime-local" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
 
                                 @error('dataDe')
@@ -192,7 +184,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="dataAte">{{__('Até:')}}</label>
+                                <label for="dataAte">{{__('Até')}}</label>
                                 <input type="datetime-local" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
 
                                 @error('dataAte')
@@ -204,7 +196,21 @@
                         </div>
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Aplicar</button>
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Filtrar</button>
+                            </div>
+                        </div>
+                        <div style="border-bottom:solid 3px #e0e0e0; margin-top: -1%; margin-bottom: 3%;">
+                        </div>
+                    </form>
+                    <form id="baixar-relatorio" method="GET" action="{{route('gerar.pdf.boletos')}}">
+                        @csrf
+                        <input type="hidden" value="{{$filtro}}" name="filtro">
+                        <input type="hidden" value="{{$dataDe}}" name="dataDe">
+                        <input type="hidden" value="{{$dataAte}}" name="dataAte">
+                        
+                        <div class="form-row justify-content-center">
+                            <div class="col-md-5 form-group">
+                                <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
                             </div>
                         </div>
                     </form>

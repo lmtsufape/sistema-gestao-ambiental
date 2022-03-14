@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div>
-                            <a class="icon-licenciamento" title="Mídia da ficha" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="25" src="{{asset('img/media.svg')}}"  alt="Mídia"></a>
+                            <a class="icon-licenciamento" title="Mídia da ficha" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="20px;" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
                         </div>
                     </div>
                 </div>

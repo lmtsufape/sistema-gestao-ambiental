@@ -49,7 +49,7 @@
                                             <td>{{$setor->descricao}}</td>
                                             <td>
                                                 @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
-                                                    <a title="Visualizar cnaes do grupo" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar setor"></a>
+                                                    <a title="Visualizar cnaes do grupo" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar setor"></a>
                                                     <a title="Editar grupo" href="{{route('setores.edit', ['setore' => $setor->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar setor"></a>
                                                     <a title="Deletar grupo" data-toggle="modal" data-target="#modalStaticDeletarSetor_{{$setor->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar setor"></a>
                                                 @endif
@@ -82,7 +82,7 @@
                         </li>
                         <li>
                             <div title="Visualizar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar grupo">
+                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar grupo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar grupo
                                 </div>
