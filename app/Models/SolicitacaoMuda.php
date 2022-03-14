@@ -15,6 +15,7 @@ class SolicitacaoMuda extends Model
         'motivo_indeferimento',
         'qtd_mudas',
         'status',
+        'especie_id'
     ];
 
     public const STATUS_ENUM = [
@@ -31,5 +32,10 @@ class SolicitacaoMuda extends Model
     public function endereco()
     {
         return $this->belongsTo(Endereco::class);
+    }
+
+    public function especie()
+    {
+        return $this->belongsTo(EspecieMuda::class);
     }
 }

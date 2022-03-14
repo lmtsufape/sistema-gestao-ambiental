@@ -26,6 +26,7 @@ class SolicitacaoMudaRequest extends FormRequest
         return [
             'comentario' => ['nullable', 'string'],
             'qtd_mudas' => ['required', 'numeric'],
+            'especie' => ['required'],
         ];
     }
 }

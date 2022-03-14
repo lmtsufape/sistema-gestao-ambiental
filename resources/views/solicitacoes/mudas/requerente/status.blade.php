@@ -27,6 +27,12 @@
                            </div>
                            <div class="form-row">
                                 <div class="col-md-6 form-group">
+                                    <label for="especie">{{ __('Espécie da muda') }}</label>
+                                    <input id="especie" class="form-control simple-field-data-mask" type="text" name="especie"
+                                        value="{{$solicitacao->especie_id ? $solicitacao->especie->nome : ''}}" autofocus autocomplete="especie"
+                                        disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
                                     <label for="qtd_mudas">{{ __('Quantidade de mudas') }}</label>
                                     <input id="qtd_mudas" class="form-control simple-field-data-mask" type="text" name="qtd_mudas"
                                         value="{{ $solicitacao->qtd_mudas }}" autofocus autocomplete="qtd_mudas"

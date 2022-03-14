@@ -45,7 +45,21 @@
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
+                                <div class="form-group col-md-6">
+                                    <label for="especie">{{ __('Espécie') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select required class="form-control @error('setor') is-invalid @enderror" name="especie">
+                                        <option value="" disabled selected>-- Selecionar a espécie--</option>
+                                        @foreach ($especies as $especie)
+                                            <option value={{$especie->id}}>{{$especie->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('especie')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 form-group">
                                     <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="qtd_mudas" class="form-control @error('qtd_mudas') is-invalid @enderror"
                                         type="number" name="qtd_mudas" value="{{ old('qtd_mudas') }}"
@@ -56,8 +70,10 @@
                                         </div>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar a espécie da muda e o local onde será plantada)</span></label>
+                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar o local onde será plantada)</span></label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
                                         autocomplete="comentario">{{old('comentario')}}</textarea>

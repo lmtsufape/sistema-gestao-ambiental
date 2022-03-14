@@ -125,7 +125,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/mostrar/{solicitacao}', [SolicitacaoMudaController::class, 'mostrar'])->name('mudas.mostrar');
     Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
     Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
-    Route::view('/solicitacoes/mudas/create', '/solicitacoes/mudas/requerente/create')->name('mudas.create');
+    Route::get('/solicitacoes/mudas/requerente/create', [SolicitacaoMudaController::class, 'create'])->name('mudas.create');
     Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
 
     Route::get('/solicitacoes/podas/mostrar/{solicitacao}', [SolicitacaoPodaController::class, 'mostrar'])->name('podas.mostrar');

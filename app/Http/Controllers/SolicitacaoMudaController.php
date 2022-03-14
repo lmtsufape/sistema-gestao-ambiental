@@ -6,6 +6,7 @@ use App\Http\Requests\SolicitacaoMudaAvaliarRequest;
 use App\Http\Requests\SolicitacaoMudaRequest;
 use App\Mail\SolicitacaoMudasCriada;
 use App\Models\Endereco;
+use App\Models\EspecieMuda;
 use App\Models\SolicitacaoMuda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,15 @@ class SolicitacaoMudaController extends Controller
         return view('solicitacoes.mudas.requerente.index', compact('solicitacoes'));
     }
 
+
+    public function create()
+    {
+        $this->authorize('create', SolicitacaoMuda::class);
+
+        $especies = EspecieMuda::orderBy('nome')->get();
+        return view('solicitacoes.mudas.requerente.create', compact('especies'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -48,6 +58,7 @@ class SolicitacaoMudaController extends Controller
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
         $solicitacao->requerente_id = auth()->user()->requerente->id;
+        $solicitacao->especie_id = $request->especie;
         $protocolo = null;
         do {
             $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
