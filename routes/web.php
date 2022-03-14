@@ -14,6 +14,7 @@ use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EspecieMudaController;
 use App\Http\Controllers\FichaAnaliseController;
 use App\Http\Controllers\LaudoTecnicoController;
 use App\Http\Controllers\NotificacaoController;
@@ -72,6 +73,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
+    Route::resource('especies', EspecieMudaController::class);
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
