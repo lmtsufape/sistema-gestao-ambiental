@@ -101,7 +101,7 @@
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
                                                 @else
                                                     @if ($visita->requerimento != null)
-                                                        <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de analisar requerimento"></a>
+                                                        <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de analisar requerimento"></a>
 
                                                         <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
@@ -113,7 +113,7 @@
                                                         @if ($visita->denuncia->empresa != null)
                                                             <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         @endif
-                                                        <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/eye.svg')}}"  alt="Descrição"></a>
+                                                        <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
                                                     @endif
@@ -182,7 +182,7 @@
                             @if($visitas->where('requerimento_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar requerimento">
+                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar requerimento
                                         </div>
@@ -225,7 +225,7 @@
                             @if($visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
                                     <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/eye.svg')}}" alt="Relato da denúncia">
+                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Relato da denúncia
                                         </div>

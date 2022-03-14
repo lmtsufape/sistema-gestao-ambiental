@@ -41,7 +41,7 @@
                                             <td>{{ucfirst(array_search($solicitacao->status, App\Models\SolicitacaoPoda::STATUS_ENUM))}}</td>
                                             <td>{{$solicitacao->endereco->enderecoSimplificado()}}</td>
                                             <td>
-                                                <a title="Visualizar" href="{{route('podas.mostrar', $solicitacao)}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar"></a>
+                                                <a title="Visualizar" href="{{route('podas.mostrar', $solicitacao)}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar"></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -63,7 +63,7 @@
                     <ul class="list-group list-unstyled">
                         <li>
                             <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar solicitação">
+                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar solicitação
                                 </div>

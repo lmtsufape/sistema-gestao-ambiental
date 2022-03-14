@@ -51,7 +51,7 @@
                                         <td>{{$documento->nome}}</td>
                                         <td>
                                             @if ($documento->documento_modelo != null)
-                                                <a title="Visualizar documento" target="_blank" href="{{route("documentos.show", $documento->id)}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar documento"></a>
+                                                <a title="Visualizar documento" target="_blank" href="{{route("documentos.show", $documento->id)}}"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar documento"></a>
                                             @endif
                                             <a title="Editar documento" href="{{route("documentos.edit", $documento->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar documento"></a>
                                             <a title="Deletar documento" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar documento"></a>
@@ -84,7 +84,7 @@
                         </li>
                         <li>
                             <div title="Visualizar documento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visualizar documento">
+                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar documento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar documento
                                 </div>

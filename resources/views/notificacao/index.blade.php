@@ -45,7 +45,7 @@
                                             <th>{{$i+1}}</th>
                                             <td>{{date('d/m/Y', strtotime($notificacao->created_at))}}</td>
                                             <td>
-                                                <a title="Visualizar notificação" href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Icone de visualizar notificação"></a>
+                                                <a title="Visualizar notificação" href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar notificação"></a>
                                             </td>
                                         </tr>
                                     @endforeach

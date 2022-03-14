@@ -123,7 +123,7 @@
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                     <td>
                                                         @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
+                                                            <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                         @endcan
                                                         <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                     </td>
@@ -281,7 +281,7 @@
                                                     </td>
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                     <td>
-                                                        <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar" title="Analisar"></a>
+                                                        <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -370,14 +370,14 @@
                                             <td>
                                                 <div class="btn-group align-items-center"> 
                                                     @can('isSecretarioOrAnalista', \App\Models\User::class)
-                                                        <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Analisar requerimentos"></a>
+                                                        <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
                                                     @endcan
                                                     @if($requerimento->visitas->count() > 0)
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                            <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                         @else
                                                             @can('isRequerente', \App\Models\User::class)
-                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" src="{{asset('img/eye-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                                             @endcan
                                                         @endcan
                                                     @endif
@@ -429,7 +429,7 @@
                         @can('isSecretarioOrAnalista', \App\Models\User::class)
                             <li>
                                 <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Analisar requerimento">
+                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Analisar requerimento
                                     </div>
@@ -452,7 +452,7 @@
                             @can('isRequerente', \App\Models\User::class)
                                 <li>
                                     <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/eye-svgrepo-com.svg')}}" alt="Visitas a empresa">
+                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visitas a empresa">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visitas à empresa
                                         </div>
