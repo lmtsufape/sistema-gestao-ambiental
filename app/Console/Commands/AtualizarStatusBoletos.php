@@ -49,9 +49,10 @@ class AtualizarStatusBoletos extends Command
                     ->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']);
             })
             ->lazy()->each(function ($boleto) {
+                $dados = $this->consultaStatus($boleto);
                 DB::table('boleto_cobrancas')
                     ->where('id', $boleto->id)
-                    ->update(['status_pagamento' => $this->consultaStatus($boleto)]);
+                    ->update(['status_pagamento' => $dados['status'], 'data_pagamento' => $dados['data']]);
             });
     }
 
@@ -114,21 +115,19 @@ class AtualizarStatusBoletos extends Command
             case 0:
                 switch ($resultado['RETORNO']) {
                     case '(0) OPERACAO EFETUADA - SITUACAO DO TITULO = EM ABERTO':
-                        return BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'];
+                        return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
                     case '(0) OPERACAO EFETUADA - SITUACAO DO TITULO = BAIXA POR DEVOLUCAO':
-                        return BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'];
+                        return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'], 'data' => null];
                     case '(0) OPERACAO EFETUADA - SITUACAO DO TITULO = LIQUIDADO':
-                        return BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'];
+                        return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'], 'data' => now()];
                     default:
-                        # tratar excecao
-                        return BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'];
+                        return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
                         break;
                 }
             default:
-                # tratar excecao
-                return BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'];
+                return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
                 break;
         }
-        return BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'];
+        return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
     }
 }
