@@ -109,6 +109,7 @@
                         <th>#</th>
                         <th scope="col">Data de criação</th>
                         <th scope="col">Data de vencimento</th>
+                        <th scope="col">Data do pagamento</th>
                         <th scope="col">Requerimento</th>
                         <th scope="col">Empresa/Serviço</th>
                         <th scope="col">Valor R$</th>
@@ -123,6 +124,7 @@
                             <th>{{$i+1}}</th>
                             <td>{{date('d/m/Y', strtotime($boleto->created_at))}}</td>
                             <td>{{date('d/m/Y', strtotime($boleto->data_vencimento))}}</td>
+                            <td>@if($boleto->data_pagamento) {{date('d/m/Y', strtotime($boleto->data_pagamento))}} @endif</td>
                             <td>{{$boleto->requerimento->tipoString() . ' - ' . $boleto->requerimento->tipoDeLicenca()}}</td>
                             <td>{{$boleto->requerimento->empresa->nome}}</td>
                             <td>{{$boleto->requerimento->valor}}</td>
