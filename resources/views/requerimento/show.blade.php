@@ -422,7 +422,7 @@
 
                                 <div id="div_taxa_servico_manual" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else display: none;  @endif">
                                     <label for="valor_da_taxa_de_serviço">{{__('Valor da taxa de serviço')}}</label>
-                                    <input type="number" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço')}}">
+                                    <input type="number" step="0.01" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço')}}">
 
                                     @error('valor_da_taxa_de_serviço')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
@@ -516,7 +516,7 @@
 
                                 <div id="div_taxa_servico_manual_edit" class="col-md-6 form-group" style="@error('valor_da_taxa_de_serviço') display: block; @else @if($requerimento->definicao_valor == $definir_valor['manual'])  display: block; @else display: none; @endif @endif">
                                     <label for="valor_da_taxa_de_serviço_edit">{{__('Valor da taxa de serviço')}}</label>
-                                    <input type="number" id="valor_da_taxa_de_serviço_edit" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço', $requerimento->valor)}}">
+                                    <input type="number" step="0.01" id="valor_da_taxa_de_serviço_edit" name="valor_da_taxa_de_serviço" class="form-control" @error('valor_da_taxa_de_serviço') is-invalid @enderror placeholder="Digite o valor a ser cobrado" value="{{old('valor_da_taxa_de_serviço', $requerimento->valor)}}">
 
                                     @error('valor_da_taxa_de_serviço')
                                         <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
