@@ -42,11 +42,23 @@ class AtualizarStatusBoletos extends Command
      */
     public function handle()
     {
+        // boletos em que o status está indefinido OU (boletos pendentes OU boletos vencidos a menos de 5 dias)
         $boletos = BoletoCobranca::
             whereNotNull('nosso_numero')
             ->where(function($qry) {
                 $qry->whereNull('status_pagamento')
-                    ->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']);
+                    ->orWhere(function($qry) {
+                        // boletos ainda não pagos
+                        $qry->where('status_pagamento', 2)
+                            ->orWhere(
+                                // boletos vencidos a menos de 5 dias
+                                [
+                                    ['status_pagamento', '=', 3],
+                                    ['data_vencimento', '>', now()->subDays(5)]
+                                ]
+                            );
+                        }
+                    );
             })
             ->lazy()->each(function ($boleto) {
                 $dados = $this->consultaStatus($boleto);
@@ -110,7 +122,6 @@ class AtualizarStatusBoletos extends Command
         fclose($file);
 
         $this->resposta_consultar_boleto = $caminho_arquivo . $documento_nome;
-
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
                 switch ($resultado['RETORNO']) {
