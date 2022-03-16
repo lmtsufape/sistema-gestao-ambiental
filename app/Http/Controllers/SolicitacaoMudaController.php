@@ -7,6 +7,7 @@ use App\Http\Requests\SolicitacaoMudaRequest;
 use App\Mail\SolicitacaoMudasCriada;
 use App\Models\Endereco;
 use App\Models\EspecieMuda;
+use App\Models\MudaSolicitada;
 use App\Models\SolicitacaoMuda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -58,7 +59,6 @@ class SolicitacaoMudaController extends Controller
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
         $solicitacao->requerente_id = auth()->user()->requerente->id;
-        $solicitacao->especie_id = $request->especie;
         $protocolo = null;
         do {
             $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
@@ -66,6 +66,13 @@ class SolicitacaoMudaController extends Controller
         } while($check != null);
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
+        foreach($request->especie as $i => $especie){
+            MudaSolicitada::create([
+                'solicitacao_id' => $solicitacao->id,
+                'especie_id' => $especie,
+                'qtd_mudas' => $request->qtd_mudas[$i]
+            ]);
+        }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
         return redirect()->back()->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
     }

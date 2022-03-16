@@ -43,19 +43,6 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="especie">{{ __('Espécie da muda') }}</label>
-                                    <input id="especie" class="form-control simple-field-data-mask" type="text" name="especie"
-                                        value="{{$solicitacao->especie_id ? $solicitacao->especie->nome : ''}}" autofocus autocomplete="especie"
-                                        disabled>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas</label>
-                                    <input id="qtd_mudas" class="form-control" type="number" step="0.01" name="qtd_mudas"
-                                        value="{{ $solicitacao->qtd_mudas }}" autocomplete="qtd_mudas" disabled>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
                                     <label for="cep">{{ __('CEP') }}</label>
                                     <input id="cep" class="form-control cep" type="text" name="cep" value="{{$solicitacao->requerente->endereco->cep}}" disabled>
                                 </div>
@@ -91,6 +78,29 @@
                                         <option selected value="PE">Pernambuco</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-row">
+                                <label for="mudas">{{ __('Mudas Solicitadas') }}</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="color: black">Espécie</th>
+                                            <th scope="col" style="color: black; text-align: center">Quantidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($solicitacao->mudasSolicitadas as $mudaSolicitada)
+                                            <tr>
+                                                <td >
+                                                    {{$mudaSolicitada->especie->nome}}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{$mudaSolicitada->qtd_mudas}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
