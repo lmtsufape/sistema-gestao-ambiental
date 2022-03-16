@@ -49,6 +49,9 @@
                                     @if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                     @endif
+                                    @if($requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
+                                        <a class="btn" data-toggle="modal" data-target="#criar-novo-boleto"><img style="height: 30px;" src="{{asset('img/boleto.png')}}" alt="Criar novo boleto" title="Criar novo boleto"></a>
+                                    @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
                                     @if ($requerimento->documentos->count() > 0)
@@ -552,6 +555,33 @@
             </div>
         </div>
     @endif
+
+    {{-- Modal confirmar gerar boleto --}}
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="criar-novo-boleto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #4a7836;">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-criar-novo-boleto" action="{{route('requerimentos.criar.novo.boleto')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                            Tem certeza que deseja criar um novo boleto para o requerimento?
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-criar-novo-boleto">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
     <!-- Modal atribuicao analista -->
     <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">

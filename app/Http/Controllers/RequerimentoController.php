@@ -272,6 +272,22 @@ class RequerimentoController extends Controller
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
+    public function criarNovoBoleto(Request $request)
+    {
+        $requerimento = Requerimento::find($request->requerimento);
+        $this->authorize('isSecretario', auth()->user());
+        try {
+            $boletoController = new BoletoController();
+            $boletoController->criarNovoBoleto($requerimento);
+        } catch (ErrorRemessaException $e) {
+            return redirect()->back()
+            ->with(['success' => 'Boleto gerado com sucesso.'])
+            ->withErrors(['error' => 'Erro na geração do boleto: '. $e->getMessage()])
+            ->withInput();
+        }
+        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Boleto gerado com sucesso.']);
+    }
+
     /**
      * Editar a lista de documentos para retirar a licença.
      *

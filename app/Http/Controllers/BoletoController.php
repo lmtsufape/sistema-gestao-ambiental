@@ -97,9 +97,34 @@ class BoletoController extends Controller
     public function boleto($requerimento)
     {
         $xmlBoletoController = new XMLCoderController();
-        $boleto = $requerimento->boleto;
+        $boleto = $requerimento->boletos->last();
 
         if (is_null($boleto)) {
+            return $this->gerarBoleto($requerimento);
+        } else {
+            if ($boleto->data_vencimento > now()) {
+                return $this->alterarBoleto($boleto);
+            } else {
+                if ($boleto->URL != null) {
+                    return $boleto->URL;
+                } else {
+                    try {
+                        $xmlBoletoController->incluir_boleto_remessa($boleto);
+                        return $boleto->URL;
+                    } catch (ErrorRemessaException $e) {
+                        throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
+                    }
+                }
+            }
+        }
+    }
+
+    public function criarNovoBoleto(Requerimento $requerimento)
+    {
+        $xmlBoletoController = new XMLCoderController();
+        $boleto = $requerimento->boletos->last();
+
+        if (is_null($boleto) || ($boleto->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $boleto->data_vencimento < now())) {
             return $this->gerarBoleto($requerimento);
         } else {
             if ($boleto->data_vencimento > now()) {

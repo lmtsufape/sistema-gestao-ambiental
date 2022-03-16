@@ -72,9 +72,9 @@ class Requerimento extends Model
         return $this->hasMany(Visita::class, 'requerimento_id');
     }
 
-    public function boleto()
+    public function boletos()
     {
-        return $this->hasOne(BoletoCobranca::class, 'requerimento_id');
+        return $this->hasMany(BoletoCobranca::class, 'requerimento_id')->orderBy('created_at', 'ASC');
     }
 
     public function tipoString()
