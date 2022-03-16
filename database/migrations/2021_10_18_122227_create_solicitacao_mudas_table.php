@@ -21,7 +21,6 @@ class CreateSolicitacaoMudasTable extends Migration
             $table->string('motivo_indeferimento')->nullable();
             $table->foreignId('requerente_id')->constrained('requerentes');
             $table->integer('status')->default(1);
-            $table->integer('qtd_mudas')->nullable();
             $table->timestamps();
         });
     }
