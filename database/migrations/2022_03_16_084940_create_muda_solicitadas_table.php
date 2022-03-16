@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEspecieIdToSolicitacaoMudasTable extends Migration
+class CreateMudaSolicitadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,16 @@ class AddEspecieIdToSolicitacaoMudasTable extends Migration
      */
     public function up()
     {
-        Schema::table('solicitacoes_mudas', function (Blueprint $table) {
+        Schema::create('muda_solicitadas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('solicitacao_id')->nullable();
+            $table->foreign('solicitacao_id')->references('id')->on('solicitacoes_mudas');
+
             $table->unsignedBigInteger('especie_id')->nullable();
             $table->foreign('especie_id')->references('id')->on('especie_mudas');
+            
+            $table->integer('qtd_mudas')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,8 +33,6 @@ class AddEspecieIdToSolicitacaoMudasTable extends Migration
      */
     public function down()
     {
-        Schema::table('solicitacoes_mudas', function (Blueprint $table) {
-            $table->dropColumn('especie_id');
-        });
+        Schema::dropIfExists('muda_solicitadas');
     }
 }

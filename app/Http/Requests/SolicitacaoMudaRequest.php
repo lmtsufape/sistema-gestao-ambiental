@@ -25,8 +25,17 @@ class SolicitacaoMudaRequest extends FormRequest
     {
         return [
             'comentario' => ['nullable', 'string'],
-            'qtd_mudas' => ['required', 'numeric'],
-            'especie' => ['required'],
+            'qtd_mudas.*' => ['required', 'numeric'],
+            'especie.*' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            "qtd_mudas.*.required" => "O campo quantidade é obrigatório",
+            "qtd_mudas.*.numeric" => "O campo quantidade deve ser um numérico",
+            "especie.*.numeric" => "O campo espécie é obrigatório",
         ];
     }
 }

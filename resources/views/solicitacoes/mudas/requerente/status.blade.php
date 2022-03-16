@@ -27,20 +27,6 @@
                            </div>
                            <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="especie">{{ __('Espécie da muda') }}</label>
-                                    <input id="especie" class="form-control simple-field-data-mask" type="text" name="especie"
-                                        value="{{$solicitacao->especie_id ? $solicitacao->especie->nome : ''}}" autofocus autocomplete="especie"
-                                        disabled>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="qtd_mudas">{{ __('Quantidade de mudas') }}</label>
-                                    <input id="qtd_mudas" class="form-control simple-field-data-mask" type="text" name="qtd_mudas"
-                                        value="{{ $solicitacao->qtd_mudas }}" autofocus autocomplete="qtd_mudas"
-                                        disabled>
-                                </div>
-                            </div>
-                           <div class="form-row">
-                                <div class="col-md-6 form-group">
                                     <label for="email">E-mail</label>
                                     <input id="email" class="form-control" type="text" name="email"
                                         value="{{ $solicitacao->requerente->user->email }}" autocomplete="email" disabled>
@@ -89,6 +75,29 @@
                                     <label for="complemento">{{ __('Complemento') }}</label>
                                     <input class="form-control" value="{{$solicitacao->requerente->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
                                 </div>
+                            </div>
+                            <div class="form-row">
+                                <label for="mudas">{{ __('Mudas Solicitadas') }}</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="color: black">Espécie</th>
+                                            <th scope="col" style="color: black; text-align: center">Quantidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($solicitacao->mudasSolicitadas as $mudaSolicitada)
+                                            <tr>
+                                                <td >
+                                                    {{$mudaSolicitada->especie->nome}}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    {{$mudaSolicitada->qtd_mudas}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
