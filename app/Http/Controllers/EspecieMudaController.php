@@ -115,7 +115,7 @@ class EspecieMudaController extends Controller
         $especie = EspecieMuda::find($id);
 
         if ($especie->solicitacoes()->first() != null) {
-            return redirect()->back()->withErrors(['error' => 'Existem solicitações de mudas desta espécie.']);
+            return redirect()->back()->with(['error' => 'Existem solicitações de mudas desta espécie.']);
         }
 
         $especie->delete();

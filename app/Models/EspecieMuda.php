@@ -20,7 +20,7 @@ class EspecieMuda extends Model
 
     public function solicitacoes()
     {
-        return $this->hasMany(SolicitacaoMuda::class, 'especie_id');
+        return $this->hasMany(MudaSolicitada::class, 'especie_id');
     }
 
 }
