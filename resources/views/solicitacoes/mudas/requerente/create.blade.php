@@ -42,11 +42,13 @@
                                 </script>
                             @endif
                         </div>
-                        <div class="row col-md-12" style="text-align: left">
-                            <input type="hidden" id="especie_indice" value="-1">
-                            <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar nova espécie">
-                            </a>
+                        <div class="form-row justify-content-between">
+                            <div class="col-md-8" style="text-align: right">
+                                <input type="hidden" id="especie_indice" value="-1">
+                                <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
+                                    <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar nova espécie">
+                                </a>
+                            </div>
                         </div>
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
@@ -86,11 +88,6 @@
                                                                     {{ $message }}
                                                                 </div>
                                                             @enderror
-                                                        </td>
-                                                        <td>
-                                                            <div>
-                                                                <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
