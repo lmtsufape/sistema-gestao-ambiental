@@ -92,12 +92,13 @@
                               Outros
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
-                                <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
                                 <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
+                                <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
+                                <a class="dropdown-item" href="{{route('especies.index')}}">{{__('Espécies de muda')}}</a>
                                 <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>
                                 <a class="dropdown-item" href="{{route('noticias.index')}}">{{__('Notícias')}}</a>
-                                <a class="dropdown-item" href="{{route('valores.index')}}">{{__('Valores')}}</a>
                                 <a class="dropdown-item" href="{{route('usuarios.index')}}">{{__('Usuários')}}</a>
+                                <a class="dropdown-item" href="{{route('valores.index')}}">{{__('Valores')}}</a>
                             </div>
                         </li>
                     @endcan

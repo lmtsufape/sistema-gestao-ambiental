@@ -13,7 +13,6 @@ class SolicitacaoMuda extends Model
         'protocolo',
         'comentario',
         'motivo_indeferimento',
-        'qtd_mudas',
         'status',
     ];
 
@@ -31,5 +30,10 @@ class SolicitacaoMuda extends Model
     public function endereco()
     {
         return $this->belongsTo(Endereco::class);
+    }
+
+    public function mudasSolicitadas()
+    {
+        return $this->hasMany(MudaSolicitada::class, 'solicitacao_id');
     }
 }

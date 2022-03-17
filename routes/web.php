@@ -14,6 +14,7 @@ use App\Http\Controllers\BoletoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EspecieMudaController;
 use App\Http\Controllers\FichaAnaliseController;
 use App\Http\Controllers\LaudoTecnicoController;
 use App\Http\Controllers\NotificacaoController;
@@ -73,6 +74,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
+    Route::resource('especies', EspecieMudaController::class);
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
@@ -124,7 +126,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/mostrar/{solicitacao}', [SolicitacaoMudaController::class, 'mostrar'])->name('mudas.mostrar');
     Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
     Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
-    Route::view('/solicitacoes/mudas/create', '/solicitacoes/mudas/requerente/create')->name('mudas.create');
+    Route::get('/solicitacoes/mudas/requerente/create', [SolicitacaoMudaController::class, 'create'])->name('mudas.create');
     Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
 
     Route::get('/solicitacoes/podas/mostrar/{solicitacao}', [SolicitacaoPodaController::class, 'mostrar'])->name('podas.mostrar');

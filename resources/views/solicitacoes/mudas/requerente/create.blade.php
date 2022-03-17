@@ -42,25 +42,64 @@
                                 </script>
                             @endif
                         </div>
+                        <div class="form-row justify-content-between">
+                            <div class="col-md-8" style="text-align: right">
+                                <input type="hidden" id="especie_indice" value="-1">
+                                <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
+                                    <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar nova espécie">
+                                </a>
+                            </div>
+                        </div>
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="qtd_mudas">Quantidade de mudas<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="qtd_mudas" class="form-control @error('qtd_mudas') is-invalid @enderror"
-                                        type="number" name="qtd_mudas" value="{{ old('qtd_mudas') }}"
-                                        autocomplete="qtd_mudas">
-                                    @error('qtd_mudas')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
+                            <div class="form-row justify-content-between">
+                                <div class="col-md-8">
+                                    <div class="card card-borda-esquerda" style="width: 100%;">
+                                        <div class="card-body">
+                                            <table class="table" data-toggle="table" id="especies">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Espécie</th>
+                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
+                                                                <option value="" disabled selected>-- Selecionar a espécie--</option>
+                                                                @foreach ($especies as $especie)
+                                                                    <option value={{$especie->id}}>{{$especie->nome}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('especie.*')
+                                                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </td>
+                                                        <td>
+                                                            <input id="qtd_mudas-1" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
+                                                                type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                                                autocomplete="qtd_mudas">
+                                                            @error('qtd_mudas.*')
+                                                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    @enderror
+                                    </div>
                                 </div>
-                                <div class="col-md-12 form-group">
-                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar a espécie da muda e o local onde será plantada)</span></label>
+                                <div class="col-md-4">
+                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar o local onde será plantada)</span></label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
-                                        autocomplete="comentario">{{old('comentario')}}</textarea>
+                                        autocomplete="comentario" rows="3">{{old('comentario')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -68,6 +107,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            <br>
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
                                 <div class="col-md-6 form-group">
@@ -142,4 +182,44 @@
             </div>
         </div>
     </div>
+<script>
+    function addEspecie() {
+        var indice = document.getElementById("especie_indice");
+        var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
+        indice.value = especie_indice;
+
+        var campo_especie = `<tr>
+                                <td>
+                                    <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
+                                        <option value="" disabled selected>-- Selecionar a espécie--</option>
+                                        @foreach ($especies as $especie)
+                                            <option value={{$especie->id}}>{{$especie->nome}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('especie.*')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </td>
+                                <td>
+                                    <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
+                                        type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                        autocomplete="qtd_mudas">
+                                    @error('qtd_mudas.*')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </td>
+                                <td>
+                                    <div>
+                                        <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                    </div>
+                                </td>
+                            </tr>`;
+
+        $('#especies tbody').append(campo_especie);
+    }
+</script>
 </x-app-layout>

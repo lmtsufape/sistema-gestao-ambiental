@@ -29,7 +29,6 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Data</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Quantidade de mudas</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -39,9 +38,8 @@
                                             <th scope="row">{{$i+1}}</th>
                                             <td>{{$solicitacao->created_at}}</td>
                                             <td>{{ucfirst(array_search($solicitacao->status, App\Models\SolicitacaoMuda::STATUS_ENUM))}}</td>
-                                            <td>{{$solicitacao->qtd_mudas}}</td>
                                             <td>
-                                                <a title="Visualizar" href="{{route('mudas.mostrar', $solicitacao)}}"><img class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar"></a>
+                                                <a title="Visualizar" href="{{route('mudas.mostrar', $solicitacao)}}"><img width="20px;" class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar"></a>
                                             </td>
                                         </tr>
                                     @endforeach
