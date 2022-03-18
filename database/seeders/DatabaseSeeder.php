@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EspecieMuda;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             RequerenteSeeder::class,
             EmpresaSeeder::class,
             ValoresSeeder::class,
+            EspecieMuda::class,
         ]);
     }
 }
