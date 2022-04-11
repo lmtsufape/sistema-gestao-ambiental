@@ -294,7 +294,7 @@ class VisitaController extends Controller
      * 
      * @urlParam id integer required O identificador da visita.
      *
-     * @response status=200 scenario="success" [{"id": 1, "caminho": "visitas/1/histoSiga2021.jpg", "comentario": null, "visita_id": 1, "created_at": "2022-04-08T19:08:54.000000Z", "updated_at": "2022-04-08T19:08:54.000000Z", "arquivo": {"headers": {}}}, {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z", "arquivo": {"headers": {}}}]
+     * @response status=200 scenario="success" [{"id": 1, "caminho": "visitas/1/histoSiga2021.jpg", "comentario": null, "visita_id": 1, "created_at": "2022-04-08T19:08:54.000000Z", "updated_at": "2022-04-08T19:08:54.000000Z"}, {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}]
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
      * 
@@ -302,16 +302,10 @@ class VisitaController extends Controller
      * @responseField caminho string O caminho de onde a imagem esta salva
      * @responseField comentario string O comentário opcional feito a imagem
      * @responseField visita_id integer O identificador da visita
-     * @responseField arquivo file O arquivo binario da imagem
      */
     public function getFotos(Request $request)
     {
-        $fotos = Visita::find($request->id)->fotos->toArray();
-
-        foreach($fotos as $i => $foto){
-            $fotos[$i]['arquivo'] = response()->file(storage_path('app/public/'.$foto['caminho']));
-        }
-        return $fotos;
+        return Visita::find($request->id)->fotos->toArray();
     }
 
     /**
@@ -322,7 +316,7 @@ class VisitaController extends Controller
      * @urlParam id integer required O identificador da visita.
      * @urlParam id_foto integer required O identificador da foto da visita.
      *
-     * @response status=200 scenario="success" {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z", "arquivo": {"headers": {}}}
+     * @response status=200 scenario="success" {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
      * 
@@ -330,14 +324,10 @@ class VisitaController extends Controller
      * @responseField caminho string O caminho de onde a imagem esta salva
      * @responseField comentario string O comentário opcional feito a imagem
      * @responseField visita_id integer O identificador da visita
-     * @responseField arquivo file O arquivo binario da imagem
      */
     public function getFotoVisita(Request $request)
     {
-        $foto = FotoVisita::find($request->id_foto)->toArray();
-        $arquivo = response()->file(storage_path('app/public/'.$foto['caminho']));
-        $foto['arquivo'] = $arquivo;
-        return $foto;
+        return FotoVisita::find($request->id_foto)->toArray();
     }
 
     /**

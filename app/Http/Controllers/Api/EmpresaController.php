@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Empresa;
+use App\Models\Requerimento;
 use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
@@ -31,5 +32,69 @@ class EmpresaController extends Controller
     public function get(Request $request)
     {
         return Empresa::find($request->id)->toArray();
+    }
+
+    /**
+     * Documentos do requerimento
+     *
+     * Retorna os nomes e ids dos documentos requeridos para emissao da licenca.
+     * 
+     * @urlParam id integer required O identificador da empresa.
+     * @urlParam id_requerimento integer required O identificador do requerimento da visita.
+     *
+     * @response status=200 scenario="success" [{"id": 8, "nome": "Comprovante de fornecimento de água (Compesa), se outro tipo, apresentar recibo de pagamento"}, {"id": 3, "nome": "Comprovante de pagamento da taxa ambiental"}, {"id": 1, "nome": "Cópia da (s) Identidade (s) e CPF(s) do requerente"}]
+     *
+     * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
+     * 
+     * @responseField id integer O identificador do documento
+     * @responseField nome string O nome do documento
+     */
+    public function getDocumentos(Request $request)
+    {
+        $requerimento = Requerimento::find($request->id_requerimento);
+        return $requerimento->documentos->map->only(['id', 'nome']);
+    }
+
+    /**
+     * Documento do requerimento
+     *
+     * Retorna o nome e id dos documento requerido para emissao da licenca.
+     * 
+     * @urlParam id integer required O identificador da empresa.
+     * @urlParam id_requerimento integer required O identificador do requerimento da visita.
+     * @urlParam id_documento integer required O identificador do documento.
+     *
+     * @response status=200 scenario="success" {"id": 8, "nome": "Comprovante de fornecimento de água (Compesa), se outro tipo, apresentar recibo de pagamento"}
+     *
+     * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
+     * 
+     * @responseField id integer O identificador do documento
+     * @responseField nome string O nome do documento
+     */
+    public function getDocumento(Request $request)
+    {
+        $requerimento = Requerimento::find($request->id_requerimento);
+        return $requerimento->documentos()->where('documento_id', $request->id_documento)->first()->only(['id', 'nome']);
+    }
+
+    /**
+     * Arquivo do documento enviado pelo requerente da licenca
+     *
+     * Retorna um .pdf do documento enviado pelo requerente da licenca.
+     *
+     * @urlParam id integer required O identificador da empresa.
+     * @urlParam id_requerimento integer required O identificador do requerimento.
+     * @urlParam id_documento integer required O identificador do documento.
+     *
+     * @response status=200 scenario="success" {file}
+     *
+     * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
+     * 
+     */
+    public function getDocumentoRequerido(Request $request)
+    {
+        $requerimento = Requerimento::find($request->id_requerimento);
+        $arquivo = response()->file(storage_path('app/public/'.$requerimento->documentos()->where('documento_id', $request->id_documento)->first()->pivot->caminho));
+        return $arquivo;
     }
 }
