@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VisitaCollection;
 use App\Http\Resources\VisitaResource;
+use App\Models\FotoVisita;
 use App\Models\Visita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VisitaController extends Controller
 {
@@ -184,5 +186,147 @@ class VisitaController extends Controller
     public function get(Request $request)
     {
         return Visita::find($request->id)->toArray();
+    }
+
+    /**
+     * Salvar imagem da visita
+     *
+     * Salva uma imagem da visita.
+     * 
+     * @response status=200 scenario="success" {"success": "success"}
+     * 
+     * @bodyParam id integer required O identificador da visita
+     * @bodyParam image file required O arquivo da foto capturada
+     * @bodyParam comentario string nullable O comentario opcional para a imagem
+     */
+    public function imageUpload(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            "image"      => "required|file|mimes:jpg,jpeg,bmp,png|max:2048",
+            "comentario" => "nullable|string|max:1000",
+        ]);
+
+        $visita =  Visita::find($request->id);
+        $arquivo = $request->image;
+        $path = 'visitas/'.$visita->id.'/';
+        $nome = $arquivo->getClientOriginalName();
+        Storage::putFileAs('public/'.$path, $arquivo, $nome);
+        $foto = new FotoVisita();
+        $foto->visita_id = $visita->id;
+        $foto->caminho = $path . $nome;
+        if($request->comentario != null){
+            $foto->comentario = $request->comentario;
+        }
+        $foto->save();
+
+        return response()->json(['success' => 'success'], 200);
+    }
+
+    /**
+     * Edita o comentario da foto da visita
+     *
+     * @urlParam id integer required O identificador da visita.
+     * @urlParam id_foto integer required O identificador da foto da visita
+     * 
+     * @response status=200 scenario="success" {"success": "success"}
+     * 
+     * @bodyParam comentario string nullable O comentario opcional para a imagem
+     */
+    public function comentarioUpdate(Request $request)
+    {
+        $request->validate([
+            "comentario" => "nullable|string|max:1000",
+        ]);
+
+        $foto =  FotoVisita::find($request->id_foto);
+        if($request->comentario != null){
+            $foto->comentario = $request->comentario;
+        }else{
+            $foto->comentario = null;
+        }
+        $foto->update();
+
+        return response()->json(['success' => 'success'], 200);
+    }
+
+    /**
+     * Deletar imagem da visita
+     *
+     * Deleta uma imagem da visita.
+     * 
+     * @response status=200 scenario="success" {"success": "success"}
+     *
+     * @urlParam id integer required O identificador da visita.
+     * @urlParam id_foto integer required O identificador da foto da visita
+     * 
+     */
+    public function imageDelete(Request $request)
+    {
+        $foto =  FotoVisita::find($request->id_foto);
+        $foto->delete();
+
+        return response()->json(['success' => 'success'], 200);
+    }
+
+    /**
+     * Concluir a visita
+     *
+     * Salva a informacao de que a visita foi realizada.
+     *
+     * @response status=200 scenario="success" {"success": "success"}
+     * 
+     * @urlParam id integer required O identificador da visita.
+     * 
+     */
+    public function concluirVisita(Request $request)
+    {
+        $visita =  Visita::find($request->id);
+        $visita->update(['data_realizada' => now()]);
+
+        return response()->json(['success' => 'success'], 200);
+    }
+
+    /**
+     * Fotos da visita
+     *
+     * Retorna as fotos anexadas a visita.
+     * 
+     * @urlParam id integer required O identificador da visita.
+     *
+     * @response status=200 scenario="success" [{"id": 1, "caminho": "visitas/1/histoSiga2021.jpg", "comentario": null, "visita_id": 1, "created_at": "2022-04-08T19:08:54.000000Z", "updated_at": "2022-04-08T19:08:54.000000Z"}, {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}]
+     *
+     * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
+     * 
+     * @responseField id integer O identificador da foto
+     * @responseField caminho string O caminho de onde a imagem esta salva
+     * @responseField comentario string O comentário opcional feito a imagem
+     * @responseField visita_id integer O identificador da visita
+     */
+    public function getFotos(Request $request)
+    {
+        return Visita::find($request->id)->fotos->toArray();
+    }
+
+    /**
+     * Foto da visita
+     *
+     * Retorna uma foto anexada a visita.
+     *
+     * @urlParam id integer required O identificador da visita.
+     * @urlParam id_foto integer required O identificador da foto da visita.
+     *
+     * @response status=200 scenario="success" {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}
+     *
+     * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
+     * 
+     * @responseField id integer O identificador da foto
+     * @responseField caminho string O caminho de onde a imagem esta salva
+     * @responseField comentario string O comentário opcional feito a imagem
+     * @responseField visita_id integer O identificador da visita
+     */
+    public function getFotoVisita(Request $request)
+    {
+        return FotoVisita::find($request->id_foto)->toArray();
     }
 }

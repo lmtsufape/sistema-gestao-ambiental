@@ -11,7 +11,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
-      Authorization: 'Bearer Ed63bgP6f1DaVk54ae8hvZc'
+      Authorization: 'Bearer g43DbEvh61aPfZ5cVa6ek8d'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -538,21 +538,21 @@ endpoints:
         name: email
         description: 'Email do usuário'
         required: true
-        example: cupiditate
+        example: id
         type: string
         custom: []
       password:
         name: password
         description: 'Senha do usuário'
         required: true
-        example: id
+        example: ipsa
         type: string
         custom: []
       device_name:
         name: device_name
         description: 'Nome para identificação do token'
         required: true
-        example: aut
+        example: omnis
         type: string
         custom: []
     responses:
@@ -577,7 +577,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
-      Authorization: 'Bearer bfvkgah683EZcDVed5Pa641'
+      Authorization: 'Bearer cvDdhEg561fe4PV6ka3abZ8'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -612,7 +612,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
-      Authorization: 'Bearer baEeVdgD65Pchk8f1346Zav'
+      Authorization: 'Bearer Evc4DP5bfVhaa861dgke36Z'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -620,7 +620,7 @@ endpoints:
         name: id
         description: 'O identificador da denúncia.'
         required: true
-        example: 14
+        example: 1
         type: integer
         custom: []
     queryParameters: []
@@ -683,7 +683,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
-      Authorization: 'Bearer dVbD1fh68vE4k5Pc6aeaZg3'
+      Authorization: 'Bearer 13bDak4g6fvcdPVaZEe56h8'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -691,7 +691,7 @@ endpoints:
         name: id
         description: 'The ID of the visita.'
         required: true
-        example: 17
+        example: 6
         type: integer
         custom: []
     queryParameters: []
@@ -746,7 +746,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
-      Authorization: 'Bearer cZ6vDPE81aVbgd3kf5e6h4a'
+      Authorization: 'Bearer daaZc65b1fve8h3D64VEPkg'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -807,3 +807,274 @@ endpoints:
         name: endereco_id
         description: 'Identificador do endereço da empresa.'
         type: integer
+  -
+    httpMethods:
+      - GET
+    uri: 'api/visitas/{id}/fotos'
+    metadata:
+      title: 'Fotos da visita'
+      description: 'Retorna as fotos anexadas a visita.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer 5aPb3aecVgfvkZdE1h6468D'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'O identificador da visita.'
+        required: true
+        example: 1
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 200
+        content: '[{"id": 1, "caminho": "visitas/1/histoSiga2021.jpg", "comentario": null, "visita_id": 1, "created_at": "2022-04-08T19:08:54.000000Z", "updated_at": "2022-04-08T19:08:54.000000Z"}, {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}]'
+        headers: []
+        description: '200, success'
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: '401, usuario nao autenticado'
+    responseFields:
+      id:
+        name: id
+        description: 'O identificador da foto'
+        type: integer
+      caminho:
+        name: caminho
+        description: 'O caminho de onde a imagem esta salva'
+        type: string
+      comentario:
+        name: comentario
+        description: 'O comentário opcional feito a imagem'
+        type: string
+      visita_id:
+        name: visita_id
+        description: 'O identificador da visita'
+        type: integer
+  -
+    httpMethods:
+      - GET
+    uri: 'api/visitas/{id}/fotos/{id_foto}'
+    metadata:
+      title: 'Foto da visita'
+      description: 'Retorna uma foto anexada a visita.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer gE1PZ6aVDahfbv4e38dck65'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'O identificador da visita.'
+        required: true
+        example: 13
+        type: integer
+        custom: []
+      id_foto:
+        name: id_foto
+        description: 'O identificador da foto da visita.'
+        required: true
+        example: 16
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}'
+        headers: []
+        description: '200, success'
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: '401, usuario nao autenticado'
+    responseFields:
+      id:
+        name: id
+        description: 'O identificador da foto'
+        type: integer
+      caminho:
+        name: caminho
+        description: 'O caminho de onde a imagem esta salva'
+        type: string
+      comentario:
+        name: comentario
+        description: 'O comentário opcional feito a imagem'
+        type: string
+      visita_id:
+        name: visita_id
+        description: 'O identificador da visita'
+        type: integer
+  -
+    httpMethods:
+      - POST
+    uri: 'api/visitas/{id}/fotos/{id_foto}/delete'
+    metadata:
+      title: 'Deletar imagem da visita'
+      description: 'Deleta uma imagem da visita.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer v8chPk3f5EV4ZbeD6a16gad'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'O identificador da visita.'
+        required: true
+        example: 5
+        type: integer
+        custom: []
+      id_foto:
+        name: id_foto
+        description: 'O identificador da foto da visita'
+        required: true
+        example: 7
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"success": "success"}'
+        headers: []
+        description: '200, success'
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/visitas/{id}/fotos/{id_foto}/update'
+    metadata:
+      title: 'Edita o comentario da foto da visita'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer 1d5ZbEgaf36hPvk8D6V4ace'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'O identificador da visita.'
+        required: true
+        example: 17
+        type: integer
+        custom: []
+      id_foto:
+        name: id_foto
+        description: 'O identificador da foto da visita'
+        required: true
+        example: 19
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters:
+      comentario:
+        name: comentario
+        description: 'nullable O comentario opcional para a imagem'
+        required: false
+        example: corrupti
+        type: string
+        custom: []
+    responses:
+      -
+        status: 200
+        content: '{"success": "success"}'
+        headers: []
+        description: '200, success'
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/visitas/{id}/image'
+    metadata:
+      title: 'Salvar imagem da visita'
+      description: 'Salva uma imagem da visita.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer aevf3dk86b5aghP46Z1cEDV'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the visita.'
+        required: true
+        example: 10
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters:
+      id:
+        name: id
+        description: 'O identificador da visita'
+        required: true
+        example: 12
+        type: integer
+        custom: []
+      image:
+        name: image
+        description: 'O arquivo da foto capturada'
+        required: true
+        example: null
+        type: file
+        custom: []
+      comentario:
+        name: comentario
+        description: 'nullable O comentario opcional para a imagem'
+        required: false
+        example: rerum
+        type: string
+        custom: []
+    responses:
+      -
+        status: 200
+        content: '{"success": "success"}'
+        headers: []
+        description: '200, success'
+    responseFields: []
+  -
+    httpMethods:
+      - POST
+    uri: 'api/visitas/{id}/concluir'
+    metadata:
+      title: 'Concluir a visita'
+      description: 'Salva a informacao de que a visita foi realizada.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer Z8eaakVhbDc5EgP3f4v61d6'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'O identificador da visita.'
+        required: true
+        example: 6
+        type: integer
+        custom: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"success": "success"}'
+        headers: []
+        description: '200, success'
+    responseFields: []

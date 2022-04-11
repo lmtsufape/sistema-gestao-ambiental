@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var baseUrl = "http://localhost:8003";
+        var baseUrl = "http://localhost/sistema-gestao-ambiental/";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -92,6 +92,24 @@
                                     <li class="tocify-item level-2" data-unique="endpoints-GETapi-empresas--id-">
                         <a href="#endpoints-GETapi-empresas--id-">Empresa</a>
                     </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-visitas--id--fotos">
+                        <a href="#endpoints-GETapi-visitas--id--fotos">Fotos da visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-visitas--id--fotos--id_foto-">
+                        <a href="#endpoints-GETapi-visitas--id--fotos--id_foto-">Foto da visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-visitas--id--fotos--id_foto--delete">
+                        <a href="#endpoints-POSTapi-visitas--id--fotos--id_foto--delete">Deletar imagem da visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-visitas--id--fotos--id_foto--update">
+                        <a href="#endpoints-POSTapi-visitas--id--fotos--id_foto--update">Edita o comentario da foto da visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-visitas--id--image">
+                        <a href="#endpoints-POSTapi-visitas--id--image">Salvar imagem da visita</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-visitas--id--concluir">
+                        <a href="#endpoints-POSTapi-visitas--id--concluir">Concluir a visita</a>
+                    </li>
                                                     </ul>
                             </ul>
         
@@ -104,7 +122,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: March 3 2022</li>
+        <li>Last updated: April 11 2022</li>
     </ul>
 </div>
 
@@ -143,19 +161,19 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8003/api/visitas" \
-    --header "Authorization: Bearer Ed63bgP6f1DaVk54ae8hvZc" \
+    --get "http://localhost/sistema-gestao-ambiental/api/visitas" \
+    --header "Authorization: Bearer g43DbEvh61aPfZ5cVa6ek8d" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/visitas"
+    "http://localhost/sistema-gestao-ambiental/api/visitas"
 );
 
 const headers = {
-    "Authorization": "Bearer Ed63bgP6f1DaVk54ae8hvZc",
+    "Authorization": "Bearer g43DbEvh61aPfZ5cVa6ek8d",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -454,7 +472,7 @@ fetch(url, {
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Authorization":"Bearer Ed63bgP6f1DaVk54ae8hvZc","Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer g43DbEvh61aPfZ5cVa6ek8d","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas', this);">
     <h3>
@@ -1103,20 +1121,20 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8003/api/users/auth" \
+    "http://localhost/sistema-gestao-ambiental/api/users/auth" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"cupiditate\",
-    \"password\": \"id\",
-    \"device_name\": \"aut\"
+    \"email\": \"id\",
+    \"password\": \"ipsa\",
+    \"device_name\": \"omnis\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/users/auth"
+    "http://localhost/sistema-gestao-ambiental/api/users/auth"
 );
 
 const headers = {
@@ -1125,9 +1143,9 @@ const headers = {
 };
 
 let body = {
-    "email": "cupiditate",
-    "password": "id",
-    "device_name": "aut"
+    "email": "id",
+    "password": "ipsa",
+    "device_name": "omnis"
 };
 
 fetch(url, {
@@ -1206,7 +1224,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-users-auth"
-               value="cupiditate"
+               value="id"
                data-component="body" hidden>
     <br>
 <p>Email do usuário</p>
@@ -1216,7 +1234,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-users-auth"
-               value="id"
+               value="ipsa"
                data-component="body" hidden>
     <br>
 <p>Senha do usuário</p>
@@ -1226,7 +1244,7 @@ fetch(url, {
                 <input type="text"
                name="device_name"
                data-endpoint="POSTapi-users-auth"
-               value="aut"
+               value="omnis"
                data-component="body" hidden>
     <br>
 <p>Nome para identificação do token</p>
@@ -1247,19 +1265,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8003/api/users" \
-    --header "Authorization: Bearer bfvkgah683EZcDVed5Pa641" \
+    --get "http://localhost/sistema-gestao-ambiental/api/users" \
+    --header "Authorization: Bearer cvDdhEg561fe4PV6ka3abZ8" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/users"
+    "http://localhost/sistema-gestao-ambiental/api/users"
 );
 
 const headers = {
-    "Authorization": "Bearer bfvkgah683EZcDVed5Pa641",
+    "Authorization": "Bearer cvDdhEg561fe4PV6ka3abZ8",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1299,7 +1317,7 @@ fetch(url, {
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Authorization":"Bearer bfvkgah683EZcDVed5Pa641","Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer cvDdhEg561fe4PV6ka3abZ8","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('GETapi-users', this);">
     <h3>
@@ -1364,19 +1382,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8003/api/denuncias/14" \
-    --header "Authorization: Bearer baEeVdgD65Pchk8f1346Zav" \
+    --get "http://localhost/sistema-gestao-ambiental/api/denuncias/1" \
+    --header "Authorization: Bearer Evc4DP5bfVhaa861dgke36Z" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/denuncias/14"
+    "http://localhost/sistema-gestao-ambiental/api/denuncias/1"
 );
 
 const headers = {
-    "Authorization": "Bearer baEeVdgD65Pchk8f1346Zav",
+    "Authorization": "Bearer Evc4DP5bfVhaa861dgke36Z",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1433,7 +1451,7 @@ fetch(url, {
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Authorization":"Bearer baEeVdgD65Pchk8f1346Zav","Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer Evc4DP5bfVhaa861dgke36Z","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('GETapi-denuncias--id-', this);">
     <h3>
@@ -1471,7 +1489,7 @@ fetch(url, {
                 <input type="number"
                name="id"
                data-endpoint="GETapi-denuncias--id-"
-               value="14"
+               value="1"
                data-component="url" hidden>
     <br>
 <p>O identificador da denúncia.</p>
@@ -1539,19 +1557,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8003/api/visitas/17" \
-    --header "Authorization: Bearer dVbD1fh68vE4k5Pc6aeaZg3" \
+    --get "http://localhost/sistema-gestao-ambiental/api/visitas/6" \
+    --header "Authorization: Bearer 13bDak4g6fvcdPVaZEe56h8" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/visitas/17"
+    "http://localhost/sistema-gestao-ambiental/api/visitas/6"
 );
 
 const headers = {
-    "Authorization": "Bearer dVbD1fh68vE4k5Pc6aeaZg3",
+    "Authorization": "Bearer 13bDak4g6fvcdPVaZEe56h8",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1606,7 +1624,7 @@ fetch(url, {
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Authorization":"Bearer dVbD1fh68vE4k5Pc6aeaZg3","Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer 13bDak4g6fvcdPVaZEe56h8","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas--id-', this);">
     <h3>
@@ -1644,7 +1662,7 @@ fetch(url, {
                 <input type="number"
                name="id"
                data-endpoint="GETapi-visitas--id-"
-               value="17"
+               value="6"
                data-component="url" hidden>
     <br>
 <p>The ID of the visita.</p>
@@ -1702,19 +1720,19 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8003/api/empresas/1" \
-    --header "Authorization: Bearer cZ6vDPE81aVbgd3kf5e6h4a" \
+    --get "http://localhost/sistema-gestao-ambiental/api/empresas/1" \
+    --header "Authorization: Bearer daaZc65b1fve8h3D64VEPkg" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8003/api/empresas/1"
+    "http://localhost/sistema-gestao-ambiental/api/empresas/1"
 );
 
 const headers = {
-    "Authorization": "Bearer cZ6vDPE81aVbgd3kf5e6h4a",
+    "Authorization": "Bearer daaZc65b1fve8h3D64VEPkg",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1771,7 +1789,7 @@ fetch(url, {
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Authorization":"Bearer cZ6vDPE81aVbgd3kf5e6h4a","Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer daaZc65b1fve8h3D64VEPkg","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('GETapi-empresas--id-', this);">
     <h3>
@@ -1863,7 +1881,833 @@ fetch(url, {
 <br>
 <p>Identificador do endereço da empresa.</p>
         </p>
-        
+                <h2 id="endpoints-GETapi-visitas--id--fotos">Fotos da visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retorna as fotos anexadas a visita.</p>
+
+<span id="example-requests-GETapi-visitas--id--fotos">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/sistema-gestao-ambiental/api/visitas/1/fotos" \
+    --header "Authorization: Bearer 5aPb3aecVgfvkZdE1h6468D" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/1/fotos"
+);
+
+const headers = {
+    "Authorization": "Bearer 5aPb3aecVgfvkZdE1h6468D",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-visitas--id--fotos">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">[
+    {
+        &quot;id&quot;: 1,
+        &quot;caminho&quot;: &quot;visitas/1/histoSiga2021.jpg&quot;,
+        &quot;comentario&quot;: null,
+        &quot;visita_id&quot;: 1,
+        &quot;created_at&quot;: &quot;2022-04-08T19:08:54.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-04-08T19:08:54.000000Z&quot;
+    },
+    {
+        &quot;id&quot;: 2,
+        &quot;caminho&quot;: &quot;visitas/1/pizzacalabresaacebolada.jpg&quot;,
+        &quot;comentario&quot;: &quot;algum comentario aqui&quot;,
+        &quot;visita_id&quot;: 1,
+        &quot;created_at&quot;: &quot;2022-04-11T10:54:40.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-04-11T10:54:40.000000Z&quot;
+    }
+]</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-visitas--id--fotos" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-visitas--id--fotos"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-visitas--id--fotos"></code></pre>
+</span>
+<span id="execution-error-GETapi-visitas--id--fotos" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-visitas--id--fotos"></code></pre>
+</span>
+<form id="form-GETapi-visitas--id--fotos" data-method="GET"
+      data-path="api/visitas/{id}/fotos"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer 5aPb3aecVgfvkZdE1h6468D","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas--id--fotos', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-visitas--id--fotos"
+                    onclick="tryItOut('GETapi-visitas--id--fotos');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-visitas--id--fotos"
+                    onclick="cancelTryOut('GETapi-visitas--id--fotos');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-visitas--id--fotos" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/visitas/{id}/fotos</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-visitas--id--fotos" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-visitas--id--fotos"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="GETapi-visitas--id--fotos"
+               value="1"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da visita.</p>
+            </p>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da foto</p>
+        </p>
+            <p>
+            <b><code>caminho</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>O caminho de onde a imagem esta salva</p>
+        </p>
+            <p>
+            <b><code>comentario</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>O comentário opcional feito a imagem</p>
+        </p>
+            <p>
+            <b><code>visita_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da visita</p>
+        </p>
+                <h2 id="endpoints-GETapi-visitas--id--fotos--id_foto-">Foto da visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Retorna uma foto anexada a visita.</p>
+
+<span id="example-requests-GETapi-visitas--id--fotos--id_foto-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/sistema-gestao-ambiental/api/visitas/13/fotos/16" \
+    --header "Authorization: Bearer gE1PZ6aVDahfbv4e38dck65" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/13/fotos/16"
+);
+
+const headers = {
+    "Authorization": "Bearer gE1PZ6aVDahfbv4e38dck65",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-visitas--id--fotos--id_foto-">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 2,
+    &quot;caminho&quot;: &quot;visitas/1/pizzacalabresaacebolada.jpg&quot;,
+    &quot;comentario&quot;: &quot;algum comentario aqui&quot;,
+    &quot;visita_id&quot;: 1,
+    &quot;created_at&quot;: &quot;2022-04-11T10:54:40.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2022-04-11T10:54:40.000000Z&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, usuario nao autenticado):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-visitas--id--fotos--id_foto-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-visitas--id--fotos--id_foto-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-visitas--id--fotos--id_foto-"></code></pre>
+</span>
+<span id="execution-error-GETapi-visitas--id--fotos--id_foto-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-visitas--id--fotos--id_foto-"></code></pre>
+</span>
+<form id="form-GETapi-visitas--id--fotos--id_foto-" data-method="GET"
+      data-path="api/visitas/{id}/fotos/{id_foto}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer gE1PZ6aVDahfbv4e38dck65","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-visitas--id--fotos--id_foto-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-visitas--id--fotos--id_foto-"
+                    onclick="tryItOut('GETapi-visitas--id--fotos--id_foto-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-visitas--id--fotos--id_foto-"
+                    onclick="cancelTryOut('GETapi-visitas--id--fotos--id_foto-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-visitas--id--fotos--id_foto-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/visitas/{id}/fotos/{id_foto}</code></b>
+        </p>
+                <p>
+            <label id="auth-GETapi-visitas--id--fotos--id_foto-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETapi-visitas--id--fotos--id_foto-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="GETapi-visitas--id--fotos--id_foto-"
+               value="13"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da visita.</p>
+            </p>
+                    <p>
+                <b><code>id_foto</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id_foto"
+               data-endpoint="GETapi-visitas--id--fotos--id_foto-"
+               value="16"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da foto da visita.</p>
+            </p>
+                    </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da foto</p>
+        </p>
+            <p>
+            <b><code>caminho</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>O caminho de onde a imagem esta salva</p>
+        </p>
+            <p>
+            <b><code>comentario</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>O comentário opcional feito a imagem</p>
+        </p>
+            <p>
+            <b><code>visita_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>O identificador da visita</p>
+        </p>
+                <h2 id="endpoints-POSTapi-visitas--id--fotos--id_foto--delete">Deletar imagem da visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Deleta uma imagem da visita.</p>
+
+<span id="example-requests-POSTapi-visitas--id--fotos--id_foto--delete">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/sistema-gestao-ambiental/api/visitas/5/fotos/7/delete" \
+    --header "Authorization: Bearer v8chPk3f5EV4ZbeD6a16gad" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/5/fotos/7/delete"
+);
+
+const headers = {
+    "Authorization": "Bearer v8chPk3f5EV4ZbeD6a16gad",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-visitas--id--fotos--id_foto--delete">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;success&quot;: &quot;success&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-visitas--id--fotos--id_foto--delete" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-visitas--id--fotos--id_foto--delete"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-visitas--id--fotos--id_foto--delete"></code></pre>
+</span>
+<span id="execution-error-POSTapi-visitas--id--fotos--id_foto--delete" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-visitas--id--fotos--id_foto--delete"></code></pre>
+</span>
+<form id="form-POSTapi-visitas--id--fotos--id_foto--delete" data-method="POST"
+      data-path="api/visitas/{id}/fotos/{id_foto}/delete"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer v8chPk3f5EV4ZbeD6a16gad","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-visitas--id--fotos--id_foto--delete', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-visitas--id--fotos--id_foto--delete"
+                    onclick="tryItOut('POSTapi-visitas--id--fotos--id_foto--delete');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-visitas--id--fotos--id_foto--delete"
+                    onclick="cancelTryOut('POSTapi-visitas--id--fotos--id_foto--delete');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-visitas--id--fotos--id_foto--delete" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/visitas/{id}/fotos/{id_foto}/delete</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-visitas--id--fotos--id_foto--delete" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-visitas--id--fotos--id_foto--delete"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="POSTapi-visitas--id--fotos--id_foto--delete"
+               value="5"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da visita.</p>
+            </p>
+                    <p>
+                <b><code>id_foto</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id_foto"
+               data-endpoint="POSTapi-visitas--id--fotos--id_foto--delete"
+               value="7"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da foto da visita</p>
+            </p>
+                    </form>
+
+            <h2 id="endpoints-POSTapi-visitas--id--fotos--id_foto--update">Edita o comentario da foto da visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-visitas--id--fotos--id_foto--update">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/sistema-gestao-ambiental/api/visitas/17/fotos/19/update" \
+    --header "Authorization: Bearer 1d5ZbEgaf36hPvk8D6V4ace" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"comentario\": \"corrupti\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/17/fotos/19/update"
+);
+
+const headers = {
+    "Authorization": "Bearer 1d5ZbEgaf36hPvk8D6V4ace",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "comentario": "corrupti"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-visitas--id--fotos--id_foto--update">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;success&quot;: &quot;success&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-visitas--id--fotos--id_foto--update" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-visitas--id--fotos--id_foto--update"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-visitas--id--fotos--id_foto--update"></code></pre>
+</span>
+<span id="execution-error-POSTapi-visitas--id--fotos--id_foto--update" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-visitas--id--fotos--id_foto--update"></code></pre>
+</span>
+<form id="form-POSTapi-visitas--id--fotos--id_foto--update" data-method="POST"
+      data-path="api/visitas/{id}/fotos/{id_foto}/update"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer 1d5ZbEgaf36hPvk8D6V4ace","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-visitas--id--fotos--id_foto--update', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-visitas--id--fotos--id_foto--update"
+                    onclick="tryItOut('POSTapi-visitas--id--fotos--id_foto--update');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-visitas--id--fotos--id_foto--update"
+                    onclick="cancelTryOut('POSTapi-visitas--id--fotos--id_foto--update');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-visitas--id--fotos--id_foto--update" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/visitas/{id}/fotos/{id_foto}/update</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-visitas--id--fotos--id_foto--update" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-visitas--id--fotos--id_foto--update"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="POSTapi-visitas--id--fotos--id_foto--update"
+               value="17"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da visita.</p>
+            </p>
+                    <p>
+                <b><code>id_foto</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id_foto"
+               data-endpoint="POSTapi-visitas--id--fotos--id_foto--update"
+               value="19"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da foto da visita</p>
+            </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>comentario</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="comentario"
+               data-endpoint="POSTapi-visitas--id--fotos--id_foto--update"
+               value="corrupti"
+               data-component="body" hidden>
+    <br>
+<p>nullable O comentario opcional para a imagem</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-visitas--id--image">Salvar imagem da visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Salva uma imagem da visita.</p>
+
+<span id="example-requests-POSTapi-visitas--id--image">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/sistema-gestao-ambiental/api/visitas/10/image" \
+    --header "Authorization: Bearer aevf3dk86b5aghP46Z1cEDV" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "id=12" \
+    --form "comentario=rerum" \
+    --form "image=@C:\Users\kelwi\AppData\Local\Temp\phpFF6B.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/10/image"
+);
+
+const headers = {
+    "Authorization": "Bearer aevf3dk86b5aghP46Z1cEDV",
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('id', '12');
+body.append('comentario', 'rerum');
+body.append('image', document.querySelector('input[name="image"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-visitas--id--image">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;success&quot;: &quot;success&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-visitas--id--image" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-visitas--id--image"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-visitas--id--image"></code></pre>
+</span>
+<span id="execution-error-POSTapi-visitas--id--image" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-visitas--id--image"></code></pre>
+</span>
+<form id="form-POSTapi-visitas--id--image" data-method="POST"
+      data-path="api/visitas/{id}/image"
+      data-authed="1"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer aevf3dk86b5aghP46Z1cEDV","Content-Type":"multipart\/form-data","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-visitas--id--image', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-visitas--id--image"
+                    onclick="tryItOut('POSTapi-visitas--id--image');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-visitas--id--image"
+                    onclick="cancelTryOut('POSTapi-visitas--id--image');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-visitas--id--image" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/visitas/{id}/image</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-visitas--id--image" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-visitas--id--image"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="POSTapi-visitas--id--image"
+               value="10"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the visita.</p>
+            </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="POSTapi-visitas--id--image"
+               value="12"
+               data-component="body" hidden>
+    <br>
+<p>O identificador da visita</p>
+        </p>
+                <p>
+            <b><code>image</code></b>&nbsp;&nbsp;<small>file</small>  &nbsp;
+                <input type="file"
+               name="image"
+               data-endpoint="POSTapi-visitas--id--image"
+               value=""
+               data-component="body" hidden>
+    <br>
+<p>O arquivo da foto capturada</p>
+        </p>
+                <p>
+            <b><code>comentario</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="comentario"
+               data-endpoint="POSTapi-visitas--id--image"
+               value="rerum"
+               data-component="body" hidden>
+    <br>
+<p>nullable O comentario opcional para a imagem</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-visitas--id--concluir">Concluir a visita</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Salva a informacao de que a visita foi realizada.</p>
+
+<span id="example-requests-POSTapi-visitas--id--concluir">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/sistema-gestao-ambiental/api/visitas/6/concluir" \
+    --header "Authorization: Bearer Z8eaakVhbDc5EgP3f4v61d6" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/sistema-gestao-ambiental/api/visitas/6/concluir"
+);
+
+const headers = {
+    "Authorization": "Bearer Z8eaakVhbDc5EgP3f4v61d6",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-visitas--id--concluir">
+            <blockquote>
+            <p>Example response (200, success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;success&quot;: &quot;success&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-visitas--id--concluir" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-visitas--id--concluir"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-visitas--id--concluir"></code></pre>
+</span>
+<span id="execution-error-POSTapi-visitas--id--concluir" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-visitas--id--concluir"></code></pre>
+</span>
+<form id="form-POSTapi-visitas--id--concluir" data-method="POST"
+      data-path="api/visitas/{id}/concluir"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer Z8eaakVhbDc5EgP3f4v61d6","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-visitas--id--concluir', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-visitas--id--concluir"
+                    onclick="tryItOut('POSTapi-visitas--id--concluir');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-visitas--id--concluir"
+                    onclick="cancelTryOut('POSTapi-visitas--id--concluir');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-visitas--id--concluir" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/visitas/{id}/concluir</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTapi-visitas--id--concluir" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTapi-visitas--id--concluir"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="id"
+               data-endpoint="POSTapi-visitas--id--concluir"
+               value="6"
+               data-component="url" hidden>
+    <br>
+<p>O identificador da visita.</p>
+            </p>
+                    </form>
+
+    
 
         
     </div>

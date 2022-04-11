@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost:8003"
+            "value": "http:\/\/localhost\/sistema-gestao-ambiental\/"
         }
     ],
     "info": {
         "name": "Sistema de Gest\u00e3o Ambiental",
-        "_postman_id": "9126a529-150a-449f-88b0-11e5c4ce3ad0",
+        "_postman_id": "3477aad6-a41f-40c3-9715-838c0a872d77",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -91,7 +91,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"email\":\"cupiditate\",\"password\":\"id\",\"device_name\":\"aut\"}"
+                            "raw": "{\"email\":\"id\",\"password\":\"ipsa\",\"device_name\":\"omnis\"}"
                         },
                         "description": "Cria um token de autentica\u00e7\u00e3o para o usu\u00e1rio.",
                         "auth": {
@@ -157,7 +157,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "14",
+                                    "value": "1",
                                     "description": "O identificador da den\u00fancia."
                                 }
                             ]
@@ -203,7 +203,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "17",
+                                    "value": "6",
                                     "description": "The ID of the visita."
                                 }
                             ]
@@ -280,6 +280,298 @@
                             "code": 401,
                             "body": "{\"message\": \"Unauthenticated.\"}",
                             "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Fotos da visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/fotos",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/fotos",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "O identificador da visita."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna as fotos anexadas a visita."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[{\"id\": 1, \"caminho\": \"visitas\/1\/histoSiga2021.jpg\", \"comentario\": null, \"visita_id\": 1, \"created_at\": \"2022-04-08T19:08:54.000000Z\", \"updated_at\": \"2022-04-08T19:08:54.000000Z\"}, {\"id\": 2, \"caminho\": \"visitas\/1\/pizzacalabresaacebolada.jpg\", \"comentario\": \"algum comentario aqui\", \"visita_id\": 1, \"created_at\": \"2022-04-11T10:54:40.000000Z\", \"updated_at\": \"2022-04-11T10:54:40.000000Z\"}]",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Foto da visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/fotos\/:id_foto",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/fotos\/:id_foto",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "13",
+                                    "description": "O identificador da visita."
+                                },
+                                {
+                                    "id": "id_foto",
+                                    "key": "id_foto",
+                                    "value": "16",
+                                    "description": "O identificador da foto da visita."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Retorna uma foto anexada a visita."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"id\": 2, \"caminho\": \"visitas\/1\/pizzacalabresaacebolada.jpg\", \"comentario\": \"algum comentario aqui\", \"visita_id\": 1, \"created_at\": \"2022-04-11T10:54:40.000000Z\", \"updated_at\": \"2022-04-11T10:54:40.000000Z\"}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": "usuario nao autenticado"
+                        }
+                    ]
+                },
+                {
+                    "name": "Deletar imagem da visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/fotos\/:id_foto\/delete",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/fotos\/:id_foto\/delete",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "5",
+                                    "description": "O identificador da visita."
+                                },
+                                {
+                                    "id": "id_foto",
+                                    "key": "id_foto",
+                                    "value": "7",
+                                    "description": "O identificador da foto da visita"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Deleta uma imagem da visita."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": \"success\"}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Edita o comentario da foto da visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/fotos\/:id_foto\/update",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/fotos\/:id_foto\/update",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "17",
+                                    "description": "O identificador da visita."
+                                },
+                                {
+                                    "id": "id_foto",
+                                    "key": "id_foto",
+                                    "value": "19",
+                                    "description": "O identificador da foto da visita"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"comentario\":\"corrupti\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": \"success\"}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Salvar imagem da visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/image",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/image",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "10",
+                                    "description": "The ID of the visita."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "id",
+                                    "value": 12,
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "comentario",
+                                    "value": "rerum",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "image",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "Salva uma imagem da visita."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": \"success\"}",
+                            "name": "success"
+                        }
+                    ]
+                },
+                {
+                    "name": "Concluir a visita",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/visitas\/:id\/concluir",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/visitas\/:id\/concluir",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "6",
+                                    "description": "O identificador da visita."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Salva a informacao de que a visita foi realizada."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\": \"success\"}",
+                            "name": "success"
                         }
                     ]
                 }
