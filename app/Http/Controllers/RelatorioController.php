@@ -54,7 +54,6 @@ class RelatorioController extends Controller
             $requerimento->update();
         }
 
-        $visita->update(['data_realizada' => now()]);
 
         return redirect(route('visitas.index'))->with(['success' => 'Relátorio salvo com sucesso!']);
     }

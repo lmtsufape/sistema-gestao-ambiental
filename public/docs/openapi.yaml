@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost:8003'
+    url: 'http://localhost/sistema-gestao-ambiental'
 paths:
   /api/visitas:
     get:
@@ -16,7 +16,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer Ed63bgP6f1DaVk54ae8hvZc'
+          example: 'Bearer g43DbEvh61aPfZ5cVa6ek8d'
           schema:
             type: string
         -
@@ -192,15 +192,15 @@ paths:
                 email:
                   type: string
                   description: 'Email do usuário'
-                  example: cupiditate
+                  example: id
                 password:
                   type: string
                   description: 'Senha do usuário'
-                  example: id
+                  example: ipsa
                 device_name:
                   type: string
                   description: 'Nome para identificação do token'
-                  example: aut
+                  example: omnis
               required:
                 - email
                 - password
@@ -215,7 +215,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer bfvkgah683EZcDVed5Pa641'
+          example: 'Bearer cvDdhEg561fe4PV6ka3abZ8'
           schema:
             type: string
         -
@@ -267,7 +267,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer baEeVdgD65Pchk8f1346Zav'
+          example: 'Bearer Evc4DP5bfVhaa861dgke36Z'
           schema:
             type: string
         -
@@ -365,7 +365,7 @@ paths:
         in: path
         name: id
         description: 'O identificador da denúncia.'
-        example: 14
+        example: 1
         required: true
         schema:
           type: integer
@@ -378,7 +378,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer dVbD1fh68vE4k5Pc6aeaZg3'
+          example: 'Bearer 13bDak4g6fvcdPVaZEe56h8'
           schema:
             type: string
         -
@@ -466,7 +466,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the visita.'
-        example: 17
+        example: 6
         required: true
         schema:
           type: integer
@@ -479,7 +479,7 @@ paths:
           in: header
           name: Authorization
           description: ''
-          example: 'Bearer cZ6vDPE81aVbgd3kf5e6h4a'
+          example: 'Bearer daaZc65b1fve8h3D64VEPkg'
           schema:
             type: string
         -
@@ -578,6 +578,422 @@ paths:
         name: id
         description: 'O identificador da empresa.'
         example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/fotos':
+    get:
+      summary: 'Fotos da visita'
+      description: 'Retorna as fotos anexadas a visita.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer 5aPb3aecVgfvkZdE1h6468D'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 1
+                    caminho: visitas/1/histoSiga2021.jpg
+                    comentario: null
+                    visita_id: 1
+                    created_at: '2022-04-08T19:08:54.000000Z'
+                    updated_at: '2022-04-08T19:08:54.000000Z'
+                  -
+                    id: 2
+                    caminho: visitas/1/pizzacalabresaacebolada.jpg
+                    comentario: 'algum comentario aqui'
+                    visita_id: 1
+                    created_at: '2022-04-11T10:54:40.000000Z'
+                    updated_at: '2022-04-11T10:54:40.000000Z'
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da visita.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/fotos/{id_foto}':
+    get:
+      summary: 'Foto da visita'
+      description: 'Retorna uma foto anexada a visita.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer gE1PZ6aVDahfbv4e38dck65'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 2
+                  caminho: visitas/1/pizzacalabresaacebolada.jpg
+                  comentario: 'algum comentario aqui'
+                  visita_id: 1
+                  created_at: '2022-04-11T10:54:40.000000Z'
+                  updated_at: '2022-04-11T10:54:40.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                    description: 'O identificador da foto'
+                  caminho:
+                    type: string
+                    example: visitas/1/pizzacalabresaacebolada.jpg
+                    description: 'O caminho de onde a imagem esta salva'
+                  comentario:
+                    type: string
+                    example: 'algum comentario aqui'
+                    description: 'O comentário opcional feito a imagem'
+                  visita_id:
+                    type: integer
+                    example: 1
+                    description: 'O identificador da visita'
+                  created_at:
+                    type: string
+                    example: '2022-04-11T10:54:40.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2022-04-11T10:54:40.000000Z'
+        401:
+          description: 'usuario nao autenticado'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da visita.'
+        example: 13
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: id_foto
+        description: 'O identificador da foto da visita.'
+        example: 16
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/fotos/{id_foto}/delete':
+    post:
+      summary: 'Deletar imagem da visita'
+      description: 'Deleta uma imagem da visita.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer v8chPk3f5EV4ZbeD6a16gad'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: success
+                properties:
+                  success:
+                    type: string
+                    example: success
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da visita.'
+        example: 5
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: id_foto
+        description: 'O identificador da foto da visita'
+        example: 7
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/fotos/{id_foto}/update':
+    post:
+      summary: 'Edita o comentario da foto da visita'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer 1d5ZbEgaf36hPvk8D6V4ace'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: success
+                properties:
+                  success:
+                    type: string
+                    example: success
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comentario:
+                  type: string
+                  description: 'nullable O comentario opcional para a imagem'
+                  example: corrupti
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da visita.'
+        example: 17
+        required: true
+        schema:
+          type: integer
+      -
+        in: path
+        name: id_foto
+        description: 'O identificador da foto da visita'
+        example: 19
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/image':
+    post:
+      summary: 'Salvar imagem da visita'
+      description: 'Salva uma imagem da visita.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer aevf3dk86b5aghP46Z1cEDV'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: multipart/form-data
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: success
+                properties:
+                  success:
+                    type: string
+                    example: success
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: 'O identificador da visita'
+                  example: 12
+                image:
+                  type: string
+                  format: binary
+                  description: 'O arquivo da foto capturada'
+                comentario:
+                  type: string
+                  description: 'nullable O comentario opcional para a imagem'
+                  example: rerum
+              required:
+                - id
+                - image
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the visita.'
+        example: 10
+        required: true
+        schema:
+          type: integer
+  '/api/visitas/{id}/concluir':
+    post:
+      summary: 'Concluir a visita'
+      description: 'Salva a informacao de que a visita foi realizada.'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer Z8eaakVhbDc5EgP3f4v61d6'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: success
+                properties:
+                  success:
+                    type: string
+                    example: success
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'O identificador da visita.'
+        example: 6
         required: true
         schema:
           type: integer

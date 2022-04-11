@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                         @if ($visita->requerimento != null)
@@ -20,11 +20,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="form col-md-9" style="margin-top:10px;">
+                            <div class="form col-md-9" style="margin-top:30px;">
                                 <form id="form-relatorio-visita" method="POST" action="{{route('relatorios.store')}}">
                                     @csrf
                                     <input type="hidden" name="visita" value="{{$visita->id}}">
@@ -42,82 +42,23 @@
                             </div>
                             <div class="form col-md-3">
                                 <div class="col barraMenu">
-                                    <p style="margin-top:8px; margin-bottom:6px;">Álbum</p>
+                                    <p style="margin-bottom:6px;">Álbum</p>
                                 </div>
-                                <div class=" overflow-auto" style="padding-left: 15px; padding-top:10px;">
-                                    <table class="table table-borderless table-hover">
-                                        <tbody>
-                                        {{-- @foreach ($album as $item)
-                                            @if($item->orientation == 6 || $item->orientation == 8)
-                                            <tr style="text-align: center;border: 1.5px solid #f5f5f5;">
-                                                <td style="width: 100%;" type="button" data-toggle="modal" data-target="#modaTipo1{{$item->id}}"><img src="{{asset('/imagens/inspecoes/'.$item->imagemInspecao)}}" alt="Logo" height="90px"/></td>
-                                            </tr>
-                                            <!-- Modal TIPO 1-->
-                                            <div class="modal fade" id="modaTipo1{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Imagem</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-3">
-                                                                <img src="{{asset('/imagens/inspecoes/'.$item->imagemInspecao)}}" alt="Logo" height="290px"/>
-                                                            </div>
-                                                            <div class="form-group col-md-9">
-                                                                <div style="overflow: auto; height:290px;">
-                                                                    <label>{!! $item->descricao !!}</label>
-                                                                </div>
-                                                            </div>
+                                <div id="imagens" class="form-row" style="width:100%; height:400px; overflow:auto;">
+                                    @foreach ($visita->fotos as $foto)
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card" style="width: 100%;">
+                                                    <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                                    @if ($foto->comentario != null)
+                                                        <div class="card-body">
+                                                            <p class="card-text">{{$foto->comentario}}</p>
                                                         </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-dismiss="modal" style="width: 190px;">Fechar</button>
-                                                    </div>
-                                                </div>
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <!--x Modal x-->
-                                            @else
-                                            <tr style="text-align: center;border: 1.5px solid #f5f5f5;">
-                                                <td style="width: 100%;"  type="button" data-toggle="modal" data-target="#modaTipo2{{$item->id}}"><img src="/imagens/inspecoes/{{$item->imagemInspecao}}" alt="Logo" height="90px"/></td>
-                                            </tr>
-                                            <!-- Modal TIPO 2-->
-                                            <div class="modal fade" id="modaTipo2{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Imagem</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <img src="/imagens/inspecoes/{{$item->imagemInspecao}}" alt="Logo" height="190px"/>
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <div style="overflow: auto; height:195px;">
-                                                                    <label>{!! $item->descricao !!}</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-dismiss="modal" style="width: 190px;">Fechar</button>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <!--x Modal x-->
-                                            @endif
-                                        @endforeach --}}
-                                        </tbody>
-                                    </table>
+                                        </div><br>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
