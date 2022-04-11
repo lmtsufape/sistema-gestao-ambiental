@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/visitas/{id}', [VisitaController::class, 'get']);
     Route::get('/visitas/{id}/fotos', [VisitaController::class, 'getFotos']);
     Route::get('/visitas/{id}/fotos/{id_foto}', [VisitaController::class, 'getFotoVisita']);
+    Route::get('/visitas/{id}/fotos/{id_foto}/arquivo', [VisitaController::class, 'getArquivoFotoVisita']);
     Route::post('/visitas/{id}/fotos/{id_foto}/delete', [VisitaController::class, 'imageDelete']);
     Route::post('/visitas/{id}/fotos/{id_foto}/update', [VisitaController::class, 'comentarioUpdate']);
     Route::post('/visitas/{id}/image', [VisitaController::class, 'imageUpload']);
