@@ -146,7 +146,7 @@ class VisitaController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->visitas()->with(
+        $dados = $request->user()->visitas()->with(
             'denuncia.empresa',
             'denuncia.empresa.user',
             'denuncia.empresa.telefone',
@@ -164,6 +164,10 @@ class VisitaController extends Controller
             'solicitacao_poda.requerente',
             'solicitacao_poda.requerente.user',
         )->get()->toArray();
+        if($dados[0]['denuncia'] != null){
+            $dados[0]['denuncia']['texto'] = strip_tags($dados[0]['denuncia']['texto']);
+        }
+        return $dados;
     }
 
     /**
