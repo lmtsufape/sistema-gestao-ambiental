@@ -167,16 +167,19 @@ class VisitaController extends Controller
             'solicitacao_poda.requerente.user',
         )->get()->toArray();
         $tz = 'America/Recife';
-        $dt = new DateTime($dados[0]['data_marcada'], new DateTimeZone($tz));
-        $dados[0]['data_marcada'] = ($dt->format('Y-m-d\TH:i:s.u'));
+        foreach($dados as $i => $visita){
+            $dt = new DateTime($visita['data_marcada'], new DateTimeZone($tz));
+            $visita['data_marcada'] = ($dt->format('Y-m-d\TH:i:s.u'));
 
-        if($dados[0]['data_realizada'] != null){
-            $dt1 = new DateTime($dados[0]['data_realizada'], new DateTimeZone($tz));
-            $dados[0]['data_realizada'] = ($dt1->format('Y-m-d\TH:i:s.u'));
-        }
+            if($visita['data_realizada'] != null){
+                $dt1 = new DateTime($visita['data_realizada'], new DateTimeZone($tz));
+                $visita['data_realizada'] = ($dt1->format('Y-m-d\TH:i:s.u'));
+            }
 
-        if($dados[0]['denuncia'] != null){
-            $dados[0]['denuncia']['texto'] = strip_tags($dados[0]['denuncia']['texto']);
+            if($visita['denuncia'] != null){
+                $visita['denuncia']['texto'] = strip_tags($visita['denuncia']['texto']);
+            }
+            $dados[$i] = $visita;
         }
         return $dados;
     }
