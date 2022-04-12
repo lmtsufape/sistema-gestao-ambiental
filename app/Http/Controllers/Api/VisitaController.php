@@ -7,6 +7,8 @@ use App\Http\Resources\VisitaCollection;
 use App\Http\Resources\VisitaResource;
 use App\Models\FotoVisita;
 use App\Models\Visita;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -146,7 +148,7 @@ class VisitaController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->visitas()->with(
+        $dados = $request->user()->visitas()->with(
             'denuncia.empresa',
             'denuncia.empresa.user',
             'denuncia.empresa.telefone',
@@ -164,6 +166,19 @@ class VisitaController extends Controller
             'solicitacao_poda.requerente',
             'solicitacao_poda.requerente.user',
         )->get()->toArray();
+        $tz = 'America/Recife';
+        $dt = new DateTime($dados[0]['data_marcada'], new DateTimeZone($tz));
+        $dados[0]['data_marcada'] = ($dt->format('Y-m-d\TH:i:s.u'));
+
+        if($dados[0]['data_realizada'] != null){
+            $dt1 = new DateTime($dados[0]['data_realizada'], new DateTimeZone($tz));
+            $dados[0]['data_realizada'] = ($dt1->format('Y-m-d\TH:i:s.u'));
+        }
+
+        if($dados[0]['denuncia'] != null){
+            $dados[0]['denuncia']['texto'] = strip_tags($dados[0]['denuncia']['texto']);
+        }
+        return $dados;
     }
 
     /**
