@@ -21,7 +21,7 @@ class TokenController extends Controller
      *
      * @response 422 scenario="Unprocessable Content" {"message":"The given data was invalid.","errors":{"email":["The provided credentials are incorrect."]}}
      *
-     * @response 200 scenario="success" 4|ECTth7OLLJCAtH4HQDhhd1y6fiTmogoGvqGr9c6f
+     * @response 200 scenario="success" {"id": 2, "name": "Analista", "email": "analista@analista.com", "profile_photo_url": "http://localhost/sistema-gestao-ambiental/storage/users/2/fotoperfil.jpeg", "token": "6|EOhmEVnaTK2vqFvL2q2oTFSCi1UmtSLG0mel1alc"}
      *
      * @bodyParam email string required Email do usuário
      *
@@ -46,7 +46,8 @@ class TokenController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
-        return $user->createToken($request->device_name)->plainTextToken;
+        $dados = $user->only(['id', 'name', 'email', 'profile_photo_url']);
+        $dados['token'] = $user->createToken($request->device_name)->plainTextToken;
+        return $dados;
     }
 }
