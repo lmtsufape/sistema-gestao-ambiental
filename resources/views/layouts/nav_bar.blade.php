@@ -92,7 +92,7 @@
                               Outros
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
-                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
+                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Pagamentos')}}</a>
                                 <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
                                 <a class="dropdown-item" href="{{route('especies.index')}}">{{__('Espécies de muda')}}</a>
                                 <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>

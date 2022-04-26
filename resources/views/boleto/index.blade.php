@@ -5,7 +5,7 @@
             <div class="col-md-8">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Boletos</h4>
+                        <h4 class="card-title">Pagamentos</h4>
                     </div>
                 </div>
                 <div div class="form-row">
