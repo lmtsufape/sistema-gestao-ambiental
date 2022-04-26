@@ -37,7 +37,6 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">Descrição</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -46,7 +45,6 @@
                                         <tr>
                                             <td scope="row">{{$i+1}}</td>
                                             <td>{{$setor->nome}}</td>
-                                            <td>{{$setor->descricao}}</td>
                                             <td>
                                                 @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
                                                     <a title="Visualizar cnaes do grupo" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar setor"></a>
