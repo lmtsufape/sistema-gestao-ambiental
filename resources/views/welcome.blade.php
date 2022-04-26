@@ -34,8 +34,8 @@
     <div class="container conteudo" style="margin-top: 40px;">
         @if ($noticias->count() > 0)  
             <div class="row">
-                <div class="col-md-12">
-                    Notícias em destaque
+                <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                    NOTÍCIAS EM DESTAQUE
                 </div>
             </div>
             <br>
@@ -90,8 +90,8 @@
         @endif
         <br>
         <div class="row">
-            <div class="col-md-12">
-                <h6>Principais serviços</h6>
+            <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                PRINCIPAIS SERVIÇOS
             </div>
         </div>
         <div class="row">
@@ -193,6 +193,7 @@
                     </div>
                 </a>
             </div>
+            {{--
             <div class="col-md-3">
                 <a href="#">
                     <div class="card card-home">
@@ -210,6 +211,7 @@
                     </div>
                 </a>
             </div>
+            --}}
 
         </div>
     </div>
