@@ -4,8 +4,8 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Editar o cnae {{$cnae->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Grupos > Cnaes do grupo {{$cnae->setor->nome}} > Editar cnae</h6>
+                        <h4 class="card-title">Editar o CNAE - {{$cnae->nome}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Grupos > CNAEs do grupo {{$cnae->setor->nome}} > Editar CNAE</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a title="Voltar" href="{{route('setores.show', ['setore' => $cnae->setor->id])}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
@@ -32,7 +32,7 @@
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
                             <div class="form-row">
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
                                     <label for="nome">{{ __('Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome" class="form-control @error('nome') is-invalid @enderror" type="text" name="nome" value="{{old('nome')!=null ? old('nome') : $cnae->nome}}" required autofocus autocomplete="nome" placeholder="Digite o nome do cnae...">
 
@@ -52,7 +52,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-2 form-group">
                                     <label for="potencial_poluidor">{{ __('Potencial Poluidor') }}</label><br>
                                     <select class="form-select form-select-sm form-control" name="potencial_poluidor" aria-label=".form-select-sm example">
                                         <option value="">-- Selecionar potencial poluidor --</option>

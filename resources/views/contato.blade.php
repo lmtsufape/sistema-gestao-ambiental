@@ -68,7 +68,7 @@
                 <div class="form-row" style="margin-top: 15px; margin-bottom: 15px;">
                     <div class="col-md-12">
                         <img src="{{asset('img/Icon-zocial-email.png')}}" alt="E-mail alternativo" style="display: inline;">
-                        &nbsp;<a href="mailto:meioambientegaranhuns@gmail.com" style="text-decoration: none; color:black;">meioambientegaranhuns@gmail.com</a>
+                        &nbsp;<a href="mailto:agricultura.garanhuns@hotmail.com" style="text-decoration: none; color:black;">agricultura.garanhuns@hotmail.com</a>
                     </div>
                 </div>
                 {{-- <div class="form-row" style="margin-top: 15px; margin-bottom: 15px;">

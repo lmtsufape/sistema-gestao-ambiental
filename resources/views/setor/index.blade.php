@@ -4,7 +4,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Grupos cadastradas no sistema</h4>
+                        <h4 class="card-title">Grupos cadastrados no sistema</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Novo grupo" href="{{route('setores.create')}}">
