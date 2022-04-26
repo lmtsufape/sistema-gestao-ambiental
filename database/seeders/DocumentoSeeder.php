@@ -42,7 +42,7 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'autorizacao_supressao_vegetacao.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Autorização da supressão de vegetação, solicitada ao órgão ambiental competente(se houver)',
+            'nome' => 'Autorização da supressão de vegetação, solicitada ao órgão ambiental competente (se houver)',
             'documento_modelo' => $caminho_licencas . 'autorizacao_supressao_vegetacao.pdf',
             'padrao_previa' => false,
         ]);
@@ -57,15 +57,15 @@ class DocumentoSeeder extends Seeder
         Storage::put('public/' . $caminho_licencas . 'outorga_apac_cprh.pdf', $pdf->stream());
         DB::table('documentos')->insert([
             'nome' => 'No caso de utilização de água de corpos hídricos (superficiais ou subterrâneos), 
-                anexar a Outorga da Agência Pernambucana de Águas (APAC)ou de Direito da Agência Estadual de Meio Ambiente (CPRH)',
+                anexar a Outorga da Agência Pernambucana de Águas (APAC) ou de Direito da Agência Estadual de Meio Ambiente (CPRH)',
             'documento_modelo' => $caminho_licencas . 'outorga_apac_cprh.pdf',
             'padrao_previa' => false,
         ]);
 
         Storage::put('public/' . $caminho_licencas . 'mapa_croquide_localizacao_empreendimento.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Mapa ou Croquide localização do empreendimento em relação ao Município, respeitando a posição do Norte 
-                verdadeiro, indicando: Vias de acessos principais e pontos de referências para chegar ao local, Ocupações vizinhas ao empreendimento, em um raio mínimo de 100 metros.',
+            'nome' => 'Mapa ou Croqui de localização do empreendimento em relação ao Município, respeitando a posição do Norte 
+                verdadeiro, indicando: vias de acessos principais e pontos de referências para chegar ao local, ocupações vizinhas ao empreendimento, em um raio mínimo de 100 metros.',
             'documento_modelo' => $caminho_licencas . 'mapa_croquide_localizacao_empreendimento.pdf',
             'padrao_previa' => false,
         ]);
@@ -93,7 +93,7 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'identidade_profissional_tecnicos.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Cópia da Carteira de Identidade profissional do (s) responsável (eis) técnico (s)pela execução da obra de instalação',
+            'nome' => 'Cópia da Carteira de Identidade profissional do (s) responsável (eis) técnico (s) pela execução da obra de instalação',
             'documento_modelo' => $caminho_licencas . 'identidade_profissional_tecnicos.pdf',
             'padrao_previa' => false,
         ]);
@@ -115,7 +115,7 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'contrato_social_jucepe.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Contrato Social, registrada na Junta Comercial do Estado –JUCEPE',
+            'nome' => 'Contrato Social, registrada na Junta Comercial do Estado – JUCEPE',
             'documento_modelo' => $caminho_licencas . 'contrato_social_jucepe.pdf',
             'padrao_previa' => false,
         ]);
@@ -130,8 +130,8 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'plano_gerenciamento_residuos_solidos.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Plano  de  Gerenciamento  de  Resíduos  Sólidos  (se  houver),  com  Anotação  de  Responsabilidade Técnica –ART 
-                (quitada)do  responsável  pela  elaboração  de  projeto,  em  conformidade  com  as atribuições do profissional',
+            'nome' => 'Plano  de  Gerenciamento  de  Resíduos  Sólidos  (se  houver),  com  Anotação  de  Responsabilidade Técnica – ART 
+                (quitada) do  responsável  pela  elaboração  de  projeto,  em  conformidade  com  as atribuições do profissional',
             'documento_modelo' => $caminho_licencas . 'plano_gerenciamento_residuos_solidos.pdf',
             'padrao_previa' => false,
         ]);
@@ -145,7 +145,7 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'atestado_regularidade_bombeiro.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Atestado de Regularidade do Corpo deBombeiro (Xerox)',
+            'nome' => 'Atestado de Regularidade do Corpo de Bombeiro (Xerox)',
             'documento_modelo' => $caminho_licencas . 'atestado_regularidade_bombeiro.pdf',
             'padrao_previa' => false,
         ]);
@@ -181,7 +181,7 @@ class DocumentoSeeder extends Seeder
 
         Storage::put('public/' . $caminho_licencas . 'certificado_condicao_microempreendedor_individual.pdf', $pdf->stream());
         DB::table('documentos')->insert([
-            'nome' => 'Certificado da Condição de Microempreendedor individual (Quando couber)',
+            'nome' => 'Certificado da Condição de Microempreendedor individual (quando couber)',
             'documento_modelo' => $caminho_licencas . 'certificado_condicao_microempreendedor_individual.pdf',
             'padrao_previa' => false,
         ]);
