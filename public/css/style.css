@@ -496,6 +496,12 @@ label {
     font-weight: bolder;
 }
 
+.container-fluid {
+    padding-right: 50px;
+    padding-left: 50px;
+    display: inline-block;
+}
+
 .container-profile form {
     width: 100%;
 }

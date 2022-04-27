@@ -13,7 +13,7 @@ class DocumentoController extends Controller
     public function index()
     {
         $this->authorize('isSecretario', User::class);
-        $documentos = Documento::orderBy('nome')->paginate(20);
+        $documentos = Documento::orderBy('nome')->paginate(25);
         return view('documento.index', compact('documentos'));
     }
 
