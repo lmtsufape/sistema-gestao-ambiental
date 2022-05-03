@@ -83,7 +83,66 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->authorize('isSecretario', User::class);
+        $usuario = User::find($id);
+        $tipos = TipoAnalista::all();
+        return view('user.edit', compact('tipos', 'usuario'));
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editar(Request $request, $id)
+    {
+        $this->authorize('isSecretario', User::class);
+        $usuario = User::find($id);
+        $input = $request->all();
+
+        if($usuario->role == User::ROLE_ENUM['analista']){
+            $request->validate([
+                'tipos_analista' => 'required',
+                'tipos_analista.*' => 'required',
+            ]);
+        }
+
+        $validated = $request->validate([
+            'name'      => 'required|string|max:255',
+            'email'     => ['required', 'string', 'email','max:255'],
+        ]);
+
+        if ($input['email'] != $usuario->email) {
+            $userCheckEmail = User::where('email', $input['email'])->first();
+            if ($userCheckEmail != null) {
+                return redirect()->back()->withErrors(['email' => 'Esse email já está sendo utilizado.'])->withInput($validated);
+            }
+        }
+
+        $usuario->setAtributes($request);
+        $usuario->save();
+
+        if($request->tipos_analista != null){
+            $analista_tipos =  collect();
+            foreach($usuario->tipo_analista as $tipo){
+                if(!array_key_exists($tipo->pivot->tipo_analista_id, $request->tipos_analista)){
+                    $tipo->pivot->delete();
+                }else{
+                    $analista_tipos->push($tipo->pivot->tipo_analista_id);
+                }
+            }
+            
+            foreach($request->tipos_analista as $tipo_id){
+                if(!$analista_tipos->contains($tipo_id)){
+                    $usuario->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+                }
+            }
+        }
+        
+        return redirect(route('usuarios.index'))->with(['success' => 'Usuário editado com sucesso!']);
     }
 
     /**

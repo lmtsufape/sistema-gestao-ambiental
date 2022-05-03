@@ -40,6 +40,7 @@
                                             <td>{{$user->name}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>
+                                                <a title="Editar usuário" href="{{route("usuarios.edit", $user->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar usuario"></a>
                                                 <button title="Deletar usuário" type="button" data-toggle="modal" data-target="#modalStaticDeletarUser_{{$user->id}}">
                                                     <img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar usuário">
                                                 </button>
@@ -68,6 +69,14 @@
                                 <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar usuário">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar usuário
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div title="Editar usuário" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar usuário">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Editar usuário
                                 </div>
                             </div>
                         </li>

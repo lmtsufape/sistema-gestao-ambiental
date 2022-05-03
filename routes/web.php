@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::put('usuarios/atualizar-endereco', [UserController::class, 'atualizarEndereco'])->name('usuarios.atualizar.endereco');
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');
+    Route::put('usuarios/{id}/editar-dados', [UserController::class, 'editar'])->name('usuarios.editar');
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
     Route::get('/informacoes-login', [UserController::class, 'infoLogin'])->name('infoLogin');
