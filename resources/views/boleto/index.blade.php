@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-8">
                 <div class="form-row">
@@ -35,6 +35,7 @@
                     <div class="card-body">
                         <div class="tab-content tab-content-custom" id="myTabContent">
                             <div class="tab-pane fade show active" id="boletos-pendentes" role="tabpanel" aria-labelledby="boletos-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -67,6 +68,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($pendentes->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto pendente
@@ -74,6 +76,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="boletos-aprovadas" role="tabpanel" aria-labelledby="boletos-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -106,6 +109,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($pagos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto pago
@@ -113,6 +117,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="boletos-arquivadas" role="tabpanel" aria-labelledby="boletos-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -145,6 +150,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($vencidos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto vencido
@@ -208,10 +214,8 @@
                         <input type="hidden" value="{{$dataDe}}" name="dataDe">
                         <input type="hidden" value="{{$dataAte}}" name="dataAte">
                         
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-5 form-group">
-                                <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
-                            </div>
+                        <div class="form-row justify-content-center mb-2">
+                            <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
                         </div>
                     </form>
 

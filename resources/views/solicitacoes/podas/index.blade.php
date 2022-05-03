@@ -8,7 +8,7 @@
         </ul>
     </div>
 @endif
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
@@ -43,6 +43,7 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="solicitacoes-pendentes" role="tabpanel" aria-labelledby="solicitacoes-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -61,19 +62,20 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento"" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
-                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/Visualizar mídia.svg')}}" width="20px;" alt="Mídia"></a>
                                                     @can('isSecretario', \App\Models\User::class)
-                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
+                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                         <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
+                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                     @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($registradas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de poda pendente
@@ -81,6 +83,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -99,18 +102,19 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Mídia da solicitação" data-toggle="modal" data-target="#modal-imagens-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
                                                     @can('isSecretario', \App\Models\User::class)
-                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
+                                                        <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                         <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
+                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                     @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($deferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de poda deferida
@@ -118,6 +122,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-arquivadas" role="tabpanel" aria-labelledby="solicitacoes-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -136,12 +141,13 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($indeferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de poda indeferida

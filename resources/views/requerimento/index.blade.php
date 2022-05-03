@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -57,6 +57,7 @@
                         <div class="card-body">
                             <div class="tab-content tab-content-custom" id="myTabContent">
                                 <div class="tab-pane fade show active" id="requerimnetos-atuais" role="tabpanel" aria-labelledby="requerimnetos-atuais-tab">
+                                    <div class="table-responsive">
                                     <table class="table mytable">
                                         <thead>
                                             <tr>
@@ -131,6 +132,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                     @if($requerimentos->first() == null)
                                         <div class="col-md-12 text-center" style="font-size: 18px;">
                                             Nenhum requerimento atual
@@ -138,6 +140,7 @@
                                     @endif
                                 </div>
                                 <div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
+                                    <div class="table-responsive">
                                     <table class="table mytable">
                                         <thead>
                                             <tr>
@@ -209,6 +212,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                     @if($requerimentosFinalizados->first() == null)
                                         <div class="col-md-12 text-center" style="font-size: 18px;">
                                             Nenhum requerimento finalizado
@@ -216,6 +220,7 @@
                                     @endif
                                 </div>
                                 <div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
+                                    <div class="table-responsive">
                                     <table class="table mytable">
                                         <thead>
                                             <tr>
@@ -287,6 +292,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    </div>
                                     @if($requerimentosCancelados->first() == null)
                                         <div class="col-md-12 text-center" style="font-size: 18px;">
                                             Nenhum requerimento cancelado
@@ -299,6 +305,7 @@
                 @else
                     <div class="card card-borda-esquerda" style="width: 100%;">
                         <div class="card-body">
+                            <div class="table-responsive">
                             <table class="table mytable">
                                 <thead>
                                     <tr>
@@ -407,6 +414,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            </div>
                             @if($requerimentos->first() == null)
                                 <div class="col-md-12 text-center" style="font-size: 18px;">
                                     @can('isAnalista', \App\Models\User::class)

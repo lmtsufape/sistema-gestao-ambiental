@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -34,6 +34,7 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="solicitacoes-pendentes" role="tabpanel" aria-labelledby="solicitacoes-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -57,6 +58,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($registradas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de muda pendente
@@ -64,6 +66,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -86,6 +89,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($deferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de muda deferida
@@ -93,6 +97,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-arquivadas" role="tabpanel" aria-labelledby="solicitacoes-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -115,6 +120,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($indeferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de muda indeferida
