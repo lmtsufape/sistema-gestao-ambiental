@@ -153,40 +153,68 @@
                     </li>
                 @endcan
                 @can('isAnalistaPoda', \App\Models\User::class)
-                <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                    <a href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Mudas
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
-                        <li>
-                            <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
-                        </li>
-                        <li>
-                            <a href="#">Deferidas</a>
-                        </li>
-                        <li>
-                            <a href="#">Indeferidas</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="@if(request()->routeIs('podas*')) active @endif">
-                    <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Podas
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
-                        <li>
-                            <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
-                        </li>
-                        <li>
-                            <a href="#">Deferidas</a>
-                        </li>
-                        <li>
-                            <a href="#">Indeferidas</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                        <a href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Mudas
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
+                            <li>
+                                <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#">Deferidas</a>
+                            </li>
+                            <li>
+                                <a href="#">Indeferidas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('podas*')) active @endif">
+                        <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Podas
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
+                            <li>
+                                <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#">Deferidas</a>
+                            </li>
+                            <li>
+                                <a href="#">Indeferidas</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
+                @can('isRequerente', \App\Models\User::class)
+                    <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
+                        <a href="{{route('requerimentos.index')}}">
+                            <i class="fas fa-home"></i>
+                            Requerimentos
+                        </a>
+                    </li>
+                    <li class="@if(request()->routeIs('empresas*') || request()->routeIs('info.porte')) active @endif">
+                        <a href="{{route('empresas.index')}}">
+                            <i class="fas fa-home"></i>
+                            Empresas/<br>
+                            <i class="fas fa-home"></i>
+                            Serviços
+                        </a>
+                    </li>
+                    <li class="@if(request()->routeIs('mudas.*')) active @endif">
+                        <a href="{{route('mudas.requerente.index')}}">
+                            <i class="fas fa-home"></i>
+                            Mudas
+                        </a>
+                    </li>
+                    <li class="@if(request()->routeIs('podas.*')) active @endif">
+                        <a href="{{route('podas.requerente.index')}}">
+                            <i class="fas fa-home"></i>
+                            Podas
+                        </a>
+                    </li>
                 @endcan
             </ul>
 

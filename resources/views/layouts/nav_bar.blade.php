@@ -34,7 +34,7 @@
                 @else
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
                         <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
-                    </li> --}}
+                    </li>
                     @can('isRequerente', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.requerente.index')}}">{{ __('Solicitações de mudas') }}</a>
@@ -116,7 +116,7 @@
                                     this.closest('form').submit();">{{__('Sair')}}</a>
                             </form>
                         </div>
-                    </li>
+                    </li> --}}
                 @endguest
             </ul>
         </div>
