@@ -116,6 +116,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="@if(request()->routeIs('visitas*')) active @endif">
+                    <a href="{{route('visitas.index')}}">
+                        <i class="fas fa-home"></i>
+                        Programação
+                    </a>
+                </li>
                 <li class="@if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
                     <a href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
