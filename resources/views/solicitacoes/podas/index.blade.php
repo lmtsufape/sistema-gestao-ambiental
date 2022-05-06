@@ -1,13 +1,14 @@
 <x-app-layout>
+    @section('content')
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
@@ -355,4 +356,5 @@
             document.getElementById('solicitacao_id_analista').value = id;
         }
     </script>
+    @endsection
 </x-app-layout>

@@ -1,5 +1,5 @@
 <x-app-layout>
-
+    @section('content')
     <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="row">
             <div class="col-sm-12">
@@ -153,4 +153,5 @@
             </div>
         </div>
     </div>
+    @endsection
 </x-app-layout>
