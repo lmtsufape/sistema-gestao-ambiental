@@ -69,7 +69,7 @@
                     </a>
                     <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
                         <li>
-                            <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                            <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias.index')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                         </li>
                         <li>
                             <a href="#">Aprovadas</a>
@@ -163,7 +163,7 @@
                         <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
                             <a class="nav-link" href="{{route('welcome')}}">Início</a>
                         </li>
-                        <li class="nav-item @if(request()->routeIs('noticias.index')) active @endif">
+                        <li class="nav-item @if(request()->routeIs('noticias*')) active @endif">
                             <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('legislacao')) active @endif">
