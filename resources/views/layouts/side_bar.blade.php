@@ -16,12 +16,12 @@
                         Início
                     </a>
                 </li>
-                <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*')))   active @endif">
+                <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
                     <a href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*')) aria-expanded="true" class="dropdown-toggle" @else aria-expanded="false" class="dropdown-toggle collapsed" @endif>
                         <i class="fas fa-home"></i>
                         Licenciamento
                     </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*'))) show @endif" id="licenciamentoSubmenu">
+                    <ul class="collapse list-unstyled @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
                         <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
                             <a href="#requerimentosSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" >
                                 Requerimentos
@@ -54,11 +54,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#">Definição de documentos</a>
+                        <li class=" @if(request()->routeIs('documentos*')) active @endif">
+                            <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) style="background-color: #ffffff; color: #214b10;" @endif  >Definição de documentos</a>
                         </li>
-                        <li>
-                            <a href="#">Valores de licenças</a>
+                        <li class=" @if(request()->routeIs('valores*')) active @endif">
+                            <a href="{{route('valores.index')}}" @if(request()->routeIs('valores*')) style="background-color: #ffffff; color: #214b10;" @endif>Valores de licenças</a>
                         </li>
                     </ul>
                 </li>

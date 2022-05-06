@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
@@ -168,4 +169,5 @@
         </div>
     </div>
     @endforeach
+    @endsection
 </x-app-layout>
