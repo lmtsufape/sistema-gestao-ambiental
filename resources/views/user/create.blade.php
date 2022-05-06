@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
@@ -96,24 +97,22 @@
             </div>
         </div>
     </div>
-</x-app-layout>
-
-<script>
-
-    function checkForm(nome_classe)
-    {
-        let checkboxes = document.getElementsByClassName(nome_classe);
-        let form = document.getElementById('cria-analista');
-        let selecionado = false;
-        for(let i = 0; i < checkboxes.length; i++){
-            if(checkboxes[i].checked){
-                selecionado = true;
-                break
+    <script>
+        function checkForm(nome_classe)
+        {
+            let checkboxes = document.getElementsByClassName(nome_classe);
+            let form = document.getElementById('cria-analista');
+            let selecionado = false;
+            for(let i = 0; i < checkboxes.length; i++){
+                if(checkboxes[i].checked){
+                    selecionado = true;
+                    break
+                }
+            }
+            if (!selecionado){
+                alert('Selecione um cargo para o analista!');
             }
         }
-        if (!selecionado){
-            alert('Selecione um cargo para o analista!');
-        }
-    }
-
-  </script>
+      </script>
+    @endsection
+</x-app-layout>

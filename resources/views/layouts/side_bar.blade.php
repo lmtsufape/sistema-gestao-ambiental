@@ -69,7 +69,7 @@
                     </a>
                     <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
                         <li>
-                            <a href="{{route('denuncias.index')}}">Pendentes</a>
+                            <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                         </li>
                         <li>
                             <a href="#">Aprovadas</a>
@@ -79,14 +79,14 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
                     <a href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
                         Mudas
                     </a>
-                    <ul class="collapse list-unstyled" id="mudasSubmenu">
+                    <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
                         <li>
-                            <a href="#">Pendentes</a>
+                            <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                         </li>
                         <li>
                             <a href="#">Deferidas</a>
@@ -95,18 +95,18 @@
                             <a href="#">Indeferidas</a>
                         </li>
                         <li>
-                            <a href="#">Definição de espécies de mudas</a>
+                            <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies de mudas</a>
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="@if(request()->routeIs('podas*')) active @endif">
                     <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
                         Podas
                     </a>
-                    <ul class="collapse list-unstyled" id="podasSubmenu">
+                    <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
                         <li>
-                            <a href="#">Pendentes</a>
+                            <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
                         </li>
                         <li>
                             <a href="#">Deferidas</a>
@@ -116,17 +116,17 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="@if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
                     <a href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
                         Configurações
                     </a>
-                    <ul class="collapse list-unstyled" id="configuracoesSubmenu">
+                    <ul class="collapse list-unstyled @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
                         <li>
-                            <a href="#">CNAEs</a>
+                            <a href="{{route('setores.index')}}" @if(request()->routeIs('setores*') || request()->routeIs('cnaes*')) style="background-color: #ffffff; color: #214b10;" @endif>Grupos (CNAEs)</a>
                         </li>
                         <li>
-                            <a href="#">Usuários</a>
+                            <a href="{{route('usuarios.index')}}" @if(request()->routeIs('usuarios*')) style="background-color: #ffffff; color: #214b10;" @endif>Usuários</a>
                         </li>
                     </ul>
                 </li>
