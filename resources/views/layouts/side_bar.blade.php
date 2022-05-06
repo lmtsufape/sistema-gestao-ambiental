@@ -16,126 +16,142 @@
                         Início
                     </a>
                 </li>
-                <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
-                    <a href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*')) aria-expanded="true" class="dropdown-toggle" @else aria-expanded="false" class="dropdown-toggle collapsed" @endif>
-                        <i class="fas fa-home"></i>
-                        Licenciamento
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
-                        <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
-                            <a href="#requerimentosSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" >
-                                Requerimentos
-                            </a>
-                            <ul class="collapse list-unstyled  @if(request()->routeIs('requerimentos*')) show @endif" id="requerimentosSubmenu" >
-                                <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
-                                    <a href="{{route('requerimentos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Atuais</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Finalizados</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Cancelados</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class=" @if(request()->routeIs('boletos*')) active @endif" >
-                            <a href="#pagamentosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                Pagamentos
-                            </a>
-                            <ul class="collapse list-unstyled @if(request()->routeIs('boletos*')) show @endif" id="pagamentosSubmenu" >
-                                <li>
-                                    <a href="{{route('boletos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pendentes</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Vencidos</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class=" @if(request()->routeIs('documentos*')) active @endif">
-                            <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) style="background-color: #ffffff; color: #214b10;" @endif  >Definição de documentos</a>
-                        </li>
-                        <li class=" @if(request()->routeIs('valores*')) active @endif">
-                            <a href="{{route('valores.index')}}" @if(request()->routeIs('valores*')) style="background-color: #ffffff; color: #214b10;" @endif>Valores de licenças</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="@if(request()->routeIs('denuncias*')) active @endif">
-                    <a href="#denunciasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Denúncias
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
-                        <li>
-                            <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias.index')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
-                        </li>
-                        <li>
-                            <a href="#">Aprovadas</a>
-                        </li>
-                        <li>
-                            <a href="#">Arquivadas</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                    <a href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Mudas
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
-                        <li>
-                            <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
-                        </li>
-                        <li>
-                            <a href="#">Deferidas</a>
-                        </li>
-                        <li>
-                            <a href="#">Indeferidas</a>
-                        </li>
-                        <li>
-                            <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies de mudas</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="@if(request()->routeIs('podas*')) active @endif">
-                    <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Podas
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
-                        <li>
-                            <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
-                        </li>
-                        <li>
-                            <a href="#">Deferidas</a>
-                        </li>
-                        <li>
-                            <a href="#">Indeferidas</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="@if(request()->routeIs('visitas*')) active @endif">
-                    <a href="{{route('visitas.index')}}">
-                        <i class="fas fa-home"></i>
-                        Programação
-                    </a>
-                </li>
-                <li class="@if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
-                    <a href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Configurações
-                    </a>
-                    <ul class="collapse list-unstyled @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
-                        <li>
-                            <a href="{{route('setores.index')}}" @if(request()->routeIs('setores*') || request()->routeIs('cnaes*')) style="background-color: #ffffff; color: #214b10;" @endif>Grupos (CNAEs)</a>
-                        </li>
-                        <li>
-                            <a href="{{route('usuarios.index')}}" @if(request()->routeIs('usuarios*')) style="background-color: #ffffff; color: #214b10;" @endif>Usuários</a>
-                        </li>
-                    </ul>
-                </li>
+                @can('isSecretario', \App\Models\User::class)
+                    <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
+                        <a href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*')) aria-expanded="true" class="dropdown-toggle" @else aria-expanded="false" class="dropdown-toggle collapsed" @endif>
+                            <i class="fas fa-home"></i>
+                            Licenciamento
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
+                            <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
+                                <a href="#requerimentosSubmenu" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" >
+                                    Requerimentos
+                                </a>
+                                <ul class="collapse list-unstyled  @if(request()->routeIs('requerimentos*')) show @endif" id="requerimentosSubmenu" >
+                                    <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
+                                        <a href="{{route('requerimentos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Atuais</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Finalizados</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Cancelados</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class=" @if(request()->routeIs('boletos*')) active @endif" >
+                                <a href="#pagamentosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    Pagamentos
+                                </a>
+                                <ul class="collapse list-unstyled @if(request()->routeIs('boletos*')) show @endif" id="pagamentosSubmenu" >
+                                    <li>
+                                        <a href="{{route('boletos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pendentes</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pagos</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Vencidos</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class=" @if(request()->routeIs('documentos*')) active @endif">
+                                <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) style="background-color: #ffffff; color: #214b10;" @endif  >Definição de documentos</a>
+                            </li>
+                            <li class=" @if(request()->routeIs('valores*')) active @endif">
+                                <a href="{{route('valores.index')}}" @if(request()->routeIs('valores*')) style="background-color: #ffffff; color: #214b10;" @endif>Valores de licenças</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('denuncias*')) active @endif">
+                        <a href="#denunciasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Denúncias
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
+                            <li>
+                                <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias.index')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#">Aprovadas</a>
+                            </li>
+                            <li>
+                                <a href="#">Arquivadas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                        <a href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Mudas
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
+                            <li>
+                                <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#">Deferidas</a>
+                            </li>
+                            <li>
+                                <a href="#">Indeferidas</a>
+                            </li>
+                            <li>
+                                <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies de mudas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('podas*')) active @endif">
+                        <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Podas
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
+                            <li>
+                                <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
+                            </li>
+                            <li>
+                                <a href="#">Deferidas</a>
+                            </li>
+                            <li>
+                                <a href="#">Indeferidas</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('visitas*')) active @endif">
+                        <a href="{{route('visitas.index')}}">
+                            <i class="fas fa-home"></i>
+                            Programação
+                        </a>
+                    </li>
+                    <li class="@if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
+                        <a href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-home"></i>
+                            Configurações
+                        </a>
+                        <ul class="collapse list-unstyled @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
+                            <li>
+                                <a href="{{route('setores.index')}}" @if(request()->routeIs('setores*') || request()->routeIs('cnaes*')) style="background-color: #ffffff; color: #214b10;" @endif>Grupos (CNAEs)</a>
+                            </li>
+                            <li>
+                                <a href="{{route('usuarios.index')}}" @if(request()->routeIs('usuarios*')) style="background-color: #ffffff; color: #214b10;" @endif>Usuários</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
+                @can('isProcessoOrProtocolista', \App\Models\User::class)
+                    <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
+                        <a href="{{route('requerimentos.index')}}">
+                            <i class="fas fa-home"></i>
+                            Requerimentos
+                        </a>
+                    </li>
+                    <li class="@if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                        <a href="{{route('visitas.index')}}">
+                            <i class="fas fa-home"></i>
+                            Programação
+                        </a>
+                    </li>
+                @endcan
             </ul>
 
             <ul class="list-unstyled CTAs">
