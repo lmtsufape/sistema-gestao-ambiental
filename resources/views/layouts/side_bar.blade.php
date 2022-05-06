@@ -62,14 +62,14 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li class="@if(request()->routeIs('denuncias*')) active @endif">
                     <a href="#denunciasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-home"></i>
                         Denúncias
                     </a>
-                    <ul class="collapse list-unstyled" id="denunciasSubmenu">
+                    <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
                         <li>
-                            <a href="#">Pendentes</a>
+                            <a href="{{route('denuncias.index')}}">Pendentes</a>
                         </li>
                         <li>
                             <a href="#">Aprovadas</a>
