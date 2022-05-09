@@ -45,13 +45,13 @@
                                 </a>
                                 <ul class="collapse list-unstyled @if(request()->routeIs('boletos*')) show @endif" id="pagamentosSubmenu" >
                                     <li>
-                                        <a href="{{route('boletos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pendentes</a>
+                                        <a href="{{route('boletos.index', 'pendentes')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pendentes</a>
                                     </li>
                                     <li>
-                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pagos</a>
+                                        <a href="{{route('boletos.index', 'pagos')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Pagos</a>
                                     </li>
                                     <li>
-                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Vencidos</a>
+                                        <a href="{{route('boletos.index', 'vencidos')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Vencidos</a>
                                     </li>
                                 </ul>
                             </li>
