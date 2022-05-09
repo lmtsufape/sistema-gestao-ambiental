@@ -446,7 +446,7 @@ paths:
                   solicitacao_poda_id:
                     type: string
                     example: null
-                    description: 'O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null'
+                    description: 'O identificador da solicitação de poda/supressão, se a visita não for para uma solicitação de poda/supressão o valor é null'
         401:
           description: 'usuario nao autenticado'
           content:

@@ -5,8 +5,8 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8" style="padding-top: 15px;">
-                        <h4 class="card-title">Avaliar solicitação de poda/corte {{$solicitacao->protocolo}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Podas</a> > Avaliar solicitação de poda/corte {{$solicitacao->protocolo}}</h6>
+                        <h4 class="card-title">Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Poda/Supressão</a> > Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('podas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <h5 class="card-title">Solicitação de poda/corte</h5>
+                                <h5 class="card-title">Solicitação de poda/supressão</h5>
                             </div>
                         </div>
                         <div class="form-row">
@@ -101,7 +101,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #278b45;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja deferir a solicitação de poda/corte?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja deferir a solicitação de poda/supressão?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -126,7 +126,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #278b45;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja indeferir a solicitação de poda/corte?</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja indeferir a solicitação de poda/supressão?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

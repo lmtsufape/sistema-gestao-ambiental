@@ -103,7 +103,9 @@
                     <li class="@if(request()->routeIs('podas*')) active @endif">
                         <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-home"></i>
-                            Podas
+                            Poda/<br>
+                            <i class="fas fa-home"></i>
+                            Supressão
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
                             <li>
@@ -173,7 +175,9 @@
                     <li class="@if(request()->routeIs('podas*')) active @endif">
                         <a href="#podasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-home"></i>
-                            Podas
+                            Poda/<br>
+                            <i class="fas fa-home"></i>
+                            Supressão
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
                             <li>
@@ -212,7 +216,9 @@
                     <li class="@if(request()->routeIs('podas.*')) active @endif">
                         <a href="{{route('podas.requerente.index')}}">
                             <i class="fas fa-home"></i>
-                            Podas
+                            Poda/<br>
+                            <i class="fas fa-home"></i>
+                            Supressão
                         </a>
                     </li>
                 @endcan

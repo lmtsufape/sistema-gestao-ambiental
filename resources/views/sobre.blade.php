@@ -31,7 +31,7 @@
                                         <li style="color: var(--textcolor2); font-size: 15px;">Avaliação de documentos enviados;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Denúnciar crimes ambientais;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de licenças ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e podas;</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e poda/supressão;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Geração e divulgação de notícias.</li>
                                     </ul>
                                 </div>
@@ -138,7 +138,7 @@
                                         <li style="color: var(--textcolor2); font-size: 15px;">Avaliação de documentos enviados;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Denúnciar crimes ambientais;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de licenças ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e podas;</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e poda/supressão;</li>
                                         <li style="color: var(--textcolor2); font-size: 15px;">Geração e divulgação de notícias.</li>
                                     </ul>
                                 </div>

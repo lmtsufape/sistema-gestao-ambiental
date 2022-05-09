@@ -7,7 +7,7 @@
                     <div class="col-md-8">
                         <h4 class="card-title">Laudo Técnico Ambiental</h4>
                         @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted">Podas > Avaliar solicitação de poda/corte {{$solicitacao->protocolo}} > Laudo</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Poda/Supressão > Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}} > Laudo</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">

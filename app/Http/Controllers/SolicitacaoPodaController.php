@@ -77,7 +77,7 @@ class SolicitacaoPodaController extends Controller
             }
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
-        return redirect()->back()->with(['success' => 'Solicitação de poda/corte realizada com sucesso!', 'protocolo' => $protocolo]);
+        return redirect()->back()->with(['success' => 'Solicitação de poda/supressão realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
     /**
@@ -155,7 +155,7 @@ class SolicitacaoPodaController extends Controller
         $this->authorize('avaliar', SolicitacaoPoda::class);
         $solicitacao->fill($request->validated());
         $solicitacao->update();
-        return redirect()->action([SolicitacaoPodaController::class, 'index'])->with('success', 'Solicitação de poda/corte avalida com sucesso');
+        return redirect()->action([SolicitacaoPodaController::class, 'index'])->with('success', 'Solicitação de poda/supressão avalida com sucesso');
     }
 
     /**

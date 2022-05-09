@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Podas</h4>
+                        <h4 class="card-title">Poda/Supressão</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -79,7 +79,7 @@
                                 </div>
                                 @if($registradas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de poda pendente
+                                        Nenhuma solicitação de poda/supressão pendente
                                     </div>
                                 @endif
                             </div>
@@ -118,7 +118,7 @@
                                 </div>
                                 @if($deferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de poda deferida
+                                        Nenhuma solicitação de poda/supressão deferida
                                     </div>
                                 @endif
                             </div>
@@ -151,7 +151,7 @@
                                 </div>
                                 @if($indeferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de poda indeferida
+                                        Nenhuma solicitação de poda/supressão indeferida
                                     </div>
                                 @endif
                             </div>

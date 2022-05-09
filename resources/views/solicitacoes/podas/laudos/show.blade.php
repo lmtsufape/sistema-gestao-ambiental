@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-10" style="padding-top: 15px;">
                         <h4 class="card-title">Laudo Técnico Ambiental</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/corte {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
                     </div>
                     <div class="col-md-2" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
