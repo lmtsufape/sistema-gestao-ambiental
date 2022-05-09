@@ -5,7 +5,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Mudas {{$filtro}}</h4>
+                        <h4 class="card-title">Solicitações de mudas {{$filtro}}</h4>
                     </div>
                 </div>
                 <div div class="form-row">

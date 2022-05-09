@@ -21,15 +21,27 @@ class SolicitacaoPodaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filtro)
     {
         $this->authorize('index', SolicitacaoPoda::class);
-        $registradas = SolicitacaoPoda::where('status', '1')->get();
-        $deferidas   = SolicitacaoPoda::where('status', '2')->get();
-        $indeferidas = SolicitacaoPoda::where('status', '3')->get();
+        $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
+        $deferidas   = SolicitacaoPoda::where('status', '2')->paginate(20);
+        $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
+
+        switch($filtro){
+            case 'pendentes':
+                $solicitacoes = $registradas;
+                break;
+            case 'deferidas':
+                $solicitacoes = $deferidas;
+                break;
+            case 'indeferidas':
+                $solicitacoes = $indeferidas;
+                break;
+        }
+
         $analistas = User::analistas();
-        $solicitacoes = $registradas->concat($deferidas)->concat($indeferidas);
-        return view('solicitacoes.podas.index', compact('registradas','deferidas', 'indeferidas', 'analistas', 'solicitacoes'));
+        return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
     }
 
 
@@ -140,7 +152,7 @@ class SolicitacaoPodaController extends Controller
         $solicitacao->analista_id = $request->analista;
         $solicitacao->update();
 
-        return redirect(route('podas.index'))->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
+        return redirect()->back()->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
     }
 
     /**
@@ -155,7 +167,7 @@ class SolicitacaoPodaController extends Controller
         $this->authorize('avaliar', SolicitacaoPoda::class);
         $solicitacao->fill($request->validated());
         $solicitacao->update();
-        return redirect()->action([SolicitacaoPodaController::class, 'index'])->with('success', 'Solicitação de poda/supressão avalida com sucesso');
+        return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avalida com sucesso');
     }
 
     /**

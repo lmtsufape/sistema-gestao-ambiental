@@ -161,8 +161,6 @@
         </div>
     </div>
 
-    @component('layouts.footer')@endcomponent
-
     <script>
         function addImagem() {
             var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">

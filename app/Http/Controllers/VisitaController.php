@@ -185,7 +185,7 @@ class VisitaController extends Controller
         $visita->analista_id = $request->analista;
         $visita->save();
 
-        return redirect(route('podas.index'))->with(['success' => 'Visita agendada com sucesso!']);
+        return redirect()->back()->with(['success' => 'Visita agendada com sucesso!']);
     }
 
     /**

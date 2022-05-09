@@ -109,13 +109,13 @@
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
                             <li>
-                                <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
+                                <a href="{{route('podas.index', 'pendentes')}}" @if(request()->is('solicitacoes/podas/pendentes/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                             </li>
                             <li>
-                                <a href="#">Deferidas</a>
+                                <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
-                                <a href="#">Indeferidas</a>
+                                <a href="{{route('podas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/podas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                         </ul>
                     </li>

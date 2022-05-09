@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Poda/Supressão</h4>
+                        <h4 class="card-title">Solicitações de poda/supressão {{$filtro}}</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -27,17 +27,17 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="solicitacoes-pendentes-tab" data-toggle="tab" href="#solicitacoes-pendentes"
-                            type="button" role="tab" aria-controls="solicitacoes-pendentes" aria-selected="true">Pendentes</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'pendentes') active @endif" id="solicitacoes-pendentes-tab"
+                            type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('podas.index', 'pendentes')}}">Pendentes</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="solicitacoes-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                            aria-controls="solicitacoes-aprovadas" aria-selected="false" href="#solicitacoes-aprovadas">Deferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
+                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">Deferidas</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" type="button" id="solicitacoes-arquivadas-tab" data-toggle="tab" role="tab"
-                            aria-controls="solicitacoes-arquivadas" aria-selected="false" href="#solicitacoes-arquivadas">Indeferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('podas.index', 'indeferidas')}}">Indeferidas</a>
                     </li>
                 </ul>
                 <div class="card" style="width: 100%;">
@@ -56,7 +56,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($registradas as $i => $solicitacao)
+                                        @foreach ($solicitacoes as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
@@ -77,13 +77,13 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                @if($registradas->first() == null)
+                                @if($solicitacoes->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de poda/supressão pendente
+                                        Nenhuma solicitação de poda/supressão @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
+                            {{--<div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
                                 <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
@@ -154,8 +154,13 @@
                                         Nenhuma solicitação de poda/supressão indeferida
                                     </div>
                                 @endif
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-9">
+                        {{$solicitacoes->links()}}
                     </div>
                 </div>
             </div>
