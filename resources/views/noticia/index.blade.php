@@ -68,7 +68,7 @@
 @else
 <x-app-layout>
     @section('content')
-    @can('isSecretarioOrAnalista')
+    @can('isSecretario', \App\Models\User::class)
         @foreach ($noticias as $noticia)
             <!-- Modal deletar noticia -->
             <div class="modal fade" id="modal-deletar-noticia-{{$noticia->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -144,7 +144,7 @@
                                                 <p class="card-text"><small class="text-muted retirar-formatacao" style="text-decoration: none;">{{$noticia->exibirDatas() ? $noticia->dataPublicado() : $noticia->dataPublicado() . ' - ' . $noticia->ultimaAtualizacao()}}</small></p>
                                             </div>
                                         </div>
-                                        @can('isSecretarioOrAnalista', app\Models\User::class)
+                                        @can('isSecretario', app\Models\User::class)
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <a href="{{route('noticias.edit', ['noticia' => $noticia])}}" class="card-link" style="text-decoration: none;"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone editar notícia"></a>

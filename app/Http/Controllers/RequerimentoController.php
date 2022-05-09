@@ -40,7 +40,11 @@ class RequerimentoController extends Controller
         if ($user->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
-            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->get();
+            if ($user->role == User::ROLE_ENUM['analista']) {
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->get();
+            }else{
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->get();
+            }
             $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->get();
             $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->get();
         }
