@@ -31,7 +31,7 @@ class RequerimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filtro)
     {
         $user = auth()->user();
         $requerimentos = collect();
@@ -41,17 +41,27 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->get();
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
             }else{
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->get();
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->paginate(20);
+                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
+                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->paginate(20);
             }
-            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->get();
-            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->get();
+        }
+        switch($filtro){
+            case 'atuais':
+                $requerimentos = $requerimentos;
+                break;
+            case 'finalizados':
+                $requerimentos = $requerimentosFinalizados;
+                break;
+            case 'cancelados':
+                $requerimentos = $requerimentosCancelados;
+                break;
         }
         return view('requerimento.index')->with(['requerimentos' => $requerimentos,
-                                                 'requerimentosFinalizados' => $requerimentosFinalizados,
-                                                 'requerimentosCancelados' => $requerimentosCancelados,
-                                                 'tipos' => Requerimento::TIPO_ENUM]);
+                                                 'tipos' => Requerimento::TIPO_ENUM,
+                                                 'filtro' => $filtro]);
     }
 
     public function indexVisitasRequerimento($id)
@@ -122,7 +132,7 @@ class RequerimentoController extends Controller
         $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
         $requerimento->save();
 
-        return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento realizado com sucesso.']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento realizado com sucesso.']);
     }
 
     /**
@@ -198,7 +208,7 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
         $requerimento->update();
 
-        return redirect(route('requerimentos.index'))->with(['success' => 'Requerimento cancelado com sucesso.']);
+        return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
     }
 
     /**
@@ -445,7 +455,7 @@ class RequerimentoController extends Controller
 
         Notification::send($requerimento->analista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
 
-        return redirect(route('requerimentos.index'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }
 
     public function showDocumento($requerimento_id, $documento_id)

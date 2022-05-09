@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento nº {{$requerimento->id}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2"  @if ($visita ?? '') href="{{route('visitas.index')}}" @else  href="{{route('requerimentos.index')}}" @endif style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2"  @if ($visita ?? '') href="{{route('visitas.index')}}" @else   href="javascript:window.history.back();" @endif style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>

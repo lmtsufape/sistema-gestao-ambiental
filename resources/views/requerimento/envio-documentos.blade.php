@@ -23,7 +23,7 @@
                     @endcan
                     @can('isRequerente', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                            <a class="btn my-2" href="{{route('requerimentos.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                            <a class="btn my-2"  href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                         </div>
                     @endcan
                 </div>

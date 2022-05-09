@@ -7,7 +7,7 @@
                     <div class="col-md-8">
                         <h4 class="card-title">
                             @can('isSecretario', \App\Models\User::class)
-                                {{__('Requerimentos')}}
+                                Requerimentos {{$filtro}}
                             @elsecan('isAnalista', \App\Models\User::class)
                                 {{__('Requerimentos atribuídos a você')}}
                             @elsecan('isRequerente', \App\Models\User::class)
@@ -41,17 +41,17 @@
                 </div>
                 @can('isSecretario', \App\Models\User::class)
                     <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="requerimnetos-atuais-tab" data-toggle="tab" href="#requerimnetos-atuais"
-                                type="button" role="tab" aria-controls="requerimnetos-atuais" aria-selected="true">Atuais</button>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'atuais') active @endif" id="requerimnetos-atuais-tab" role="tab" type="button"
+                                 @if($filtro == 'atuais') aria-selected="true" @endif href="{{route('requerimentos.index', 'atuais')}}">Atuais</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="requerimnetos-finalizados-tab" data-toggle="tab" role="tab" type="button"
-                                aria-controls="requerimnetos-finalizados" aria-selected="false" href="#requerimnetos-finalizados">Finalizados</button>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'finalizados') active @endif" id="requerimnetos-finalizados-tab" role="tab" type="button"
+                                 @if($filtro == 'finalizados') aria-selected="true" @endif href="{{route('requerimentos.index', 'finalizados')}}">Finalizados</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="equerimnetos-cancelados-tab" data-toggle="tab" role="tab" type="button"
-                                aria-controls="equerimnetos-cancelados" aria-selected="false" href="#requerimnetos-cancelados">Cancelados</button>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'cancelados') active @endif" id="equerimnetos-cancelados-tab" role="tab" type="button"
+                                 @if($filtro == 'cancelados') aria-selected="true" @endif href="{{route('requerimentos.index', 'cancelados')}}">Cancelados</a>
                         </li>
                     </ul>
                     <div class="card" style="width: 100%;">
@@ -136,11 +136,11 @@
                                     </div>
                                     @if($requerimentos->first() == null)
                                         <div class="col-md-12 text-center" style="font-size: 18px;">
-                                            Nenhum requerimento atual
+                                            Nenhum requerimento @switch($filtro) @case('atuais') atual @break @case('finalizados') finalizado @break @case('cancelados') cancelado @break @endswitch
                                         </div>
                                     @endif
                                 </div>
-                                <div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
+                                {{--<div class="tab-pane fade show" id="requerimnetos-finalizados" role="tabpanel" aria-labelledby="requerimnetos-finalizados-tab">
                                     <div class="table-responsive">
                                     <table class="table mytable">
                                         <thead>
@@ -219,8 +219,8 @@
                                             Nenhum requerimento finalizado
                                         </div>
                                     @endif
-                                </div>
-                                <div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
+                                </div>--}}
+                                {{--<div class="tab-pane fade show" id="requerimnetos-cancelados" role="tabpanel" aria-labelledby="requerimnetos-cancelados-tab">
                                     <div class="table-responsive">
                                     <table class="table mytable">
                                         <thead>
@@ -299,7 +299,7 @@
                                             Nenhum requerimento cancelado
                                         </div>
                                     @endif
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -502,6 +502,13 @@
                     </ul>
                 </div>
             </div>
+            @can('isSecretarioOrAnalista', \App\Models\User::class)
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$requerimentos->links()}}
+                    </div>
+                </div>
+            @endcan
         </div>
     </div>
 

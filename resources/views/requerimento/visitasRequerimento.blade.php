@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         @can('isRequerente', \App\Models\User::class)
-                            <a title="Voltar" href="{{route('requerimentos.index')}}">
+                            <a title="Voltar"  href="javascript:window.history.back();">
                                 <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                             </a>
                         @else

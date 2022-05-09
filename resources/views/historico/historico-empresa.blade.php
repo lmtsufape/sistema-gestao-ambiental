@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Empresa > Histórico</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('requerimentos.index')}}">
+                        <a title="Voltar"  href="javascript:window.history.back();">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
                     </div>

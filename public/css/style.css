@@ -417,7 +417,18 @@ nav img {
     background-color: #4A7836;
 }
 
+.nav-tab-custom .nav-item a{
+    background-color: #4A7836;
+    color: white;
+}
+
 .nav-tab-custom .nav-item:hover > button{
+    transition: 0.5s;
+    background-color: white;
+    color: var(--secundaria);
+}
+
+.nav-tab-custom .nav-item:hover > a{
     transition: 0.5s;
     background-color: white;
     color: var(--secundaria);

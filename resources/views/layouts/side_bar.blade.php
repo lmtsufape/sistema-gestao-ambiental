@@ -29,13 +29,13 @@
                                 </a>
                                 <ul class="collapse list-unstyled  @if(request()->routeIs('requerimentos*')) show @endif" id="requerimentosSubmenu" >
                                     <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
-                                        <a href="{{route('requerimentos.index')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Atuais</a>
+                                        <a href="{{route('requerimentos.index', 'atuais')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Atuais</a>
                                     </li>
                                     <li>
-                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Finalizados</a>
+                                        <a href="{{route('requerimentos.index', 'finalizados')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Finalizados</a>
                                     </li>
                                     <li>
-                                        <a href="#" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Cancelados</a>
+                                        <a href="{{route('requerimentos.index', 'cancelados')}}" style="background-color: #133306;" onMouseOver="this.style.color='rgb(170, 245, 154)'" onMouseOut="this.style.color='rgb(255, 255, 255)'">Cancelados</a>
                                     </li>
                                 </ul>
                             </li>
@@ -142,7 +142,7 @@
                 @endcan
                 @can('isProcessoOrProtocolista', \App\Models\User::class)
                     <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
-                        <a href="{{route('requerimentos.index')}}">
+                        <a href="{{route('requerimentos.index', 'atuais')}}">
                             <i class="fas fa-home"></i>
                             Requerimentos
                         </a>
@@ -194,7 +194,7 @@
                 @endcan
                 @can('isRequerente', \App\Models\User::class)
                     <li class=" @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
-                        <a href="{{route('requerimentos.index')}}">
+                        <a href="{{route('requerimentos.index', 'atuais')}}">
                             <i class="fas fa-home"></i>
                             Requerimentos
                         </a>
