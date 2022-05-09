@@ -6,10 +6,10 @@
                 <div class="form-row">
                     <div class="col-md-8" style="padding-top: 15px;">
                         <h4 class="card-title">Avaliar solicitação de muda {{$solicitacao->protocolo}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('mudas.index')}}">Mudas</a> > Avaliar solicitação de muda {{$solicitacao->protocolo}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Mudas</a> > Avaliar solicitação de muda {{$solicitacao->protocolo}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2" href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>

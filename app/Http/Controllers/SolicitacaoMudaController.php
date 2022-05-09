@@ -21,13 +21,26 @@ class SolicitacaoMudaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filtro)
     {
         $this->authorize('index', SolicitacaoMuda::class);
-        $registradas = SolicitacaoMuda::where('status', '1')->get();
-        $deferidas   = SolicitacaoMuda::where('status', '2')->get();
-        $indeferidas = SolicitacaoMuda::where('status', '3')->get();
-        return view('solicitacoes.mudas.index', compact('registradas','deferidas', 'indeferidas'));
+        $registradas = SolicitacaoMuda::where('status', '1')->paginate(20);
+        $deferidas   = SolicitacaoMuda::where('status', '2')->paginate(20);
+        $indeferidas = SolicitacaoMuda::where('status', '3')->paginate(20);
+
+        switch($filtro){
+            case 'pendentes':
+                $mudas = $registradas;
+                break;
+            case 'deferidas':
+                $mudas = $deferidas;
+                break;
+            case 'indeferidas':
+                $mudas = $indeferidas;
+                break;
+        }
+        
+        return view('solicitacoes.mudas.index', compact('mudas','filtro'));
     }
 
     public function requerenteIndex()

@@ -71,7 +71,7 @@
                                 </div>
                                 @if($pagamentos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhum boleto  @switch($filtragem) @case('pendentes') pendente @break @case('pagos') pago @break @case('vencidos') vencido @break @endswitch
+                                        Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @endswitch
                                     </div>
                                 @endif
                             </div>

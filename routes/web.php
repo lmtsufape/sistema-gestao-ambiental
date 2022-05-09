@@ -108,7 +108,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/{solicitacao}/show', [SolicitacaoMudaController::class, 'show'])->name('mudas.show');
     Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
     Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
-    Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
+    Route::get('/solicitacoes/mudas/{filtro}/listar', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
     Route::get('/solicitacoes/mudas/requerente/index', [SolicitacaoMudaController::class, 'requerenteIndex'])->name('mudas.requerente.index');
 
     Route::get('/solicitacoes/podas/{solicitacao}/show', [SolicitacaoPodaController::class, 'show'])->name('podas.show');

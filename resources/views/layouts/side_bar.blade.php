@@ -87,13 +87,13 @@
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
                             <li>
-                                <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                                <a href="{{route('mudas.index', 'pendentes')}}" @if(request()->is('solicitacoes/mudas/pendentes/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                             </li>
                             <li>
-                                <a href="#">Deferidas</a>
+                                <a href="{{route('mudas.index', 'deferidas')}}" @if(request()->is('solicitacoes/mudas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
-                                <a href="#">Indeferidas</a>
+                                <a href="{{route('mudas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/mudas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                             <li>
                                 <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies de mudas</a>
@@ -162,13 +162,13 @@
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
                             <li>
-                                <a href="{{route('mudas.index')}}" @if(request()->routeIs('mudas*')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                                <a href="{{route('mudas.index', 'pendentes')}}" @if(request()->is('solicitacoes/mudas/pendentes/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                             </li>
                             <li>
-                                <a href="#">Deferidas</a>
+                                <a href="{{route('mudas.index', 'deferidas')}}" @if(request()->is('solicitacoes/mudas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
-                                <a href="#">Indeferidas</a>
+                                <a href="{{route('mudas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/mudas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                         </ul>
                     </li>

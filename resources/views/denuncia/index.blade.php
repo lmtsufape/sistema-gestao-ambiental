@@ -72,7 +72,7 @@
                                 </div>
                                 @if($denuncias->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma denúncia pendente
+                                        Nenhuma denúncia @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>

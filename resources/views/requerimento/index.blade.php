@@ -428,6 +428,13 @@
                         </div>
                     </div>
                 @endcan
+                @can('isSecretarioOrAnalista', \App\Models\User::class)
+                    <div class="form-row justify-content-center">
+                        <div class="col-md-10">
+                            {{$requerimentos->links()}}
+                        </div>
+                    </div>
+                @endcan
             </div>
             <div class="col-md-3">
                 <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
@@ -502,13 +509,6 @@
                     </ul>
                 </div>
             </div>
-            @can('isSecretarioOrAnalista', \App\Models\User::class)
-                <div class="form-row justify-content-center">
-                    <div class="col-md-10">
-                        {{$requerimentos->links()}}
-                    </div>
-                </div>
-            @endcan
         </div>
     </div>
 
