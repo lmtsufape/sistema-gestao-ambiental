@@ -168,7 +168,7 @@ class VisitaController extends Controller
         $visita->analista_id = $request->analista;
         $visita->save();
 
-        return redirect(route('denuncias.index'))->with(['success' => 'Visita agendada com sucesso!']);
+        return redirect(route('denuncias.index', 'pendentes'))->with(['success' => 'Visita agendada com sucesso!']);
     }
 
     public function createVisitaSolicitacaoPoda(Request $request)

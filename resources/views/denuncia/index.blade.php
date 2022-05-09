@@ -18,17 +18,17 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
-                            type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'pendentes') active @endif" id="denuncias-pendentes-tab"
+                            type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('denuncias.index', 'pendentes')}}">Pendentes</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                            aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Deferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="denuncias-aprovadas-tab"
+                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('denuncias.index', 'deferidas')}}">Deferidas</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab"
-                            aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Indeferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="denuncias-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('denuncias.index', 'indeferidas')}}">Indeferidas</a>
                     </li>
                 </ul>
                 <div class="card" style="width: 100%;">
@@ -47,7 +47,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_registradas as $i => $denuncia)
+                                        @foreach ($denuncias as $i => $denuncia)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
@@ -70,13 +70,13 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                @if($denuncias_registradas->first() == null)
+                                @if($denuncias->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma denúncia pendente
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
+                            {{--<div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
                                 <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
@@ -161,8 +161,13 @@
                                         Nenhuma denúncia indeferida
                                     </div>
                                 @endif
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$denuncias->links()}}
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ use App\Models\User;
 
 class DenunciaController extends Controller
 {
-    public function index()
+    public function index($filtro)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
 
@@ -24,21 +24,32 @@ class DenunciaController extends Controller
         $user = auth()->user();
         switch ($user->role) {
             case User::ROLE_ENUM['secretario']:
-                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->get();
-                $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->get();
-                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->paginate(20);
                 break;
             case User::ROLE_ENUM['analista']:
-                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
-                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
-                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->get();
+                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
                 break;
         }
 
-        $denuncias = $denuncias_registradas->concat($denuncias_aprovadas)->concat($denuncias_arquivadas);
+        switch($filtro){
+            case 'pendentes':
+                $denuncias = $denuncias_registradas;
+                break;
+            case 'deferidas':
+                $denuncias = $denuncias_aprovadas;
+                break;
+            case 'indeferidas':
+                $denuncias = $denuncias_arquivadas;
+                break;
+        }
+
         $analistas = User::analistas();
 
-        return view('denuncia.index', compact('denuncias_registradas', 'denuncias_aprovadas', 'denuncias_arquivadas', 'denuncias', 'analistas'));
+        return view('denuncia.index', compact('denuncias', 'analistas', 'filtro'));
     }
 
     public function create()
@@ -159,7 +170,7 @@ class DenunciaController extends Controller
         $denuncia->analista_id = $request->analista;
         $denuncia->update();
 
-        return redirect(route('denuncias.index'))->with(['success' => 'Denúncia atribuida com sucesso ao analista.']);
+        return redirect()->back()->with(['success' => 'Denúncia atribuida com sucesso ao analista.']);
     }
 
     public function statusDenuncia(Request $request)

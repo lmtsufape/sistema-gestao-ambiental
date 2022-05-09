@@ -70,13 +70,13 @@
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('denuncias*')) show @endif" id="denunciasSubmenu">
                             <li>
-                                <a href="{{route('denuncias.index')}}" @if(request()->routeIs('denuncias.index')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
+                                <a href="{{route('denuncias.index', 'pendentes')}}" @if(request()->is('denuncias/pendentes/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Pendentes</a>
                             </li>
                             <li>
-                                <a href="#">Aprovadas</a>
+                                <a href="{{route('denuncias.index', 'deferidas')}}" @if(request()->is('denuncias/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
-                                <a href="#">Arquivadas</a>
+                                <a href="{{route('denuncias.index', 'indeferidas')}}" @if(request()->is('denuncias/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                         </ul>
                     </li>
