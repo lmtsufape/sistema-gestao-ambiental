@@ -415,6 +415,7 @@
                             </div>`;
 
         $('#imagens').append(campo_imagem);
+        $("#file-input-"+imagem_indice).click();
     }
 
     function addVideo() {
@@ -892,6 +893,7 @@
                             </div>`;
 
         $('#imagens').append(campo_imagem);
+        $("#file-input-"+imagem_indice).click();
     }
 
     function addVideo() {
