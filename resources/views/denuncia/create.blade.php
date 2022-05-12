@@ -126,6 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="justify-content-betwceeen">
+                                        <input type="hidden" id="tamanhoTotal" value="0">
                                         <div id="imagens" class="form-row" style="width:100%; height:300px; overflow:auto;">
                                             <div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
                                                 <div class="form-row">
@@ -293,11 +294,13 @@
 
                         </form>
                         <br>
-                        <div class="row col-md-12">
-                            <div class="alert alert-warning" role="alert">
-                                <h5 class="alert-heading">Envio de vídeos</h5>
-                                <hr>
-                                <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                        <div class="form row">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning" role="alert">
+                                    <h5 class="alert-heading">Envio de vídeos</h5>
+                                    <hr>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -387,35 +390,39 @@
 
 
     function addImagem() {
-        var indice = document.getElementById("imagem_indice");
-        var imagem_indice = parseInt(document.getElementById("imagem_indice").value)+1;
-        indice.value = imagem_indice;
+        if($('#imagens').children().length >= 20){
+            alert("A quantidade máxima de imagens é 20!");
+        }else{
+            var indice = document.getElementById("imagem_indice");
+            var imagem_indice = parseInt(document.getElementById("imagem_indice").value)+1;
+            indice.value = imagem_indice;
 
-        var campo_imagem = `<div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
-                                <div class="form-row">
-                                    <div class="image-upload">
-                                        <label for="file-input-`+imagem_indice+`">
-                                            <img id="imagem_previa`+imagem_indice+`" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
-                                        </label>
+            var campo_imagem = `<div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
+                                    <div class="form-row">
+                                        <div class="image-upload">
+                                            <label for="file-input-`+imagem_indice+`">
+                                                <img id="imagem_previa`+imagem_indice+`" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
+                                            </label>
+                                        </div>
+                                        <input style="display: none;" type="file" name="imagem[]" id="file-input-`+imagem_indice+`" accept="image/*" onchange="loadPreview(event, `+imagem_indice+`)">
                                     </div>
-                                    <input style="display: none;" type="file" name="imagem[]" id="file-input-`+imagem_indice+`" accept="image/*" onchange="loadPreview(event, `+imagem_indice+`)">
-                                </div>
-                                <div class="form-row justify-content-betwceeen">
-                                    <div class="col-md-6" style="text-align: right">
-                                        <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
+                                    <div class="form-row justify-content-betwceeen">
+                                        <div class="col-md-6" style="text-align: right">
+                                            <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: right">
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6" style="text-align: right">
-                                        <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
-                                    </div>
-                                </div>
-                                {{--<div class="form-row">
-                                    <label for="comentarios"">{{ __('Comentário') }}</label>
-                                    <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
-                                </div>--}}
-                            </div>`;
+                                    {{--<div class="form-row">
+                                        <label for="comentarios"">{{ __('Comentário') }}</label>
+                                        <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
+                                    </div>--}}
+                                </div>`;
 
-        $('#imagens').append(campo_imagem);
-        $("#file-input-"+imagem_indice).click();
+            $('#imagens').append(campo_imagem);
+            $("#file-input-"+imagem_indice).click();
+        }
     }
 
     function addVideo() {
@@ -433,27 +440,49 @@
     }
 
     var loadPreview = function(event, indice) {
-        var reader = new FileReader();
-        reader.onload = function(){
-        var output = document.getElementById('imagem_previa'+indice);
-        output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-
-        document.getElementById('nome'+indice).innerHTML = event.target.files[0].name;
-        document.getElementById('nome'+indice).style.display = "block";
+        if(checarTamanhoIndividual(indice) && checarTamanhoTotal(indice)){
+            var reader = new FileReader();
+            reader.onload = function(){
+            var output = document.getElementById('imagem_previa'+indice);
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            document.getElementById('nome'+indice).innerHTML = event.target.files[0].name;
+            document.getElementById('nome'+indice).style.display = "block";
+        }
     };
 
-    function checarTamanho(id){
-        console.log(id);
-        let video = $('#video'+id);
-        if(video){
-            if(video[0].files[0].size > 52428800){
-                alert("Mídias não podem ultrapassar o valor máximo de 50MB!");
-                video[0].value = "";
+    function checarTamanhoIndividual(id){
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            const fileSize = imagem[0].files[0].size / 1024 / 1024;
+            if(fileSize > 2){
+                alert("A imagem deve ter no máximo 2MB!");
+                imagem.value = "";
+                imagem[0].parentElement.parentElement.remove();
+                return false;
             }
         }
-    }
+        return true;
+    };
+
+    function checarTamanhoTotal(id){
+        let total = document.getElementById('tamanhoTotal');
+        console.log(total.value);
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            const fileSize = imagem[0].files[0].size / 1024 / 1024;
+            const totalSize = parseInt(total.value) / 1024 / 1024;
+            if(totalSize+fileSize > 8){
+                alert("A soma dos tamanhos da imagem não deve ultrapassar 8MB!");
+                imagem.value = "";
+                imagem[0].parentElement.parentElement.remove();
+                return false;
+            }
+        }
+        total.value = parseInt(total.value) + imagem[0].files[0].size;
+        return true;
+    };
 
     function showCampoEmpresaNaoCadastrada(){
         let select_empresas = $('select#empresas');
@@ -605,6 +634,7 @@
                                         </div>
                                     </div>
                                     <div class="justify-content-betwceeen">
+                                        <input type="hidden" id="tamanhoTotal" value="0">
                                         <div id="imagens" class="form-row" style="width:100%; height:300px; overflow:auto;">
                                             <div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
                                                 <div class="form-row">
@@ -772,11 +802,13 @@
 
                         </form>
                         <br>
-                        <div class="row col-md-12">
-                            <div class="alert alert-warning" role="alert">
-                                <h5 class="alert-heading">Envio de vídeos</h5>
-                                <hr>
-                                <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                        <div class="form row">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning" role="alert">
+                                    <h5 class="alert-heading">Envio de vídeos</h5>
+                                    <hr>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -865,35 +897,39 @@
 
 
     function addImagem() {
-        var indice = document.getElementById("imagem_indice");
-        var imagem_indice = parseInt(document.getElementById("imagem_indice").value)+1;
-        indice.value = imagem_indice;
+        if($('#imagens').children().length >= 20){
+            alert("A quantidade máxima de imagens é 20!");
+        }else{
+            var indice = document.getElementById("imagem_indice");
+            var imagem_indice = parseInt(document.getElementById("imagem_indice").value)+1;
+            indice.value = imagem_indice;
 
-        var campo_imagem = `<div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
-                                <div class="form-row">
-                                    <div class="image-upload">
-                                        <label for="file-input-`+imagem_indice+`">
-                                            <img id="imagem_previa`+imagem_indice+`" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
-                                        </label>
+            var campo_imagem = `<div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
+                                    <div class="form-row">
+                                        <div class="image-upload">
+                                            <label for="file-input-`+imagem_indice+`">
+                                                <img id="imagem_previa`+imagem_indice+`" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
+                                            </label>
+                                        </div>
+                                        <input style="display: none;" type="file" name="imagem[]" id="file-input-`+imagem_indice+`" accept="image/*" onchange="loadPreview(event, `+imagem_indice+`)">
                                     </div>
-                                    <input style="display: none;" type="file" name="imagem[]" id="file-input-`+imagem_indice+`" accept="image/*" onchange="loadPreview(event, `+imagem_indice+`)">
-                                </div>
-                                <div class="form-row justify-content-betwceeen">
-                                    <div class="col-md-6" style="text-align: right">
-                                        <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
+                                    <div class="form-row justify-content-betwceeen">
+                                        <div class="col-md-6" style="text-align: right">
+                                            <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
+                                        </div>
+                                        <div class="col-md-6" style="text-align: right">
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6" style="text-align: right">
-                                        <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
-                                    </div>
-                                </div>
-                                {{--<div class="form-row">
-                                    <label for="comentarios"">{{ __('Comentário') }}</label>
-                                    <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
-                                </div>--}}
-                            </div>`;
+                                    {{--<div class="form-row">
+                                        <label for="comentarios"">{{ __('Comentário') }}</label>
+                                        <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
+                                    </div>--}}
+                                </div>`;
 
-        $('#imagens').append(campo_imagem);
-        $("#file-input-"+imagem_indice).click();
+            $('#imagens').append(campo_imagem);
+            $("#file-input-"+imagem_indice).click();
+        }
     }
 
     function addVideo() {
@@ -911,27 +947,49 @@
     }
 
     var loadPreview = function(event, indice) {
-        var reader = new FileReader();
-        reader.onload = function(){
-        var output = document.getElementById('imagem_previa'+indice);
-        output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-
-        document.getElementById('nome'+indice).innerHTML = event.target.files[0].name;
-        document.getElementById('nome'+indice).style.display = "block";
+        if(checarTamanhoIndividual(indice) && checarTamanhoTotal(indice)){
+            var reader = new FileReader();
+            reader.onload = function(){
+            var output = document.getElementById('imagem_previa'+indice);
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            document.getElementById('nome'+indice).innerHTML = event.target.files[0].name;
+            document.getElementById('nome'+indice).style.display = "block";
+        }
     };
 
-    function checarTamanho(id){
-        console.log(id);
-        let video = $('#video'+id);
-        if(video){
-            if(video[0].files[0].size > 52428800){
-                alert("Mídias não podem ultrapassar o valor máximo de 50MB!");
-                video[0].value = "";
+    function checarTamanhoIndividual(id){
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            const fileSize = imagem[0].files[0].size / 1024 / 1024;
+            if(fileSize > 2){
+                alert("A imagem deve ter no máximo 2MB!");
+                imagem.value = "";
+                imagem[0].parentElement.parentElement.remove();
+                return false;
             }
         }
-    }
+        return true;
+    };
+
+    function checarTamanhoTotal(id){
+        let total = document.getElementById('tamanhoTotal');
+        console.log(total.value);
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            const fileSize = imagem[0].files[0].size / 1024 / 1024;
+            const totalSize = parseInt(total.value) / 1024 / 1024;
+            if(totalSize+fileSize > 8){
+                alert("A soma dos tamanhos da imagem não deve ultrapassar 8MB!");
+                imagem.value = "";
+                imagem[0].parentElement.parentElement.remove();
+                return false;
+            }
+        }
+        total.value = parseInt(total.value) + imagem[0].files[0].size;
+        return true;
+    };
 
     function showCampoEmpresaNaoCadastrada(){
         let select_empresas = $('select#empresas');
