@@ -123,7 +123,7 @@ class UserController extends Controller
         }
 
         $usuario->setAtributes($request);
-        $usuario->save();
+        $usuario->update();
 
         if($request->tipos_analista != null){
             $analista_tipos =  collect();

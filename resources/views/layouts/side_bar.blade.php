@@ -147,12 +147,14 @@
                             Requerimentos
                         </a>
                     </li>
-                    <li class="@if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
-                        <a href="{{route('visitas.index')}}">
-                            <i class="fas fa-home"></i>
-                            Programação
-                        </a>
-                    </li>
+                    @can('isAnalistaProcesso', \App\Models\User::class)
+                        <li class="@if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                            <a href="{{route('visitas.index')}}">
+                                <i class="fas fa-home"></i>
+                                Programação
+                            </a>
+                        </li>
+                    @endcan
                 @endcan
                 @can('isAnalistaPoda', \App\Models\User::class)
                     <li class="@if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
