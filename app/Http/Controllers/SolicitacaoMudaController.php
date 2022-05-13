@@ -151,7 +151,7 @@ class SolicitacaoMudaController extends Controller
             $solicitacao->arquivo = sprintf('mudas/%u/documento/%s', $solicitacao->id, $data['arquivo']->getClientOriginalName());
         }
         $solicitacao->update();
-        return redirect()->action([SolicitacaoMudaController::class, 'index'])->with('success', 'Solicitação de muda avalida com sucesso');
+        return redirect()->route('mudas.index', 'pendentes')->with('success', 'Solicitação de muda avalida com sucesso');
     }
 
     /**

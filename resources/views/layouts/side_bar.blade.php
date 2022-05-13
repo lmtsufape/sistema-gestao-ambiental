@@ -181,15 +181,15 @@
                         </a>
                         <ul class="collapse list-unstyled @if(request()->routeIs('podas*')) show @endif" id="podasSubmenu">
                             <li>
-                                <a href="{{route('podas.index')}}" @if(request()->routeIs('podas*')) style="background-color: #ffffff; color: #214b10;" @endif >Pendentes</a>
-                            </li>
-                            <li>
-                                <a href="#">Deferidas</a>
-                            </li>
-                            <li>
-                                <a href="#">Indeferidas</a>
+                                <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Atribuídas</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="@if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                        <a href="{{route('visitas.index')}}">
+                            <i class="fas fa-home"></i>
+                            Programação
+                        </a>
                     </li>
                 @endcan
                 @can('isRequerente', \App\Models\User::class)

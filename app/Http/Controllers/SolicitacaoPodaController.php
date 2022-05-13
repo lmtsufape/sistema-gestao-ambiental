@@ -9,6 +9,7 @@ use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
+use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -24,24 +25,32 @@ class SolicitacaoPodaController extends Controller
     public function index($filtro)
     {
         $this->authorize('index', SolicitacaoPoda::class);
-        $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
-        $deferidas   = SolicitacaoPoda::where('status', '2')->paginate(20);
-        $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
 
-        switch($filtro){
-            case 'pendentes':
-                $solicitacoes = $registradas;
-                break;
-            case 'deferidas':
-                $solicitacoes = $deferidas;
-                break;
-            case 'indeferidas':
-                $solicitacoes = $indeferidas;
-                break;
+        $userPolicy = new UserPolicy();
+        if($userPolicy->isAnalistaPoda(auth()->user())){
+            $solicitacoes   = SolicitacaoPoda::where([['status', '2'], ['analista_id', auth()->user()->id]])->paginate(20);
+            $analistas = User::analistasPoda();
+            $filtro = 'deferidas';
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
+        }else{
+            $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
+            $deferidas   = SolicitacaoPoda::where('status', '2')->paginate(20);
+            $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
+
+            switch($filtro){
+                case 'pendentes':
+                    $solicitacoes = $registradas;
+                    break;
+                case 'deferidas':
+                    $solicitacoes = $deferidas;
+                    break;
+                case 'indeferidas':
+                    $solicitacoes = $indeferidas;
+                    break;
+            }
+            $analistas = User::analistasPoda();
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }
-
-        $analistas = User::analistas();
-        return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
     }
 
 
