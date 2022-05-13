@@ -411,7 +411,7 @@
                                             <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
                                         </div>
                                         <div class="col-md-6" style="text-align: right">
-                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="removerImagem(this, `+imagem_indice+`)">remover</a>
                                         </div>
                                     </div>
                                     {{--<div class="form-row">
@@ -423,6 +423,15 @@
             $('#imagens').append(campo_imagem);
             $("#file-input-"+imagem_indice).click();
         }
+    }
+
+    function removerImagem(image, id){
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            let total = document.getElementById('tamanhoTotal');
+            total.value = parseInt(total.value) - imagem[0].files[0].size;
+        }
+        image.parentElement.parentElement.parentElement.remove();
     }
 
     function addVideo() {
@@ -918,7 +927,7 @@
                                             <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
                                         </div>
                                         <div class="col-md-6" style="text-align: right">
-                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="removerImagem(this, `+imagem_indice+`)">remover</a>
                                         </div>
                                     </div>
                                     {{--<div class="form-row">
@@ -930,6 +939,15 @@
             $('#imagens').append(campo_imagem);
             $("#file-input-"+imagem_indice).click();
         }
+    }
+
+    function removerImagem(image, id){
+        let imagem = $('#file-input-'+id);
+        if(imagem[0].files[0]){
+            let total = document.getElementById('tamanhoTotal');
+            total.value = parseInt(total.value) - imagem[0].files[0].size;
+        }
+        image.parentElement.parentElement.parentElement.remove();
     }
 
     function addVideo() {
