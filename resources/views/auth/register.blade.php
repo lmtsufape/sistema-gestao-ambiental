@@ -80,8 +80,11 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="celular">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" required autocomplete="celular" placeholder="(00) 00000-0000">
+                                        <label for="celular">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label><br>
+                                        <input id="phone" class="form-control celular @error('celular') is-invalid @enderror" type="tel" name="celular" value="{{old('celular')}}" required autocomplete="celular" onkeyup="process(event)">
+                                        <div class="alert alert-info mt-1" style="display: none"></div>
+                                        <div id="celular-invalido" class="alert alert-danger mt-1" role="alert"   style="display: none"></div>
+
                                         @error('celular')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -321,7 +324,7 @@
                         field.mask(SPMaskBehavior.apply({}, arguments), options);
                     }
                 };
-            $('.celular').mask(SPMaskBehavior, spOptions);
+            //$('.celular').mask(SPMaskBehavior, spOptions);
             $('.cep').mask('00000-000');
             $(".apenas_letras").mask("#", {
                 maxlength: true,
@@ -450,5 +453,50 @@
         function exibirModalCepInvalido() {
             $('#btn-modal-cep-invalido').click();
         }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            formatOnDisplay: true,
+            hiddenInput: "full_number",
+            preferredCountries: ["br", "us"],
+                utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+        const info = document.querySelector(".alert-info");
+        const error = document.querySelector("#celular-invalido");
+
+        function process(event) {
+            event.preventDefault();
+
+            const phoneNumber = phoneInput.getNumber();
+
+            info.style.display = "none";
+            error.style.display = "none";
+
+            if (phoneInput.isValidNumber()) {
+                info.style.display = "";
+                info.innerHTML = `Número válido: <strong>${phoneNumber}</strong>`;
+            } else {
+                error.style.display = "";
+                error.innerHTML = `Número inválido.`;
+            }
+        }
+
+        $(phoneInputField).on("countrychange", function(event) {
+            var selectedCountryData = phoneInput.getSelectedCountryData();
+            newPlaceholder = intlTelInputUtils.getExampleNumber(selectedCountryData.iso2, true, intlTelInputUtils.numberFormat.INTERNATIONAL),
+            phoneInput.setNumber("");
+            mask = newPlaceholder.replace(/[1-9]/g, "0");
+
+            $(this).mask(mask);
+        });
+
+        phoneInput.promise.then(function() {
+            $(phoneInputField).trigger("countrychange");
+        });
     </script>
 </x-guest-layout>
