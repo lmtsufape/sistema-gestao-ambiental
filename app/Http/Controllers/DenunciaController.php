@@ -8,6 +8,7 @@ use App\Models\Empresa;
 use App\Models\FotoDenuncia;
 use App\Models\VideoDenuncia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
@@ -24,14 +25,33 @@ class DenunciaController extends Controller
         $user = auth()->user();
         switch ($user->role) {
             case User::ROLE_ENUM['secretario']:
-                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('empresa_id', 'ASC')->paginate(20);
-                $denuncias_aprovadas   = Denuncia::where('aprovacao', '2')->orderBy('empresa_id', 'ASC')->paginate(20);
-                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('created_at', 'DESC')->paginate(20);
+                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('created_at', 'DESC')->paginate(20);
+
+                $denuncias_concluidas = DB::table('denuncias')->join('visitas', 'visitas.denuncia_id', '=', 'denuncias.id')
+                ->where('visitas.data_realizada', '!=', null)
+                ->get('denuncias.id');
+
+                $denuncias_aprovadas = DB::table('denuncias')
+                ->where('denuncias.aprovacao', '=', 2)
+                ->select('denuncias.id');
+
+                $denuncias_aprovadas_collection = collect();
+
+                foreach($denuncias_aprovadas->get() as $denuncia){
+                    if($denuncias_concluidas->doesntContain($denuncia)){
+                        $denuncias_aprovadas_collection->push($denuncia);
+                    }
+                }
+
+                $denuncias_aprovadas = Denuncia::whereIn('id', $denuncias_aprovadas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+                $denuncias_concluidas = Denuncia::whereIn('id', $denuncias_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+
                 break;
             case User::ROLE_ENUM['analista']:
-                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
-                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
-                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('empresa_id', 'ASC')->paginate(20);
+                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
                 break;
         }
 
@@ -45,11 +65,31 @@ class DenunciaController extends Controller
             case 'indeferidas':
                 $denuncias = $denuncias_arquivadas;
                 break;
+            case 'concluidas':
+                $denuncias = $denuncias_concluidas;
+                break;
         }
 
         $analistas = User::analistas();
 
         return view('denuncia.index', compact('denuncias', 'analistas', 'filtro'));
+    }
+
+    public function infoDenuncia(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+
+        $denuncia = Denuncia::find($request->denuncia_id);
+
+        $denunciaInfo = [
+            'id' => $denuncia->id,
+            'analista_atribuido' => $denuncia->analista ? $denuncia->analista : null,
+            'analista_visita' => $denuncia->visita ? $denuncia->visita->analista : null,
+            'marcada' => $denuncia->visita ? $denuncia->visita->data_marcada : null,
+            'realizada' => $denuncia->visita ? $denuncia->visita->data_realizada : null,
+        ];
+
+        return response()->json($denunciaInfo);
     }
 
     public function create()
@@ -137,12 +177,12 @@ class DenunciaController extends Controller
         
         if ($request->aprovar == "true") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
-            $msg = 'Denuncia aprovada com sucesso!';
+            $msg = 'Denuncia deferida com sucesso!';
             
 
         } else if ($request->aprovar == "false") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['arquivada'];
-            $msg = 'Denuncia arquivada com sucesso!';
+            $msg = 'Denuncia indeferida com sucesso!';
 
         }
 

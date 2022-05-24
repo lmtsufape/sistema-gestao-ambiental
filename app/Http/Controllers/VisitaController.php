@@ -22,7 +22,7 @@ class VisitaController extends Controller
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $visitas = Visita::orderBy('data_marcada')->paginate(10);
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
-            $visitas = Visita::where('analista_id', auth()->user()->id)->paginate(10);
+            $visitas = Visita::where('analista_id', auth()->user()->id)->orderBy('data_marcada', 'DESC')->paginate(10);
         }
 
         return view('visita.index', compact('visitas'));

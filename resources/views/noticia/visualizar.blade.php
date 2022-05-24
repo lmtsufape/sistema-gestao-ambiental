@@ -7,8 +7,15 @@
                 <div class="form-row">
                     <div class="col-md-8">
                     </div>
-                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="javascript:window.history.back();" ><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
+                    <div class="col-md-4" style="text-align: right; padding-top: 15px;" id="div-voltar">
+                        <script>
+                            if(window.history.length > 1){
+                                $(document).ready(function() {
+                                    let bottao = `<a title="Voltar" href="javascript:window.history.back();" ><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>`;
+                                    $('#div-voltar').append(bottao);
+                                });
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
@@ -35,8 +42,15 @@
                     <div class="form-row">
                         <div class="col-md-8">
                         </div>
-                        <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                            <a title="Voltar" href="javascript:window.history.back();" ><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
+                        <div class="col-md-4" style="text-align: right; padding-top: 15px;" id="div-voltar">
+                            <script>
+                                if(window.history.length > 1){
+                                    $(document).ready(function() {
+                                        let bottao = `<a title="Voltar" href="javascript:window.history.back();" ><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>`;
+                                        $('#div-voltar').append(bottao);
+                                    });
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>
