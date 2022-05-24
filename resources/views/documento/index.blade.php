@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
@@ -36,12 +37,12 @@
                                 @endif
                             </div>
                         </div>
-                        <table class="table">
-                            <thead>
+                        <table class="table" style="word-break: break-word;">
+                            <thead >
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col">Nome</th>
-                                    <th scope="col" style="width: 125px;">Opções</th>
+                                    <th scope="col" style="width: 100px;">Opções</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,10 +52,10 @@
                                         <td>{{$documento->nome}}</td>
                                         <td>
                                             @if ($documento->documento_modelo != null)
-                                                <a title="Visualizar documento" target="_blank" href="{{route("documentos.show", $documento->id)}}"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar documento"></a>
+                                                <a title="Visualizar documento" target="_blank" href="{{route("documentos.show", $documento->id)}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar documento"></a>
                                             @endif
-                                            <a title="Editar documento" href="{{route("documentos.edit", $documento->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar documento"></a>
-                                            <a title="Deletar documento" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar documento"></a>
+                                            <a title="Editar documento" href="{{route("documentos.edit", $documento->id)}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar documento"></a>
+                                            <a title="Deletar documento" data-toggle="modal" data-target="#modalStaticDeletarDocumento_{{$documento->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar documento"></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -138,4 +139,5 @@
             </div>
         </div>
     @endforeach
+    @endsection
 </x-app-layout>

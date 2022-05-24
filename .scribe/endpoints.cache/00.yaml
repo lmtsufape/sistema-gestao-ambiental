@@ -63,7 +63,7 @@ endpoints:
         type: integer
       solicitacao_poda_id:
         name: solicitacao_poda_id
-        description: 'O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null'
+        description: 'O identificador da solicitação de poda/supressão, se a visita não for para uma solicitação de poda/supressão o valor é null'
         type: integer
       denuncia.id:
         name: denuncia.id
@@ -391,11 +391,11 @@ endpoints:
         type: ''
       solicitacao_poda:
         name: solicitacao_poda
-        description: 'Solicitação de poda/corte'
+        description: 'Solicitação de poda/supressão'
         type: object
       solicitacao_poda.id:
         name: solicitacao_poda.id
-        description: 'Identificador da solicitação de poda/corte'
+        description: 'Identificador da solicitação de poda/supressão'
         type: ''
       solicitacao_poda.protocolo:
         name: solicitacao_poda.protocolo
@@ -736,7 +736,7 @@ endpoints:
         type: integer
       solicitacao_poda_id:
         name: solicitacao_poda_id
-        description: 'O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null'
+        description: 'O identificador da solicitação de poda/supressão, se a visita não for para uma solicitação de poda/supressão o valor é null'
         type: integer
   -
     httpMethods:

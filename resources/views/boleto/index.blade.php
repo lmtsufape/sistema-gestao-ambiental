@@ -1,11 +1,11 @@
 <x-app-layout>
-
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-8">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Boletos</h4>
+                        <h4 class="card-title">Pagamentos {{$filtragem}} </h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -18,23 +18,24 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="boletos-pendentes-tab" data-toggle="tab" href="#boletos-pendentes"
-                            type="button" role="tab" aria-controls="boletos-pendentes" aria-selected="true">Pendentes</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtragem == 'pendentes') active @endif" id="boletos-pendentes-tab"
+                            type="button" role="tab" @if($filtragem == 'pendentes') aria-selected="true" @endif href="{{route('boletos.index', 'pendentes')}}">Pendentes</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button id="link-boletos-aprovados" class="nav-link" id="boletos-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                            aria-controls="boletos-aprovadas" aria-selected="false" href="#boletos-aprovadas">Pagos</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtragem == 'pagos') active @endif" id="boletos-aprovadas-tab"
+                            type="button" role="tab" @if($filtragem == 'pagos') aria-selected="true" @endif href="{{route('boletos.index', 'pagos')}}">Pagos</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" type="button" id="boletos-arquivadas-tab" data-toggle="tab" role="tab"
-                            aria-controls="boletos-arquivadas" aria-selected="false" href="#boletos-arquivadas">Vencidos</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtragem == 'vencidos') active @endif" id="boletos-arquivadas-tab"
+                            type="button" role="tab" @if($filtragem == 'vencidos') aria-selected="true" @endif href="{{route('boletos.index', 'vencidos')}}">Vencidos</a>
                     </li>
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="tab-content tab-content-custom" id="myTabContent">
                             <div class="tab-pane fade show active" id="boletos-pendentes" role="tabpanel" aria-labelledby="boletos-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -46,7 +47,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pendentes as $boleto)
+                                        @foreach ($pagamentos as $boleto)
                                             <tr>
                                                 <td>{{($loop->iteration)}}</td>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
@@ -67,13 +68,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                @if($pendentes->first() == null)
+                                </div>
+                                @if($pagamentos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhum boleto pendente
+                                        Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @endswitch
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="boletos-aprovadas" role="tabpanel" aria-labelledby="boletos-aprovadas-tab">
+                            {{--<div class="tab-pane fade" id="boletos-aprovadas" role="tabpanel" aria-labelledby="boletos-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -106,6 +109,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($pagos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto pago
@@ -113,6 +117,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="boletos-arquivadas" role="tabpanel" aria-labelledby="boletos-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -145,13 +150,19 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($vencidos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto vencido
                                     </div>
                                 @endif
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$pagamentos->links()}}
                     </div>
                 </div>
             </div>
@@ -160,7 +171,7 @@
                     <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
                         Baixar relatório
                     </div>
-                    <form id="form-fitrar-boleto" method="GET" action="{{route('boletos.index')}}">
+                    <form id="form-fitrar-boleto" method="GET" action="{{route('boletos.index', $filtragem)}}">
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
@@ -208,10 +219,8 @@
                         <input type="hidden" value="{{$dataDe}}" name="dataDe">
                         <input type="hidden" value="{{$dataAte}}" name="dataAte">
                         
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-5 form-group">
-                                <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
-                            </div>
+                        <div class="form-row justify-content-center mb-2">
+                            <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
                         </div>
                     </form>
 
@@ -226,7 +235,8 @@
                 form.submit();
             });
             sleep(2000);
-            .then(() => window.location.reload();
+            .then(() => window.location.reload());
         }
     </script>
+    @endsection
 </x-app-layout>

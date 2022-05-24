@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
@@ -53,24 +54,21 @@
     </div>
 
 
-
-
-
-
-</x-app-layout>
-<script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: "{{route('notificacoes.get')}}",
-            method: 'get',
-            type: 'get',
-            data: {"notificacao_id": "{{$notificacao->id}}"},
-            dataType:'json',
-            success: function(notificacao){
-                var divNificacao = document.getElementById('notificacao');
-                divNificacao.innerHTML = notificacao.texto;
-            },
+    <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{route('notificacoes.get')}}",
+                method: 'get',
+                type: 'get',
+                data: {"notificacao_id": "{{$notificacao->id}}"},
+                dataType:'json',
+                success: function(notificacao){
+                    var divNificacao = document.getElementById('notificacao');
+                    divNificacao.innerHTML = notificacao.texto;
+                },
+            });
         });
-    });
-</script>
+    </script>
+    @endsection
+</x-app-layout>

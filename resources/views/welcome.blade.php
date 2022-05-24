@@ -1,10 +1,11 @@
+@guest
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{config('app.name', 'Laravel')}}</title>
+    <title>{{config('app.name', 'Sistema de Gestão Ambiental')}}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -34,8 +35,8 @@
     <div class="container conteudo" style="margin-top: 40px;">
         @if ($noticias->count() > 0)  
             <div class="row">
-                <div class="col-md-12">
-                    Notícias em destaque
+                <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                    NOTÍCIAS EM DESTAQUE
                 </div>
             </div>
             <br>
@@ -90,8 +91,8 @@
         @endif
         <br>
         <div class="row">
-            <div class="col-md-12">
-                <h6>Principais serviços</h6>
+            <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                PRINCIPAIS SERVIÇOS
             </div>
         </div>
         <div class="row">
@@ -193,6 +194,7 @@
                     </div>
                 </a>
             </div>
+            {{--
             <div class="col-md-3">
                 <a href="#">
                     <div class="card card-home">
@@ -210,6 +212,7 @@
                     </div>
                 </a>
             </div>
+            --}}
 
         </div>
     </div>
@@ -253,3 +256,211 @@
     </script>
 </body>
 </html>
+@else
+<x-app-layout>
+    @section('content')
+    <div class="container conteudo" style="margin-top: 40px;">
+        @if ($noticias->count() > 0)  
+            <div class="row">
+                <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                    NOTÍCIAS EM DESTAQUE
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
+                        <div class="row">
+                            <div class="col">
+                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
+                            </div>
+                            <div class="col-11">
+                                <ol class="carousel-indicators">
+                                    @foreach ($noticias as $i => $noticia)
+                                      @if ($i == 0)
+                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                      @else
+                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
+                                      @endif
+                                    @endforeach
+                                </ol>
+                                <div class="carousel-inner">
+                                    @foreach ($noticias as $i => $noticia)
+                                        @if ($i == 0)
+                                            <div class="carousel-item active">
+                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                </a>
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="carousel-item">
+                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                </a>
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="col">
+                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-svgrepo-com.svg')}}" alt="">
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        @endif
+        <br>
+        <div class="row">
+            <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                PRINCIPAIS SERVIÇOS
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-home">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4 alinhar-direita">
+                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
+                            </div>
+                        </div>
+                        <div class="row espaco">
+                            <div class="col-md-12">Emissão de <br>licenças</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-home">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4 alinhar-direita">
+                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
+                            </div>
+                        </div>
+                        <div class="row espaco">
+                            <div class="col-md-12">Renovação de <br>licenças</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="{{route('denuncias.create')}}">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 67.png')}}" alt="Contato" width="49px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Registro de <br>denúncias</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 116.png')}}" alt="Contato" width="37px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Consulta de <br>licenças ambientais</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="#">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Group 115.png')}}" alt="Contato" width="33px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Acompanhamento <br>de solicitações</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{{route('mudas.create')}}">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 alinhar-direita">
+                                    <img src="{{asset('img/Icon awesome-tree.png')}}" alt="Denúnciar" width="30px;">
+                                </div>
+                            </div>
+                            <div class="row espaco">
+                                <div class="col-md-12">Solicitações de poda<br>ou supressão de árvores</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function mostrarContato(tipo, texto, img){
+            if(tipo == "mostrar1"){
+                if(document.getElementById("mostrar1").style.display == "block"){
+                    document.getElementById("mostrar1").style.display = "none";
+                    document.getElementById("mostrar2").style.display = "block";
+                    document.getElementById("texto1").innerHTML="Mostrar";
+                    document.getElementById("texto2").innerHTML="Fechar";
+                    document.getElementById("img1").style.display = "none";
+                    document.getElementById("img2").style.display = "block";
+                }else if(document.getElementById("mostrar1").style.display == "none"){
+                    document.getElementById("mostrar1").style.display = "block";
+                    document.getElementById("mostrar2").style.display = "none";
+                    document.getElementById("texto1").innerHTML="Fechar";
+                    document.getElementById("texto2").innerHTML="Mostrar";
+                    document.getElementById("img1").style.display = "block";
+                    document.getElementById("img2").style.display = "none";
+                }
+            }else if(tipo == "mostrar2"){
+                if(document.getElementById("mostrar2").style.display == "block"){
+                    document.getElementById("mostrar2").style.display = "none";
+                    document.getElementById("mostrar1").style.display = "block";
+                    document.getElementById("texto2").innerHTML="Mostrar";
+                    document.getElementById("texto1").innerHTML="Fechar";
+                    document.getElementById("img2").style.display = "none";
+                    document.getElementById("img1").style.display = "block";
+                }else if(document.getElementById("mostrar2").style.display == "none"){
+                    document.getElementById("mostrar2").style.display = "block";
+                    document.getElementById("mostrar1").style.display = "none";
+                    document.getElementById("texto2").innerHTML="Fechar";
+                    document.getElementById("texto1").innerHTML="Mostrar";
+                    document.getElementById("img2").style.display = "block";
+                    document.getElementById("img1").style.display = "none";
+                }
+            }
+        }
+    </script>
+    @endsection
+</x-app-layout>
+@endguest

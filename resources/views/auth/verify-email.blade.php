@@ -1,4 +1,5 @@
 <x-guest-layout>
+    @component('layouts.nav_bar')@endcomponent
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -34,4 +35,5 @@
             </form>
         </div>
     </x-jet-authentication-card>
+    @component('layouts.footer')@endcomponent
 </x-guest-layout>

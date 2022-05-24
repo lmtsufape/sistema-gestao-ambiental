@@ -34,7 +34,7 @@
                 @else
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
                         <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
-                    </li> --}}
+                    </li>
                     @can('isRequerente', \App\Models\User::class)
                         <li class="nav-item @if(request()->routeIs('mudas.*')) active @endif">
                             <a class="nav-link" href="{{route('mudas.requerente.index')}}">{{ __('Solicitações de mudas') }}</a>
@@ -92,7 +92,7 @@
                               Outros
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
-                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Boletos')}}</a>
+                                <a class="dropdown-item" href="{{route('boletos.index')}}">{{__('Pagamentos')}}</a>
                                 <a class="dropdown-item" href="{{route('documentos.index')}}">{{__('Documentos')}}</a>
                                 <a class="dropdown-item" href="{{route('especies.index')}}">{{__('Espécies de muda')}}</a>
                                 <a class="dropdown-item" href="{{route('setores.index')}}">{{__('Grupos')}}</a>
@@ -116,7 +116,7 @@
                                     this.closest('form').submit();">{{__('Sair')}}</a>
                             </form>
                         </div>
-                    </li>
+                    </li> --}}
                 @endguest
             </ul>
         </div>

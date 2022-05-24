@@ -34,7 +34,7 @@
 
         <div class="min-h-screen bg-gray-100">
             {{-- @livewire('navigation-menu') --}}
-            @component('layouts.nav_bar')@endcomponent
+            @component('layouts.side_bar')@endcomponent
 
             <!-- Page Heading -->
             @if (isset($header))

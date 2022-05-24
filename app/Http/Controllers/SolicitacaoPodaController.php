@@ -9,6 +9,7 @@ use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
+use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -21,15 +22,35 @@ class SolicitacaoPodaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filtro)
     {
         $this->authorize('index', SolicitacaoPoda::class);
-        $registradas = SolicitacaoPoda::where('status', '1')->get();
-        $deferidas   = SolicitacaoPoda::where('status', '2')->get();
-        $indeferidas = SolicitacaoPoda::where('status', '3')->get();
-        $analistas = User::analistas();
-        $solicitacoes = $registradas->concat($deferidas)->concat($indeferidas);
-        return view('solicitacoes.podas.index', compact('registradas','deferidas', 'indeferidas', 'analistas', 'solicitacoes'));
+
+        $userPolicy = new UserPolicy();
+        if($userPolicy->isAnalistaPoda(auth()->user())){
+            $solicitacoes   = SolicitacaoPoda::where([['status', '2'], ['analista_id', auth()->user()->id]])->paginate(20);
+            $analistas = User::analistasPoda();
+            $filtro = 'deferidas';
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
+        }else{
+            $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
+            $deferidas   = SolicitacaoPoda::where('status', '2')->paginate(20);
+            $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
+
+            switch($filtro){
+                case 'pendentes':
+                    $solicitacoes = $registradas;
+                    break;
+                case 'deferidas':
+                    $solicitacoes = $deferidas;
+                    break;
+                case 'indeferidas':
+                    $solicitacoes = $indeferidas;
+                    break;
+            }
+            $analistas = User::analistasPoda();
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
+        }
     }
 
 
@@ -77,7 +98,7 @@ class SolicitacaoPodaController extends Controller
             }
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
-        return redirect()->back()->with(['success' => 'Solicitação de poda/corte realizada com sucesso!', 'protocolo' => $protocolo]);
+        return redirect()->back()->with(['success' => 'Solicitação de poda/supressão realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
     /**
@@ -140,7 +161,7 @@ class SolicitacaoPodaController extends Controller
         $solicitacao->analista_id = $request->analista;
         $solicitacao->update();
 
-        return redirect(route('podas.index'))->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
+        return redirect()->back()->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
     }
 
     /**
@@ -155,7 +176,7 @@ class SolicitacaoPodaController extends Controller
         $this->authorize('avaliar', SolicitacaoPoda::class);
         $solicitacao->fill($request->validated());
         $solicitacao->update();
-        return redirect()->action([SolicitacaoPodaController::class, 'index'])->with('success', 'Solicitação de poda/corte avalida com sucesso');
+        return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avalida com sucesso');
     }
 
     /**

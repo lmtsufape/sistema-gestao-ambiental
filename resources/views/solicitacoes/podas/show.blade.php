@@ -1,16 +1,17 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Solicitação de poda/corte</h4>
+                        <h4 class="card-title">Solicitação de poda/supressão</h4>
                         @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted">Podas > Visualizar solicitação de poda/corte {{$solicitacao->protocolo}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Poda/Supressão > Visualizar solicitação de poda/supressão {{$solicitacao->protocolo}}</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('podas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2" href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>
@@ -133,4 +134,5 @@
             </div>
         </div>
     </div>
+    @endsection
 </x-app-layout>

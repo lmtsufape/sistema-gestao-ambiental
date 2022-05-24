@@ -94,7 +94,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->name = $input['name'];
         $this->email = $input['email'];
-        $this->password = Hash::make($input['password']);
+        if($input['password'] != null){
+            $this->password = Hash::make($input['password']);
+        }
     }
 
     public function visitas()
@@ -160,6 +162,25 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $protocolistas;
+    }
+
+    /**
+     * Retorna os analistas de poda cadastrados.
+     *
+     * @return App\Models\User $analistasPoda
+     */
+    public static function analistasPoda()
+    {
+        $analistasPoda = collect();
+        $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
+
+        foreach ($analistas as $analista) {
+            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) {
+                $analistasPoda->push($analista);
+            }
+        }
+
+        return $analistasPoda;
     }
 
     public function denuncias()

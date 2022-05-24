@@ -102,6 +102,6 @@ class NoticiaPolicy
     private function opercacoesBasicas(User $user) 
     {
         $userPolicy = new UserPolicy();
-        return $userPolicy->isSecretarioOrAnalista($user);
+        return $userPolicy->isSecretario($user);
     }
 }

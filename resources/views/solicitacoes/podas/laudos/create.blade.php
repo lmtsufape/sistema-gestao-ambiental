@@ -1,12 +1,13 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Laudo Técnico Ambiental</h4>
                         @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted">Podas > Avaliar solicitação de poda/corte {{$solicitacao->protocolo}} > Laudo</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Poda/Supressão > Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}} > Laudo</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
@@ -160,8 +161,6 @@
         </div>
     </div>
 
-    @component('layouts.footer')@endcomponent
-
     <script>
         function addImagem() {
             var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
@@ -177,4 +176,5 @@
             $('#imagens').append(campo_imagem);
         }
     </script>
+    @endsection
 </x-app-layout>

@@ -30,7 +30,7 @@ class VisitaController extends Controller
      * @responseField data_realizada A data em que a visita foi realizada
      * @responseField requerimento_id integer O identificador do requerimento, se a visita não for para um requerimento o valor é null
      * @responseField denuncia_id integer O identificador da denúncia, se a visita não for para uma denúncia o valor é null
-     * @responseField solicitacao_poda_id integer O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null
+     * @responseField solicitacao_poda_id integer O identificador da solicitação de poda/supressão, se a visita não for para uma solicitação de poda/supressão o valor é null
      * @responseField denuncia.id O identificador da denúncia
      * @responseField denuncia.empresa_nao_cadastrada Nome da empresa, caso não esteja cadastrada no sistema.
      * @responseField denuncia.endereco Endereco da empresa, caso não esteja cadastrada no sistema.
@@ -112,8 +112,8 @@ class VisitaController extends Controller
      * @responseField requerimento.analista.id Identificador do usuário analista.
      * @responseField requerimento.analista.name Nome do usuário analista.
      * @responseField requerimento.analista.email E-mail do usuário analista.
-     * @responseField solicitacao_poda object Solicitação de poda/corte
-     * @responseField solicitacao_poda.id Identificador da solicitação de poda/corte
+     * @responseField solicitacao_poda object Solicitação de poda/supressão
+     * @responseField solicitacao_poda.id Identificador da solicitação de poda/supressão
      * @responseField solicitacao_poda.protocolo Protocolo gerado.
      * @responseField solicitacao_poda.motivo_indeferimento Motivo do indeferimento, caso tenha sido indeferida.
      * @responseField solicitacao_poda.status Situação da solicitação.
@@ -199,7 +199,7 @@ class VisitaController extends Controller
      * @responseField analista_id Identificador do usuário analista atribuido a visita.
      * @responseField requerimento_id integer O identificador do requerimento, se a visita não for para um requerimento o valor é null
      * @responseField denuncia_id integer O identificador da denúncia, se a visita não for para uma denúncia o valor é null
-     * @responseField solicitacao_poda_id integer O identificador da solicitação de poda/corte, se a visita não for para uma solicitação de poda/corte o valor é null
+     * @responseField solicitacao_poda_id integer O identificador da solicitação de poda/supressão, se a visita não for para uma solicitação de poda/supressão o valor é null
      */
     public function get(Request $request)
     {

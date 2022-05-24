@@ -1,6 +1,6 @@
 <x-app-layout>
-
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -18,23 +18,24 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="denuncias-pendentes-tab" data-toggle="tab" href="#denuncias-pendentes"
-                            type="button" role="tab" aria-controls="denuncias-pendentes" aria-selected="true">Pendentes</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'pendentes') active @endif" id="denuncias-pendentes-tab"
+                            type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('denuncias.index', 'pendentes')}}">Pendentes</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button id="link-denuncias-aprovados" class="nav-link" id="denuncias-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                            aria-controls="denuncias-aprovadas" aria-selected="false" href="#denuncias-aprovadas">Aprovadas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="denuncias-aprovadas-tab"
+                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('denuncias.index', 'deferidas')}}">Deferidas</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" type="button" id="denuncias-arquivadas-tab" data-toggle="tab" role="tab"
-                            aria-controls="denuncias-arquivadas" aria-selected="false" href="#denuncias-arquivadas">Arquivadas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="denuncias-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('denuncias.index', 'indeferidas')}}">Indeferidas</a>
                     </li>
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="tab-content tab-content-custom" id="myTabContent">
                             <div class="tab-pane fade show active" id="denuncias-pendentes" role="tabpanel" aria-labelledby="denuncias-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -46,7 +47,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($denuncias_registradas as $i => $denuncia)
+                                        @foreach ($denuncias as $i => $denuncia)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
@@ -68,13 +69,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                @if($denuncias_registradas->first() == null)
+                                </div>
+                                @if($denuncias->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma denúncia pendente
+                                        Nenhuma denúncia @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
+                            {{--<div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -110,13 +113,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($denuncias_aprovadas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma denúncia aprovada
+                                        Nenhuma denúncia deferida
                                     </div>
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="denuncias-arquivadas" role="tabpanel" aria-labelledby="denuncias-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -150,18 +155,24 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($denuncias_arquivadas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma denúncia arquivada
+                                        Nenhuma denúncia indeferida
                                     </div>
                                 @endif
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$denuncias->links()}}
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
@@ -332,7 +343,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12" style="font-family: 'Roboto', sans-serif;">
-                                Você deseja aprovar ou arquivar esta denúncia?
+                                Você deseja deferir ou indeferir esta denúncia?
                                 <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>
                             </div>
                         </div>
@@ -344,10 +355,10 @@
                             <input type="hidden" name="aprovar" id="inputAprovar-{{$denuncia->id}}" value="">
                             <div class="form-row">
                                 <div class="col-md-6 form-group" style="padding-right: 20px">
-                                    <button type="button" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Aprovar</button>
+                                    <button type="button" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <button type="button" class="btn btn-danger botao-form" style="width:100px;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Arquivar</button>
+                                    <button type="button" class="btn btn-danger botao-form" style="width:100px;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
                                 </div>
                             </div>
                         </form>
@@ -467,4 +478,5 @@
             form.submit();
         }
     </script>
+    @endsection
 </x-app-layout>

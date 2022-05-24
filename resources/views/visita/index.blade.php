@@ -1,6 +1,6 @@
 <x-app-layout>
-
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
@@ -39,6 +39,7 @@
                                 </div>
                             @endif
                         </div>
+                        <div class="table-responsive">
                         <table class="table">
                                 <thead>
                                     <tr>
@@ -115,6 +116,7 @@
                                                         @endif
                                                         <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
+                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
                                                     @endif
                                                 @endcan
@@ -123,6 +125,7 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        </div>
                         @if($visitas->first() == null)
                             <div class="col-md-12 text-center" style="font-size: 18px;">
                                 @can('isSecretario', \App\Models\User::class)
@@ -228,6 +231,23 @@
                                         <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Relato da denúncia
+                                        </div>
+                                    </div>
+                                </li>
+                            @elseif($visitas->where('solicitacao_poda_id', '!=', null)->first() != null)
+                                <li>
+                                    <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Visualizar solicitação
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar/editar relatório
                                         </div>
                                     </div>
                                 </li>
@@ -443,4 +463,5 @@
             </div>
         @endif
     @endforeach
+    @endsection
 </x-app-layout>

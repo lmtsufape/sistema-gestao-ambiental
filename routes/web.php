@@ -43,7 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
 }])->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/boletos', [BoletoController::class, 'index'])->name('boletos.index');
+    Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
 
     Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
@@ -58,11 +58,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::put('usuarios/atualizar-endereco', [UserController::class, 'atualizarEndereco'])->name('usuarios.atualizar.endereco');
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');
+    Route::put('usuarios/{id}/editar-dados', [UserController::class, 'editar'])->name('usuarios.editar');
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
     Route::get('/informacoes-login', [UserController::class, 'infoLogin'])->name('infoLogin');
     Route::resource('documentos', DocumentoController::class);
-    Route::resource('requerimentos', RequerimentoController::class);
+    Route::resource('requerimentos', RequerimentoController::class)->except('index');
+    Route::get('requerimentos/{filtro}/listar', [RequerimentoController::class, 'index'])->name('requerimentos.index');
     Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::get('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'editEmpresa'])->name('requerimentos.editar.empresa');
     Route::post('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'updateEmpresa'])->name('requerimentos.update.empresa');
@@ -93,7 +95,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ->parameters(['notificacoes' => 'notificacao']);
     Route::get('/notificacoes-get', [NotificacaoController::class, 'get'])->name('notificacoes.get');
 
-    Route::get('/denuncias/index', [DenunciaController::class, 'index'])->name('denuncias.index');
+    Route::get('/denuncias/{filtro}/listar', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
     Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
@@ -106,13 +108,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/{solicitacao}/show', [SolicitacaoMudaController::class, 'show'])->name('mudas.show');
     Route::put('/solicitacoes/mudas/{solicitacao}/', [SolicitacaoMudaController::class, 'avaliar'])->name('mudas.avaliar');
     Route::get('/solicitacoes/mudas/{solicitacao}/edit', [SolicitacaoMudaController::class, 'edit'])->name('mudas.edit');
-    Route::get('/solicitacoes/mudas/index', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
+    Route::get('/solicitacoes/mudas/{filtro}/listar', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
     Route::get('/solicitacoes/mudas/requerente/index', [SolicitacaoMudaController::class, 'requerenteIndex'])->name('mudas.requerente.index');
 
     Route::get('/solicitacoes/podas/{solicitacao}/show', [SolicitacaoPodaController::class, 'show'])->name('podas.show');
     Route::put('/solicitacoes/podas/{solicitacao}/', [SolicitacaoPodaController::class, 'avaliar'])->name('podas.avaliar');
     Route::get('/solicitacoes/podas/{solicitacao}/edit', [SolicitacaoPodaController::class, 'edit'])->name('podas.edit');
-    Route::get('/solicitacoes/podas/index', [SolicitacaoPodaController::class, 'index'])->name('podas.index');
+    Route::get('/solicitacoes/podas/{filtro}/listar', [SolicitacaoPodaController::class, 'index'])->name('podas.index');
     Route::get('/solicitacoes/podas/requerente/index', [SolicitacaoPodaController::class, 'requerenteIndex'])->name('podas.requerente.index');
     Route::get('/solicitacoes/podas/{solicitacao}/ficha', [SolicitacaoPodaController::class, 'ficha'])->name('podas.ficha');
     Route::get('/solicitacoes/podas/{solicitacao}/laudo', [SolicitacaoPodaController::class, 'laudo'])->name('podas.laudo');

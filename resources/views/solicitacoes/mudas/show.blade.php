@@ -1,5 +1,5 @@
 <x-app-layout>
-
+    @section('content')
     <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="row">
             <div class="col-sm-12">
@@ -11,7 +11,7 @@
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('mudas.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        <a class="btn my-2" href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
                     </div>
                 </div>
             </div>
@@ -153,4 +153,5 @@
             </div>
         </div>
     </div>
+    @endsection
 </x-app-layout>

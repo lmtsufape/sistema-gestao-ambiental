@@ -1,6 +1,6 @@
 <x-app-layout>
-
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Empresa > Histórico</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('requerimentos.index')}}">
+                        <a title="Voltar"  href="javascript:window.history.back();">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
                     </div>
@@ -193,4 +193,5 @@
             </div>
         </div>
     </div>
+    @endsection
 </x-app-layout>

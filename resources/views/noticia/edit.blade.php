@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
@@ -102,4 +103,5 @@
             return string.split("\\")[string.split("\\").length - 1];
         }
     </script>
+    @endsection
 </x-app-layout>

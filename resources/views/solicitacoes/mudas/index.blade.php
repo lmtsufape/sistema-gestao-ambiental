@@ -1,10 +1,11 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Mudas</h4>
+                        <h4 class="card-title">Solicitações de mudas {{$filtro}}</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -17,23 +18,24 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="solicitacoes-pendentes-tab" data-toggle="tab" href="#solicitacoes-pendentes"
-                            type="button" role="tab" aria-controls="solicitacoes-pendentes" aria-selected="true">Pendentes</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'pendentes') active @endif" id="solicitacoes-pendentes-tab"
+                            type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('mudas.index', 'pendentes')}}">Pendentes</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="solicitacoes-aprovadas-tab" data-toggle="tab" role="tab" type="button"
-                            aria-controls="solicitacoes-aprovadas" aria-selected="false" href="#solicitacoes-aprovadas">Deferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
+                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('mudas.index', 'deferidas')}}">Deferidas</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" type="button" id="solicitacoes-arquivadas-tab" data-toggle="tab" role="tab"
-                            aria-controls="solicitacoes-arquivadas" aria-selected="false" href="#solicitacoes-arquivadas">Indeferidas</button>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('mudas.index', 'indeferidas')}}">Indeferidas</a>
                     </li>
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="solicitacoes-pendentes" role="tabpanel" aria-labelledby="solicitacoes-pendentes-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -44,7 +46,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($registradas as $i => $solicitacao)
+                                        @foreach ($mudas as $i => $solicitacao)
                                             <tr>
                                                 <td>{{($i+1)}}</td>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
@@ -57,13 +59,15 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                @if($registradas->first() == null)
+                                </div>
+                                @if($mudas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de muda pendente
+                                        Nenhuma solicitação de muda @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
+                            {{--<div class="tab-pane fade" id="solicitacoes-aprovadas" role="tabpanel" aria-labelledby="solicitacoes-aprovadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -86,6 +90,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($deferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de muda deferida
@@ -93,6 +98,7 @@
                                 @endif
                             </div>
                             <div class="tab-pane fade" id="solicitacoes-arquivadas" role="tabpanel" aria-labelledby="solicitacoes-arquivadas-tab">
+                                <div class="table-responsive">
                                 <table class="table mytable">
                                     <thead>
                                         <tr>
@@ -115,18 +121,24 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                                 @if($indeferidas->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de muda indeferida
                                     </div>
                                 @endif
-                            </div>
+                            </div>--}}
                         </div>
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-9">
+                        {{$mudas->links()}}
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
@@ -152,4 +164,5 @@
             </div>
         </div>
     </div>
+    @endsection
 </x-app-layout>

@@ -1,11 +1,12 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-10" style="padding-top: 15px;">
                         <h4 class="card-title">Laudo Técnico Ambiental</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index')}}">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/corte {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
                     </div>
                     <div class="col-md-2" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
@@ -95,5 +96,5 @@
             </div>
         </div>
     </div>
-
+    @endsection
 </x-app-layout>

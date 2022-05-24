@@ -1,10 +1,11 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    @section('content')
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Grupos cadastradas no sistema</h4>
+                        <h4 class="card-title">Grupos cadastrados no sistema</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Novo grupo" href="{{route('setores.create')}}">
@@ -32,12 +33,12 @@
                                 </div>
                             @enderror
                         </div>
+                        <div class="table-responsive">
                         <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">Descrição</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -46,7 +47,6 @@
                                         <tr>
                                             <td scope="row">{{$i+1}}</td>
                                             <td>{{$setor->nome}}</td>
-                                            <td>{{$setor->descricao}}</td>
                                             <td>
                                                 @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])
                                                     <a title="Visualizar cnaes do grupo" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar setor"></a>
@@ -58,6 +58,7 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
@@ -137,4 +138,5 @@
         </div>
     </div>
     @endforeach
+    @endsection
 </x-app-layout>

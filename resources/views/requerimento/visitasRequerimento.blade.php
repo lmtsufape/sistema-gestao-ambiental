@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         @can('isRequerente', \App\Models\User::class)
-                            <a title="Voltar" href="{{route('requerimentos.index')}}">
+                            <a title="Voltar"  href="javascript:window.history.back();">
                                 <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                             </a>
                         @else

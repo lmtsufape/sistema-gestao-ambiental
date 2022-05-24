@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('content')
     <div class="container container-profile" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="container">
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -466,4 +467,5 @@
             });
         </script>
     @endif
+    @endsection
 </x-app-layout>

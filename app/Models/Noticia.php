@@ -81,15 +81,15 @@ class Noticia extends Model
     {
         $ultima = now()->diff(new Carbon($this->created_at));
         if ($ultima->d >= 1) {
-            return 'Publicado em ' . (new Carbon($this->created_at))->format('d/m/Y às H:m');
+            return 'Publicada em ' . (new Carbon($this->created_at))->format('d/m/Y') . ' às ' . (new Carbon($this->created_at))->format('H:m');
         } else if ($ultima->h >= 1 && $ultima->h < 2) {
-            return 'Publicado à ' . $ultima->h . ' hora atrás.';
+            return 'Publicada há ' . $ultima->h . ' hora atrás.';
         } else if ($ultima->h >= 2) {
-            return 'Publicado à ' . $ultima->h . ' horas atrás.';
+            return 'Publicada há ' . $ultima->h . ' horas atrás.';
         } else if ($ultima->m <= 1) {
-            return 'Publicado agora.';
+            return 'Publicada agora.';
         } else if ($ultima->m > 1) {
-            return 'Publicado à ' . $ultima->m . ' minutos atrás.';
+            return 'Publicada há ' . $ultima->m . ' minutos atrás.';
         }
     }
 
