@@ -76,6 +76,9 @@
                                 <a href="{{route('denuncias.index', 'deferidas')}}" @if(request()->is('denuncias/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
+                                <a href="{{route('denuncias.index', 'concluidas')}}" @if(request()->is('denuncias/concluidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Concluídas</a>
+                            </li>
+                            <li>
                                 <a href="{{route('denuncias.index', 'indeferidas')}}" @if(request()->is('denuncias/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                         </ul>

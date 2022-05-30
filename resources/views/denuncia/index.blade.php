@@ -5,7 +5,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Denúncias</h4>
+                        <h4 class="card-title">Denúncias @if($filtro == "concluidas") concluídas @else {{$filtro}} @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -25,6 +25,10 @@
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'deferidas') active @endif" id="denuncias-aprovadas-tab"
                             type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('denuncias.index', 'deferidas')}}">Deferidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtro == 'concluidas') active @endif" id="denuncias-concluidas-tab"
+                            type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('denuncias.index', 'concluidas')}}">Concluídas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="denuncias-arquivadas-tab"
@@ -58,11 +62,22 @@
                                                 <td style="text-align: center">
                                                     <div class="btn-group">
                                                         @can('isSecretario', \App\Models\User::class)
-                                                            <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;"src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
-                                                            <a id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
+                                                            @if($filtro != "indeferidas" && $filtro != "pendentes")
+                                                                <a data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$denuncia->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;"src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
+                                                            @endif
+                                                            <a id="btn-avaliar-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
                                                                 data-toggle="modal" data-target="#modal-avaliar-{{$denuncia->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                            @if($filtro != "indeferidas" && $filtro != "pendentes")
+                                                                <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
+                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
+                                                            @endif
                                                         @endcan
                                                         <a data-toggle="modal" data-target="#modal-texto-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
+                                                        @can('isSecretario', \App\Models\User::class)
+                                                            @if($filtro ==  "concluidas")
+                                                                @if($denuncia->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $denuncia->visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                            @endif
+                                                        @endcan
                                                     </div>
                                                 </td>
                                             </tr>
@@ -72,7 +87,7 @@
                                 </div>
                                 @if($denuncias->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma denúncia @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('indeferidas')indeferida @break @endswitch
+                                        Nenhuma denúncia @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('concluidas')concluída @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>
@@ -204,6 +219,16 @@
                                     Relato da denúncia
                                 </div>
                             </div>
+                            @can('isSecretario', \App\Models\User::class)
+                                @if($filtro ==  "concluidas")
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Visualizar relatório
+                                        </div>
+                                    </div>
+                                @endif
+                            @endcan
                         </li>
                     </ul>
                 </div>
@@ -342,7 +367,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-12" style="font-family: 'Roboto', sans-serif;">
+                            <div class="col-md-12">
+                                @if($denuncia->aprovacao == App\Models\Denuncia::APROVACAO_ENUM['arquivada'])
+                                    <div class="alert alert-danger" role="alert">
+                                        <p>Denúncia indeferida</p>
+                                    </div>
+                                @elseif($denuncia->aprovacao == App\Models\Denuncia::APROVACAO_ENUM['aprovada'])
+                                    <div class="alert alert-success" role="alert">
+                                        <p>Denúncia deferida</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 Você deseja deferir ou indeferir esta denúncia?
                                 <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>
                             </div>
@@ -375,6 +413,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="alerta-agendar">
+                        </div>
+                    </div>
                     <form id="form-criar-visita-denuncia" method="POST" action="{{route('denuncias.visita.create')}}">
                         @csrf
                         <div class="form-row">
@@ -393,7 +435,7 @@
                             <div class="col-md-12 form-group">
                                  <input type="hidden" name="denuncia_id" id="denuncia_id" value="">
                                 <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
                                     <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
                                     @foreach ($analistas as $analista)
                                         <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
@@ -425,13 +467,17 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" id="alerta-atribuida">
+                            </div>
+                        </div>
                         <form id="form-atribuir-analista-denuncia" method="POST" action="{{route('denuncias.atribuir.analista')}}">
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <input type="hidden" name="denuncia_id_analista" id="denuncia_id_analista" value="">
                                     <label for="analista">{{__('Selecione o analista')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                    <select name="analista" id="analista-atribuido" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="" selected disabled>-- {{__('Selecionar analista')}} --</option>
                                         @foreach ($analistas as $analista)
                                             <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
@@ -466,10 +512,46 @@
     <script>
         function adicionarId(id) {
             document.getElementById('denuncia_id').value = id;
+            $("#alerta-agendar").html("");
+            $("#analista-visita").val("");
+            document.getElementById('data').value = "";
+            $.ajax({
+                url:"{{route('denuncias.info.ajax')}}",
+                type:"get",
+                data: {"denuncia_id": id},
+                dataType:'json',
+                success: function(denuncia) {
+                    if(denuncia.analista_visita != null){
+                        $("#analista-visita").val(denuncia.analista_visita.id).change();
+                        document.getElementById('data').value = denuncia.marcada;
+                        let alerta = `<div class="alert alert-success" role="alert">
+                                        <p>Denúncia agendada.</p>
+                                      </div>`;
+                        $("#alerta-agendar").append(alerta);
+                    }
+                }
+            });
         }
 
         function adicionarIdAtribuir(id) {
             document.getElementById('denuncia_id_analista').value = id;
+            $("#alerta-atribuida").html("");
+            $("#analista-atribuido").val("");
+            $.ajax({
+                url:"{{route('denuncias.info.ajax')}}",
+                type:"get",
+                data: {"denuncia_id": id},
+                dataType:'json',
+                success: function(denuncia) {
+                    if(denuncia.analista_atribuido != null){
+                        $("#analista-atribuido").val(denuncia.analista_atribuido.id).change();
+                        let alerta = `<div class="alert alert-success" role="alert">
+                                        <p>Denúncia atribuída a um analista.</p>
+                                      </div>`;
+                        $("#alerta-atribuida").append(alerta);
+                    }
+                }
+            });
         }
 
         function atualizarInputAprovar(resultado, id){
