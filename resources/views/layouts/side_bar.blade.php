@@ -118,6 +118,9 @@
                                 <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
                             </li>
                             <li>
+                                <a href="{{route('podas.index', 'concluidas')}}" @if(request()->is('solicitacoes/podas/concluidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Concluídas</a>
+                            </li>
+                            <li>
                                 <a href="{{route('podas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/podas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                         </ul>

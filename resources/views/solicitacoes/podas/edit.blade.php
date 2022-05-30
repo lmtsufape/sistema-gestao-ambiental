@@ -68,6 +68,23 @@
                                 <label for="complemento">{{ __('Complemento') }}</label>
                                 <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
                             </div>
+                            @if($solicitacao->fotos->first() != null)
+                                <div class="col-md-12 form-group">
+                                    <label for="imagens">{{ __('Imagens anexadas junto à solicitação') }}</label>
+                                </div>
+                                @foreach ($solicitacao->fotos as $foto)
+                                    <div class="col-md-6 form-group">
+                                        <div class="card" style="width: 100%;">
+                                            <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                            @if ($foto->comentario != null)
+                                                <div class="card-body">
+                                                    <p class="card-text">{{$foto->comentario}}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                             <div class="col-md-12 form-group">
                                 @empty($solicitacao->ficha)
                                     <a href="{{route('podas.ficha', $solicitacao)}}">Ficha de Análise de Risco em árvore</a>

@@ -30,6 +30,11 @@ class SolicitacaoPoda extends Model
         'privada' => 2,
     ];
 
+    public function visita()
+    {
+        return $this->hasOne(Visita::class, 'solicitacao_poda_id');
+    }
+
     public function requerente()
     {
         return $this->belongsTo(Requerente::class);
