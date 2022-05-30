@@ -20,7 +20,7 @@ class VisitaController extends Controller
         $this->authorize('isSecretarioOrAnalista', User::class);
         $visitas = collect();
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
-            $visitas = Visita::orderBy('data_marcada')->paginate(10);
+            $visitas = Visita::orderBy('data_marcada', 'DESC')->paginate(10);
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
             $visitas = Visita::where('analista_id', auth()->user()->id)->orderBy('data_marcada', 'DESC')->paginate(10);
         }
@@ -59,7 +59,8 @@ class VisitaController extends Controller
 
         $visita = new Visita();
         $visita->setAtributesRequerimento($request);
-        $visita->requerimento->update(['status' => Requerimento::STATUS_ENUM['visita_marcada']]);
+        $visita->requerimento->status = Requerimento::STATUS_ENUM['visita_marcada'];
+        $visita->requerimento->update();
         $visita->analista_id = $request->analista;
         $visita->save();
 

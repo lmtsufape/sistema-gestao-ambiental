@@ -199,10 +199,11 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
 
-        if (auth()->user()->role != User::ROLE_ENUM['secretario']) {
-            if ($requerimento->status > Requerimento::STATUS_ENUM['requerida']) {
-                return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
-            }
+        if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['requerida'] &&
+        $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['em_andamento'] &&
+        $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']) {
+
+            return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
         }
 
         $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];

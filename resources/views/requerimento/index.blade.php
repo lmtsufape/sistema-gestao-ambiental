@@ -404,9 +404,7 @@
 
                                                         @endif
                                                         @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}">
-                                                                Cancelar
-                                                            </button>
+                                                            <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                         @endif
                                                     @endcan
                                                 </div>
@@ -459,16 +457,6 @@
                                 </div>
                             </li>
                         @endcan
-                        @can('isSecretario', \App\Models\User::class)
-                            <li>
-                                <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Cancelar requerimento
-                                    </div>
-                                </div>
-                            </li>
-                        @endcan
                         @if(\App\Models\Visita::select('visitas.*')
                                     ->whereIn('requerimento_id', $requerimentos->pluck('id')->toArray())
                                     ->get()->count() > 0)
@@ -493,7 +481,8 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
+                            @endif
+                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
                                 <li>
                                     <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
@@ -502,7 +491,8 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
+                            @endif
+                            @if($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
                                 <li>
                                     <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
                                         <img class="aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
@@ -513,6 +503,14 @@
                                 </li>
                             @endif
                         @endcan
+                        <li>
+                            <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Cancelar requerimento
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

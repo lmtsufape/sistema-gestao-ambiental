@@ -93,7 +93,7 @@
                                                         @else
                                                             <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $visita, 'licenca' => $visita->requerimento->licenca])}}">Editar licença</a>
                                                         @endif
-                                                    @elseif($visita->relatorioAceito())
+                                                    @elseif($visita->relatorioAceito() && $visita->requerimento_id  != null)
                                                         <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a>
                                                     @endif
                                                     @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
