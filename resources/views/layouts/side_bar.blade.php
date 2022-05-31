@@ -1,9 +1,9 @@
 <div class="wrapper">
     @guest
     @else
-        <nav id="sidebar" class="active">
+        <nav id="sidebar">
             <div class="sidebar-header" style="align-items: center">
-                <a class="navbar-brand" id="logoSGA" style="display: none">
+                <a class="navbar-brand" id="logoSGA">
                     <img src="{{asset('img/icon-logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
                 </a>
                 <strong style="font-size: 18px">SGA</strong>
@@ -116,6 +116,9 @@
                             </li>
                             <li>
                                 <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Deferidas</a>
+                            </li>
+                            <li>
+                                <a href="{{route('podas.index', 'concluidas')}}" @if(request()->is('solicitacoes/podas/concluidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Concluídas</a>
                             </li>
                             <li>
                                 <a href="{{route('podas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/podas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>

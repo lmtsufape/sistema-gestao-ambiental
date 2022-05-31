@@ -44,10 +44,8 @@
                 <div class="col-md-12">
                     <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
                         <div class="row">
-                            <div class="col">
-                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
-                            </div>
-                            <div class="col-11">
+                            <div class="col-md-12">
+                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
                                 <ol class="carousel-indicators">
                                     @foreach ($noticias as $i => $noticia)
                                       @if ($i == 0)
@@ -80,9 +78,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                            </div>
-                            <div class="col">
-                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-svgrepo-com.svg')}}" alt="">
+                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
                             </div>
                         </div>                        
                     </div>
@@ -271,10 +267,8 @@
                 <div class="col-md-12">
                     <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
                         <div class="row">
-                            <div class="col">
-                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
-                            </div>
-                            <div class="col-11">
+                            <div class="col-md-12">
+                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
                                 <ol class="carousel-indicators">
                                     @foreach ($noticias as $i => $noticia)
                                       @if ($i == 0)
@@ -308,9 +302,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col">
-                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-svgrepo-com.svg')}}" alt="">
-                            </div>
+                            <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
                         </div>                        
                     </div>
                 </div>

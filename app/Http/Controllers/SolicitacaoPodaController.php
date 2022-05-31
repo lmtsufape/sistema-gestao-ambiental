@@ -11,6 +11,7 @@ use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -34,8 +35,26 @@ class SolicitacaoPodaController extends Controller
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }else{
             $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
-            $deferidas   = SolicitacaoPoda::where('status', '2')->paginate(20);
             $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
+
+            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
+                ->where('visitas.data_realizada', '!=', null)
+                ->get('solicitacoes_podas.id');
+
+            $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
+            ->where('solicitacoes_podas.status', '=', 2)
+            ->select('solicitacoes_podas.id');
+
+            $solicitacoes_podas_deferidas_collection = collect();
+
+            foreach($solicitacoes_podas_deferidas->get() as $denuncia){
+                if($solicitacoes_podas_concluidas->doesntContain($denuncia)){
+                    $solicitacoes_podas_deferidas_collection->push($denuncia);
+                }
+            }
+
+            $deferidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_deferidas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+            $concluidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
 
             switch($filtro){
                 case 'pendentes':
@@ -47,10 +66,30 @@ class SolicitacaoPodaController extends Controller
                 case 'indeferidas':
                     $solicitacoes = $indeferidas;
                     break;
+                case 'concluidas':
+                    $solicitacoes = $concluidas;
+                    break;
             }
             $analistas = User::analistasPoda();
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }
+    }
+
+    public function infoSolicitacao(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+
+        $solicitacao = SolicitacaoPoda::find($request->solicitacao_id);
+
+        $solicitacaoInfo = [
+            'id' => $solicitacao->id,
+            'analista_atribuido' => $solicitacao->analista ? $solicitacao->analista : null,
+            'analista_visita' => $solicitacao->visita ? $solicitacao->visita->analista : null,
+            'marcada' => $solicitacao->visita ? $solicitacao->visita->data_marcada : null,
+            'realizada' => $solicitacao->visita ? $solicitacao->visita->data_realizada : null,
+        ];
+
+        return response()->json($solicitacaoInfo);
     }
 
 
