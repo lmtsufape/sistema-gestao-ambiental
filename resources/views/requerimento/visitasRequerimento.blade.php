@@ -33,7 +33,7 @@
                                 </div>
                             @endif
                         </div>
-                        <table class="table">
+                        <table class="table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">Data marcada</th>

@@ -1,9 +1,9 @@
 <div class="wrapper">
     @guest
     @else
-        <nav id="sidebar" class="active">
+        <nav id="sidebar">
             <div class="sidebar-header" style="align-items: center">
-                <a class="navbar-brand" id="logoSGA" style="display: none">
+                <a class="navbar-brand" id="logoSGA">
                     <img src="{{asset('img/icon-logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
                 </a>
                 <strong style="font-size: 18px">SGA</strong>

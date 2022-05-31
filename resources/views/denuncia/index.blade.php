@@ -5,7 +5,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Denúncias @if($filtro == "concluidas") concluídas @else {{$filtro}} @endif</h4>
+                        <h4 class="card-title">Denúncias @if($filtro == "concluidas") com visita realizada/concluída @else {{$filtro}} @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
