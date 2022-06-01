@@ -62,7 +62,7 @@
                                                 <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
                                                     <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
                                                 </a>
-                                                <div class="carousel-caption d-none d-md-block">
+                                                <div class="carousel-caption">
                                                     <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>
@@ -71,7 +71,7 @@
                                                 <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
                                                     <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
                                                 </a>
-                                                <div class="carousel-caption d-none d-md-block">
+                                                <div class="carousel-caption">
                                                     <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>
@@ -285,7 +285,7 @@
                                                 <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
                                                     <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
                                                 </a>
-                                                <div class="carousel-caption d-none d-md-block">
+                                                <div class="carousel-caption">
                                                     <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>
@@ -294,7 +294,7 @@
                                                 <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
                                                     <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
                                                 </a>
-                                                <div class="carousel-caption d-none d-md-block">
+                                                <div class="carousel-caption">
                                                     <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                 </div>
                                             </div>

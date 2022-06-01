@@ -18,7 +18,7 @@
                     <div class="row" style="text-align: center">
                         <div class="col-md-12">
                             <a href="#">
-                                <img class="img" src="{{asset('img/icon-logo.png')}}" alt="Sistema de gestão ambiental" style="width: 240px; height: auto; display:inline;">
+                                <img class="img" src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="width: 240px; height: auto; display:inline;">
                             </a>
                         </div>
                     </div>
