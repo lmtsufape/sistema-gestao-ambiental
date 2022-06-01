@@ -877,12 +877,6 @@ a.article:hover {
         width: 70%;
     }
 
-    #sidebar ul{
-        display: none;
-    }
-    #sidebar.active ul{
-        display: block;
-    }
     #sidebar.active .sidebar-header strong{
         display: none;
     }
@@ -897,6 +891,10 @@ a.article:hover {
 
     .link-carousel {
         color: black;
+    }
+
+    #sidebar.active ul li a{
+        object-fit: contain;
     }
 }
 

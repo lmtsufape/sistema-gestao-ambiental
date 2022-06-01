@@ -344,22 +344,26 @@
                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                         <div class="shadow card" style="width: 50%; margin-top: 1rem;">
                             <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="col-md-10">
-                                        <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista</h5>
-                                        <span class="linha"></span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a data-toggle="modal" data-target="#atribuir-analista" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista" title="Atribuir analista"></a>
+                                <div class="d-flex align-items-center">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista</h5>
+                                            <span class="linha"></span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a data-toggle="modal" data-target="#atribuir-analista" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista" title="Atribuir analista"></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="col-md-2">
-                                        <a><img src="{{asset('img/profile-user-svgrepo-com.svg')}}" alt="usuario"  width="45" class="img-flex"></a>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <h6 class="titulo-nav-tab-custom">{{$requerimento->analista->name}}</h6>
-                                        <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->analista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                <div class="d-flex align-items-center mt-4">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <a><img src="{{asset('img/profile-user-svgrepo-com.svg')}}" alt="usuario"  width="45" class="img-flex"></a>
+                                        </div>
+                                        <div class="col-md-10" style="padding-left: 30px;">
+                                            <h6 class="titulo-nav-tab-custom">{{$requerimento->analista->name}}</h6>
+                                            <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->analista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

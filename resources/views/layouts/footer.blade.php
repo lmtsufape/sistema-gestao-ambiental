@@ -6,11 +6,11 @@
                     <div class="row" style="text-align: center" >
                         <div class="col-md-6" >
                             <a href="https://garanhuns.pe.gov.br/" target="_blank" style="text-align: center">
-                                <img class="img" src="{{asset('img/prefeitura-garanhuns.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px; display:inline;" >
+                                <img class="img" src="{{asset('img/prefeitura-garanhuns.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px; max-height: 120px; display:inline;" >
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <img class="img" src="{{asset('img/gus-logotipo.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px; display:inline;">
+                            <img class="img" src="{{asset('img/gus-logotipo.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px; max-height: 120px; display:inline;">
                         </div>
                     </div>
                 </div>
