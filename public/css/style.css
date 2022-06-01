@@ -894,6 +894,10 @@ a.article:hover {
     .img-carousel{
         object-fit: contain;
     }
+
+    .link-carousel {
+        color: black;
+    }
 }
 
 /* X DEMO STYLE SIDE BAR X */

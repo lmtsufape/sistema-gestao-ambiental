@@ -244,11 +244,11 @@
             <div class="container">
                 @guest
                     <a class="navbar-brand" href="{{route('welcome')}}">
-                        <img src="{{asset('img/icon-logo.png')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
+                        <img src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
                     </a>
                 @else
                     <button type="button" id="sidebarCollapse" onclick="toggleSideBar()" class="navbar-brand">
-                        <img src="{{asset('img/icon-logo.png')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
+                        <img src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
                     </button>
                     <button type="button" id="sidebarCollapseClose" onclick="toggleSideBar()" class="navbar-brand" style="display: none; margin-left: 10px;">
                         <i class="close">&times;</i>
