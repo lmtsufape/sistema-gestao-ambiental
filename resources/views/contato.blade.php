@@ -60,7 +60,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-6 color-default form-group" style="transform: translate(6%, 1%); text-align: left;">
+            <div class="col-md-6 color-default form-group" style="text-align: left;">
                 <div class="form-row">
                     <div class="col-md-12 mb-2">
                         Alternativa de contato
@@ -174,7 +174,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-6 color-default form-group" style="transform: translate(6%, 1%); text-align: left;">
+            <div class="col-md-6 color-default form-group" style="text-align: left;">
                 <div class="form-row">
                     <div class="col-md-12 mb-2">
                         Alternativa de contato
