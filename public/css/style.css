@@ -739,7 +739,7 @@ span {
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #2f571f;
 }
 
@@ -809,6 +809,14 @@ a.article:hover {
     padding: 15px;
 }
 
+#sidebarCollapse {
+    display: none;
+}
+
+#logoImage {
+    display: none;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -844,6 +852,7 @@ a.article:hover {
         transform: translateX(50%);
     }
     #sidebar.active {
+        min-width: 120px;
         width: fit-content;
         margin-left: 0 !important;
     }
@@ -911,6 +920,15 @@ a.article:hover {
     #botaoDeferir{
         margin-top: 15px;
     }
+
+    #sidebarCollapse {
+        display: block;
+    }
+    
+    #logoImage {
+        display: block;
+    }
+
 }
 
 /* X DEMO STYLE SIDE BAR X */
