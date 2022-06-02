@@ -852,7 +852,7 @@ a.article:hover {
         transform: translateX(50%);
     }
     #sidebar.active {
-        min-width: 120px;
+        min-width: 160px;
         width: fit-content;
         margin-left: 0 !important;
     }
