@@ -3,7 +3,7 @@
     @else
         <nav id="sidebar">
             <div class="sidebar-header" style="align-items: center">
-                <a class="navbar-brand" id="logoSGA">
+                <a class="navbar-brand" id="logoSGA" href="{{route('welcome')}}">
                     <img src="{{asset('img/icon-logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
                 </a>
                 <strong style="font-size: 18px">SGA</strong>
@@ -99,7 +99,7 @@
                                 <a href="{{route('mudas.index', 'indeferidas')}}" @if(request()->is('solicitacoes/mudas/indeferidas/listar')) style="background-color: #ffffff; color: #214b10;" @endif>Indeferidas</a>
                             </li>
                             <li>
-                                <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies de mudas</a>
+                                <a href="{{route('especies.index')}}" @if(request()->routeIs('especies*')) style="background-color: #ffffff; color: #214b10;" @endif>Definição de espécies<br>de mudas</a>
                             </li>
                         </ul>
                     </li>
@@ -248,11 +248,14 @@
                     </a>
                 @else
                     <button type="button" id="sidebarCollapse" onclick="toggleSideBar()" class="navbar-brand">
-                        <img src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
+                        <img src="{{asset('img/sidebar-icon.svg')}}" alt="Sistema de gestão ambiental" style="height: 35px;">
                     </button>
                     <button type="button" id="sidebarCollapseClose" onclick="toggleSideBar()" class="navbar-brand" style="display: none; margin-left: 10px;">
                         <i class="close">&times;</i>
                     </button>
+                    <a id="logoImage" class="navbar-brand" href="{{route('welcome')}}">
+                        <img src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
+                    </a>
                 @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -306,10 +309,14 @@
             $('#logoSGA').show();
             $('#sidebarCollapse').hide();
             $('#sidebarCollapseClose').show();
+            $('#logoImage').hide();
         }else{
             $('#logoSGA').hide();
             $('#sidebarCollapse').show();
             $('#sidebarCollapseClose').hide();
+            if($('#logoImage').is(":hidden")){
+                $('#logoImage').show();
+            }
         }
         $('#sidebar').toggleClass('active');
     }

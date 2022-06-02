@@ -35,7 +35,7 @@
                     @enderror
                 </div>
 
-                @foreach ($historico as $modificacao)
+                @forelse ($historico as $modificacao)
                     <div class="shadow card" data-toggle="collapse" data-target="#collapse_{{$modificacao->id}}" aria-expanded="true" aria-controls="collapse_{{$modificacao->id}}" style="cursor: pointer; width: 100%; margin-top: 1rem;">
                         <div class="card-body">
                             <div class="accordion" id="accordion{{$modificacao->id}}">
@@ -189,7 +189,15 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="shadow card" style="width: 100%; margin-top: 1rem;">
+                        <div class="card-body">
+                            <p>
+                                Não há histórico de modificações de CNAEs ou porte da empresa.
+                            </p>
+                        </div>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>
