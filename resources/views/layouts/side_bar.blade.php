@@ -294,7 +294,7 @@
                 </div>
             </div>
         </nav>
-        <div>
+        <div id="conteudo">
             @yield('content')
         </div>
     </div>

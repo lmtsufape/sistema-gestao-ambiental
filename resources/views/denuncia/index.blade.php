@@ -381,27 +381,24 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                Você deseja deferir ou indeferir esta denúncia?
-                                <label id="nomeDoEstabelecimento" style="font-weight:bold; font-family: 'Roboto', sans-serif;"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
                         <form id="form-avaliar-denuncia-{{$denuncia->id}}" method="POST" action="{{route('denuncias.avaliar')}}">
                             @csrf
                             <input type="hidden" name="denunciaId" id="denuncia-id-{{$denuncia->id}}" value="{{$denuncia->id}}">
                             <input type="hidden" name="aprovar" id="inputAprovar-{{$denuncia->id}}" value="">
-                            <div class="form-row">
-                                <div class="col-md-6 form-group" style="padding-right: 20px">
-                                    <button type="button" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <button type="button" class="btn btn-danger botao-form" style="width:100px;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
-                                </div>
-                            </div>
                         </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-row col-md-12">
+                            <p>Você deseja deferir ou indeferir esta denúncia?</p>
+                        </div>
+                        <div class="form-row col-md-12 justify-content-between">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-danger botao-form" style="padding-right: 20px; width:100%;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
+                            </div>
+                            <div class="col-md-6" id="botaoDeferir">
+                                <button type="button" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
