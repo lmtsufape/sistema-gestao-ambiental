@@ -8,6 +8,7 @@ use App\Http\Requests\LicencaRequest;
 use App\Models\Licenca;
 use App\Models\Visita;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class LicencaController extends Controller
 {
@@ -23,8 +24,8 @@ class LicencaController extends Controller
 
     /**
      * Mostra a view de emitir uma licença para um requerimento com relatório aceito.
-     * 
-     * @param int $id 
+     *
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function create($id)
@@ -71,6 +72,12 @@ class LicencaController extends Controller
         return view('licenca.show', compact('licenca'));
     }
 
+    public function documento(Licenca $licenca)
+    {
+        $this->authorize('baixarLicenca', $licenca);
+        return response()->file(storage_path('app/'.$licenca->caminho));
+    }
+
     /**
      * Mostra a tela de revisar licença para um analista.
      *
@@ -82,7 +89,7 @@ class LicencaController extends Controller
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisitaOrSecretario', $visita);
         $licenca = Licenca::find($licenca_id);
-        
+
         return view('licenca.revisar', compact('visita', 'licenca'));
     }
 
@@ -134,7 +141,7 @@ class LicencaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function salvar_revisao(Request $request, $licenca_id, $visita_id) 
+    public function salvar_revisao(Request $request, $licenca_id, $visita_id)
     {
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisita', $visita);
@@ -142,7 +149,7 @@ class LicencaController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
-        
+
         $licenca = Licenca::find($licenca_id);
         if ($request->status == 1) {
             $licenca->status = Licenca::STATUS_ENUM['aprovada'];

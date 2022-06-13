@@ -129,10 +129,7 @@ class SolicitacaoPodaController extends Controller
                 $foto_poda = new FotoPoda();
                 $foto_poda->solicitacao_poda_id = $solicitacao->id;
                 $foto_poda->comentario = $data['comentarios'][$i] ?? "";
-                $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-                $path = 'podas/' . $solicitacao->id .'/imagens'.'/';
-                Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
-                $foto_poda->caminho = $path . $nomeImg;
+                $foto_poda->caminho = $data['imagem'][$i]->store("podas/{$solicitacao->id}/imagens");
                 $foto_poda->save();
             }
         }
@@ -150,6 +147,12 @@ class SolicitacaoPodaController extends Controller
     {
         $this->authorize('viewAny', SolicitacaoPoda::class);
         return view('solicitacoes.podas.show', ['solicitacao' => $solicitacao]);
+    }
+
+    public function foto(SolicitacaoPoda $solicitacao, FotoPoda $foto)
+    {
+        $this->authorize('view', $solicitacao);
+        return Storage::download($foto->caminho);
     }
 
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SolicitacaoMudaAvaliarRequest;
 use App\Http\Requests\SolicitacaoMudaRequest;
 use App\Mail\SolicitacaoMudasCriada;
-use App\Models\Endereco;
 use App\Models\EspecieMuda;
 use App\Models\MudaSolicitada;
 use App\Models\SolicitacaoMuda;
@@ -39,7 +38,7 @@ class SolicitacaoMudaController extends Controller
                 $mudas = $indeferidas;
                 break;
         }
-        
+
         return view('solicitacoes.mudas.index', compact('mudas','filtro'));
     }
 
@@ -108,7 +107,7 @@ class SolicitacaoMudaController extends Controller
         if($solicitacao == null){
             return redirect()->back()->with(['error' => 'Solicitação não encontrada.']);
         } else {
-            return Storage::download('/public//'.$solicitacao->arquivo);
+            return Storage::download($solicitacao->arquivo);
         }
     }
 
@@ -145,10 +144,8 @@ class SolicitacaoMudaController extends Controller
     {
         $data = $request->validated();
         $solicitacao->fill($data);
-        if (array_key_exists("arquivo", $data)) {
-            $path = sprintf('public/mudas/%u/documento/', $solicitacao->id);
-            Storage::putFileAs($path, $data['arquivo'], $data['arquivo']->getClientOriginalName());
-            $solicitacao->arquivo = sprintf('mudas/%u/documento/%s', $solicitacao->id, $data['arquivo']->getClientOriginalName());
+        if ($request->file('arquivo')) {
+            $solicitacao->arquivo = $data['arquivo']->store("mudas/{$solicitacao->id}/documento");
         }
         $solicitacao->update();
         return redirect()->route('mudas.index', 'pendentes')->with('success', 'Solicitação de muda avalida com sucesso');

@@ -30,7 +30,7 @@ class NotificacaoPolicy
      */
     public function view(User $user, Notificacao $notificacao)
     {
-        //
+        return $user->can('isSecretarioOrAnalista', $user) || ($notificacao->empresa && $notificacao->empresa->user && $notificacao->empresa->user->id == $user->id);
     }
 
     /**

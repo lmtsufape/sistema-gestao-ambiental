@@ -10,8 +10,8 @@ use App\Models\VideoDenuncia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class DenunciaController extends Controller
 {
@@ -118,11 +118,7 @@ class DenunciaController extends Controller
                 $foto_denuncia = new FotoDenuncia();
                 $foto_denuncia->denuncia_id = $denuncia->id;
                 $foto_denuncia->comentario = $data['comentario'][$i] ?? "";
-
-                $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-                $path = 'denuncias/' . $denuncia->id .'/imagens'.'/';
-                Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
-                $foto_denuncia->caminho = $path . $nomeImg;
+                $foto_denuncia->caminho = $data['imagem'][$i]->store("denuncias/{$denuncia->id}/imagens");
                 $foto_denuncia->save();
             }
 
@@ -131,11 +127,7 @@ class DenunciaController extends Controller
                 $video_denuncia = new VideoDenuncia();
                 $video_denuncia->denuncia_id = $denuncia->id;
                 $video_denuncia->comentario = $data['comentario'][$i] ?? "";
-
-                $nomeVideo = $data['video'][$i]->getClientOriginalName();
-                $path = 'denuncias/' . $denuncia->id .'/videos'.'/';
-                Storage::putFileAs('public/' . $path, $data['video'][$i], $nomeVideo);
-                $video_denuncia->caminho = $path . $nomeVideo;
+                $video_denuncia->caminho = $data['video'][$i]->store("denuncias/{$denuncia->id}/videos");
                 $video_denuncia->save();
             }
         }
@@ -151,6 +143,11 @@ class DenunciaController extends Controller
     public function update()
     {
         return redirect()->route("denuncias.create");
+    }
+
+    public function imagem(FotoDenuncia $foto)
+    {
+        return Storage::download($foto->caminho);
     }
 
     public function imagensDenuncia(Request $request)
@@ -174,11 +171,11 @@ class DenunciaController extends Controller
         $msg = '';
         $denuncia = Denuncia::find($request->denunciaId);
         $this->authorize('isSecretarioOrAnalista', User::class);
-        
+
         if ($request->aprovar == "true") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['aprovada'];
             $msg = 'Denuncia deferida com sucesso!';
-            
+
 
         } else if ($request->aprovar == "false") {
             $denuncia->aprovacao = Denuncia::APROVACAO_ENUM['arquivada'];

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Empresa;
 use App\Models\Requerimento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmpresaController extends Controller
 {
@@ -38,14 +39,14 @@ class EmpresaController extends Controller
      * Documentos do requerimento
      *
      * Retorna os nomes e ids dos documentos requeridos para emissao da licenca.
-     * 
+     *
      * @urlParam id integer required O identificador da empresa.
      * @urlParam id_requerimento integer required O identificador do requerimento da visita.
      *
      * @response status=200 scenario="success" [{"id": 8, "nome": "Comprovante de fornecimento de água (Compesa), se outro tipo, apresentar recibo de pagamento"}, {"id": 3, "nome": "Comprovante de pagamento da taxa ambiental"}, {"id": 1, "nome": "Cópia da (s) Identidade (s) e CPF(s) do requerente"}]
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      * @responseField id integer O identificador do documento
      * @responseField nome string O nome do documento
      */
@@ -59,7 +60,7 @@ class EmpresaController extends Controller
      * Documento do requerimento
      *
      * Retorna o nome e id dos documento requerido para emissao da licenca.
-     * 
+     *
      * @urlParam id integer required O identificador da empresa.
      * @urlParam id_requerimento integer required O identificador do requerimento da visita.
      * @urlParam id_documento integer required O identificador do documento.
@@ -67,7 +68,7 @@ class EmpresaController extends Controller
      * @response status=200 scenario="success" {"id": 8, "nome": "Comprovante de fornecimento de água (Compesa), se outro tipo, apresentar recibo de pagamento"}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      * @responseField id integer O identificador do documento
      * @responseField nome string O nome do documento
      */
@@ -89,12 +90,12 @@ class EmpresaController extends Controller
      * @response status=200 scenario="success" {file}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      */
     public function getDocumentoRequerido(Request $request)
     {
         $requerimento = Requerimento::find($request->id_requerimento);
-        $arquivo = response()->file(storage_path('app/public/'.$requerimento->documentos()->where('documento_id', $request->id_documento)->first()->pivot->caminho));
-        return $arquivo;
+        $caminho = $requerimento->documentos()->where('documento_id', $request->id_documento)->first()->pivot->caminho;
+        return Storage::download($caminho);
     }
 }

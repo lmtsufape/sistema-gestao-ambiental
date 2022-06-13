@@ -210,9 +210,9 @@ class VisitaController extends Controller
      * Salvar imagem da visita
      *
      * Salva uma imagem da visita.
-     * 
+     *
      * @response status=200 scenario="success" {"success": "success"}
-     * 
+     *
      * @bodyParam id integer required O identificador da visita
      * @bodyParam image file required O arquivo da foto capturada
      * @bodyParam comentario string nullable O comentario opcional para a imagem
@@ -227,12 +227,9 @@ class VisitaController extends Controller
 
         $visita =  Visita::find($request->id);
         $arquivo = $request->image;
-        $path = 'visitas/'.$visita->id.'/';
-        $nome = $arquivo->getClientOriginalName();
-        Storage::putFileAs('public/'.$path, $arquivo, $nome);
         $foto = new FotoVisita();
         $foto->visita_id = $visita->id;
-        $foto->caminho = $path . $nome;
+        $foto->caminho = $arquivo->store("visitas/{$visita->id}");
         if($request->comentario != null){
             $foto->comentario = $request->comentario;
         }
@@ -246,9 +243,9 @@ class VisitaController extends Controller
      *
      * @urlParam id integer required O identificador da visita.
      * @urlParam id_foto integer required O identificador da foto da visita
-     * 
+     *
      * @response status=200 scenario="success" {"success": "success"}
-     * 
+     *
      * @bodyParam comentario string nullable O comentario opcional para a imagem
      */
     public function comentarioUpdate(Request $request)
@@ -272,12 +269,12 @@ class VisitaController extends Controller
      * Deletar imagem da visita
      *
      * Deleta uma imagem da visita.
-     * 
+     *
      * @response status=200 scenario="success" {"success": "success"}
      *
      * @urlParam id integer required O identificador da visita.
      * @urlParam id_foto integer required O identificador da foto da visita
-     * 
+     *
      */
     public function imageDelete(Request $request)
     {
@@ -293,9 +290,9 @@ class VisitaController extends Controller
      * Salva a informacao de que a visita foi realizada.
      *
      * @response status=200 scenario="success" {"success": "success"}
-     * 
+     *
      * @urlParam id integer required O identificador da visita.
-     * 
+     *
      */
     public function concluirVisita(Request $request)
     {
@@ -309,13 +306,13 @@ class VisitaController extends Controller
      * Fotos da visita
      *
      * Retorna as fotos anexadas a visita.
-     * 
+     *
      * @urlParam id integer required O identificador da visita.
      *
      * @response status=200 scenario="success" [{"id": 1, "caminho": "visitas/1/histoSiga2021.jpg", "comentario": null, "visita_id": 1, "created_at": "2022-04-08T19:08:54.000000Z", "updated_at": "2022-04-08T19:08:54.000000Z"}, {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}]
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      * @responseField id integer O identificador da foto
      * @responseField caminho string O caminho de onde a imagem esta salva
      * @responseField comentario string O comentário opcional feito a imagem
@@ -337,7 +334,7 @@ class VisitaController extends Controller
      * @response status=200 scenario="success" {"id": 2, "caminho": "visitas/1/pizzacalabresaacebolada.jpg", "comentario": "algum comentario aqui", "visita_id": 1, "created_at": "2022-04-11T10:54:40.000000Z", "updated_at": "2022-04-11T10:54:40.000000Z"}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      * @responseField id integer O identificador da foto
      * @responseField caminho string O caminho de onde a imagem esta salva
      * @responseField comentario string O comentário opcional feito a imagem
@@ -359,12 +356,11 @@ class VisitaController extends Controller
      * @response status=200 scenario="success" {file}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     * 
+     *
      */
     public function getArquivoFotoVisita(Request $request)
     {
         $foto = FotoVisita::find($request->id_foto);
-        $arquivo = response()->file(storage_path('app/public/'.$foto['caminho']));
-        return $arquivo;
+        return Storage::download($foto['caminho']);
     }
 }

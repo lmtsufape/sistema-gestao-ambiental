@@ -41,8 +41,10 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () {
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
+Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->name('denuncias.imagem');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
 
@@ -80,8 +82,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class);
+    Route::get('/visitas/{visita}/foto/{foto}', [VisitaController::class, 'foto'])->name('visitas.foto');
     Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
-    
+
 
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
@@ -94,6 +97,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ->shallow()
         ->parameters(['notificacoes' => 'notificacao']);
     Route::get('/notificacoes-get', [NotificacaoController::class, 'get'])->name('notificacoes.get');
+    Route::get('/notificacoes/{notificacao}/foto/{foto}', [NotificacaoController::class, 'foto'])->name('notificacoes.foto');
 
     Route::get('/denuncias/{filtro}/listar', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/info', [DenunciaController::class, 'infoDenuncia'])->name('denuncias.info.ajax');
@@ -112,6 +116,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/{filtro}/listar', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
     Route::get('/solicitacoes/mudas/requerente/index', [SolicitacaoMudaController::class, 'requerenteIndex'])->name('mudas.requerente.index');
 
+    Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaController::class, 'foto'])->name('podas.foto');
     Route::get('/solicitacoes/podas/{solicitacao}/show', [SolicitacaoPodaController::class, 'show'])->name('podas.show');
     Route::put('/solicitacoes/podas/{solicitacao}/', [SolicitacaoPodaController::class, 'avaliar'])->name('podas.avaliar');
     Route::get('/solicitacoes/podas/{solicitacao}/edit', [SolicitacaoPodaController::class, 'edit'])->name('podas.edit');
@@ -123,7 +128,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/solicitacoes/podas/{solicitacao}/laudo', [LaudoTecnicoController::class, 'store'])->name('podas.laudos.store');
     Route::post('/solicitacoes/podas/{solicitacao}/ficha', [FichaAnaliseController::class, 'store'])->name('podas.fichas.store');
     Route::get('/solicitacoes/podas/laudo/{laudo}', [LaudoTecnicoController::class, 'show'])->name('podas.laudos.show');
+    Route::get('/solicitacoes/podas/laudo/{laudo}/foto/{foto}', [LaudoTecnicoController::class, 'foto'])->name('podas.laudos.foto');
     Route::get('/solicitacoes/podas/ficha/{ficha}', [FichaAnaliseController::class, 'show'])->name('podas.fichas.show');
+    Route::get('/solicitacoes/podas/ficha/{ficha}/foto/{foto}', [FichaAnaliseController::class, 'foto'])->name('podas.fichas.foto');
     Route::post('/solicitacoes/atribuir/analista', [SolicitacaoPodaController::class, 'atribuirAnalistaSolicitacao'])->name('solicitacoes.atribuir.analista');
     Route::post('/solicitacoes/create/visita', [VisitaController::class, 'createVisitaSolicitacaoPoda'])->name('solicitacoes.visita.create');
 
@@ -141,6 +148,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
     Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
+    Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
