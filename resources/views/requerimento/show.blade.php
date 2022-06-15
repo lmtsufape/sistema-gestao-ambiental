@@ -50,7 +50,7 @@
                                     @if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                     @endif
-                                    @if($requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
+                                    @if($requerimento->boletos->last() && $requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
                                         <a class="btn" data-toggle="modal" data-target="#criar-novo-boleto"><img style="height: 30px;" src="{{asset('img/boleto.png')}}" alt="Criar novo boleto" title="Criar novo boleto"></a>
                                     @endif
                                 @endcan
