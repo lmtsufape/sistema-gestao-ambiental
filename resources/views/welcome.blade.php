@@ -8,7 +8,7 @@
     <title>{{config('app.name', 'Sistema de Gestão Ambiental')}}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap">
 
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> --}}
@@ -33,184 +33,205 @@
 <body>
     @component('layouts.nav_bar')@endcomponent
     <div class="container conteudo" style="margin-top: 40px;">
+        <div class="row">
+            <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D">
+                PRINCIPAIS SERVIÇOS
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        EMISSÃO DE LICENÇAS
+                                    </p>
+                                </div>
+                                <div class="col-md-4" style="text-align: right;">
+                                    <img src="{{asset('img/emissao.svg')}}" width="35px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        RENOVAÇÃO DE LICENÇA
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/renovacao.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{route('denuncias.create')}}" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        REGISTRO DE <br> DENÚNCIAS
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/denuncias.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        CONSULTAS DE LICENÇAS AMBIENTAIS
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/consulta.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        ACOMPANHAMENTO DE SOLICITAÇÕES
+                                    </p>
+                                </div>
+                                <div class="col-md-4" style="text-align: right;">
+                                    <img src="{{asset('img/acompanhar.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-10">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
+                                    </p>
+                                </div>
+                                <div class="col-md-2" style="text-align: right;">
+                                    <img src="{{asset('img/poda.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br>
         @if ($noticias->count() > 0)  
             <div class="row">
-                <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D;">
                     NOTÍCIAS EM DESTAQUE
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
-                                <ol class="carousel-indicators">
-                                    @foreach ($noticias as $i => $noticia)
-                                      @if ($i == 0)
-                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
-                                      @else
-                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
-                                      @endif
-                                    @endforeach
-                                </ol>
-                                <div class="carousel-inner">
-                                    @foreach ($noticias as $i => $noticia)
-                                        @if ($i == 0)
-                                            <div class="carousel-item active">
-                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
-                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
-                                                </a>
-                                                <div class="carousel-caption">
-                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                    <div class="row justify-content-between">
+                        <div class="col-md-8" style="padding-left: 0px; padding-right: 0px">
+                            <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
+                                        <ol class="carousel-indicators">
+                                            @foreach ($noticias as $i => $noticia)
+                                                @if ($i == 0)
+                                                    <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                                @else
+                                                    <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
+                                                @endif
+                                            @endforeach
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            @foreach ($noticias as $i => $noticia)
+                                                <div class="carousel-item @if($i == 0)active @endif">
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                        <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                    </a>
+                                                    <div class="carousel-caption" style="right: 0%; left: 0%">
+                                                        <div style="
+                                                        bottom: 0;
+                                                        background: rgb(0, 0, 0);
+                                                        background: rgba(0, 0, 0, 0.8);
+                                                        color: #f1f1f1;
+                                                        padding: 20px;
+                                                        padding-bottom: 0;
+                                                        padding-top: 5;">
+                                                            <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                                                            <p style="font-size: 12px; color: rgb(202, 202, 202);">
+                                                                {!! mb_strimwidth(strip_tags($noticia->texto), 0, 200, "...") !!}
+                                                            </p> 
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @else
-                                            <div class="carousel-item">
-                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
-                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
-                                                </a>
-                                                <div class="carousel-caption">
-                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
+                                            @endforeach
+                                        </div>
+                                        <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
+                                    </div>
+                                </div>                        
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
+                            @foreach ($noticias as $i => $noticia)
+                                @if($i < 3)
+                                    <a href="{{$noticia->link}}" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">
+                                        <br>
+                                        <div class="form-row col-md-12" style="font-size: 12px; color: whitesmoke">
+                                            {{date('d/m/Y', strtotime($noticia->created_at))}}
+                                        </div>
+                                        <div class="form-row col-md-12" style="font-weight: bold; font-size: 16px; color: whitesmoke">
+                                            {{$noticia->titulo}}
+                                            <br>
+                                            <span style="font-weight: bold; font-size: 14px;">
+                                                {!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}
+                                            </span> 
+                                        </div>
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align: right">
+                    <a href="{{route('noticias.index')}}" style="font-weight: bold; font-style: italic; text-decoration: underline; color: #00883D">
+                        Ver todas as notícias
+                    </a>
                 </div>
             </div>
         @endif
-        <br>
-        <div class="row">
-            <div class="col-md-12" style="font-weight: bold; font-size: 18px">
-                PRINCIPAIS SERVIÇOS
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 alinhar-direita">
-                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
-                            </div>
-                        </div>
-                        <div class="row espaco">
-                            <div class="col-md-12">Emissão de <br>licenças</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 alinhar-direita">
-                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
-                            </div>
-                        </div>
-                        <div class="row espaco">
-                            <div class="col-md-12">Renovação de <br>licenças</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <a href="{{route('denuncias.create')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 67.png')}}" alt="Contato" width="49px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Registro de <br>denúncias</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 116.png')}}" alt="Contato" width="37px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Consulta de <br>licenças ambientais</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 115.png')}}" alt="Contato" width="33px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Acompanhamento <br>de solicitações</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="{{route('mudas.create')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Icon awesome-tree.png')}}" alt="Denúnciar" width="30px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Solicitações de poda<br>ou supressão de árvores</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {{--
-            <div class="col-md-3">
-                <a href="#">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 116.png')}}" alt="Denúnciar" width="37px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Pagamentos de multas <br>ou taxas administrativas</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            --}}
-
-        </div>
     </div>
     @component('layouts.footer')@endcomponent
     <script>
@@ -256,165 +277,205 @@
 <x-app-layout>
     @section('content')
     <div class="container conteudo" style="margin-top: 40px;">
+        <div class="row">
+            <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D">
+                PRINCIPAIS SERVIÇOS
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        EMISSÃO DE LICENÇAS
+                                    </p>
+                                </div>
+                                <div class="col-md-4" style="text-align: right;">
+                                    <img src="{{asset('img/emissao.svg')}}" width="35px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        RENOVAÇÃO DE LICENÇA
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/renovacao.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{route('denuncias.create')}}" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        REGISTRO DE <br> DENÚNCIAS
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/denuncias.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        CONSULTAS DE LICENÇAS AMBIENTAIS
+                                    </p>
+                                </div>
+                                <div class="col-md-3" style="text-align: right;">
+                                    <img src="{{asset('img/consulta.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        ACOMPANHAMENTO DE SOLICITAÇÕES
+                                    </p>
+                                </div>
+                                <div class="col-md-4" style="text-align: right;">
+                                    <img src="{{asset('img/acompanhar.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="" style="text-decoration: none; padding: 0px;">
+                    <div class="card card-home">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-10">
+                                    <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                        SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
+                                    </p>
+                                </div>
+                                <div class="col-md-2" style="text-align: right;">
+                                    <img src="{{asset('img/poda.svg')}}" width="45px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <br>
         @if ($noticias->count() > 0)  
             <div class="row">
-                <div class="col-md-12" style="font-weight: bold; font-size: 18px">
+                <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D;">
                     NOTÍCIAS EM DESTAQUE
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
-                                <ol class="carousel-indicators">
-                                    @foreach ($noticias as $i => $noticia)
-                                      @if ($i == 0)
-                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
-                                      @else
-                                          <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
-                                      @endif
-                                    @endforeach
-                                </ol>
-                                <div class="carousel-inner">
-                                    @foreach ($noticias as $i => $noticia)
-                                        @if ($i == 0)
-                                            <div class="carousel-item active">
-                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
-                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
-                                                </a>
-                                                <div class="carousel-caption">
-                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                    <div class="row justify-content-between">
+                        <div class="col-md-8" style="padding-left: 0px; padding-right: 0px">
+                            <div id="carouselNoticiasCaptions" class="carousel slide" data-ride="carousel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <img id="icon-prev-carousel" class="carousel-control-prev alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="prev" src="{{asset('img/back-green-com.svg')}}" alt="" style="width: 50px">
+                                        <ol class="carousel-indicators">
+                                            @foreach ($noticias as $i => $noticia)
+                                                @if ($i == 0)
+                                                    <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                                @else
+                                                    <li data-target="#carouselNoticiasCaptions" data-slide-to="{{$i}}"></li>
+                                                @endif
+                                            @endforeach
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            @foreach ($noticias as $i => $noticia)
+                                                <div class="carousel-item @if($i == 0)active @endif">
+                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
+                                                        <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
+                                                    </a>
+                                                    <div class="carousel-caption" style="right: 0%; left: 0%">
+                                                        <div style="
+                                                        bottom: 0;
+                                                        background: rgb(0, 0, 0);
+                                                        background: rgba(0, 0, 0, 0.8);
+                                                        color: #f1f1f1;
+                                                        padding: 20px;
+                                                        padding-bottom: 0;
+                                                        padding-top: 5;">
+                                                            <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
+                                                            <p style="font-size: 12px; color: rgb(202, 202, 202);">
+                                                                {!! mb_strimwidth(strip_tags($noticia->texto), 0, 200, "...") !!}
+                                                            </p> 
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @else
-                                            <div class="carousel-item">
-                                                <a class="link-carousel" href="{{$noticia->link}}" target="_blank">
-                                                    <img class="img-carousel" src="{{asset('storage/'.$noticia->imagem_principal)}}" class="d-block w-100" alt="Imagem da notícia {{$noticia->titulo}}" height="400px">
-                                                </a>
-                                                <div class="carousel-caption">
-                                                    <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
+                                            @endforeach
+                                        </div>
+                                        <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
+                                    </div>
+                                </div>                        
                             </div>
-                            <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
-                        </div>                        
+                        </div>
+                        <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
+                            @foreach ($noticias as $i => $noticia)
+                                @if($i < 3)
+                                    <a href="{{$noticia->link}}" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">
+                                        <br>
+                                        <div class="form-row col-md-12" style="font-size: 12px; color: whitesmoke">
+                                            {{date('d/m/Y', strtotime($noticia->created_at))}}
+                                        </div>
+                                        <div class="form-row col-md-12" style="font-weight: bold; font-size: 16px; color: whitesmoke">
+                                            {{$noticia->titulo}}
+                                            <br>
+                                            <span style="font-weight: bold; font-size: 14px;">
+                                                {!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}
+                                            </span> 
+                                        </div>
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align: right">
+                    <a href="{{route('noticias.index')}}" style="font-weight: bold; font-style: italic; text-decoration: underline; color: #00883D">
+                        Ver todas as notícias
+                    </a>
                 </div>
             </div>
         @endif
-        <br>
-        <div class="row">
-            <div class="col-md-12" style="font-weight: bold; font-size: 18px">
-                PRINCIPAIS SERVIÇOS
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 alinhar-direita">
-                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
-                            </div>
-                        </div>
-                        <div class="row espaco">
-                            <div class="col-md-12">Emissão de <br>licenças</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 alinhar-direita">
-                                <img src="{{asset('img/Icon ionic-ios-document.png')}}" alt="Emissão de licenças" width="30px;">
-                            </div>
-                        </div>
-                        <div class="row espaco">
-                            <div class="col-md-12">Renovação de <br>licenças</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <a href="{{route('denuncias.create')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 67.png')}}" alt="Contato" width="49px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Registro de <br>denúncias</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 116.png')}}" alt="Contato" width="37px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Consulta de <br>licenças ambientais</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Group 115.png')}}" alt="Contato" width="33px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Acompanhamento <br>de solicitações</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="{{route('mudas.create')}}">
-                    <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 alinhar-direita">
-                                    <img src="{{asset('img/Icon awesome-tree.png')}}" alt="Denúnciar" width="30px;">
-                                </div>
-                            </div>
-                            <div class="row espaco">
-                                <div class="col-md-12">Solicitações de poda<br>ou supressão de árvores</div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-        </div>
     </div>
     <script>
         function mostrarContato(tipo, texto, img){

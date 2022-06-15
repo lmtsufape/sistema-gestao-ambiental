@@ -1,11 +1,11 @@
 :root {
-    --primaria: #4A7836;
+    --primaria: #00883D;
     --secundaria: #203318;
     --dafault: #4a7836d8;
 }
 
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #e9eef5;
 }
 
@@ -154,7 +154,6 @@ nav img {
 .conteudo .card-home {
     margin-top: 10px;
     background-color: var(--primaria);
-    height: 150px;
     max-height: 150px;
     color: white;
     box-shadow: 1px 1px 5px rgb(83, 83, 83);
@@ -182,6 +181,8 @@ nav img {
 .conteudo .card-home .alinhar-direita {
     float: right;
     text-align: right;
+    padding-right: 0px;
+    padding-left: 0px
 }
 
 .styleMapa{
@@ -387,10 +388,6 @@ nav img {
     border-right: solid 1px var(--secundaria);
 }
 
-#appRodape .img {
-    height: 80%;
-    width: auto;
-}
 
 /* X FOOTER X */
 
@@ -910,7 +907,7 @@ a.article:hover {
     }
 
     .link-carousel {
-        color: black;
+        color: white;
     }
 
     #sidebar.active ul li a{
