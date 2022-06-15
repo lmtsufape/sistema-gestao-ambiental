@@ -39,7 +39,7 @@ class Licenca extends Model
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
     }
 
-    public function setAtributes(LicencaRequest $request, Requerimento $requerimento) 
+    public function setAtributes(LicencaRequest $request, Requerimento $requerimento)
     {
         $this->status = Licenca::STATUS_ENUM['gerada'];
         $this->tipo = $request->input('tipo_de_licença');
@@ -51,27 +51,23 @@ class Licenca extends Model
         $this->update();
     }
 
-    public function salvarLicenca($file, Requerimento $requerimento) 
+    public function salvarLicenca($file, Requerimento $requerimento)
     {
         if ($this->caminho != null) {
-            if (Storage::disk()->exists('public/'. $this->caminho)) {
-                Storage::delete('public/'. $this->caminho);
+            if (Storage::exists($this->caminho)) {
+                Storage::delete($this->caminho);
             }
         }
-        
-        $caminho_licencas = "requerimentos/" . $requerimento->id . "/licenca/" . $this->id . "/";
-        $documento_nome = $file->getClientOriginalName();
-        Storage::putFileAs('public/' . $caminho_licencas, $file, $documento_nome);
-        return $caminho_licencas . $file->getClientOriginalName();
+        return $file->store("requerimentos/{$requerimento->id}/licenca/{$this->id}");
     }
 
-    public function gerarProtocolo() 
+    public function gerarProtocolo()
     {
         $max = 9999999999;
         $min = 1000000000;
 
         $protocolo = null;
-        do {    
+        do {
             $protocolo = rand($min, $max);
             $checagem = Licenca::where('protocolo',$protocolo)->first();
         } while ($checagem != null);

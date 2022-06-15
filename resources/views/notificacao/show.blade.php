@@ -38,7 +38,7 @@
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 @foreach ($notificacao->fotos as $foto)
-                                    <img class="img-fluid" src="{{asset('storage/' . $foto->caminho)}}" alt="foto">
+                                    <img class="img-fluid" src="{{route('notificacoes.foto', ['notificacao' => $notificacao->id, 'foto' => $foto->id])}}" alt="foto">
                                     @if ($foto->comentario != null)
                                         <div class="card-body">
                                             <p class="card-text">{{$foto->comentario}}</p>

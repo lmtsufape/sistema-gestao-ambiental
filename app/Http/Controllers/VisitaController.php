@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FotoVisita;
 use App\Models\Requerimento;
 use App\Models\Visita;
 use App\Models\User;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class VisitaController extends Controller
@@ -76,6 +79,12 @@ class VisitaController extends Controller
     public function show(Visita $visita)
     {
         //
+    }
+
+    public function foto(Visita $visita, FotoVisita $foto)
+    {
+        $this->authorize('view', $visita);
+        return Storage::download($foto->caminho);
     }
 
     /**
@@ -197,7 +206,7 @@ class VisitaController extends Controller
     public function gerarRelatorioVisitas()
     {
         $visitas = Visita::all();
-        
+
         $pdf = PDF::loadview('pdf/visitas', ['visitas' => $visitas]);
         return $pdf->setPaper('a4')->stream('visitas.pdf');
     }

@@ -8,11 +8,10 @@ use App\Models\FotoNotificacao;
 use App\Models\Notificacao;
 use App\Notifications\NotificacaoCriadaNotification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class NotificacaoController extends Controller
 {
@@ -80,11 +79,7 @@ class NotificacaoController extends Controller
                 $foto_notificacao = new FotoNotificacao();
                 $foto_notificacao->notificacao_id = $notificacao->id;
                 $foto_notificacao->comentario = $data['comentario'][$i] ?? "";
-
-                $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-                $path = 'notificacoes/' . $notificacao->id . '/';
-                Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
-                $foto_notificacao->caminho = $path . $nomeImg;
+                $foto_notificacao->caminho = $data['imagem'][$i]->store("notificacoes/{$notificacao->id}");
                 $foto_notificacao->save();
             }
         }
@@ -102,6 +97,12 @@ class NotificacaoController extends Controller
     public function show(Notificacao $notificacao)
     {
         return view('notificacao.show', ['notificacao' => $notificacao]);
+    }
+
+    public function foto(Notificacao $notificacao, FotoNotificacao $foto)
+    {
+        $this->authorize('view', $notificacao);
+        return Storage::download($foto->caminho);
     }
 
     /**

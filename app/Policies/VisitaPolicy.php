@@ -30,7 +30,7 @@ class VisitaPolicy
      */
     public function view(User $user, Visita $visita)
     {
-        //
+        return $user->can('isSecretarioOrAnalista', $user);
     }
 
     /**

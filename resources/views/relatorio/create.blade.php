@@ -50,7 +50,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card" style="width: 100%;">
-                                                    <img src="{{asset('storage/' . $foto->caminho)}}" class="card-img-top" alt="...">
+                                                    <img src="{{route('visitas.foto', ['visita' => $visita->id, 'foto' => $foto->id])}}" class="card-img-top" alt="...">
                                                     @if ($foto->comentario != null)
                                                         <div class="card-body">
                                                             <p class="card-text">{{$foto->comentario}}</p>

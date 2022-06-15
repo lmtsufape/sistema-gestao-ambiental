@@ -261,7 +261,7 @@ class RequerimentoController extends Controller
             return redirect()->back()->withErrors(['error' => 'É necessário atribuir um potencial poluidor ao requerimento.'])->withInput($request->all());
         }
         $this->atribuirValor($request, $requerimento);
-        
+
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
@@ -273,7 +273,7 @@ class RequerimentoController extends Controller
         $requerimento->update();
 
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
-        
+
         try {
             $boletoController = new BoletoController();
             $boletoController->boleto($requerimento);
@@ -369,16 +369,16 @@ class RequerimentoController extends Controller
         }
 
         switch ($request->input('opcão_taxa_serviço')) {
-            case Requerimento::DEFINICAO_VALOR_ENUM['manual']: 
+            case Requerimento::DEFINICAO_VALOR_ENUM['manual']:
                 $valor = $request->input('valor_da_taxa_de_serviço');
                 $requerimento->valor_juros = null;
                 break;
-            case Requerimento::DEFINICAO_VALOR_ENUM['automatica']: 
+            case Requerimento::DEFINICAO_VALOR_ENUM['automatica']:
                 $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
-            case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']: 
+            case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']:
                 $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
@@ -437,14 +437,11 @@ class RequerimentoController extends Controller
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
             if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == \App\Models\Checklist::STATUS_ENUM['recusado']){
-                if (Storage::disk()->exists('public/' . $documento->caminho)) {
-                    Storage::delete('public/' . $documento->caminho);
+                if (Storage::exists($documento->caminho)) {
+                    Storage::delete($documento->caminho);
                 }
                 $arquivo = $request->documentos[$id];
-                $path = 'documentos/requerimentos/'. $requerimento->id .'/';
-                $nome = $arquivo->getClientOriginalName();
-                Storage::putFileAs('public/'.$path, $arquivo, $nome);
-                $documento->caminho = $path . $nome;
+                $documento->caminho = $arquivo->store("documentos/requerimentos/{$requerimento->id}");
                 $documento->comentario = null;
                 $documento->status = Checklist::STATUS_ENUM['enviado'];
                 $documento->update();
@@ -464,7 +461,7 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($requerimento_id);
         $this->authorize('verDocumentacao', $requerimento);
         $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-        return Storage::disk()->exists('public/' . $documento->caminho) ? response()->file('storage/' . $documento->caminho) : abort(404);
+        return Storage::exists($documento->caminho) ? Storage::download($documento->caminho) : abort(404);
     }
 
     public function analisarDocumentos(Request $request)

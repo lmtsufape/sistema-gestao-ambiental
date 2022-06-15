@@ -6,7 +6,6 @@ use App\Http\Requests\LaudoTecnicoRequest;
 use App\Models\FotoLaudoTecnico;
 use App\Models\LaudoTecnico;
 use App\Models\SolicitacaoPoda;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class LaudoTecnicoController extends Controller
@@ -30,10 +29,7 @@ class LaudoTecnicoController extends Controller
             $foto_laudo = new FotoLaudoTecnico();
             $foto_laudo->laudo_tecnico_id = $laudo->id;
             $foto_laudo->comentario = $data['comentario'][$i] ?? "";
-            $nomeImg = $data['imagem'][$i]->getClientOriginalName();
-            $path = 'laudos/' .$laudo->id .'/imagens'.'/' ;
-            Storage::putFileAs('public/' . $path, $data['imagem'][$i], $nomeImg);
-            $foto_laudo->caminho = $path . $nomeImg;
+            $foto_laudo->caminho = $data['imagem'][$i]->store("laudos/{$laudo->id}/imagens");
             $foto_laudo->save();
         }
         return view('solicitacoes.podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Laudo tecnico criado com sucesso');
@@ -42,5 +38,11 @@ class LaudoTecnicoController extends Controller
     public function show(LaudoTecnico $laudo)
     {
         return view('solicitacoes.podas.laudos.show', ['laudo' => $laudo]);
+    }
+
+    public function foto(LaudoTecnico $laudo, FotoLaudoTecnico $foto)
+    {
+        $this->authorize('isAnalistaPodaOrSecretario', User::class);
+        return Storage::download($foto->caminho);
     }
 }

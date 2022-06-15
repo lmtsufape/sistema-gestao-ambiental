@@ -22,10 +22,10 @@ class Documento extends Model
         'padrao_regularizacao',
     ];
 
-    public function requerimentos() 
+    public function requerimentos()
     {
         return $this->belongsToMany(Requerimento::class, 'checklists', 'documento_id', 'requerimento_id')->withPivot('caminho', 'comentario', 'status');
-    } 
+    }
 
     public function setAtributes(DocumentoRequest $request)
     {
@@ -52,14 +52,14 @@ class Documento extends Model
                 Storage::delete('public/'. $this->documento_modelo);
             }
         }
-        
+
         $caminho_licencas = "documentos/licencas/";
         $documento_nome = $file->getClientOriginalName();
         Storage::putFileAs('public/' . $caminho_licencas, $file, $documento_nome);
         $this->documento_modelo = $caminho_licencas . $file->getClientOriginalName();
     }
 
-    public function deletar() 
+    public function deletar()
     {
         if ($this->documento_modelo != null) {
             if (Storage::disk()->exists('public/'. $this->documento_modelo)) {
