@@ -35,7 +35,7 @@ class DenunciaRequest extends FormRequest
             "empresa_nao_cadastrada"  => "nullable|string|min:5|max:255|required_if:empresa_id,none",
             "endereco"                => "nullable|string|min:5|max:255|required_if:empresa_id,none",
             "denunciante"             => "nullable|string|min:5|max:255",
-            "texto"                   => "required|string|min:10|max:500",
+            "texto"                   => "required|string|min:10|max:2000",
             "imagem.*"                => "nullable|file|mimes:jpg,bmp,png|max:2048",
             "video.*"                => "nullable|file|mimes:mp4,mkv,3gp,avi,m4v,ogg|max:51200",
             "comentario.*"            => "nullable|string|min:5|max:255",
