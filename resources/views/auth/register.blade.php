@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
 
     <div style="background-color: rgb(236, 236, 243)">
         <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
@@ -306,7 +306,7 @@
             </div>
         </div>
     </div>
-    @component('layouts.footer')@endcomponent
+
 
     <script>
         $(document).ready(function($) {

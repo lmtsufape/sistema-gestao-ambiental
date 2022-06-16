@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
         <link rel="icon" type="imagem/png" href="{{asset('img/icon-page.png')}}" />
-        
+
         @livewireStyles
 
 
@@ -32,11 +32,14 @@
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
     </head>
-    <body>
+    <body class="min-h-screen" style="grid-template-rows: auto 1fr auto;">
+        <header>
+            @component('layouts.nav_bar')@endcomponent
+        </header>
         <div class="font-sans antialiased">
             <!-- Page Heading -->
 
-            <div class="min-h-screen bg-gray-100">
+            <div class="">
                 @if (isset($header))
                     <header class="bg-white shadow">
                         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -70,5 +73,6 @@
                 })
             </script>
         </div>
+        @component('layouts.footer')@endcomponent
     </body>
 </html>

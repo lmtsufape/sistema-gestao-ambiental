@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
 
     <x-jet-authentication-card>
         <x-slot name="logo">
@@ -42,7 +42,7 @@
 
             <div class="block mt-2" style="align-content: center; text-align: center;">
                 <span class="text-sm text-gray-600" style="font-size: 16px;">
-                    {{ __('Ou') }} 
+                    {{ __('Ou') }}
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" style="font-size: 16px;" href="{{ route('register') }}">
                         {{ __('cadastre-se') }}
                     </a>
@@ -52,7 +52,7 @@
             <div class="block mt-2" style="align-content: center; text-align: center;">
                 @if (Route::has('password.request'))
                     <span class="text-sm text-gray-600">
-                        {{ __('Forgot your password?') }} 
+                        {{ __('Forgot your password?') }}
                         <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                             {{ __('clique aqui') }}
                         </a>
@@ -61,10 +61,10 @@
             </div>
 
             {{-- <div class="flex items-center justify-end mt-4">
-                
+
             </div> --}}
         </form>
     </x-jet-authentication-card>
 
-    @component('layouts.footer')@endcomponent
+
 </x-guest-layout>

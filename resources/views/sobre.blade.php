@@ -1,6 +1,6 @@
 @guest
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
     <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
                                     Apresentação:
-                                </div> 
+                                </div>
                                 <div style="color: var(--textcolor2); font-size: 15px; text-align: justify;">
                                     O sistema de gestão ambiental (SGA) foi pensado para atender a demanda da secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE (SDRMA). Sendo um sistema de protocolização dos serviços que a SDRMA oferece, como emissão de licença ambietal para empresas, autorização de plantil de muda e poda, podendo também realizar denúncias e acompanhar os projetos da SDRMA.
                                 </div>
@@ -101,9 +101,9 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
-    @component('layouts.footer')@endcomponent
+
 </x-guest-layout>
 @else
 <x-app-layout>
@@ -124,7 +124,7 @@
                             <div class="col-md-12">
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
                                     Apresentação:
-                                </div> 
+                                </div>
                                 <div style="color: var(--textcolor2); font-size: 15px; text-align: justify;">
                                     O sistema de gestão ambiental (SGA) foi pensado para atender a demanda da secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE (SDRMA). Sendo um sistema de protocolização dos serviços que a SDRMA oferece, como emissão de licença ambietal para empresas, autorização de plantil de muda e poda, podendo também realizar denúncias e acompanhar os projetos da SDRMA.
                                 </div>
@@ -208,7 +208,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     @endsection
 </x-app-layout>

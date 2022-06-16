@@ -1,6 +1,6 @@
 @guest
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
     <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="form-row justify-content-center">
             <div class="col-md-6 form-group">
@@ -110,7 +110,6 @@
             </div>
         </div>
     </div>
-    @component('layouts.footer')@endcomponent
 </x-guest-layout>
 @else
 <x-app-layout>

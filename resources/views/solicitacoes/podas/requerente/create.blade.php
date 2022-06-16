@@ -1,6 +1,6 @@
 @guest
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
@@ -231,7 +231,7 @@
         </div>
     </div>
 
-    @component('layouts.footer')@endcomponent
+
 
     <div class="modal fade" id="modalProtocolo" role="dialog" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -623,7 +623,7 @@
         </div>
     </div>
 
-    @component('layouts.footer')@endcomponent
+
 
     <div class="modal fade" id="modalProtocolo" role="dialog" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

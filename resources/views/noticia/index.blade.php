@@ -1,6 +1,6 @@
 @guest
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
@@ -9,7 +9,7 @@
                         <h4 class="card-title">
                             @can('create', App\Models\Noticia::class)
                                 Notícias escritas
-                            @else  
+                            @else
                                 Notícias
                             @endcan
                         </h4>
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    @component('layouts.footer')@endcomponent
+
 </x-guest-layout>
 @else
 <x-app-layout>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="deletar-noticia-{{$noticia->id}}" method="POST" action="{{route('noticias.destroy', ['noticia' => $noticia])}}">
-                            @csrf 
+                            @csrf
                             @method('delete')
                             Tem certeza que desenha deletar {{$noticia->titulo}}?
                         </form>
@@ -105,7 +105,7 @@
                         <h4 class="card-title">
                             @can('create', App\Models\Noticia::class)
                                 Notícias escritas
-                            @else  
+                            @else
                                 Notícias
                             @endcan
                         </h4>
