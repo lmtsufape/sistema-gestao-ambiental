@@ -30,7 +30,7 @@ class SolicitacaoPodasCriada extends Mailable
     public function build()
     {
         return $this->subject('Solicitação de poda/supressão')
-            ->view('mail/solicitacao_podas_criada')
+            ->markdown('mail.solicitacao_podas_criada')
             ->with('solicitacao', $this->solicitacao);
     }
 }
