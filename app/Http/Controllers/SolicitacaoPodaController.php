@@ -9,11 +9,13 @@ use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
+use App\Notifications\ParecerSolicitacao;
 use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SolicitacaoPodaController extends Controller
@@ -216,7 +218,13 @@ class SolicitacaoPodaController extends Controller
     public function avaliar(SolicitacaoPodaAvaliarRequest $request, SolicitacaoPoda $solicitacao)
     {
         $this->authorize('avaliar', SolicitacaoPoda::class);
-        $solicitacao->fill($request->validated());
+        $data = $request->validated();
+        $solicitacao->fill($data);
+        if ($data['status'] == 2) {
+            Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'poda', 'deferida'));
+        } elseif ($data['status'] == 3) {
+            Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'poda', 'indeferida', $data['motivo_indeferimento']));
+        }
         $solicitacao->update();
         return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avalida com sucesso');
     }
