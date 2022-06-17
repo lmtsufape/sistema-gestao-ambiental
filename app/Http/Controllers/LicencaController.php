@@ -8,6 +8,8 @@ use App\Http\Requests\LicencaRequest;
 use App\Models\Licenca;
 use App\Models\Visita;
 use App\Models\User;
+use App\Notifications\LicencaAprovada;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class LicencaController extends Controller
@@ -84,12 +86,11 @@ class LicencaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function revisar($licenca_id, $visita_id)
+    public function revisar($visita_id, $licenca_id)
     {
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisitaOrSecretario', $visita);
         $licenca = Licenca::find($licenca_id);
-
         return view('licenca.revisar', compact('visita', 'licenca'));
     }
 
@@ -153,6 +154,8 @@ class LicencaController extends Controller
         $licenca = Licenca::find($licenca_id);
         if ($request->status == 1) {
             $licenca->status = Licenca::STATUS_ENUM['aprovada'];
+            $requerimento = $licenca->requerimento;
+            Notification::send($requerimento->empresa->user, new LicencaAprovada($requerimento, $licenca));
         } else {
             $licenca->status = Licenca::STATUS_ENUM['revisar'];
             $licenca->comentario_revisao = $request->motivo;
