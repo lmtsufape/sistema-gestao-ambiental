@@ -1,37 +1,5 @@
 @guest
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{config('app.name', 'Sistema de Gestão Ambiental')}}</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    {{-- <link rel="stylesheet" href="{{asset('css/app.css')}}"> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="icon" type="imagem/png" href="{{asset('img/icon-page.png')}}" />
-
-    @livewireStyles
-
-    <!-- Scripts -->
-    <script src="{{asset('js/app.js')}}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" defer></script>
-    <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-</head>
-<body>
-    @component('layouts.nav_bar')@endcomponent
+<x-guest-layout>
     <div class="container conteudo" style="margin-top: 40px;">
         <div class="row">
             <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D">
@@ -149,7 +117,7 @@
             </div>
         </div>
         <br>
-        @if ($noticias->count() > 0)  
+        @if ($noticias->count() > 0)
             <div class="row">
                 <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D;">
                     NOTÍCIAS EM DESTAQUE
@@ -191,7 +159,7 @@
                                                             <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                             <p style="font-size: 12px; color: rgb(202, 202, 202);">
                                                                 {!! mb_strimwidth(strip_tags($noticia->texto), 0, 200, "...") !!}
-                                                            </p> 
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,7 +167,7 @@
                                         </div>
                                         <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
                                     </div>
-                                </div>                        
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
@@ -215,7 +183,7 @@
                                             <br>
                                             <span style="font-weight: bold; font-size: 14px;">
                                                 {!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}
-                                            </span> 
+                                            </span>
                                         </div>
                                     </a>
                                 @endif
@@ -233,7 +201,7 @@
             </div>
         @endif
     </div>
-    @component('layouts.footer')@endcomponent
+
     <script>
         function mostrarContato(tipo, texto, img){
             if(tipo == "mostrar1"){
@@ -271,8 +239,7 @@
             }
         }
     </script>
-</body>
-</html>
+</x-guest-layout>
 @else
 <x-app-layout>
     @section('content')
@@ -393,7 +360,7 @@
             </div>
         </div>
         <br>
-        @if ($noticias->count() > 0)  
+        @if ($noticias->count() > 0)
             <div class="row">
                 <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D;">
                     NOTÍCIAS EM DESTAQUE
@@ -435,7 +402,7 @@
                                                             <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                             <p style="font-size: 12px; color: rgb(202, 202, 202);">
                                                                 {!! mb_strimwidth(strip_tags($noticia->texto), 0, 200, "...") !!}
-                                                            </p> 
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -443,7 +410,7 @@
                                         </div>
                                         <img id="icon-next-carousel" class="carousel-control-next alinhar-verticalmente" href="#carouselNoticiasCaptions" role="button" data-slide="next" src="{{asset('img/next-green-com.svg')}}" alt="" style="width: 50px">
                                     </div>
-                                </div>                        
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
@@ -459,7 +426,7 @@
                                             <br>
                                             <span style="font-weight: bold; font-size: 14px;">
                                                 {!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}
-                                            </span> 
+                                            </span>
                                         </div>
                                     </a>
                                 @endif

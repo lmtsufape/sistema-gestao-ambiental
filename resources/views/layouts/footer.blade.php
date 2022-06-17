@@ -1,6 +1,6 @@
 <footer>
     <div id="appRodape">
-    <div class="container">
+        <div class="container">
             <div class="row">
                 <div class="col-md-3" style="margin-top: 40px;">
                     <div class="row" style="text-align: center" >
@@ -28,7 +28,7 @@
                         <div class="col-md-12">
                             <label>Desenvolvido por:</label>
                         </div>
-                        <div class="col-md-6" style="padding-top: 10px; border-right: 1px #000000 solid;"> 
+                        <div class="col-md-6" style="padding-top: 10px; border-right: 1px #000000 solid;">
                             <a href="http://ufape.edu.br/" target="_blank">
                                 <img class="img" src="{{asset('img/ufape.png')}}" alt="Logo da UFAPE" style="display:inline;" />
                             </a>

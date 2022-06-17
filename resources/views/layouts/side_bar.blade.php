@@ -1,7 +1,7 @@
-<div class="wrapper">
+<div class="wrapper h-100">
     @guest
     @else
-        <nav id="sidebar">
+        <nav id="sidebar" class="h-100">
             <div class="sidebar-header" style="align-items: center">
                 <a class="navbar-brand" id="logoSGA" href="{{route('welcome')}}">
                     <img src="{{asset('img/icon-logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
@@ -231,9 +231,6 @@
                     </li>
                 @endcan
             </ul>
-
-            <ul class="list-unstyled CTAs">
-            </ul>
         </nav>
     @endguest
 
@@ -260,7 +257,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
-        
+
                 <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item @if(request()->routeIs('welcome')) active @endif">

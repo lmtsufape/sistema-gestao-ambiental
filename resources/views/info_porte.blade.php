@@ -1,6 +1,6 @@
 @guest
 <x-guest-layout>
-    @component('layouts.nav_bar')@endcomponent
+
     <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row">
             <div class="col-md-6">
@@ -46,8 +46,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * A  atividade  ou  o  empreendimento  será  enquadrado  pelo  maior 
+                                * A  atividade  ou  o  empreendimento  será  enquadrado  pelo  maior
                                 critério de classificação do porte no momento do requerimento.
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO III</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">TRATAMENTO,  TRANSPORTE  E  DISPOSIÇÃO 
+                        <h6 class="card-subtitle mb-2 text-muted">TRATAMENTO,  TRANSPORTE  E  DISPOSIÇÃO
                             DE RESÍDUOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -173,7 +173,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO IV</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - CONJUNTOS HABITACIONAIS/EDIFICAÇÕES UNI OU 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - CONJUNTOS HABITACIONAIS/EDIFICAÇÕES UNI OU
                             PLURIFAMILIARES/CONDOMÍNIOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -268,7 +268,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE
                             SERVIÇOS - POSTOS DE REVENDA DE COMBUSTÍVEIS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -314,7 +314,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE
                             SERVIÇOS - DEMAIS EMPREENDIMENTOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -354,8 +354,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -405,8 +405,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -420,7 +420,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO VII</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - ATIVIDADE  QUE  UTILIZAR  MADEIRA,  LENHA,  CARVÃO 
+                        <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - ATIVIDADE  QUE  UTILIZAR  MADEIRA,  LENHA,  CARVÃO
                             VEGETAL, DERIVADOS OU PRODUTOS SIMILARES</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -503,7 +503,7 @@
             </div>
         </div>
     </div>
-    @component('layouts.footer')@endcomponent
+
 </x-guest-layout>
 @else
 <x-app-layout>
@@ -553,8 +553,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -610,7 +610,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * A  atividade  ou  o  empreendimento  será  enquadrado  pelo  maior 
+                                * A  atividade  ou  o  empreendimento  será  enquadrado  pelo  maior
                                 critério de classificação do porte no momento do requerimento.
                             </div>
                         </div>
@@ -624,7 +624,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO III</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">TRATAMENTO,  TRANSPORTE  E  DISPOSIÇÃO 
+                        <h6 class="card-subtitle mb-2 text-muted">TRATAMENTO,  TRANSPORTE  E  DISPOSIÇÃO
                             DE RESÍDUOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -680,7 +680,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO IV</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - CONJUNTOS HABITACIONAIS/EDIFICAÇÕES UNI OU 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS IMOBILIÁRIOS - CONJUNTOS HABITACIONAIS/EDIFICAÇÕES UNI OU
                             PLURIFAMILIARES/CONDOMÍNIOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -775,7 +775,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE
                             SERVIÇOS - POSTOS DE REVENDA DE COMBUSTÍVEIS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -821,7 +821,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO V</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE 
+                        <h6 class="card-subtitle mb-2 text-muted">EMPREENDIMENTOS COMERCIAIS E DE
                             SERVIÇOS - DEMAIS EMPREENDIMENTOS</h6>
                         <div class="row">
                             <div class="col-md-12">
@@ -861,8 +861,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -912,8 +912,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12" style="text-align: justify;">
-                                * Área útil: área total utilizada no empreendimento industrial, 
-                                incluindo-se a área construída, a área utilizada para circulação, 
+                                * Área útil: área total utilizada no empreendimento industrial,
+                                incluindo-se a área construída, a área utilizada para circulação,
                                 manobras, estocagem, pátios, etc.
                             </div>
                         </div>
@@ -927,7 +927,7 @@
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">GRUPO VII</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - ATIVIDADE  QUE  UTILIZAR  MADEIRA,  LENHA,  CARVÃO 
+                        <h6 class="card-subtitle mb-2 text-muted">EXPLORAÇÃO AGROPECUÁRIA - ATIVIDADE  QUE  UTILIZAR  MADEIRA,  LENHA,  CARVÃO
                             VEGETAL, DERIVADOS OU PRODUTOS SIMILARES</h6>
                         <div class="row">
                             <div class="col-md-12">

@@ -29,10 +29,8 @@
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
     </head>
-    <body class="font-sans antialiased" style="background-color: #e9eef5">
-        <x-jet-banner />
-
-        <div class="min-h-screen bg-gray-100">
+    <body class="min-h-screen font-sans antialiased" style="background-color: #e9eef5; grid-template-rows: 1fr auto;">
+        <div>
             {{-- @livewire('navigation-menu') --}}
             @component('layouts.side_bar')@endcomponent
 
