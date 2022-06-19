@@ -36,4 +36,19 @@ class SolicitacaoMuda extends Model
     {
         return $this->hasMany(MudaSolicitada::class, 'solicitacao_id');
     }
+
+    public function statusSolicitacao()
+    {
+        switch($this->status){
+            case SolicitacaoMuda::STATUS_ENUM['registrada']:
+                return "registrada";
+                break;
+            case SolicitacaoMuda::STATUS_ENUM['deferido']:
+                return "deferida";
+                break;
+            case SolicitacaoMuda::STATUS_ENUM['indeferido']:
+                return "indeferida";
+                break;
+        }
+    }
 }

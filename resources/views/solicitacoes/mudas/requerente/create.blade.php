@@ -83,7 +83,7 @@
                                                         <td>
                                                             <input id="qtd_mudas-1" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
                                                                 type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
-                                                                autocomplete="qtd_mudas">
+                                                                autocomplete="qtd_mudas" required>
                                                             @error('qtd_mudas.*')
                                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                                     {{ $message }}
@@ -100,7 +100,7 @@
                                     <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar o local onde será plantada)</span></label>
                                     <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                         name="comentario" value="{{ old('comentario') }}"
-                                        autocomplete="comentario" rows="3">{{old('comentario')}}</textarea>
+                                        autocomplete="comentario" rows="3" required>{{old('comentario')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -112,7 +112,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
                                 <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-success btn-color-dafault" style="width: 100%;">Confirmar</button>
+                                    <button type="submit" class="btn btn-success submeterFormBotao btn-color-dafault" style="width: 100%;">Confirmar</button>
                                 </div>
                             </div>
                         </form>
@@ -206,7 +206,7 @@
                                 <td>
                                     <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
                                         type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
-                                        autocomplete="qtd_mudas">
+                                        autocomplete="qtd_mudas" required>
                                     @error('qtd_mudas.*')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}

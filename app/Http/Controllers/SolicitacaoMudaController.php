@@ -45,7 +45,7 @@ class SolicitacaoMudaController extends Controller
     public function requerenteIndex()
     {
         $this->authorize('requerenteIndex', SolicitacaoMuda::class);
-        $solicitacoes = SolicitacaoMuda::where('requerente_id', auth()->user()->requerente->id)->get();
+        $solicitacoes = SolicitacaoMuda::where('requerente_id', auth()->user()->requerente->id)->orderBy('created_at', 'DESC')->paginate(10);
         return view('solicitacoes.mudas.requerente.index', compact('solicitacoes'));
     }
 
