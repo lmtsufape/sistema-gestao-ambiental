@@ -25,7 +25,7 @@
                             @endif
                         </div>
                         <div class="table-responsive">
-                        <table class="table-responsive">
+                        <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>

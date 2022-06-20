@@ -680,6 +680,7 @@ span {
 
 #sidebar {
     min-width: 170px;
+    min-height: 500px;
     transition: all 0.3s;
 }
 
@@ -857,6 +858,7 @@ a.article:hover {
     }
 
     #sidebar {
+        min-height: fit-content;
         min-width: 80px;
         max-width: 80px;
         margin-left: -80px !important;
