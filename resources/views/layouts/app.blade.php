@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="icon" type="imagem/png" href="{{asset('img/icon-page.png')}}" />
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
+        <link rel="stylesheet" href="{{asset('css/sidebars.css')}}">
 
         @livewireStyles
 
@@ -28,6 +29,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" defer></script>
         <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+        <script src="{{asset('js/sidebars.js')}}"></script>
+        <script src="{{asset('js/bootstrap.js.download')}}"></script><meta name="betech_apesar" content="UA-23288050-15"><meta name="betech_fatiei" content="UA-23288050-14">
     </head>
     <body class="min-h-screen font-sans antialiased" style="background-color: #e9eef5; grid-template-rows: 1fr auto;">
         <div>

@@ -255,12 +255,12 @@
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-md-8">
+                                <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         EMISSÃO DE LICENÇAS
                                     </p>
                                 </div>
-                                <div class="col-md-4" style="text-align: right;">
+                                <div class="col-md-3" style="text-align: right;">
                                     <img src="{{asset('img/emissao.svg')}}" width="35px;">
                                 </div>
                             </div>
@@ -327,12 +327,12 @@
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-md-8">
+                                <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         ACOMPANHAMENTO DE SOLICITAÇÕES
                                     </p>
                                 </div>
-                                <div class="col-md-4" style="text-align: right;">
+                                <div class="col-md-3" style="text-align: right;">
                                     <img src="{{asset('img/acompanhar.svg')}}" width="45px;">
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
                                         SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
                                     </p>
                                 </div>
-                                <div class="col-md-2" style="text-align: right;">
+                                <div class="col-md-2" style="padding-left: 0px">
                                     <img src="{{asset('img/poda.svg')}}" width="45px;">
                                 </div>
                             </div>

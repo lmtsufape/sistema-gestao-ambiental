@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
@@ -68,7 +68,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <table class="table">
+                                                            <table class="table-responsive">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">Porte antigo</th>
@@ -130,7 +130,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <table class="table">
+                                                            <table class="table-responsive">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">Cnae</th>
@@ -161,7 +161,7 @@
                                                             </h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <table class="table">
+                                                            <table class="table-responsive">
                                                                 <thead>
                                                                     <tr>
                                                                         <th scope="col">Cnae</th>

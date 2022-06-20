@@ -2,9 +2,9 @@
 
 
     <div style="background-color: rgb(236, 236, 243)">
-        <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
+        <div class="container-fluid" style="padding-top: 5rem; padding-bottom: 8rem;">
             <div class="form-row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="form-row">
                         <div class="col-md-8">
                             <h4 class="card-title">Cadastre-se</h4>
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="form-row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             @php
