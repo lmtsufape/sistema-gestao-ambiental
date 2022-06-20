@@ -11,8 +11,8 @@
                         <a title="Voltar" href="{{route('mudas.requerente.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
                         </a>
-                        <a class="btn btn-success btn-color-dafault" data-toggle="modal"
-                            data-target="#modalAcompanharSolicitacao">Acompanhar solicitação</a>
+                        {{--<a class="btn btn-success btn-color-dafault" data-toggle="modal"
+                            data-target="#modalAcompanharSolicitacao">Acompanhar solicitação</a>--}}
                     </div>
                 </div>
             </div>
