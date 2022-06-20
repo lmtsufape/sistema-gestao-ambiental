@@ -8,9 +8,11 @@ use App\Mail\SolicitacaoMudasCriada;
 use App\Models\EspecieMuda;
 use App\Models\MudaSolicitada;
 use App\Models\SolicitacaoMuda;
+use App\Notifications\ParecerSolicitacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SolicitacaoMudaController extends Controller
@@ -146,6 +148,11 @@ class SolicitacaoMudaController extends Controller
         $solicitacao->fill($data);
         if ($request->file('arquivo')) {
             $solicitacao->arquivo = $data['arquivo']->store("mudas/{$solicitacao->id}/documento");
+        }
+        if ($data['status'] == 2) {
+            Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'muda', 'deferida'));
+        } elseif ($data['status'] == 3) {
+            Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'muda', 'indeferida', $data['motivo_indeferimento']));
         }
         $solicitacao->update();
         return redirect()->route('mudas.index', 'pendentes')->with('success', 'Solicitação de muda avalida com sucesso');

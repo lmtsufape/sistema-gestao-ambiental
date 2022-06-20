@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-</head>
-<body>
-    <p style="color: black; font-family: 'Times New Roman', Times, serif;"> 
-        O status do requerimento nº {{$requerimento->id}} foi alterado para 
+@component('mail::message')
+    <p style="color: black; font-family: 'Times New Roman', Times, serif;">
+        O status do requerimento nº {{$requerimento->id}} foi alterado para
         @switch($requerimento->status)
             @case(\App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                 documentos requeridos.
@@ -31,12 +24,8 @@
             </li>
         @endforeach
     </ul>
-    <br>
-    <p style="'Times New Roman', Times, serif; font-size: 12px;">
-        Atenciosamente, <br>
-        {{ config('app.name') }} <br>
-        Laboratório Multidisciplinar de Tecnologias Sociais<br>
-        Universidade Federal do Agreste de Pernambuco
-    </p>
-</body>
-</html>
+    @lang('Regards'),<br>
+    {{ config('app.name') }}<br>
+    Laboratório Multidisciplinar de Tecnologias Sociais<br>
+    Universidade Federal do Agreste de Pernambuco
+@endcomponent

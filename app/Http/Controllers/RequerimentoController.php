@@ -494,7 +494,7 @@ class RequerimentoController extends Controller
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos aceitos'));
         }
         $requerimento->update();
-        return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
 
     }
 
