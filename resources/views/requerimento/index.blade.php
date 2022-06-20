@@ -503,14 +503,16 @@
                                 </li>
                             @endif
                         @endcan
-                        <li>
-                            <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
-                                <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Cancelar requerimento
+                        @if($requerimentos->first() != null)
+                            <li>
+                                <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Cancelar requerimento
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>

@@ -93,7 +93,7 @@ class RequerimentoController extends Controller
     public function analista()
     {
         $user = auth()->user();
-        $requerimentos = $user->requerimentos;
+        $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
 
         return view('requerimento.index', compact('requerimentos'));
     }
@@ -488,10 +488,10 @@ class RequerimentoController extends Controller
         }
         if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento recusado'));
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos recusados'));
         }else{
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
-            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documento aceitos'));
+            Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos aceitos'));
         }
         $requerimento->update();
         return redirect(route('requerimentos.analista'))->with(['success' => 'Análise enviada com sucesso.']);
