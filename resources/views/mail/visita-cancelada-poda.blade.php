@@ -1,6 +1,6 @@
 @component('mail::message')
     <p style="color: black; font-family: 'Times New Roman', Times, serif;">
-        O status do requerimento nº {{$requerimento->id}} foi alterado para documentos enviados. Por favor analise os documentos e dê seguimento ao processo.
+        A visita agendada para {{$data_marcada}} no endereço {{$poda->endereco->enderecoSimplificado()}} referente a uma solicitação de poda/supressão foi cancelada. <br>
     </p>
     @lang('Regards'),<br>
     {{ config('app.name') }}<br>

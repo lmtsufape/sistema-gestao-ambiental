@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\FotoVisita;
 use App\Models\Requerimento;
+use App\Models\SolicitacaoPoda;
 use App\Models\Visita;
 use App\Models\User;
+use App\Notifications\VisitaAlteradaPoda;
+use App\Notifications\VisitaAlteradaRequerimento;
+use App\Notifications\VisitaCanceladaPoda;
+use App\Notifications\VisitaCanceladaRequerimento;
+use App\Notifications\VisitaMarcadaPoda;
+use App\Notifications\VisitaMarcadaRequerimento;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
@@ -66,6 +74,11 @@ class VisitaController extends Controller
         $visita->requerimento->update();
         $visita->analista_id = $request->analista;
         $visita->save();
+
+        $requerimento = Requerimento::find($request['requerimento']);
+        $user = $requerimento->empresa->user;
+        $data_marcada = $request['data_marcada'];
+        Notification::send($user, new VisitaMarcadaRequerimento($requerimento, $data_marcada));
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita programada com sucesso!']);
     }
@@ -129,6 +142,18 @@ class VisitaController extends Controller
         $visita->analista_id = $request->analista;
         $visita->update();
 
+        if ($visita->requerimento) {
+            $requerimento = Requerimento::find($request['requerimento']);
+            $user = $requerimento->empresa->user;
+            $data_marcada = $request['data_marcada'];
+            Notification::send($user, new VisitaAlteradaRequerimento($requerimento, $data_marcada));
+        } elseif ($visita->solicitacao_poda) {
+            $poda = $visita->solicitacao_poda;
+            $user = $poda->requerente->user;
+            $data_marcada = $request['data_marcada'];
+            Notification::send($user, new VisitaAlteradaPoda($poda, $data_marcada));
+        }
+
         $requerimento = Requerimento::find($visita->requerimento_id);
         $requerimento->update(['status' => Requerimento::STATUS_ENUM['visita_marcada']]);
 
@@ -153,7 +178,21 @@ class VisitaController extends Controller
                 $visita->requerimento->update();
             }
         }
+
+        if ($visita->requerimento) {
+            $requerimento = $visita->requerimento;
+            $user = $requerimento->empresa->user;
+            $data_marcada = $visita->data_marcada;
+            Notification::send($user, new VisitaCanceladaRequerimento($requerimento, $data_marcada));
+        } elseif ($visita->solicitacao_poda) {
+            $poda = $visita->solicitacao_poda;
+            $user = $poda->requerente->user;
+            $data_marcada = $visita->data_marcada;
+            Notification::send($user, new VisitaCanceladaPoda($poda, $data_marcada));
+        }
+
         $visita->delete();
+
 
         return redirect(route('visitas.index'))->with(['success' => 'Visita deletada com sucesso!']);
     }
@@ -194,6 +233,11 @@ class VisitaController extends Controller
         $visita->solicitacao_poda_id = $request->solicitacao_id;
         $visita->analista_id = $request->analista;
         $visita->save();
+
+        $poda = SolicitacaoPoda::find($request['solicitacao_id']);
+        $user = $poda->requerente->user;
+        $data_marcada = $request['data'];
+        Notification::send($user, new VisitaMarcadaPoda($poda, $data_marcada));
 
         return redirect()->back()->with(['success' => 'Visita agendada com sucesso!']);
     }
