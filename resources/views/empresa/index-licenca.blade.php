@@ -76,7 +76,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{$licenca->validade}}
+                                                            {{Date('d/m/Y', strtotime($licenca->validade))}}
                                                         </td>
                                                         <td>
                                                             <a title="Abrir Licença" href="{{route('licenca.show', ['licenca' => $licenca])}}"><img class="icon-licenciamento"
