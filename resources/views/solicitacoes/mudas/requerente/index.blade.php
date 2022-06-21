@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -24,6 +24,7 @@
                                 </div>
                             @endif
                         </div>
+                        <div class="table-responsive">
                         <table class="table">
                                 <thead>
                                     <tr>
@@ -37,8 +38,8 @@
                                     @foreach ($solicitacoes as $i => $solicitacao)
                                         <tr>
                                             <th scope="row">{{$i+1}}</th>
-                                            <td>{{$solicitacao->created_at}}</td>
-                                            <td>{{ucfirst(array_search($solicitacao->status, App\Models\SolicitacaoMuda::STATUS_ENUM))}}</td>
+                                            <td>{{$solicitacao->created_at->format('d/m/Y H:i')}}</td>
+                                            <td>{{ucfirst($solicitacao->statusSolicitacao())}}</td>
                                             <td>
                                                 <a title="Visualizar" href="{{route('mudas.mostrar', $solicitacao)}}"><img width="20px;" class="icon-licenciamento" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar"></a>
                                             </td>
@@ -46,11 +47,17 @@
                                     @endforeach
                                 </tbody>
                         </table>
+                        </div>
                         @if($solicitacoes->first() == null)
                             <div class="col-md-12 text-center" style="font-size: 18px;">
                                 Nenhuma solicitação feita
                             </div>
                         @endif
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$solicitacoes->links()}}
                     </div>
                 </div>
             </div>

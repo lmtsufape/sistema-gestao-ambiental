@@ -1,8 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="{{route('welcome')}}">
-            <img src="{{asset('img/logo.svg')}}" alt="Sistema de gestão ambiental" style="height: 40px;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 35px;">
+    <div class="container" style="">
+        <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+            <img class="img-logo" src="{{asset('img/logo.svg')}}" alt="Logo SGA" style="height: 100px; width: 250px;">
         </a>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                        <img class="img-logo" src="{{asset('img/ig.svg')}}" alt="Logo ig" style="height: 40px; width: 40px;">
+                    </a>
+                </li>
+                <li>
+                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                        <img class="img-logo" src="{{asset('img/fb.svg')}}" alt="Logo fb" style="height: 40px; width: 40px;">
+                    </a>
+                </li>
+                <li>
+                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                        <img class="img-logo" src="{{asset('img/rede.svg')}}" alt="Logo rede" style="height: 40px; width: 40px;">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-light navbar-primaria">
+    <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
