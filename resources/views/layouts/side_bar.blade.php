@@ -42,25 +42,27 @@
                 <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
-                    <ul class="navbar-nav ml-auto">
+                <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+                    <ul class="navbar-nav">
                         <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
-                            <a class="nav-link" href="{{route('welcome')}}">Início</a>
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{route('welcome')}}">Início</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('noticias*')) active @endif">
-                            <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{route('noticias.index')}}">Notícias</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('legislacao')) active @endif">
-                            <a class="nav-link" href="{{route('legislacao')}}">Legislação</a>
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{route('legislacao')}}">Legislação</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('contato')) active @endif">
-                            <a class="nav-link" href="{{route('contato')}}">Contato</a>
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{route('contato')}}">Contato</a>
                         </li>
                         <li class="nav-item @if(request()->routeIs('sobre')) active @endif">
-                            <a class="nav-link" href="{{route('sobre')}}">Sobre</a>
+                            <a class="nav-link text-uppercase font-weight-bold" href="{{route('sobre')}}">Sobre</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_outros" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link text-uppercase font-weight-bold dropdown-toggle" href="#" id="navbarDropdown_outros" role="button" data-toggle="dropdown" aria-expanded="false">
                                 {{Auth::user()->name}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown_outros">
