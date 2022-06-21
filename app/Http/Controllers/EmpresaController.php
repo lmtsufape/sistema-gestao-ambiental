@@ -40,7 +40,7 @@ class EmpresaController extends Controller
         return view('empresa.create', compact('setores'));
     }
 
-    public function licencas_index(Request $request)
+    public function licencasIndex(Request $request)
     {
         $empresa = Empresa::find($request->empresa);
         $licencas = [];
