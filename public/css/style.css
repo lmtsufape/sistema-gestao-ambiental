@@ -362,14 +362,14 @@ nav img {
 
 /* FOOTER */
 #appRodape {
-    background-color: #f8f9fa;
+    background-color: var(--primaria);
     padding-bottom: 1rem;
     padding-top: 2rem;
-    color: var(--secundaria);
+    color: white;
 }
 
 #appRodape .link-email {
-    color: var(--secundaria);
+    color: white;
 }
 
 #appRodape  .alinhar-centro {
@@ -849,7 +849,11 @@ a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-
+@media (min-width : 768px) {
+    .border-md-right {
+        border-right: 1px white solid;
+    }
+}
 @media (max-width: 650px) {
     #conteudo .container-fluid{
         padding-left: 1rem;
