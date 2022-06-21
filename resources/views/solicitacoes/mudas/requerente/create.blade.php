@@ -60,8 +60,8 @@
                                             <table class="table" data-toggle="table" id="especies">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Espécie</th>
-                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col">Espécie<span style="color: red; font-weight: bold;">*</span></th>
+                                                        <th scope="col">Quantidade<span style="color: red; font-weight: bold;">*</span></th>
                                                         <th scope="col"></th>
                                                     </tr>
                                                 </thead>

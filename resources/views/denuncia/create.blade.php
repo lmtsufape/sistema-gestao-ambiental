@@ -68,8 +68,8 @@
                                     </div>
                                     <div class="form-row justify-content-between" id="empresa_info">
                                         <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
-                                                class="col-md-7 form-group">
-                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
                                                 value="{{old('empresa_nao_cadastrada')}}">
                                             @error('empresa_nao_cadastrada')
@@ -79,8 +79,8 @@
                                             @enderror
                                         </div>
                                         <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
-                                                class="col-md-5 form-group">
-                                            <label for="endereco">{{ __('Endereço') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
                                             @error('endereco')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -583,8 +583,8 @@
                                     </div>
                                     <div class="form-row justify-content-between" id="empresa_info">
                                         <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
-                                                class="col-md-7 form-group">
-                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
                                                 value="{{old('empresa_nao_cadastrada')}}">
                                             @error('empresa_nao_cadastrada')
@@ -594,8 +594,8 @@
                                             @enderror
                                         </div>
                                         <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
-                                                class="col-md-5 form-group">
-                                            <label for="endereco">{{ __('Endereço') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
                                             @error('endereco')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
