@@ -335,7 +335,7 @@
                             @if($denuncia->fotos->first() != null)
                                 <div class="row form-row">
                                     <div class="col-md-12 form-group">
-                                        <label for="imagens_anexadas">{{__('Imagens anexadas junto a denúncia:')}}</label>
+                                        <label for="imagens_anexadas">{{__('Imagens anexadas:')}}</label>
                                     </div>
                                 </div>
                             @endif
@@ -371,7 +371,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a denúncia:</div>
+                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas:</div>
                             </div>
                             <br>
                             <div class="row">
@@ -442,7 +442,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a solicitação:</div>
+                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas:</div>
                             </div>
                             <br>
                             <div class="row">

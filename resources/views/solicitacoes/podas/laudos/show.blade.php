@@ -72,7 +72,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto ao Laudo Técnico Ambiental:</div>
+                        <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas:</div>
                     </div>
                     <br>
                     <div class="row">

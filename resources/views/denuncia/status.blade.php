@@ -64,7 +64,7 @@
                         </div>
                         @if ($denuncia->fotos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas junto a denúncia:</div>
+                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->fotos as $foto)
@@ -220,7 +220,7 @@
                         </div>
                         @if ($denuncia->fotos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas junto a denúncia:</div>
+                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->fotos as $foto)
