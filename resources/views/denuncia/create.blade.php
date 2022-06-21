@@ -328,10 +328,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da denúncia
-                    <br>
-                    Protocolo:
+                <div class="modal-body">
+                    Sua denúncia foi recebida com sucesso! Ela se encontra sob análise da Secretária de Desenvolvimento Rural e Meio Ambiente. Acompanhe a tramitação dela por meio do seguinte protocolo:
                     <strong>{{session('protocolo')}}</strong>
                 </div>
                 <div class="modal-footer">
@@ -844,10 +842,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da denúncia
-                    <br>
-                    Protocolo:
+                <div class="modal-body">
+                    Sua denúncia foi recebida com sucesso! Ela se encontra sob análise da Secretária de Desenvolvimento Rural e Meio Ambiente. Acompanhe a tramitação dela por meio do seguinte protocolo:
                     <strong>{{session('protocolo')}}</strong>
                 </div>
                 <div class="modal-footer">
