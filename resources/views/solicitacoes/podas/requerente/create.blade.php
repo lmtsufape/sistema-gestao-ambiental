@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Realizar solicitação de podas</h4>
+                        <h4 class="card-title">Realizar solicitação de poda/supressão</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('podas.requerente.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
@@ -398,7 +398,7 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Realizar solicitação de podas</h4>
+                        <h4 class="card-title">Realizar solicitação de poda/supressão</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a class="btn my-2" href="{{route('podas.requerente.index')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
