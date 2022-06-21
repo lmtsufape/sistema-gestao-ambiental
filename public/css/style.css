@@ -680,7 +680,6 @@ span {
 
 #sidebar {
     min-width: 170px;
-    min-height: 500px;
     transition: all 0.3s;
 }
 
@@ -866,7 +865,7 @@ a.article:hover {
     #sidebar .dropdown-toggle::after {
         top: auto;
         bottom: 10px;
-        right: 50%; 
+        right: 50%;
         -webkit-transform: translateX(50%);
         -ms-transform: translateX(50%);
         transform: translateX(50%);
