@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Notifications\DenunciaRecebida;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class DenunciaController extends Controller
@@ -130,6 +132,10 @@ class DenunciaController extends Controller
                 $video_denuncia->caminho = $data['video'][$i]->store("denuncias/{$denuncia->id}/videos");
                 $video_denuncia->save();
             }
+        }
+
+        if(auth()->user()) {
+            Notification::send(auth()->user(), new DenunciaRecebida($protocolo));
         }
 
         return redirect()->back()->with(['success' => 'Denúncia cadastrada com sucesso!', 'protocolo' => $protocolo]);
