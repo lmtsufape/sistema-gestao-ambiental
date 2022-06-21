@@ -6,9 +6,9 @@
                 PRINCIPAIS SERVIÇOS
             </div>
         </div>
-        <div class="row justify-content-between">
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+        <div class="row align-content-stretch">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -25,8 +25,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -43,8 +43,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="{{route('denuncias.create')}}" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="{{route('denuncias.create')}}" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -61,8 +61,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -79,8 +79,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -97,17 +97,17 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
                                     </p>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <img src="{{asset('img/poda.svg')}}" width="45px;">
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
+                        <div class="col-md-4 mb-3" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
                             @foreach ($noticias as $i => $noticia)
                                 @if($i < 3)
                                     <a href="{{$noticia->link}}" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">
@@ -250,8 +250,8 @@
             </div>
         </div>
         <div class="row justify-content-between">
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -268,8 +268,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -286,8 +286,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="{{route('denuncias.create')}}" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="{{route('denuncias.create')}}" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -304,8 +304,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -322,8 +322,8 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -340,17 +340,17 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                <a href="" style="text-decoration: none; padding: 0px;">
+            <div class="col-md-4 mb-3">
+                <a href="" style="text-decoration: none;">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
                                     </p>
                                 </div>
-                                <div class="col-md-2" style="padding-left: 0px">
+                                <div class="col-md-3" style="padding-left: 0px">
                                     <img src="{{asset('img/poda.svg')}}" width="45px;">
                                 </div>
                             </div>
@@ -413,7 +413,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
+                        <div class="col-md-4 mb-3" style="background-color: rgb(61, 61, 61)" style="padding-left: 0px; padding-right: 0px">
                             @foreach ($noticias as $i => $noticia)
                                 @if($i < 3)
                                     <a href="{{$noticia->link}}" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">

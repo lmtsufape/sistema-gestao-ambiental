@@ -148,13 +148,13 @@ nav img {
 }
 
 .conteudo .card-home {
-    margin-top: 10px;
     background-color: var(--primaria);
     max-height: 150px;
     color: white;
     box-shadow: 1px 1px 5px rgb(83, 83, 83);
     transition: 0.5s;
     border-radius: 10px;
+    height: 100%;
 }
 
 .conteudo .card-home:hover {
