@@ -396,7 +396,7 @@
                                 <button type="button" class="btn btn-danger botao-form" style="padding-right: 20px; width:100%;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
                             </div>
                             <div class="col-md-6" id="botaoDeferir">
-                                <button type="button" class="btn btn-success botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
+                                <button type="button" class="btn btn-success btn-color-dafault botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
                             </div>
                         </div>
                     </div>
@@ -452,7 +452,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="form-criar-visita-denuncia">Agendar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
                 </div>
             </div>
         </div>
@@ -494,7 +494,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
                     </div>
                 </div>
             </div>

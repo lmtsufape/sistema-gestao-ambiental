@@ -116,7 +116,7 @@
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #278b45;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja deferir a solicitação de muda?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="deferir-solicitacao">Continuar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault" form="deferir-solicitacao">Continuar</button>
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #278b45;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Tem certeza que deseja indeferir a solicitação da muda?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -171,7 +171,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="status-solicitacao">Confirmar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Confirmar</button>
                 </div>
             </div>
         </div>

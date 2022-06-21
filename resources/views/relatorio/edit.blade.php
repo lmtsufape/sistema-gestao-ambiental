@@ -144,7 +144,7 @@
                         <div class="form-row">
                             <div class="col-md-6 form-group"></div>
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-success submeterFormBotao" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
+                                <button class="btn btn-success btn-color-dafault  submeterFormBotao" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
                             </div>
                         </div>
                     </div>

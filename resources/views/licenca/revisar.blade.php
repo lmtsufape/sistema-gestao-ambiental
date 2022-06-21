@@ -100,7 +100,7 @@
 
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button type="submit" class="btn btn-success submeterFormBotao" style="width: 100%" @if ($licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada']) dissabled @endif>Atualizar</button>
+                                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" style="width: 100%" @if ($licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada']) dissabled @endif>Atualizar</button>
                                 </div>
                             </div>
                         @else
@@ -109,7 +109,7 @@
                                     <button type="button" class="btn btn-warning submeterFormBotao" data-toggle="modal" data-target="#staticBackdrop-revisar-licenca" style="width: 100%">Revisar</button>
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button type="button" class="btn btn-success submeterFormBotao" data-toggle="modal" data-target="#staticBackdrop-aprovar-licenca" style="width: 100%">Aprovar</button>
+                                    <button type="button" class="btn btn-success btn-color-dafault  submeterFormBotao" data-toggle="modal" data-target="#staticBackdrop-aprovar-licenca" style="width: 100%">Aprovar</button>
                                 </div>
                             </div>
                         @endcan
@@ -165,7 +165,7 @@
         <div class="modal fade" id="staticBackdrop-aprovar-licenca" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #28a745;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Aprovar licença</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-licenca-aprovar">Aprovar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-licenca-aprovar">Aprovar</button>
                     </div>
                 </div>
             </div>
