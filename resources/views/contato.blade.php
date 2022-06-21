@@ -69,7 +69,7 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         <img src="{{asset('img/Icon-zocial-email.png')}}" alt="E-mail alternativo" style="display: inline;">
-                        &nbsp;<a href="mailto:agricultura.garanhuns@hotmail.com" style="text-decoration: none; color:black;">agricultura.garanhuns@hotmail.com</a>
+                        &nbsp;<a href="mailto:meioambientegaranhuns@gmail.com" style="text-decoration: none; color:black;">meioambientegaranhuns@gmail.com</a>
                     </div>
                 </div>
                 <div class="form-row mt-3">
@@ -182,7 +182,7 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         <img src="{{asset('img/Icon-zocial-email.png')}}" alt="E-mail alternativo" style="display: inline;">
-                        &nbsp;<a href="mailto:agricultura.garanhuns@hotmail.com" style="text-decoration: none; color:black;">agricultura.garanhuns@hotmail.com</a>
+                        &nbsp;<a href="mailto:meioambientegaranhuns@gmail.com" style="text-decoration: none; color:black;">meioambientegaranhuns@gmail.com</a>
                     </div>
                 </div>
                 <div class="form-row mt-3">

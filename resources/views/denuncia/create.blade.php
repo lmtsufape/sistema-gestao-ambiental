@@ -299,7 +299,7 @@
                                 <div class="alert alert-warning" role="alert">
                                     <h5 class="alert-heading">Envio de vídeos</h5>
                                     <hr>
-                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail meioambientegaranhuns@gmail.com. Manteremos o anonimato do denunciante.</p>
                                 </div>
                             </div>
                         </div>
@@ -814,7 +814,7 @@
                                 <div class="alert alert-warning" role="alert">
                                     <h5 class="alert-heading">Envio de vídeos</h5>
                                     <hr>
-                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail meioambientegaranhuns@gmail.com. Manteremos o anonimato do denunciante.</p>
                                 </div>
                             </div>
                         </div>
