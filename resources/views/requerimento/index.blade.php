@@ -279,7 +279,7 @@
                                                         @if($requerimento->valor == null)
                                                             {{__('Em definição')}}
                                                         @else
-                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}} 
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
                                                             @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
                                                                 <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
                                                             @endif
@@ -376,7 +376,7 @@
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                             <td>
-                                                <div class="btn-group align-items-center"> 
+                                                <div class="btn-group align-items-center">
                                                     @can('isSecretarioOrAnalista', \App\Models\User::class)
                                                         <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
                                                     @endcan
@@ -435,7 +435,7 @@
                 @endcan
             </div>
             <div class="col-md-3">
-                
+
                 <div class="col-md-12 shadow-sm p-2 px-3" @can('isAnalista', \App\Models\User::class)
                                                                 style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @elsecan('isRequerente', \App\Models\User::class)
@@ -472,6 +472,14 @@
                             @endcan
                         @endif
                         @can('isRequerente', \App\Models\User::class)
+                            <li>
+                                <div title="Novo requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Novo requerimento">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Novo requerimento
+                                    </div>
+                                </div>
+                            </li>
                             @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
                                 <li>
                                     <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">

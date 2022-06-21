@@ -8,7 +8,7 @@
                         <h4 class="card-title">Espécies de muda</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
-                        <a title="Adicionar documento" href="{{route('especies.create')}}">
+                        <a title="Adicionar espécie" href="{{route('especies.create')}}">
                             <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar especie">
                         </a>
                     </div>

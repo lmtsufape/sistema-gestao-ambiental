@@ -150,6 +150,14 @@
                     </div>
                     <ul class="list-group list-unstyled">
                         @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Criar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Criar visita
+                                    </div>
+                                </div>
+                            </li>
                             {{--consulta necessaria pra verificar se tem notificacao feitas--}}
                             <li>
                                 <div title="Visualizar notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
