@@ -10,9 +10,9 @@
                         <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('welcome')}}">
+                        {{-- <a title="Voltar" href="{{route('welcome')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
                     </div>
                 </div>
@@ -525,9 +525,9 @@
                         <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('welcome')}}">
+                        {{-- <a title="Voltar" href="{{route('welcome')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
                     </div>
                 </div>

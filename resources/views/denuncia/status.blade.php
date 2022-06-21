@@ -10,9 +10,9 @@
                         <h4 class="card-title">Denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('denuncias.create')}}">
+                        {{-- <a title="Voltar" href="{{route('denuncias.create')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -166,9 +166,9 @@
                         <h4 class="card-title">Denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('denuncias.create')}}">
+                        {{-- <a title="Voltar" href="{{route('denuncias.create')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

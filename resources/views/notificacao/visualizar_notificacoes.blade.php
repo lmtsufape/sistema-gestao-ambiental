@@ -8,9 +8,9 @@
                         <h4 class="card-title">Notificações à empresa {{$empresa->nome}}</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('empresas.index')}}">
+                        {{-- <a title="Voltar" href="{{route('empresas.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         @can('create', App\Models\Notificacao::class)
                             <a title="Criar notificação" href="{{route('empresas.notificacoes.create', ['empresa' => $empresa])}}">
                                 <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notificação">

@@ -10,7 +10,7 @@
                         <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.show', ['solicitacao' => $ficha->solicitacaoPoda])}}">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $ficha->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$ficha->solicitacaoPoda->protocolo}}</a> > Ficha de Análise de Risco em árvore</h6>
                     </div>
                     <div class="col-md-2" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $ficha->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $ficha->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>

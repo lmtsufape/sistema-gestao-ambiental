@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Programação > Visitas > Notificações > Criar notificação</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">
+                        {{-- <a title="Voltar" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index', 'pendentes')}}">Poda/Supressão</a> > Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('podas.index', 'pendentes')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2" href="{{route('podas.index', 'pendentes')}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>

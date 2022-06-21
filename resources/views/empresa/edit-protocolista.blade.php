@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento  nº {{$requerimento->id}} > Editar empresa/serviço do requerimento</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">
+                        {{-- <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
     $(document).ready(function($) {
         selecionarSetor();
     });
-    
+
     window.selecionarSetor = function(){
         //setor
         var historySelectList = $('select#idSelecionarSetor');

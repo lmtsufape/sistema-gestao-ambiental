@@ -10,9 +10,9 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- @can('create', App\Models\Noticia::class) --}}
-                        <a title="Voltar" href="{{route('noticias.index')}}">
+                        {{-- <a title="Voltar" href="{{route('noticias.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         {{-- @endif --}}
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                                     <label class="label-input" for="enviar_arquivo"></label>
                                     <label for="label-input-arquivo" for="enviar_arquivo">Nenhum arquivo selecionado</label>
                                     <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal">
-                                
+
                                     @error('imagem_principal')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
