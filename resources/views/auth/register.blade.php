@@ -218,7 +218,7 @@
                                                 <x-jet-checkbox name="terms" id="terms" class="checkbox-licenciamento" required/>
 
                                                 <div class="ml-2">
-                                                    {!! __('Eu aceito os :terms_of_service e a :privacy_policy', [
+                                                    {!! __('Eu aceito os :terms_of_service e a :privacy_policy.', [
                                                             'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Termos de Serviço').'</a>',
                                                             'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Política de Privacidade').'</a>',
                                                     ]) !!}
@@ -232,7 +232,7 @@
                                                 <x-jet-checkbox name="declaracao" id="declaracao" class="checkbox-licenciamento" required/>
 
                                                 <div class="ml-2">
-                                                    {!! __('Declaro sob as penas da lei que todas as informações prestadas são verdadeiras e estou ciente de eventual responsabilidade administrativa, cível e criminal que tais informações possam gerar') !!}
+                                                    {!! __('Declaro sob as penas da lei que todas as informações prestadas são verdadeiras e estou ciente de eventual responsabilidade administrativa, cível e criminal que tais informações possam gerar.') !!}
                                                 </div>
                                             </div>
                                         </x-jet-label>
