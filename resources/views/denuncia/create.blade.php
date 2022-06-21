@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Registro de denúnica</h4>
+                        <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a title="Voltar" href="{{route('welcome')}}">
@@ -524,7 +524,7 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Registro de denúnica</h4>
+                        <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         <a title="Voltar" href="{{route('welcome')}}">
