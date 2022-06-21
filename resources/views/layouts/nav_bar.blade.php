@@ -6,18 +6,13 @@
         <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                    <a class="navbar-brand nav-link-logo" href="https://www.instagram.com/prefgaranhuns/" target="_blank">
                         <img class="img-logo" src="{{asset('img/ig.svg')}}" alt="Logo ig" style="height: 40px; width: 40px;">
                     </a>
                 </li>
                 <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                    <a class="navbar-brand nav-link-logo" href="https://www.facebook.com/PrefeituraGaranhuns/" target="_blank">
                         <img class="img-logo" src="{{asset('img/fb.svg')}}" alt="Logo fb" style="height: 40px; width: 40px;">
-                    </a>
-                </li>
-                <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
-                        <img class="img-logo" src="{{asset('img/rede.svg')}}" alt="Logo rede" style="height: 40px; width: 40px;">
                     </a>
                 </li>
             </ul>
