@@ -43,13 +43,9 @@ class EmpresaController extends Controller
     public function licencasIndex(Request $request)
     {
         $empresa = Empresa::find($request->empresa);
-        $licencas = [];
-
-        foreach ($empresa->requerimentos as $requerimento)
-        {
-            array_push($licencas, $requerimento->licenca);
-        }
-        return view('empresa.index-licenca', compact('licencas', 'empresa'));
+        $requerimentos = $empresa->requerimentos;
+        $tipos = Requerimento::TIPO_ENUM;
+        return view('empresa.index-licenca', compact('requerimentos', 'empresa', 'tipos'));
     }
     /**
      * Store a newly created resource in storage.
