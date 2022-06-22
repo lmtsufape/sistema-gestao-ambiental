@@ -76,6 +76,7 @@
                                         <li><a href="https://www.linkedin.com/in/carlos-andr%C3%A9-611766196" target="_blanck" class="link-dark" style="font-size: 15px;">Carlos André de Almeida Cavalcante</a></li>
                                         <li><a href="https://br.linkedin.com/in/kelwin-jonas-1b8656214" target="_blanck" class="link-dark" style="font-size: 15px;">Kelwin Jonas Silva Santos</a></li>
                                         <li><a href="https://www.linkedin.com/in/jo-fernando" target="_blanck" class="link-dark" style="font-size: 15px;">José Fernando Mendes da Costa</a></li>
+                                        <li><a href="https://www.linkedin.com/in/luisfrl" target="_blanck" class="link-dark" style="font-size: 15px;">Luís Fernando</a></li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
@@ -86,14 +87,14 @@
                                         <li><a href="https://www.linkedin.com/in/jleonardolima" target="_blanck" class="link-dark" style="font-size: 15px;">José Leonardo Santos de Lima</a></li>
                                     </ul>
                                 </div>
-                                <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
+                                {{-- <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
                                     Gerenciadora de tarefas:
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
                                         <li><a href="http://lattes.cnpq.br/9361972029542674" target="_blanck" class="link-dark" style="font-size: 15px;">Maria Virgínia Mendonça</a></li>
                                     </ul>
-                                </div>
+                                </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -183,6 +184,7 @@
                                         <li><a href="https://www.linkedin.com/in/carlos-andr%C3%A9-611766196" target="_blanck" class="link-dark" style="font-size: 15px;">Carlos André de Almeida Cavalcante</a></li>
                                         <li><a href="https://br.linkedin.com/in/kelwin-jonas-1b8656214" target="_blanck" class="link-dark" style="font-size: 15px;">Kelwin Jonas Silva Santos</a></li>
                                         <li><a href="https://www.linkedin.com/in/jo-fernando" target="_blanck" class="link-dark" style="font-size: 15px;">José Fernando Mendes da Costa</a></li>
+                                        <li><a href="https://www.linkedin.com/in/luisfrl" target="_blanck" class="link-dark" style="font-size: 15px;">Luís Fernando</a></li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
@@ -193,14 +195,14 @@
                                         <li><a href="https://www.linkedin.com/in/jleonardolima" target="_blanck" class="link-dark" style="font-size: 15px;">José Leonardo Santos de Lima</a></li>
                                     </ul>
                                 </div>
-                                <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
+                                {{-- <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
                                     Gerenciadora de tarefas:
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
                                         <li><a href="http://lattes.cnpq.br/9361972029542674" target="_blanck" class="link-dark" style="font-size: 15px;">Maria Virgínia Mendonça</a></li>
                                     </ul>
-                                </div>
+                                </div> --}}
                                 </div>
                             </div>
                         </div>

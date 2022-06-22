@@ -148,13 +148,13 @@ nav img {
 }
 
 .conteudo .card-home {
-    margin-top: 10px;
     background-color: var(--primaria);
     max-height: 150px;
     color: white;
     box-shadow: 1px 1px 5px rgb(83, 83, 83);
     transition: 0.5s;
     border-radius: 10px;
+    height: 100%;
 }
 
 .conteudo .card-home:hover {
@@ -362,14 +362,14 @@ nav img {
 
 /* FOOTER */
 #appRodape {
-    background-color: #f8f9fa;
+    background-color: var(--primaria);
     padding-bottom: 1rem;
     padding-top: 2rem;
-    color: var(--secundaria);
+    color: white;
 }
 
 #appRodape .link-email {
-    color: var(--secundaria);
+    color: white;
 }
 
 #appRodape  .alinhar-centro {
@@ -680,7 +680,6 @@ span {
 
 #sidebar {
     min-width: 170px;
-    min-height: 500px;
     transition: all 0.3s;
 }
 
@@ -850,7 +849,11 @@ a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
-
+@media (min-width : 768px) {
+    .border-md-right {
+        border-right: 1px white solid;
+    }
+}
 @media (max-width: 650px) {
     #conteudo .container-fluid{
         padding-left: 1rem;
@@ -866,7 +869,7 @@ a.article:hover {
     #sidebar .dropdown-toggle::after {
         top: auto;
         bottom: 10px;
-        right: 50%; 
+        right: 50%;
         -webkit-transform: translateX(50%);
         -ms-transform: translateX(50%);
         transform: translateX(50%);

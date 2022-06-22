@@ -10,9 +10,9 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- @can('create', App\Models\Noticia::class) --}}
-                        <a title="Voltar" href="{{route('noticias.index')}}">
+                        {{-- <a title="Voltar" href="{{route('noticias.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         {{-- @endif --}}
                     </div>
                 </div>

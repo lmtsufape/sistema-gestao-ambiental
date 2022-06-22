@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
                     </div>
                     <div class="col-md-2" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto ao Laudo Técnico Ambiental:</div>
+                        <div class="col-12">Imagens anexadas:</div>
                     </div>
                     <br>
                     <div class="row">

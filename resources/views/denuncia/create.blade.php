@@ -7,12 +7,12 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Registro de denúnica</h4>
+                        <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('welcome')}}">
+                        {{-- <a title="Voltar" href="{{route('welcome')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
                                     </div>
                                     <div class="form-row justify-content-between" id="empresa_info">
                                         <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
-                                                class="col-md-7 form-group">
-                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
                                                 value="{{old('empresa_nao_cadastrada')}}">
                                             @error('empresa_nao_cadastrada')
@@ -79,8 +79,8 @@
                                             @enderror
                                         </div>
                                         <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
-                                                class="col-md-5 form-group">
-                                            <label for="endereco">{{ __('Endereço') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
                                             @error('endereco')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -299,7 +299,7 @@
                                 <div class="alert alert-warning" role="alert">
                                     <h5 class="alert-heading">Envio de vídeos</h5>
                                     <hr>
-                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail <a href="mailto:meioambientegaranhuns@gmail.com" class="text-decoration-none text-reset">meioambientegaranhuns@gmail.com</a>. Manteremos o anonimato do denunciante.</p>
                                 </div>
                             </div>
                         </div>
@@ -328,10 +328,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da denúncia
-                    <br>
-                    Protocolo:
+                <div class="modal-body">
+                    Sua denúncia foi recebida com sucesso! Ela se encontra sob análise da Secretária de Desenvolvimento Rural e Meio Ambiente. Acompanhe a tramitação dela por meio do seguinte protocolo:
                     <strong>{{session('protocolo')}}</strong>
                 </div>
                 <div class="modal-footer">
@@ -345,7 +343,7 @@
     <div class="modal fade" id="modalAcompanharDenuncia" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #278b45;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Acompanhe o status da sua denúncia</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -370,7 +368,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-success submeterFormBotao" form="status-denuncia">Ir</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault  submeterFormBotao" form="status-denuncia">Ir</button>
                 </div>
             </div>
         </div>
@@ -524,12 +522,12 @@
             <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Registro de denúnica</h4>
+                        <h4 class="card-title">Registro de denúncia</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('welcome')}}">
+                        {{-- <a title="Voltar" href="{{route('welcome')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         <a class="btn btn-primary btn-color-dafault" data-toggle="modal" data-target="#modalAcompanharDenuncia">Acompanhar denúncia</a>
                     </div>
                 </div>
@@ -585,8 +583,8 @@
                                     </div>
                                     <div class="form-row justify-content-between" id="empresa_info">
                                         <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
-                                                class="col-md-7 form-group">
-                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
                                                 value="{{old('empresa_nao_cadastrada')}}">
                                             @error('empresa_nao_cadastrada')
@@ -596,8 +594,8 @@
                                             @enderror
                                         </div>
                                         <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
-                                                class="col-md-5 form-group">
-                                            <label for="endereco">{{ __('Endereço') }}</label>
+                                                class="col-md-12 form-group">
+                                            <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
                                             @error('endereco')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -816,7 +814,7 @@
                                 <div class="alert alert-warning" role="alert">
                                     <h5 class="alert-heading">Envio de vídeos</h5>
                                     <hr>
-                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail agricultura.garanhuns@hotmail.com. Manteremos o anonimato do denunciante.</p>
+                                    <p class="mb-0">Caso necessite submeter algum vídeo, solicitamos que o faça pelo e-mail <a href="mailto:meioambientegaranhuns@gmail.com" class="text-decoration-none text-reset">meioambientegaranhuns@gmail.com</a>. Manteremos o anonimato do denunciante.</p>
                                 </div>
                             </div>
                         </div>
@@ -844,10 +842,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da denúncia
-                    <br>
-                    Protocolo:
+                <div class="modal-body">
+                    Sua denúncia foi recebida com sucesso! Ela se encontra sob análise da Secretária de Desenvolvimento Rural e Meio Ambiente. Acompanhe a tramitação dela por meio do seguinte protocolo:
                     <strong>{{session('protocolo')}}</strong>
                 </div>
                 <div class="modal-footer">
@@ -861,7 +857,7 @@
     <div class="modal fade" id="modalAcompanharDenuncia" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #278b45;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Acompanhe o status da sua denúncia</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -886,7 +882,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="submeterFormBotao" class="btn btn-success submeterFormBotao" form="status-denuncia">Ir</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault  submeterFormBotao" form="status-denuncia">Ir</button>
                 </div>
             </div>
         </div>

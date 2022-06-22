@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Programação > Visualizar licença</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" @can('isRequerente', \App\Models\User::class)  href="javascript:window.history.back();" @else href="{{route('visitas.index')}}" @endcan >
+                        {{-- <a title="Voltar" @can('isRequerente', \App\Models\User::class)  href="javascript:window.history.back();" @else href="{{route('visitas.index')}}" @endcan >
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

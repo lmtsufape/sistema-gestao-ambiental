@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Grupos > CNAEs do grupo {{$cnae->setor->nome}} > Editar CNAE</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('setores.show', ['setore' => $cnae->setor->id])}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
+                        {{-- <a title="Voltar" href="{{route('setores.show', ['setore' => $cnae->setor->id])}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a> --}}
                     </div>
                 </div>
             </div>

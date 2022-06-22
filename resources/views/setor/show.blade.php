@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Grupos > Cnaes do grupo {{$setor->nome}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a>
+                        {{-- <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a> --}}
                         <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar cnae"></a>
                     </div>
                 </div>

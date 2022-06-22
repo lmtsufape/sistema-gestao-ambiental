@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Usuários > Editar usuário</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('usuarios.index')}}">
+                        {{-- <a title="Voltar" href="{{route('usuarios.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -51,11 +51,11 @@
                                         @foreach ($tipos as $tipo)
                                             <div class="form-check">
                                                 <input class="checkbox_tipo checkbox-licenciamento" type="checkbox" name="tipos_analista[]" value="{{$tipo->id}}" id="tipo_{{$tipo->id}}"
-                                                @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'] && 
+                                                @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'] &&
                                                     $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) checked
-                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['processo'] && 
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['processo'] &&
                                                     $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) checked
-                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'] && 
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'] &&
                                                     $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) checked
                                                 @endif>
                                                 <label class="form-check-label" for="tipo_{{$tipo->id}}">
@@ -107,7 +107,7 @@
                 alert('Selecione um cargo para o analista!');
             }
         }
-    
+
     </script>
     @endsection
 </x-app-layout>

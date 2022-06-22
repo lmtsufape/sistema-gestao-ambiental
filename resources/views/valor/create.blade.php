@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Valores de licenças > Criar valor</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('valores.index')}}">
+                        {{-- <a title="Voltar" href="{{route('valores.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>

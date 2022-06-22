@@ -315,7 +315,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="form-criar-visita-solicitacao">Agendar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
                 </div>
             </div>
         </div>
@@ -357,7 +357,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success" form="form-atribuir-analista-solicitacao">Atribuir</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
                     </div>
                 </div>
             </div>

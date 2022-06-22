@@ -8,9 +8,9 @@
                         <h4 class="card-title">Realizar solicitação de mudas</h4>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" href="{{route('mudas.requerente.index')}}">
+                        {{-- <a title="Voltar" href="{{route('mudas.requerente.index')}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                         <a class="btn btn-success btn-color-dafault" data-toggle="modal"
                             data-target="#modalAcompanharSolicitacao">Acompanhar solicitação</a>
                     </div>
@@ -60,8 +60,8 @@
                                             <table class="table" data-toggle="table" id="especies">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Espécie</th>
-                                                        <th scope="col">Quantidade</th>
+                                                        <th scope="col">Espécie<span style="color: red; font-weight: bold;">*</span></th>
+                                                        <th scope="col">Quantidade<span style="color: red; font-weight: bold;">*</span></th>
                                                         <th scope="col"></th>
                                                     </tr>
                                                 </thead>
@@ -151,7 +151,7 @@
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #278b45;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Acompanhe o status da sua
                         solicitação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" form="status-solicitacao">Ir</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
                 </div>
             </div>
         </div>

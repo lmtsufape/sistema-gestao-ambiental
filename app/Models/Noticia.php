@@ -22,7 +22,7 @@ class Noticia extends Model
         'publicada',
     ];
 
-    public function autor() 
+    public function autor()
     {
         return $this->belongsTo(User::class, 'autor_id');
     }
@@ -49,10 +49,10 @@ class Noticia extends Model
      * @param $file
      * @return void
      */
-    public function salvarImagem($file) 
+    public function salvarImagem($file)
     {
         $this->deletar_imagem();
-        
+
         $caminho_noticias = "noticias/" . $this->id . "/";
         $documento_nome = $file->getClientOriginalName();
         Storage::putFileAs('public/' . $caminho_noticias, $file, $documento_nome);
@@ -64,7 +64,7 @@ class Noticia extends Model
      *
      * @return boolean
      */
-    public function exibirDatas() 
+    public function exibirDatas()
     {
         if ((new Carbon($this->created_at)) == (new Carbon($this->updated_at))) {
             return true;
@@ -77,7 +77,7 @@ class Noticia extends Model
      *
      * @return string $ultimaAtualizacao
      */
-    public function dataPublicado() 
+    public function dataPublicado()
     {
         $ultima = now()->diff(new Carbon($this->created_at));
         if ($ultima->d >= 1) {
@@ -98,7 +98,7 @@ class Noticia extends Model
      *
      * @return string $ultimaAtualizacao
      */
-    public function ultimaAtualizacao() 
+    public function ultimaAtualizacao()
     {
         $ultima = now()->diff(new Carbon($this->updated_at));
         if ($ultima->d >= 1) {
@@ -120,16 +120,10 @@ class Noticia extends Model
      * @param string $string
      * @return string $string
      */
-    private function gerarLinkDivulgacao($string) 
+    private function gerarLinkDivulgacao($string)
     {
-        $complemento = "";
-        for ($i = 0; $i < strlen($string); $i++) {
-            if ($string[$i] == " ") {
-                $complemento .= "-";
-            } else {
-                $complemento .= $string[$i];
-            }
-        }
+        $string = iconv( "UTF-8" , "ASCII//TRANSLIT//IGNORE" , $string );
+        $complemento = preg_replace( array( '/[ ]/' , '/[^A-Za-z0-9\-]/' ) , array( '' , '' ) , $string );
         return route('welcome') . '/noticias/' . $complemento;
     }
 

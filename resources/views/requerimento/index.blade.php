@@ -279,7 +279,7 @@
                                                         @if($requerimento->valor == null)
                                                             {{__('Em definição')}}
                                                         @else
-                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}} 
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
                                                             @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
                                                                 <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
                                                             @endif
@@ -376,7 +376,7 @@
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                             <td>
-                                                <div class="btn-group align-items-center"> 
+                                                <div class="btn-group align-items-center">
                                                     @can('isSecretarioOrAnalista', \App\Models\User::class)
                                                         <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
                                                     @endcan
@@ -435,7 +435,7 @@
                 @endcan
             </div>
             <div class="col-md-3">
-                
+
                 <div class="col-md-12 shadow-sm p-2 px-3" @can('isAnalista', \App\Models\User::class)
                                                                 style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @elsecan('isRequerente', \App\Models\User::class)
@@ -472,6 +472,14 @@
                             @endcan
                         @endif
                         @can('isRequerente', \App\Models\User::class)
+                            <li>
+                                <div title="Novo requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Novo requerimento">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Novo requerimento
+                                    </div>
+                                </div>
+                            </li>
                             @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
                                 <li>
                                     <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
@@ -521,8 +529,8 @@
     <div class="modal fade" id="novo_requerimento" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Novo requerimento</h5>
+            <div class="modal-header" style="background-color: var(--primaria);">
+              <h5 class="modal-title text-white" id="staticBackdropLabel">Novo requerimento</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -584,7 +592,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary submeterFormBotao" form="novo-requerimento-form">Salvar</button>
+              <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="novo-requerimento-form">Salvar</button>
             </div>
           </div>
         </div>

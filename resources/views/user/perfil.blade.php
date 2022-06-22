@@ -56,7 +56,7 @@
                                     <div class="col-md-12 form-group">
                                         <label for="nome_de_exibição">Nome de exibição</label>
                                         <input type="text" id="nome_de_exibição" name="nome_de_exibição" class="form-control apenas_letras @error('nome_de_exibição') is-invalid @enderror" value="{{old('nome_de_exibição', auth()->user()->name)}}">
-        
+
                                         @error('nome_de_exibição')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -68,7 +68,7 @@
                                     <div class="col-md-12 form-group">
                                         <label for="rg">RG</label>
                                         <input type="text" id="rg" name="rg" class="form-control @error('rg') is-invalid @enderror" @if(auth()->user()->requerente != null) value="{{old('rg', auth()->user()->requerente->rg)}}"@else value="" disabled @endif>
-        
+
                                         @error('rg')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -80,7 +80,7 @@
                                     <div class="col-md-12 form-group">
                                         <label for="orgao_emissor">Orgão emissor</label>
                                         <input type="text" id="orgão_emissor" name="orgão_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('orgão_emissor', auth()->user()->requerente->orgao_emissor)}}" @else value="" disabled @endif>
-        
+
                                         @error('orgão_emissor')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -92,7 +92,7 @@
                                     <div class="col-md-12 form-group">
                                         <label for="cpf">CPF</label>
                                         <input type="text" id="cpf" name="cpf" class="form-control @error('cpf') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('cpf', auth()->user()->requerente->cpf)}}" @else value="" disabled @endif>
-        
+
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -104,7 +104,7 @@
                                     <div class="col-md-12 form-group">
                                         <label for="telefone">Telefone</label>
                                         <input type="text" id="telefone" name="telefone" class="form-control celular @error('telefone') is-invalid @enderror"  @if(auth()->user()->requerente != null) value="{{old('telefone', auth()->user()->requerente->telefone->numero)}}" @else value="" disabled @endif>
-        
+
                                         @error('telefone')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -226,8 +226,8 @@
     <div class="modal fade" id="modal-editar-endereco" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Atualizar endereço pessoal</h5>
+                <div class="modal-header" style="background-color: var(--primaria);">
+                    <h5 class="modal-title text-white">Atualizar endereço pessoal</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -241,7 +241,7 @@
                                 <div class="col-md-12 form-group">
                                     <label for="cep">CEP</label>
                                     <input id="cep" name="cep" type="text" class="form-control cep @error('cep') is-invalid @enderror" value="{{old('cep', auth()->user()->requerente->endereco->cep)}}" onblur="pesquisacep(this.value);">
-                                
+
                                     @error('cep')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -253,7 +253,7 @@
                                 <div class="col-md-8 form-group">
                                     <label for="rua">Rua</label>
                                     <input id="rua" name="rua" type="text" class="form-control @error('rua') is-invalid @enderror" value="{{old('rua', auth()->user()->requerente->endereco->rua)}}">
-                                
+
                                     @error('rua')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -263,7 +263,7 @@
                                 <div class="col-md-4">
                                     <label for="número">Número</label>
                                     <input id="número" name="número" type="text" class="form-control @error('número') is-invalid @enderror" value="{{old('número', auth()->user()->requerente->endereco->numero)}}">
-                                
+
                                     @error('número')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -275,7 +275,7 @@
                                 <div class="col-md-12 form-group">
                                     <label for="bairro">Bairro</label>
                                     <input id="bairro" name="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{old('bairro', auth()->user()->requerente->endereco->bairro)}}">
-                                
+
                                     @error('bairro')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -287,7 +287,7 @@
                                 <div class="col-md-12 form-group">
                                     <label for="cidade">Cidade</label>
                                     <input id="cidade" name="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" value="{{old('cidade', auth()->user()->requerente->endereco->cidade)}}">
-                                
+
                                     @error('cidade')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -328,7 +328,7 @@
                                         <option @if(old('uf', auth()->user()->requerente->endereco->estado) == 'SE') selected @endif value="SE">Sergipe</option>
                                         <option @if(old('uf', auth()->user()->requerente->endereco->estado) == 'TO') selected @endif value="TO">Tocantins</option>
                                     </select>
-                                
+
                                     @error('bairro')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -340,7 +340,7 @@
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">Cidade</label>
                                     <textarea id="complemento" name="complemento" type="text" class="form-control @error('complemento') is-invalid @enderror">{{old('complemento', auth()->user()->requerente->endereco->complemento)}}</textarea>
-                                
+
                                     @error('complemento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -370,11 +370,11 @@
                 var file = new FileReader();
                 file.onload = function(e) {
                     document.getElementById("photo").src = e.target.result;
-                };       
+                };
                 file.readAsDataURL(this.files[0]);
             }
         }
-        
+
         document.getElementById("photo_input").addEventListener("change", preview, false);
 
         function limpa_formulario_cep() {
