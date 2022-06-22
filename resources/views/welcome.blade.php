@@ -62,7 +62,7 @@
                 </a>
             </div>
             <div class="col-md-4 mb-3">
-                <a href="" style="text-decoration: none;">
+                <button class="h-100" data-toggle="modal" data-target="#consultaLicencaModal">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
             <div class="col-md-4 mb-3">
                 <a href="" style="text-decoration: none;">
@@ -200,6 +200,35 @@
                 </div>
             </div>
         @endif
+        <div class="modal fade" id="consultaLicencaModal" tabindex="-1" role="dialog" aria-labelledby="consultaLicencaLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #00883D; color: white;">
+                        <h5 class="modal-title" id="exampleModalLabel">Seleciona a Empresa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="novo-requerimento-form" method="GET" action="{{route('empresa.licenca.index')}}">
+                        <div class="modal-body">
+                            <div>
+                                <label for="selectEmpresa"> Empresas Cadastradas <span style="color: red">*</span></label>
+                                <select class="form-control" id="selectEmpresa" name="empresa">
+                                    @foreach($empresas as $empresa)
+                                        <option value="{{$empresa->id}}">{{$empresa->nome}} - {{$empresa->cpf_cnpj}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -305,7 +334,7 @@
                 </a>
             </div>
             <div class="col-md-4 mb-3">
-                <a href="" style="text-decoration: none;">
+                <button class="h-100" data-toggle="modal" data-target="#consultaLicencaModal">
                     <div class="card card-home">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -320,7 +349,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
             </div>
             <div class="col-md-4 mb-3">
                 <a href="" style="text-decoration: none;">
@@ -360,6 +389,35 @@
             </div>
         </div>
         <br>
+        <div class="modal fade" id="consultaLicencaModal" tabindex="-1" role="dialog" aria-labelledby="consultaLicencaLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #00883D; color: white;">
+                        <h5 class="modal-title" id="exampleModalLabel">Seleciona a Empresa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="novo-requerimento-form" method="GET" action="{{route('empresa.licenca.index')}}">
+                        <div class="modal-body">
+                            <div>
+                                <label for="selectEmpresa"> Empresas Cadastradas <span style="color: red">*</span></label>
+                                <select class="form-control" id="selectEmpresa" name="empresa">
+                                    @foreach($empresas as $empresa)
+                                        <option value="{{$empresa->id}}">{{$empresa->nome}} - {{$empresa->cpf_cnpj}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         @if ($noticias->count() > 0)
             <div class="row">
                 <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D;">
