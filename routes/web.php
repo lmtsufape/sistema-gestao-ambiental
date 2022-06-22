@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
 Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->name('denuncias.imagem');
+Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
@@ -147,7 +148,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
-    Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
     Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
