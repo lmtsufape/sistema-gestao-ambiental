@@ -169,6 +169,7 @@ Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('envi
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
+Route::get('/licencas/', [EmpresaController::class, 'licencasIndex'])->name('empresa.licenca.index');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
 Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');

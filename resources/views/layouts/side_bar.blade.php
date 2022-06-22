@@ -1,7 +1,7 @@
 <div class="wrapper h-100">
     @guest
     @else
-        
+
         {{--<nav id="sidebar" class="h-100">
             <div class="sidebar-header" style="align-items: center">
                 <a class="navbar-brand" id="logoSGA" href="{{route('welcome')}}">
@@ -461,7 +461,7 @@
                 </div>
             </div>
         </div>
-                
+
     </div>
 </div>
 
