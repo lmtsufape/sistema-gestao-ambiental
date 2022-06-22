@@ -62,10 +62,10 @@
                 </button>
             </div>
             <div class="col-md-4 mb-3">
-                <button class="h-100" data-toggle="modal" data-target="#consultaLicencaModal">
+                <button class="h-100 w-100" data-toggle="modal" data-target="#consultaLicencaModal">
                     <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row align-items-center">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="row">
                                 <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         CONSULTAS DE LICENÇAS AMBIENTAIS
@@ -82,8 +82,8 @@
             <div class="col-md-4 mb-3">
                 <button class="h-100 w-100" data-toggle="modal" data-target="#acompanhamentoSolicitacoesModal">
                     <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row align-items-center">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="row ">
                                 <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         ACOMPANHAMENTO DE SOLICITAÇÕES
@@ -100,8 +100,8 @@
             <div class="col-md-4 mb-3">
                 <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesPodaModal">
                     <div class="card card-home">
-                        <div class="card-body">
-                            <div class="row align-items-center">
+                        <div class="card-body align-items-center">
+                            <div class="row">
                                 <div class="col-md-9">
                                     <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                         SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
@@ -211,8 +211,8 @@
                     </div>
                     <form id="novo-requerimento-form" method="GET" action="{{route('empresa.licenca.index')}}">
                         <div class="modal-body">
-                            <p class="moda-text">
-                                Você poderá consultar as licenças e autorizações ambientais emitidas pela SDRMA.
+                            <p class="moda-text text-justify">
+                                Você poderá consultar as licenças e autorizações ambientais emitidas ou em processamento pela SDRMA.
                             </p>
                             <div>
                                 <label for="selectEmpresa"> Empresas Cadastradas <span style="color: red">*</span></label>
@@ -242,7 +242,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá solicitar a emissão da sua licença ou autorização ambiental, com base na lei municipal 4224/2015. Apenas os empreendimentos listados no anexo único do Impacto Local do Estado de Pernambuco (Resolução CONSEMA nº 01/2018) e cujas atividades se restrinjam aos limites do município devem se licenciar pela SDRMA. O processo de licenciamento ambiental consiste em uma etapa (Licença Simplificada) para empreendimentos de baixo potencial poluidor e porte micro, e em três etapas (Licenças Prévia, de Instalação e de Operação) para o restante. Autorizações ambientais são emitidas para atividades cujo impacto seja de tempo limitado.
                             </div>
                         </div>
@@ -264,7 +264,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá solicitar a renovação de sua licença ambiental dentro do prazo de renovação. O prazo para renovação é de até 120 dias antes do vencimento da licença atual. A nova licença só poderá ser emitida a partir do dia seguinte ao vencimento da licença anterior.
                             </div>
                         </div>
@@ -286,7 +286,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá registrar denúncias e ocorrências de crimes ambientais. A SDRMA irá encaminhar a sua equipe técnica ao local para averiguar fazer o diagnóstico ambiental do ocorrido e tomar as devidas providências administrativas, de acordo com a lei de crimes ambientais (Lei Federal nº 9.605/2018), bem como da lei municipal 4224/2015 (Sistema Municipal de Meio Ambiente).
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá acompanhar as solicitações feitas pelo seu usuário no sistema.
                             </div>
                         </div>
@@ -330,7 +330,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você pode requerer poda ou supressão nas áreas públicas do município. Apenas espécimes nativos da flora Brasileira necessitam de autorização para sua supressão em áreas particulares.
                             </div>
                         </div>
@@ -448,10 +448,10 @@
                     </button>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <button class="h-100" data-toggle="modal" data-target="#consultaLicencaModal">
+                    <button class="h-100 w-100" data-toggle="modal" data-target="#consultaLicencaModal">
                         <div class="card card-home">
-                            <div class="card-body">
-                                <div class="row align-items-center">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="row">
                                     <div class="col-md-9">
                                         <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                             CONSULTAS DE LICENÇAS AMBIENTAIS
@@ -468,8 +468,8 @@
                 <div class="col-md-4 mb-3">
                     <button class="h-100 w-100" data-toggle="modal" data-target="#acompanhamentoSolicitacoesModal">
                         <div class="card card-home">
-                            <div class="card-body">
-                                <div class="row align-items-center">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="row ">
                                     <div class="col-md-9">
                                         <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                             ACOMPANHAMENTO DE SOLICITAÇÕES
@@ -486,8 +486,8 @@
                 <div class="col-md-4 mb-3">
                     <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesPodaModal">
                         <div class="card card-home">
-                            <div class="card-body">
-                                <div class="row align-items-center">
+                            <div class="card-body align-items-center">
+                                <div class="row ">
                                     <div class="col-md-9">
                                         <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                             SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
@@ -515,7 +515,7 @@
                     </div>
                     <form id="novo-requerimento-form" method="GET" action="{{route('empresa.licenca.index')}}">
                         <div class="modal-body">
-                            <p class="moda-text">
+                            <p class="moda-text text-justify">
                                 Você poderá consultar as licenças e autorizações ambientais emitidas pela SDRMA.
                             </p>
                             <div>
@@ -546,7 +546,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá solicitar a emissão da sua licença ou autorização ambiental, com base na lei municipal 4224/2015. Apenas os empreendimentos listados no anexo único do Impacto Local do Estado de Pernambuco (Resolução CONSEMA nº 01/2018) e cujas atividades se restrinjam aos limites do município devem se licenciar pela SDRMA. O processo de licenciamento ambiental consiste em uma etapa (Licença Simplificada) para empreendimentos de baixo potencial poluidor e porte micro, e em três etapas (Licenças Prévia, de Instalação e de Operação) para o restante. Autorizações ambientais são emitidas para atividades cujo impacto seja de tempo limitado.
                             </div>
                         </div>
@@ -568,7 +568,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá solicitar a renovação de sua licença ambiental dentro do prazo de renovação. O prazo para renovação é de até 120 dias antes do vencimento da licença atual. A nova licença só poderá ser emitida a partir do dia seguinte ao vencimento da licença anterior.
                             </div>
                         </div>
@@ -590,7 +590,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá registrar denúncias e ocorrências de crimes ambientais. A SDRMA irá encaminhar a sua equipe técnica ao local para averiguar fazer o diagnóstico ambiental do ocorrido e tomar as devidas providências administrativas, de acordo com a lei de crimes ambientais (Lei Federal nº 9.605/2018), bem como da lei municipal 4224/2015 (Sistema Municipal de Meio Ambiente).
                             </div>
                         </div>
@@ -612,7 +612,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você poderá acompanhar as solicitações feitas pelo seu usuário no sistema.
                             </div>
                         </div>
@@ -634,7 +634,7 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <div class="modal-text">
+                            <div class="modal-text text-justify">
                                 Você pode requerer poda ou supressão nas áreas públicas do município. Apenas espécimes nativos da flora Brasileira necessitam de autorização para sua supressão em áreas particulares.
                             </div>
                         </div>
