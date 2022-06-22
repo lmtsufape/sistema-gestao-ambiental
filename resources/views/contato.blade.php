@@ -90,14 +90,14 @@
                                     <div class="d-flex">
                                         <div class="mr-auto p-2">
                                             <div class="btn-group">
-                                                <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-family:'arial'; font-weight:bold; color:#707070">Secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE</div>
+                                                <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-weight:bold; color:#707070">Secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE</div>
                                             </div>
                                         </div>
                                         <div class="p-2">
                                             <div style="margin-right:10px; cursor:pointer;" onclick="mostrarContato('mostrar1','texto1','img1')"><span id="texto1">Fechar</span></div>
                                         </div>
                                     </div>
-                                    <div id="mostrar1" style="display:block; font-size:14px; font-family:'arial';">
+                                    <div id="mostrar1" style="display:block; font-size:14px;">
                                         <div class="container" style="margin-left:3px; color:#707070">Centro Administrativo II Avenida Irga, s/n - Novo Heliópolis, Garanhuns - PE, 55297-256</div>
                                         <div class="container" style="margin-left:3px; color:#4a7836da; margin-bottom:10px;">Segunda a Sexta das 8h às 14h</div>
                                         {{-- <div class="container" style="margin-left:3px; color:#707070; margin-bottom:10px;">(87) 3761-0697</div> --}}
@@ -203,14 +203,14 @@
                                     <div class="d-flex">
                                         <div class="mr-auto p-2">
                                             <div class="btn-group">
-                                                <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-family:'arial'; font-weight:bold; color:#707070">Secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE</div>
+                                                <div style="margin-top:2.4px;margin-left:10px;font-size:15px; font-weight:bold; color:#707070">Secretaria de desenvolvimento rural e meio ambiente de Garanhuns - PE</div>
                                             </div>
                                         </div>
                                         <div class="p-2">
                                             <div style="margin-right:10px; cursor:pointer;" onclick="mostrarContato('mostrar1','texto1','img1')"><span id="texto1">Fechar</span></div>
                                         </div>
                                     </div>
-                                    <div id="mostrar1" style="display:block; font-size:14px; font-family:'arial';">
+                                    <div id="mostrar1" style="display:block; font-size:14px;">
                                         <div class="container" style="margin-left:3px; color:#707070">Centro Administrativo II Avenida Irga, s/n - Novo Heliópolis, Garanhuns - PE, 55297-256</div>
                                         <div class="container" style="margin-left:3px; color:#4a7836da; margin-bottom:10px;">Segunda a Sexta das 8h às 14h</div>
                                         {{-- <div class="container" style="margin-left:3px; color:#707070; margin-bottom:10px;">(87) 3761-0697</div> --}}

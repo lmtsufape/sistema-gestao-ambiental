@@ -82,8 +82,8 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="color: black">Espécie</th>
-                                            <th scope="col" style="color: black; text-align: center">Quantidade</th>
+                                            <th scope="col" style="color: Espécie">Espécie</th>
+                                            <th scope="col" style="color: Espécie; text-align: center">Quantidade</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -237,8 +237,8 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="color: black">Espécie</th>
-                                            <th scope="col" style="color: black; text-align: center">Quantidade</th>
+                                            <th scope="col" style="color: #212529">Espécie</th>
+                                            <th scope="col" style="color: #212529; text-align: center">Quantidade</th>
                                         </tr>
                                     </thead>
                                     <tbody>

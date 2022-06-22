@@ -64,7 +64,7 @@
                         </div>
                         @if ($denuncia->fotos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas:</div>
+                                <div class="col-12">Imagens anexadas:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->fotos as $foto)
@@ -83,7 +83,7 @@
                         @endif
                         @if ($denuncia->videos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Vídeos anexados junto a denúncia:</div>
+                                <div class="col-12">Vídeos anexados junto a denúncia:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->videos as $video)
@@ -113,7 +113,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
-                                        <h5 class="card-title mb-0" style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">Status da denúncia</h5>
+                                        <h5 class="card-title mb-0" style="color:#08a02e; font-weight:bold">Status da denúncia</h5>
                                     </div>
                                     <div class="col-md-12">
                                         @switch($denuncia->aprovacao)
@@ -220,7 +220,7 @@
                         </div>
                         @if ($denuncia->fotos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Imagens anexadas:</div>
+                                <div class="col-12">Imagens anexadas:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->fotos as $foto)
@@ -239,7 +239,7 @@
                         @endif
                         @if ($denuncia->videos->first() != null)
                             <br><div class="row">
-                                <div class="col-12" style="font-family: 'Times New Roman', Times, serif">Vídeos anexados junto a denúncia:</div>
+                                <div class="col-12">Vídeos anexados junto a denúncia:</div>
                             </div>
                             <div class="row">
                                 @foreach ($denuncia->videos as $video)
@@ -269,7 +269,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
-                                        <h5 class="card-title mb-0" style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">Status da denúncia</h5>
+                                        <h5 class="card-title mb-0" style="color:#08a02e; font-weight:bold">Status da denúncia</h5>
                                     </div>
                                     <div class="col-md-12">
                                         @switch($denuncia->aprovacao)

@@ -32,7 +32,7 @@
         <script src="{{asset('js/sidebars.js')}}"></script>
         <script src="{{asset('js/bootstrap.js.download')}}"></script><meta name="betech_apesar" content="UA-23288050-15"><meta name="betech_fatiei" content="UA-23288050-14">
     </head>
-    <body class="min-h-screen font-sans antialiased" style="background-color: #e9eef5; grid-template-rows: 1fr auto;">
+    <body class="min-h-screen antialiased" style="background-color: #e9eef5; grid-template-rows: 1fr auto;">
         <div>
             {{-- @livewire('navigation-menu') --}}
             @component('layouts.side_bar')@endcomponent

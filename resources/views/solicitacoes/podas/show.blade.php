@@ -128,7 +128,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
                                         <h5 class="card-title mb-0"
-                                            style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">
+                                            style="color:#08a02e; font-weight:bold">
                                             Status da solicitação</h5>
                                     </div>
                                     <div class="col-md-12">

@@ -441,7 +441,7 @@
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#2a9df4;">
                                 <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                                    <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                    <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold;">
                                         Mídias da solicitação
                                     </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -450,7 +450,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas:</div>
+                                <div class="col-12">Imagens anexadas:</div>
                             </div>
                             <br>
                             <div class="row">
