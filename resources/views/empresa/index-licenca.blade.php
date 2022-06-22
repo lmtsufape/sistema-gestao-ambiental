@@ -64,13 +64,13 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($requerimento && $requerimento->licenca && $licenca->status == 2 && $requerimento->licenca->validade)
-                                                            {{Date('d/m/Y', strtotime($licenca->validade))}}
+                                                        @if($requerimento && $requerimento->licenca && $requerimento->licenca->status == 2 && $requerimento->licenca->validade)
+                                                            {{Date('d/m/Y', strtotime($requerimento->licenca->validade))}}
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($requerimento->licenca && $licenca->status == 2 && $requerimento->licenca->caminho)
-                                                            <a title="Abrir Licença" href="{{route('licenca.show', ['licenca' => $licenca])}}"><img class="icon-licenciamento"
+                                                        @if ($requerimento->licenca && $requerimento->licenca->status == 2 && $requerimento->licenca->caminho)
+                                                            <a title="Abrir Licença" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento"
                                                                                                                                                     width="20px;"
                                                                                                                                                     src="{{asset('img/Visualizar.svg')}}"
                                                                                                                                                     alt="Analisar requerimentos"></a>
@@ -177,13 +177,13 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                @if($requerimento && $requerimento->licenca && $licenca->status == 2 && $requerimento->licenca->validade)
-                                                                    {{Date('d/m/Y', strtotime($licenca->validade))}}
+                                                                @if($requerimento && $requerimento->licenca && $requerimento->licenca->status == 2 && $requerimento->licenca->validade)
+                                                                    {{Date('d/m/Y', strtotime($requerimento->licenca->validade))}}
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                @if ($requerimento->licenca && $licenca->status == 2 && $requerimento->licenca->caminho)
-                                                                    <a title="Abrir Licença" href="{{route('licenca.show', ['licenca' => $licenca])}}"><img class="icon-licenciamento"
+                                                                @if ($requerimento->licenca && $requerimento->licenca->status == 2 && $requerimento->licenca->caminho)
+                                                                    <a title="Abrir Licença" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento"
                                                                                                                                                             width="20px;"
                                                                                                                                                             src="{{asset('img/Visualizar.svg')}}"
                                                                                                                                                             alt="Analisar requerimentos"></a>
