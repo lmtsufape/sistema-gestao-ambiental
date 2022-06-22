@@ -25,14 +25,14 @@ class ContatoController extends Controller
         ]);
 
         $user = new User();
-        $user->email = env('MAIL_CONTATO');
+        $user->email = env('MAIL_CONTATO', 'meioambientegaranhuns@gmail.com');
 
         Notification::send($user, new ContatoNotification($request, 'Contato público'));
 
         return redirect(route('contato'))->with(['success' => 'Obrigado por entrar em contato, sua mensagem foi enviada com sucesso!']);
     }
 
-    public function infoPorte() 
+    public function infoPorte()
     {
         return view('info_porte');
     }

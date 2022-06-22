@@ -18,12 +18,12 @@
                     </div>
                     @can('isSecretarioOrAnalista', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                            <a class="btn my-2" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                            {{-- <a class="btn my-2" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                         </div>
                     @endcan
                     @can('isRequerente', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                            <a class="btn my-2"  href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                            {{-- <a class="btn my-2"  href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                         </div>
                     @endcan
                 </div>
@@ -94,7 +94,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-10">
-                                        <label class="titulo-documento" for="documento_{{$documento->id}}"><span style="color: red; font-weight: bold;">*</span>{{$documento->nome}}</label>
+                                        <label class="titulo-documento" for="documento_{{$documento->id}}">{{$documento->nome}}<span style="color: red; font-weight: bold;">*</span></label>
                                     </div>
                                     <div class="col-md-2">
                                         @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->caminho != null) <a href="{{route('requerimento.documento', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="arquivo atual" title="Documento enviado" style="width: 16px;"></a> @endif

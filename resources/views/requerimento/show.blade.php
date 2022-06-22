@@ -9,7 +9,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento nº {{$requerimento->id}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2"  @if ($visita ?? '') href="{{route('visitas.index')}}" @else   href="javascript:window.history.back();" @endif style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2"  @if ($visita ?? '') href="{{route('visitas.index')}}" @else   href="javascript:window.history.back();" @endif style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>
@@ -378,7 +378,7 @@
         <div class="modal fade" id="documentos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #28a745;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Requisitar documentos</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -466,7 +466,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form">Enviar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="documentos-form">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -476,7 +476,7 @@
         <div class="modal fade" id="documentos-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #28a745;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Editar checklist de documentos</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -554,7 +554,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="documentos-form-edit">Atualizar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="documentos-form-edit">Atualizar</button>
                     </div>
                 </div>
             </div>
@@ -581,7 +581,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success submeterFormBotao" form="form-criar-novo-boleto">Confirmar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-criar-novo-boleto">Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -616,7 +616,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success submeterFormBotao" form="atribuir-analista-form">Atribuir ao analista</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="atribuir-analista-form">Atribuir ao analista</button>
                 </div>
             </div>
         </div>

@@ -112,7 +112,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         @can('create', App\Models\Noticia::class)
-                            <a title="Criar notificação" href="{{route('noticias.create')}}">
+                            <a title="Criar notícia" href="{{route('noticias.create')}}">
                                 <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notícia">
                             </a>
                         @endcan
@@ -140,7 +140,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <a href="{{$noticia->link}}" style="text-decoration-color: black;"><h5 class="card-title">{{$noticia->titulo}}</h5></a>
-                                                <p class="card-text">{!! mb_strimwidth($noticia->texto, 0, 100, "...") !!}</p>
+                                                <p class="card-text">{!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}</p>
                                                 <p class="card-text"><small class="text-muted retirar-formatacao" style="text-decoration: none;">{{$noticia->exibirDatas() ? $noticia->dataPublicado() : $noticia->dataPublicado() . ' - ' . $noticia->ultimaAtualizacao()}}</small></p>
                                             </div>
                                         </div>

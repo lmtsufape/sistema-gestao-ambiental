@@ -36,7 +36,7 @@
         <header>
             @component('layouts.nav_bar')@endcomponent
         </header>
-        <div class="font-sans antialiased">
+        <div class="antialiased">
             <!-- Page Heading -->
 
             <div class="">

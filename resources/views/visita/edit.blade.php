@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted"> Visita > Editar visita</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a title="Voltar" @if ($verRequerimento ?? '') href="{{route('requerimento.visitas', ['id' => $visita->requerimento])}}" @else href="{{route('visitas.index')}}" @endif>
+                        {{-- <a title="Voltar" @if ($verRequerimento ?? '') href="{{route('requerimento.visitas', ['id' => $visita->requerimento])}}" @else href="{{route('visitas.index')}}" @endif>
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 <div div class="form-row">
@@ -93,7 +93,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" class="btn btn-success submeterFormBotao" form="editar-visita" style="width: 100%">Salvar</button>
+                                <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="editar-visita" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>

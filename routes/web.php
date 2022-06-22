@@ -42,6 +42,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
 Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->name('denuncias.imagem');
+Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
+Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
@@ -147,8 +150,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/{requerimento}/licenca/create', [LicencaController::class, 'create'])->name('licenca.create');
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
-    Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
-    Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
@@ -169,6 +170,7 @@ Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('envi
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
+Route::get('/licencas/', [EmpresaController::class, 'licencasIndex'])->name('empresa.licenca.index');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
 Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');

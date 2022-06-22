@@ -6,18 +6,13 @@
         <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav ml-auto">
                 <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                    <a class="navbar-brand nav-link-logo" href="https://www.instagram.com/prefgaranhuns/" target="_blank">
                         <img class="img-logo" src="{{asset('img/ig.svg')}}" alt="Logo ig" style="height: 40px; width: 40px;">
                     </a>
                 </li>
                 <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
+                    <a class="navbar-brand nav-link-logo" href="https://www.facebook.com/PrefeituraGaranhuns/" target="_blank">
                         <img class="img-logo" src="{{asset('img/fb.svg')}}" alt="Logo fb" style="height: 40px; width: 40px;">
-                    </a>
-                </li>
-                <li>
-                    <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
-                        <img class="img-logo" src="{{asset('img/rede.svg')}}" alt="Logo rede" style="height: 40px; width: 40px;">
                     </a>
                 </li>
             </ul>
@@ -30,29 +25,31 @@
         <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav ml-auto">
+        <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
+            <ul class="navbar-nav">
                 @guest
-                    <li class="nav-item @if(request()->routeIs('welcome')) active @endif">
-                        <a class="nav-link" href="{{route('welcome')}}">Início</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('welcome')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('welcome')}}">Início</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('noticias.index')) active @endif">
-                        <a class="nav-link" href="{{route('noticias.index')}}">Notícias</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('noticias.index')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('noticias.index')}}">Notícias</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('legislacao')) active @endif">
-                        <a class="nav-link" href="{{route('legislacao')}}">Legislação</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('legislacao')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('legislacao')}}">Legislação</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('contato')) active @endif">
-                        <a class="nav-link" href="{{route('contato')}}">Contato</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('contato')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('contato')}}">Contato</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('sobre')) active @endif">
-                        <a class="nav-link" href="{{route('sobre')}}">Sobre</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('sobre')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('sobre')}}">Sobre</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('login')) active @endif">
-                        <a class="nav-link" href="{{route('login')}}">Entrar</a>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item align-self-center @if(request()->routeIs('login')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('login')}}">Entrar</a>
                     </li>
-                    <li class="nav-item @if(request()->routeIs('register')) active @endif">
-                        <a class="nav-link" href="{{route('register')}}">Cadastre-se</a>
+                    <li class="nav-item align-self-center @if(request()->routeIs('register')) active @endif">
+                        <a class="nav-link text-uppercase font-weight-bold" href="{{route('register')}}">Cadastre-se</a>
                     </li>
                 @else
                     {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">

@@ -17,12 +17,12 @@
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Analisar documentação - {{$requerimento->empresa->nome}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        
+
                         @error('error')
                             <div class="alert alert-danger" role="alert">
                                 {{$message}}
@@ -74,7 +74,7 @@
                                             <div class="form-group col-sm-8">
                                                 <label for="comentario_{{$documento->id}}">{{ __('Comentário') }}</label>
                                                 <textarea id="comentario_{{$documento->id}}" class="form-control @error('comentario'.$documento->id) is-invalid @enderror" type="text" name="comentario_{{$documento->id}}" autofocus autocomplete="comentario_{{$documento->id}}">@if(old('comentario_'.$documento->id)!=null){{old('comentario_'.$documento->id)}}@else{{$requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario}}@endif</textarea>
-        
+
                                                 @error('comentario_{{$documento->id}}')
                                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                                         {{ $message }}

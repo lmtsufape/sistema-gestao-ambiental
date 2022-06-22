@@ -13,9 +13,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Programação > Visitas > Relátorio</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="javascript:window.history.back();">
+                        {{-- <a title="Voltar" href="javascript:window.history.back();">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                                 <button class="btn btn-warning" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Revisar' : 'Revisar' }}</button>
                             </div>
                             <div class="col-md-6 form-group">
-                                <button class="btn btn-success" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
+                                <button class="btn btn-success btn-color-dafault" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
     <div class="modal fade" id="staticBackdrop-aprovar-relatorio" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #28a745;">
+                <div class="modal-header" style="background-color: var(--primaria);">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Aprovar relátorio</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success submeterFormBotao" form="form-relatorio-aprovar">Aprovar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-relatorio-aprovar">Aprovar</button>
                 </div>
             </div>
         </div>

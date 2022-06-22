@@ -40,6 +40,13 @@ class EmpresaController extends Controller
         return view('empresa.create', compact('setores'));
     }
 
+    public function licencasIndex(Request $request)
+    {
+        $empresa = Empresa::find($request->empresa);
+        $requerimentos = $empresa->requerimentos;
+        $tipos = Requerimento::TIPO_ENUM;
+        return view('empresa.index-licenca', compact('requerimentos', 'empresa', 'tipos'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -91,7 +98,7 @@ class EmpresaController extends Controller
         $empresa = Empresa::find($id);
         $this->authorize('update', $empresa);
         $setores = Setor::orderBy('nome')->get();
-        
+
         return view('empresa.edit', compact('setores', 'empresa'));
     }
 
@@ -112,7 +119,7 @@ class EmpresaController extends Controller
 
         //Adicionando
         foreach ($request->cnaes_id as $cnae_id) {
-            
+
             if ($empresa->cnaes()->where('cnae_id', $cnae_id)->first() == null) {
                 $empresa->cnaes()->attach((Cnae::find($cnae_id)));
             }
@@ -161,12 +168,12 @@ class EmpresaController extends Controller
 
         $empresa->delete();
         $endereco->delete();
-        $telefone->delete();        
+        $telefone->delete();
 
         return redirect(route('empresas.index'))->with(['success' => 'Empresa deletada com sucesso!']);
     }
 
-    public function statusRequerimento(Request $request) 
+    public function statusRequerimento(Request $request)
     {
         $empresa = Empresa::find($request->empresa_id);
 
@@ -177,7 +184,7 @@ class EmpresaController extends Controller
                     'enum_tipo' => Requerimento::TIPO_ENUM['primeira_licenca'],
                 ],
             ]);
-        } 
+        }
         return response()->json([
             [
                 'tipo' => 'Renovação',

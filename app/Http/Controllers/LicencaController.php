@@ -76,7 +76,6 @@ class LicencaController extends Controller
 
     public function documento(Licenca $licenca)
     {
-        $this->authorize('baixarLicenca', $licenca);
         return response()->file(storage_path('app/'.$licenca->caminho));
     }
 

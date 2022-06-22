@@ -11,7 +11,7 @@
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        <a class="btn my-2" href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a>
+                        {{-- <a class="btn my-2" href="javascript:window.history.back();" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>
@@ -128,7 +128,7 @@
                                 <div class="form-row">
                                     <div class="col-md-12" style="margin-bottom: 0.5rem">
                                         <h5 class="card-title mb-0"
-                                            style="font-family:Arial, Helvetica, sans-serif; color:#08a02e; font-weight:bold">
+                                            style="color:#08a02e; font-weight:bold">
                                             Status da solicitação</h5>
                                     </div>
                                     <div class="col-md-12">

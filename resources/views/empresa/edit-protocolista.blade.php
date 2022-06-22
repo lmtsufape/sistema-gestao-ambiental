@@ -9,9 +9,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento  nº {{$requerimento->id}} > Editar empresa/serviço do requerimento</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
-                        <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">
+                        {{-- <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">
                             <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">clique aqui para saber como classificar o porte</a>
+                                        <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">(como classificar o porte?)</a>
                                         <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
                                             @if(old('porte') != null)
                                                 <option value="">-- Selecionar o porte da empresa --</option>
@@ -126,7 +126,7 @@
                         <div class="form-row">
                             <div class="col-md-6"></div>
                             <div class="col-md-6" style="text-align: right">
-                                <button type="submit" class="btn btn-success submeterFormBotao" form="editar-empresa" style="width: 100%">Salvar</button>
+                                <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="editar-empresa" style="width: 100%">Salvar</button>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
     $(document).ready(function($) {
         selecionarSetor();
     });
-    
+
     window.selecionarSetor = function(){
         //setor
         var historySelectList = $('select#idSelecionarSetor');
@@ -165,7 +165,7 @@
                                         <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
                                         <div style="width:140px; height:25px; text-align:right;">
                                             <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
-                                                <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
+                                                <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-color-dafault btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
                                             </div>
                                         </div>
                                     </div>`;
@@ -195,8 +195,8 @@
             var $setor_id = $('option:selected', historySelectList).val();
             if($setor == $setor_id){
                 $('#dentroTabelaCnaes').append(elemento);
-                divBtn.style.backgroundColor = "#28a745";
-                divBtn.style.borderColor = "#28a745";
+                divBtn.style.backgroundColor = "var(--primaria)";
+                divBtn.style.borderColor = "var(--primaria)";
                 divBtn.textContent = "Adicionar";
                 $('#inputCnae_'+$id).remove();
             }else{

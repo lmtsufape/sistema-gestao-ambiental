@@ -150,6 +150,14 @@
                     </div>
                     <ul class="list-group list-unstyled">
                         @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Criar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Criar visita
+                                    </div>
+                                </div>
+                            </li>
                             {{--consulta necessaria pra verificar se tem notificacao feitas--}}
                             <li>
                                 <div title="Visualizar notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
@@ -335,7 +343,7 @@
                             @if($denuncia->fotos->first() != null)
                                 <div class="row form-row">
                                     <div class="col-md-12 form-group">
-                                        <label for="imagens_anexadas">{{__('Imagens anexadas junto a denúncia:')}}</label>
+                                        <label for="imagens_anexadas">{{__('Imagens anexadas:')}}</label>
                                     </div>
                                 </div>
                             @endif
@@ -371,7 +379,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a denúncia:</div>
+                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas:</div>
                             </div>
                             <br>
                             <div class="row">
@@ -433,7 +441,7 @@
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#2a9df4;">
                                 <img src="{{ asset('img/logo_atencao3.png') }}" alt="Logo" style=" margin-right:15px;"/>
-                                    <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold; font-family: 'Roboto', sans-serif;">
+                                    <h5 class="modal-title" style="font-size:20px; color:white; font-weight:bold;">
                                         Mídias da solicitação
                                     </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -442,7 +450,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12" style="font-family: 'Roboto', sans-serif;">Imagens anexadas junto a solicitação:</div>
+                                <div class="col-12">Imagens anexadas:</div>
                             </div>
                             <br>
                             <div class="row">

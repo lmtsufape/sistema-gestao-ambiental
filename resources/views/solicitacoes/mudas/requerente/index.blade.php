@@ -67,13 +67,19 @@
                         Legenda
                     </div>
                     <ul class="list-group list-unstyled">
-                        @if($solicitacoes->first() != null)
-                            <li>
-                                <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Visualizar solicitação
-                                    </div>
+                        <li>
+                            <div title="Cadastrar solicitação de muda" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Cadastrar solicitação de muda">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Cadastrar solicitação de muda
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Visualizar solicitação
                                 </div>
                             </li>
                         @endif
