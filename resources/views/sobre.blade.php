@@ -26,13 +26,14 @@
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Cadastro de usuários para disponibilização dos serviços;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Envio de documentos durante os processos;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Avaliação de documentos enviados;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Denúnciar crimes ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de licenças ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e poda/supressão;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Geração e divulgação de notícias.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Publicação de notícias.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Registro e avaliação de denúncias referentes a potenciais crimes ambientais.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de mudas.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Requerimento para poda/supressão.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Requerimento de licenças ambientais com emissão de boletos e submissão eletrônica de documentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Consulta de licenças emitidas ou de solicitações por parte de empreendimentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Múltiplos perfis para tramitação, análise documental e vistoria dos requerimentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Geração de relatórios.</li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
@@ -85,6 +86,16 @@
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
                                         <li><a href="https://www.linkedin.com/in/jleonardolima" target="_blanck" class="link-dark" style="font-size: 15px;">José Leonardo Santos de Lima</a></li>
+                                    </ul>
+                                </div>
+                                <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
+                                    Secretaria de Desenvolvimento Rural e Meio Ambiente:
+                                </div>
+                                <div>
+                                    <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
+                                        <li style="font-size: 15px;">Antonio Fernando Alves de Souza</li>
+                                        <li style="font-size: 15px;">Pâmela Rodrigues Azevedo</li>
+                                        <li style="font-size: 15px;">Yalli Vanessa Borges Souza</li>
                                     </ul>
                                 </div>
                                 {{-- <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
@@ -134,13 +145,14 @@
                                 </div>
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Cadastro de usuários para disponibilização dos serviços;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Envio de documentos durante os processos;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Avaliação de documentos enviados;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Denúnciar crimes ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de licenças ambientais;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de autorizações de plantio de mudas e poda/supressão;</li>
-                                        <li style="color: var(--textcolor2); font-size: 15px;">Geração e divulgação de notícias.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Publicação de notícias.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Registro e avaliação de denúncias referentes a potenciais crimes ambientais.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Solicitação de mudas.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Requerimento para poda/supressão.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Requerimento de licenças ambientais com emissão de boletos e submissão eletrônica de documentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Consulta de licenças emitidas ou de solicitações por parte de empreendimentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Múltiplos perfis para tramitação, análise documental e vistoria dos requerimentos.</li>
+                                        <li style="color: var(--textcolor2); font-size: 15px;">Geração de relatórios.</li>
                                     </ul>
                                 </div>
                                 <div style="color: var(--textcolor); font-size: 18px; font-weight: 600;" class="my-1">
@@ -193,6 +205,16 @@
                                 <div>
                                     <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
                                         <li><a href="https://www.linkedin.com/in/jleonardolima" target="_blanck" class="link-dark" style="font-size: 15px;">José Leonardo Santos de Lima</a></li>
+                                    </ul>
+                                </div>
+                                <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
+                                    Secretaria de Desenvolvimento Rural e Meio Ambiente:
+                                </div>
+                                <div>
+                                    <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
+                                        <li style="font-size: 15px;">Antonio Fernando Alves de Souza</li>
+                                        <li style="font-size: 15px;">Pâmela Rodrigues Azevedo</li>
+                                        <li style="font-size: 15px;">Yalli Vanessa Borges Souza</li>
                                     </ul>
                                 </div>
                                 {{-- <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">
