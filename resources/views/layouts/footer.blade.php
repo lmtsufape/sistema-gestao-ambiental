@@ -2,8 +2,11 @@
     <div id="appRodape">
         <div class="container">
             <div class="row">
-                <div class="col-md-4" style="margin-top: 40px;">
+                <div class="col-md-4">
                     <div class="row" style="text-align: center" >
+                        <div class="col-md-12">
+                            <label>Realização:</label>
+                        </div>
                         <div class="col-md-6" >
                             <a href="https://garanhuns.pe.gov.br/" target="_blank" style="text-align: center">
                                 <img class="img" src="{{asset('img/prefeitura-garanhuns.png')}}" alt="Prefeitura de Garanhuns" width="120px;" style="max-width: 120px; max-height: 120px; display:inline;" >
