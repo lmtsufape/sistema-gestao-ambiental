@@ -210,6 +210,15 @@
                                                         1
                                                     </div>
                                                 </div>
+                                                <div class="popup-texto">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row col-md-12">
+                                                                texto descritivo
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="@if($requerimento->status == 2)circulo-maior-selected @endif distancia-circulo">
                                                 <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido 

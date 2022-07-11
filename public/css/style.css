@@ -858,6 +858,20 @@ a.article:hover {
     border:3px solid #50c2db; 
     border-radius: 60%; 
     background-color: white;
+    cursor: pointer;
+}
+
+.circulo-maior-selected:hover {
+    transition: 0.5s;
+    width: 55px;
+    height: 55px;
+}
+
+.circulo-maior-selected:hover .circulo-selected {
+    transition: 0.5s;
+    width: 41px;
+    height: 41px;
+    font-size: 20px;
 }
 
 .circulo-concluido {
@@ -866,6 +880,14 @@ a.article:hover {
     border:3px solid #34A877; 
     border-radius: 60%; 
     background-color: #34A877;
+    cursor: pointer;
+}
+
+.circulo-concluido:hover{
+    transition: 0.5s;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
 }
 
 .circulo {
@@ -874,6 +896,14 @@ a.article:hover {
     border:1px solid #8E8E8E;
     border-radius: 60%;
     background-color: white;
+    cursor: pointer;
+}
+
+.circulo:hover{
+    transition: 0.5s;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
 }
 
 .numero-selected {
@@ -881,6 +911,7 @@ a.article:hover {
     color: #50c2db; 
     font-weight: bold;
     padding-top: 3px;
+    
 }
 
 .numero-concluido {
@@ -908,6 +939,18 @@ a.article:hover {
     top: 60%;
     left: 0;
     border-bottom: solid 4px #680072;
+}
+
+.popup-texto{
+    position: absolute;
+}
+
+.distancia-circulo .popup-texto {
+    display: none;
+  }
+
+.distancia-circulo:hover .popup-texto {
+    display: block;
 }
 
 /* ---------------------------------------------------
