@@ -154,6 +154,8 @@ class LicencaController extends Controller
         if ($request->status == 1) {
             $licenca->status = Licenca::STATUS_ENUM['aprovada'];
             $requerimento = $licenca->requerimento;
+            $requerimento->status = Requerimento::STATUS_ENUM['finalizada'];
+            $requerimento->update();
             Notification::send($requerimento->empresa->user, new LicencaAprovada($requerimento, $licenca));
         } else {
             $licenca->status = Licenca::STATUS_ENUM['revisar'];

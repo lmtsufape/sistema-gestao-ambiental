@@ -837,6 +837,79 @@ a.article:hover {
     display: none;
 }
 
+.distancia-circulo {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.circulo-selected {
+    width: 33px;
+    height: 33px;
+    border:2px solid #50c2db; 
+    border-radius: 60%; 
+    background-color: white;
+}
+
+.circulo-maior-selected {
+    padding-left: 4px;
+    padding-top: 4px;
+    width: 47px;
+    height: 47px;
+    border:3px solid #50c2db; 
+    border-radius: 60%; 
+    background-color: white;
+}
+
+.circulo-concluido {
+    width: 38px;
+    height: 38px;
+    border:3px solid #34A877; 
+    border-radius: 60%; 
+    background-color: #34A877;
+}
+
+.circulo {
+    width: 38px;
+    height: 38px;
+    border:1px solid #8E8E8E;
+    border-radius: 60%;
+    background-color: white;
+}
+
+.numero-selected {
+    text-align: center; 
+    color: #50c2db; 
+    font-weight: bold;
+    padding-top: 3px;
+}
+
+.numero-concluido {
+    text-align: center; 
+    color: #ffffff; 
+    font-weight: bold;
+    padding-top: 3px;
+}
+
+.numero {
+    text-align: center;
+    padding-top: 4px;
+}
+
+#wrapper{
+    position: relative;
+}
+
+#content-circulos{
+    position: relative;
+}
+
+#background-circulos{
+    position: absolute;
+    top: 60%;
+    left: 0;
+    border-bottom: solid 4px #680072;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */

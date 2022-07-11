@@ -177,83 +177,167 @@
                         </div>
                     </div>
                 @else
-                    <div class="card card-borda-esquerda" style="width: 100%;">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                            <table class="table mytable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Empresa/serviço</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Valor</th>
-                                        <th scope="col">Data</th>
-                                        <th scope="col">Opções</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($requerimentos as $i => $requerimento)
-                                        <tr>
-                                            <th scope="row">{{($i+1)}}</th>
-                                            <td>
-                                                {{$requerimento->empresa->nome}}
-                                            </td>
-                                            <td>
-                                                {{ucfirst($requerimento->status())}}
-                                            </td>
-                                            <td>
-                                                {{ucfirst($requerimento->tipoString())}}
-                                            </td>
-                                            <td>
-                                                @if($requerimento->valor == null)
-                                                    {{__('Em definição')}}
-                                                @else
-                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                        Pago
-                                                    @else
-                                                        R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
-                                                        @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
-                                                            <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
-                                                        @endif
-                                                    @endif
-                                                @endif
-                                            </td>
-                                            <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                            <td>
-                                                <div class="btn-group align-items-center">
-                                                    @if($requerimento->visitas->count() > 0)
-                                                        <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
-                                                    @endif
-                                                    @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                                                        @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                            <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                        @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                            <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                        @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                            <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
-                                                        @endif
-                                                    @endif
-                                                    @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
-                                                    @endif
-                                                    @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                        <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
-                                                    @endif
+                    @forelse ($requerimentos as $i => $requerimento)
+                        <div class="card card-borda-esquerda @if($i>0)mt-3 @endif" style="width: 100%;">
+                            <div class="card-body" style="padding-top: 10px;">
+                                <div class="row">
+                                    <div class="col-md-12" style="font-size: 20px; font-weight: bold;">
+                                        {{$requerimento->empresa->nome}} -  {{ucfirst($requerimento->tipoString())}}
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top: 10px;">
+                                    <div class="col-md-12" style="font-size: 16px; font-weight: bold; color: rgb(110, 110, 110)">
+                                        {{ucfirst($requerimento->status())}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="font-size: 16px; padding-left: 27px;">
+                                        {{"Algum texto aqui para explicar algo que não sei definir ainda"}}
+                                    </div>
+                                </div>
+                                <div id="wrapper">
+                                    <div class="row">
+                                        <div id="background-circulos" class="col-md-12">
+                                        </div>
+                                    </div>
+                                    <div id="content-circulos">
+                                        <div class="row justify-content-center align-items-center mt-3 mb-3">
+                                            <div class="@if($requerimento->status == 1)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 1)circulo-selected @elseif($requerimento->status > 1)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 1)numero-selected @elseif($requerimento->status > 1)numero-concluido 
+                                                        @else numero @endif">
+                                                        1
+                                                    </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </div>
+                                            <div class="@if($requerimento->status == 2)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 2)numero-selected @elseif($requerimento->status > 2)numero-concluido 
+                                                        @else numero @endif">
+                                                        2
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="@if($requerimento->status == 3)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 3)circulo-selected @elseif($requerimento->status > 3)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 3)numero-selected @elseif($requerimento->status > 3)numero-concluido 
+                                                        @else numero @endif">
+                                                        3
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="@if($requerimento->status == 4)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 4)circulo-selected @elseif($requerimento->status > 4)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 4)numero-selected @elseif($requerimento->status > 4)numero-concluido 
+                                                        @else numero @endif">
+                                                        4
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="@if($requerimento->status == 5)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 5)circulo-selected @elseif($requerimento->status > 5)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 5)numero-selected @elseif($requerimento->status > 5)numero-concluido 
+                                                        @else numero @endif">
+                                                        5
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="@if($requerimento->status == 6)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 6)circulo-selected @elseif($requerimento->status > 6)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 6)numero-selected @elseif($requerimento->status > 6)numero-concluido 
+                                                        @else numero @endif">
+                                                        6
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="@if($requerimento->status == 7)circulo-maior-selected @endif distancia-circulo">
+                                                <div class="@if($requerimento->status == 7)circulo-selected @elseif($requerimento->status > 7)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 7)numero-selected @elseif($requerimento->status > 7)numero-concluido 
+                                                        @else numero @endif">
+                                                        7
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="distancia-circulo">
+                                                <div class="@if($requerimento->status == 8)circulo-concluido 
+                                                    @else circulo @endif">
+                                                    <div class="@if($requerimento->status == 8)numero-concluido 
+                                                        @else numero @endif">
+                                                        8
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="border-bottom:solid 2px #e0e0e0;">
+                                </div>
+                                <div class="row justify-content-center align-items-center" style="text-align: center">
+                                    <div class="col-md-6">
+                                        <span style="color: #00883D; font-weight: bold;">Valor:</span>
+                                        @if($requerimento->valor == null)
+                                            {{__('Em definição')}}
+                                        @else
+                                            @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                Pago
+                                            @else
+                                                R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
+                                                    <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span style="color: #00883D; font-weight: bold;">Data de criação:</span>
+                                        {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-6" style="text-align: right">
+                                        <div class="btn-group align-items-center">
+                                            @if($requerimento->visitas->count() > 0)
+                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                            @endif
+                                            @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                                @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
+                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
+                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                @endif
+                                            @endif
+                                            @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            @if($requerimentos->first() == null)
+                        </div>
+                    @empty
+                        <div class="card card-borda-esquerda" style="width: 100%;">
+                            <div class="card-body">
                                 <div class="col-md-12 text-center" style="font-size: 18px;">
                                     {{__('Nenhum requerimento foi criado por você')}}
                                 </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
+                    @endforelse
                 @endcan
                 @can('isSecretarioOrAnalista', \App\Models\User::class)
                     <div class="form-row justify-content-center">
