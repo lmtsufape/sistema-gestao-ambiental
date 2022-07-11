@@ -95,6 +95,42 @@ class Requerimento extends Model
         }
     }
 
+    public function status()
+    {
+        switch ($this->status) {
+            case $this::STATUS_ENUM['requerida']:
+                return 'requerida';
+                break;
+            case $this::STATUS_ENUM['em_andamento']:
+                return 'em andamento';
+                break;
+            case $this::STATUS_ENUM['documentos_requeridos']:
+                return 'documentos requeridos';
+                break;
+            case $this::STATUS_ENUM['documentos_enviados']:
+                return 'documentos enviados';
+                break;
+            case $this::STATUS_ENUM['documentos_aceitos']:
+                return 'documentos aceitos';
+                break;
+            case $this::STATUS_ENUM['visita_marcada']:
+                return 'visita marcada para '.date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
+                break;
+            case $this::STATUS_ENUM['visita_realizada']:
+                return 'visita feita em '.date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
+                break;
+            case $this::STATUS_ENUM['finalizada']:
+                return 'finalizada';
+                break;
+            case $this::STATUS_ENUM['cancelada']:
+                return 'cancelada';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+
     public function tipoDeLicenca()
     {
         switch ($this->tipo_licenca) {
