@@ -954,6 +954,10 @@ a.article:hover {
     font-size: 16px;
 }
 
+.card-popup:hover{
+    background-color: rgba(56, 17, 53, 0.9);
+}
+
 .etapa-titulo{
     font-size: 20px;
 }

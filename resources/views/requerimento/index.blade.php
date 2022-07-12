@@ -20,6 +20,9 @@
                             <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
                                 <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar novo requerimento">
                             </button>
+                            <a id="btn-etapas-requerimento" class="btn btn-success btn-color-dafault" title="Etapas do requerimento" data-toggle="modal" data-target="#etapas" style="cursor: pointer">
+                                Etapas
+                            </a>
                         </div>
                     @endcan
                 </div>
@@ -844,6 +847,141 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="novo-requerimento-form">Salvar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {{-- Etapas do requerimento --}}
+    <div class="modal fade bd-example-modal-lg" id="etapas" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: var(--primaria);">
+              <h5 class="modal-title text-white" id="staticBackdropLabel">Etapas do requerimento</h5>
+              <button type="button" class="close" style="opacity: 1; color: white" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Todas as etapas do processo de emissão da licença seguem de forma sequencial. Para chegar na etapa 8, onde você receberá a sua licença, é necessário passar por todos as outras 7 etapas.
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 1
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Após criar o seu requerimento de licença, ele será enviado para o banco de requerimentos da secretaria.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 2
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Seu requerimento será analisado por um dos protocolistas.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 3
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Envie os documentos solicitados pelo protocolista.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 4
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Seus documentos serão recebidos e serão analisados pelo protocolista.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 5
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Seus documentos serão aprovados, aguarde o agendamento da visita à empresa/serviço.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 6
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                A visita à empresa/serviço será agendada, aguarde a equipe da secretaria na data informada.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 7
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                A visita à empresa/serviço será realizada, aguarde a análise da secretaria para receber sua licença.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-popup mt-2">
+                    <div class="card-body">
+                        <div class="etapa-titulo">
+                            <div class="row col-md-12 align-items-center">
+                                Etapa 8
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Sua licença será disponibilizada.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
