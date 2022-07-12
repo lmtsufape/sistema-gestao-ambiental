@@ -202,4 +202,39 @@ class Requerimento extends Model
                 break;
         }
     }
+
+    public function textoEtapa(){
+        switch ($this->status) {
+            case $this::STATUS_ENUM['requerida']:
+                return 'Seu requerimento será enviado para o banco de requerimentos da secretaria.';
+                break;
+            case $this::STATUS_ENUM['em_andamento']:
+                return 'Seu requerimento está sendo analisado por um dos protocolistas';
+                break;
+            case $this::STATUS_ENUM['documentos_requeridos']:
+                return 'Envie os documentos solicitados pelo protocolista.';
+                break;
+            case $this::STATUS_ENUM['documentos_enviados']:
+                return 'Seus documentos foram recebidos e serão analisados pelo protocolista.';
+                break;
+            case $this::STATUS_ENUM['documentos_aceitos']:
+                return 'Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.';
+                break;
+            case $this::STATUS_ENUM['visita_marcada']:
+                return 'A visita à empresa/serviço '. $this->empresa->nome .' foi agendada, aguarde a equipe da secretaria na data informada.';
+                break;
+            case $this::STATUS_ENUM['visita_realizada']:
+                return 'A visita à empresa/serviço '. $this->empresa->nome .'foi realizada, aguarde a análise da secretaria para receber sua licença.';
+                break;
+            case $this::STATUS_ENUM['finalizada']:
+                return 'Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".';
+                break;
+            case $this::STATUS_ENUM['cancelada']:
+                return 'cancelada';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
 }
