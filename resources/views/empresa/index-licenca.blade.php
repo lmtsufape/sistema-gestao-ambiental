@@ -55,11 +55,11 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($requerimento->tipo <= 7)
+                                                        @if($requerimento->status <= 7)
                                                             {{__('Em processo')}}
-                                                        @elseif($requerimento->tipo == 8)
+                                                        @elseif($requerimento->status == 8)
                                                             {{__('Concluída')}}
-                                                        @elseif($requerimento->tipo == 9)
+                                                        @elseif($requerimento->status == 9)
                                                             {{__('Cancelada')}}
                                                         @endif
                                                     </td>
@@ -168,11 +168,11 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                @if($requerimento->tipo <= 7)
+                                                                @if($requerimento->status <= 7)
                                                                     {{__('Em processo')}}
-                                                                @elseif($requerimento->tipo == 8)
+                                                                @elseif($requerimento->status == 8)
                                                                     {{__('Concluída')}}
-                                                                @elseif($requerimento->tipo == 9)
+                                                                @elseif($requerimento->status == 9)
                                                                     {{__('Cancelada')}}
                                                                 @endif
                                                             </td>
