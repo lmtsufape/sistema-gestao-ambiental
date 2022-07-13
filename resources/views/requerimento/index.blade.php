@@ -34,10 +34,10 @@
                             </div>
                         </div>
                     @endif
-                    @error('error')
+                    @if(session('error'))
                         <div class="col-md-12" style="margin-top: 5px;">
                             <div class="alert alert-danger" role="alert">
-                                <p>{{$message}}</p>
+                                <p>{{session('error')}}</p>
                             </div>
                         </div>
                     @endif
@@ -84,7 +84,11 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        {{ucfirst($requerimento->status())}}
+                                                        @if($requerimento->canceladoSecretario())
+                                                            Cancelado pela secretaria.
+                                                        @else
+                                                            {{ucfirst($requerimento->status())}}
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         {{ucfirst($requerimento->tipoString())}}
@@ -189,435 +193,450 @@
                                     </div>
                                 </div>
                                 <div class="row" style="padding-top: 10px;">
-                                    <div class="col-md-12" style="font-size: 16px; font-weight: bold; color: rgb(110, 110, 110)">
-                                        {{ucfirst($requerimento->status())}}
+                                    <div class="col-md-12"
+                                    @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                        style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(241, 241, 241); max-width: fit-content;"
+                                    @else
+                                        style="font-size: 16px; font-weight: bold; color: rgb(110, 110, 110)"
+                                    @endif>
+                                        @if($requerimento->canceladoSecretario())
+                                            Cancelado
+                                        @else
+                                            {{ucfirst($requerimento->status())}}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12" style="font-size: 16px; padding-left: 27px;">
-                                        {{$requerimento->textoEtapa()}}
+                                        @if($requerimento->canceladoSecretario())
+                                            A secretaria cancelou ou indeferiu o seu requerimento. Veja o motivo clicando no ícone de "Cancelar requerimento".
+                                        @else
+                                            {{$requerimento->textoEtapa()}}
+                                        @endif
                                     </div>
                                 </div>
-                                <div id="wrapper">
-                                    <div class="row">
-                                        <div id="background-circulos" class="col-md-12">
-                                        </div>
-                                    </div>
-                                    <div id="content-circulos">
-                                        <div class="row justify-content-center align-items-center mt-3 mb-3">
-                                            <div class="@if($requerimento->status == 1)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 1)circulo-selected @elseif($requerimento->status > 1)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 1)numero-selected @elseif($requerimento->status > 1)numero-concluido 
-                                                        @else numero @endif">
-                                                        1
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 1
-                                                                    @if($requerimento->status == 1)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 1)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 1)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 1)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 1)
-                                                                        Seu requerimento será enviado para o banco de requerimentos da secretaria.
-                                                                    @elseif($requerimento->status > 1)
-                                                                        Seu requerimento foi recebido e encaminhado para um dos protocolistas.
-                                                                    @else
-                                                                        Seu requerimento foi recebido e será encaminhado para um dos protocolistas.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 2)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 2)numero-selected @elseif($requerimento->status > 2)numero-concluido 
-                                                        @else numero @endif">
-                                                        2
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 2
-                                                                    @if($requerimento->status == 2)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 2)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 2)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 2)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 2)
-                                                                        Seu requerimento está sendo analisado por um dos protocolistas.
-                                                                    @elseif($requerimento->status > 2)
-                                                                        Seu requerimento foi analisado por um dos protocolistas.
-                                                                    @else
-                                                                        Seu requerimento será analisado por um dos protocolistas.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 3)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 3)circulo-selected @elseif($requerimento->status > 3)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 3)numero-selected @elseif($requerimento->status > 3)numero-concluido 
-                                                        @else numero @endif">
-                                                        3
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 3
-                                                                    @if($requerimento->status == 3)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 3)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 3)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 3)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 3)
-                                                                        Envie os documentos solicitados pelo protocolista.
-                                                                    @elseif($requerimento->status > 3)
-                                                                        O protocolista definiu quais documentos devem ser enviados para a emissão da licença.
-                                                                    @else
-                                                                        O protocolista definirá quais documentos devem ser enviados para a emissão da licença.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 4)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 4)circulo-selected @elseif($requerimento->status > 4)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 4)numero-selected @elseif($requerimento->status > 4)numero-concluido 
-                                                        @else numero @endif">
-                                                        4
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 4
-                                                                    @if($requerimento->status == 4)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 4)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 4)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 4)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 4)
-                                                                        Seus documentos foram recebidos e serão analisados pelo protocolista.
-                                                                    @elseif($requerimento->status > 4)
-                                                                        O protocolista analisou a documentação enviada.
-                                                                    @else
-                                                                        O protocolista fará a análise da documentação enviada.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 5)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 5)circulo-selected @elseif($requerimento->status > 5)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 5)numero-selected @elseif($requerimento->status > 5)numero-concluido 
-                                                        @else numero @endif">
-                                                        5
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 5
-                                                                    @if($requerimento->status == 5)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 5)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 5)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 5)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 5)
-                                                                        Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.
-                                                                    @elseif($requerimento->status > 5)
-                                                                        O protocolista enviou o parecer da análise da documentação enviada.
-                                                                    @else
-                                                                        O protocolista enviará o parecer da análise da documentação.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 6)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 6)circulo-selected @elseif($requerimento->status > 6)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 6)numero-selected @elseif($requerimento->status > 6)numero-concluido 
-                                                        @else numero @endif">
-                                                        6
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 6
-                                                                    @if($requerimento->status == 6)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 6)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 6)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 6)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 6)
-                                                                        A visita à empresa/serviço foi agendada, aguarde a equipe da secretaria na data informada.
-                                                                    @elseif($requerimento->status > 6)
-                                                                        A visita à empresa/serviço foi agendada.
-                                                                    @else
-                                                                        A visita à empresa/serviço será agendada.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="@if($requerimento->status == 7)circulo-maior-selected @endif distancia-circulo">
-                                                <div class="@if($requerimento->status == 7)circulo-selected @elseif($requerimento->status > 7)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 7)numero-selected @elseif($requerimento->status > 7)numero-concluido 
-                                                        @else numero @endif">
-                                                        7
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 7
-                                                                    @if($requerimento->status == 7)
-                                                                        <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
-                                                                    @elseif($requerimento->status > 7)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 7)
-                                                                        <span class="etapa-texto">
-                                                                            (atual)
-                                                                        </span>
-                                                                    @elseif($requerimento->status > 7)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 7)
-                                                                        A visita à empresa/serviço foi realizada, aguarde a análise da secretaria para receber sua licença.
-                                                                    @elseif($requerimento->status > 7)
-                                                                        A visita à empresa/serviço foi realizada.
-                                                                    @else
-                                                                        A visita à empresa/serviço será realizada e a secretaria aprovará a emissão da licença.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="distancia-circulo">
-                                                <div class="@if($requerimento->status == 8)circulo-concluido 
-                                                    @else circulo @endif">
-                                                    <div class="@if($requerimento->status == 8)numero-concluido 
-                                                        @else numero @endif">
-                                                        8
-                                                    </div>
-                                                </div>
-                                                <div class="popup-texto">
-                                                    <div class="card card-popup">
-                                                        <div class="card-body">
-                                                            <div class="etapa-titulo">
-                                                                <div class="row col-md-12 align-items-center">
-                                                                    Etapa 8
-                                                                    @if($requerimento->status == 8)
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
-                                                                    @else
-                                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
-                                                                    @endif
-
-                                                                    @if($requerimento->status == 8)
-                                                                        <span class="etapa-texto">
-                                                                            (concluída)
-                                                                        </span>
-                                                                    @else
-                                                                        <span class="etapa-texto">
-                                                                            (pendente)
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    @if($requerimento->status == 8)
-                                                                        Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".
-                                                                    @else
-                                                                        A secretaria enviará sua licença.
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
+                                    <div id="wrapper">
+                                        <div class="row" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                            <div id="background-circulos" class="col-md-12">
                                             </div>
                                         </div>
+                                        <div id="content-circulos">
+                                            <div class="row justify-content-center align-items-center mt-3 mb-3">
+                                                <div class="@if($requerimento->status == 1)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 1)circulo-selected @elseif($requerimento->status > 1)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 1)numero-selected @elseif($requerimento->status > 1)numero-concluido 
+                                                            @else numero @endif">
+                                                            1
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 1
+                                                                        @if($requerimento->status == 1)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 1)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 1)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 1)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 1)
+                                                                            Seu requerimento será enviado para o banco de requerimentos da secretaria.
+                                                                        @elseif($requerimento->status > 1)
+                                                                            Seu requerimento foi recebido e encaminhado para um dos protocolistas.
+                                                                        @else
+                                                                            Seu requerimento foi recebido e será encaminhado para um dos protocolistas.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 2)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 2)numero-selected @elseif($requerimento->status > 2)numero-concluido 
+                                                            @else numero @endif">
+                                                            2
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 2
+                                                                        @if($requerimento->status == 2)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 2)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 2)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 2)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 2)
+                                                                            Seu requerimento está sendo analisado por um dos protocolistas.
+                                                                        @elseif($requerimento->status > 2)
+                                                                            Seu requerimento foi analisado por um dos protocolistas.
+                                                                        @else
+                                                                            Seu requerimento será analisado por um dos protocolistas.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 3)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 3)circulo-selected @elseif($requerimento->status > 3)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 3)numero-selected @elseif($requerimento->status > 3)numero-concluido 
+                                                            @else numero @endif">
+                                                            3
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 3
+                                                                        @if($requerimento->status == 3)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 3)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 3)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 3)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 3)
+                                                                            Envie os documentos solicitados pelo protocolista.
+                                                                        @elseif($requerimento->status > 3)
+                                                                            O protocolista definiu quais documentos devem ser enviados para a emissão da licença.
+                                                                        @else
+                                                                            O protocolista definirá quais documentos devem ser enviados para a emissão da licença.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 4)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 4)circulo-selected @elseif($requerimento->status > 4)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 4)numero-selected @elseif($requerimento->status > 4)numero-concluido 
+                                                            @else numero @endif">
+                                                            4
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 4
+                                                                        @if($requerimento->status == 4)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 4)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 4)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 4)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 4)
+                                                                            Seus documentos foram recebidos e serão analisados pelo protocolista.
+                                                                        @elseif($requerimento->status > 4)
+                                                                            O protocolista analisou a documentação enviada.
+                                                                        @else
+                                                                            O protocolista fará a análise da documentação enviada.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 5)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 5)circulo-selected @elseif($requerimento->status > 5)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 5)numero-selected @elseif($requerimento->status > 5)numero-concluido 
+                                                            @else numero @endif">
+                                                            5
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 5
+                                                                        @if($requerimento->status == 5)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 5)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 5)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 5)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 5)
+                                                                            Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.
+                                                                        @elseif($requerimento->status > 5)
+                                                                            O protocolista enviou o parecer da análise da documentação enviada.
+                                                                        @else
+                                                                            O protocolista enviará o parecer da análise da documentação.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 6)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 6)circulo-selected @elseif($requerimento->status > 6)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 6)numero-selected @elseif($requerimento->status > 6)numero-concluido 
+                                                            @else numero @endif">
+                                                            6
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 6
+                                                                        @if($requerimento->status == 6)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 6)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 6)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 6)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 6)
+                                                                            A visita à empresa/serviço foi agendada, aguarde a equipe da secretaria na data informada.
+                                                                        @elseif($requerimento->status > 6)
+                                                                            A visita à empresa/serviço foi agendada.
+                                                                        @else
+                                                                            A visita à empresa/serviço será agendada.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="@if($requerimento->status == 7)circulo-maior-selected @endif distancia-circulo">
+                                                    <div class="@if($requerimento->status == 7)circulo-selected @elseif($requerimento->status > 7)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 7)numero-selected @elseif($requerimento->status > 7)numero-concluido 
+                                                            @else numero @endif">
+                                                            7
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 7
+                                                                        @if($requerimento->status == 7)
+                                                                            <img class="icon-licenciamento" width="20px;" style="padding-left: 5px;" src="{{asset('img/atual.svg')}}"  alt="Icone de etapa atual" title="Etapa atual"/>
+                                                                        @elseif($requerimento->status > 7)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 7)
+                                                                            <span class="etapa-texto">
+                                                                                (atual)
+                                                                            </span>
+                                                                        @elseif($requerimento->status > 7)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 7)
+                                                                            A visita à empresa/serviço foi realizada, aguarde a análise da secretaria para receber sua licença.
+                                                                        @elseif($requerimento->status > 7)
+                                                                            A visita à empresa/serviço foi realizada.
+                                                                        @else
+                                                                            A visita à empresa/serviço será realizada e a secretaria aprovará a emissão da licença.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="distancia-circulo">
+                                                    <div class="@if($requerimento->status == 8)circulo-concluido 
+                                                        @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
+                                                        <div class="@if($requerimento->status == 8)numero-concluido 
+                                                            @else numero @endif">
+                                                            8
+                                                        </div>
+                                                    </div>
+                                                    <div class="popup-texto">
+                                                        <div class="card card-popup">
+                                                            <div class="card-body">
+                                                                <div class="etapa-titulo">
+                                                                    <div class="row col-md-12 align-items-center">
+                                                                        Etapa 8
+                                                                        @if($requerimento->status == 8)
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
+                                                                        @else
+                                                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
+                                                                        @endif
+
+                                                                        @if($requerimento->status == 8)
+                                                                            <span class="etapa-texto">
+                                                                                (concluída)
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="etapa-texto">
+                                                                                (pendente)
+                                                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @if($requerimento->status == 8)
+                                                                            Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".
+                                                                        @else
+                                                                            A secretaria enviará sua licença.
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div style="border-bottom:solid 2px #e0e0e0;">
                                 </div>
-                                <div style="border-bottom:solid 2px #e0e0e0;">
-                                </div>
+                                @endif
                                 <div class="row justify-content-center align-items-center" style="text-align: center">
                                     <div class="col-md-6">
                                         <span style="color: #00883D; font-weight: bold;">Valor:</span>
@@ -763,16 +782,18 @@
                                 </li>
                             @endif
                         @endcan
-                        @if($requerimentos->first() != null)
-                            <li>
-                                <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Cancelar requerimento
+                        @can('isRequerenteOrSecretario', \App\Models\User::class)
+                            @if($requerimentos->first() != null)
+                                <li>
+                                    <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Cancelar requerimento
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        @endif
+                                </li>
+                            @endif
+                        @endcan
                     </ul>
                 </div>
             </div>
@@ -988,7 +1009,7 @@
     </div>
 
     @foreach ($requerimentos as $requerimento)
-        {{-- Criar requerimento --}}
+        {{-- Cancelar requerimento --}}
         <div class="modal fade" id="cancelar_requerimento_{{$requerimento->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
@@ -999,15 +1020,74 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                    <form id="cancelar-requerimento-form-{{$requerimento->id}}" method="POST" action="{{route('requerimentos.destroy', ['requerimento' => $requerimento])}}">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        Tem certeza que deseja cancelar esse requerimento?
-                    </form>
+                    @if($requerimento->canceladoSecretario() && auth()->user()->role != \App\Models\User::ROLE_ENUM['secretario'])
+                        <div class="row">
+                            <div class="col-md-12">
+                                Seu requerimento foi cancelado ou indeferido!
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="comentario">Motivo:</label>
+                                <textarea id="motivo_cancelamento" class="form-control"
+                                    name="motivo_cancelamento" value="{{ old('motivo_cancelamento') }}"
+                                    autocomplete="motivo_cancelamento" rows="3" disabled>{{$requerimento->motivo_cancelamento}}
+                                </textarea>
+                            </div>
+                        </div>
+                    @else
+                        <form id="cancelar-requerimento-form-{{$requerimento->id}}" method="POST" action="{{route('requerimentos.destroy', ['requerimento' => $requerimento])}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if($requerimento->cancelado())
+                                        <label>Tem certeza que deseja desfazer o cancelamento deste requerimento?</label>
+                                    @else
+                                        <label>Tem certeza que deseja cancelar este requerimento?</label>
+                                    @endif
+                                </div>
+                            </div>
+                            @can('isSecretario', \App\Models\User::class)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if($requerimento->cancelado() && $requerimento->canceladoSecretario() == false)
+                                            <div class="alert alert-warning">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        Este requerimento foi cancelado pelo requerente.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <label for="comentario">Motivo <span style="font-weight: normal; color: red">*</span></label>
+                                            <textarea id="motivo_cancelamento" class="form-control @error('motivo_cancelamento') is-invalid @enderror"
+                                                name="motivo_cancelamento" value="{{ old('motivo_cancelamento') }}"
+                                                autocomplete="motivo_cancelamento" rows="3" required>{{old('motivo_cancelamento', $requerimento->motivo_cancelamento)}}</textarea>
+                                            @error('motivo_cancelamento')
+                                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        @endif
+                                    </div>
+                                </div>
+                            @endcan
+                        </form>
+                    @endif
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-requerimento-form-{{$requerimento->id}}">Cancelar requerimento</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                    @if($requerimento->canceladoSecretario() && auth()->user()->role != \App\Models\User::ROLE_ENUM['secretario'])
+                    @else
+                        <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-requerimento-form-{{$requerimento->id}}">
+                            @if($requerimento->cancelado())
+                                Desfazer cancelamento
+                            @else
+                                Cancelar requerimento
+                            @endif
+                        </button>
+                    @endif
                 </div>
             </div>
             </div>
