@@ -50,7 +50,7 @@ class LicencaAprovada extends Notification
                     ->line("A licença do requerimento de {$this->requerimento->tipoString()} da empresa {$this->requerimento->empresa->nome} foi aprovada.")
                     ->line("A licença segue em anexo e também está disponível no site.")
                     ->attach(storage_path('app/'.$this->licenca->caminho), ['as' => 'licenca.pdf', 'mime' => 'application/pdf'])
-                    ->subject('Licenca aprovada!');
+                    ->subject('Licença aprovada!');
     }
 
     /**

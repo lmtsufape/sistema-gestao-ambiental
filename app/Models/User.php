@@ -11,6 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -116,13 +117,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosRequerente()
     {
-        $empresas = $this->empresas;
-        $requerimentos = collect();
-
-        foreach ($empresas as $empresa) {
-            $requerimentos = $requerimentos->concat($empresa->requerimentos()->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->get());
-        }
-
+        $requerimentos_id = DB::table('requerimentos')->join('empresas', 'requerimentos.empresa_id', '=', 'empresas.id')
+                ->where('empresas.user_id', '=', auth()->user()->id)
+                ->get('requerimentos.id');
+                
+        $requerimentos = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->paginate(5);
         return $requerimentos;
     }
 

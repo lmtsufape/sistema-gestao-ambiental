@@ -837,6 +837,144 @@ a.article:hover {
     display: none;
 }
 
+.distancia-circulo {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.circulo-selected {
+    width: 33px;
+    height: 33px;
+    border:2px solid #50c2db; 
+    border-radius: 60%; 
+    background-color: white;
+}
+
+.circulo-maior-selected {
+    padding-left: 4px;
+    padding-top: 4px;
+    width: 47px;
+    height: 47px;
+    border:3px solid #50c2db; 
+    border-radius: 60%; 
+    background-color: white;
+    cursor: pointer;
+}
+
+.circulo-maior-selected:hover {
+    transition: 0.5s;
+    width: 55px;
+    height: 55px;
+}
+
+.circulo-maior-selected:hover .circulo-selected {
+    transition: 0.5s;
+    width: 41px;
+    height: 41px;
+    font-size: 20px;
+}
+
+.circulo-concluido {
+    width: 38px;
+    height: 38px;
+    border:3px solid #34A877; 
+    border-radius: 60%; 
+    background-color: #34A877;
+    cursor: pointer;
+}
+
+.circulo-concluido:hover{
+    transition: 0.5s;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+}
+
+.circulo {
+    width: 38px;
+    height: 38px;
+    border:1px solid #8E8E8E;
+    border-radius: 60%;
+    background-color: white;
+    cursor: pointer;
+}
+
+.circulo:hover{
+    transition: 0.5s;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+}
+
+.numero-selected {
+    text-align: center; 
+    color: #50c2db; 
+    font-weight: bold;
+    padding-top: 3px;
+    
+}
+
+.numero-concluido {
+    text-align: center; 
+    color: #ffffff; 
+    font-weight: bold;
+    padding-top: 3px;
+}
+
+.numero {
+    text-align: center;
+    padding-top: 4px;
+}
+
+#wrapper{
+    position: relative;
+}
+
+#content-circulos{
+    position: relative;
+}
+
+#background-circulos{
+    position: absolute;
+    top: 60%;
+    left: 0;
+    border-bottom: solid 4px #680072;
+}
+
+.popup-texto{
+    left: 0;
+    position: absolute;
+    z-index: 1;
+}
+
+.card-popup{
+    background-color: rgb(72 28 68 / 90%);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.card-popup:hover{
+    background-color: rgba(56, 17, 53, 0.9);
+}
+
+.etapa-titulo{
+    font-size: 20px;
+}
+
+.etapa-texto{
+    font-size: 12px;
+}
+
+.distancia-circulo .popup-texto {
+    display: none;
+  }
+
+.distancia-circulo:hover .popup-texto {
+    display: block;
+    transition: 0.8;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
