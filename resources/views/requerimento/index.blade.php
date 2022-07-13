@@ -192,7 +192,9 @@
                                         {{$requerimento->empresa->nome}} -  {{ucfirst($requerimento->tipoString())}}
                                     </div>
                                 </div>
-                                <div class="row" style="padding-top: 10px;">
+                                <div class="row" @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada']) 
+                                    style="padding-left: 15px; padding-bottom: 10px;" @else style="padding-bottom: 10px;"
+                                    @endif>
                                     <div class="col-md-12"
                                     @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                         style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(241, 241, 241); max-width: fit-content;"
