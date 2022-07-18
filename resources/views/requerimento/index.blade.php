@@ -696,7 +696,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforelse
                 @endcan
                 @can('isSecretarioOrAnalista', \App\Models\User::class)
