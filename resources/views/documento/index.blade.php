@@ -37,7 +37,8 @@
                                 @endif
                             </div>
                         </div>
-                        <table class="table-responsive" style="word-break: break-word;">
+                        <div class="table-responsive">
+                        <table class="table">
                             <thead >
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
@@ -61,6 +62,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
