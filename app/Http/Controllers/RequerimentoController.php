@@ -454,10 +454,11 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('verDocumentacao', $requerimento);
         $documentos = $requerimento->documentos;
+        $status = Checklist::STATUS_ENUM;
         if(auth()->user()->role == User::ROLE_ENUM['analista']){
             return view('requerimento.analise-documentos', compact('requerimento', 'documentos'));
         }
-        return view('requerimento.envio-documentos', compact('requerimento', 'documentos'));
+        return view('requerimento.envio-documentos', compact('requerimento', 'documentos', 'status'));
     }
 
     public function enviarDocumentos(Request $request)

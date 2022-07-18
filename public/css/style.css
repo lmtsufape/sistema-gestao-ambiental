@@ -326,6 +326,7 @@ nav img {
     display: none;
 }
 
+/*
 .form-envia-documentos .label-input {
     border: 1px solid var(--primaria);
     color: white;
@@ -344,9 +345,10 @@ nav img {
     padding: 8px;
     box-shadow: 1px 2px 3px var(black);
 }
+*/
 
 .form-envia-documentos .label-input:after {
-    content: "Enviar arquivo";
+    content: "Clique para selecionar o arquivo";
 }
 
 .form-envia-documentos .titulo-documento {
@@ -837,6 +839,8 @@ a.article:hover {
     display: none;
 }
 
+/* LINHA DO TEMPO REQUERIMENTO INDEX */
+
 .distancia-circulo {
     padding-left: 10px;
     padding-right: 10px;
@@ -974,6 +978,44 @@ a.article:hover {
     display: block;
     transition: 0.8;
 }
+
+/* LINHA DO TEMPO REQUERIMENTO INDEX */
+
+/* ENVIAR DOCUMENTO */
+
+.modelo-doc {
+    color: #2070c7;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.card-enviar-doc {
+    background-color: var(--primaria);
+    color: white;
+    width: 90%;
+    border-radius: 13px;
+}
+
+.card-doc-recusado {
+    background-color: #F26565;
+    color: white;
+    width: 90%;
+    border-radius: 13px;
+}
+
+.btn-enviar-doc {
+    background-color: white;
+    color: black;
+    border-radius: 0%;
+    width: 70%;
+}
+
+.btn-enviar-doc:hover {
+    background-color: rgb(207, 207, 207);
+    color: black;
+}
+
+/* ENVIAR DOCUMENTO */
 
 /* ---------------------------------------------------
     CONTENT STYLE
