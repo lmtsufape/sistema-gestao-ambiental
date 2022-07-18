@@ -276,7 +276,7 @@ class RequerimentoController extends Controller
         $requerimento->analista_id = $analista->id;
         $requerimento->update();
 
-        return redirect(route('requerimentos.index'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuído com sucesso a " . $analista->name]);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuído com sucesso a " . $analista->name]);
     }
 
     /**
