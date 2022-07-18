@@ -117,7 +117,7 @@
                             @endforeach
                         </form>
                     </div>
-                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
+                    @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'] && $requerimento->canceladoSecretario() == false)
                         <div class="card-footer">
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>

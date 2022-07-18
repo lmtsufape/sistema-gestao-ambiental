@@ -23,6 +23,7 @@ use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosAnalisadosNotification;
 use App\Notifications\EmpresaModificadaNotification;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use App\Policies\UserPolicy;
 
 class RequerimentoController extends Controller
 {
@@ -41,11 +42,11 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
             }else{
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->orderBy('created_at')->paginate(20);
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
                 $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
-                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orderBy('created_at')->paginate(20);
+                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
             }
         }
         switch($filtro){
@@ -119,7 +120,7 @@ class RequerimentoController extends Controller
         $request->validated();
         $empresa = Empresa::find($request->empresa);
 
-        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
 
         if ($requerimentos->count() > 0) {
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
@@ -191,25 +192,66 @@ class RequerimentoController extends Controller
     /**
      * Cancela um requerimento.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
 
-        if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['requerida'] &&
-        $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['em_andamento'] &&
-        $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']) {
+        $userPolicy = new UserPolicy();
 
-            return redirect()->back()->withErrors(['error' => 'Este requerimento já está em andamento e não pode ser cancelado.']);
+        $requerimentos_atuais = Requerimento::where([['empresa_id', $requerimento->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
+
+        if($userPolicy->isSecretario(auth()->user())){
+            if($requerimento->motivo_cancelamento == null){
+                $request->validate([
+                    'motivo_cancelamento' => 'required'
+                ]);
+                $requerimento->cancelada = true;
+                $requerimento->motivo_cancelamento = $request->motivo_cancelamento;
+                $requerimento->update();
+
+                return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
+            }else{
+                if($requerimentos_atuais->count() > 0){
+                    return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
+                }
+                $requerimento->cancelada = false;
+                $requerimento->motivo_cancelamento = null;
+                $requerimento->update();
+
+                return redirect()->back()->with(['success' => 'Cancelamento desfeito com sucesso.']);
+            }
+        }else{
+            if($requerimento->status == Requerimento::STATUS_ENUM['cancelada']){
+                if($requerimentos_atuais->count() > 0){
+                    return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
+                }
+
+                if($requerimento->documentos()->first() != null){
+                    $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+                }else{
+                    $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+                }
+                $requerimento->update();
+
+                return redirect()->back()->with(['success' => 'Cancelamento desfeito com sucesso.']);
+            }else{
+                if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['requerida'] &&
+                    $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['em_andamento'] &&
+                    $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']) {
+                    return redirect()->back()->with(['error' => 'Este requerimento já está em andamento e não pode ser cancelado. Se deseja realmente cancelar o mesmo, contate a secretaria.']);
+                }
+                $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
+                $requerimento->update();
+
+                return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
+            }
+            
         }
-
-        $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
-        $requerimento->update();
-
-        return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
     }
 
     /**

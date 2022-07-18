@@ -115,10 +115,12 @@ class RequerimentoPolicy
     public function requerimentoDocumentacao(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
-        if ($userPolicy->isRequerente($user)) {
-            return $requerimento->empresa->user_id == $user->id;
-        }elseif($userPolicy->isSecretario($user)){
-            return true;
+        if(!$requerimento->cancelado()){
+            if ($userPolicy->isRequerente($user)) {
+                return $requerimento->empresa->user_id == $user->id;
+            }elseif($userPolicy->isSecretario($user)){
+                return true;
+            }
         }
         return false;
     }

@@ -39,7 +39,9 @@ class Requerimento extends Model
         'status',
         'tipo',
         'valor',
-        'potencial_poluidor_atribuido'
+        'potencial_poluidor_atribuido',
+        'cancelada',
+        'motivo_cancelamento'
     ];
 
     public function analista()
@@ -99,7 +101,7 @@ class Requerimento extends Model
     {
         switch ($this->status) {
             case $this::STATUS_ENUM['requerida']:
-                return 'requerida';
+                return 'requerido';
                 break;
             case $this::STATUS_ENUM['em_andamento']:
                 return 'em andamento';
@@ -120,10 +122,10 @@ class Requerimento extends Model
                 return 'visita feita em '.date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
                 break;
             case $this::STATUS_ENUM['finalizada']:
-                return 'finalizada';
+                return 'finalizado';
                 break;
             case $this::STATUS_ENUM['cancelada']:
-                return 'cancelada';
+                return 'cancelado';
                 break;
             default:
                 return '';
@@ -230,11 +232,18 @@ class Requerimento extends Model
                 return 'Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".';
                 break;
             case $this::STATUS_ENUM['cancelada']:
-                return 'cancelada';
+                return 'Você cancelou o seu requerimento. Desfaça o cancelamento do mesmo clicando no ícone de "Cancelar requerimento".';
                 break;
             default:
                 return '';
                 break;
         }
+    }
+    public function cancelado(){
+        return $this->status == $this::STATUS_ENUM['cancelada'] || $this->cancelada;
+    }
+
+    public function canceladoSecretario(){
+        return $this->cancelada;    
     }
 }
