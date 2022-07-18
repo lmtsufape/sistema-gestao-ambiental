@@ -81,8 +81,8 @@
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar solicitação
                                 </div>
-                            </li>
-                        @endif
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
