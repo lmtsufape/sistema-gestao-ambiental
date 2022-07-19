@@ -110,8 +110,7 @@
                                                                     <div class="col-md-12">
                                                                         <a class="btn btn-success btn-enviar-doc" href="{{route('requerimento.documento', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}">
                                                                             <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" >
-                                                                            Baixar arquivo enviado
-                                                                        </a>
+                                                                            Baixar arquivo anexado                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -125,9 +124,9 @@
                                                                 <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-upload.svg')}}"  alt="Icone de enviar documento" title="Enviar documento">
                                                                 <div class="row" style="padding-top: 10px">
                                                                     <div class="col-md-12">
-                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
-                                                                        <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('documento_{{$documento->id}}') is-invalid @enderror" accept=".pdf" name="documentos[]" value="{{$documento->id}}" required autofocus autocomplete="documento_{{$documento->id}}">
+                                                                        <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('documento_{{$documento->id}}') is-invalid @enderror" accept=".pdf" name="documentos[]" value="{{$documento->id}}" autocomplete="documento_{{$documento->id}}">
                                                                         <input type="hidden" name="documentos_id[]" value="{{$documento->id}}">
                                                                     </div>
                                                                     @error('documento_{{$documento->id}}')
@@ -177,9 +176,9 @@
                                                                 <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-upload.svg')}}"  alt="Icone de enviar documento" title="Enviar documento">
                                                                 <div class="row" style="padding-top: 10px">
                                                                     <div class="col-md-12">
-                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
-                                                                        <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('documento_{{$documento->id}}') is-invalid @enderror" accept=".pdf" name="documentos[]" value="{{$documento->id}}" required autofocus autocomplete="documento_{{$documento->id}}">
+                                                                        <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('documento_{{$documento->id}}') is-invalid @enderror" accept=".pdf" name="documentos[]" value="{{$documento->id}}" autocomplete="documento_{{$documento->id}}">
                                                                         <input type="hidden" name="documentos_id[]" value="{{$documento->id}}">
                                                                     </div>
                                                                     @error('documento_{{$documento->id}}')
@@ -204,7 +203,7 @@
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button data-toggle="modal" data-target="#modalStaticConfirmarEnvio" class="btn btn-success btn-color-dafault" style="width: 100%">Enviar</button>
+                                    <button onclick="checar_arquivos()" class="btn btn-success btn-color-dafault" style="width: 100%">Enviar documentos</button>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +219,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #f3c062;">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -228,7 +227,7 @@
                     Tem certeza que deseja enviar estes documentos? A modificação de algum documento só poderá ser feita caso o mesmo seja recusado pelo analista.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos">Enviar</button>
                 </div>
             </div>
@@ -238,13 +237,31 @@
     <script>
         $(document).ready(function() {
             $(".input-enviar-arquivo").change(function(){
+                const fileSize = this.files[0].size / 1024 / 1024;
                 var label = this.parentElement.children[2];
-                label.textContent = editar_caminho($(this).val());
+                if(fileSize > 2){
+                    alert("O arquivo deve ter no máximo 2MB!");
+                    this.value = "";
+                    label.textContent = editar_caminho(" ");
+                }else{
+                    label.textContent = editar_caminho($(this).val());
+                }
             });
         });
 
         function editar_caminho(string) {
             return string.split("\\")[string.split("\\").length - 1];
+        }
+
+        function checar_arquivos() {
+            var elements = document.getElementsByClassName("input-enviar-arquivo");
+            for(let i=0; i < elements.length; i++){
+                if(!elements[i].files[0]){
+                    alert("Anexe o arquivo .pdf para "+elements[i].parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].children[0].textContent);
+                    return false
+                }
+            }
+            $("#modalStaticConfirmarEnvio").modal('show');
         }
     </script>
     @endsection
