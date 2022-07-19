@@ -40,7 +40,7 @@ class DocumentoController extends Controller
 
     public function show($id)
     {
-        $this->authorize('isSecretario', User::class);
+        //$this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
 
         if ($documento)
