@@ -216,8 +216,10 @@ class RequerimentoController extends Controller
 
                 return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
             }else{
-                if($requerimentos_atuais->count() > 0){
-                    return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
+                if($requerimento->status != Requerimento::STATUS_ENUM['finalizada']){
+                    if($requerimentos_atuais->count() > 0){
+                        return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
+                    }
                 }
                 $requerimento->cancelada = false;
                 $requerimento->motivo_cancelamento = null;

@@ -680,7 +680,7 @@
                                                     <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @endif
                                             @endif
-                                            @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                            @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'] || $requerimento->canceladoSecretario())
                                                 <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                             @endif
                                         </div>

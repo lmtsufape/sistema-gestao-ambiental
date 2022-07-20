@@ -43,7 +43,7 @@ class EmpresaController extends Controller
     public function licencasIndex(Request $request)
     {
         $empresa = Empresa::find($request->empresa);
-        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])->get();
+        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
         $tipos = Requerimento::TIPO_ENUM;
         return view('empresa.index-licenca', compact('requerimentos', 'empresa', 'tipos'));
     }
