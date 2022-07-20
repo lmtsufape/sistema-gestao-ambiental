@@ -56,7 +56,7 @@
 
         @livewireScripts
         @component('layouts.footer')@endcomponent
-
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function () {
                 var btn = document.getElementsByClassName("submeterFormBotao");
@@ -69,7 +69,20 @@
                     }
                     });
                 }
-            })
+            });
+            window.addEventListener('swal:fire', event => {
+                Swal.fire({
+                    position: 'bottom-end',
+                    icon: event.detail.icon,
+                    title: event.detail.title,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 3000,
+                    toast: true,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                })
+            });
         </script>
     </body>
 </html>
