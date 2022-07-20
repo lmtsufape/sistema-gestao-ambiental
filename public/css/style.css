@@ -351,6 +351,10 @@ nav img {
     content: "Clique para selecionar o arquivo";
 }
 
+.form-envia-documentos .label-input-novo:after {
+    content: "Selecione um novo arquivo";
+}
+
 .form-envia-documentos .titulo-documento {
     color: var(--secundaria);
     font-weight: bolder;
