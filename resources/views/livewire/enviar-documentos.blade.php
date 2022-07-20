@@ -74,7 +74,7 @@
                                                         <img class="icon-licenciamento" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de documento pendente" title="Documento pendente"> (documento pendente)
                                                         @break
                                                     @case($status['enviado'])
-                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/carbon_document-tasks.svg')}}"  alt="Icone de documento enviado" title="Documento enviado"> (documento enviado)
+                                                        <img class="icon-licenciamento" width="20px;" src="{{asset('img/carbon_document-tasks.svg')}}"  alt="Icone de documento anexado" title="documento anexado"> (documento @if($requerimento->status == $requerimentoStatus['documentos_requeridos'])anexado) @else enviado) @endif
                                                         @break
                                                     @case($status['recusado'])
                                                         <img class="icon-licenciamento" width="20px;" src="{{asset('img/ep_warning-filled.svg')}}"  alt="Icone de documento indeferido" title="Documento indeferido"> (documento indeferido)
@@ -82,6 +82,17 @@
                                                 @endswitch
                                             </div>
                                         </div>
+                                        @error('arquivos.'.$documento->id)
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="validationServer03Feedback" class="invalid-feedback font-weight-bold" style="display: block">
+                                                            {{ $message }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @enderror
                                         @if ($documento->documento_modelo != null)
                                             <div class="form-row">
                                                 <div class="col-md-12" style="text-align: left;">
@@ -105,7 +116,7 @@
                                                                     <div class="col-md-12">
                                                                         <a class="btn btn-success btn-enviar-doc" href="{{route('requerimento.documento', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}">
                                                                             <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" >
-                                                                            Baixar arquivo anexado
+                                                                            Baixar arquivo @if($requerimento->status == $requerimentoStatus['documentos_requeridos'])anexado @else enviado @endif
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -124,11 +135,6 @@
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
                                                                         <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo " accept=".pdf" wire:model="arquivos.{{$documento->id}}">
                                                                     </div>
-                                                                    @error('arquivos.'.$documento->id)
-                                                                        <div id="validationServer03Feedback" class="invalid-feedback font-weight-bold text-white">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,21 +152,19 @@
                                                                     <div class="col-md-12  @error('arquivos.'.$documento->id) is-invalid @enderror">
                                                                         <a class="btn btn-success btn-enviar-doc" href="{{route('requerimento.documento', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}">
                                                                             <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" >
-                                                                            Baixar arquivo enviado
+                                                                            @if($requerimento->status == $requerimentoStatus['documentos_enviados'])
+                                                                                Baixar arquivo enviado
+                                                                            @else
+                                                                                Baixe o arquivo @if($requerimento->status == $requerimentoStatus['documentos_requeridos'])anexado @else enviado @endif
+                                                                            @endif
                                                                         </a>
                                                                         @if ($requerimento->status == $requerimentoStatus['documentos_requeridos'])
-                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                                                        <p class="font-weight-bold text-white" style="margin-bottom: 0px">ou</p>
+                                                                        <label class="label-input-novo btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
                                                                         <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('{{$documento->id}}') is-invalid @enderror" accept=".pdf" wire:model="arquivos.{{$documento->id}}">
                                                                         @endif
                                                                     </div>
-                                                                    @if ($requerimento->status == $requerimentoStatus['documentos_requeridos'])
-                                                                    @error('arquivos.'.$documento->id)
-                                                                        <div id="validationServer03Feedback" class="invalid-feedback font-weight-bold text-white">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
-                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -186,15 +190,10 @@
                                                                 <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-upload.svg')}}"  alt="Icone de enviar documento" title="Enviar documento">
                                                                 <div class="row" style="padding-top: 10px">
                                                                     <div class="col-md-12 @error('arquivos.'.$documento->id) is-invalid @enderror">
-                                                                        <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                                                        <label class="label-input-novo btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
                                                                         <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo " accept=".pdf" wire:model="arquivos.{{$documento->id}}">
                                                                     </div>
-                                                                    @error('arquivos.'.$documento->id)
-                                                                        <div id="validationServer03Feedback" class="invalid-feedback font-weight-bold text-white">
-                                                                            {{ $message }}
-                                                                        </div>
-                                                                    @enderror
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -213,7 +212,7 @@
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6" style="text-align: right">
-                                    <button onclick="checar_arquivos()" class="btn btn-success btn-color-dafault" style="width: 100%">Enviar documentos</button>
+                                    <button onclick="checar_arquivos()" class="btn btn-success btn-color-dafault" style="width: 100%">Concluir envio dos documentos</button>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +237,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos" data-bs-dismiss="modal">Enviar</button>
+                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos" data-bs-dismiss="modal">Concluir</button>
                 </div>
             </div>
         </div>
