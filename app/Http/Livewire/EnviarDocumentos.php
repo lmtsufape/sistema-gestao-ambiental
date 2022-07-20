@@ -61,6 +61,10 @@ class EnviarDocumentos extends Component
                 'caminho' => $value->store("documentos/requerimentos/{$this->requerimento->id}"),
                 'status' => Checklist::STATUS_ENUM['enviado'],
             ]);
+            $this->dispatchBrowserEvent('swal:fire', [
+                'icon' => 'success',
+                'title' => 'Documento anexado!'
+            ]);
         }
     }
 
