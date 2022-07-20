@@ -75,7 +75,7 @@ class DocumentoController extends Controller
         $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
         if ($documento->existemRequerimentos()) {
-            return redirect()->back()->withErrors(['error' => 'Existem requerimentos que utilizam desde documento, logo o mesmo não pode ser deletado.']);
+            return redirect()->back()->withErrors(['error' => 'Existem requerimentos que utilizam este documento, logo o mesmo não pode ser deletado.']);
         }
         
         $documento->deletar();
