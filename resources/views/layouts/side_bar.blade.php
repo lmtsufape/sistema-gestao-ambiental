@@ -217,6 +217,33 @@
                         </ul>
                     </div>
                     <div id="pagina-carregada" class="col-md-10">
+                        @can('isRequerente', \App\Models\User::class)
+                            @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
+                                <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
+                                    <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
+                                        <div class="card-header" style="background-color: #F26565; color: white;">
+                                            <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
+                                            {{--<small>11 mins ago</small>--}}
+                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Você necessita concluir o envio dos documentos do requerimento de {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->tipoString()}} da(o) {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->empresa->nome}}!
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <a href="{{route('requerimento.documentacao', Auth::user()->requerimentosDocumentosAnexadosNotificacao()->id)}}">Clique aqui</a> para ir à página
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endcan
                         @yield('content')
                     </div>
                 </div>
@@ -243,4 +270,7 @@
         }
         $('#sidebar').toggleClass('active');
     }
+    $('#card-notificacao .close').click(function(){
+        $('#card-notificacao').slideUp();
+    })
 </script>
