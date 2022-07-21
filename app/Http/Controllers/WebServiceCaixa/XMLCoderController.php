@@ -17,8 +17,8 @@ class XMLCoderController extends Controller
     /**
      * Gera o boleto objeto do requerimento e inclui o arquivo xml de remessa.
      *
-     * @param  App\Models\Requerimento $requerimento
-     * @return App\Models\BoletoCobranca $boleto
+     * @param  \App\Models\Requerimento $requerimento
+     * @return \App\Models\BoletoCobranca $boleto
      */
     public function gerar_incluir_boleto(Requerimento $requerimento)
     {
@@ -29,7 +29,7 @@ class XMLCoderController extends Controller
         $beneficiario->gerar_beneficiario();
 
         $boleto = new IncluirBoletoRemessa();
-        $data_vencimento = now()->addDays(3)->format('Y-m-d');
+        $data_vencimento = now()->addDays(30)->format('Y-m-d');
 
         $boleto->data_vencimento = $data_vencimento;
         $boleto->requerimento_id = $requerimento->id;
@@ -58,7 +58,7 @@ class XMLCoderController extends Controller
      * Envia o arquivo de remessa incluir boleto para o web service da caixa e gera exceções
      * ou gera a resposta e salva no boleto objeto.
      *
-     * @param  App\Models\Requerimento $requerimento
+     * @param  \App\Models\Requerimento $requerimento
      * @return void
      */
     public function incluir_boleto_remessa(BoletoCobranca $boleto)
@@ -105,7 +105,7 @@ class XMLCoderController extends Controller
     /**
      * Salva a resposta de incluir boleto ao boleto objeto.
      *
-     * @param App\Models\BoletoCobranca $boleto
+     * @param \App\Models\BoletoCobranca $boleto
      * @param array $resultado
      * @return void
      */
@@ -121,7 +121,7 @@ class XMLCoderController extends Controller
     /**
      * Gerar e envia o alterar boleto.
      *
-     * @param App\Models\BoletoCobranca $boleto
+     * @param \App\Models\BoletoCobranca $boleto
      * @return void
      */
     public function gerar_alterar_boleto(BoletoCobranca $boleto)
@@ -133,7 +133,7 @@ class XMLCoderController extends Controller
         $pagador->gerar_pagador($boleto->requerimento->empresa);
         $beneficiario->gerar_beneficiario();
 
-        $data_vencimento = now()->addDays(3)->format('Y-m-d');
+        $data_vencimento = now()->addDays(30)->format('Y-m-d');
 
         $remessa_alterar_boleto->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
