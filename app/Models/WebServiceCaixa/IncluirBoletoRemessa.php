@@ -165,7 +165,7 @@ class IncluirBoletoRemessa extends Remessa
         $this->data_emissao = now()->format("Y-m-d");
         $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO" ? true : false;
         $this->tipo_juros_mora = array_key_exists("tipo_juros_mora", $data) ? $data["tipo_juros_mora"] : "ISENTO";
-        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? $data["data_juros_mora"] : now()->addDays(4)->format("Y-m-d");
+        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? $data["data_juros_mora"] : now()->addDays(31)->format("Y-m-d");
         $this->valor_juros_mora = array_key_exists("valor_juros_mora", $data) ? $data["valor_juros_mora"] : "0000000000000.00";
         $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : "00000000000.00000";
         $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : "0000000000000.00";
