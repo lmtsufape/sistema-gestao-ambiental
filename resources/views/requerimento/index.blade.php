@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -192,7 +192,7 @@
                                         {{$requerimento->empresa->nome}} -  {{ucfirst($requerimento->tipoString())}}
                                     </div>
                                 </div>
-                                <div class="row" @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada']) 
+                                <div class="row" @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                     style="padding-left: 15px; padding-bottom: 10px;" @else style="padding-bottom: 10px;"
                                     @endif>
                                     <div class="col-md-12"
@@ -226,9 +226,9 @@
                                         <div id="content-circulos">
                                             <div class="row justify-content-center align-items-center mt-3 mb-3">
                                                 <div class="@if($requerimento->status == 1)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 1)circulo-selected @elseif($requerimento->status > 1)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 1)circulo-selected @elseif($requerimento->status > 1)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 1)numero-selected @elseif($requerimento->status > 1)numero-concluido 
+                                                        <div class="@if($requerimento->status == 1)numero-selected @elseif($requerimento->status > 1)numero-concluido
                                                             @else numero @endif">
                                                             1
                                                         </div>
@@ -278,9 +278,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 2)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 2)circulo-selected @elseif($requerimento->status > 2)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 2)numero-selected @elseif($requerimento->status > 2)numero-concluido 
+                                                        <div class="@if($requerimento->status == 2)numero-selected @elseif($requerimento->status > 2)numero-concluido
                                                             @else numero @endif">
                                                             2
                                                         </div>
@@ -330,9 +330,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 3)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 3)circulo-selected @elseif($requerimento->status > 3)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 3)circulo-selected @elseif($requerimento->status > 3)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 3)numero-selected @elseif($requerimento->status > 3)numero-concluido 
+                                                        <div class="@if($requerimento->status == 3)numero-selected @elseif($requerimento->status > 3)numero-concluido
                                                             @else numero @endif">
                                                             3
                                                         </div>
@@ -382,9 +382,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 4)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 4)circulo-selected @elseif($requerimento->status > 4)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 4)circulo-selected @elseif($requerimento->status > 4)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 4)numero-selected @elseif($requerimento->status > 4)numero-concluido 
+                                                        <div class="@if($requerimento->status == 4)numero-selected @elseif($requerimento->status > 4)numero-concluido
                                                             @else numero @endif">
                                                             4
                                                         </div>
@@ -434,9 +434,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 5)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 5)circulo-selected @elseif($requerimento->status > 5)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 5)circulo-selected @elseif($requerimento->status > 5)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 5)numero-selected @elseif($requerimento->status > 5)numero-concluido 
+                                                        <div class="@if($requerimento->status == 5)numero-selected @elseif($requerimento->status > 5)numero-concluido
                                                             @else numero @endif">
                                                             5
                                                         </div>
@@ -486,9 +486,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 6)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 6)circulo-selected @elseif($requerimento->status > 6)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 6)circulo-selected @elseif($requerimento->status > 6)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 6)numero-selected @elseif($requerimento->status > 6)numero-concluido 
+                                                        <div class="@if($requerimento->status == 6)numero-selected @elseif($requerimento->status > 6)numero-concluido
                                                             @else numero @endif">
                                                             6
                                                         </div>
@@ -538,9 +538,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="@if($requerimento->status == 7)circulo-maior-selected @endif distancia-circulo">
-                                                    <div class="@if($requerimento->status == 7)circulo-selected @elseif($requerimento->status > 7)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 7)circulo-selected @elseif($requerimento->status > 7)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 7)numero-selected @elseif($requerimento->status > 7)numero-concluido 
+                                                        <div class="@if($requerimento->status == 7)numero-selected @elseif($requerimento->status > 7)numero-concluido
                                                             @else numero @endif">
                                                             7
                                                         </div>
@@ -590,9 +590,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="distancia-circulo">
-                                                    <div class="@if($requerimento->status == 8)circulo-concluido 
+                                                    <div class="@if($requerimento->status == 8)circulo-concluido
                                                         @else circulo @endif" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
-                                                        <div class="@if($requerimento->status == 8)numero-concluido 
+                                                        <div class="@if($requerimento->status == 8)numero-concluido
                                                             @else numero @endif">
                                                             8
                                                         </div>
