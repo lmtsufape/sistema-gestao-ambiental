@@ -5,6 +5,9 @@ namespace App\Models\WebServiceCaixa;
 use App\Models\WebServiceCaixa\Remessa;
 use Carbon\Carbon;
 
+/**
+ * Útil para situações de emissão de segunda via de boleto ou consulta de dados gerais.
+ */
 class ConsultarBoletoRemessa extends Remessa
 {
     public const URL = 'https://barramento.caixa.gov.br/sibar/ConsultaCobrancaBancaria/Boleto';
