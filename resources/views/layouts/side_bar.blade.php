@@ -78,7 +78,7 @@
         <div id="conteudo">
             <div class="container-fluid" style="padding-left: 15px;">
                 <div class="row">
-                    <div class="col-md-2" style="padding-top: 3rem; background-color: white; padding-right: 0px; padding-left: 0px; box-shadow: 5px 0 5px -2px #888; max-width: fit-content;">
+                    <div class="col-md-2" style="padding-top: 3rem; background-color: white; padding-right: 0px; padding-left: 0px; box-shadow: 1px 0 5px 2px #888; clip-path: inset(0px -12px 0px 0px); max-width: fit-content;">
                         <ul id="sidebar" class="list-unstyled">
                             @can('isSecretario', \App\Models\User::class)
                                 <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
