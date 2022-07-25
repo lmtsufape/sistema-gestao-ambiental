@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Visitas à empresa {{$requerimento->empresa->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Visitas > Requerimento: @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Visitas</a> > Requerimento: @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         @can('isRequerente', \App\Models\User::class)

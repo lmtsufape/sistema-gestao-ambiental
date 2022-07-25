@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Editando um usuário</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Usuários > Editar usuário</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('usuarios.index')}}">Usuários</a> > Editar usuário</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('usuarios.index')}}">

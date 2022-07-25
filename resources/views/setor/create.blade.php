@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cadastrar um novo grupo</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Grupos > Criar grupo</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('setores.index')}}">Grupos</a> > Criar grupo</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('setores.index')}}">

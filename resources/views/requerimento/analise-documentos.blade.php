@@ -14,7 +14,7 @@
                                 {{__('autorização')}}
                             @endif
                         </h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Analisar documentação - {{$requerimento->empresa->nome}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Analisar documentação - {{$requerimento->empresa->nome}}</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a class="btn my-2" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
