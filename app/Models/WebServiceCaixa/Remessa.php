@@ -52,16 +52,11 @@ abstract class Remessa extends BoletoCobranca
     protected function gerar_valor_atutenticacao()
     {
         $valor_string = number_format($this->valor, 2, "", "");
-        $tamanho = strlen($valor_string);
-
-        for ($i = 0; $i < 15 - $tamanho; $i++) {
-            $valor_string = "0" . $valor_string;
-        }
-        
-        return $valor_string;
+        return str_pad($valor_string, 15, "0", STR_PAD_LEFT);
     }
 
-    /** Retorna a string sem pontos, barras e traços.
+    /**
+     * Retorna a string sem pontos, barras e traços.
      *
      * @param String $string
      * @return String $string
@@ -107,19 +102,13 @@ abstract class Remessa extends BoletoCobranca
      * @param Integer $tamanho : tamanho limite da string
      * @return String $string : string formatada
     */
-    protected function validar_formartar_tamanho($string, $tamanho) 
+    protected function validar_formartar_tamanho(string $string, int $tamanho): string
     {
         $tam_string = strlen($string);
-
+        $string = $this->retirar_acento($string);
         if ($tam_string > $tamanho) {
-            $string = $this->retirar_acento($string);
-            $string_formatada = "";
-            for ($i = 0; $i < $tamanho; $i++) {
-                $string_formatada .= $string[$i];
-            }
-            return $string_formatada;
+            return substr($string, 0, $tamanho);
         }
-
         return $string;
     }
 
