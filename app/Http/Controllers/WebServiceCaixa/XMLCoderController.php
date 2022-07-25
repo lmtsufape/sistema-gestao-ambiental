@@ -5,20 +5,19 @@ namespace App\Http\Controllers\WebServiceCaixa;
 use App\Http\Controllers\Controller;
 use App\Models\WebServiceCaixa\Pessoa;
 use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
-use App\Models\WebServiceCaixa\ConsultarBoletoRemessa;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
 use App\Models\WebServiceCaixa\AlterarBoletoRemessa;
-use Illuminate\Http\Request;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use Illuminate\Support\Facades\Storage;
 
 class XMLCoderController extends Controller
 {
     /**
-     * Gera o boleto objeto do requerimento e inclui o arquivo xml de remessa.
+     * Gera o boleto objeto do requerimento e inclui o arquivo de remessa.
      *
-     * @param  \App\Models\Requerimento $requerimento
-     * @return \App\Models\BoletoCobranca $boleto
+     * @param Requerimento $requerimento
+     * @return BoletoCobranca $boleto
      */
     public function gerar_incluir_boleto(Requerimento $requerimento)
     {
@@ -48,18 +47,19 @@ class XMLCoderController extends Controller
             'mensagens_compensacao' => $requerimento->gerarMensagemCompesacao(),
         ]);
 
-        $boleto->salvar_arquivo($boleto->gerar_remessa(), $requerimento);
+        $boleto->salvar_arquivo($boleto->gerar_remessa());
         $boleto->update();
 
         return $boleto;
     }
 
     /**
-     * Envia o arquivo de remessa incluir boleto para o web service da caixa e gera exceções
-     * ou gera a resposta e salva no boleto objeto.
+     * Envia o arquivo de remessa incluir boleto para o WebService da Caixa e gera a resposta e salva no boleto objeto,
+     * ou trata a exceção lançada.
      *
-     * @param  \App\Models\Requerimento $requerimento
+     * @param BoletoCobranca $boleto
      * @return void
+     * @throws ErrorRemessaException
      */
     public function incluir_boleto_remessa(BoletoCobranca $boleto)
     {
@@ -93,9 +93,6 @@ class XMLCoderController extends Controller
                 $boleto->salvar_arquivo_resposta($response);
                 $this->salvar_resposta_incluir_boleto_remessa($boleto, $resultado);
                 break;
-            case 1:
-                throw new ErrorRemessaException($resultado['RETORNO']);
-                break;
             default:
                 throw new ErrorRemessaException($resultado['RETORNO']);
                 break;
@@ -105,7 +102,7 @@ class XMLCoderController extends Controller
     /**
      * Salva a resposta de incluir boleto ao boleto objeto.
      *
-     * @param \App\Models\BoletoCobranca $boleto
+     * @param BoletoCobranca $boleto
      * @param array $resultado
      * @return void
      */
@@ -119,10 +116,26 @@ class XMLCoderController extends Controller
     }
 
     /**
+     * Salva a resposta de alterar boleto ao boleto objeto.
+     *
+     * @param BoletoCobranca $boleto
+     * @param array $resultado
+     * @return void
+     */
+    private function salvar_resposta_alterar_boleto_remessa(BoletoCobranca $boleto, array $resultado)
+    {
+        $boleto->codigo_de_barras = $resultado['CODIGO_BARRAS'];
+        $boleto->linha_digitavel = $resultado['LINHA_DIGITAVEL'];
+        $boleto->URL = $resultado['URL'];
+        $boleto->update();
+    }
+
+    /**
      * Gerar e envia o alterar boleto.
      *
-     * @param \App\Models\BoletoCobranca $boleto
+     * @param BoletoCobranca $boleto
      * @return void
+     * @throws ErrorRemessaException
      */
     public function gerar_alterar_boleto(BoletoCobranca $boleto)
     {
@@ -132,9 +145,7 @@ class XMLCoderController extends Controller
 
         $pagador->gerar_pagador($boleto->requerimento->empresa);
         $beneficiario->gerar_beneficiario();
-
         $data_vencimento = now()->addDays(30)->format('Y-m-d');
-
         $remessa_alterar_boleto->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
             'data_vencimento' => $data_vencimento,
@@ -142,13 +153,15 @@ class XMLCoderController extends Controller
             'pagador' => $pagador,
             'beneficiario' => $beneficiario,
             'tipo_juros_mora' => 'VALOR_POR_DIA',
-            'valor_juros_mora' => '0000000000000.01',
+            'valor_juros_mora' => 0.01,
             'data_multa' => $data_vencimento,
-            'valor_multa' => '0000000000000.79',
+            'valor_multa' => 0.79,
             'mensagens_compensacao' => $boleto->requerimento->gerarMensagemCompesacao(),
+            'nosso_numero' => $boleto->nosso_numero,
         ]);
 
-        $boleto->salvar_arquivo($remessa_alterar_boleto->gerar_remessa(), $boleto->requerimento);
+        $caminho = 'remessas/alterar_boleto_remessa_'.$boleto->id.'.xml';
+        Storage::put($caminho, $remessa_alterar_boleto->gerar_remessa());
         $boleto->update();
 
         $curl = curl_init();
@@ -163,7 +176,7 @@ class XMLCoderController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa),
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$caminho),
             CURLOPT_HTTPHEADER => array(
                 'SoapAction: ALTERA_BOLETO',
                 'Content-Type: text/plain'
@@ -171,18 +184,14 @@ class XMLCoderController extends Controller
         ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
-
-        $resultado = (new IncluirBoletoRemessa())->to_array($response);
+        $resultado = (new AlterarBoletoRemessa())->to_array($response);
 
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
                 $boleto->salvar_arquivo_resposta($response);
-                $this->salvar_resposta_incluir_boleto_remessa($boleto, $resultado);
-                break;
-            case 1:
-                throw new ErrorRemessaException($resultado['RETORNO']);
+                Storage::put('resposta_alterar_boleto_remessa_'.$boleto->id.'.xml', $response);
+                $this->salvar_resposta_alterar_boleto_remessa($boleto, $resultado);
                 break;
             default:
                 throw new ErrorRemessaException($resultado['RETORNO']);

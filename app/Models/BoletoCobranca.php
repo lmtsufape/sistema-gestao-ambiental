@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Requerimento;
 
 class BoletoCobranca extends Model
 {
@@ -17,7 +17,7 @@ class BoletoCobranca extends Model
         'caminho_arquivo_resposta',
         'codigo_de_barras',
         'linha_digitavel',
-        'nosso_numero', 
+        'nosso_numero',
         'URL',
         'status_pagamento',
     ];
@@ -28,12 +28,12 @@ class BoletoCobranca extends Model
         'vencido'      => 3,
     ];
 
-    public function requerimento()
+    public function requerimento(): BelongsTo
     {
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
     }
 
-    public function salvar_arquivo($string, Requerimento $requerimento) 
+    public function salvar_arquivo($string)
     {
         if ($this->caminho_arquivo_remessa != null) {
             if (Storage::disk()->exists('public/'. $this->caminho_arquivo_remessa)) {
@@ -42,17 +42,17 @@ class BoletoCobranca extends Model
         }
 
         $caminho_arquivo = "remessas/";
-        $documento_nome = "incluir_boleto_remessa_".$requerimento->id.".xml";
+        $documento_nome = "incluir_boleto_remessa_".$this->id.".xml";
         $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
         $this->caminho_arquivo_remessa = $caminho_arquivo . $documento_nome;
     }
 
-    private function gerar_arquivo($string, $caminho) 
+    private function gerar_arquivo($string, $caminho)
     {
         $file = fopen(storage_path('').'/app/'.$caminho, 'w+');
-        
+
         fwrite($file, $string);
-        
+
         fclose($file);
     }
 
@@ -65,8 +65,22 @@ class BoletoCobranca extends Model
         }
 
         $caminho_arquivo = "remessas/";
-        $documento_nome = "resposta_incluir_boleto_remessa_".$this->requerimento->id.".xml";
+        $documento_nome = "resposta_incluir_boleto_remessa_".$this->id.".xml";
         $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
         $this->resposta_incluir_boleto = $caminho_arquivo . $documento_nome;
+    }
+
+    public function salvar_arquivo_resposta_alterar_boleto($string)
+    {
+        if ($this->resposta_alterar_boleto != null) {
+            if (Storage::disk()->exists('public/'. $this->resposta_alterar_boleto)) {
+                Storage::delete('public/'. $this->resposta_alterar_boleto);
+            }
+        }
+
+        $caminho_arquivo = "remessas/";
+        $documento_nome = "resposta_alterar_boleto_remessa_".$this->id.".xml";
+        $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
+        $this->resposta_alterar_boleto = $caminho_arquivo . $documento_nome;
     }
 }
