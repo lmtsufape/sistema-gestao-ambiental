@@ -148,7 +148,7 @@ class AlterarBoletoRemessa extends Remessa
         $this->flag_aceite = "N";
         $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO" ? true : false;
         $this->tipo_juros_mora = array_key_exists("tipo_juros_mora", $data) ? $data["tipo_juros_mora"] : "ISENTO";
-        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(3)->format("Y-m-d");
+        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(31)->format("Y-m-d");
         $this->valor_juros_mora = array_key_exists("valor_juros_mora", $data) ? $data["valor_juros_mora"] : "0000000000000.00";
         $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : "00000000000.00000";
         $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : "0000000000000.00";
