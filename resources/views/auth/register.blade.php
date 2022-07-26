@@ -2,7 +2,7 @@
 
 
     <div style="background-color: rgb(236, 236, 243)">
-        <div class="container-fluid" style="padding-top: 5rem; padding-bottom: 8rem;">
+        <div class="container" style="padding-top: 5rem; padding-bottom: 8rem;">
             <div class="form-row justify-content-center">
                 <div class="col-md-10">
                     <div class="form-row">

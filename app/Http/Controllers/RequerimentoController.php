@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Requerimento;
@@ -30,7 +34,7 @@ class RequerimentoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index($filtro)
     {
@@ -89,7 +93,7 @@ class RequerimentoController extends Controller
     /**
      * Retorna a view dos requerimentos do analista logado.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function analista()
     {
@@ -102,7 +106,7 @@ class RequerimentoController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -112,8 +116,8 @@ class RequerimentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(RequerimentoRequest $request)
     {
@@ -140,7 +144,7 @@ class RequerimentoController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -170,7 +174,7 @@ class RequerimentoController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -180,9 +184,9 @@ class RequerimentoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -192,9 +196,9 @@ class RequerimentoController extends Controller
     /**
      * Cancela um requerimento.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Request $request, $id)
     {
@@ -252,15 +256,15 @@ class RequerimentoController extends Controller
 
                 return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
             }
-            
+
         }
     }
 
     /**
      * Atribui um analista a um requerimento.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function atribuirAnalista(Request $request)
     {
@@ -284,8 +288,8 @@ class RequerimentoController extends Controller
     /**
      * Salva a lista de documentos para retirar a licença.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function storeChecklist(Request $request)
     {
@@ -309,7 +313,7 @@ class RequerimentoController extends Controller
         foreach ($request->documentos as $documento_id) {
             $requerimento->documentos()->attach($documento_id);
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-            $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
+            $documento->status = Checklist::STATUS_ENUM['nao_enviado'];
             $documento->update();
         }
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
@@ -350,8 +354,8 @@ class RequerimentoController extends Controller
     /**
      * Editar a lista de documentos para retirar a licença.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
      */
     public function updateChecklist(Request $request)
     {
@@ -381,7 +385,7 @@ class RequerimentoController extends Controller
             if (!$requerimento->documentos->contains('id', $documento_id)) {
                 $requerimento->documentos()->attach($documento_id);
                 $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-                $documento->status = \App\Models\Checklist::STATUS_ENUM['nao_enviado'];
+                $documento->status = Checklist::STATUS_ENUM['nao_enviado'];
                 $documento->update();
             }
         }
@@ -481,7 +485,7 @@ class RequerimentoController extends Controller
         $id = 0;
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == \App\Models\Checklist::STATUS_ENUM['recusado']){
+            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == Checklist::STATUS_ENUM['recusado']){
                 if (Storage::exists($documento->caminho)) {
                     Storage::delete($documento->caminho);
                 }

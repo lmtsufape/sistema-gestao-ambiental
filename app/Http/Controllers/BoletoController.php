@@ -23,7 +23,7 @@ class BoletoController extends Controller
         $pendentes = $retorno[1];
         $pagos = $retorno[2];
         $dataAte = $retorno[3];
-        $dataDe = $retorno[4]; 
+        $dataDe = $retorno[4];
         $filtro = $retorno[5];
 
         switch($filtragem){
@@ -94,17 +94,17 @@ class BoletoController extends Controller
     public function gerarRelatorioBoletos(Request $request)
     {
         $retorno = $this->filtrarBoletos($request);
-        
-        $pdf = PDF::loadview('pdf/boletos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2], 
+
+        $pdf = PDF::loadview('pdf/boletos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2],
             'dataAte' => $retorno[3], 'dataDe' => $retorno[4], 'filtro' => $retorno[5]]);
         return $pdf->setPaper('a4')->stream('boletos.pdf');
     }
-    
+
     /**
      * Cria um boleto para o requerimento.
      *
-     * @param App\Models\Requerimento $requerimento
-     * @return string $url do boleto 
+     * @param Requerimento $requerimento
+     * @return string $url do boleto
      */
     public function boleto($requerimento)
     {
@@ -159,14 +159,14 @@ class BoletoController extends Controller
     /**
      * Gera um boleto para um requerimento
      *
-     * @param  App\Models\Requerimento
+     * @param Requerimento
      * @return redirect
      */
     private function gerarBoleto(Requerimento $requerimento)
     {
         $xmlBoletoController = new XMLCoderController();
         $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
-        
+
         try {
             $xmlBoletoController->incluir_boleto_remessa($boleto);
             return $boleto->URL;
@@ -178,7 +178,7 @@ class BoletoController extends Controller
     /**
      * Altera o boleto para um nova data de vencimento
      *
-     * @param  App\Models\BoletoCobranca
+     * @param BoletoCobranca
      * @return redirect
      */
     private function alterarBoleto(BoletoCobranca $boleto)

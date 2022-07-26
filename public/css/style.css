@@ -719,7 +719,8 @@ span {
 #sidebar .item-align{
     color: var(--primaria);
     font-weight: 600;
-    padding-left: 23px;
+    line-height: 1.1;
+    padding: 5px 0px 5px 16px;
 }
 
 #sidebar ul li a {
@@ -853,8 +854,8 @@ a.article:hover {
 .circulo-selected {
     width: 33px;
     height: 33px;
-    border:2px solid #50c2db; 
-    border-radius: 60%; 
+    border:2px solid #50c2db;
+    border-radius: 60%;
     background-color: white;
 }
 
@@ -863,8 +864,8 @@ a.article:hover {
     padding-top: 4px;
     width: 47px;
     height: 47px;
-    border:3px solid #50c2db; 
-    border-radius: 60%; 
+    border:3px solid #50c2db;
+    border-radius: 60%;
     background-color: white;
     cursor: pointer;
 }
@@ -885,8 +886,8 @@ a.article:hover {
 .circulo-concluido {
     width: 38px;
     height: 38px;
-    border:3px solid #34A877; 
-    border-radius: 60%; 
+    border:3px solid #34A877;
+    border-radius: 60%;
     background-color: #34A877;
     cursor: pointer;
 }
@@ -915,16 +916,16 @@ a.article:hover {
 }
 
 .numero-selected {
-    text-align: center; 
-    color: #50c2db; 
+    text-align: center;
+    color: #50c2db;
     font-weight: bold;
     padding-top: 3px;
-    
+
 }
 
 .numero-concluido {
-    text-align: center; 
-    color: #ffffff; 
+    text-align: center;
+    color: #ffffff;
     font-weight: bold;
     padding-top: 3px;
 }
