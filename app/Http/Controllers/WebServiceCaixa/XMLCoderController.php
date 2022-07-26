@@ -17,8 +17,8 @@ class XMLCoderController extends Controller
     /**
      * Gera o boleto objeto do requerimento e inclui o arquivo xml de remessa.
      *
-     * @param  App\Models\Requerimento $requerimento
-     * @return App\Models\BoletoCobranca $boleto
+     * @param Requerimento $requerimento
+     * @return BoletoCobranca $boleto
      */
     public function gerar_incluir_boleto(Requerimento $requerimento)
     {
@@ -105,7 +105,7 @@ class XMLCoderController extends Controller
     /**
      * Salva a resposta de incluir boleto ao boleto objeto.
      *
-     * @param App\Models\BoletoCobranca $boleto
+     * @param BoletoCobranca $boleto
      * @param array $resultado
      * @return void
      */
@@ -121,7 +121,7 @@ class XMLCoderController extends Controller
     /**
      * Gerar e envia o alterar boleto.
      *
-     * @param App\Models\BoletoCobranca $boleto
+     * @param BoletoCobranca $boleto
      * @return void
      */
     public function gerar_alterar_boleto(BoletoCobranca $boleto)
