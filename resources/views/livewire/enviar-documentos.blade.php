@@ -13,7 +13,7 @@
                                 {{__('autorização')}}
                             @endif
                         </h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Enviar documentação - {{$requerimento->empresa->nome}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Enviar documentação - {{$requerimento->empresa->nome}}</h6>
                     </div>
                     @can('isSecretarioOrAnalista', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right; padding-top: 15px;">

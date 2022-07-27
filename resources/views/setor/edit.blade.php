@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Editar o grupó {{$setor->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Grupo > Editar grupo</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('setores.index')}}">Grupos</a> > Editar grupo</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('setores.index')}}">

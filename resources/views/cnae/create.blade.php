@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cadastrar um novo cnae</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Grupos > Cnaes do grupo {{$setor->nome}} > Criar cnae</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('setores.index')}}">Grupos</a> > Cnaes do grupo {{$setor->nome}} > Criar cnae</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('setores.show', ['setore' => $setor->id])}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a> --}}

@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cadastrar um novo analista</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Usuários > Criar analista</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('usuarios.index')}}">Usuários</a> > Criar analista</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('usuarios.index')}}">

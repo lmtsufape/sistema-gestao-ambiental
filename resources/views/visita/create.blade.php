@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Criar uma visita</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Visitas > Criar visita</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Visitas</a> > Criar visita</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">

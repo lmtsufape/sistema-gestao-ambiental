@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Editar a empresa/serviço {{$requerimento->empresa->nome}} como protocolista</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Requerimentos > Visualizar requerimento  nº {{$requerimento->id}} > Editar empresa/serviço do requerimento</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Visualizar requerimento  nº {{$requerimento->id}} > Editar empresa/serviço do requerimento</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">

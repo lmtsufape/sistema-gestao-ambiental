@@ -2,7 +2,7 @@
 <x-guest-layout>
     <div class="container conteudo" style="margin-top: 40px;">
         <div class="row">
-            <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D">
+            <div class="col-md-12 mb-1" style="font-weight: bold; font-size: 16px; color: #00883D">
                 PRINCIPAIS SERVIÇOS
             </div>
         </div>
@@ -387,7 +387,7 @@
     @section('content')
     <div class="container conteudo" style="margin-top: 40px;">
         <div class="row">
-            <div class="col-md-12" style="font-weight: bold; font-size: 16px; color: #00883D">
+            <div class="col-md-12 mb-1" style="font-weight: bold; font-size: 16px; color: #00883D">
                 PRINCIPAIS SERVIÇOS
             </div>
         </div>

@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Editar uma espécie</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Espécies de muda > Editar uma espécie de muda</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('especies.index')}}">Espécies de muda</a> > Editar uma espécie de muda</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('especies.index')}}">
