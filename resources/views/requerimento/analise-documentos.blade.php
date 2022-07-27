@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
+                    @can('isSecretarioOrAnalistaOrProtocolista', \App\Models\User::class)
                         <div class="card-footer">
                             <div class="form-row justify-content-center">
                                 <div class="col-md-6"></div>
