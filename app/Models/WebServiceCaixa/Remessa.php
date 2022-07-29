@@ -145,9 +145,10 @@ abstract class Remessa extends BoletoCobranca
                 "/(ñ)/",
                 "/(Ñ)/",
                 "/(ç)/",
-                "/(Ç)/"
+                "/(Ç)/",
+                "/(&)/",
             ),
-            explode(" ","a A e E i I o O u U n N c C"),
+            explode(" ","a A e E i I o O u U n N c C E"),
             $string);
     }
 
