@@ -91,6 +91,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Requerimento::class, 'analista_id');
     }
 
+    public function requerimentosDocumentosAnexadosNotificacao()
+    {
+        $requerimentos_id = DB::table('requerimentos')->join('empresas', 'requerimentos.empresa_id', '=', 'empresas.id')
+                ->where('empresas.user_id', '=', auth()->user()->id)
+                ->where('requerimentos.cancelada', '=', false)
+                ->where('requerimentos.status', '=', Requerimento::STATUS_ENUM['documentos_requeridos'])
+                ->get('requerimentos.id');
+                
+        $requerimento = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->first();
+
+        if($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->first() == null){
+            $requerimento = null;
+        }
+        return $requerimento;
+    }
+
     public function setAtributes($input)
     {
         $this->name = $input['name'];

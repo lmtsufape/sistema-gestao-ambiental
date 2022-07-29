@@ -4,9 +4,9 @@ namespace App\Models\WebServiceCaixa;
 
 use App\Models\Empresa;
 
-class Pessoa 
+class Pessoa
 {
-    // CPF : long[11] 
+    // CPF : long[11]
     public $cpf;
 
     // NOME : char[40]
@@ -41,16 +41,15 @@ class Pessoa
      * @param  Empresa $emrepsa
      * @return void
     */
-    public function gerar_pagador(Empresa $empresa) 
+    public function gerar_pagador(Empresa $empresa)
     {
         if ($empresa->eh_cnpj) {
             $this->cnpj = $empresa->cpf_cnpj;
             $this->razao_social = $empresa->nome;
         } else {
             $this->cpf = $empresa->cpf_cnpj;
-            $this->nome = $empresa->user;
+            $this->nome = $empresa->user->name;
         }
-        
         $this->logradouro = $empresa->endereco->rua;
         $this->cidade = $empresa->endereco->cidade;
         $this->bairro = $empresa->endereco->bairro;
@@ -63,7 +62,7 @@ class Pessoa
      * @param  Empresa $emrepsa
      * @return void
     */
-    public function gerar_beneficiario() 
+    public function gerar_beneficiario()
     {
         $this->cnpj = env('CNPJ_EMPRESA_BENEFICIADA');
         $this->razao_social = env('NOME_EMPRESA_BENEFICIADA');

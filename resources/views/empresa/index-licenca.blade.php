@@ -113,7 +113,7 @@
 @else
 <x-app-layout>
     @section('content')
-        <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 3rem;">
+        <div class="container" style="padding-top: 3rem; padding-bottom: 3rem;">
             <div class="form-row justify-content-between">
                 <div class="col-md-9">
                     <div class="form-row">

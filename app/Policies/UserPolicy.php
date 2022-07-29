@@ -151,4 +151,9 @@ class UserPolicy
     {
         return $user->role != User::ROLE_ENUM['requerente'] && $user->role != User::ROLE_ENUM['represetante_legal'];
     }
+
+    public function isSecretarioOrAnalistaOrProtocolista(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalista($user) || $this->isProtocolista($user);
+    }
 }
