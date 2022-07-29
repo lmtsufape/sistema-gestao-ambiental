@@ -7,6 +7,9 @@ use BaconQrCode\Encoder\ByteMatrix;
 use Carbon\Carbon;
 use ParagonIE\ConstantTime\Binary;
 
+/**
+ * Utilizada para a inclusão de boletos (somente emissão BENEFICIÁRIO) no sistema CAIXA.
+ */
 class IncluirBoletoRemessa extends Remessa
 {
     public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
@@ -24,7 +27,7 @@ class IncluirBoletoRemessa extends Remessa
 
     // NUMERO_DOCUMENTO : char[11]
     public $numero_do_documento;
-    
+
     // // DATA_VENCIMENTO : date (FORMATO yyyy-MM-dd)
     // public $data_vencimento;
 
@@ -200,7 +203,7 @@ class IncluirBoletoRemessa extends Remessa
      *
      * @return String $cabeçalho
     */
-    public function gerar_remessa() 
+    public function gerar_remessa()
     {
         return "<?xml version='1.0' encoding='ISO8859-1'?>
                 <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
@@ -246,14 +249,14 @@ class IncluirBoletoRemessa extends Remessa
                 \t\t\t\t\t<UF>".$this->validar_formartar_tamanho($this->pagador->uf, 2)."</UF>
                 \t\t\t\t\t<CEP>".$this->retirar_formatacao($this->pagador->cep)."</CEP>
                 \t\t\t\t</ENDERECO>
-                \t\t\t</PAGADOR>".($this->sacador_avalista != null ? 
+                \t\t\t</PAGADOR>".($this->sacador_avalista != null ?
                 "\t\t\t<SACADOR_AVALISTA>
                 \t\t\t\t".($this->sacador_avalista->cpf ? "<CPF>".$this->retirar_formatacao($this->sacador_avalista->cpf)."</CPF>" : "<CNPJ>".$this->retirar_formatacao($this->sacador_avalista->cnpj)."</CNPJ>") ."
                 \t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->validar_formartar_tamanho($this->sacador_avalista->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40)."</RAZAO_SOCIAL>")."
                 \t\t\t</SACADOR_AVALISTA>"
                 : "")."".($this->multa ? "
                 \t\t\t<MULTA>
-                \t\t\t\t<DATA>".$this->formatar_data($this->data_multa)."</DATA> 
+                \t\t\t\t<DATA>".$this->formatar_data($this->data_multa)."</DATA>
                 \t\t\t\t".($this->valor_multa != null ? "<VALOR>".$this->gerar_valor($this->valor_multa, 2)."</VALOR>" : "<PERCENTUAL>".$this->gerar_valor($this->percentual_multa, 5)."</PERCENTUAL>")."
                 \t\t\t\t</MULTA>" : "")."".($this->descontos > 0 ? $this->gerar_descontos(): "")."".($this->valor_iof != null ? "\t\t\t\t<VALOR_IOF>".$this->formatar_data($this->valor_iof, 2)."</VALOR_IOF>" : "")."
                 \t\t\t\t<IDENTIFICACAO_EMPRESA>".$this->id."</IDENTIFICACAO_EMPRESA>".($this->quant_mensagens_compensacao > 0 ? $this->gerar_mensagens(): "")."".($this->quant_mensagens_pagador > 0 ? $this->gerar_mensagens_pagador() : "")."".($this->quant_pagamento_permitido > 0 ? $this->gerar_tipos_de_pagamento() : "")."
@@ -273,7 +276,7 @@ class IncluirBoletoRemessa extends Remessa
     private function gerar_autenticacao()
     {
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format("dmY");
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj); 
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj);
 
         $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
@@ -299,14 +302,14 @@ class IncluirBoletoRemessa extends Remessa
     private function gerar_mensagens()
     {
         $retorno = "\t\t\t\t<FICHA_COMPENSACAO>\t\t\t\t\t<MENSAGENS>";
-        
+
         foreach ($this->mensagens_compensacao as $mensagem) {
             $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$mensagem."</MENSAGEM>";
         }
         return $retorno . "\t\t\t\t\t</MENSAGENS>\t\t\t\t</FICHA_COMPENSACAO>";
     }
 
-    private function gerar_mensagens_pagador() 
+    private function gerar_mensagens_pagador()
     {
         $retorno = "\t\t\t\t<RECIBO_PAGADOR>\t\t\t\t\t<MENSAGENS>";
         for($i = 0; $i < $this->quant_mensagens_pagador; $i++) {

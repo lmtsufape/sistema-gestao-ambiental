@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "barryvdh/laravel-dompdf": "^0.9.0",
+        "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
@@ -14,7 +15,9 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "laravellegends/pt-br-validator": "^8.0",
-        "livewire/livewire": "^2.5"
+        "livewire/livewire": "^2.5",
+        "ext-dom": "*",
+        "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

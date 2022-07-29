@@ -4,10 +4,15 @@ namespace App\Models\WebServiceCaixa;
 
 use App\Models\WebServiceCaixa\Remessa;
 
+/**
+ * Utilizada para baixar um boleto, ou seja, encerrar o compromisso de dívida do pagador
+ * (devedor) perante o beneficiário (credor). Aplica-se somente para títulos com situação EM
+ * ABERTO.
+ */
 class BaixarBoletoRemessa extends Remessa
 {
     public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
-    
+
     // OPERACAO : char[50]
     public $operacao = "BAIXA_BOLETO";
 
@@ -33,7 +38,7 @@ class BaixarBoletoRemessa extends Remessa
      *
      * @return String $cabeçalho
     */
-    public function gerar_remessa() 
+    public function gerar_remessa()
     {
         return "<?xml version='1.0' encoding='UTF-8'?>
                 <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
@@ -66,7 +71,7 @@ class BaixarBoletoRemessa extends Remessa
 
     private function gerar_autenticacao()
     {
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj); 
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj);
 
         $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);

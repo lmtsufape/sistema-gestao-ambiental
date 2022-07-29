@@ -2,139 +2,267 @@
 
 namespace App\Models\WebServiceCaixa;
 
-use App\Models\WebServiceCaixa\Remessa;
 use Carbon\Carbon;
 
+/**
+ * Utilizada para alterar dados de um boleto registrado na CAIXA. Útil para situações onde o
+ * pagador necessita de atualização de instruções de devolução/protesto, prazos,
+ * vencimento, descontos, juros, entre outros.
+ */
 class AlterarBoletoRemessa extends Remessa
 {
     public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
 
-    // OPERACAO : char[50]
-    public $operacao = "ALTERA_BOLETO";
+    public string $operacao = "ALTERA_BOLETO";
 
-    // CODIGO_BENEFICIARIO : int
-    public $codigo_beneficiario;
+    /**
+     * Código do Convênio no Banco (Código do Beneficiário).
+     * Código fornecido pela CAIXA, através da agência de relacionamento do cliente.
+     * Deve ser preenchido com o código do Beneficiário, até 7 posições, da esquerda para direita.
+     * @var string $codigo_beneficiario
+     */
+    public string $codigo_beneficiario;
 
-    //NOSSO_NUMERO : long
-    public $nosso_numero;
+    /**
+     * Nosso Número — Informação de entrada.
+     * Se informado zeros, o nosso número será gerado pelo banco. Caso contrário deverá ser informado número iniciando com 14.
+     * @var string $nosso_numero
+     */
+    public string $nosso_numero;
 
-    // NUMERO_DOCUMENTO : char[11]
-    public $numero_do_documento;
-    
-    // DATA_VENCIMENTO : date (FORMATO yyyy-MM-dd)
-    public $data_vencimento;
+    /**
+     * Número utilizado e controlado pelo Cliente, para identificar o título de cobrança. Poderá conter número de
+     * duplicata, no caso de cobrança de duplicatas; número da apólice, no caso de cobrança de seguros, etc.
+     * Campo de preenchimento obrigatório.
+     * @var string $numero_do_documento
+     */
+    public string $numero_do_documento;
 
-    // VALOR : decimal com até 13,2 casas decimais
-    public $valor;
+    /**
+     * Data de vencimento do título de cobrança no formato YYYY-MM-DD
+     * @var string $data_vencimento
+     */
+    public string $data_vencimento;
 
-    // TIPO_ESPECIE : short
+    /**
+     * Valor original do Título. Valor expresso em moeda corrente, utilizar 2 casas decimais. Exemplo: 0000000000000.00
+     * @var float $valor
+     */
+    public float $valor;
+
+    /**
+     * Código adotado para identificar o tipo de título de cobrança:
+     * @var
+     */
     public $tipo_especie;
 
-    // FLAG_ACEITE : char[1]
-    public $flag_aceite;
+    /**
+     * Identificação de Título Aceito / Não Aceito
+     * Código adotado para identificar se o título de cobrança foi aceito (reconhecimento da dívida pelo Pagador):
+     * @var string $flag_aceite
+     */
+    public string $flag_aceite;
 
-    // JUROS_MORA : Boolean
-    public $juros_mora = true;
+    public bool $juros_mora = true;
 
-    // TIPO_JUROS_MORA : string
-    public $tipo_juros_mora;
+    /**
+     * Define o tipo de pagamento de juros de mora. ISENTO, VALOR_POR_DIA ou TAXA_MENSAL
+     * @var string $tipo_juros_mora
+     */
+    public string $tipo_juros_mora;
 
-    // DATA_JUROS_MORA : date (FORMATO yyyy-MM-dd)
-    public $data_juros_mora;
+    /**
+     * Data indicativa do início da cobrança de Juros de Mora de um título de cobrança. Deverá ser maior que a Data de
+     * Vencimento do título de cobrança. Utilizar o formato yyyy-MM-dd
+     * @var string $data_juros_mora
+     */
+    public string $data_juros_mora;
 
-    // VALOR_JUROS_MORA : decimal com até 13,2 casas decimais
-    public $valor_juros_mora;
+    /**
+     * Valor sobre o valor do título a ser cobrado de juros de mora.
+     * @var float $valor_juros_mora
+     */
+    public float $valor_juros_mora;
 
-    // PERCENTUAL_JUROS_MORA : decimal com até 13,2 casas decimais
-    public $percentual_juros_mora;
+    /**
+     * Porcentagem sobre o valor do título a ser cobrado de juros de mora.
+     * @var float $percentual_juros_mora
+     */
+    public float $percentual_juros_mora;
 
-    // VALOR_ABATIMENTO : decimal com até 13,2 casas decimais
-    public $valor_abatimento;
+    /**
+     * Valor do abatimento (redução do valor do documento, devido a algum problema), expresso em moeda corrente
+     * @var float $valor_abatimento
+     */
+    public float $valor_abatimento;
 
-    // POS_VENCIMENTO : Bool
-    public $pos_vecimento = true;
+    /**
+     * Indica se existe ação pós-vencimento.
+     * @var bool $pos_vecimento
+     */
+    public bool $pos_vecimento = true;
 
-    // ACAO_POS_VENCIMENTO : string
-    public $acao_pos_vecimento;
+    /**
+     * Código de Instrução de Protesto ou Devolução. Valores admissíveis: PROTESTAR ou DEVOLVER
+     * @var string $acao_pos_vecimento
+     */
+    public string $acao_pos_vecimento;
 
-    // NUMERO_DIAS_POS_VENCIMENTO : short
-    public $numero_dias_pos_vencimento;
+    /**
+     * Número de dias para o protesto ou baixa por devolução do título não pago após o vencimento. Valores admissíveis:
+     * PROTESTAR = 02 A 90 DIAS
+     * DEVOLVER = 00 A 999 DIAS
+     * @var int $numero_dias_pos_vencimento
+     */
+    public int $numero_dias_pos_vencimento;
 
-    // PAGADOR : Pessoa
-    public $pagador;
+    public Pessoa $pagador;
 
-    // MULTA : Bool
-    public $multa = false;
+    public $sacador_avalista;
 
-    // DATA_MULTA : date (Formato yyyy-MM-dd)
-    public $data_multa;
+    /**
+     * Indica se será cobrado multa por atraso de pagamento.
+     * @var bool $multa
+     */
+    public bool $multa = false;
 
-    // VALOR_MULTA : decimal com até 13,2 casas decimais
-    public $valor_multa;
+    /**
+     * Data a partir da qual a multa deverá ser cobrada. Na ausência, será considerada a data de vencimento.
+     * Utilizar o formato yyyy-MM-dd
+     * @var string $data_multa
+     */
+    public string $data_multa;
 
-    // PERCENTUAL : decimal com até 10,5 casas decimais
-    public $pencentual_multa;
+    /**
+     * Valor de multa a ser aplicado sobre o valor do Título, por atraso no pagamento.
+     * @var float $valor_multa
+     */
+    public float $valor_multa;
 
-    // DESCONTOS : integer, max 3
-    public $descontos = 0;
+    /**
+     * Percentual de multa a ser aplicado sobre o valor do Título, por atraso no pagamento.
+     * @var float $pencentual_multa
+     */
+    public float $pencentual_multa;
 
-    // DATAS_DOS_DESCONTOS : date (Formato yyyy-MM-dd)
-    public $data_desconto = [null, null, null];
+    /**
+     * Quantidade de descontos aplicados. Max: 3
+     * @var int $descontos
+     */
+    public int $descontos = 0;
 
-    // VALORES_DOS_DESCONTOS : decimal com até 13,2 casas decimais
-    public $valores_desconto = [null, null, null];
+    /**
+     * Data limite do desconto do título de cobrança. O Desconto 1 é aquele de maior valor e data de aplicação mais
+     * distante da Data de Vencimento, enquanto o Desconto 3 é o de menor valor e mais próximo da Data de Vencimento.
+     * Utilizar o formato yyyy-MM-dd
+     * @var string[] $data_desconto
+     */
+    public array $data_desconto = [null, null, null];
 
-    // PERCENTUAIS_DOS_DESCONTOS : decimal com até 10,5 casas decimais
-    public $percentuais_desconto = [null, null, null];
+    /**
+     * Valor dos descontos a serem aplicados sobre o valor do Título.
+     * @var float[] $valores_desconto
+     */
+    public array $valores_desconto = [null, null, null];
 
-    // TIPOS_DOS_DESCONTOS : ISENTO, VALOR_FIXO_ATE_DATA ou PERCENTUAL_ATE_DATA
-    public $tipos_de_desconto = [null, null, null];
+    /**
+     * Percentuais de descontos a serem aplicados sobre o valor do Título
+     * @var float[] $percentuais_desconto
+     */
+    public array $percentuais_desconto = [null, null, null];
 
-    // VALOR_IOF : decimal com até 13,2 casas decimais
-    public $valor_iof;
+    /**
+     * Tipos de decontos. Valores aceitaveis: ISENTO, VALOR_FIXO_ATE_DATA ou PERCENTUAL_ATE_DATA
+     * @var string[] $tipos_de_desconto
+     */
+    public array $tipos_de_desconto = [null, null, null];
 
-    // IDENTIFICACAO_EMPRESA : char[25]
-    public $identificacao_empresa;
+    /**
+     * Valor original do IOF — Imposto sobre Operações Financeiras de um título prêmio de seguro na sua data de
+     * emissão, expresso conforme o tipo de moeda.
+     * @var float $valor_iof
+     */
+    public float $valor_iof;
 
-    // QUANTIDADE_DE_MENSAGENS_DE_COMPENSACAO : integer, max 2
-    public $quant_mensagens_compensacao;
+    /**
+     * Campo destinado para uso da Empresa Beneficiário para identificação do Título.
+     * @var string $identificacao_empresa
+     */
+    public string $identificacao_empresa;
 
-    // MENSAGENS_COMPENSACAO : char[40]
-    public $mensagens_compensacao = [null, null];
+    /**
+     * Quantidade de mensagens da Ficha de Compensação. Max: 2
+     * @var int $quant_mensagens_compensacao
+     */
+    public int $quant_mensagens_compensacao;
 
-    // QUANTIDADE_DE_MENSAGENS_DE_RECIBO_PAGADOR : integer, max 4
-    public $quant_mensagens_pagador;
+    /**
+     * Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo instruções da Ficha de
+     * Compensação e na parte Recibo do Pagador do boleto. Ocorre até 2 vezes.
+     * @var string[] $mensagens_compensacao
+     */
+    public array $mensagens_compensacao = [null, null];
 
-    // MENSAGENS_COMPENSACAO : char[40]
-    public $mensagens_pagador = [null, null, null, null];
+    /**
+     * Quantidade de mensagens do Recibo Pagador. Max: 4
+     * @var int
+     */
+    public int $quant_mensagens_pagador;
+
+    /**
+     * Texto de observações destinado ao envio de mensagens livres, a serem impressas na parte Recibo do Pagador do
+     * boleto. Max: 4.
+     * @var string[] $mensagens_pagador
+     */
+    public array $mensagens_pagador = [null, null, null, null];
 
     // OPCOES_PAGAMENTO : Bool
-    public $opcoes_pagamento = false;
+    public bool $opcoes_pagamento = false;
 
-    // QUANT_PAGAMENTOS_PERMITIDOS : short de 1 a 99
-    public $quant_pagamento_permitido = 0;
+    /**
+     * Identificar a Quantidade de Pagamentos possíveis: de 1 a 99
+     * @var int $quant_pagamento_permitido
+     */
+    public int $quant_pagamento_permitido = 0;
 
-    // TIPOS_DE_PAGAMENTO, Valores: ACEITA_QUALQUER_VALOR, ACEITA_VALORES_ENTRE_MINIMO_MAXIMO, NAO_ACEITA_VALOR_DIVERGENTE, SOMENTE_VALOR_MINIMO ou NÃO_ACEITA_VALOR_DIVERGENTE
-    public $tipos_de_pagamento;
+    /**
+     * Registro para Identificação do Tipo de Pagamento
+     * Valores: ACEITA_QUALQUER_VALOR, ACEITA_VALORES_ENTRE_MINIMO_MAXIMO, NAO_ACEITA_VALOR_DIVERGENTE,
+     * SOMENTE_VALOR_MINIMO ou NÃO_ACEITA_VALOR_DIVERGENTE
+     * @var string $tipos_de_pagamento
+     */
+    public string $tipos_de_pagamento;
 
-    // VALOR_MINIMO : decimal com até 13,2 casas decimais
-    public $valor_minimo_pagamento;
+    /**
+     * Identificar o valor mínimo admissível para pagamento.
+     * @var float $valor_minimo_pagamento
+     */
+    public float $valor_minimo_pagamento;
 
-    // VALOR_MAXIMO : decimal com até 13,2 casas decimais
-    public $valor_maximo_pagamento;
+    /**
+     * Identificar o valor máximo admissível para pagamento.
+     * @var float $valor_maximo_pagamento
+     */
+    public float $valor_maximo_pagamento;
 
-    // PERCENTUAL_MINIMO : decimal com até 10,5 casas decimais
-    public $pencentual_minimo_pagamento;
+    /**
+     * Identificar o percentual mínimo admissível para pagamento.
+     * @var float $pencentual_minimo_pagamento
+     */
+    public float $pencentual_minimo_pagamento;
 
-    // PERCENTUAL_MAXIMO : decimal com até 10,5 casas decimais
-    public $pencentual_maximo_pagamento;
+    /**
+     * Identificar o percentual máximo admissível para pagamento.
+     * @var float $pencentual_maximo_pagamento
+     */
+    public float $pencentual_maximo_pagamento;
 
     /** Seta os dados da remessa.
      *
-     * @param  Array $data
+     * @param array $data
      * @return void
-    */
-    public function setAttributes($data)
+     */
+    public function setAttributes(array $data)
     {
         $this->codigo_beneficiario = $data["codigo_beneficiario"];
         $this->data_vencimento = $data["data_vencimento"];
@@ -143,165 +271,267 @@ class AlterarBoletoRemessa extends Remessa
         $this->beneficiario = $data["beneficiario"];
 
         $this->nosso_numero = array_key_exists("nosso_numero", $data) ? $data["nosso_numero"] : "00000000000000000";
-        $this->numero_do_documento = array_key_exists("numero_do_documento", $data) ? $data["numero_do_documento"] : $this->id;
+        $this->numero_do_documento = array_key_exists("numero_do_documento", $data) ? $data["numero_do_documento"] : "";
         $this->tipo_especie = array_key_exists("tipo_especie", $data) ? $data["tipo_especie"] : "02";
         $this->flag_aceite = "N";
-        $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO" ? true : false;
+        $this->juros_mora = array_key_exists("tipo_juros_mora", $data) && $data["tipo_juros_mora"] != "ISENTO";
         $this->tipo_juros_mora = array_key_exists("tipo_juros_mora", $data) ? $data["tipo_juros_mora"] : "ISENTO";
         $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(31)->format("Y-m-d");
-        $this->valor_juros_mora = array_key_exists("valor_juros_mora", $data) ? $data["valor_juros_mora"] : "0000000000000.00";
-        $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : "00000000000.00000";
-        $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : "0000000000000.00";
+        $this->valor_juros_mora = array_key_exists("valor_juros_mora", $data) ? $data["valor_juros_mora"] : 0;
+        $this->percentual_juros_mora = array_key_exists("percentual_juros_mora", $data) ? $data["percentual_juros_mora"] : 0;
+        $this->valor_abatimento = array_key_exists("valor_abatimento", $data) ? $data["valor_abatimento"] : 0;
         $this->acao_pos_vecimento = array_key_exists("acao_pos_vecimento", $data) ? $data["acao_pos_vecimento"] : "DEVOLVER";
-        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : "15";
+        $this->numero_dias_pos_vencimento = array_key_exists("numero_dias_pos_vencimento", $data) ? $data["numero_dias_pos_vencimento"] : 15;
         $this->data_hora = now()->format("YmdHms");
         $this->sacador_avalista = array_key_exists("sacador_avalista", $data) ? $data['sacador_avalista'] : null;
         $this->multa = array_key_exists("data_multa", $data);
         $this->data_multa = array_key_exists("data_multa", $data) ? $data['data_multa'] : null;
         $this->valor_multa = array_key_exists("valor_multa", $data) ? $data['valor_multa'] : null;
         $this->percentual_multa = array_key_exists("percentual_multa", $data) ? $data['percentual_multa'] : null;
-        $this->descontos = array_key_exists("datas_desconto", $data) ? (count($data['datas_desconto']) <= 3 ? count($data['datas_desconto']) : 3) : 0;
+        $this->descontos = array_key_exists("datas_desconto", $data) ? (min(count($data['datas_desconto']), 3)) : 0;
         $this->datas_desconto = array_key_exists("datas_desconto", $data) ? $data['datas_desconto'] : [null, null, null];
         $this->valores_desconto = array_key_exists("valores_desconto", $data) ? $data['valores_desconto'] : [null, null, null];
         $this->percentuais_desconto = array_key_exists("percentuais_desconto", $data) ? $data['percentuais_desconto'] : [null, null, null];
         $this->tipos_de_desconto = array_key_exists("tipos_de_desconto", $data) ? $data['tipos_de_desconto'] : [null, null, null];
-        $this->valor_iof = array_key_exists("valor_iof", $data) ? $data['valor_iof'] : null;
-        $this->quant_mensagens_compensacao = array_key_exists("mensagens_compensacao", $data) ? (count($data["mensagens_compensacao"]) <= 2 ? count($data["mensagens_compensacao"]) : 2) : 0;
+        $this->valor_iof = array_key_exists("valor_iof", $data) ? $data['valor_iof'] : 0;
+        $this->quant_mensagens_compensacao = array_key_exists("mensagens_compensacao", $data) ? (min(count($data["mensagens_compensacao"]), 2)) : 0;
         $this->mensagens_compensacao = array_key_exists("mensagens_compensacao", $data) ? $data["mensagens_compensacao"] : [null, null];
-        $this->quant_mensagens_pagador = array_key_exists("mensagens_pagador", $data) ? (count($data["mensagens_pagador"]) <= 4 ? count($data["mensagens_pagador"]) : 4) : 0;
+        $this->quant_mensagens_pagador = array_key_exists("mensagens_pagador", $data) ? (min(count($data["mensagens_pagador"]), 4)) : 0;
         $this->mensagens_pagador = array_key_exists("mensagens_pagador", $data) ? $data["mensagens_pagador"] : [null, null, null, null];
         $this->quant_pagamento_permitido =  array_key_exists("quant_pagamento_permitido", $data) ?  count($data["quant_pagamento_permitido"]) : 0;
-        $this->tipos_de_pagamento = array_key_exists("tipos_de_pagamento", $data) ? $data["tipos_de_pagamento"] : null;
-        $this->valor_minimo_pagamento = array_key_exists("valor_minimo_pagamento", $data) ? $data["valor_minimo_pagamento"] : null;
-        $this->valor_maximo_pagamento = array_key_exists("valor_maximo_pagamento", $data) ? $data["valor_maximo_pagamento"] : null;
-        $this->pencentual_minimo_pagamento = array_key_exists("pencentual_minimo_pagamento", $data) ? $data["pencentual_minimo_pagamento"] : null;
-        $this->pencentual_maximo_pagamento = array_key_exists("pencentual_maximo_pagamento", $data) ? $data["pencentual_maximo_pagamento"] : null;
+        $this->tipos_de_pagamento = array_key_exists("tipos_de_pagamento", $data) ? $data["tipos_de_pagamento"] : "";
+        $this->valor_minimo_pagamento = array_key_exists("valor_minimo_pagamento", $data) ? $data["valor_minimo_pagamento"] : 0;
+        $this->valor_maximo_pagamento = array_key_exists("valor_maximo_pagamento", $data) ? $data["valor_maximo_pagamento"] : 0;
+        $this->pencentual_minimo_pagamento = array_key_exists("pencentual_minimo_pagamento", $data) ? $data["pencentual_minimo_pagamento"] : 0;
+        $this->pencentual_maximo_pagamento = array_key_exists("pencentual_maximo_pagamento", $data) ? $data["pencentual_maximo_pagamento"] : 0;
     }
 
-    /** Gera o arquivo de remessa.
-     *
-     * @return String $cabeçalho
-    */
-    public function gerar_remessa() 
+    /**
+     * Gera o arquivo de remessa.
+     * @return string $cabeçalho
+     */
+    public function gerar_remessa(): string
     {
-        return "<?xml version='1.0' encoding='ISO8859-1'?>
-                <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
-                <soapenv:Header/>
-                <soapenv:Body>
-                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
-                \t<sibar_base:HEADER>
-                \t\t<VERSAO>".$this->versao."</VERSAO>
-                \t\t<AUTENTICACAO>".$this->gerar_autenticacao()."</AUTENTICACAO>
-                \t\t<USUARIO_SERVICO>".$this->usuario_servico."</USUARIO_SERVICO>
-                \t\t<OPERACAO>".$this->operacao."</OPERACAO>
-                \t\t<SISTEMA_ORIGEM>".$this->sistema_origem."</SISTEMA_ORIGEM>
-                \t\t<DATA_HORA>".$this->data_hora."</DATA_HORA>
-                \t</sibar_base:HEADER>
-                \t<DADOS>
-                \t\t<ALTERA_BOLETO>
-                \t\t\t<CODIGO_BENEFICIARIO>".$this->codigo_beneficiario."</CODIGO_BENEFICIARIO>
-                \t\t\t<TITULO>
-                \t\t\t\t<NOSSO_NUMERO>".$this->nosso_numero."</NOSSO_NUMERO>
-                \t\t\t\t<NUMERO_DOCUMENTO>".$this->numero_do_documento."</NUMERO_DOCUMENTO>
-                \t\t\t\t<DATA_VENCIMENTO>".$this->data_vencimento."</DATA_VENCIMENTO>
-                \t\t\t\t<VALOR>".$this->gerar_valor($this->valor, 2)."</VALOR>
-                \t\t\t\t<TIPO_ESPECIE>".$this->tipo_especie."</TIPO_ESPECIE>
-                \t\t\t\t<FLAG_ACEITE>".$this->flag_aceite."</FLAG_ACEITE>
-                \t\t\t\t<JUROS_MORA>
-                \t\t\t\t\t<TIPO>".$this->tipo_juros_mora."</TIPO>".($this->tipo_juros_mora != 'ISENTO' ? "\t\t\t\t\t<DATA>".$this->data_juros_mora."</DATA>" : "") ."
-                \t\t\t\t\t".($this->tipo_juros_mora == 'ISENTO' ? "<VALOR>".$this->valor_juros_mora."</VALOR>" : ($this->valor_juros_mora != "0000000000000.00" ? "<VALOR>".$this->gerar_valor($this->valor_juros_mora, 2)."</VALOR>" : "<PERCENTUAL>".$this->gerar_valor($this->percentual_juros_mora, 5)."</PERCENTUAL>"))."
-                \t\t\t\t</JUROS_MORA>
-                \t\t\t\t<VALOR_ABATIMENTO>".($this->valor_abatimento != "0000000000000.00" ? $this->gerar_valor($this->valor_abatimento, 2) : $this->valor_abatimento)."</VALOR_ABATIMENTO>\n".($this->pos_vecimento ?
-                "\t\t\t\t<POS_VENCIMENTO>
-                \t\t\t\t\t<ACAO>".$this->acao_pos_vecimento."</ACAO>
-                \t\t\t\t\t<NUMERO_DIAS>".$this->numero_dias_pos_vencimento."</NUMERO_DIAS>
-                \t\t\t\t</POS_VENCIMENTO>" : "")."
-                \t\t\t\t<PAGADOR>
-                \t\t\t\t\t".($this->pagador->cpf ? "<NOME>".$this->validar_formartar_tamanho($this->pagador->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->pagador->razao_social, 40)."</RAZAO_SOCIAL>")."
-                \t\t\t\t\t<ENDERECO>
-                \t\t\t\t\t\t<LOGRADOURO>".$this->validar_formartar_tamanho($this->pagador->logradouro, 40)."</LOGRADOURO>
-                \t\t\t\t\t\t<BAIRRO>".$this->validar_formartar_tamanho($this->pagador->bairro, 15)."</BAIRRO>
-                \t\t\t\t\t\t<CIDADE>".$this->validar_formartar_tamanho($this->pagador->cidade, 15)."</CIDADE>
-                \t\t\t\t\t\t<UF>".$this->validar_formartar_tamanho($this->pagador->uf, 2)."</UF>
-                \t\t\t\t\t\t<CEP>".$this->retirar_formatacao($this->pagador->cep)."</CEP>
-                \t\t\t\t\t</ENDERECO>
-                \t\t\t\t</PAGADOR>".($this->sacador_avalista != null ? 
-                "\t\t\t\t<SACADOR_AVALISTA>
-                \t\t\t\t\t".($this->sacador_avalista->cpf ? "<CPF>".$this->retirar_formatacao($this->sacador_avalista->cpf)."</CPF>" : "<CNPJ>".$this->retirar_formatacao($this->sacador_avalista->cnpj)."</CNPJ>") ."
-                \t\t\t\t\t".($this->sacador_avalista->nome ? "<NOME>".$this->validar_formartar_tamanho($this->sacador_avalista->nome, 40)."</NOME>" : "<RAZAO_SOCIAL>".$this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40)."</RAZAO_SOCIAL>")."
-                \t\t\t\t</SACADOR_AVALISTA>"
-                : "")."".($this->multa ? "
-                \t\t\t\t<MULTA>
-                \t\t\t\t\t<DATA>".$this->formatar_data($this->data_multa)."</DATA> 
-                \t\t\t\t\t".($this->valor_multa != null ? "<VALOR>".$this->gerar_valor($this->valor_multa, 2)."</VALOR>" : "<PERCENTUAL>".$this->gerar_valor($this->percentual_multa, 5)."</PERCENTUAL>")."
-                \t\t\t\t</MULTA>" : "")."".($this->descontos > 0 ? $this->gerar_descontos(): "")."".($this->valor_iof != null ? "\t\t\t\t<VALOR_IOF>".$this->formatar_data($this->valor_iof, 2)."</VALOR_IOF>" : "")."
-                \t\t\t\t<IDENTIFICACAO_EMPRESA>".$this->id."</IDENTIFICACAO_EMPRESA>".($this->quant_mensagens_compensacao > 0 ? $this->gerar_mensagens(): "")."".($this->quant_mensagens_pagador > 0 ? $this->gerar_mensagens_pagador() : "")."".($this->quant_pagamento_permitido > 0 ? $this->gerar_tipos_de_pagamento() : "")."
-                \t\t\t</TITULO>
-                \t\t</ALTERA_BOLETO>
-                \t</DADOS>
-                </manutencaocobrancabancaria:SERVICO_ENTRADA>
-                </soapenv:Body>
-                </soapenv:Envelope>";
+        $xml_array = array(
+            'soapenv:Body' => array(
+                'ext:SERVICO_ENTRADA' => array(
+                    'sib:HEADER' => array(
+                        'VERSAO' => $this->versao,
+                        'AUTENTICACAO' => $this->gerar_autenticacao(),
+                        'USUARIO_SERVICO' => $this->usuario_servico,
+                        'OPERACAO' => $this->operacao,
+                        'SISTEMA_ORIGEM' => $this->sistema_origem,
+                        'DATA_HORA' => $this->data_hora,
+                    ),
+                    'DADOS' => array(
+                        'ALTERA_BOLETO' => array(
+                            'CODIGO_BENEFICIARIO' => $this->codigo_beneficiario,
+                            'TITULO' => array(
+                                'NOSSO_NUMERO' => $this->nosso_numero,
+                                'NUMERO_DOCUMENTO' => $this->numero_do_documento,
+                                'DATA_VENCIMENTO' => $this->data_vencimento,
+                                'VALOR' => $this->gerar_valor($this->valor, 2),
+                                'TIPO_ESPECIE' => $this->tipo_especie,
+                                'FLAG_ACEITE' => $this->flag_aceite,
+                                'JUROS_MORA' => $this->gerar_juros_mora(),
+                                'VALOR_ABATIMENTO' => $this->gerar_valor($this->valor_abatimento, 2),
+                                'POS_VENCIMENTO' => array(
+                                    'ACAO' => $this->acao_pos_vecimento,
+                                    'NUMERO_DIAS' => $this->numero_dias_pos_vencimento,
+                                ),
+                                'PAGADOR' => array(
+                                    $this->etiqueta_nome_ou_razao_social() => $this->gerar_nome_ou_razao_social(),
+                                    'ENDERECO' => array(
+                                        'LOGRADOURO' => $this->validar_formartar_tamanho($this->pagador->logradouro, 40),
+                                        'BAIRRO' => $this->validar_formartar_tamanho($this->pagador->bairro, 15),
+                                        'CIDADE' => $this->validar_formartar_tamanho($this->pagador->cidade, 15),
+                                        'UF' => $this->validar_formartar_tamanho($this->pagador->uf, 2),
+                                        'CEP' => $this->retirar_formatacao($this->pagador->cep),
+                                    )
+                                ),
+                                'SACADOR_AVALISTA' => $this->gerar_sacador_avalista(),
+                                'MULTA' => $this->gerar_multa(),
+                                'DESCONTOS' => $this->gerar_descontos(),
+                                'VALOR_IOF' => $this->gerar_valor($this->valor_iof, 2),
+                                'IDENTIFICACAO_EMPRESA' => $this->id,
+                                'FICHA_COMPENSACAO' => $this->gerar_mensagens(),
+                                'RECIBO_PAGADOR' => $this->gerar_mensagens_pagador(),
+                                'PAGAMENTO' => $this->gerar_tipos_de_pagamento(),
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        if ($this->descontos == 0) {
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS']['ALTERA_BOLETO']['TITULO']['DESCONTOS']);
+        }
+        if ($this->sacador_avalista == null) {
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS']['ALTERA_BOLETO']['TITULO']['SACADOR_AVALISTA']);
+        }
+        if ($this->quant_mensagens_compensacao == 0) {
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS']['ALTERA_BOLETO']['TITULO']['FICHA_COMPENSACAO']);
+        }
+        if ($this->quant_mensagens_pagador == 0) {
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS']['ALTERA_BOLETO']['TITULO']['RECIBO_PAGADOR']);
+        }
+        if ($this->quant_pagamento_permitido == 0) {
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS']['ALTERA_BOLETO']['TITULO']['PAGAMENTO']);
+        }
+        $xml_root = 'soapenv:Envelope';
+		$xml = new XmlDomConstruct('1.0', 'ISO8859-1');
+		$xml->formatOutput = true;
+		$xml->fromMixed(array($xml_root => $xml_array));
+		$xml_root_item = $xml->getElementsByTagName($xml_root)->item(0);
+		$xml_root_item->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
+		$xml_root_item->setAttribute('xmlns:ext', 'http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo');
+		$xml_root_item->setAttribute('xmlns:sib', 'http://caixa.gov.br/sibar');
+		return $xml->saveXML();
     }
 
-    /** Gera a hash de atutenticação do cabeçalho do arquivo.
-     *
-     * @return String $cabeçalho
-    */
-
-    private function gerar_autenticacao()
+    /**
+     * Gera a hash de atutenticação do cabeçalho do arquivo.
+     * @return string $cabeçalho
+     */
+    private function gerar_autenticacao(): string
     {
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format("dmY");
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj); 
-
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj);
         $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
     }
 
-    /** Retorna a parte dos descontos do xml, se tiver.
-     *
-     * @return String $string : parte do xml dos descontos
-    */
-    private function gerar_descontos()
+    /**
+     * Retorna a parte dos descontos do xml, se tiver.
+     * @return array parte do xml dos descontos
+     */
+    private function gerar_descontos(): array
     {
-        $retorno = "\t\t\t\t<DESCONTOS>";
-        for($i = 0; $i < $this->descontos; $i++) {
-            $retorno .=  "\t\t\t\t\t<DESCONTO>
-                          \t\t\t\t\t\t<DATA>".$this->formatar_data($this->datas_desconto[$i])."</DATA>
-                          \t\t\t\t\t\t".($this->valores_desconto[$i] != null ? "<VALOR>".$this->gerar_valor($this->valores_desconto[$i], 2)."</VALOR>" : "<PERCENTUAL>".$this->gerar_valor($this->percentuais_desconto[$i], 5)."</PERCENTUAL>" )."
-                          \t\t\t\t\t\t<TIPO>".$this->tipos_de_desconto[$i]."<TIPO>
-                          \t\t\t\t\t</DESCONTO>";
+        if ($this->descontos > 0) {
+            $descontos = array(
+                'DESCONTO' => array()
+            );
+            for ($i = 0; $i < $this->descontos; $i++) {
+                $tipo = $this->valores_desconto[$i] != null ? 'VALOR' : 'PERCENTUAL';
+                $desconto = $this->valores_desconto[$i] != null ?
+                    $this->gerar_valor($this->valores_desconto[$i], 2) :
+                    $this->gerar_valor($this->percentuais_desconto[$i], 5);
+                $descontos['DESCONTO'][] = array(
+                    'DATA' => $this->formatar_data($this->data_desconto[$i]),
+                    $tipo => $desconto,
+                );
+            }
+            return $descontos;
         }
-        return $retorno . "\t\t\t\t</DESCONTOS>";
+        return [];
     }
 
-    private function gerar_mensagens()
+    private function gerar_mensagens(): array
     {
-        $retorno = "\t\t\t\t<FICHA_COMPENSACAO>\t\t\t\t\t<MENSAGENS>";
-        for($i = 0; $i < $this->descontos; $i++) {
-            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->mensagens_compensacao[$i]."</MENSAGEM>";
+        if ($this->quant_mensagens_compensacao > 0) {
+            $array = array(
+                'MENSAGENS' => array(
+                    'MENSAGEM' => array()
+                ),
+            );
+            for ($i = 0; $i < $this->quant_mensagens_compensacao; $i++) {
+                $array['MENSAGENS']['MENSAGEM'][$i] = $this->validar_formartar_tamanho($this->mensagens_compensacao[$i], 40);
+            }
+            return $array;
         }
-        return $retorno . "\t\t\t\t\t</MENSAGENS></FICHA_COMPENSACAO>";
+        return [];
     }
 
-    private function gerar_mensagens_pagador() 
+    private function gerar_mensagens_pagador(): array
     {
-        $retorno = "\t\t\t\t<RECIBO_PAGADOR>\t\t\t\t\t<MENSAGENS>";
-        for($i = 0; $i < $this->quant_mensagens_pagador; $i++) {
-            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->mensagens_pagador[$i]."</MENSAGEM>";
+        if ($this->quant_mensagens_pagador > 0) {
+            $msgs = array(
+                'MENSAGENS' => array(
+                    'MENSAGEM' => array()
+                )
+            );
+            for ($i = 0; $i < $this->quant_mensagens_pagador; $i++) {
+                $msgs['MENSAGENS']['MENSAGEM'][$i] = $this->validar_formartar_tamanho($this->mensagens_pagador[$i], 40);
+            }
+            return $msgs;
         }
-        return $retorno . "\t\t\t\t</MENSAGENS>\t\t\t\t\t</RECIBO_PAGADOR>";
+        return [];
     }
 
-    private function gerar_tipos_de_pagamento()
+    private function gerar_tipos_de_pagamento(): array
     {
-        $retorno = "\t\t\t\t<PAGAMENTO><QUANTIDADE_PERMITIDA>".$this->quant_pagamento_permitido."</QUANTIDADE_PERMITIDA>";
-        for($i = 0; $i < $this->quant_pagamento_permitido; $i++) {
-            $retorno .= "\t\t\t\t\t<TIPO>".$this->tipos_de_pagamento[$i]."</TIPO>";
-            $retorno .= "\t\t\t\t\t".($this->valor_minimo_pagamento[$i] ? "<VALOR_MINIMO>".$this->gerar_valor($this->valor_minimo_pagamento[$i], 2)."</VALOR_MINIMO>" : "<PERCENTUAL_MINIMO>".$this->gerar_valor($this->pencentual_minimo_pagamento[$i], 5)."</PERCENTUAL_MINIMO>")."";
-            $retorno .= "\t\t\t\t\t".($this->valor_maximo_pagamento[$i] ? "<VALOR_MAXIMO>".$this->gerar_valor($this->valor_maximo_pagamento[$i], 2)."</VALOR_MAXIMO>" : "<PERCENTUAL_MAXIMO>".$this->gerar_valor($this->pencentual_maximo_pagamento[$i], 5)."</PERCENTUAL_MAXIMO>")."";
+        if ($this->quant_pagamento_permitido > 0) {
+            $pgmts = array(
+                'QUANTIDADE_PERMITIDA' => $this->quant_pagamento_permitido,
+                'TIPO' => $this->tipos_de_pagamento,
+            );
+            if ($this->valor_maximo_pagamento > 0) {
+                $pgmts['VALOR_MINIMO'] = $this->gerar_valor($this->valor_minimo_pagamento, 2);
+                $pgmts['VALOR_MAXIMO'] = $this->gerar_valor($this->valor_maximo_pagamento, 2);
+            } else {
+                $pgmts['PERCENTUAL_MINIMO'] = $this->gerar_valor($this->pencentual_minimo_pagamento, 5);
+                $pgmts['PERCENTUAL_MAXIMO'] = $this->gerar_valor($this->pencentual_maximo_pagamento, 5);
+            }
+            return $pgmts;
         }
-        return $retorno . "\t\t\t\t</PAGAMENTO>";
+        return [];
     }
 
+    private function gerar_sacador_avalista(): array
+    {
+        if ($this->sacador_avalista != null) {
+            if ($this->sacador_avalista->cpf) {
+                return array(
+                    'CPF' => $this->retirar_formatacao($this->sacador_avalista->cpf),
+                    'NOME' => $this->validar_formartar_tamanho($this->sacador_avalista->nome, 40),
+                );
+            } else {
+                return array(
+                    'CNPJ' => $this->retirar_formatacao($this->sacador_avalista->cnpj),
+                    'RAZAO_SOCIAL' => $this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40),
+                );
+            }
+        }
+        return [];
+    }
+
+    private function gerar_juros_mora(): array
+    {
+        $array = array(
+            'TIPO' => $this->tipo_juros_mora,
+        );
+        if ($this->tipo_juros_mora != 'ISENTO')
+            $array['DATA'] = $this->data_juros_mora;
+        if ($this->tipo_juros_mora == 'TAXA_MENSAL')
+            $array['PERCENTUAL'] = $this->gerar_valor($this->percentual_juros_mora, 5);
+        else
+            $array['VALOR'] = $this->gerar_valor($this->valor_juros_mora, 2);
+        return $array;
+    }
+
+    private function gerar_nome_ou_razao_social(): string
+    {
+        if ($this->pagador->cpf)
+            return $this->validar_formartar_tamanho($this->pagador->nome, 40);
+        return $this->validar_formartar_tamanho($this->pagador->razao_social, 40);
+    }
+
+    private function etiqueta_nome_ou_razao_social(): string
+    {
+        if ($this->pagador->cpf)
+            return 'NOME';
+        return 'RAZAO_SOCIAL';
+    }
+
+    private function gerar_multa(): array
+    {
+        $array = array(
+            'DATA' => $this->formatar_data($this->data_multa)
+        );
+        if ($this->valor_multa)
+            $array['VALOR'] = $this->gerar_valor($this->valor_multa, 2);
+        else
+            $array['PERCENTUAL'] = $this->gerar_valor($this->percentual_multa, 5);
+        return $array;
+    }
 }
