@@ -11,7 +11,7 @@ abstract class Remessa extends BoletoCobranca
 {
     /*
         Classe base para todos os tipos de remessas possiveis
-        Inclui as tags do cabeçalho do arquivo de remessa exceto a tag OPERACAO que 
+        Inclui as tags do cabeçalho do arquivo de remessa exceto a tag OPERACAO que
         é colocada nas classes que herdam essa.
     */
 
@@ -57,7 +57,7 @@ abstract class Remessa extends BoletoCobranca
         for ($i = 0; $i < 15 - $tamanho; $i++) {
             $valor_string = "0" . $valor_string;
         }
-        
+
         return $valor_string;
     }
 
@@ -84,7 +84,7 @@ abstract class Remessa extends BoletoCobranca
      * @param int $num_casas : quantidade de casas decimais
      * @return String $string do valor com duas casas decimais
     */
-    protected function gerar_valor($valor, $num_casas) 
+    protected function gerar_valor($valor, $num_casas)
     {
         return number_format($valor, $num_casas, '.', "");
     }
@@ -93,7 +93,7 @@ abstract class Remessa extends BoletoCobranca
      *
      * @return String $string : parte do xml dos descontos
     */
-    protected function formatar_data($data) 
+    protected function formatar_data($data)
     {
         $data = new Carbon($data);
         return $data->format('Y-m-d');
@@ -107,7 +107,7 @@ abstract class Remessa extends BoletoCobranca
      * @param Integer $tamanho : tamanho limite da string
      * @return String $string : string formatada
     */
-    protected function validar_formartar_tamanho($string, $tamanho) 
+    protected function validar_formartar_tamanho($string, $tamanho)
     {
         $tam_string = strlen($string);
 
@@ -128,9 +128,27 @@ abstract class Remessa extends BoletoCobranca
      * @param String $string : string que o acento será retirado
      * @return String $string : string sem acentos
     */
-    protected function retirar_acento($string) 
+    public function retirar_acento($string)
     {
-        return preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"), explode(" ","a A e E i I o O u U n N"), $string);
+        return preg_replace(
+            array(
+                "/(á|à|ã|â|ä)/",
+                "/(Á|À|Ã|Â|Ä)/",
+                "/(é|è|ê|ë)/",
+                "/(É|È|Ê|Ë)/",
+                "/(í|ì|î|ï)/",
+                "/(Í|Ì|Î|Ï)/",
+                "/(ó|ò|õ|ô|ö)/",
+                "/(Ó|Ò|Õ|Ô|Ö)/",
+                "/(ú|ù|û|ü)/",
+                "/(Ú|Ù|Û|Ü)/",
+                "/(ñ)/",
+                "/(Ñ)/",
+                "/(ç)/",
+                "/(Ç)/"
+            ),
+            explode(" ","a A e E i I o O u U n N c C"),
+            $string);
     }
 
     /** Recebe um reponse string xml com o resultado da chamada e converte para array.
@@ -138,13 +156,13 @@ abstract class Remessa extends BoletoCobranca
      * @param String $string_response : string responsiva com conteudo em xml
      * @return String $array_conteudo : array na forma ['tag' => 'conteudo_da_tag']
     */
-    public function to_array($string_response) 
+    public function to_array($string_response)
     {
         $dom_document = new DOMDocument();
         $dom_document->loadXML($string_response);
         $conteudo = $dom_document->childNodes[0]->childNodes[0]->childNodes[0];
         $arvore_conteudo = $this->gerar_arvore_de_conteudo($conteudo);
-        $array_conteudo = $this->passa_para_array($arvore_conteudo); 
+        $array_conteudo = $this->passa_para_array($arvore_conteudo);
 
         return $array_conteudo;
     }
@@ -180,9 +198,9 @@ abstract class Remessa extends BoletoCobranca
      * @param Array $arvore_conteudo : árvore com conteudos
      * @return String $array : array de conteudo do xml como ['chave' => 'valor']
     */
-    private function passa_para_array($arvore, $array = []) 
+    private function passa_para_array($arvore, $array = [])
     {
-        
+
         if (array_key_exists(0, $arvore)) {
             foreach ($arvore as $no) {
                 $array = $this->passa_para_array($no, $array);
@@ -215,7 +233,7 @@ abstract class Remessa extends BoletoCobranca
     */
     protected function string_to_bytes($string) {
         $resultado = '';
-        
+
         for($i = 0; $i < strlen($string); $i++){
             $resultado .= ord($string[$i]);
         }
