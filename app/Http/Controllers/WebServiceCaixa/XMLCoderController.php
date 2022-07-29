@@ -88,14 +88,21 @@ class XMLCoderController extends Controller
 
         $resultado = (new IncluirBoletoRemessa())->to_array($response);
 
-        switch ($resultado['COD_RETORNO']['DADOS']) {
-            case 0:
-                $boleto->salvar_arquivo_resposta($response);
-                $this->salvar_resposta_incluir_boleto_remessa($boleto, $resultado);
-                break;
-            default:
-                throw new ErrorRemessaException($resultado['RETORNO']);
-                break;
+        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
+            switch ($resultado['COD_RETORNO']['DADOS']) {
+                case 0:
+                    $boleto->salvar_arquivo_resposta($response);
+                    $this->salvar_resposta_incluir_boleto_remessa($boleto, $resultado);
+                    break;
+                case 1:
+                    throw new ErrorRemessaException($resultado['RETORNO']);
+                    break;
+                default:
+                    throw new ErrorRemessaException($resultado['RETORNO']);
+                    break;
+            }
+        } else {
+            throw new ErrorRemessaException($response);
         }
     }
 
