@@ -302,9 +302,8 @@ class IncluirBoletoRemessa extends Remessa
     private function gerar_mensagens()
     {
         $retorno = "\t\t\t\t<FICHA_COMPENSACAO>\t\t\t\t\t<MENSAGENS>";
-
         foreach ($this->mensagens_compensacao as $mensagem) {
-            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$mensagem."</MENSAGEM>";
+            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->validar_formartar_tamanho($mensagem, 40)."</MENSAGEM>";
         }
         return $retorno . "\t\t\t\t\t</MENSAGENS>\t\t\t\t</FICHA_COMPENSACAO>";
     }
@@ -313,7 +312,7 @@ class IncluirBoletoRemessa extends Remessa
     {
         $retorno = "\t\t\t\t<RECIBO_PAGADOR>\t\t\t\t\t<MENSAGENS>";
         for($i = 0; $i < $this->quant_mensagens_pagador; $i++) {
-            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->mensagens_pagador[$i]."</MENSAGEM>";
+            $retorno .= "\t\t\t\t\t\t<MENSAGEM>".$this->validar_formartar_tamanho($this->mensagens_pagador[$i], 40)."</MENSAGEM>";
         }
         return $retorno . "\t\t\t\t\t</MENSAGENS>\t\t\t\t</RECIBO_PAGADOR>";
     }
