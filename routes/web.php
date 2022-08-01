@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('documentos', DocumentoController::class);
     Route::resource('requerimentos', RequerimentoController::class)->except('index');
     Route::get('requerimentos/{filtro}/listar', [RequerimentoController::class, 'index'])->name('requerimentos.index');
-    Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
+    Route::post('requerimentos/atribuir-analista/{tipo}', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::get('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'editEmpresa'])->name('requerimentos.editar.empresa');
     Route::post('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'updateEmpresa'])->name('requerimentos.update.empresa');
     Route::get('requerimentos/{id}/setor/ajax-listar-cnaes', [SetorController::class, 'ajaxCnaes'])->name("ajax.listar.cnaes.editar");

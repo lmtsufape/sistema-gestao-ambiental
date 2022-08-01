@@ -47,7 +47,7 @@ class VisitaController extends Controller
     public function create()
     {
         $this->authorize('isSecretario', User::class);
-        $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']]])->orderBy('created_at', 'ASC')->get();
+        $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']], ['cancelada', false]])->orderBy('created_at', 'ASC')->get();
         $analistas = User::analistas();
 
         return view('visita.create', compact('requerimentos', 'analistas'));

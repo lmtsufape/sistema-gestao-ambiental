@@ -55,9 +55,11 @@
                                     @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
-                                    @if ($requerimento->documentos->count() > 0)
-                                        <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
-                                    @endif
+                                    @can('isAnalistaProcesso', \App\Models\User::class)
+                                        @if ($requerimento->documentos->count() > 0)
+                                            <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                        @endif
+                                    @endcan
                                     @can('isProtocolista', \App\Models\User::class)
                                         <a  href="{{route('requerimentos.editar.empresa', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/building-svgrepo-com.svg')}}"  alt="Editar empresa" title="Editar Informações da Empresa/Serviço"></a>
                                         @if ($requerimento->documentos->count() > 0)
@@ -342,32 +344,67 @@
 
                 @can('isSecretario', \App\Models\User::class)
                     @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                        <div class="shadow card" style="width: 50%; margin-top: 1rem;">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista</h5>
-                                            <span class="linha"></span>
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <div class="shadow card" style="margin-top: 1rem;">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="row justify-content-between">
+                                                <div class="col-md-10">
+                                                    <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir protocolista</h5>
+                                                    <span class="linha"></span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a data-toggle="modal" data-target="#atribuir-analista" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista" title="Atribuir analista"></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <a data-toggle="modal" data-target="#atribuir-analista" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista" title="Atribuir analista"></a>
+                                        <div class="d-flex align-items-center mt-4">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <a><img src="{{asset('img/profile-user-svgrepo-com.svg')}}" alt="usuario"  width="45" class="img-flex"></a>
+                                                </div>
+                                                <div class="col-md-10" style="padding-left: 30px;">
+                                                    <h6 class="titulo-nav-tab-custom">{{$requerimento->protocolista->name}}</h6>
+                                                    <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->protocolista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-center mt-4">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <a><img src="{{asset('img/profile-user-svgrepo-com.svg')}}" alt="usuario"  width="45" class="img-flex"></a>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="shadow card" style="margin-top: 1rem;">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista de processo</h5>
+                                                    <span class="linha"></span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a data-toggle="modal" data-target="#atribuir-analista-processo" style="cursor: pointer;"><img width="25" src="{{asset('img/plus-svgrepo-com.svg')}}"  alt="Atribuir analista de processo" title="Atribuir analista de processo"></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-10" style="padding-left: 30px;">
-                                            <h6 class="titulo-nav-tab-custom">{{$requerimento->analista->name}}</h6>
-                                            <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->analista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                        <div class="d-flex align-items-center mt-4">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <a><img src="{{asset('img/profile-user-svgrepo-com.svg')}}" alt="usuario"  width="45" class="img-flex"></a>
+                                                </div>
+                                                <div class="col-md-10" style="padding-left: 30px;">
+                                                    <h6 class="titulo-nav-tab-custom">{{$requerimento->analistaProcesso ? $requerimento->analistaProcesso->name: "Sem analista atribuído"}}</h6>
+                                                    @if($requerimento->analistaProcesso)
+                                                        <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->analistaProcesso->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                     @endif
                 @endcan
             </div>
@@ -587,25 +624,25 @@
             </div>
         </div>
     @endcan
-    <!-- Modal atribuicao analista -->
+    <!-- Modal atribuicao protocolista -->
     <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #4a7836;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Atribuir analista</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Atribuir protocolista</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="atribuir-analista-form" method="POST" action="{{route('requerimentos.atribuir.analista')}}">
+                    <form id="atribuir-analista-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'protocolista')}}">
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12">
                                 <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                <label for="analista">{{__('Selecione um analista')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <label for="analista">{{__('Selecione um protocolista')}}<span style="color: red; font-weight: bold;">*</span></label>
                                 <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                    <option value="">-- {{__('Selecione um analista')}} --</option>
+                                    <option value="">-- {{__('Selecione um protocolista')}} --</option>
                                     @foreach ($protocolistas as $protocolista)
                                         <option value="{{$protocolista->id}}">{{$protocolista->name}}</option>
                                     @endforeach
@@ -616,7 +653,43 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="atribuir-analista-form">Atribuir ao analista</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="atribuir-analista-form">Atribuir ao protocolista</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal atribuicao analista de processo-->
+    <div class="modal fade" id="atribuir-analista-processo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #4a7836;">
+                    <h5 class="modal-title" id="staticBackdropLabel2" style="color: white;">Atribuir analista de processo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="atribuir-analista-processo-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'processo')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                <label for="analista">{{__('Selecione um analista de processo')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                    <option value="">-- {{__('Selecione um analista de processo')}} --</option>
+                                    @foreach ($analistas as $analista)
+                                        <option value="{{$analista->id}}">{{$analista->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="atribuir-analista-processo-form">Atribuir ao analista de processo</button>
                 </div>
             </div>
         </div>

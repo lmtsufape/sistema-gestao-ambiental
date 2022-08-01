@@ -421,11 +421,11 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         @if($requerimento->status == 4)
-                                                                            Seus documentos foram recebidos e serão analisados pelo protocolista.
+                                                                            Seus documentos foram recebidos e serão analisados por um analista.
                                                                         @elseif($requerimento->status > 4)
-                                                                            O protocolista analisou a documentação enviada.
+                                                                            Um analista fez a análise da documentação enviada.
                                                                         @else
-                                                                            O protocolista fará a análise da documentação enviada.
+                                                                        Um analista analisará a documentação enviada.
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -475,9 +475,9 @@
                                                                         @if($requerimento->status == 5)
                                                                             Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.
                                                                         @elseif($requerimento->status > 5)
-                                                                            O protocolista enviou o parecer da análise da documentação enviada.
+                                                                            O analista enviou o parecer da análise da documentação enviada.
                                                                         @else
-                                                                            O protocolista enviará o parecer da análise da documentação.
+                                                                            O analista enviará o parecer da análise da documentação.
                                                                         @endif
                                                                     </div>
                                                                 </div>
