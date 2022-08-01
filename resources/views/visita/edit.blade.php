@@ -45,22 +45,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                        <option value="">-- {{__('Selecione um analista')}} --</option>
-                                        @foreach ($analistas as $analista)
-                                            <option @if(old('analista', $visita->analista->id) == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('analista')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento ou denúncia')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="requerimento">{{__('Selecione um requerimento')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="requerimento"  id="requerimento" required class="form-control @error('requerimento') is-invalid @enderror">
                                         <option value="">-- {{__('Selecione um requerimento')}} --</option>
                                         @if (old('requerimento') != null)
@@ -85,6 +70,21 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="">-- {{__('Selecione um analista')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista', $visita->analista->id) == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </form>

@@ -708,4 +708,24 @@ class RequerimentoController extends Controller
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Potencial poluidor atribuído ao requerimento com sucesso.']);
     }
 
+    /**
+     * Recupera o analista de processo atribuído ao requerimento se ele existir.
+     * 
+     * @param Request $request id do requerimento
+     * @return json 
+     */
+    public function getAnalistaProcesso(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+
+        $requerimento = Requerimento::find($request->requerimento_id);
+
+        $requerimentoInfo = [
+            'id' => $requerimento->id,
+            'analista_atribuido' => $requerimento->analistaProcesso ? $requerimento->analistaProcesso : null,
+        ];
+
+        return response()->json($requerimentoInfo);
+    }
+
 }
