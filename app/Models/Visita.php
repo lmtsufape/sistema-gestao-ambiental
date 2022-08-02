@@ -18,8 +18,7 @@ class Visita extends Model
     {
         $this->data_marcada = $input['data_marcada'];
         $this->requerimento_id = $input['requerimento'];
-        $requerimento = Requerimento::find($input['requerimento']);
-        $this->analista_id = $requerimento->analista->id;
+        $this->analista_id = $input['analista'];
     }
 
     public function denuncia()

@@ -37,6 +37,21 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label for="requerimento">{{__('Selecione um requerimento')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="requerimento" id="requerimento" class="form-control @error('requerimento') is-invalid @enderror" required onchange="selecionarAnalista(this)">
+                                        <option value="">-- {{__('Selecione um requerimento')}} --</option>
+                                        @foreach ($requerimentos as $requerimento)
+                                            <option value="{{$requerimento->id}}">{{$requerimento->empresa->nome}} @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
+                                                {{__('(primeira licença)')}}
+                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
+                                                {{__('(renovação)')}}
+                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
+                                                {{__('(autorização)')}}
+                                            @endif</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
                                         <option value="">-- {{__('Selecione um analista')}} --</option>
@@ -50,22 +65,6 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="requerimento">{{__('Selecione um requerimento')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="requerimento" id="requerimento" class="form-control @error('requerimento') is-invalid @enderror" required>
-                                        <option value="">-- {{__('Selecione um requerimento')}} --</option>
-                                        @foreach ($requerimentos as $requerimento)
-                                            <option value="{{$requerimento->id}}">{{$requerimento->empresa->nome}} @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                {{__('(primeira licença)')}}
-                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                {{__('(renovação)')}}
-                                            @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                {{__('(autorização)')}}
-                                            @endif</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                         </form>
@@ -83,4 +82,22 @@
         </div>
     </div>
     @endsection
+    <script>
+        function selecionarAnalista(requerimento){
+            id = requerimento.value;
+            $.ajax({
+                url:"{{route('requerimentos.get.analista')}}",
+                type:"get",
+                data: {"requerimento_id": id},
+                dataType:'json',
+                success: function(requerimento) {
+                    if(requerimento.analista_atribuido != null){
+                        $("#analista").val(requerimento.analista_atribuido.id).change();
+                    }else{
+                        $("#analista").val('').change();
+                    }
+                }
+            });
+        }
+    </script>
 </x-app-layout>

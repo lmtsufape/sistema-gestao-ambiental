@@ -44,9 +44,14 @@ class Requerimento extends Model
         'motivo_cancelamento'
     ];
 
-    public function analista()
+    public function protocolista()
     {
         return $this->belongsTo(User::class, 'analista_id');
+    }
+
+    public function analistaProcesso()
+    {
+        return $this->belongsTo(User::class, 'analista_processo_id');
     }
 
     public function represetanteLegalEmpresa()
@@ -217,7 +222,7 @@ class Requerimento extends Model
                 return 'Envie os documentos solicitados pelo protocolista.';
                 break;
             case $this::STATUS_ENUM['documentos_enviados']:
-                return 'Seus documentos foram recebidos e serão analisados pelo protocolista.';
+                return 'Seus documentos foram recebidos e serão analisados por um analista.';
                 break;
             case $this::STATUS_ENUM['documentos_aceitos']:
                 return 'Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.';

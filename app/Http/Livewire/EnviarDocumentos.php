@@ -98,7 +98,11 @@ class EnviarDocumentos extends Component
         $this->requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $this->requerimento->update();
 
-        Notification::send($this->requerimento->analista, new DocumentosEnviadosNotification($this->requerimento, 'Documentos enviados'));
+        if($this->requerimento->analistaProcesso != null){
+            Notification::send($this->requerimento->analistaProcesso, new DocumentosEnviadosNotification($this->requerimento, 'Documentos enviados'));
+        }else{
+            Notification::send($this->requerimento->protocolista, new DocumentosEnviadosNotification($this->requerimento, 'Documentos enviados'));
+        }
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
 

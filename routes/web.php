@@ -60,6 +60,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/{requerimento_id}/documentacao/{documento_id}', [RequerimentoController::class, 'showDocumento'])->name('requerimento.documento');
     Route::get('/requerimentos/{id}/visitas', [RequerimentoController::class, 'indexVisitasRequerimento'])->name('requerimento.visitas');
     Route::get('/requerimentos/{requerimento_id}/visitas/{visita_id}/edit', [RequerimentoController::class, 'requerimentoVisitasEdit'])->name('requerimento.visitas.edit');
+    Route::get('/requerimentos/visita-create-analista', [RequerimentoController::class, 'getAnalistaProcesso'])->name('requerimentos.get.analista');
 
     Route::put('usuarios/atualizar-endereco', [UserController::class, 'atualizarEndereco'])->name('usuarios.atualizar.endereco');
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');
@@ -70,7 +71,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('documentos', DocumentoController::class);
     Route::resource('requerimentos', RequerimentoController::class)->except('index');
     Route::get('requerimentos/{filtro}/listar', [RequerimentoController::class, 'index'])->name('requerimentos.index');
-    Route::post('requerimentos/atribuir-analista', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
+    Route::post('requerimentos/atribuir-analista/{tipo}', [RequerimentoController::class, 'atribuirAnalista'])->name('requerimentos.atribuir.analista');
     Route::get('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'editEmpresa'])->name('requerimentos.editar.empresa');
     Route::post('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'updateEmpresa'])->name('requerimentos.update.empresa');
     Route::get('requerimentos/{id}/setor/ajax-listar-cnaes', [SetorController::class, 'ajaxCnaes'])->name("ajax.listar.cnaes.editar");

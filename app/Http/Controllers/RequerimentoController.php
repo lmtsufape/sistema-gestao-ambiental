@@ -46,7 +46,10 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
+                ->where('analista_id', $user->id)
+                ->orwhere('analista_processo_id', $user->id)
+                ->orderBy('created_at')->paginate(20);
             }else{
                 $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
                 $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
@@ -98,7 +101,10 @@ class RequerimentoController extends Controller
     public function analista()
     {
         $user = auth()->user();
-        $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['analista_id', $user->id]])->orderBy('created_at')->paginate(20);
+        $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])
+        ->where('analista_id', $user->id)
+        ->orwhere('analista_processo_id', $user->id)
+        ->orderBy('created_at')->paginate(20);
 
         return view('requerimento.index', compact('requerimentos'));
     }
@@ -151,10 +157,11 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($id);
         $this->authorize('view', $requerimento);
         $protocolistas = User::protocolistas();
+        $analistas = User::analistas();
         $documentos = Documento::orderBy('nome')->get();
         $definir_valor = Requerimento::DEFINICAO_VALOR_ENUM;
 
-        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'definir_valor'));
+        return view('requerimento.show', compact('requerimento', 'protocolistas', 'analistas', 'documentos', 'definir_valor'));
     }
 
 
@@ -266,7 +273,7 @@ class RequerimentoController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function atribuirAnalista(Request $request)
+    public function atribuirAnalista(Request $request, $tipo)
     {
         $this->authorize('isSecretario', User::class);
         $validated = $request->validate([
@@ -279,7 +286,11 @@ class RequerimentoController extends Controller
         if($requerimento->analista_id == null){
             $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         }
-        $requerimento->analista_id = $analista->id;
+        if($tipo == "protocolista"){
+            $requerimento->analista_id = $analista->id;
+        }else{
+            $requerimento->analista_processo_id = $analista->id;
+        }
         $requerimento->update();
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuído com sucesso a " . $analista->name]);
@@ -500,7 +511,11 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
 
-        Notification::send($requerimento->analista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
+        if($requerimento->analistaProcesso != null){
+            Notification::send($requerimento->analistaProcesso, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
+        }else{
+            Notification::send($requerimento->protocolista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
+        }
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }
@@ -691,6 +706,26 @@ class RequerimentoController extends Controller
         $requerimento->update();
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Potencial poluidor atribuído ao requerimento com sucesso.']);
+    }
+
+    /**
+     * Recupera o analista de processo atribuído ao requerimento se ele existir.
+     * 
+     * @param Request $request id do requerimento
+     * @return json 
+     */
+    public function getAnalistaProcesso(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+
+        $requerimento = Requerimento::find($request->requerimento_id);
+
+        $requerimentoInfo = [
+            'id' => $requerimento->id,
+            'analista_atribuido' => $requerimento->analistaProcesso ? $requerimento->analistaProcesso : null,
+        ];
+
+        return response()->json($requerimentoInfo);
     }
 
 }
