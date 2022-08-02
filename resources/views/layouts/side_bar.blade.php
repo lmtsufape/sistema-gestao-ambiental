@@ -1,6 +1,6 @@
 <div class="wrapper h-100">
     <!-- Page Content  -->
-    <div id="content">
+    <div id="content" style="min-height: 100%; grid-template-rows: auto auto 1fr; display: grid;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 35px;">
             <div class="container" style="">
                 <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
@@ -76,107 +76,85 @@
             </div>
         </nav>
         <div id="conteudo">
-            <div class="container-fluid" style="padding-left: 15px;">
-                <div class="row">
-                    <div class="col-md-2" style="padding-top: 3rem; background-color: white; padding-right: 0px; padding-left: 0px; box-shadow: 1px 0 5px 2px #888; clip-path: inset(0px -12px 0px 0px); max-width: fit-content;">
-                        <ul id="sidebar" class="list-unstyled">
-                            @can('isSecretario', \App\Models\User::class)
-                                <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
-                                    <button href="#licenciamentoSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
-                                        <i class="fas fa-home"></i>
-                                        Licenciamento
-                                    </button>
-                                    <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
-                                        <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
-                                            <a href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a>
-                                        </li>
-                                        <li class=" @if(request()->routeIs('boletos*')) active @endif">
-                                            <a href="{{route('boletos.index', 'pendentes')}}" >Pagamentos</a>
-                                        </li>
-                                        <li class=" @if(request()->routeIs('documentos*')) active @endif">
-                                            <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) @endif  >Definição de documentos</a>
-                                        </li>
-                                        <li class=" @if(request()->routeIs('valores*')) active @endif">
-                                            <a href="{{route('valores.index')}}" @if(request()->routeIs('valores*')) @endif>Valores de licenças</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('denuncias*')) active @endif">
-                                    <a href="{{route('denuncias.index', 'pendentes')}}">
-                                        <i class="fas fa-home"></i>
-                                        Denúncias
-                                    </a>
-                                </li>
-                                <li class="mb-2 @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                                    <button href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
-                                        <i class="fas fa-home"></i>
-                                        Mudas
-                                    </button>
-                                    <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
-                                        <li class="@if(request()->is('solicitacoes/mudas/pendentes/listar')) active @endif">
-                                            <a href="{{route('mudas.index', 'pendentes')}}" >Solicitações</a>
-                                        </li>
-                                        <li class="@if(request()->routeIs('especies*')) active @endif">
-                                            <a href="{{route('especies.index')}}">Definição de espécies de mudas</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
-                                    <a href="{{route('podas.index', 'pendentes')}}">
-                                        <i class="fas fa-home"></i>
-                                        Poda/Supressão
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
-                                    <a href="{{route('visitas.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Programação
-                                    </a>
-                                </li>
-                                <li class="mb-2 @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
-                                    <button href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
-                                        <i class="fas fa-home"></i>
-                                        Configurações
-                                    </button>
-                                    <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
-                                        <li class="@if(request()->routeIs('setores*') || request()->routeIs('cnaes*')) active @endif">
-                                            <a href="{{route('setores.index')}}">Grupos (CNAEs)</a>
-                                        </li>
-                                        <li class="@if(request()->routeIs('usuarios*')) active @endif">
-                                            <a href="{{route('usuarios.index')}}">Usuários</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endcan
-                            @can('isProcessoOrProtocolista', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
-                                    <a href="{{route('requerimentos.index', 'atuais')}}">
-                                        <i class="fas fa-home"></i>
-                                        Requerimentos
-                                    </a>
-                                </li>
-                                @can('isAnalistaProcesso', \App\Models\User::class)
-                                    <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
-                                        <a href="{{route('visitas.index')}}">
-                                            <i class="fas fa-home"></i>
-                                            Programação
-                                        </a>
+            <div class="row h-100" style="padding-left: 15px;">
+                <div class="col-md-2" style="padding-top: 3rem; background-color: white; padding-right: 0px; padding-left: 0px; box-shadow: 1px 0 5px 2px #888; clip-path: inset(0px -12px 0px 0px); max-width: fit-content;">
+                    <ul id="sidebar" class="list-unstyled">
+                        @can('isSecretario', \App\Models\User::class)
+                            <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
+                                <button href="#licenciamentoSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
+                                    <i class="fas fa-home"></i>
+                                    Licenciamento
+                                </button>
+                                <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
+                                    <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
+                                        <a href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a>
                                     </li>
-                                @endcan
-                            @endcan
-                            @can('isAnalistaPoda', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                                    <a href="{{route('mudas.index', 'pendentes')}}" >
-                                        <i class="fas fa-home"></i>
-                                        Mudas
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
-                                    <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
-                                        <i class="fas fa-home"></i>
-                                        Poda/Supressão
-                                    </a>
-                                </li>
+                                    <li class=" @if(request()->routeIs('boletos*')) active @endif">
+                                        <a href="{{route('boletos.index', 'pendentes')}}" >Pagamentos</a>
+                                    </li>
+                                    <li class=" @if(request()->routeIs('documentos*')) active @endif">
+                                        <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) @endif  >Definição de documentos</a>
+                                    </li>
+                                    <li class=" @if(request()->routeIs('valores*')) active @endif">
+                                        <a href="{{route('valores.index')}}" @if(request()->routeIs('valores*')) @endif>Valores de licenças</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('denuncias*')) active @endif">
+                                <a href="{{route('denuncias.index', 'pendentes')}}">
+                                    <i class="fas fa-home"></i>
+                                    Denúncias
+                                </a>
+                            </li>
+                            <li class="mb-2 @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                <button href="#mudasSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
+                                    <i class="fas fa-home"></i>
+                                    Mudas
+                                </button>
+                                <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
+                                    <li class="@if(request()->is('solicitacoes/mudas/pendentes/listar')) active @endif">
+                                        <a href="{{route('mudas.index', 'pendentes')}}" >Solicitações</a>
+                                    </li>
+                                    <li class="@if(request()->routeIs('especies*')) active @endif">
+                                        <a href="{{route('especies.index')}}">Definição de espécies de mudas</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
+                                <a href="{{route('podas.index', 'pendentes')}}">
+                                    <i class="fas fa-home"></i>
+                                    Poda/Supressão
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
+                                <a href="{{route('visitas.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Programação
+                                </a>
+                            </li>
+                            <li class="mb-2 @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
+                                <button href="#configuracoesSubmenu" data-toggle="collapse" aria-expanded="false" class="btn btn-toggle">
+                                    <i class="fas fa-home"></i>
+                                    Configurações
+                                </button>
+                                <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
+                                    <li class="@if(request()->routeIs('setores*') || request()->routeIs('cnaes*')) active @endif">
+                                        <a href="{{route('setores.index')}}">Grupos (CNAEs)</a>
+                                    </li>
+                                    <li class="@if(request()->routeIs('usuarios*')) active @endif">
+                                        <a href="{{route('usuarios.index')}}">Usuários</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('isProcessoOrProtocolista', \App\Models\User::class)
+                            <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
+                                <a href="{{route('requerimentos.index', 'atuais')}}">
+                                    <i class="fas fa-home"></i>
+                                    Requerimentos
+                                </a>
+                            </li>
+                            @can('isAnalistaProcesso', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
                                     <a href="{{route('visitas.index')}}">
                                         <i class="fas fa-home"></i>
@@ -184,68 +162,88 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('isRequerente', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
-                                    <a href="{{route('requerimentos.index', 'atuais')}}">
-                                        <i class="fas fa-home"></i>
-                                        Requerimentos
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('empresas*') || request()->routeIs('info.porte')) active @endif">
-                                    <a href="{{route('empresas.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Empresas/<br>
-                                        <i class="fas fa-home"></i>
-                                        Serviços
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('mudas.*')) active @endif">
-                                    <a href="{{route('mudas.requerente.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Mudas
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('podas.*')) active @endif">
-                                    <a href="{{route('podas.requerente.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Poda/<br>
-                                        <i class="fas fa-home"></i>
-                                        Supressão
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </div>
-                    <div id="pagina-carregada" class="col-md-10">
+                        @endcan
+                        @can('isAnalistaPoda', \App\Models\User::class)
+                            <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                <a href="{{route('mudas.index', 'pendentes')}}" >
+                                    <i class="fas fa-home"></i>
+                                    Mudas
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
+                                <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
+                                    <i class="fas fa-home"></i>
+                                    Poda/Supressão
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                                <a href="{{route('visitas.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Programação
+                                </a>
+                            </li>
+                        @endcan
                         @can('isRequerente', \App\Models\User::class)
-                            @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
-                                <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
-                                    <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
-                                        <div class="card-header" style="background-color: #F26565; color: white;">
-                                            <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
-                                            {{--<small>11 mins ago</small>--}}
-                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Você necessita concluir o envio dos documentos do requerimento de {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->tipoString()}} da(o) {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->empresa->nome}}!
-                                                </div>
+                            <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
+                                <a href="{{route('requerimentos.index', 'atuais')}}">
+                                    <i class="fas fa-home"></i>
+                                    Requerimentos
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('empresas*') || request()->routeIs('info.porte')) active @endif">
+                                <a href="{{route('empresas.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Empresas/<br>
+                                    <i class="fas fa-home"></i>
+                                    Serviços
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('mudas.*')) active @endif">
+                                <a href="{{route('mudas.requerente.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Mudas
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('podas.*')) active @endif">
+                                <a href="{{route('podas.requerente.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Poda/<br>
+                                    <i class="fas fa-home"></i>
+                                    Supressão
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </div>
+                <div id="pagina-carregada" class="col-md-10">
+                    @can('isRequerente', \App\Models\User::class)
+                        @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
+                            <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
+                                <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
+                                    <div class="card-header" style="background-color: #F26565; color: white;">
+                                        <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
+                                        {{--<small>11 mins ago</small>--}}
+                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                Você necessita concluir o envio dos documentos do requerimento de {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->tipoString()}} da(o) {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->empresa->nome}}!
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <a href="{{route('requerimento.documentacao', Auth::user()->requerimentosDocumentosAnexadosNotificacao()->id)}}">Clique aqui</a> para ir à página
-                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="{{route('requerimento.documentacao', Auth::user()->requerimentosDocumentosAnexadosNotificacao()->id)}}">Clique aqui</a> para ir à página
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endcan
-                        @yield('content')
-                    </div>
+                            </div>
+                        @endif
+                    @endcan
+                    @yield('content')
                 </div>
             </div>
         </div>
