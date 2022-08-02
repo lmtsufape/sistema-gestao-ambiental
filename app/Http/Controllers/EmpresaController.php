@@ -15,7 +15,7 @@ use App\Models\Requerimento;
 class EmpresaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista das empresas do requerente.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,6 +25,19 @@ class EmpresaController extends Controller
         $empresas = auth()->user()->empresas;
 
         return view('empresa.index', compact('empresas'));
+    }
+
+    /**
+     * Lista de todas as empresas.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexEmpresas()
+    {
+        $this->authorize('isSecretarioOrAnalista', User::class);
+        $empresas = Empresa::orderBy('nome')->paginate(20);
+
+        return view('empresa.index-empresas', compact('empresas'));
     }
 
     /**
@@ -84,7 +97,10 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->authorize('isSecretarioOrAnalista', User::class);
+        $empresa = Empresa::find($id);
+
+        return view('empresa.show', compact('empresa'));
     }
 
     /**

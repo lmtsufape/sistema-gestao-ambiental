@@ -127,6 +127,14 @@
                                         Poda/Supressão
                                     </a>
                                 </li>
+                                <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
+                                    <a href="{{route('empresas.listar')}}">
+                                        <i class="fas fa-home"></i>
+                                        Empresas/<br>
+                                        <i class="fas fa-home"></i>
+                                        Serviços
+                                    </a>
+                                </li>
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
                                     <a href="{{route('visitas.index')}}">
                                         <i class="fas fa-home"></i>
@@ -155,8 +163,16 @@
                                         Requerimentos
                                     </a>
                                 </li>
+                                <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
+                                    <a href="{{route('empresas.listar')}}">
+                                        <i class="fas fa-home"></i>
+                                        Empresas/<br>
+                                        <i class="fas fa-home"></i>
+                                        Serviços
+                                    </a>
+                                </li>
                                 @can('isAnalistaProcesso', \App\Models\User::class)
-                                    <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                                    <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
                                         <a href="{{route('visitas.index')}}">
                                             <i class="fas fa-home"></i>
                                             Programação
@@ -177,7 +193,15 @@
                                         Poda/Supressão
                                     </a>
                                 </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                                <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
+                                    <a href="{{route('empresas.listar')}}">
+                                        <i class="fas fa-home"></i>
+                                        Empresas/<br>
+                                        <i class="fas fa-home"></i>
+                                        Serviços
+                                    </a>
+                                </li>
+                                <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
                                     <a href="{{route('visitas.index')}}">
                                         <i class="fas fa-home"></i>
                                         Programação
