@@ -1008,6 +1008,13 @@ a.article:hover {
     border-radius: 13px;
 }
 
+.card-doc-aceito {
+    background-color: #34a877;
+    color: white;
+    width: 90%;
+    border-radius: 13px;
+}
+
 .btn-enviar-doc {
     background-color: white;
     color: black;
