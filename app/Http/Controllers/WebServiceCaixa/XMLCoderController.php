@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebServiceCaixa;
 
 use App\Http\Controllers\Controller;
+use App\Models\WebServiceCaixa\GerirBoletoRemessa;
 use App\Models\WebServiceCaixa\Pessoa;
 use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
 use App\Models\BoletoCobranca;
@@ -164,6 +165,7 @@ class XMLCoderController extends Controller
             'valor_multa' => 0.79,
             'mensagens_compensacao' => $boleto->requerimento->gerarMensagemCompesacao(),
             'nosso_numero' => $boleto->nosso_numero,
+            'numero_do_documento' => strval($boleto->id),
         ]);
 
         $caminho = 'remessas/alterar_boleto_remessa_'.$boleto->id.'.xml';
@@ -173,7 +175,7 @@ class XMLCoderController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => AlterarBoletoRemessa::URL,
+            CURLOPT_URL => GerirBoletoRemessa::URL,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -193,14 +195,18 @@ class XMLCoderController extends Controller
         curl_close($curl);
         $resultado = (new AlterarBoletoRemessa())->to_array($response);
 
-        switch ($resultado['COD_RETORNO']['DADOS']) {
-            case 0:
-                $boleto->salvar_arquivo_resposta($response);
-                Storage::put('resposta_alterar_boleto_remessa_'.$boleto->id.'.xml', $response);
-                $this->salvar_resposta_alterar_boleto_remessa($boleto, $resultado);
-                break;
-            default:
-                throw new ErrorRemessaException($resultado['RETORNO']);
+        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
+            switch ($resultado['COD_RETORNO']['DADOS']) {
+                case 0:
+                    $boleto->salvar_arquivo_resposta($response);
+                    Storage::put('resposta_alterar_boleto_remessa_'.$boleto->id.'.xml', $response);
+                    $this->salvar_resposta_alterar_boleto_remessa($boleto, $resultado);
+                    break;
+                default:
+                    throw new ErrorRemessaException($resultado['RETORNO']);
+            }
+        } else {
+            throw new ErrorRemessaException($response);
         }
     }
 }

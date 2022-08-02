@@ -383,6 +383,8 @@ abstract class GerirBoletoRemessa extends Remessa
             unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['VALOR_ABATIMENTO']);
         if ($this->operacao != 'INCLUI_BOLETO')
             unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['CODIGO_MOEDA']);
+        if ($this->operacao != 'INCLUI_BOLETO')
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['PAGADOR'][$this->etiqueta_cpf_ou_cnpj()]);
         $xml_root = 'soapenv:Envelope';
         $xml = new XmlDomConstruct('1.0', 'ISO8859-1');
         $xml->formatOutput = true;
