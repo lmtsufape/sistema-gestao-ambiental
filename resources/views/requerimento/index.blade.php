@@ -79,9 +79,7 @@
                                                 <tr>
                                                     <th scope="row">{{($i+1)}}</th>
                                                     <td>
-                                                        <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
-                                                            {{$requerimento->empresa->nome}}
-                                                        </a>
+                                                        {{$requerimento->empresa->nome}}
                                                     </td>
                                                     <td>
                                                         @if($requerimento->canceladoSecretario())
@@ -104,9 +102,18 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                    <td>
+                                                    <td style="text-align: center">
                                                         <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                         <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                                        @if($requerimento->licenca != null)
+                                                            @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                                            @else
+                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}">Editar licença</a>
+                                                            @endif
+                                                        @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $requerimento->id])}}">Criar licença</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -170,6 +177,13 @@
                                                 <div class="btn-group align-items-center">
                                                     <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
                                                 </div>
+                                                @if($requerimento->licenca != null)
+                                                    @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                                    @else
+                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}">Revisar licença</a>
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

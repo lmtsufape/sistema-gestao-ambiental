@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Histórico de modificações da empresa {{$empresa->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Empresa > Histórico</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('empresas.listar')}}">Empresas</a> > <a class="text-muted" href="{{route('empresas.show', $empresa)}}">Dados da empresa {{$empresa->nome}}</a> > Histórico de modificações</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar"  href="javascript:window.history.back();">
