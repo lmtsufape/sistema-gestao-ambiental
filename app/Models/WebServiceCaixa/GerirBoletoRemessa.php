@@ -341,7 +341,9 @@ abstract class GerirBoletoRemessa extends Remessa
                                     'ACAO' => $this->acao_pos_vecimento,
                                     'NUMERO_DIAS' => $this->numero_dias_pos_vencimento,
                                 ),
+                                'CODIGO_MOEDA' => $this->codigo_moeda,
                                 'PAGADOR' => array(
+                                    $this->etiqueta_cpf_ou_cnpj() => $this->gerar_cpf_ou_cnpj(),
                                     $this->etiqueta_nome_ou_razao_social() => $this->gerar_nome_ou_razao_social(),
                                     'ENDERECO' => array(
                                         'LOGRADOURO' => $this->validar_formartar_tamanho($this->pagador->logradouro, 40),
@@ -379,14 +381,16 @@ abstract class GerirBoletoRemessa extends Remessa
             unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['VALOR_IOF']);
         if (!$this->abatimento)
             unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['VALOR_ABATIMENTO']);
+        if ($this->operacao != 'INCLUI_BOLETO')
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['CODIGO_MOEDA']);
         $xml_root = 'soapenv:Envelope';
         $xml = new XmlDomConstruct('1.0', 'ISO8859-1');
         $xml->formatOutput = true;
         $xml->fromMixed(array($xml_root => $xml_array));
         $xml_root_item = $xml->getElementsByTagName($xml_root)->item(0);
-        $xml_root_item->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
-        $xml_root_item->setAttribute('xmlns:ext', 'http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo');
         $xml_root_item->setAttribute('xmlns:sib', 'http://caixa.gov.br/sibar');
+        $xml_root_item->setAttribute('xmlns:ext', 'http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo');
+        $xml_root_item->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
         return $xml->saveXML();
     }
 
@@ -517,11 +521,25 @@ abstract class GerirBoletoRemessa extends Remessa
         return $this->validar_formartar_tamanho($this->pagador->razao_social, 40);
     }
 
+    protected function gerar_cpf_ou_cnpj(): string
+    {
+        if ($this->pagador->cpf)
+            return $this->retirar_formatacao($this->pagador->cpf);
+        return $this->retirar_formatacao($this->pagador->cnpj);
+    }
+
     protected function etiqueta_nome_ou_razao_social(): string
     {
         if ($this->pagador->cpf)
             return 'NOME';
         return 'RAZAO_SOCIAL';
+    }
+
+    protected function etiqueta_cpf_ou_cnpj(): string
+    {
+        if ($this->pagador->cpf)
+            return 'CPF';
+        return 'CNPJ';
     }
 
     protected function gerar_multa(): array
