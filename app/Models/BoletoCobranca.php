@@ -20,12 +20,13 @@ class BoletoCobranca extends Model
         'nosso_numero',
         'URL',
         'status_pagamento',
+        'requerimento_id',
     ];
 
     public const STATUS_PAGAMENTO_ENUM = [
         'pago'     => 1,
-        'nao_pago'     => 2,
-        'vencido'      => 3,
+        'nao_pago' => 2,
+        'vencido'  => 3,
     ];
 
     public function requerimento(): BelongsTo
