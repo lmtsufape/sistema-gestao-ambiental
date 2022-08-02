@@ -624,122 +624,127 @@
             </div>
         </div>
     @endcan
-    <!-- Modal atribuicao protocolista -->
-    <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4a7836;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Atribuir protocolista</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="atribuir-analista-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'protocolista')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                <label for="analista">{{__('Selecione um protocolista')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                    <option value="">-- {{__('Selecione um protocolista')}} --</option>
-                                    @foreach ($protocolistas as $protocolista)
-                                        <option value="{{$protocolista->id}}">{{$protocolista->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="atribuir-analista-form">Atribuir ao protocolista</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal atribuicao analista de processo-->
-    <div class="modal fade" id="atribuir-analista-processo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4a7836;">
-                    <h5 class="modal-title" id="staticBackdropLabel2" style="color: white;">Atribuir analista de processo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="atribuir-analista-processo-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'processo')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                                <label for="analista">{{__('Selecione um analista de processo')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
-                                    <option value="">-- {{__('Selecione um analista de processo')}} --</option>
-                                    @foreach ($analistas as $analista)
-                                        <option value="{{$analista->id}}">{{$analista->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="atribuir-analista-processo-form">Atribuir ao analista de processo</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="atribuir_potencial_poluidor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Atribuir potencial poluidor ao requerimento</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form id="atribuir-potencial-poluidor-form" method="POST" action="{{route('requerimentos.atribuir.potencial.poluidor', $requerimento)}}">
-                    @csrf
-                    <input type="hidden" name="licença" value="{{$requerimento->tipo_licenca}}">
-                    <input type="hidden" name="opcão_taxa_serviço" value="{{$requerimento->definicao_valor}}">
-                    <input type="hidden" name="valor_da_taxa_de_serviço" value="{{$requerimento->valor}}">
-                    <input type="hidden" name="valor_do_juros" value="{{$requerimento->valor_juros}}">
-                    <div class="col-md-12 form-group">
-                        <label for="potencial_poluidor">{{ __('Potencial poluidor') }}<span style="color: red; font-weight: bold;">*</span></label>
-                        <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
-                            <option value="">-- Selecione o potencial poluidor --</option>
-                            @if(old('potencial_poluidor') != null)
-                                <option @if(old('potencial_poluidor') == "baixo") selected @endif value="baixo">Baixo</option>
-                                <option @if(old('potencial_poluidor') == "medio") selected @endif value="medio">Médio</option>
-                                <option @if(old('potencial_poluidor') == "alto") selected @endif value="alto">Alto</option>
-                            @else
-                                <option @if($requerimento->potencial_poluidor_atribuido == 1) selected @endif value="baixo">Baixo</option>
-                                <option @if($requerimento->potencial_poluidor_atribuido == 2) selected @endif value="medio">Médio</option>
-                                <option @if($requerimento->potencial_poluidor_atribuido == 3) selected @endif value="alto">Alto</option>
-                            @endif
-                        </select>
-                        @error('potencial_poluidor')
-                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+    @can('isSecretario', \App\Models\User::class)
+        <!-- Modal atribuicao protocolista -->
+        <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #4a7836;">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Atribuir protocolista</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </form>
+                    <div class="modal-body">
+                        <form id="atribuir-analista-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'protocolista')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                    <label for="analista">{{__('Selecione um protocolista')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="">-- {{__('Selecione um protocolista')}} --</option>
+                                        @foreach ($protocolistas as $protocolista)
+                                            <option value="{{$protocolista->id}}">{{$protocolista->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="atribuir-analista-form">Atribuir ao protocolista</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" id="submeterFormBotao" class="btn btn-primary" form="atribuir-potencial-poluidor-form">Salvar</button>
-            </div>
-          </div>
         </div>
-    </div>
+    @endcan
+
+    @can('isSecretario', \App\Models\User::class)
+        <!-- Modal atribuicao analista de processo-->
+        <div class="modal fade" id="atribuir-analista-processo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #4a7836;">
+                        <h5 class="modal-title" id="staticBackdropLabel2" style="color: white;">Atribuir analista de processo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="atribuir-analista-processo-form" method="POST" action="{{route('requerimentos.atribuir.analista', 'processo')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
+                                    <label for="analista">{{__('Selecione um analista de processo')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="">-- {{__('Selecione um analista de processo')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="atribuir-analista-processo-form">Atribuir ao analista de processo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+
+    @can('isSecretarioOrProtocolista', \App\Models\User::class)
+        <div class="modal fade" id="atribuir_potencial_poluidor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Atribuir potencial poluidor ao requerimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form id="atribuir-potencial-poluidor-form" method="POST" action="{{route('requerimentos.atribuir.potencial.poluidor', $requerimento)}}">
+                        @csrf
+                        <input type="hidden" name="licença" value="{{$requerimento->tipo_licenca}}">
+                        <input type="hidden" name="opcão_taxa_serviço" value="{{$requerimento->definicao_valor}}">
+                        <input type="hidden" name="valor_da_taxa_de_serviço" value="{{$requerimento->valor}}">
+                        <input type="hidden" name="valor_do_juros" value="{{$requerimento->valor_juros}}">
+                        <div class="col-md-12 form-group">
+                            <label for="potencial_poluidor">{{ __('Potencial poluidor') }}<span style="color: red; font-weight: bold;">*</span></label>
+                            <select name="potencial_poluidor" id="potencial_poluidor" class="form-control @error('potencial_poluidor') is-invalid @enderror" required >
+                                <option value="">-- Selecione o potencial poluidor --</option>
+                                @if(old('potencial_poluidor') != null)
+                                    <option @if(old('potencial_poluidor') == "baixo") selected @endif value="baixo">Baixo</option>
+                                    <option @if(old('potencial_poluidor') == "medio") selected @endif value="medio">Médio</option>
+                                    <option @if(old('potencial_poluidor') == "alto") selected @endif value="alto">Alto</option>
+                                @else
+                                    <option @if($requerimento->potencial_poluidor_atribuido == 1) selected @endif value="baixo">Baixo</option>
+                                    <option @if($requerimento->potencial_poluidor_atribuido == 2) selected @endif value="medio">Médio</option>
+                                    <option @if($requerimento->potencial_poluidor_atribuido == 3) selected @endif value="alto">Alto</option>
+                                @endif
+                            </select>
+                            @error('potencial_poluidor')
+                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" id="submeterFormBotao" class="btn btn-primary" form="atribuir-potencial-poluidor-form">Salvar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    @endcan
 
     <script>
         function defaultDocs(select) {
