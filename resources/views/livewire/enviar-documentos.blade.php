@@ -109,6 +109,17 @@
                                             @switch($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status)
                                                 @case($status['aceito'])
                                                     <div class="row justify-content-center" style="padding-top: 1rem;">
+                                                        @if($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario != null)
+                                                            <div class="card card-doc-aceito mb-3">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <strong>Comentário: </strong>{{$requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->comentario}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                         <div class="card card-enviar-doc text-center">
                                                             <div class="card-body">
                                                                 <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-download.svg')}}"  alt="Icone de baixar documento" title="Baixar documento">
