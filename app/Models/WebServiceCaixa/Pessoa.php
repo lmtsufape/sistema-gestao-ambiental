@@ -36,9 +36,9 @@ class Pessoa
     // CÓDIGO BENEFICIARIO : char[7]
     public $cod_beneficiario;
 
-    /** Função que seta os dados do pagador através de uma empresa passada.
-     *
-     * @param  Empresa $emrepsa
+    /**
+     * Função que seta os dados do pagador através de uma empresa passada.
+     * @param  Empresa $empresa
      * @return void
     */
     public function gerar_pagador(Empresa $empresa)
@@ -48,7 +48,7 @@ class Pessoa
             $this->razao_social = $empresa->nome;
         } else {
             $this->cpf = $empresa->cpf_cnpj;
-            $this->nome = $empresa->user->name;
+            $this->nome = $empresa->nome;
         }
         $this->logradouro = $empresa->endereco->rua;
         $this->cidade = $empresa->endereco->cidade;
@@ -57,9 +57,8 @@ class Pessoa
         $this->cep = $empresa->endereco->cep;
     }
 
-    /** Função que seta os dados do beneficiario através dos dados configurados no .env.
-     *
-     * @param  Empresa $emrepsa
+    /**
+     * Função que seta os dados do beneficiário através dos dados configurados no .env.
      * @return void
     */
     public function gerar_beneficiario()
