@@ -15,7 +15,11 @@
             <li>
                 @switch($documento->pivot->status)
                     @case(\App\Models\Checklist::STATUS_ENUM['aceito'])
-                        {{$documento->nome . ' (aceito)'}}
+                        @if ($documento->pivot->comentario)
+                            {{$documento->nome.' (aceito, comentário: '.$documento->pivot->comentario.')'}}
+                        @else
+                            {{$documento->nome.' (aceito)'}}
+                        @endif
                         @break
                     @case(\App\Models\Checklist::STATUS_ENUM['recusado'])
                         {{$documento->nome . ' (recusado, motivo: ' . $documento->pivot->comentario . ')'}}

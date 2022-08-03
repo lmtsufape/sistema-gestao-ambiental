@@ -59,14 +59,14 @@
                                                 <div>Ação</div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <input class="form-input-radio" type="radio" name="analise_{{$documento->id}}" value="{{\App\Models\Checklist::STATUS_ENUM['aceito']}}" required @if(old('analise_{{$documento->id}}') || ($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['aceito'])) checked @endif>
-                                                        <label for="aceito">{{ __('Aceito') }}</label>
+                                                        <input id="aceito{{$documento->id}}" class="form-input-radio" type="radio" name="analise_{{$documento->id}}" value="{{\App\Models\Checklist::STATUS_ENUM['aceito']}}" required @if(old('analise_{{$documento->id}}') || ($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['aceito'])) checked @endif>
+                                                        <label for="aceito{{$documento->id}}">{{ __('Aceito') }}</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
-                                                        <input class="form-input-radio" type="radio" name="analise_{{$documento->id}}" value="{{\App\Models\Checklist::STATUS_ENUM['recusado']}}" required @if(old('analise_{{$documento->id}}') || ($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['recusado'])) checked @endif>
-                                                        <label for="recusado">{{ __('Recusado') }}</label>
+                                                        <input id="recusado{{$documento->id}}" class="form-input-radio" type="radio" name="analise_{{$documento->id}}" value="{{\App\Models\Checklist::STATUS_ENUM['recusado']}}" required @if(old('analise_{{$documento->id}}') || ($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status == \App\Models\Checklist::STATUS_ENUM['recusado'])) checked @endif>
+                                                        <label for="recusado{{$documento->id}}">{{ __('Recusado') }}</label>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="documentos_id[]" value="{{$documento->id}}">

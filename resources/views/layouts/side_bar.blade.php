@@ -1,6 +1,6 @@
 <div class="wrapper h-100">
     <!-- Page Content  -->
-    <div id="content">
+    <div id="content" style="min-height: 100%; grid-template-rows: auto auto 1fr; display: grid;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 35px;">
             <div class="container" style="">
                 <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
@@ -208,68 +208,88 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('isRequerente', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
-                                    <a href="{{route('requerimentos.index', 'atuais')}}">
-                                        <i class="fas fa-home"></i>
-                                        Requerimentos
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('empresas*') || request()->routeIs('info.porte')) active @endif">
-                                    <a href="{{route('empresas.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Empresas/<br>
-                                        <i class="fas fa-home"></i>
-                                        Serviços
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('mudas.*')) active @endif">
-                                    <a href="{{route('mudas.requerente.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Mudas
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('podas.*')) active @endif">
-                                    <a href="{{route('podas.requerente.index')}}">
-                                        <i class="fas fa-home"></i>
-                                        Poda/<br>
-                                        <i class="fas fa-home"></i>
-                                        Supressão
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </div>
-                    <div id="pagina-carregada" class="col-md-10">
+                        @endcan
+                        @can('isAnalistaPoda', \App\Models\User::class)
+                            <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                <a href="{{route('mudas.index', 'pendentes')}}" >
+                                    <i class="fas fa-home"></i>
+                                    Mudas
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
+                                <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
+                                    <i class="fas fa-home"></i>
+                                    Poda/Supressão
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
+                                <a href="{{route('visitas.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Programação
+                                </a>
+                            </li>
+                        @endcan
                         @can('isRequerente', \App\Models\User::class)
-                            @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
-                                <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
-                                    <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
-                                        <div class="card-header" style="background-color: #F26565; color: white;">
-                                            <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
-                                            {{--<small>11 mins ago</small>--}}
-                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    Você necessita concluir o envio dos documentos do requerimento de {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->tipoString()}} da(o) {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->empresa->nome}}!
-                                                </div>
+                            <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
+                                <a href="{{route('requerimentos.index', 'atuais')}}">
+                                    <i class="fas fa-home"></i>
+                                    Requerimentos
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('empresas*') || request()->routeIs('info.porte')) active @endif">
+                                <a href="{{route('empresas.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Empresas/<br>
+                                    <i class="fas fa-home"></i>
+                                    Serviços
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('mudas.*')) active @endif">
+                                <a href="{{route('mudas.requerente.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Mudas
+                                </a>
+                            </li>
+                            <li class="mb-2 item-align @if(request()->routeIs('podas.*')) active @endif">
+                                <a href="{{route('podas.requerente.index')}}">
+                                    <i class="fas fa-home"></i>
+                                    Poda/<br>
+                                    <i class="fas fa-home"></i>
+                                    Supressão
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </div>
+                <div id="pagina-carregada" class="col-md-10">
+                    @can('isRequerente', \App\Models\User::class)
+                        @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
+                            <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
+                                <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
+                                    <div class="card-header" style="background-color: #F26565; color: white;">
+                                        <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
+                                        {{--<small>11 mins ago</small>--}}
+                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                Você necessita concluir o envio dos documentos do requerimento de {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->tipoString()}} da(o) {{Auth::user()->requerimentosDocumentosAnexadosNotificacao()->empresa->nome}}!
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <a href="{{route('requerimento.documentacao', Auth::user()->requerimentosDocumentosAnexadosNotificacao()->id)}}">Clique aqui</a> para ir à página
-                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="{{route('requerimento.documentacao', Auth::user()->requerimentosDocumentosAnexadosNotificacao()->id)}}">Clique aqui</a> para ir à página
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endcan
-                        @yield('content')
-                    </div>
+                            </div>
+                        @endif
+                    @endcan
+                    @yield('content')
                 </div>
             </div>
         </div>
