@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         @can('isSecretario', \App\Models\User::class)
-                            <h4 class="card-title">Visitas</h4>
+                            <h4 class="card-title">Programação de visitas</h4>
                         @else
                             <h4 class="card-title">Visitas programadas para você</h4>
                         @endcan
@@ -16,7 +16,7 @@
                         <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
                         @can('isSecretario', \App\Models\User::class)
                             <a title="Criar visita" href="{{route('visitas.create')}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar documento">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
                             </a>
                         @endif
                     </div>
@@ -43,19 +43,21 @@
                         <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Data marcada</th>
-                                        <th scope="col">Data realizada</th>
-                                        <th scope="col">Requerimento</th>
-                                        <th scope="col">Empresa/serviço</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="align-middle">Data marcada</th>
+                                        <th scope="col" class="align-middle">Data realizada</th>
+                                        <th scope="col" class="align-middle">Requerimento</th>
+                                        <th scope="col" class="align-middle">Empresa/serviço</th>
                                         @can('isSecretario', \App\Models\User::class)
-                                            <th scope="col">Analista</th>
+                                            <th scope="col" class="align-middle">Analista</th>
                                         @endcan
-                                        <th scope="col">Opções</th>
+                                        <th scope="col" class="align-middle">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($visitas as $visita)
+                                    @foreach ($visitas as $i => $visita)
                                         <tr>
+                                            <td scope="row" style="font-weight: bold">{{$i+1}}</td>
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
@@ -87,7 +89,7 @@
                                             @endcan
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
-                                                    
+
                                                     @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
                                                     @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
@@ -128,15 +130,15 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem; text-align: right">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
-                    <ul class="list-group list-unstyled">
+                    <ul class="list-group list-unstyled mt-2">
                         @can('isSecretario', \App\Models\User::class)
                             <li>
-                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Criar visita">
+                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Criar visita">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Criar visita
                                     </div>
@@ -146,8 +148,8 @@
                                     ->whereIn('visita_id', $visitas->pluck('id')->toArray())
                                     ->get()->count() > 0)
                                 <li>
-                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1"">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar relatório
                                         </div>
@@ -156,8 +158,16 @@
                             @endif
                             @if($visitas->where('requerimento_id', '!=', null)->first() != null || $visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
+                                    <div title="Editar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar visita">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Editar visita
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Deletar visita
                                         </div>
@@ -167,16 +177,16 @@
                         @else
                             @if($visitas->where('requerimento_id', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
+                                    <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar requerimento
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Criar/editar relatório
                                         </div>
@@ -184,8 +194,8 @@
                                 </li>
                             @elseif($visitas->where('denuncia_id', '!=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null)
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Criar/editar relatório
                                         </div>
@@ -194,8 +204,8 @@
                             @endif
                             @if($visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
+                                    <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Relato da denúncia
                                         </div>
@@ -203,16 +213,16 @@
                                 </li>
                             @elseif($visitas->where('solicitacao_poda_id', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
+                                    <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar solicitação
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Criar/editar relatório
                                         </div>
@@ -220,8 +230,8 @@
                                 </li>
                             @elseif ($visitas->where('denuncia_id', '=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null && $visitas->where('solicitacao_poda', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Criar/editar relatório
                                         </div>

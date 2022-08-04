@@ -98,7 +98,7 @@
                     <ul class="list-group list-unstyled">
                         <li>
                             <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Abrir Licença
                                 </div>
@@ -211,7 +211,7 @@
                         <ul class="list-group list-unstyled">
                             <li>
                                 <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Abrir Licença
                                     </div>

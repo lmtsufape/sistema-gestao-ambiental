@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right;">
                         <a title="Adicionar espécie" href="{{route('especies.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar especie">
+                            <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar especie">
                         </a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     <ul class="list-group list-unstyled">
                         <li>
                             <div title="Adicionar espécie" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar espécie">
+                                <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar espécie">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar espécie
                                 </div>
@@ -77,7 +77,7 @@
                         </li>
                         <li>
                             <div title="Editar espécie" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar espécie">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar espécie">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar espécie
                                 </div>
@@ -85,7 +85,7 @@
                         </li>
                         <li>
                             <div title="Deletar espécie" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar espécie">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar espécie">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar espécie
                                 </div>

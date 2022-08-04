@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Adicionar empresa/serviço" href="{{route('empresas.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar empresa/serviço">
+                            <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
                         </a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         <ul class="list-group list-unstyled">
                             <li>
                                 <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar empresa/serviço">
+                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Adicionar empresa/serviço
                                     </div>
@@ -77,7 +77,7 @@
                             </li>
                             <li>
                                 <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Icon bell.svg')}}" alt="Notificações">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Icon bell.svg')}}" alt="Notificações">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Notificações
                                     </div>
@@ -85,7 +85,7 @@
                             </li>
                             <li>
                                 <div title="Editar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar empresa/serviço">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Editar empresa/serviço
                                     </div>
@@ -93,7 +93,7 @@
                             </li>
                             <li>
                                 <div title="Deletar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar empresa/serviço">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Deletar empresa/serviço
                                     </div>

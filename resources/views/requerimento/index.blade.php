@@ -18,7 +18,7 @@
                     @can('isRequerente', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right;">
                             <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar novo requerimento">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar novo requerimento">
                             </button>
                             <a id="btn-etapas-requerimento" class="btn btn-success btn-color-dafault" title="Etapas do requerimento" data-toggle="modal" data-target="#etapas" style="cursor: pointer">
                                 Etapas
@@ -736,7 +736,7 @@
                         @can('isSecretarioOrAnalista', \App\Models\User::class)
                             <li>
                                 <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Analisar requerimento
                                     </div>
@@ -749,7 +749,7 @@
                             @can('isRequerente', \App\Models\User::class)
                                 <li>
                                     <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visitas a empresa">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visitas a empresa">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visitas à empresa
                                         </div>
@@ -760,7 +760,7 @@
                         @can('isRequerente', \App\Models\User::class)
                             <li>
                                 <div title="Novo requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Novo requerimento">
+                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Novo requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Novo requerimento
                                     </div>
@@ -769,7 +769,7 @@
                             @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
                                 <li>
                                     <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Enviar documentação
                                         </div>
@@ -779,7 +779,7 @@
                             @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
                                 <li>
                                     <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Documentação em análise
                                         </div>
@@ -789,7 +789,7 @@
                             @if($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
                                 <li>
                                     <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Documentação aceita
                                         </div>
@@ -801,7 +801,7 @@
                             @if($requerimentos->first() != null)
                                 <li>
                                     <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Cancelar requerimento
                                         </div>

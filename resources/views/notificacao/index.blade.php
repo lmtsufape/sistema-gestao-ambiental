@@ -14,7 +14,7 @@
                         </a> --}}
                         @can('create', App\Models\Notificacao::class)
                             <a title="Criar notificação" href="{{route('empresas.notificacoes.create', ['empresa' => $empresa])}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notificação">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de criar notificação">
                             </a>
                         @endif
                     </div>

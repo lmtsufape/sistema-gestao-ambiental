@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Novo grupo" href="{{route('setores.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar grupo">
+                            <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar grupo">
                         </a>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <ul class="list-group list-unstyled">
                         <li>
                             <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar grupo">
+                                <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar grupo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar grupo
                                 </div>
@@ -83,7 +83,7 @@
                         </li>
                         <li>
                             <div title="Visualizar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar grupo">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar grupo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar grupo
                                 </div>
@@ -91,7 +91,7 @@
                         </li>
                         <li>
                             <div title="Editar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar grupo">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar grupo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar grupo
                                 </div>
@@ -99,7 +99,7 @@
                         </li>
                         <li>
                             <div title="Deletar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar grupo">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar grupo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar grupo
                                 </div>

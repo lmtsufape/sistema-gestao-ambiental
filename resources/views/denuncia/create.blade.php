@@ -121,7 +121,7 @@
                                         <div class="col-md-4" style="text-align: right">
                                             <input type="hidden" id="imagem_indice" value="-1">
                                             <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
-                                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar imagem">
+                                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
                                             </a>
                                         </div>
                                     </div>
@@ -636,7 +636,7 @@
                                         <div class="col-md-4" style="text-align: right">
                                             <input type="hidden" id="imagem_indice" value="-1">
                                             <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
-                                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar imagem">
+                                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
                                             </a>
                                         </div>
                                     </div>

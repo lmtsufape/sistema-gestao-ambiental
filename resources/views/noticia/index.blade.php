@@ -17,7 +17,7 @@
                     <div class="col-md-4" style="text-align: right">
                         @can('create', App\Models\Noticia::class)
                             <a title="Criar notificação" href="{{route('noticias.create')}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notícia">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de criar notícia">
                             </a>
                         @endcan
                     </div>
@@ -113,7 +113,7 @@
                     <div class="col-md-4" style="text-align: right">
                         @can('create', App\Models\Noticia::class)
                             <a title="Criar notícia" href="{{route('noticias.create')}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notícia">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de criar notícia">
                             </a>
                         @endcan
                     </div>

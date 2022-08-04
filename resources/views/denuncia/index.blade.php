@@ -197,25 +197,25 @@
                         <li>
                             @can('isSecretario', \App\Models\User::class)
                                 <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Relato da denúncia
                                     </div>
                                 </div>
                                 <div title="Avaliar denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar denúncia">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar denúncia">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Avaliar denúncia
                                     </div>
                                 </div>
                                 <div title="Atribuir denúncia a um analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir a um analista">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir a um analista">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Atribuir denúncia a um analista
                                     </div>
                                 </div>
                                 <div title="Agendar uma visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar uma visita">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar uma visita">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Agendar uma visita
                                     </div>
@@ -224,7 +224,7 @@
                             @can('isSecretario', \App\Models\User::class)
                                 @if($filtro ==  "concluidas")
                                     <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar relatório
                                         </div>
