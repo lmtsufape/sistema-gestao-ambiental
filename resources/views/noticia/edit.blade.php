@@ -42,9 +42,9 @@
                                 <div class="col-md-12 form-group">
                                     <label for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label> <a href="{{asset('storage/'.$noticia->imagem_principal)}}" target="_blanck">Imagem atual</a>
                                     <br>
-                                    <label class="label-input" for="enviar_arquivo"></label>
-                                    <label for="label-input-arquivo" for="enviar_arquivo">Nenhum arquivo selecionado</label>
-                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal">
+                                    <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                    <label for="label-input-arquivo" for="enviar_arquivo"></label>
+                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="image/*" name="imagem_principal">
 
                                     @error('imagem_principal')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

@@ -1088,6 +1088,7 @@ a.article:hover {
         display: block;
     }
     #sidebar.active  ul li a {
+        padding: 5px 10px;
         display: block;
     }
 
@@ -1138,6 +1139,7 @@ a.article:hover {
     }
 
     #sidebar.active ul li a{
+        text-align: left;
         object-fit: contain;
     }
 

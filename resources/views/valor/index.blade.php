@@ -107,13 +107,13 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
-                    <div style="font-size: 21px;" class="tituloModal">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;">
+                    <div style="font-size: 21px;  text-align: right" class="tituloModal">
                         Legenda
                     </div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Adicionar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Adicionar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar valor de licença">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar valor de licença
@@ -121,7 +121,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Editar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Editar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar valor de licença">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar valor de licença
@@ -129,7 +129,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Deletar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Deletar valor de licença" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar valor de licença">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar valor de licença

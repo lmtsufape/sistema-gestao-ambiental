@@ -94,7 +94,7 @@
                     </div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar CNAE
@@ -102,7 +102,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Editar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Editar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar CNAE
@@ -110,7 +110,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Deletar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Deletar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar CNAE

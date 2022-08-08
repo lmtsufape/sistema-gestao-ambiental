@@ -49,7 +49,7 @@
                             <tbody>
                                 @foreach ($documentos as $i => $documento)
                                     <tr>
-                                        <td scope="row">{{$i+1}}</td>
+                                        <th scope="row">{{$i+1}}</th>
                                         <td>{{$documento->nome}}</td>
                                         <td>
                                             @if ($documento->documento_modelo != null)
@@ -72,13 +72,13 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem; text-align: right">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Adicionar documento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Adicionar documento" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar documento
@@ -86,7 +86,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Visualizar documento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Visualizar documento" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar documento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar documento
@@ -94,7 +94,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Editar documento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Editar documento" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar documento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar documento
@@ -102,7 +102,7 @@
                             </div>
                         </li>
                         <li>
-                            <div title="Deletar documento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Deletar documento" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar documento">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar documento

@@ -62,7 +62,7 @@
                                     <tbody>
                                         @foreach ($solicitacoes as $i => $solicitacao)
                                             <tr>
-                                                <td>{{($i+1)}}</td>
+                                                <th>{{($i+1)}}</th>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
@@ -173,26 +173,26 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
-                    <div style="font-size: 21px;" class="tituloModal">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
+                    <div style="font-size: 21px; text-align: right" class="tituloModal">
                         Legenda
                     </div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar solicitação
                                 </div>
                             </div>
-                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Avaliar solicitação
                                 </div>
                             </div>
                         {{--<li>
-                            <div title="Mídia da solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Mídia da solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar mídia.svg')}}" alt="Mídia da solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Mídia da solicitação
@@ -200,20 +200,20 @@
                             </div>
                         </li>--}}
                         @can('isSecretario', \App\Models\User::class)
-                            <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir analista">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Atribuir solicitação a um analista
                                 </div>
                             </div>
-                            <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                            <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar visita">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Agendar uma visita
                                 </div>
                             </div>
                             @if($filtro ==  "concluidas")
-                                <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
+                                <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Visualizar relatório
