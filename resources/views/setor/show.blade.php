@@ -89,9 +89,10 @@
             </div>
             <div class="col-md-3">
                 <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem;">
-                    <div style="font-size: 21px;" class="tituloModal">
+                    <div style="font-size: 21px; text-align: right" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         <li>
                             <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">

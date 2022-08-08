@@ -732,6 +732,7 @@
                     <div style="font-size: 21px; text-align: right" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         @can('isSecretarioOrAnalista', \App\Models\User::class)
                             <li>

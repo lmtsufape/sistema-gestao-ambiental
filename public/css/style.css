@@ -465,6 +465,8 @@ label {
     color: var(--primaria);
     font-weight: bolder;
     font-size: 23px;
+}
+.borda-baixo{
     border-bottom: solid 1px rgba(0, 0, 0, 0.25);
 }
 
