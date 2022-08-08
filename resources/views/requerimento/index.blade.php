@@ -211,7 +211,7 @@
                                     @endif>
                                     <div class="col-md-12"
                                     @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                                        style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(241, 241, 241); max-width: fit-content;"
+                                        style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(255, 255, 255); max-width: fit-content;"
                                     @else
                                         style="font-size: 16px; font-weight: bold; color: rgb(110, 110, 110)"
                                     @endif>
@@ -723,9 +723,9 @@
             <div class="col-md-3">
 
                 <div class="col-md-12 shadow-sm p-2 px-3" @can('isAnalista', \App\Models\User::class)
-                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem; text-align: right"
+                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @elsecan('isRequerente', \App\Models\User::class)
-                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem; text-align: right"
+                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @else
                                                                 style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;"
                                                             @endcan>

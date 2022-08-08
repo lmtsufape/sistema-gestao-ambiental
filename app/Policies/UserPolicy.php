@@ -147,6 +147,11 @@ class UserPolicy
         return $this->isSecretario($user) || $this->isProtocolista($user);
     }
 
+    public function isSecretarioOrProcesso(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaProcesso($user);
+    }
+
     public function usuarioInterno(User $user)
     {
         return $user->role != User::ROLE_ENUM['requerente'] && $user->role != User::ROLE_ENUM['represetante_legal'];

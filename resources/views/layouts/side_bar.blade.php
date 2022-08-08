@@ -136,7 +136,7 @@
                                     </a>
                                 </li>
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
-                                    <a href="{{route('visitas.index')}}">
+                                    <a href="{{route('visitas.index', 'requerimento')}}">
                                         <i class="fas fa-home"></i>
                                         Programação
                                     </a>
@@ -173,7 +173,7 @@
                                 </li>
                                 @can('isAnalistaProcesso', \App\Models\User::class)
                                     <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
-                                        <a href="{{route('visitas.index')}}">
+                                        <a href="{{route('visitas.index', 'requerimento')}}">
                                             <i class="fas fa-home"></i>
                                             Programação
                                         </a>
@@ -202,7 +202,7 @@
                                     </a>
                                 </li>
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
-                                    <a href="{{route('visitas.index')}}">
+                                    <a href="{{route('visitas.index', 'poda')}}">
                                         <i class="fas fa-home"></i>
                                         Programação
                                     </a>
@@ -222,7 +222,7 @@
                                 </a>
                             </li>
                             <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*') || request()->routeIs('empresas*')) active @endif">
-                                <a href="{{route('visitas.index')}}">
+                                <a href="{{route('visitas.index', 'poda')}}">
                                     <i class="fas fa-home"></i>
                                     Programação
                                 </a>

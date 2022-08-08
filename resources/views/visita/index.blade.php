@@ -21,7 +21,25 @@
                         @endif
                     </div>
                 </div>
-                <div class="card card-borda-esquerda" style="width: 100%;">
+                <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
+                    @can('isSecretarioOrProcesso', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'requerimento') active @endif" id="visitas-atuais-tab" role="tab" type="button"
+                                @if($filtro == 'requerimento') aria-selected="true" @endif href="{{route('visitas.index', 'requerimento')}}">Requerimentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'denuncia') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
+                                @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', 'denuncia')}}">Denúncias</a>
+                        </li>
+                    @endcan
+                    @can('isAnalistaPodaOrSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'poda') active @endif" id="visitas-cancelados-tab" role="tab" type="button"
+                                @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', 'poda')}}">Poda/Supressão</a>
+                        </li>
+                    @endcan
+                </ul>
+                <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
                             @if(session('success'))
@@ -46,8 +64,11 @@
                                         <th scope="col">#</th>
                                         <th scope="col" class="align-middle">Data marcada</th>
                                         <th scope="col" class="align-middle">Data realizada</th>
-                                        <th scope="col" class="align-middle">Requerimento</th>
-                                        <th scope="col" class="align-middle">Empresa/serviço</th>
+                                        @if($filtro == "requerimento" || $filtro == "denuncia")
+                                            <th scope="col" class="align-middle">Empresa/serviço</th>
+                                        @else
+                                            <th scope="col" class="align-middle">Requerente</th>
+                                        @endif
                                         @can('isSecretario', \App\Models\User::class)
                                             <th scope="col" class="align-middle">Analista</th>
                                         @endcan
@@ -62,25 +83,15 @@
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
-                                                <td>{{$visita->data_realizada}}</td>
+                                                <td>{{__('Aguardando visita')}}</td>
                                             @endif
 
                                             @if($visita->requerimento != null)
-                                                @if($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                    <td> Primeira licença</td>
-                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                    <td>Renovação</td>
-                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                    <td>Autorização</td>
-                                                @endif
-
                                                 <td>{{$visita->requerimento->empresa->nome}}</td>
                                             @elseif($visita->denuncia != null)
-                                                <td>Denúncia</td>
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @elseif ($visita->solicitacao_poda != null)
-                                                <td>Solicitação de poda</td>
-                                                <td>{{$visita->solicitacao_poda->nome}}</td>
+                                                <td>{{$visita->solicitacao_poda->requerente->user->name}}</td>
                                             @endif
 
 
@@ -130,7 +141,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px; text-align: right" class="tituloModal">
                         Legenda
                     </div>

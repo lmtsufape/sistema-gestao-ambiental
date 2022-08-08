@@ -58,7 +58,7 @@ class LicencaController extends Controller
 
         $requerimento->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença criada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença criada com sucesso!']);
     }
 
     /**
@@ -121,7 +121,7 @@ class LicencaController extends Controller
 
         $licenca->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença atualizada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença atualizada com sucesso!']);
     }
 
     /**
@@ -164,6 +164,6 @@ class LicencaController extends Controller
 
         $licenca->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença revisada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença revisada com sucesso!']);
     }
 }

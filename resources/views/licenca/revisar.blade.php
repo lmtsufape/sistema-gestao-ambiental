@@ -7,10 +7,10 @@
                     <div class="col-md-8">
                         @can('isSecretario', auth()->user())
                             <h4 class="card-title">Editar licença</h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Editar licença</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Editar licença</h6>
                         @elsecan ('isAnalista', auth()->user())
                             <h4 class="card-title">Revisar licença</h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Revisar licença</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Revisar licença</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right">

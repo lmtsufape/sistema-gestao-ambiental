@@ -55,7 +55,7 @@ class RelatorioController extends Controller
         }
 
 
-        return redirect(route('visitas.index'))->with(['success' => 'Relátorio salvo com sucesso!']);
+        return redirect(route('visitas.index', 'requerimento'))->with(['success' => 'Relátorio salvo com sucesso!']);
     }
 
     /**
@@ -100,7 +100,7 @@ class RelatorioController extends Controller
         $relatorio->motivo_edicao = null;
         $relatorio->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Relátorio atualizado com sucesso!']);
+        return redirect(route('visitas.index', 'requerimento'))->with(['success' => 'Relátorio atualizado com sucesso!']);
     }
 
     /**

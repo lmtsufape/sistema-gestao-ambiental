@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         <h4 class="card-title">Visitas à empresa {{$requerimento->empresa->nome}} - Requerimento de {{$requerimento->tipoString()}} </h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" @can('isSecretario', \App\Models\User::class) href="{{route('visitas.index')}}" @endcan>Visitas</a> > Visitas à empresa {{$requerimento->empresa->nome}} - Requerimento de {{$requerimento->tipoString()}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" @can('isSecretario', \App\Models\User::class) @endcan>Visitas</a> > Visitas à empresa {{$requerimento->empresa->nome}} - Requerimento de {{$requerimento->tipoString()}}</h6>
                     </div>
                 </div>
             </div>

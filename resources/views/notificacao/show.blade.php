@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Notificação à empresa {{$notificacao->empresa->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Visitas > Notificações > Visualizar notificação</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('empresas.listar')}}">Empresas/Serviços</a> > Empresas > Notificações > Visualizar notificação</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('empresas.notificacoes.index', ['empresa' => $notificacao->empresa])}}">
