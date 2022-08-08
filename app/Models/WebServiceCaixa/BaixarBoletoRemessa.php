@@ -13,66 +13,77 @@ class BaixarBoletoRemessa extends Remessa
 {
     public const URL = 'https://barramento.caixa.gov.br/sibar/ManutencaoCobrancaBancaria/Boleto/Externo';
 
-    // OPERACAO : char[50]
-    public $operacao = "BAIXA_BOLETO";
+    public string $operacao = "BAIXA_BOLETO";
 
-    // CODIGO_BENEFICIARIO : int
-    public $codigo_beneficiario;
+    /**
+     * Código do Convênio no Banco (Código do Beneficiário).
+     * Código fornecido pela CAIXA, através da agência de relacionamento do cliente.
+     * Deve ser preenchido com o código do Beneficiário, até 7 posições, da esquerda para direita.
+     * @var string $codigo_beneficiario
+     */
+    public string $codigo_beneficiario;
 
-    //NOSSO_NUMERO : long
-    public $nosso_numero;
+    /**
+     * Nosso Número — Informação de entrada.
+     * Se informado zeros, o nosso número será gerado pelo banco. Caso contrário deverá ser informado número iniciando com 14.
+     * @var string $nosso_numero
+     */
+    public string $nosso_numero;
 
-    //VERSAO : char[10]
-    public $versao = "2.1";
+    public string $versao = "2.1";
 
     public function setAttributes($data)
     {
         $this->codigo_beneficiario = $data["codigo_beneficiario"];
         $this->nosso_numero = $data["nosso_numero"];
         $this->beneficiario = $data["beneficiario"];
-
         $this->data_hora = now()->format('YmdHms');
     }
 
-    /** Gera o arquivo de remessa.
-     *
-     * @return String $cabeçalho
+    /**
+     * Gera o arquivo de remessa.
+     * @return string $cabeçalho
     */
     public function gerar_remessa()
     {
-        return "<?xml version='1.0' encoding='UTF-8'?>
-                <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'>
-                <soapenv:Header/>
-                <soapenv:Body>
-                <manutencaocobrancabancaria:SERVICO_ENTRADA xmlns:manutencaocobrancabancaria='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo Emite_Boleto.xsd'>
-                \t<sibar_base:HEADER>
-                \t\t<VERSAO>".$this->versao."</VERSAO>
-                \t\t<AUTENTICACAO>".$this->gerar_autenticacao()."</AUTENTICACAO>
-                \t\t<USUARIO_SERVICO>".$this->usuario_servico."</USUARIO_SERVICO>
-                \t\t<OPERACAO>".$this->operacao."</OPERACAO>
-                \t\t<SISTEMA_ORIGEM>".$this->sistema_origem."</SISTEMA_ORIGEM>
-                \t\t<DATA_HORA>".$this->data_hora."</DATA_HORA>
-                \t</sibar_base:HEADER>
-                \t<DADOS>
-                \t\t<BAIXA_BOLETO>
-                \t\t\t<CODIGO_BENEFICIARIO>".$this->codigo_beneficiario."</CODIGO_BENEFICIARIO>
-                \t\t\t<NOSSO_NUMERO>".$this->nosso_numero."</NOSSO_NUMERO>
-                \t\t</BAIXA_BOLETO>
-                \t</DADOS>
-                </manutencaocobrancabancaria:SERVICO_ENTRADA>
-                </soapenv:Body>
-                </soapenv:Envelope>";
+        $xml_array = array(
+            'soapenv:Body' => array(
+                'ext:SERVICO_ENTRADA' => array(
+                    'sib:HEADER' => array(
+                        'VERSAO' => $this->versao,
+                        'AUTENTICACAO' => $this->gerar_autenticacao(),
+                        'USUARIO_SERVICO' => $this->usuario_servico,
+                        'OPERACAO' => $this->operacao,
+                        'SISTEMA_ORIGEM' => $this->sistema_origem,
+                        'DATA_HORA' => $this->data_hora,
+                    ),
+                    'DADOS' => array(
+                        $this->operacao => array(
+                            'CODIGO_BENEFICIARIO' => $this->codigo_beneficiario,
+                            'NOSSO_NUMERO' => $this->nosso_numero,
+                        )
+                    )
+                )
+            )
+        );
+        $xml_root = 'soapenv:Envelope';
+        $xml = new XmlDomConstruct('1.0', 'ISO8859-1');
+        $xml->formatOutput = true;
+        $xml->fromMixed(array($xml_root => $xml_array));
+        $xml_root_item = $xml->getElementsByTagName($xml_root)->item(0);
+        $xml_root_item->setAttribute('xmlns:sib', 'http://caixa.gov.br/sibar');
+        $xml_root_item->setAttribute('xmlns:ext', 'http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo');
+        $xml_root_item->setAttribute('xmlns:soapenv', 'http://schemas.xmlsoap.org/soap/envelope/');
+        return $xml->saveXML();
     }
 
-    /** Gera a hash de atutenticação do cabeçalho do arquivo.
-     *
-     * @return String $cabeçalho
+    /**
+     * Gera a hash de atutenticação do cabeçalho do arquivo.
+     * @return string $cabeçalho
     */
-
     private function gerar_autenticacao()
     {
         $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . "00000000" . "000000000000000" . $this->retirar_formatacao($this->beneficiario->cnpj);
-
         $hash = hash("sha256", $autenticacao, true);
         return base64_encode($hash);
     }
