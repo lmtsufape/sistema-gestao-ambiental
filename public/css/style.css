@@ -859,6 +859,9 @@ a.article:hover {
     border:2px solid #50c2db;
     border-radius: 60%;
     background-color: white;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo-maior-selected {
@@ -892,6 +895,9 @@ a.article:hover {
     border-radius: 60%;
     background-color: #34A877;
     cursor: pointer;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo-concluido:hover{
@@ -908,6 +914,9 @@ a.article:hover {
     border-radius: 60%;
     background-color: white;
     cursor: pointer;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo:hover{
@@ -921,7 +930,6 @@ a.article:hover {
     text-align: center;
     color: #50c2db;
     font-weight: bold;
-    padding-top: 3px;
 
 }
 
@@ -929,12 +937,10 @@ a.article:hover {
     text-align: center;
     color: #ffffff;
     font-weight: bold;
-    padding-top: 3px;
 }
 
 .numero {
     text-align: center;
-    padding-top: 4px;
 }
 
 #wrapper{

@@ -682,7 +682,7 @@
                                     </div>
                                     <div class="col-md-6" style="text-align: right">
                                         <div class="btn-group align-items-center">
-                                            @if($requerimento->visitas->count() > 0)
+                                            @if(!$requerimento->cancelado() && $requerimento->visitas->count() > 0)
                                                 <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                             @endif
                                             @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
