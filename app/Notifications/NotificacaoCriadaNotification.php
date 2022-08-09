@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NotificacaoCriadaNotification extends Notification implements ShouldQueue
+class NotificacaoCriadaNotification extends Notification
 {
     use Queueable;
     private $notificacao;
@@ -48,7 +48,9 @@ class NotificacaoCriadaNotification extends Notification implements ShouldQueue
         $comentarios = [];
         foreach ($this->notificacao->fotos as $index => $foto)
         {
-            $comentarios[$index]  = "Comentário da foto" . ($index + 1) . ": " . $foto->comentario;
+            if ($foto->comentario != '') {
+                $comentarios[$index]  = "Comentário da foto" . ($index + 1) . ": " . $foto->comentario;
+            }
         }
 
         $message = (new MailMessage)
@@ -62,7 +64,7 @@ class NotificacaoCriadaNotification extends Notification implements ShouldQueue
                 ]
             )->subject('Notificação da Secretária de Meio Ambiente');
         foreach ($this->notificacao->fotos as $index => $foto) {
-            $message->attach('storage/' . $foto->caminho, ['as' => 'foto' . ($index + 1), 'mime' => 'image/png']);
+            $message->attach(storage_path('app'.DIRECTORY_SEPARATOR.$foto->caminho), ['as' => 'foto' . ($index + 1), 'mime' => 'image/png']);
         }
         return $message;
     }
