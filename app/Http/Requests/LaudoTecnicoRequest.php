@@ -23,7 +23,7 @@ class LaudoTecnicoRequest extends FormRequest
         return [
             'condicoes' => ['required', 'string'],
             'localizacao' => ['required', 'string'],
-            'imagem' => ['required', 'array', 'min:6'],
+            'imagem' => ['required', 'array', 'min:1'],
             'comentario' => ['nullable', 'array'],
             'imagem.*' => ['required', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
         ];
@@ -32,8 +32,8 @@ class LaudoTecnicoRequest extends FormRequest
     public function messages()
     {
         return [
-            'imagem.min' => 'É necessário 6 imagens',
-            'imagem.required' => 'É necessário 6 imagens',
+            'imagem.min' => 'É necessário 1 (uma) imagem',
+            'imagem.required' => 'É necessário uma imagem',
         ];
     }
 
