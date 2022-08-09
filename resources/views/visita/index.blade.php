@@ -15,9 +15,11 @@
                     <div class="col-md-4" style="text-align: right;">
                         <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
                         @can('isSecretario', \App\Models\User::class)
-                            <a title="Criar visita" href="{{route('visitas.create')}}">
-                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
-                            </a>
+                            @if($filtro == 'requerimento')
+                                <a title="Criar visita" href="{{route('visitas.create')}}">
+                                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
+                                </a>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -156,14 +158,16 @@
                     <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled mt-2">
                         @can('isSecretario', \App\Models\User::class)
-                            <li>
-                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Criar visita">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Criar visita
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Criar visita">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar visita para requerimento
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endif
                             @if(\App\Models\Relatorio::select('relatorios.*')
                                     ->whereIn('visita_id', $visitas->pluck('id')->toArray())
                                     ->get()->count() > 0)
