@@ -72,6 +72,7 @@ class NotificacaoController extends Controller
         $data = $request->validated();
         $notificacao->fill($data);
         $notificacao->empresa_id = $empresa->id;
+        $notificacao->autor_id = auth()->user()->id;
         $notificacao->save();
         if (array_key_exists("imagem", $data))
         {
@@ -96,6 +97,10 @@ class NotificacaoController extends Controller
      */
     public function show(Notificacao $notificacao)
     {
+        if (!$notificacao->visto && auth()->user()->id == $notificacao->empresa->user->id) {
+            $notificacao->visto = true;
+            $notificacao->save();
+        }
         return view('notificacao.show', ['notificacao' => $notificacao]);
     }
 

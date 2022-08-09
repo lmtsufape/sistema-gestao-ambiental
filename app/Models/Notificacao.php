@@ -22,4 +22,9 @@ class Notificacao extends Model
     {
         return $this->hasMany(FotoNotificacao::class, 'notificacao_id');
     }
+
+    public function autor()
+    {
+        return $this->belongsTo(User::class, 'autor_id');
+    }
 }
