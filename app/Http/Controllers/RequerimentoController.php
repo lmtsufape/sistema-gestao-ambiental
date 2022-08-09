@@ -406,6 +406,9 @@ class RequerimentoController extends Controller
         $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
 
+        $requerimento->refresh();
+        Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Alteração dos documentos requeridos'));
+
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
@@ -710,9 +713,9 @@ class RequerimentoController extends Controller
 
     /**
      * Recupera o analista de processo atribuído ao requerimento se ele existir.
-     * 
+     *
      * @param Request $request id do requerimento
-     * @return json 
+     * @return json
      */
     public function getAnalistaProcesso(Request $request)
     {
