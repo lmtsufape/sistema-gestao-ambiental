@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 35px;">
+<nav class="navbar navbar-expand-lg navbar-light bg-white" style="padding-top: 35px;">
     <div class="container" style="">
         <a class="navbar-brand nav-link-logo" href="{{route('welcome')}}">
             <img class="img-logo" src="{{asset('img/logo.svg')}}" alt="Logo SGA" style="height: 100px; width: 250px;">
