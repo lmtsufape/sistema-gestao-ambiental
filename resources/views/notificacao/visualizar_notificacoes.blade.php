@@ -36,6 +36,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Data</th>
+                                        <th scope="col">Autor</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -44,6 +45,11 @@
                                         <tr>
                                             <th>{{$i+1}}</th>
                                             <td>{{date('d/m/Y H:i', strtotime($notificacao->created_at))}}</td>
+                                            <td>
+                                                @if ($notificacao->autor != null)
+                                                    {{$notificacao->autor->name}}
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a title="Visualizar notificação" href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar notificação"></a>
                                             </td>
