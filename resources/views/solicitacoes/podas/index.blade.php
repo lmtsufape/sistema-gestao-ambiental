@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com visita realizada/concluída @else {{$filtro}} @endif</h4>
+                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com visita realizada/concluída @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -27,22 +27,26 @@
                     @endif
                 </div>
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'pendentes') active @endif" id="solicitacoes-pendentes-tab"
-                            type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('podas.index', 'pendentes')}}">@can('isAnalistaPoda', \App\Models\User::class) -- @else Pendentes @endcan</a>
-                    </li>
+                    @can('isSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'pendentes') active @endif" id="solicitacoes-pendentes-tab"
+                                type="button" role="tab" @if($filtro == 'pendentes') aria-selected="true" @endif href="{{route('podas.index', 'pendentes')}}">Pendentes</a>
+                        </li>
+                    @endcan
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
                             type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">@can('isAnalistaPoda', \App\Models\User::class)  Atribuídas @else Deferidas @endcan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'concluidas') active @endif" id="solicitacoes-concluidas-tab"
-                            type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">@can('isAnalistaPoda', \App\Models\User::class) -- @else Concluídas @endcan</a>
+                            type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">Concluídas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
-                            type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('podas.index', 'indeferidas')}}">@can('isAnalistaPoda', \App\Models\User::class) -- @else Indeferidas @endcan</a>
-                    </li>
+                    @can('isSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
+                                type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('podas.index', 'indeferidas')}}">Indeferidas</a>
+                        </li>
+                    @endcan
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
@@ -87,7 +91,7 @@
                                 </div>
                                 @if($solicitacoes->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhuma solicitação de poda/supressão @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('concluidas')concluída @break @case('indeferidas')indeferida @break @endswitch
+                                        Nenhuma solicitação de poda/supressão @switch($filtro) @case('pendentes')pendente @break @case('deferidas') @can('isAnalistaPoda', \App\Models\User::class) atribuída @else deferida @endcan @break @case('concluidas')concluída @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
                                 @endif
                             </div>

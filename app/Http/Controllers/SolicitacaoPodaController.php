@@ -31,9 +31,36 @@ class SolicitacaoPodaController extends Controller
 
         $userPolicy = new UserPolicy();
         if($userPolicy->isAnalistaPoda(auth()->user())){
-            $solicitacoes   = SolicitacaoPoda::where([['status', '2'], ['analista_id', auth()->user()->id]])->paginate(20);
+            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
+            ->where('visitas.data_realizada', '!=', null)
+            ->where('solicitacoes_podas.analista_id', '=',  auth()->user()->id)
+            ->get('solicitacoes_podas.id');
+
+            $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
+            ->where('solicitacoes_podas.status', '=', 2)
+            ->where('solicitacoes_podas.analista_id', '=',  auth()->user()->id)
+            ->select('solicitacoes_podas.id');
+
+            $solicitacoes_podas_deferidas_collection = collect();
+
+            foreach($solicitacoes_podas_deferidas->get() as $denuncia){
+                if($solicitacoes_podas_concluidas->doesntContain($denuncia)){
+                    $solicitacoes_podas_deferidas_collection->push($denuncia);
+                }
+            }
+
+            $deferidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_deferidas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+            $concluidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+
+            switch($filtro){
+                case 'deferidas':
+                    $solicitacoes = $deferidas;
+                    break;
+                case 'concluidas':
+                    $solicitacoes = $concluidas;
+                    break;
+            }
             $analistas = User::analistasPoda();
-            $filtro = 'deferidas';
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }else{
             $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
@@ -98,7 +125,7 @@ class SolicitacaoPodaController extends Controller
     public function requerenteIndex()
     {
         $this->authorize('requerenteIndex', SolicitacaoPoda::class);
-        $solicitacoes = SolicitacaoPoda::where('requerente_id', auth()->user()->requerente->id)->get();
+        $solicitacoes = SolicitacaoPoda::where('requerente_id', auth()->user()->requerente->id)->orderBy('created_at', 'DESC')->get();
         return view('solicitacoes.podas.requerente.index', compact('solicitacoes'));
     }
 

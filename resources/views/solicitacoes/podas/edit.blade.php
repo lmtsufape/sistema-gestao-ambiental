@@ -85,13 +85,13 @@
                                     </div>
                                 @endforeach
                             @endif
-                            <div class="col-md-12 form-group">
+                            {{--<div class="col-md-12 form-group">
                                 @empty($solicitacao->ficha)
                                     <a href="{{route('podas.ficha', $solicitacao)}}">Ficha de Análise de Risco em árvore</a>
                                 @else
                                     <a href="{{route('podas.fichas.show', $solicitacao->ficha)}}">Ficha de Análise de Risco em árvore</a>
                                 @endempty
-                            </div>
+                            </div>--}}
                             <div class="col-md-12 form-group">
                                 @empty($solicitacao->laudo)
                                     <a href="{{route('podas.laudo', $solicitacao)}}">Laudo Técnico Ambiental</a>
