@@ -60,6 +60,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/{requerimento_id}/documentacao/{documento_id}', [RequerimentoController::class, 'showDocumento'])->name('requerimento.documento');
     Route::get('/requerimentos/{id}/visitas', [RequerimentoController::class, 'indexVisitasRequerimento'])->name('requerimento.visitas');
     Route::get('/requerimentos/{requerimento_id}/visitas/{visita_id}/edit', [RequerimentoController::class, 'requerimentoVisitasEdit'])->name('requerimento.visitas.edit');
+    Route::post('/visitas/editVisita', [VisitaController::class, 'editVisita'])->name('visitas.visita.edit');
+    Route::get('/visitas/info', [VisitaController::class, 'infoVisita'])->name('visitas.info.ajax');
     Route::get('/requerimentos/visita-create-analista', [RequerimentoController::class, 'getAnalistaProcesso'])->name('requerimentos.get.analista');
 
     Route::put('usuarios/atualizar-endereco', [UserController::class, 'atualizarEndereco'])->name('usuarios.atualizar.endereco');

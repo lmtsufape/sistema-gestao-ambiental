@@ -103,7 +103,15 @@
 
                                                     @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
-                                                    @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
+                                                    @if($visita->requerimento != null)
+                                                        <a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}">
+                                                            <img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita">
+                                                        </a>
+                                                    @else
+                                                        <a class="icon-licenciamento" style="cursor: pointer;" title="Editar visita" id="btn-criar-visita-{{$visita->id}}" data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$visita->id}})">
+                                                            <img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita">
+                                                        </a>
+                                                    @endif
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
                                                 @else
                                                     @if ($visita->requerimento != null)
@@ -168,26 +176,24 @@
                                     </div>
                                 </li>
                             @endif
-                            @if($visitas->where('requerimento_id', '!=', null)->first() != null || $visitas->where('denuncia_id', '!=', null)->first() != null)
-                                <li>
-                                    <div title="Editar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar visita">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Editar visita
-                                        </div>
+                            <li>
+                                <div title="Editar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Editar visita
                                     </div>
-                                </li>
-                                <li>
-                                    <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Deletar visita
-                                        </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Deletar visita
                                     </div>
-                                </li>
-                            @endif
+                                </div>
+                            </li>
                         @else
-                            @if($visitas->where('requerimento_id', '!=', null)->first() != null)
+                            @if($filtro == 'requerimento')
                                 <li>
                                     <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" ">
                                         <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
@@ -196,25 +202,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                            @elseif($visitas->where('denuncia_id', '!=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null)
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-                            @if($visitas->where('denuncia_id', '!=', null)->first() != null)
+                            @elseif($filtro == 'denuncia')
                                 <li>
                                     <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" ">
                                         <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
@@ -223,7 +211,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($visitas->where('solicitacao_poda_id', '!=', null)->first() != null)
+                            @elseif($filtro == 'poda')
                                 <li>
                                     <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" ">
                                         <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
@@ -232,24 +220,15 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                            @elseif ($visitas->where('denuncia_id', '=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null && $visitas->where('solicitacao_poda', '!=', null)->first() != null)
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
                             @endif
+                            <li>
+                                <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Criar/editar relatório
+                                    </div>
+                                </div>
+                            </li>
                         @endcan
                     </ul>
                 </div>
@@ -411,6 +390,58 @@
             </div>--}}
         @endif
     @endforeach
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar visita</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-criar-visita-denuncia" method="POST" action="{{route('visitas.visita.edit')}}">
+                            @csrf
+                            <input type="hidden" name="filtro" id="filtro" value="{{$filtro}}">
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" required value="{{old('data')}}">
+
+                                    @error('data')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="visita_id" id="visita_id" value="">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
 
     @foreach ($visitas as $visita)
         @if ($visita->solicitacao_poda != null)
@@ -453,4 +484,23 @@
         @endif
     @endforeach
     @endsection
+    <script>
+        function adicionarId(id) {
+            document.getElementById('visita_id').value = id;
+            $("#analista-visita").val("");
+            document.getElementById('data').value = "";
+            $.ajax({
+                url:"{{route('visitas.info.ajax')}}",
+                type:"get",
+                data: {"visita_id": id},
+                dataType:'json',
+                success: function(visita) {
+                    if(visita.analista_visita != null){
+                        $("#analista-visita").val(visita.analista_visita.id).change();
+                        document.getElementById('data').value = visita.marcada;
+                    }
+                }
+            });
+        }
+    </script>
 </x-app-layout>

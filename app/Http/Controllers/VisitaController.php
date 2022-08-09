@@ -29,15 +29,19 @@ class VisitaController extends Controller
     public function index($filtro)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
+        $analistas = collect();
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             switch($filtro){
                 case 'requerimento':
+                    $analistas = User::analistas();
                     $visitas = Visita::where('requerimento_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
                     break;
                 case 'denuncia':
+                    $analistas = User::analistas();
                     $visitas = Visita::where('denuncia_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
                     break;
                 case 'poda':
+                    $analistas = User::analistasPoda();
                     $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
                     break;
             }
@@ -55,7 +59,7 @@ class VisitaController extends Controller
             }
         }
 
-        return view('visita.index', compact('visitas', 'filtro'));
+        return view('visita.index', compact('visitas', 'filtro', 'analistas'));
     }
 
     /**
@@ -148,6 +152,10 @@ class VisitaController extends Controller
         $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
 
+        if($visita->data_realizada != null){
+            return redirect()->back()->with(['error' => 'Você não pode editar uma visita já realizada.']);
+        }
+
         $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
@@ -237,6 +245,54 @@ class VisitaController extends Controller
         $visita->save();
 
         return redirect(route('denuncias.index', 'pendentes'))->with(['success' => 'Visita agendada com sucesso!']);
+    }
+
+
+    /**
+     * Edita o analista e data de uma visita.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function editVisita(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+        $visita = Visita::find($request->visita_id);
+        if($visita->data_realizada != null){
+            return redirect()->back()->with(['error' => 'Você não pode editar uma visita já realizada.']);
+        }else{
+            $request->validate([
+                'data' => 'required|date',
+                'analista' => 'required'
+            ]);
+        }
+
+        $visita->data_marcada = $request->data;
+        $visita->analista_id = $request->analista;
+        $visita->save();
+
+        return redirect(route('visitas.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);
+    }
+
+    /**
+     * Recupera as informações básicas de uma visita agendada.
+     *
+     * @param  Illuminate\Http\Request  $request
+     */
+    public function infoVisita(Request $request)
+    {
+        $this->authorize('isSecretario', User::class);
+
+        $visita = Visita::find($request->visita_id);
+
+        $visitaInfo = [
+            'id' => $visita->id,
+            'analista_visita' => $visita->analista,
+            'marcada' => $visita->data_marcada,
+            'realizada' => $visita->data_realizada,
+        ];
+
+        return response()->json($visitaInfo);
     }
 
     public function createVisitaSolicitacaoPoda(Request $request)

@@ -16,13 +16,11 @@
                 </div>
                 <div div class="form-row">
                     <div class="col-sm-12">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                        @if(session('error'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-danger" role="alert">
+                                    <p>{{session('error')}}</p>
+                                </div>
                             </div>
                         @endif
                     </div>
