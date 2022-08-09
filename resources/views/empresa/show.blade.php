@@ -27,22 +27,22 @@
                             <div class="col-md-6">
                                 <h5 class="titulo-nav-tab-custom">{{$empresa->nome}}</h5>
                             </div>
-                            @can('isSecretario', \App\Models\User::class)
-                                <div class="col-md-6" style="text-align: right;">
-                                    <span style="position: relative; align-items: center; justify-content: center">
-                                        <a href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}" class="btn btn-success btn-default btn-padding border">
-                                          <img class="icon-licenciamento" src="{{asset('img/Icon bell-white.svg')}}" alt="Icone de notificações da empresa/serviço">
-                                          Notificações
-                                        </a>
-                                    </span>
+                            <div class="col-md-6" style="text-align: right;">
+                                <span style="position: relative; align-items: center; justify-content: center">
+                                    <a href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}" class="btn btn-success btn-default btn-padding border">
+                                        <img class="icon-licenciamento" src="{{asset('img/Icon bell-white.svg')}}" alt="Icone de notificações da empresa/serviço">
+                                        Notificações
+                                    </a>
+                                </span>
+                                @can('isSecretario', \App\Models\User::class)
                                     <span style="position: relative; align-items: center; justify-content: center">
                                         <a href="{{route('historico.empresa', $empresa->id)}}" class="btn btn-success btn-default btn-padding border">
-                                          <img class="icon-licenciamento" src="{{asset('img/history_icon.svg')}}" alt="Icone histórico de modificações">
-                                          Histórico de modificações
+                                        <img class="icon-licenciamento" src="{{asset('img/history_icon.svg')}}" alt="Icone histórico de modificações">
+                                        Histórico de modificações
                                         </a>
                                     </span>
-                                </div>
-                            @endcan
+                                @endcan
+                            </div>
                         </div>
                     </div>
                 </div>

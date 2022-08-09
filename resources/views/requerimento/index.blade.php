@@ -958,7 +958,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                Seus documentos serão recebidos e serão analisados pelo protocolista.
+                                Seus documentos serão recebidos e serão analisados por um analista.
                             </div>
                         </div>
                     </div>

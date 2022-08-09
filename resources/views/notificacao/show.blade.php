@@ -28,24 +28,26 @@
                         <div class="form-row">
                             <div class="col-md-12" style="margin-bottom:20px">
                                 <div class="card-body">
-                                    <div class="alert alert-warning" role="alert">
+                                    <div class="alert alert-warning" role="alert" style="background-color: #62005a; color: white; border-color: #62005a;">
                                         <div id="notificacao" style="margin-top: 10px">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                @foreach ($notificacao->fotos as $foto)
-                                    <img class="img-fluid" src="{{route('notificacoes.foto', ['notificacao' => $notificacao->id, 'foto' => $foto->id])}}" alt="foto">
-                                    @if ($foto->comentario != null)
-                                        <div class="card-body">
-                                            <p class="card-text">{{$foto->comentario}}</p>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
+                        <div class="form-row justify-content-center">
+                            @foreach ($notificacao->fotos as $foto)
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <img class="img-fluid" src="{{route('notificacoes.foto', ['notificacao' => $notificacao->id, 'foto' => $foto->id])}}" alt="foto" width="400px">
+                                        @if ($foto->comentario != null)
+                                            <div class="card-body">
+                                                <p class="card-text">{{$foto->comentario}}</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                             @endforeach
                         </div>
                     </div>
                 </div>

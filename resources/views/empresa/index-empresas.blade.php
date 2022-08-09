@@ -32,7 +32,8 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Nome</th>
-                                        <th scope="col">CPF/CNPJ</th>
+                                        <th scope="col">CNPJ/CPF</th>
+                                        <th scope="col">Empresário</th>
                                         <th scope="col">Grupo</th>
                                         <th scope="col">Opções</th>
                                     </tr>
@@ -43,6 +44,7 @@
                                             <th scope="row">{{$i+1}}</th>
                                             <td>{{$empresa->nome}}</td>
                                             <td>{{$empresa->cpf_cnpj}}</td>
+                                            <td>{{$empresa->user->name}}</td>
                                             <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
                                             <td>
                                                 <a  href="{{route('empresas.show', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar a empresa" title="Visualizar a empresa"></a>

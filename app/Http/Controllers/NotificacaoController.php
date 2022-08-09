@@ -28,16 +28,16 @@ class NotificacaoController extends Controller
         switch ($user->role) {
             case User::ROLE_ENUM['requerente']:
                 $this->authorize('view', $empresa);
-                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->paginate(10);
+                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->orderBy('created_at', 'DESC')->paginate(10);
                 return view('notificacao.visualizar_notificacoes', compact('notificacoes', 'empresa'));
                 break;
             case User::ROLE_ENUM['analista']:
-                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->paginate(10);
+                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->orderBy('created_at', 'DESC')->paginate(10);
                 $this->authorize('isSecretarioOrAnalista', User::class);
                 return view('notificacao.index', ['empresa' => $empresa, 'notificacoes' => $notificacoes]);
                 break;
             case User::ROLE_ENUM['secretario']:
-                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->paginate(10);
+                $notificacoes = Notificacao::where('empresa_id', $empresa->id)->orderBy('created_at', 'DESC')->paginate(10);
                 $this->authorize('isSecretarioOrAnalista', User::class);
                 return view('notificacao.index', ['empresa' => $empresa, 'notificacoes' => $notificacoes]);
                 break;
@@ -83,9 +83,8 @@ class NotificacaoController extends Controller
                 $foto_notificacao->save();
             }
         }
-        $notificacoes = Notificacao::where('empresa_id', $empresa->id)->paginate(10);
         Notification::send($empresa->user, new NotificacaoCriadaNotification($notificacao, $empresa));
-        return view('notificacao.index', ['empresa' => $empresa, 'notificacoes' => $notificacoes])->with('success', 'Notificação criada com sucesso');
+        return redirect(route('empresas.notificacoes.index', ['empresa' => $empresa]))->with('success', 'Notificação criada com sucesso');
     }
 
     /**
