@@ -103,8 +103,8 @@
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
 
-                                                    @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                    @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->requerimento != null)
                                                         <a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}">
                                                             <img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita">
@@ -119,6 +119,7 @@
                                                     @if ($visita->requerimento != null)
                                                         <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de analisar requerimento"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                        @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @elseif ($visita->denuncia != null)
                                                         <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
@@ -180,6 +181,16 @@
                                     </div>
                                 </li>
                             @endif
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Notificação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações à empresa
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
                             <li>
                                 <div title="Editar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar visita">
@@ -233,6 +244,16 @@
                                     </div>
                                 </div>
                             </li>
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Notificação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações à empresa
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
                         @endcan
                     </ul>
                 </div>
