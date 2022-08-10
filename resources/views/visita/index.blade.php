@@ -64,6 +64,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col" class="align-middle">Data de requerimento</th>
                                         <th scope="col" class="align-middle">Data marcada</th>
                                         <th scope="col" class="align-middle">Data realizada</th>
                                         @if($filtro == "requerimento" || $filtro == "denuncia")
@@ -81,6 +82,13 @@
                                     @foreach ($visitas as $i => $visita)
                                         <tr>
                                             <td scope="row" style="font-weight: bold">{{$i+1}}</td>
+                                            @if($visita->requerimento != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->requerimento->created_at))}}</td>
+                                            @elseif($visita->denuncia != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->denuncia->created_at))}}</td>
+                                            @elseif($visita->solicitacao_poda != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->solicitacao_poda->created_at))}}</td>
+                                            @endif
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
