@@ -43,6 +43,7 @@
                         <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Data de requerimento</th>
                                         <th scope="col">Data marcada</th>
                                         <th scope="col">Data realizada</th>
                                         <th scope="col">Requerimento</th>
@@ -56,6 +57,13 @@
                                 <tbody>
                                     @foreach ($visitas as $visita)
                                         <tr>
+                                            @if($visita->requerimento != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->requerimento->created_at))}}</td>
+                                            @elseif($visita->denuncia != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->denuncia->created_at))}}</td>
+                                            @elseif($visita->solicitacao_poda != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->solicitacao_poda->created_at))}}</td>
+                                            @endif
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
