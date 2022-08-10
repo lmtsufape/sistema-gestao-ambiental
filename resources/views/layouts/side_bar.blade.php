@@ -82,7 +82,7 @@
                         <ul id="sidebar" class="list-unstyled">
                             @can('isSecretario', \App\Models\User::class)
                                 <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
-                                    <button href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle">
+                                    <button href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
                                         Licenciamento
                                     </button>
                                     <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
@@ -106,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li class="mb-2 @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                                    <button href="#mudasSubmenu" data-toggle="collapse" @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle">
+                                    <button href="#mudasSubmenu" data-toggle="collapse" @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
                                         Mudas
                                     </button>
                                     <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
@@ -135,7 +135,7 @@
                                     </a>
                                 </li>
                                 <li class="mb-2 @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
-                                    <button href="#configuracoesSubmenu" data-toggle="collapse" @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle">
+                                    <button href="#configuracoesSubmenu" data-toggle="collapse" @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
                                         Configurações
                                     </button>
                                     <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) show @endif" id="configuracoesSubmenu">
