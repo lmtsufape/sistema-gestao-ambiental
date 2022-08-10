@@ -176,11 +176,19 @@
                                 </li>
                             @endcan
                             @can('isAnalistaProcessoOrPoda', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
-                                    <a href="{{route('visitas.index', 'requerimento')}}">
-                                        Programação
-                                    </a>
-                                </li>
+                                @can('isAnalistaProcesso', \App\Models\User::class)
+                                    <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
+                                        <a href="{{route('visitas.index', 'requerimento')}}">
+                                            Programação
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
+                                        <a href="{{route('visitas.index', 'poda')}}">
+                                            Programação
+                                        </a>
+                                    </li>
+                                @endcan
                             @endcan
                             @can('isRequerente', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
