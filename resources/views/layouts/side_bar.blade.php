@@ -148,6 +148,18 @@
                                     </ul>
                                 </li>
                             @endcan
+                            @can('isAnalistaPoda', \App\Models\User::class)
+                                <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
+                                    <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
+                                        Poda/Supressão
+                                    </a>
+                                </li>
+                                <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                    <a href="{{route('mudas.index', 'pendentes')}}" >
+                                        Mudas
+                                    </a>
+                                </li>
+                            @endcan
                             @can('isProcessoOrProtocolista', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
                                     <a href="{{route('requerimentos.index', 'atuais')}}">
@@ -167,18 +179,6 @@
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
                                     <a href="{{route('visitas.index', 'requerimento')}}">
                                         Programação
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('isAnalistaPoda', \App\Models\User::class)
-                                <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                                    <a href="{{route('mudas.index', 'pendentes')}}" >
-                                        Mudas
-                                    </a>
-                                </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
-                                    <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
-                                        Poda/Supressão
                                     </a>
                                 </li>
                             @endcan
