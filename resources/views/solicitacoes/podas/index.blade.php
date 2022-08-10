@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com visita realizada/concluída @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
+                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com relatório aprovado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -73,6 +73,13 @@
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                     <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    @can('isAnalistaPoda', \App\Models\User::class)
+                                                        @if($filtro ==  "concluidas")
+                                                            <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
+                                                                <img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                            </a>
+                                                        @endif
+                                                    @endcan
                                                     @can('isSecretario', \App\Models\User::class)
                                                         @if($filtro != "indeferidas" && $filtro != "pendentes")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
@@ -217,15 +224,15 @@
                                     Agendar uma visita
                                 </div>
                             </div>
-                            @if($filtro ==  "concluidas")
-                                <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Visualizar relatório
-                                    </div>
-                                </div>
-                            @endif
                         @endcan
+                        @if($filtro ==  "concluidas")
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Visualizar relatório
+                                </div>
+                            </div>
+                        @endif
                     </ul>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use App\Http\Requests\SolicitacaoPodaRequest;
 use App\Mail\SolicitacaoPodasCriada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
+use App\Models\Relatorio;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Notifications\ParecerSolicitacao;
@@ -31,9 +32,11 @@ class SolicitacaoPodaController extends Controller
 
         $userPolicy = new UserPolicy();
         if($userPolicy->isAnalistaPoda(auth()->user())){
-            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
-            ->where('visitas.data_realizada', '!=', null)
+            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')
+            ->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
+            ->join('relatorios', 'relatorios.visita_id', '=', 'visitas.id')
             ->where('solicitacoes_podas.analista_id', '=',  auth()->user()->id)
+            ->where('relatorios.aprovacao', '=', Relatorio::APROVACAO_ENUM['aprovado'])
             ->get('solicitacoes_podas.id');
 
             $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
@@ -66,9 +69,11 @@ class SolicitacaoPodaController extends Controller
             $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
             $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
 
-            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
-                ->where('visitas.data_realizada', '!=', null)
-                ->get('solicitacoes_podas.id');
+            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')
+            ->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
+            ->join('relatorios', 'relatorios.visita_id', '=', 'visitas.id')
+            ->where('relatorios.aprovacao', '=', Relatorio::APROVACAO_ENUM['aprovado'])
+            ->get('solicitacoes_podas.id');
 
             $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
             ->where('solicitacoes_podas.status', '=', 2)

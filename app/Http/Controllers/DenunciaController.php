@@ -6,6 +6,7 @@ use App\Http\Requests\DenunciaRequest;
 use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\FotoDenuncia;
+use App\Models\Relatorio;
 use App\Models\VideoDenuncia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,8 +31,10 @@ class DenunciaController extends Controller
                 $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('created_at', 'DESC')->paginate(20);
                 $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('created_at', 'DESC')->paginate(20);
 
-                $denuncias_concluidas = DB::table('denuncias')->join('visitas', 'visitas.denuncia_id', '=', 'denuncias.id')
-                ->where('visitas.data_realizada', '!=', null)
+                $denuncias_concluidas = DB::table('denuncias')
+                ->join('visitas', 'visitas.denuncia_id', '=', 'denuncias.id')
+                ->join('relatorios', 'relatorios.visita_id', '=', 'visitas.id')
+                ->where('relatorios.aprovacao', '=', Relatorio::APROVACAO_ENUM['aprovado'])
                 ->get('denuncias.id');
 
                 $denuncias_aprovadas = DB::table('denuncias')
