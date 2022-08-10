@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Policies\UserPolicy;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -236,5 +237,21 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->update();
+    }
+
+    /**
+     * Get if user analista type poda or requerimento.
+     *
+     * @return string $filtro
+     */
+
+    public function getUserType(){
+        $userPolicy = new UserPolicy();
+        if($userPolicy->isAnalistaPoda($this)){
+            $filtro = 'poda';
+        }else{
+            $filtro = 'requerimento';
+        }
+        return $filtro;
     }
 }

@@ -4,11 +4,13 @@
         <div class="form-row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         @if ($relatorio->visita->requerimento != null)
                             <h4 class="card-title">Editar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h4>
                         @elseif ($relatorio->visita->denuncia != null)
-                            <h4 class="card-title">Editar relátorio do denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
+                            <h4 class="card-title">Editar relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
+                        @elseif ($relatorio->visita->solicitacao_poda != null)
+                            <h4 class="card-title">Editar relátorio da solicitação de poda/supressão nº {{$relatorio->visita->solicitacao_poda->id}}</h4>
                         @endif
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Programação</a> > Visitas > Editar relátorio</h6>
                     </div>
@@ -26,9 +28,9 @@
                             <div class="form col-md-12" style="margin-top:10px;">
                                 @if ($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                     <div class="alert alert-success" role="alert">
-                                        <h4 class="alert-heading">Relatório aprovado</h4>
+                                        <h4 class="alert-heading">Relatório aprovado!</h4>
                                         <hr>
-                                        <p class="mb-0">Esse relatório já foi aprovado, logo edições estão desativadas.</p>
+                                        <p class="mb-0">Este relatório já foi aprovado! As edições estão desativadas.</p>
                                     </div>
                                 @elseif($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'])
                                     <div class="alert alert-warning" role="alert">
@@ -140,14 +142,16 @@
                         </div>
 
                     </div>
-                    <div class="card-footer">
-                        <div class="form-row">
-                            <div class="col-md-6 form-group"></div>
-                            <div class="col-md-6 form-group">
-                                <button class="btn btn-success btn-color-dafault  submeterFormBotao" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
+                    @if($relatorio->aprovacao != \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                        <div class="card-footer">
+                            <div class="form-row">
+                                <div class="col-md-6 form-group"></div>
+                                <div class="col-md-6 form-group">
+                                    <button class="btn btn-success btn-color-dafault  submeterFormBotao" style="width: 100%;" form="form-relatorio-visita" @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado']) disabled @endif>Atualizar</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
