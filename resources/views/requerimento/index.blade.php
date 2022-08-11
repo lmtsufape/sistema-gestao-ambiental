@@ -112,7 +112,7 @@
                                                                 <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}">Editar licença</a>
                                                             @endif
                                                         @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
-                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $requerimento->id])}}">Criar licença</a>
+                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', $requerimento)}}">Criar licença</a>
                                                         @endif
                                                     </td>
                                                 </tr>

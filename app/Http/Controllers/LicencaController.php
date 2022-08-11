@@ -30,14 +30,10 @@ class LicencaController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Requerimento $requerimento)
     {
-        $visita = Visita::find($id);
         $this->authorize('isSecretario', User::class);
-
-        $requerimento = $visita->requerimento;
-
-        return view('licenca.create', compact('requerimento', 'visita'));
+        return view('licenca.create', compact('requerimento'));
     }
 
     /**
@@ -48,7 +44,6 @@ class LicencaController extends Controller
      */
     public function store(LicencaRequest $request)
     {
-        $visita = Visita::find($request->visita);
         $this->authorize('isSecretario', User::class);
 
         $requerimento = Requerimento::find($request->requerimento);

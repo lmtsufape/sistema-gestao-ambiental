@@ -20,7 +20,6 @@
                     <div class="card-body">
                         <form method="POST" id="emitir-licenca-form" action="{{route('licenca.store')}}" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="visita" id="visita" value="{{$visita->id}}">
                             <input type="hidden" name="requerimento" id="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
