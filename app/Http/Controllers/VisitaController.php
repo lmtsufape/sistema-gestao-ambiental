@@ -15,6 +15,7 @@ use App\Notifications\VisitaMarcadaPoda;
 use App\Notifications\VisitaMarcadaRequerimento;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -34,7 +35,11 @@ class VisitaController extends Controller
             switch($filtro){
                 case 'requerimento':
                     $analistas = User::analistas();
-                    $visitas = Visita::where('requerimento_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitasId = DB::table('visitas')
+                    ->join('requerimentos', 'requerimentos.id', '=', 'visitas.requerimento_id')
+                    ->where([['requerimentos.status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['requerimentos.cancelada', false]])
+                    ->get('visitas.id');
+                    $visitas = Visita::whereIn('id', $visitasId->pluck('id'))->orderBy('data_marcada', 'DESC')->paginate(10);
                     break;
                 case 'denuncia':
                     $analistas = User::analistas();
@@ -48,7 +53,12 @@ class VisitaController extends Controller
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
             switch($filtro){
                 case 'requerimento':
-                    $visitas = Visita::where([['requerimento_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitasId = DB::table('visitas')
+                    ->join('requerimentos', 'requerimentos.id', '=', 'visitas.requerimento_id')
+                    ->where('visitas.analista_id', auth()->user()->id)
+                    ->where([['requerimentos.status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['requerimentos.cancelada', false]])
+                    ->get('visitas.id');
+                    $visitas = Visita::whereIn('id', $visitasId->pluck('id'))->orderBy('data_marcada', 'DESC')->paginate(10);
                     break;
                 case 'denuncia':
                     $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->paginate(10);
