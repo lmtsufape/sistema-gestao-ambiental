@@ -46,14 +46,15 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
-                ->where('analista_id', $user->id)
+                $requerimentos = Requerimento::
+                where('analista_id', $user->id)
                 ->orwhere('analista_processo_id', $user->id)
-                ->orderBy('created_at')->paginate(20);
+                ->where([['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
+                ->orderBy('created_at', 'DESC')->paginate(20);
             }else{
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
-                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
+                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at', 'DESC')->paginate(20);
+                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at', 'DESC')->paginate(20);
             }
         }
         switch($filtro){
