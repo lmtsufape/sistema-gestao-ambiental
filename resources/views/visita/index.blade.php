@@ -111,7 +111,17 @@
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
 
-                                                    @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                    @if($visita->relatorio!=null)
+                                                        <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">
+                                                            <img class="icon-licenciamento"
+                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif
+                                                            alt="Icone de relatório">
+                                                        </a>
+                                                    @endif
                                                     @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @if($visita->requerimento != null)
                                                         <a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}">
@@ -126,14 +136,29 @@
                                                 @else
                                                     @if ($visita->requerimento != null)
                                                         <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de analisar requerimento"></a>
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório">
                                                         @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @elseif ($visita->denuncia != null)
                                                         <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
                                                         <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>
                                                     @endif
                                                 @endcan
                                             </td>
@@ -181,10 +206,18 @@
                                     ->whereIn('visita_id', $visitas->pluck('id')->toArray())
                                     ->get()->count() > 0)
                                 <li>
-                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1"">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Visualizar relatório
+                                            Relatório aprovado
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Relatório com pendências
                                         </div>
                                     </div>
                                 </li>
@@ -245,12 +278,22 @@
                                 </li>
                             @endif
                             <li>
-                                <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" ">
-                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Criar/editar relatório
+                                <li>
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Relatório aprovado
+                                        </div>
                                     </div>
-                                </div>
+                                </li>
+                                <li>
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Relatório com pendências
+                                        </div>
+                                    </div>
+                                </li>
                             </li>
                             @if($filtro == 'requerimento')
                                 <li>
