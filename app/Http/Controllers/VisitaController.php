@@ -13,9 +13,8 @@ use App\Notifications\VisitaCanceladaPoda;
 use App\Notifications\VisitaCanceladaRequerimento;
 use App\Notifications\VisitaMarcadaPoda;
 use App\Notifications\VisitaMarcadaRequerimento;
-use Illuminate\Contracts\Cache\Store;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -35,11 +34,13 @@ class VisitaController extends Controller
             switch($filtro){
                 case 'requerimento':
                     $analistas = User::analistas();
-                    $visitasId = DB::table('visitas')
-                    ->join('requerimentos', 'requerimentos.id', '=', 'visitas.requerimento_id')
-                    ->where([['requerimentos.status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['requerimentos.cancelada', false]])
-                    ->get('visitas.id');
-                    $visitas = Visita::whereIn('id', $visitasId->pluck('id'))->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::
+                        whereHas('requerimento', function(Builder $qry) {
+                            $qry->where('status', '!=', Requerimento::STATUS_ENUM)
+                                ->where('cancelada', false);
+                        })
+                        ->orderBy('data_marcada', 'DESC')
+                        ->paginate(10);
                     break;
                 case 'denuncia':
                     $analistas = User::analistas();
@@ -53,12 +54,14 @@ class VisitaController extends Controller
         } else if (auth()->user()->role == User::ROLE_ENUM['analista']) {
             switch($filtro){
                 case 'requerimento':
-                    $visitasId = DB::table('visitas')
-                    ->join('requerimentos', 'requerimentos.id', '=', 'visitas.requerimento_id')
-                    ->where('visitas.analista_id', auth()->user()->id)
-                    ->where([['requerimentos.status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['requerimentos.cancelada', false]])
-                    ->get('visitas.id');
-                    $visitas = Visita::whereIn('id', $visitasId->pluck('id'))->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::
+                        whereHas('requerimento', function(Builder $qry) {
+                            $qry->where('status', '!=', Requerimento::STATUS_ENUM)
+                                ->where('cancelada', false);
+                        })
+                        ->where('analista_id', auth()->user()->id)
+                        ->orderBy('data_marcada', 'DESC')
+                        ->paginate(10);
                     break;
                 case 'denuncia':
                     $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->paginate(10);
