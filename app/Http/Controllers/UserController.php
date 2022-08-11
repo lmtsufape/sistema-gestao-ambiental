@@ -252,7 +252,7 @@ class UserController extends Controller
                 'telefone'                  => ['required', 'string', 'celular_com_ddd', 'max:255'],
                 'rg'                        => ['required', 'string', 'max:255'],
                 'orgão_emissor'             => ['required', 'string', 'max:255'],
-                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
+                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
             ], [
                 'cpf.cpf'                   => 'O campo CPF não é um CPF válido.',
                 'telefone.celular_com_ddd'  => 'O campo contato não é um contato com DDD válido.',
@@ -266,7 +266,7 @@ class UserController extends Controller
         }else{
             $request->validate([
                 'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
-                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg', 'max:2048'],
+                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
             ]);
         }
         

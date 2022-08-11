@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Policies\UserPolicy;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -237,6 +238,35 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $this->update();
+    }
+
+    /**
+     * Retorna  notificacoes nao vistas.
+     * 
+     * @return App\Models\Notificacao $notificacoes
+     */
+    public function notificacoesEmpresas()
+    {
+        $notificacoes = Notificacao::whereHas('empresa', function (Builder $query) {
+            $query->where('user_id', auth()->user()->id);
+        })->orderBy('created_at', 'DESC')->take(4)->get();
+
+        return $notificacoes;
+    }
+
+
+    /**
+     * Retorna se ha notificacoes nao vistas.
+     * 
+     * @return boolean
+     */
+    public function notificacoesNaoVistas()
+    {
+        $notificacoes = Notificacao::whereHas('empresa', function (Builder $query) {
+            $query->where('user_id', auth()->user()->id);
+        })->where('visto', false)->first();
+
+        return $notificacoes  != null;
     }
 
     /**

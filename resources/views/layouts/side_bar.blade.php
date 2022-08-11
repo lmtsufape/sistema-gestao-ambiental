@@ -71,6 +71,53 @@
                                 </form>
                             </div>
                         </li>
+                        @can('isRequerente', \App\Models\User::class)
+                            <li style="margin-right: 10px; margin-left: 10px; padding: 0.5rem 1rem;">
+                                <a class="nav-link" id="navbarDropdown_notificacoes" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    @if(Auth::user()->notificacoesNaoVistas())
+                                        <img class="icon-licenciamento" src="{{asset('img/notifications-unread.svg')}}" alt="Notificações">
+                                    @else
+                                        <img class="icon-licenciamento" src="{{asset('img/Icon bell-white.svg')}}" alt="Notificações">
+                                    @endif
+                                </a>
+                                <div class="dropdown-menu" style="left: unset; right: 0" aria-labelledby="navbarDropdown_notificacoes">
+                                    @forelse (Auth::user()->notificacoesEmpresas() as $notificacao)
+                                        <a class="dropdown-item" href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}">
+                                            <div class="card notificacao-card @if(!$notificacao->visto) nao-visto @endif">
+                                                <div class="card-body">
+                                                    <div class="justify-content-between">
+                                                        <div class="row align-items-center">
+                                                            @if ($notificacao->autor != null)
+                                                                <div class="col-md-1">
+                                                                    <img class="photo-perfil" src="{{$notificacao->autor->profile_photo_path != null ? asset('storage/'.$notificacao->autor->profile_photo_path) : asset('img/user_img_perfil.png')}}" alt="Imagem de perfil">
+                                                                </div>
+                                                            @endif
+                                                            <div class="col-md-11">
+                                                                <span class="texto-card-highlight">
+                                                                    @if ($notificacao->autor != null)
+                                                                        {{$notificacao->autor->name}}
+                                                                    @endif
+                                                                </span>
+                                                                <br>{!! mb_strimwidth(strip_tags($notificacao->texto), 0, 20, "...") !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center justify-content-end texto-card-highlight" style="font-weight: normal; padding-right: 10px; text-align: right;">
+                                                        {{date('d/m/Y H:i', strtotime($notificacao->created_at))}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @empty
+                                        <a class="dropdown-item">
+                                            <div class="row col-md-12">
+                                                Sem notificações :(
+                                            </div>
+                                        </a>
+                                    @endforelse
+                                </div>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </div>
