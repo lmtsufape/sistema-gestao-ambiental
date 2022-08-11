@@ -168,7 +168,7 @@ class VisitaController extends Controller
         )->get()->toArray();
         $tz = 'America/Recife';
         foreach($dados as $i => $visita){
-            if (array_key_exists('requerimento', $visita) && array_key_exists('analista_processo', $visita['requerimento'])) {
+            if (array_key_exists('requerimento', $visita) && $visita['requerimento'] != null && array_key_exists('analista_processo', $visita['requerimento'])) {
                 $visita['requerimento']['analista'] = $visita['requerimento']['analista_processo'];
                 $visita['requerimento']['analista_id'] = $visita['requerimento']['analista_processo_id'];
                 unset($visita['requerimento']['analista_processo']);
