@@ -87,7 +87,11 @@
                                                             data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endif
                                                         @if($filtro ==  "concluidas")
-                                                            @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                            @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>@endif
                                                         @endif
                                                     @endcan
                                                 </td>
@@ -227,9 +231,15 @@
                         @endcan
                         @if($filtro ==  "concluidas")
                             <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Visualizar relatório
+                                    Relatório aprovado
+                                </div>
+                            </div>
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Relatório com pendências
                                 </div>
                             </div>
                         @endif

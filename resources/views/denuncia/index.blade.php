@@ -77,7 +77,12 @@
                                                         @endcan
                                                         @can('isSecretario', \App\Models\User::class)
                                                             @if($filtro ==  "concluidas")
-                                                                @if($denuncia->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $denuncia->visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                                @if($denuncia->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $denuncia->visita->relatorio])}}"><img class="icon-licenciamento"
+                                                                @if($denuncia->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                    src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                                @else
+                                                                    src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                                @endif alt="Icone de relatório"></a>@endif
                                                             @endif
                                                         @endcan
                                                     </div>
@@ -224,12 +229,22 @@
                             @endcan
                             @can('isSecretario', \App\Models\User::class)
                                 @if($filtro ==  "concluidas")
-                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Visualizar relatório
+                                    <li>
+                                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
+                                            <div style="font-size: 15px;" class="aling-middle mx-3">
+                                                Relatório aprovado
+                                            </div>
                                         </div>
-                                    </div>
+                                    </li>
+                                    <li>
+                                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                            <div style="font-size: 15px;" class="aling-middle mx-3">
+                                                Relatório com pendências
+                                            </div>
+                                        </div>
+                                    </li>
                                 @endif
                             @endcan
                         </li>
