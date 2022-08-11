@@ -155,7 +155,7 @@ class VisitaController extends Controller
             'denuncia.empresa.endereco',
             'denuncia.analista',
             'requerimento',
-            'requerimento.analista',
+            'requerimento.analistaProcesso',
             'requerimento.empresa',
             'requerimento.empresa.user',
             'requerimento.empresa.endereco',
@@ -168,6 +168,12 @@ class VisitaController extends Controller
         )->get()->toArray();
         $tz = 'America/Recife';
         foreach($dados as $i => $visita){
+            if (array_key_exists('requerimento', $visita) && array_key_exists('analista_processo', $visita['requerimento'])) {
+                $visita['requerimento']['analista'] = $visita['requerimento']['analista_processo'];
+                $visita['requerimento']['analista_id'] = $visita['requerimento']['analista_processo_id'];
+                unset($visita['requerimento']['analista_processo']);
+                unset($visita['requerimento']['analista_processo_id']);
+            }
             $dt = new DateTime($visita['data_marcada'], new DateTimeZone($tz));
             $visita['data_marcada'] = ($dt->format('Y-m-d\TH:i:s.u'));
 
