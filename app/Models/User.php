@@ -95,15 +95,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosDocumentosAnexadosNotificacao()
     {
-        $requerimentos_id = DB::table('requerimentos')->join('empresas', 'requerimentos.empresa_id', '=', 'empresas.id')
-                ->where('empresas.user_id', '=', auth()->user()->id)
-                ->where('requerimentos.cancelada', '=', false)
-                ->where('requerimentos.status', '=', Requerimento::STATUS_ENUM['documentos_requeridos'])
-                ->get('requerimentos.id');
-                
-        $requerimento = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->first();
-
-        if($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->first() == null){
+        $requerimento = Requerimento::
+            where('status', '=', Requerimento::STATUS_ENUM['documentos_requeridos'])
+            ->where('cancelada', false)
+            ->whereRelation('empresa', 'user_id', auth()->user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+        if($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->count() > 0){
             $requerimento = null;
         }
         return $requerimento;
@@ -128,19 +126,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(TipoAnalista::class, 'tipo_analista_user', 'user_id', 'tipo_analista_id');
     }
 
-    public function noticias() 
+    public function noticias()
     {
         return $this->hasMany(Noticia::class, 'autor_id');
     }
 
     public function requerimentosRequerente()
     {
-        $requerimentos_id = DB::table('requerimentos')->join('empresas', 'requerimentos.empresa_id', '=', 'empresas.id')
-                ->where('empresas.user_id', '=', auth()->user()->id)
-                ->get('requerimentos.id');
-                
-        $requerimentos = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->paginate(5);
-        return $requerimentos;
+        return $this->hasManyThrough(Requerimento::class, Empresa::class)->orderBy('created_at', 'DESC')->paginate(5);
     }
 
     /**
