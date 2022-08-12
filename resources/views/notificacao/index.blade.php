@@ -71,10 +71,10 @@
                     </a>
                 </div>
             @empty
-                <div class="card">
+                <div class="shadow card col-md-10 mt-3">
                     <div class="card-body">
-                        <div class="col-md-12 text-center" style="font-size: 18px;">
-                            Nenhuma notificação registrada
+                        <div class="text-center">
+                            Nenhuma notificação registrada.
                         </div>
                     </div>
                 </div>
