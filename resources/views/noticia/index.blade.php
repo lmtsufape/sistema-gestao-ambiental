@@ -6,13 +6,13 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">
+                        <div style="color: var(--primaria); font-size: 35px; font-weight: bolder;">
                             @can('create', App\Models\Noticia::class)
                                 Notícias escritas
                             @else
                                 Notícias
                             @endcan
-                        </h4>
+                        </div>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         @can('create', App\Models\Noticia::class)
@@ -102,13 +102,13 @@
             <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">
+                        <div style="color: var(--primaria); font-size: 35px; font-weight: bolder;">
                             @can('create', App\Models\Noticia::class)
                                 Notícias escritas
                             @else
                                 Notícias
                             @endcan
-                        </h4>
+                        </div>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         @can('create', App\Models\Noticia::class)
