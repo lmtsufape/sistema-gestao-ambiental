@@ -152,7 +152,7 @@
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
                                                             @endif alt="Icone de relatório"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
-                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
                                                             @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"
@@ -512,7 +512,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Editar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Editar</button>
                     </div>
                 </div>
             </div>

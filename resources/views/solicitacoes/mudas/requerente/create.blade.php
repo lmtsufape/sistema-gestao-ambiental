@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
                 </div>
             </div>
         </div>

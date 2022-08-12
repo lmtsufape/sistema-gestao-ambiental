@@ -71,8 +71,8 @@
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
                                                     @can('isAnalistaPoda', \App\Models\User::class)
                                                         @if($filtro ==  "concluidas")
                                                             <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
@@ -337,7 +337,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
                 </div>
             </div>
         </div>
@@ -379,7 +379,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
+                        <button type="submit" id="submeterFormBotao" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
                     </div>
                 </div>
             </div>

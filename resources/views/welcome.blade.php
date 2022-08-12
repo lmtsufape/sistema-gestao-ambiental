@@ -226,7 +226,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-success btn-color-dafault">Continuar</button>
+                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault">Continuar</button>
                         </div>
                     </form>
                 </div>
@@ -530,7 +530,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-success btn-color-dafault">Continuar</button>
+                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault">Continuar</button>
                         </div>
                     </form>
                 </div>

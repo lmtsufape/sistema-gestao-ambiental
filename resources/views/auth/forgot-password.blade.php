@@ -26,7 +26,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <button type="submit" class="btn btn-success btn-color-dafault" style="width: 100%;">
+                <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 100%;">
                     {{ __('Email Password Reset Link') }}
                 </button>
             </div>

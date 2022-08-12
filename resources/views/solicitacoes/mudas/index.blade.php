@@ -52,8 +52,8 @@
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->endereco->rua }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
                                                 </td>
                                             </tr>
                                         @endforeach
