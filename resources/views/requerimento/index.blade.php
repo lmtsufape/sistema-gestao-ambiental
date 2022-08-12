@@ -803,36 +803,38 @@
                                     </div>
                                 </div>
                             </li>
-                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
-                                <li>
-                                    <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Enviar documentação
-                                        </div>
+                            <li>
+                                <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Enviar documentação
                                     </div>
-                                </li>
-                            @endif
-                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
-                                <li>
-                                    <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Documentação em análise
-                                        </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Documentação em análise
                                     </div>
-                                </li>
-                            @endif
-                            @if($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
-                                <li>
-                                    <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Documentação aceita
-                                        </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Documentação aceita
                                     </div>
-                                </li>
-                            @endif
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Visualizar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Visualizar licença
+                                    </div>
+                                </div>
+                            </li>
                         @endcan
                         @can('isRequerenteOrSecretario', \App\Models\User::class)
                             @if($requerimentos->first() != null)
