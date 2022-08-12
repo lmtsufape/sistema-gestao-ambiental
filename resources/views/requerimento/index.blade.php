@@ -650,10 +650,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div style="border-bottom:solid 2px #e0e0e0;">
+                                    <div>
                                 </div>
                                 @endif
-                                <div class="row justify-content-center align-items-center" style="text-align: center">
+                                <div class="row justify-content-center align-items-center mt-4" style="text-align: center">
                                     <div class="col-md-6">
                                         <span style="color: #00883D; font-weight: bold;">Valor:</span>
                                         @if($requerimento->valor == null)
@@ -674,7 +674,7 @@
                                         {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
+                                <div class="row mt-4">
                                     <div class="col-md-6">
                                         @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                             <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
@@ -683,19 +683,19 @@
                                     <div class="col-md-6" style="text-align: right">
                                         <div class="btn-group align-items-center">
                                             @if(!$requerimento->cancelado() && $requerimento->visitas->count() > 0)
-                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer;;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                             @endif
                                             @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @endif
                                             @endif
                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'] || $requerimento->canceladoSecretario())
-                                                <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                                <a style="cursor: pointer; margin-left: 8px" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                             @endif
                                         </div>
                                     </div>
@@ -729,7 +729,7 @@
                                                             @else
                                                                 style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;"
                                                             @endcan>
-                    <div style="font-size: 21px; text-align: right" class="tituloModal">
+                    <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
                     <div class="mt-2 borda-baixo"></div>
