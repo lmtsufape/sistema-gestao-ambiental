@@ -137,7 +137,7 @@
                                                     @if ($visita->requerimento != null)
                                                         <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de analisar requerimento"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
-                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"
                                                             @else
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
@@ -146,7 +146,7 @@
                                                     @elseif ($visita->denuncia != null)
                                                         <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
-                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"
                                                             @else
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
@@ -154,7 +154,7 @@
                                                     @elseif ($visita->solicitacao_poda != null)
                                                         <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
-                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"
                                                             @else
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
