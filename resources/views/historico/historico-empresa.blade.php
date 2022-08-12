@@ -190,11 +190,11 @@
                         </div>
                     </div>
                 @empty
-                    <div class="shadow card" style="width: 100%; margin-top: 1rem;">
+                    <div class="shadow card w-100 mt-3">
                         <div class="card-body">
-                            <p>
+                            <div class="text-center">
                                 Não há histórico de modificações de CNAEs ou porte da empresa.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 @endforelse
