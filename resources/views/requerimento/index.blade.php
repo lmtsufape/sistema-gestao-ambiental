@@ -107,12 +107,12 @@
                                                         <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                         @if($requerimento->licenca != null)
                                                             @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                                            <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                             @else
-                                                                <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}">Editar licença</a>
+                                                                <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
                                                             @endif
                                                         @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
-                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', $requerimento)}}">Criar licença</a>
+                                                            <a style="cursor: pointer;" href="{{route('licenca.create', $requerimento)}}"><img class="icon-licenciamento" src="{{asset('img/Grupo 1666.svg')}}"  alt="Criar licença" title="Criar licença"></a>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -179,9 +179,9 @@
                                                 </div>
                                                 @if($requerimento->licenca != null)
                                                     @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                                    <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                     @else
-                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}">Revisar licença</a>
+                                                        <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
                                                     @endif
                                                 @endif
                                             </td>
@@ -677,13 +677,13 @@
                                 <div class="row mt-2">
                                     <div class="col-md-6">
                                         @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                            <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                         @endif
                                     </div>
                                     <div class="col-md-6" style="text-align: right">
                                         <div class="btn-group align-items-center">
                                             @if(!$requerimento->cancelado() && $requerimento->visitas->count() > 0)
-                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                <a href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                             @endif
                                             @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
@@ -740,6 +740,42 @@
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Analisar requerimento
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Visualizar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Visualizar licença
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Criar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Criar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Criar licença
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Editar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Editar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Editar licença
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('isAnalista', \App\Models\User::class)
+                            <li>
+                                <div title="Revisar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Revisar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Revisar licença
                                     </div>
                                 </div>
                             </li>
