@@ -72,6 +72,9 @@
                                         @else
                                             <th scope="col" class="align-middle">Requerente</th>
                                         @endif
+                                        @if($filtro == "requerimento")
+                                            <th scope="col" class="align-middle">Tipo</th>
+                                        @endif
                                         @can('isSecretario', \App\Models\User::class)
                                             <th scope="col" class="align-middle">Analista</th>
                                         @endcan
@@ -98,6 +101,9 @@
 
                                             @if($visita->requerimento != null)
                                                 <td>{{$visita->requerimento->empresa->nome}}</td>
+                                                <td>
+                                                    {{ucfirst($visita->requerimento->tipoString())}}
+                                                </td>
                                             @elseif($visita->denuncia != null)
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @elseif ($visita->solicitacao_poda != null)
