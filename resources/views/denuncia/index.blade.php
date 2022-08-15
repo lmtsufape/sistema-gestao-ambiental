@@ -468,7 +468,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
                 </div>
             </div>
         </div>
@@ -510,7 +510,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
                     </div>
                 </div>
             </div>

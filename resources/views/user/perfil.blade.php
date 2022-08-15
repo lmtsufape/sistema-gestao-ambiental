@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group" style="text-align: right;">
-                                        <button type="submit" class="btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Alterar dados</button>
+                                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Alterar dados</button>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +353,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-atualizar-endereco">Salvar</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-atualizar-endereco">Salvar</button>
                 </div>
             </div>
         </div>

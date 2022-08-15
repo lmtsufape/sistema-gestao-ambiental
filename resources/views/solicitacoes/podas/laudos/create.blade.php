@@ -150,7 +150,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
                                 <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-success btn-color-dafault"
+                                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault"
                                         style="width: 100%;">Confirmar</button>
                                 </div>
                             </div>

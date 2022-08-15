@@ -26,7 +26,7 @@
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                        <button type="submit" class="btn btn-danger" form="deletar-noticia-{{$noticia->id}}">Sim</button>
+                        <button type="submit" class="submeterFormBotao btn btn-danger" form="deletar-noticia-{{$noticia->id}}">Sim</button>
                         </div>
                     </div>
                     </div>

@@ -28,7 +28,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <button type="submit" class="btn btn-success btn-color-dafault">
+                <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault">
                     {{ __('Reset Password') }}
                 </button>
             </div>

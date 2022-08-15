@@ -135,7 +135,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="deferir-solicitacao">Continuar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="deferir-solicitacao">Continuar</button>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Confirmar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Confirmar</button>
                     </div>
                 </div>
             </div>

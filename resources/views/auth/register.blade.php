@@ -244,7 +244,7 @@
                                         {{ __('Already registered?') }}
                                     </a>
 
-                                    <button type="submit" class="btn btn-success btn-color-dafault" style="margin-left: 15px;">
+                                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="margin-left: 15px;">
                                         {{ __('Register') }}
                                     </button>
                                 </div>

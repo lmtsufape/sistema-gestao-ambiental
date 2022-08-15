@@ -35,7 +35,7 @@
             </div>
 
             <div class="block mt-2" style="align-content: center; text-align: center;">
-                <button type="submit" class="btn btn-success btn-color-dafault" style="margin-left: 15px; width: 40%;">
+                <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="margin-left: 15px; width: 40%;">
                     {{ __('Entrar') }}
                 </button>
             </div>

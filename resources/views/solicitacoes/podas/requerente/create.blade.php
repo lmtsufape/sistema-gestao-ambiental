@@ -220,7 +220,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
                                 <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-success btn-color-dafault"
+                                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault"
                                         style="width: 100%;">Confirmar</button>
                                 </div>
                             </div>
@@ -289,7 +289,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
                 </div>
             </div>
         </div>
@@ -612,7 +612,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
                                 <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-success btn-color-dafault"
+                                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault"
                                         style="width: 100%;">Confirmar</button>
                                 </div>
                             </div>
@@ -681,7 +681,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
                 </div>
             </div>
         </div>
