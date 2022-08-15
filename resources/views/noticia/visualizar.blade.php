@@ -1,7 +1,7 @@
 @guest
 <x-guest-layout>
 
-    <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="container-fluid" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="form-row">

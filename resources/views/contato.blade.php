@@ -114,7 +114,7 @@
 @else
 <x-app-layout>
     @section('content')
-    <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="container-fluid" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="form-row justify-content-center">
             <div class="col-md-6 form-group">
                 <form method="POST" action="{{route('enviar.mensagem')}}">

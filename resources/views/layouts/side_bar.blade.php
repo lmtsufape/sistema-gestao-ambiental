@@ -122,10 +122,10 @@
                 </div>
             </div>
         </nav>
-        <div id="conteudo">
-            <div class="container-fluid" style="padding-left: 15px;">
-                <div class="row">
-                    <div class="col-md-2" style="padding-top: 3rem; padding-right: 0px; padding-left: 0px; clip-path: inset(0px -12px 0px 0px); max-width: fit-content; padding-left: 2rem;">
+        <div class="mb-4" id="conteudo">
+            <div class="container-fluid" style="padding-left: 20px; padding-right: 20px">
+                <div class="row justify-content-between">
+                    <div class="col-md-2" style="padding-top: 3rem; padding-right: 0px; clip-path: inset(0px -12px 0px 0px); max-width: fit-content; padding-left: 25px;">
                         <ul id="sidebar" class="list-unstyled">
                             @can('isSecretario', \App\Models\User::class)
                                 <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">

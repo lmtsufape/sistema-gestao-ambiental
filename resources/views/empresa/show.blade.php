@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
             <div class="col-sm-10">
                 <div class="form-row">
