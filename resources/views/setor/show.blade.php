@@ -2,7 +2,7 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cnaes do grupo {{$setor->nome}} cadastrados no sistema</h4>
@@ -14,8 +14,6 @@
                         <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar cnae"></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
             </div>
             <div class="col-md-9">
                 <div class="card card-borda-esquerda" style="width: 100%;">
@@ -88,7 +86,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>

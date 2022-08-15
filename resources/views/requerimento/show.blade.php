@@ -2,7 +2,7 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class="form-row">
                     <div class="col-md-8" style="padding-top: 15px;">
                         <h4 class="card-title">Visualizar requerimento nº {{$requerimento->id}}</h4>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @if(session('success'))
                     <div class="alert alert-success" role="alert">
                         {{session('success')}}
@@ -47,9 +47,9 @@
                                     @else
                                         <a class="btn" data-toggle="modal" data-target="#documentos"><img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                     @endif
-                                    @if($requerimento->visitas->count() > 0)
+                                    {{--@if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
-                                    @endif
+                                    @endif--}}
                                     @if($requerimento->boletos->last() && $requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
                                         <a class="btn" data-toggle="modal" data-target="#criar-novo-boleto"><img style="height: 30px;" src="{{asset('img/boleto.png')}}" alt="Criar novo boleto" title="Criar novo boleto"></a>
                                     @endif
@@ -348,7 +348,7 @@
                             <div class="col-md-6">
                                 <div class="shadow card" style="margin-top: 1rem;">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center">
+                                        <div class="align-items-center">
                                             <div class="row justify-content-between">
                                                 <div class="col-md-10">
                                                     <h5 class="titulo-nav-tab-custom" style="color: var(--primaria);">Atribuir protocolista</h5>
@@ -376,8 +376,8 @@
                             <div class="col-md-6">
                                 <div class="shadow card" style="margin-top: 1rem;">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="row">
+                                        <div class="align-items-center">
+                                            <div class="row justify-content-between">
                                                 <div class="col-md-10">
                                                     <h5 class="titulo-nav-tab-custom" style="color: var(--primaria);">Atribuir analista de processo</h5>
                                                     <span class="linha"></span>

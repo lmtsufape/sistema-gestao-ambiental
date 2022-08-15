@@ -2,9 +2,9 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8" style="padding-top: 15px;">
+                    <div class="col-md-12" style="padding-top: 15px;">
                         <h4 class="card-title">Avaliar solicitação de muda {{$solicitacao->protocolo}}</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Mudas</a> > Avaliar solicitação de muda {{$solicitacao->protocolo}}</h6>
                     </div>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
 

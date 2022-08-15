@@ -2,15 +2,15 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class="form-row">
-                    <div class="col-md-8" style="padding-top: 15px;">
+                    <div class="col-md-12" style="padding-top: 15px;">
                         <h4 class="card-title">Empresa/Serviço {{$empresa->nome}}</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('empresas.listar')}}">Empresas</a> > Dados da empresa {{$empresa->nome}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @if(session('success'))
                     <div class="alert alert-success" role="alert">
                         {{session('success')}}

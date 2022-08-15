@@ -807,7 +807,7 @@
                                 <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Enviar documentação
+                                        Documentação pendente
                                     </div>
                                 </div>
                             </li>

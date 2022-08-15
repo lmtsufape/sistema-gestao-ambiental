@@ -2,9 +2,9 @@
     <x-guest-layout>
         <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
             <div class="form-row justify-content-center">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="form-row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <h4 class="card-title">Licença com nº de referência {{$licenca->protocolo}}</h4>
                         </div>
                         <div class="col-md-4" style="text-align: right">
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             <div class="form-row">
@@ -42,9 +42,9 @@
         @section('content')
         <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
             <div class="form-row justify-content-center">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="form-row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <h4 class="card-title">Licença com nº de referência {{$licenca->protocolo}}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Programação > Visualizar licença</h6>
                         </div>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             <div class="form-row">

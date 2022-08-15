@@ -2,9 +2,9 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Editar documento</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('documentos.index')}}">Documentos</a> > Editar documento</h6>
                     </div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <form method="POST" id="cria-documento" action="{{route('documentos.update', $documento->id)}}" enctype="multipart/form-data">

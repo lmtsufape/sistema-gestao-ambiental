@@ -2,9 +2,9 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         @can('isSecretario', auth()->user())
                             <h4 class="card-title">Editar licença</h4>
                             <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Editar licença</h6>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         @can('isSecretario', auth()->user()) <form method="POST" action="{{route('licenca.update', ['licenca' => $licenca])}}" enctype="multipart/form-data"> @endif
