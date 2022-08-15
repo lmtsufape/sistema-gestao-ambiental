@@ -78,8 +78,15 @@
                                     @can('isSecretario', auth()->user())
                                         <div class="col-md-12 form-group">
                                             <label for="licenca">{{__('Licença')}}</label>
-                                            <input type="file" name="licença" id="licença" class="form-control" accept=".pdf">
-
+                                            <div>
+                                                <label for="licença" class="label-input btn btn-success btn-enviar-doc w-100">
+                                                    <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                                    {{ __('Clique para selecionar o arquivo') }}
+                                                </label>
+                                                <label id="labelarquivoselecionado" class="d-empty" for="licença"></label>
+                                                <input id="licença" class="input-enviar-arquivo d-none @error('licença') is-invalid @enderror" type="file" accept=".pdf"
+                                                    name="licença" value="{{old('licença')}}" autofocus autocomplete="licença">
+                                            </div>
                                             @error('licença')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                     {{ $message }}
@@ -188,4 +195,12 @@
         </div>
     @endcan
     @endsection
+    <script>
+        $(".input-enviar-arquivo").change(function(){
+            $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+        });
+        function editar_caminho(string) {
+            return string.split("\\")[string.split("\\").length - 1];
+        }
+    </script>
 </x-app-layout>

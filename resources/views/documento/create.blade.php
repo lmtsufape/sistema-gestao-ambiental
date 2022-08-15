@@ -34,9 +34,15 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="documento_modelo">{{ __('Modelo do documento') }}</label>
-                                    <input id="documento_modelo" class="form-control @error('documento_modelo') is-invalid @enderror" type="file" accept=".pdf"
-                                        name="documento_modelo" value="{{old('documento_modelo')}}" autofocus autocomplete="documento_modelo">
-
+                                    <div>
+                                        <label for="documento_modelo" class="label-input btn btn-success btn-enviar-doc w-100">
+                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                            {{ __('Clique para selecionar o arquivo') }}
+                                        </label>
+                                        <label id="labelarquivoselecionado" class="d-empty" for="documento_modelo"></label>
+                                        <input id="documento_modelo" class="input-enviar-arquivo d-none @error('documento_modelo') is-invalid @enderror" type="file" accept=".pdf"
+                                            name="documento_modelo" value="{{old('documento_modelo')}}" autofocus autocomplete="documento_modelo">
+                                    </div>
                                     @error('documento_modelo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -127,6 +133,12 @@
             this.value = "";
         };
     });
+    $(".input-enviar-arquivo").change(function(){
+        $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+    });
+    function editar_caminho(string) {
+        return string.split("\\")[string.split("\\").length - 1];
+    }
 </script>
 @endsection
 </x-app-layout>
