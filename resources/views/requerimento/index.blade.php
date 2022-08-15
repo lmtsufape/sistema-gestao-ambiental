@@ -698,13 +698,11 @@
                         </div>
                     @endforelse
                 @endcan
-                @can('isSecretarioOrAnalista', \App\Models\User::class)
-                    <div class="form-row justify-content-center">
-                        <div class="col-md-10">
-                            {{$requerimentos->links()}}
-                        </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-10">
+                        {{$requerimentos->links()}}
                     </div>
-                @endcan
+                </div>
             </div>
             <div class="col-md-3">
 

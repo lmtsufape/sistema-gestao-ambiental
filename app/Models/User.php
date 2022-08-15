@@ -137,7 +137,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->where('empresas.user_id', '=', auth()->user()->id)
                 ->get('requerimentos.id');
                 
-        $requerimentos = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->paginate(5);
+        $requerimentos = Requerimento::whereIn('id', $requerimentos_id->pluck('id'))->orderBy('created_at', 'DESC')->paginate(8);
         return $requerimentos;
     }
 
