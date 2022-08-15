@@ -133,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosRequerente()
     {
-        return $this->hasManyThrough(Requerimento::class, Empresa::class)->orderBy('created_at', 'DESC')->paginate(5);
+        return $this->hasManyThrough(Requerimento::class, Empresa::class)->orderBy('created_at', 'DESC')->paginate(8);
     }
 
     /**
@@ -235,7 +235,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Retorna  notificacoes nao vistas.
-     * 
+     *
      * @return App\Models\Notificacao $notificacoes
      */
     public function notificacoesEmpresas()
@@ -250,7 +250,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Retorna se ha notificacoes nao vistas.
-     * 
+     *
      * @return boolean
      */
     public function notificacoesNaoVistas()
