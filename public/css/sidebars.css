@@ -55,9 +55,7 @@ html {
 .btn-toggle[aria-expanded="true"]::after {
   transform: rotate(90deg);
 }
-.btn-toggle[aria-expanded="false"]::after {
-    transform: rotate(180deg);
-  }
+
 .btn-toggle-nav a {
   display: inline-flex;
   padding: .1875rem .5rem;
