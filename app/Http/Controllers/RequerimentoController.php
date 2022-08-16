@@ -224,11 +224,7 @@ class RequerimentoController extends Controller
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
-
         $userPolicy = new UserPolicy();
-
-        $requerimentos_atuais = Requerimento::where([['empresa_id', $requerimento->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
-
         if ($userPolicy->isSecretario(auth()->user())) {
             if ($requerimento->motivo_cancelamento == null) {
                 $request->validate([
@@ -240,11 +236,6 @@ class RequerimentoController extends Controller
 
                 return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
             } else {
-                if ($requerimento->status != Requerimento::STATUS_ENUM['finalizada']) {
-                    if ($requerimentos_atuais->count() > 0) {
-                        return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
-                    }
-                }
                 $requerimento->cancelada = false;
                 $requerimento->motivo_cancelamento = null;
                 $requerimento->update();
@@ -253,10 +244,6 @@ class RequerimentoController extends Controller
             }
         } else {
             if ($requerimento->status == Requerimento::STATUS_ENUM['cancelada']) {
-                if ($requerimentos_atuais->count() > 0) {
-                    return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
-                }
-
                 if ($requerimento->documentos()->first() != null) {
                     $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
                 } else {
