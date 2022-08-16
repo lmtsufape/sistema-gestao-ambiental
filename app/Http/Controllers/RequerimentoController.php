@@ -2,44 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Storage;
-use App\Models\User;
-use App\Models\Requerimento;
-use App\Models\Documento;
-use App\Models\ValorRequerimento;
 use App\Http\Requests\RequerimentoRequest;
 use App\Models\Checklist;
 use App\Models\Cnae;
+use App\Models\Documento;
 use App\Models\Empresa;
 use App\Models\Historico;
 use App\Models\ModificacaoCnae;
 use App\Models\ModificacaoPorte;
+use App\Models\Requerimento;
 use App\Models\Setor;
+use App\Models\User;
+use App\Models\ValorRequerimento;
 use App\Models\Visita;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\DocumentosNotification;
-use App\Notifications\DocumentosEnviadosNotification;
-use App\Notifications\DocumentosAnalisadosNotification;
-use App\Notifications\EmpresaModificadaNotification;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use App\Notifications\DocumentosAnalisadosNotification;
+use App\Notifications\DocumentosEnviadosNotification;
+use App\Notifications\DocumentosNotification;
+use App\Notifications\EmpresaModificadaNotification;
 use App\Policies\UserPolicy;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 class RequerimentoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index($filtro)
     {
         $user = auth()->user();
-        $requerimentos = collect();
         $requerimentosCancelados = collect();
         $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
@@ -47,18 +49,17 @@ class RequerimentoController extends Controller
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
                 $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
-                ->where('analista_id', $user->id)
-                ->orwhere('analista_processo_id', $user->id)
-                ->orderBy('created_at')->paginate(20);
-            }else{
+                    ->where('analista_id', $user->id)
+                    ->orwhere('analista_processo_id', $user->id)
+                    ->orderBy('created_at')->paginate(20);
+            } else {
                 $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
                 $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
                 $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
             }
         }
-        switch($filtro){
+        switch ($filtro) {
             case 'atuais':
-                $requerimentos = $requerimentos;
                 break;
             case 'finalizados':
                 $requerimentos = $requerimentosFinalizados;
@@ -67,11 +68,14 @@ class RequerimentoController extends Controller
                 $requerimentos = $requerimentosCancelados;
                 break;
         }
-        return view('requerimento.index')->with(['requerimentos' => $requerimentos,
-                                                 'tipos' => Requerimento::TIPO_ENUM,
-                                                 'filtro' => $filtro]);
+        $tipos = Requerimento::TIPO_ENUM;
+
+        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro'));
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function indexVisitasRequerimento($id)
     {
         $requerimento = Requerimento::find($id);
@@ -81,6 +85,9 @@ class RequerimentoController extends Controller
         return view('requerimento.visitasRequerimento', compact('visitas', 'requerimento'));
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function requerimentoVisitasEdit($requerimento_id, $visita_id)
     {
         $this->authorize('isSecretario', User::class);
@@ -96,15 +103,19 @@ class RequerimentoController extends Controller
     /**
      * Retorna a view dos requerimentos do analista logado.
      *
-     * @return Response
+     * @return View
      */
     public function analista()
     {
         $user = auth()->user();
-        $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])
-        ->where('analista_id', $user->id)
-        ->orwhere('analista_processo_id', $user->id)
-        ->orderBy('created_at')->paginate(20);
+        $requerimentos = Requerimento::where(
+            [
+                ['status', '!=', Requerimento::STATUS_ENUM['finalizada']],
+                ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]
+            ])
+            ->where('analista_id', $user->id)
+            ->orwhere('analista_processo_id', $user->id)
+            ->orderBy('created_at')->paginate(20);
 
         return view('requerimento.index', compact('requerimentos'));
     }
@@ -143,8 +154,9 @@ class RequerimentoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return View
+     * @throws AuthorizationException
      */
     public function show($id)
     {
@@ -158,6 +170,12 @@ class RequerimentoController extends Controller
         return view('requerimento.show', compact('requerimento', 'protocolistas', 'analistas', 'documentos', 'definir_valor'));
     }
 
+    /**
+     * @param $visita_id
+     * @param $requerimento_id
+     * @return View
+     * @throws AuthorizationException
+     */
 
     public function verRequerimentoVisita($visita_id, $requerimento_id)
     {
@@ -174,7 +192,7 @@ class RequerimentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -186,7 +204,7 @@ class RequerimentoController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -198,10 +216,11 @@ class RequerimentoController extends Controller
      * Cancela um requerimento.
      *
      * @param Request $request
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, int $id)
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('delete', $requerimento);
@@ -210,8 +229,8 @@ class RequerimentoController extends Controller
 
         $requerimentos_atuais = Requerimento::where([['empresa_id', $requerimento->empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
 
-        if($userPolicy->isSecretario(auth()->user())){
-            if($requerimento->motivo_cancelamento == null){
+        if ($userPolicy->isSecretario(auth()->user())) {
+            if ($requerimento->motivo_cancelamento == null) {
                 $request->validate([
                     'motivo_cancelamento' => 'required'
                 ]);
@@ -220,9 +239,9 @@ class RequerimentoController extends Controller
                 $requerimento->update();
 
                 return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
-            }else{
-                if($requerimento->status != Requerimento::STATUS_ENUM['finalizada']){
-                    if($requerimentos_atuais->count() > 0){
+            } else {
+                if ($requerimento->status != Requerimento::STATUS_ENUM['finalizada']) {
+                    if ($requerimentos_atuais->count() > 0) {
                         return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
                     }
                 }
@@ -232,24 +251,24 @@ class RequerimentoController extends Controller
 
                 return redirect()->back()->with(['success' => 'Cancelamento desfeito com sucesso.']);
             }
-        }else{
-            if($requerimento->status == Requerimento::STATUS_ENUM['cancelada']){
-                if($requerimentos_atuais->count() > 0){
+        } else {
+            if ($requerimento->status == Requerimento::STATUS_ENUM['cancelada']) {
+                if ($requerimentos_atuais->count() > 0) {
                     return redirect()->back()->with(['error' => 'Já existe outro requerimento pendente, logo este não pode voltar a ser pendente.']);
                 }
 
-                if($requerimento->documentos()->first() != null){
+                if ($requerimento->documentos()->first() != null) {
                     $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-                }else{
+                } else {
                     $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
                 }
                 $requerimento->update();
 
                 return redirect()->back()->with(['success' => 'Cancelamento desfeito com sucesso.']);
-            }else{
-                if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['requerida'] &&
-                    $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['em_andamento'] &&
-                    $requerimento->status != \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos']) {
+            } else {
+                if ($requerimento->status != Requerimento::STATUS_ENUM['requerida'] &&
+                    $requerimento->status != Requerimento::STATUS_ENUM['em_andamento'] &&
+                    $requerimento->status != Requerimento::STATUS_ENUM['documentos_requeridos']) {
                     return redirect()->back()->with(['error' => 'Este requerimento já está em andamento e não pode ser cancelado. Se deseja realmente cancelar o mesmo, contate a secretaria.']);
                 }
                 $requerimento->status = Requerimento::STATUS_ENUM['cancelada'];
@@ -265,7 +284,9 @@ class RequerimentoController extends Controller
      * Atribui um analista a um requerimento.
      *
      * @param Request $request
-     * @return Response
+     * @param $tipo
+     * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function atribuirAnalista(Request $request, $tipo)
     {
@@ -277,12 +298,12 @@ class RequerimentoController extends Controller
 
         $analista = User::find($request->analista);
         $requerimento = Requerimento::find($request->requerimento);
-        if($requerimento->analista_id == null){
+        if ($requerimento->analista_id == null) {
             $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         }
-        if($tipo == "protocolista"){
+        if ($tipo == "protocolista") {
             $requerimento->analista_id = $analista->id;
-        }else{
+        } else {
             $requerimento->analista_processo_id = $analista->id;
         }
         $requerimento->update();
@@ -301,8 +322,8 @@ class RequerimentoController extends Controller
         $validated = $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
-            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,'.Requerimento::DEFINICAO_VALOR_ENUM['manual'],
-            'valor_do_juros' => 'required_if:opcão_taxa_serviço,'.Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
+            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
+            'valor_do_juros' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
         ]);
 
         if ($request->documentos == null) {
@@ -332,9 +353,9 @@ class RequerimentoController extends Controller
             $boletoController->boleto($requerimento);
         } catch (ErrorRemessaException $e) {
             return redirect()->back()
-            ->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.'])
-            ->withErrors(['error' => 'Erro na geração do boleto: '. $e->getMessage()])
-            ->withInput();
+                ->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.'])
+                ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
+                ->withInput();
         }
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
@@ -349,9 +370,9 @@ class RequerimentoController extends Controller
             $boletoController->criarNovoBoleto($requerimento);
         } catch (ErrorRemessaException $e) {
             return redirect()->back()
-            ->with(['success' => 'Boleto gerado com sucesso.'])
-            ->withErrors(['error' => 'Erro na geração do boleto: '. $e->getMessage()])
-            ->withInput();
+                ->with(['success' => 'Boleto gerado com sucesso.'])
+                ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
+                ->withInput();
         }
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Boleto gerado com sucesso.']);
     }
@@ -367,8 +388,8 @@ class RequerimentoController extends Controller
         $validated = $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
-            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,'.Requerimento::DEFINICAO_VALOR_ENUM['manual'],
-            'valor_do_juros' => 'required_if:opcão_taxa_serviço,'.Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
+            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
+            'valor_do_juros' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
         ]);
 
         if ($request->documentos == null) {
@@ -418,9 +439,9 @@ class RequerimentoController extends Controller
     {
         $valor = null;
         $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
-        if($cnae_maior_poluidor->potencial_poluidor == null){
+        if ($cnae_maior_poluidor->potencial_poluidor == null) {
             $maiorPotencialPoluidor = $requerimento->potencial_poluidor_atribuido;
-        }else{
+        } else {
             $maiorPotencialPoluidor = $cnae_maior_poluidor->potencial_poluidor;
         }
 
@@ -463,18 +484,24 @@ class RequerimentoController extends Controller
         return false;
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function showRequerimentoDocumentacao($id)
     {
         $requerimento = Requerimento::find($id);
         $this->authorize('verDocumentacao', $requerimento);
         $documentos = $requerimento->documentos;
         $status = Checklist::STATUS_ENUM;
-        if(auth()->user()->role == User::ROLE_ENUM['analista']){
+        if (auth()->user()->role == User::ROLE_ENUM['analista']) {
             return view('requerimento.analise-documentos', compact('requerimento', 'documentos'));
         }
         return view('requerimento.envio-documentos', compact('requerimento', 'documentos', 'status'));
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function enviarDocumentos(Request $request)
     {
         $requerimento = Requerimento::find($request->requerimento_id);
@@ -493,7 +520,7 @@ class RequerimentoController extends Controller
         $id = 0;
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-            if($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == Checklist::STATUS_ENUM['recusado']){
+            if ($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == Checklist::STATUS_ENUM['recusado']) {
                 if (Storage::exists($documento->caminho)) {
                     Storage::delete($documento->caminho);
                 }
@@ -508,15 +535,18 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
 
-        if($requerimento->analistaProcesso != null){
+        if ($requerimento->analistaProcesso != null) {
             Notification::send($requerimento->analistaProcesso, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
-        }else{
+        } else {
             Notification::send($requerimento->protocolista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
         }
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function showDocumento($requerimento_id, $documento_id)
     {
         $requerimento = Requerimento::find($requerimento_id);
@@ -536,21 +566,21 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($request->requerimento_id);
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-            if($documento->status != Checklist::STATUS_ENUM['nao_enviado']){
-                $documento->status = $data['analise_'.$documento_id];
-                if($data['comentario_'.$documento_id] != null){
-                    $documento->comentario = $data['comentario_'.$documento_id];
-                }else{
+            if ($documento->status != Checklist::STATUS_ENUM['nao_enviado']) {
+                $documento->status = $data['analise_' . $documento_id];
+                if ($data['comentario_' . $documento_id] != null) {
+                    $documento->comentario = $data['comentario_' . $documento_id];
+                } else {
                     $documento->comentario = null;
                 }
                 $documento->update();
                 $id++;
             }
         }
-        if($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null){
+        if ($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null) {
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos recusados'));
-        }else{
+        } else {
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos aceitos'));
         }
@@ -559,6 +589,9 @@ class RequerimentoController extends Controller
 
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function editEmpresa($id)
     {
         $requerimento = Requerimento::find($id);
@@ -566,8 +599,8 @@ class RequerimentoController extends Controller
         $setores = Setor::all();
 
         $setoresSelecionados = collect();
-        foreach($requerimento->empresa->cnaes as $cnae){
-            if(!$setoresSelecionados->contains($cnae->setor)){
+        foreach ($requerimento->empresa->cnaes as $cnae) {
+            if (!$setoresSelecionados->contains($cnae->setor)) {
                 $setoresSelecionados->push($cnae->setor);
             }
         }
@@ -578,26 +611,26 @@ class RequerimentoController extends Controller
     public function updateEmpresa(Request $request, $id)
     {
         $requerimento = Requerimento::find($id);
-        if($request->cnaes_id == null){
+        if ($request->cnaes_id == null) {
             return redirect()->back()->with(['error' => 'Selecione ao menos um cnae.']);
         }
 
-        if($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)){
+        if ($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)) {
             $historico = new Historico;
             $historico->user_id = auth()->user()->id;
             $historico->empresa_id = $requerimento->empresa->id;
             $historico->save();
-            if($this->possuiModificacaoCnae($request, $id)){
-                foreach($request->cnaes_id as $cnae_id){
+            if ($this->possuiModificacaoCnae($request, $id)) {
+                foreach ($request->cnaes_id as $cnae_id) {
                     $cnae = Cnae::find($cnae_id);
-                    if(!$requerimento->empresa->cnaes->contains($cnae)){
+                    if (!$requerimento->empresa->cnaes->contains($cnae)) {
                         $requerimento->empresa->cnaes()->attach($cnae);
                         $modifcacaoCnae = new ModificacaoCnae;
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
-                    }else{
+                    } else {
                         $modifcacaoCnae = new ModificacaoCnae;
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
@@ -611,8 +644,8 @@ class RequerimentoController extends Controller
                         $modifcacaoCnae3->save();
                     }
                 }
-                foreach($requerimento->empresa->cnaes as $cnae){
-                    if(!in_array($cnae->id, $request->cnaes_id)){
+                foreach ($requerimento->empresa->cnaes as $cnae) {
+                    if (!in_array($cnae->id, $request->cnaes_id)) {
                         $requerimento->empresa->cnaes()->detach($cnae);
                         $modifcacaoCnae2 = new ModificacaoCnae;
                         $modifcacaoCnae2->novo = false;
@@ -622,7 +655,7 @@ class RequerimentoController extends Controller
                     }
                 }
             }
-            if($this->possuiModificacaoPorte($request, $id)){
+            if ($this->possuiModificacaoPorte($request, $id)) {
                 $modifcacaoPorte = new ModificacaoPorte;
                 $modifcacaoPorte->porte_antigo = $requerimento->empresa->porte;
                 $modifcacaoPorte->porte_atual = Empresa::PORTE_ENUM[$request->porte];
@@ -640,15 +673,15 @@ class RequerimentoController extends Controller
     public function possuiModificacaoCnae($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        foreach($request->cnaes_id as $cnae_id){
+        foreach ($request->cnaes_id as $cnae_id) {
             $cnae = Cnae::find($cnae_id);
-            if(!$requerimento->empresa->cnaes->contains($cnae)){
+            if (!$requerimento->empresa->cnaes->contains($cnae)) {
                 return true;
             }
         }
 
-        foreach($requerimento->empresa->cnaes as $cnae){
-            if(!in_array($cnae->id, $request->cnaes_id)){
+        foreach ($requerimento->empresa->cnaes as $cnae) {
+            if (!in_array($cnae->id, $request->cnaes_id)) {
                 return true;
             }
         }
@@ -659,7 +692,7 @@ class RequerimentoController extends Controller
     public function possuiModificacaoPorte($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        if($requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte]){
+        if ($requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte]) {
             return true;
         }
         return false;
@@ -668,7 +701,7 @@ class RequerimentoController extends Controller
     /**
      * Retorna o protocolista com menos requerimentos.
      *
-     * @return App\Models\User $protocolistaComMenosRequerimentos
+     * @return User $protocolistaComMenosRequerimentos
      */
     private function protocolistaComMenosRequerimentos()
     {
@@ -686,7 +719,11 @@ class RequerimentoController extends Controller
         return $protocolistaComMenosRequerimentos;
     }
 
-    public function atribuirPotencialPoluidor(Request $request, $id){
+    /**
+     * @throws AuthorizationException
+     */
+    public function atribuirPotencialPoluidor(Request $request, $id)
+    {
         $this->authorize('isSecretarioOrProtocolista', User::class);
 
         $validator = $request->validate([
@@ -697,7 +734,7 @@ class RequerimentoController extends Controller
         $requerimento->potencial_poluidor_atribuido = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
         $requerimento->update();
 
-        if($requerimento->valor != null){
+        if ($requerimento->valor != null) {
             $this->atribuirValor($request, $requerimento);
         }
         $requerimento->update();
@@ -709,7 +746,8 @@ class RequerimentoController extends Controller
      * Recupera o analista de processo atribuído ao requerimento se ele existir.
      *
      * @param Request $request id do requerimento
-     * @return json
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function getAnalistaProcesso(Request $request)
     {
@@ -719,7 +757,7 @@ class RequerimentoController extends Controller
 
         $requerimentoInfo = [
             'id' => $requerimento->id,
-            'analista_atribuido' => $requerimento->analistaProcesso ? $requerimento->analistaProcesso : null,
+            'analista_atribuido' => $requerimento->analistaProcesso ?: null,
         ];
 
         return response()->json($requerimentoInfo);
