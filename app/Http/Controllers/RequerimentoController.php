@@ -122,19 +122,13 @@ class RequerimentoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param RequerimentoRequest $request
+     * @return RedirectResponse
      */
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
         $empresa = Empresa::find($request->empresa);
-
-        $requerimentos = Requerimento::where([['empresa_id', $empresa->id], ['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->get();
-
-        if ($requerimentos->count() > 0) {
-            return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
-        }
 
         $requerimento = new Requerimento;
         $requerimento->tipo = $request->tipo;
