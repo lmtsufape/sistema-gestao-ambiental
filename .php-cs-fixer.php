@@ -111,6 +111,7 @@ return $config->setRules([
         'positions' => ['inside', 'outside'],
     ],
     'no_spaces_inside_parenthesis' => true,
+    'no_trailing_whitespace_in_string' => true,
     'no_trailing_comma_in_list_call' => true,
     'no_trailing_comma_in_singleline_array' => true,
     'no_trailing_whitespace' => true,
@@ -175,4 +176,5 @@ return $config->setRules([
         'elements' => ['method', 'property'],
     ],
     'whitespace_after_comma_in_array' => true,
+    '@PSR12' => true,
 ]);
