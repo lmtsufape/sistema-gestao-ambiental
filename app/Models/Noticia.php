@@ -58,17 +58,13 @@ class Noticia extends Model
     }
 
     /**
-     * Chega se a noticia sofreu alguma atualização.
+     * Checa se a noticia sofreu alguma atualização.
      *
      * @return bool
      */
     public function exibirDatas()
     {
-        if ((new Carbon($this->created_at)) == (new Carbon($this->updated_at))) {
-            return true;
-        }
-
-        return false;
+        return (new Carbon($this->created_at)) == (new Carbon($this->updated_at));
     }
 
     /**

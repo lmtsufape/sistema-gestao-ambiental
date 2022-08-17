@@ -27,13 +27,7 @@ class Setor extends Model
 
     public function existemEmpresas()
     {
-        foreach ($this->cnaes as $cnae) {
-            if ($cnae->existemEmpresas()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->cnaes()->has('empresas')->exists();
     }
 
     public function deletarCnaes()

@@ -40,11 +40,7 @@ class Documento extends Model
 
     public function existemRequerimentos()
     {
-        if ($this->requerimentos->count() > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->requerimentos()->exists();
     }
 
     public function salvarDocumento($file)

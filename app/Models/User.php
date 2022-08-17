@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosRequerente()
     {
-        return $this->hasManyThrough(Requerimento::class, Empresa::class)->orderBy('created_at', 'DESC')->paginate(8);
+        return $this->hasManyThrough(Requerimento::class, Empresa::class);
     }
 
     /**

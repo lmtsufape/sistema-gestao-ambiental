@@ -40,11 +40,7 @@ class Cnae extends Model
 
     public function existemEmpresas()
     {
-        if ($this->empresas->count() > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->empresas()->exists();
     }
 
     /**
@@ -55,13 +51,10 @@ class Cnae extends Model
      */
     public static function maiorPontencial($cnaes)
     {
-        $max = 0;
-        foreach ($cnaes as $cnae) {
-            if ($cnae->potencial_poluidor > $max) {
-                $max = $cnae->potencial_poluidor;
-            }
+        if ($cnaes != null && ! $cnaes->isEmpty()) {
+            return $cnaes->max('potencial_poluidor');
         }
 
-        return $max;
+        return 0;
     }
 }

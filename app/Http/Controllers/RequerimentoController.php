@@ -24,6 +24,7 @@ use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,18 +46,16 @@ class RequerimentoController extends Controller
         $requerimentosCancelados = collect();
         $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = auth()->user()->requerimentosRequerente();
-        } else {
-            if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
+            $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
+        } elseif ($user->role == User::ROLE_ENUM['analista']) {
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
                     ->where('analista_id', $user->id)
                     ->orwhere('analista_processo_id', $user->id)
                     ->orderBy('created_at')->paginate(20);
-            } else {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
-                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
-            }
+        } else {
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
+            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
         }
         switch ($filtro) {
             case 'atuais':
@@ -111,8 +110,9 @@ class RequerimentoController extends Controller
         $requerimentos = Requerimento::where(
             [
                 ['status', '!=', Requerimento::STATUS_ENUM['finalizada']],
-                ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]
-            ])
+                ['status', '!=', Requerimento::STATUS_ENUM['cancelada']],
+            ]
+        )
             ->where('analista_id', $user->id)
             ->orwhere('analista_processo_id', $user->id)
             ->orderBy('created_at')->paginate(20);
@@ -141,7 +141,7 @@ class RequerimentoController extends Controller
         $request->validated();
         $empresa = Empresa::find($request->empresa);
 
-        $requerimento = new Requerimento;
+        $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
@@ -176,7 +176,6 @@ class RequerimentoController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-
     public function verRequerimentoVisita($visita_id, $requerimento_id)
     {
         $requerimento = Requerimento::find($requerimento_id);
@@ -287,7 +286,7 @@ class RequerimentoController extends Controller
         if ($requerimento->analista_id == null) {
             $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         }
-        if ($tipo == "protocolista") {
+        if ($tipo == 'protocolista') {
             $requerimento->analista_id = $analista->id;
         } else {
             $requerimento->analista_processo_id = $analista->id;
@@ -460,12 +459,7 @@ class RequerimentoController extends Controller
     private function primeiroRequerimento()
     {
         if (auth()->user()->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where('empresa_id', auth()->user()->empresa->id)->get();
-            if ($requerimentos->count() > 0) {
-                return false;
-            }
-
-            return true;
+            return ! auth()->user()->requerimentosRequerente()->exists();
         }
 
         return false;
@@ -588,8 +582,8 @@ class RequerimentoController extends Controller
         $setores = Setor::all();
 
         $setoresSelecionados = collect();
-        foreach($requerimento->empresa->cnaes as $cnae){
-            if(!$setoresSelecionados->contains($cnae->setor)){
+        foreach ($requerimento->empresa->cnaes as $cnae) {
+            if (! $setoresSelecionados->contains($cnae->setor)) {
                 $setoresSelecionados->push($cnae->setor);
             }
         }
@@ -604,23 +598,23 @@ class RequerimentoController extends Controller
             return redirect()->back()->with(['error' => 'Selecione ao menos um cnae.']);
         }
 
-        if($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)){
-            $historico = new Historico;
+        if ($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)) {
+            $historico = new Historico();
             $historico->user_id = auth()->user()->id;
             $historico->empresa_id = $requerimento->empresa->id;
             $historico->save();
             if ($this->possuiModificacaoCnae($request, $id)) {
                 foreach ($request->cnaes_id as $cnae_id) {
                     $cnae = Cnae::find($cnae_id);
-                    if(!$requerimento->empresa->cnaes->contains($cnae)){
+                    if (! $requerimento->empresa->cnaes->contains($cnae)) {
                         $requerimento->empresa->cnaes()->attach($cnae);
                         $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
-                    }else{
-                        $modifcacaoCnae = new ModificacaoCnae;
+                    } else {
+                        $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
@@ -633,8 +627,8 @@ class RequerimentoController extends Controller
                         $modifcacaoCnae3->save();
                     }
                 }
-                foreach($requerimento->empresa->cnaes as $cnae){
-                    if(!in_array($cnae->id, $request->cnaes_id)){
+                foreach ($requerimento->empresa->cnaes as $cnae) {
+                    if (! in_array($cnae->id, $request->cnaes_id)) {
                         $requerimento->empresa->cnaes()->detach($cnae);
                         $modifcacaoCnae2 = new ModificacaoCnae();
                         $modifcacaoCnae2->novo = false;
@@ -644,8 +638,8 @@ class RequerimentoController extends Controller
                     }
                 }
             }
-            if($this->possuiModificacaoPorte($request, $id)){
-                $modifcacaoPorte = new ModificacaoPorte;
+            if ($this->possuiModificacaoPorte($request, $id)) {
+                $modifcacaoPorte = new ModificacaoPorte();
                 $modifcacaoPorte->porte_antigo = $requerimento->empresa->porte;
                 $modifcacaoPorte->porte_atual = Empresa::PORTE_ENUM[$request->porte];
                 $modifcacaoPorte->historico_id = $historico->id;
@@ -664,30 +658,20 @@ class RequerimentoController extends Controller
     public function possuiModificacaoCnae($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        foreach ($request->cnaes_id as $cnae_id) {
-            $cnae = Cnae::find($cnae_id);
-            if(!$requerimento->empresa->cnaes->contains($cnae)){
-                return true;
-            }
-        }
+        $cnaes_view = $request->cnaes_id;
+        $empresa_canes = $requerimento->empresa->cnaes->pluck('id')->all();
+        $cnaes_adicionados = array_diff($cnaes_view, $empresa_canes);
+        $cnaes_removidos = array_diff($empresa_canes, $cnaes_view);
+        $diff = array_merge($cnaes_adicionados, $cnaes_removidos);
 
-        foreach($requerimento->empresa->cnaes as $cnae){
-            if(!in_array($cnae->id, $request->cnaes_id)){
-                return true;
-            }
-        }
-
-        return false;
+        return ! empty($diff);
     }
 
     public function possuiModificacaoPorte($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        if ($requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte]) {
-            return true;
-        }
 
-        return false;
+        return $requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte];
     }
 
     /**
@@ -697,21 +681,15 @@ class RequerimentoController extends Controller
      */
     private function protocolistaComMenosRequerimentos()
     {
-        $protocolistas = User::protocolistas();
-        $protocolistaComMenosRequerimentos = null;
-        $min = 30000;
-        foreach ($protocolistas as $protocolista) {
-            $quantRequerimentos = $protocolista->requerimentos()->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos'])->get()->count();
-            if ($quantRequerimentos < $min) {
-                $min = $quantRequerimentos;
-                $protocolistaComMenosRequerimentos = $protocolista;
-            }
-        }
-
-        return $protocolistaComMenosRequerimentos;
+        return User::withCount(['requerimentos' => function (Builder $qry) {
+            $qry->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos']);
+        }])
+            ->orderBy('requerimentos_count', 'ASC')
+            ->first();
     }
 
-    public function atribuirPotencialPoluidor(Request $request, $id){
+    public function atribuirPotencialPoluidor(Request $request, $id)
+    {
         $this->authorize('isSecretarioOrProtocolista', User::class);
 
         $validator = $request->validate([
