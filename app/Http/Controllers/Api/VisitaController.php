@@ -158,11 +158,11 @@ class VisitaController extends Controller
             'requerimento.empresa.user',
             'requerimento.empresa.endereco',
             'requerimento.empresa.telefone',
-            'solicitacao_poda',
-            'solicitacao_poda.endereco',
-            'solicitacao_poda.analista',
-            'solicitacao_poda.requerente',
-            'solicitacao_poda.requerente.user',
+            'solicitacaoPoda',
+            'solicitacaoPoda.endereco',
+            'solicitacaoPoda.analista',
+            'solicitacaoPoda.requerente',
+            'solicitacaoPoda.requerente.user',
         )->get()->toArray();
         $tz = 'America/Recife';
         foreach ($dados as $i => $visita) {

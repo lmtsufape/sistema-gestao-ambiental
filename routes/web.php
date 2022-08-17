@@ -158,7 +158,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/licenca/store', [LicencaController::class, 'store'])->name('licenca.store');
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
-    Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvar_revisao'])->name('licenca.salvar.revisao');
+    Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvarRevisao'])->name('licenca.salvar.revisao');
 
     Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
     Route::post('/noticias/create', [NoticiaController::class, 'store'])->name('noticias.store');

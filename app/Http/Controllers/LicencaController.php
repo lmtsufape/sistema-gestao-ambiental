@@ -138,7 +138,7 @@ class LicencaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function salvar_revisao(Request $request, $licenca_id, $visita_id)
+    public function salvarRevisao(Request $request, $licenca_id, $visita_id)
     {
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisita', $visita);

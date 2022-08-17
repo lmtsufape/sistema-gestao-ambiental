@@ -312,14 +312,14 @@ abstract class GerirBoletoRemessa extends Remessa
      * Gera o arquivo de remessa.
      * @return string $cabeçalho
      */
-    public function gerar_remessa(): string
+    public function gerarRemessa(): string
     {
         $xml_array = [
             'soapenv:Body' => [
                 'ext:SERVICO_ENTRADA' => [
                     'sib:HEADER' => [
                         'VERSAO' => $this->versao,
-                        'AUTENTICACAO' => $this->gerar_autenticacao(),
+                        'AUTENTICACAO' => $this->gerarAutenticacao(),
                         'USUARIO_SERVICO' => $this->usuario_servico,
                         'OPERACAO' => $this->operacao,
                         'SISTEMA_ORIGEM' => $this->sistema_origem,
@@ -332,35 +332,35 @@ abstract class GerirBoletoRemessa extends Remessa
                                 'NOSSO_NUMERO' => $this->nosso_numero,
                                 'NUMERO_DOCUMENTO' => $this->numero_do_documento,
                                 'DATA_VENCIMENTO' => $this->data_vencimento,
-                                'VALOR' => $this->gerar_valor($this->valor, 2),
+                                'VALOR' => $this->gerarValor($this->valor, 2),
                                 'TIPO_ESPECIE' => $this->tipo_especie,
                                 'FLAG_ACEITE' => $this->flag_aceite,
-                                'JUROS_MORA' => $this->gerar_juros_mora(),
-                                'VALOR_ABATIMENTO' => $this->gerar_valor($this->valor_abatimento, 2),
+                                'JUROS_MORA' => $this->gerarJurosMora(),
+                                'VALOR_ABATIMENTO' => $this->gerarValor($this->valor_abatimento, 2),
                                 'POS_VENCIMENTO' => [
                                     'ACAO' => $this->acao_pos_vecimento,
                                     'NUMERO_DIAS' => $this->numero_dias_pos_vencimento,
                                 ],
                                 'CODIGO_MOEDA' => $this->codigo_moeda,
                                 'PAGADOR' => [
-                                    $this->etiqueta_cpf_ou_cnpj() => $this->gerar_cpf_ou_cnpj(),
-                                    $this->etiqueta_nome_ou_razao_social() => $this->gerar_nome_ou_razao_social(),
+                                    $this->etiquetaCpfOuCnpj() => $this->gerarCpfOuCnpj(),
+                                    $this->etiquetaNomeOuRazaoSocial() => $this->gerarNomeOuRazaoSocial(),
                                     'ENDERECO' => [
-                                        'LOGRADOURO' => $this->validar_formartar_tamanho($this->pagador->logradouro, 40),
-                                        'BAIRRO' => $this->validar_formartar_tamanho($this->pagador->bairro, 15),
-                                        'CIDADE' => $this->validar_formartar_tamanho($this->pagador->cidade, 15),
-                                        'UF' => $this->validar_formartar_tamanho($this->pagador->uf, 2),
-                                        'CEP' => $this->retirar_formatacao($this->pagador->cep),
+                                        'LOGRADOURO' => $this->validarFormartarTamanho($this->pagador->logradouro, 40),
+                                        'BAIRRO' => $this->validarFormartarTamanho($this->pagador->bairro, 15),
+                                        'CIDADE' => $this->validarFormartarTamanho($this->pagador->cidade, 15),
+                                        'UF' => $this->validarFormartarTamanho($this->pagador->uf, 2),
+                                        'CEP' => $this->retirarFormatacao($this->pagador->cep),
                                     ],
                                 ],
-                                'SACADOR_AVALISTA' => $this->gerar_sacador_avalista(),
-                                'MULTA' => $this->gerar_multa(),
-                                'DESCONTOS' => $this->gerar_descontos(),
-                                'VALOR_IOF' => $this->gerar_valor($this->valor_iof, 2),
+                                'SACADOR_AVALISTA' => $this->gerarSacadorAvalista(),
+                                'MULTA' => $this->gerarMulta(),
+                                'DESCONTOS' => $this->gerarDescontos(),
+                                'VALOR_IOF' => $this->gerarValor($this->valor_iof, 2),
                                 'IDENTIFICACAO_EMPRESA' => $this->id,
-                                'FICHA_COMPENSACAO' => $this->gerar_mensagens(),
-                                'RECIBO_PAGADOR' => $this->gerar_mensagens_pagador(),
-                                'PAGAMENTO' => $this->gerar_tipos_de_pagamento(),
+                                'FICHA_COMPENSACAO' => $this->gerarMensagens(),
+                                'RECIBO_PAGADOR' => $this->gerarMensagensPagador(),
+                                'PAGAMENTO' => $this->gerarTiposDePagamento(),
                             ],
                         ],
                     ],
@@ -392,7 +392,7 @@ abstract class GerirBoletoRemessa extends Remessa
             unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['CODIGO_MOEDA']);
         }
         if ($this->operacao != 'INCLUI_BOLETO') {
-            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['PAGADOR'][$this->etiqueta_cpf_ou_cnpj()]);
+            unset($xml_array['soapenv:Body']['ext:SERVICO_ENTRADA']['DADOS'][$this->operacao]['TITULO']['PAGADOR'][$this->etiquetaCpfOuCnpj()]);
         }
         $xml_root = 'soapenv:Envelope';
         $xml = new XmlDomConstruct('1.0', 'ISO8859-1');
@@ -410,10 +410,10 @@ abstract class GerirBoletoRemessa extends Remessa
      * Gera a hash de autenticação do cabeçalho do arquivo.
      * @return string $cabeçalho
      */
-    protected function gerar_autenticacao(): string
+    protected function gerarAutenticacao(): string
     {
         $data_vencimento_formatada = (new Carbon($this->data_vencimento))->format('dmY');
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerar_valor_atutenticacao() . $this->retirar_formatacao($this->beneficiario->cnpj);
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . $data_vencimento_formatada . $this->gerarValorAtutenticacao() . $this->retirarFormatacao($this->beneficiario->cnpj);
         $hash = hash('sha256', $autenticacao, true);
 
         return base64_encode($hash);
@@ -423,7 +423,7 @@ abstract class GerirBoletoRemessa extends Remessa
      * Retorna a parte dos descontos do xml, se tiver.
      * @return array parte do xml dos descontos
      */
-    protected function gerar_descontos(): array
+    protected function gerarDescontos(): array
     {
         if ($this->descontos > 0) {
             $descontos = [
@@ -432,10 +432,10 @@ abstract class GerirBoletoRemessa extends Remessa
             for ($i = 0; $i < $this->descontos; $i++) {
                 $tipo = $this->valores_desconto[$i] != null ? 'VALOR' : 'PERCENTUAL';
                 $desconto = $this->valores_desconto[$i] != null ?
-                    $this->gerar_valor($this->valores_desconto[$i], 2) :
-                    $this->gerar_valor($this->percentuais_desconto[$i], 5);
+                    $this->gerarValor($this->valores_desconto[$i], 2) :
+                    $this->gerarValor($this->percentuais_desconto[$i], 5);
                 $descontos['DESCONTO'][] = [
-                    'DATA' => $this->formatar_data($this->datas_desconto[$i]),
+                    'DATA' => $this->formatarData($this->datas_desconto[$i]),
                     $tipo => $desconto,
                 ];
             }
@@ -446,7 +446,7 @@ abstract class GerirBoletoRemessa extends Remessa
         return [];
     }
 
-    protected function gerar_mensagens(): array
+    protected function gerarMensagens(): array
     {
         if ($this->quant_mensagens_compensacao > 0) {
             $array = [
@@ -455,7 +455,7 @@ abstract class GerirBoletoRemessa extends Remessa
                 ],
             ];
             for ($i = 0; $i < $this->quant_mensagens_compensacao; $i++) {
-                $array['MENSAGENS']['MENSAGEM'][$i] = $this->validar_formartar_tamanho($this->mensagens_compensacao[$i], 40);
+                $array['MENSAGENS']['MENSAGEM'][$i] = $this->validarFormartarTamanho($this->mensagens_compensacao[$i], 40);
             }
 
             return $array;
@@ -464,7 +464,7 @@ abstract class GerirBoletoRemessa extends Remessa
         return [];
     }
 
-    protected function gerar_mensagens_pagador(): array
+    protected function gerarMensagensPagador(): array
     {
         if ($this->quant_mensagens_pagador > 0) {
             $msgs = [
@@ -473,7 +473,7 @@ abstract class GerirBoletoRemessa extends Remessa
                 ],
             ];
             for ($i = 0; $i < $this->quant_mensagens_pagador; $i++) {
-                $msgs['MENSAGENS']['MENSAGEM'][$i] = $this->validar_formartar_tamanho($this->mensagens_pagador[$i], 40);
+                $msgs['MENSAGENS']['MENSAGEM'][$i] = $this->validarFormartarTamanho($this->mensagens_pagador[$i], 40);
             }
 
             return $msgs;
@@ -482,7 +482,7 @@ abstract class GerirBoletoRemessa extends Remessa
         return [];
     }
 
-    protected function gerar_tipos_de_pagamento(): array
+    protected function gerarTiposDePagamento(): array
     {
         if ($this->quant_pagamento_permitido > 0) {
             $pgmts = [
@@ -490,11 +490,11 @@ abstract class GerirBoletoRemessa extends Remessa
                 'TIPO' => $this->tipos_de_pagamento,
             ];
             if ($this->valor_maximo_pagamento > 0) {
-                $pgmts['VALOR_MINIMO'] = $this->gerar_valor($this->valor_minimo_pagamento, 2);
-                $pgmts['VALOR_MAXIMO'] = $this->gerar_valor($this->valor_maximo_pagamento, 2);
+                $pgmts['VALOR_MINIMO'] = $this->gerarValor($this->valor_minimo_pagamento, 2);
+                $pgmts['VALOR_MAXIMO'] = $this->gerarValor($this->valor_maximo_pagamento, 2);
             } else {
-                $pgmts['PERCENTUAL_MINIMO'] = $this->gerar_valor($this->pencentual_minimo_pagamento, 5);
-                $pgmts['PERCENTUAL_MAXIMO'] = $this->gerar_valor($this->pencentual_maximo_pagamento, 5);
+                $pgmts['PERCENTUAL_MINIMO'] = $this->gerarValor($this->pencentual_minimo_pagamento, 5);
+                $pgmts['PERCENTUAL_MAXIMO'] = $this->gerarValor($this->pencentual_maximo_pagamento, 5);
             }
 
             return $pgmts;
@@ -503,26 +503,26 @@ abstract class GerirBoletoRemessa extends Remessa
         return [];
     }
 
-    protected function gerar_sacador_avalista(): array
+    protected function gerarSacadorAvalista(): array
     {
         if ($this->sacador_avalista != null) {
             if ($this->sacador_avalista->cpf) {
                 return [
-                    'CPF' => $this->retirar_formatacao($this->sacador_avalista->cpf),
-                    'NOME' => $this->validar_formartar_tamanho($this->sacador_avalista->nome, 40),
+                    'CPF' => $this->retirarFormatacao($this->sacador_avalista->cpf),
+                    'NOME' => $this->validarFormartarTamanho($this->sacador_avalista->nome, 40),
                 ];
             }
 
             return [
-                'CNPJ' => $this->retirar_formatacao($this->sacador_avalista->cnpj),
-                'RAZAO_SOCIAL' => $this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40),
+                'CNPJ' => $this->retirarFormatacao($this->sacador_avalista->cnpj),
+                'RAZAO_SOCIAL' => $this->validarFormartarTamanho($this->sacador_avalista->razao_social, 40),
             ];
         }
 
         return [];
     }
 
-    protected function gerar_juros_mora(): array
+    protected function gerarJurosMora(): array
     {
         $array = [
             'TIPO' => $this->tipo_juros_mora,
@@ -531,33 +531,33 @@ abstract class GerirBoletoRemessa extends Remessa
             $array['DATA'] = $this->data_juros_mora;
         }
         if ($this->tipo_juros_mora == 'TAXA_MENSAL') {
-            $array['PERCENTUAL'] = $this->gerar_valor($this->percentual_juros_mora, 5);
+            $array['PERCENTUAL'] = $this->gerarValor($this->percentual_juros_mora, 5);
         } else {
-            $array['VALOR'] = $this->gerar_valor($this->valor_juros_mora, 2);
+            $array['VALOR'] = $this->gerarValor($this->valor_juros_mora, 2);
         }
 
         return $array;
     }
 
-    protected function gerar_nome_ou_razao_social(): string
+    protected function gerarNomeOuRazaoSocial(): string
     {
         if ($this->pagador->cpf) {
-            return $this->validar_formartar_tamanho($this->pagador->nome, 40);
+            return $this->validarFormartarTamanho($this->pagador->nome, 40);
         }
 
-        return $this->validar_formartar_tamanho($this->pagador->razao_social, 40);
+        return $this->validarFormartarTamanho($this->pagador->razao_social, 40);
     }
 
-    protected function gerar_cpf_ou_cnpj(): string
+    protected function gerarCpfOuCnpj(): string
     {
         if ($this->pagador->cpf) {
-            return $this->retirar_formatacao($this->pagador->cpf);
+            return $this->retirarFormatacao($this->pagador->cpf);
         }
 
-        return $this->retirar_formatacao($this->pagador->cnpj);
+        return $this->retirarFormatacao($this->pagador->cnpj);
     }
 
-    protected function etiqueta_nome_ou_razao_social(): string
+    protected function etiquetaNomeOuRazaoSocial(): string
     {
         if ($this->pagador->cpf) {
             return 'NOME';
@@ -566,7 +566,7 @@ abstract class GerirBoletoRemessa extends Remessa
         return 'RAZAO_SOCIAL';
     }
 
-    protected function etiqueta_cpf_ou_cnpj(): string
+    protected function etiquetaCpfOuCnpj(): string
     {
         if ($this->pagador->cpf) {
             return 'CPF';
@@ -575,15 +575,15 @@ abstract class GerirBoletoRemessa extends Remessa
         return 'CNPJ';
     }
 
-    protected function gerar_multa(): array
+    protected function gerarMulta(): array
     {
         $array = [
-            'DATA' => $this->formatar_data($this->data_multa),
+            'DATA' => $this->formatarData($this->data_multa),
         ];
         if ($this->valor_multa) {
-            $array['VALOR'] = $this->gerar_valor($this->valor_multa, 2);
+            $array['VALOR'] = $this->gerarValor($this->valor_multa, 2);
         } else {
-            $array['PERCENTUAL'] = $this->gerar_valor($this->percentual_multa, 5);
+            $array['PERCENTUAL'] = $this->gerarValor($this->percentual_multa, 5);
         }
 
         return $array;

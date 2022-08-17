@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->email_verified_at = now();
         $user->save();
         foreach ($request->tipos_analista as $tipo_id) {
-            $user->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+            $user->tipoAnalista()->attach(TipoAnalista::find($tipo_id));
         }
 
         return redirect(route('usuarios.index'))->with(['success' => 'Analista cadastrado com sucesso!']);
@@ -128,7 +128,7 @@ class UserController extends Controller
 
         if ($request->tipos_analista != null) {
             $analista_tipos = collect();
-            foreach ($usuario->tipo_analista as $tipo) {
+            foreach ($usuario->tipoAnalista as $tipo) {
                 if (! array_key_exists($tipo->pivot->tipo_analista_id, $request->tipos_analista)) {
                     $tipo->pivot->delete();
                 } else {
@@ -138,7 +138,7 @@ class UserController extends Controller
 
             foreach ($request->tipos_analista as $tipo_id) {
                 if (! $analista_tipos->contains($tipo_id)) {
-                    $usuario->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+                    $usuario->tipoAnalista()->attach(TipoAnalista::find($tipo_id));
                 }
             }
         }
@@ -206,7 +206,7 @@ class UserController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $user = User::find($id);
-        foreach ($user->tipo_analista()->get() as $tipo) {
+        foreach ($user->tipoAnalista()->get() as $tipo) {
             $tipo->pivot->delete();
         }
         $user->delete();

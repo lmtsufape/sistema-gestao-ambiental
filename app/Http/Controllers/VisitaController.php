@@ -186,8 +186,8 @@ class VisitaController extends Controller
             $user = $requerimento->empresa->user;
             $data_marcada = $request['data_marcada'];
             Notification::send($user, new VisitaAlteradaRequerimento($requerimento, $data_marcada));
-        } elseif ($visita->solicitacao_poda) {
-            $poda = $visita->solicitacao_poda;
+        } elseif ($visita->solicitacaoPoda) {
+            $poda = $visita->solicitacaoPoda;
             $user = $poda->requerente->user;
             $data_marcada = $request['data_marcada'];
             Notification::send($user, new VisitaAlteradaPoda($poda, $data_marcada));
@@ -223,8 +223,8 @@ class VisitaController extends Controller
             $user = $requerimento->empresa->user;
             $data_marcada = $visita->data_marcada;
             Notification::send($user, new VisitaCanceladaRequerimento($requerimento, $data_marcada));
-        } elseif ($visita->solicitacao_poda) {
-            $poda = $visita->solicitacao_poda;
+        } elseif ($visita->solicitacaoPoda) {
+            $poda = $visita->solicitacaoPoda;
             $user = $poda->requerente->user;
             $data_marcada = $visita->data_marcada;
             Notification::send($user, new VisitaCanceladaPoda($poda, $data_marcada));

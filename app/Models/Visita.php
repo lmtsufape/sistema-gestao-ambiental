@@ -31,7 +31,7 @@ class Visita extends Model
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
     }
 
-    public function solicitacao_poda()
+    public function solicitacaoPoda()
     {
         return $this->belongsTo(SolicitacaoPoda::class, 'solicitacao_poda_id');
     }

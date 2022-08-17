@@ -70,14 +70,14 @@ class AtualizarStatusBoletos extends Command
     private function consultaStatus(BoletoCobranca $boleto)
     {
         $beneficiario = new Pessoa();
-        $beneficiario->gerar_beneficiario();
+        $beneficiario->gerarBeneficiario();
         $consulta = new ConsultarBoletoRemessa();
         $consulta->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
             'nosso_numero' => $boleto->nosso_numero,
             'beneficiario' => $beneficiario,
         ]);
-        $string = $consulta->gerar_remessa();
+        $string = $consulta->gerarRemessa();
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'consultar_boleto_remessa_' . $boleto->requerimento->id . '.xml';
 
@@ -107,7 +107,7 @@ class AtualizarStatusBoletos extends Command
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $resultado = (new ConsultarBoletoRemessa())->to_array($response);
+        $resultado = (new ConsultarBoletoRemessa())->toArray($response);
 
         if ($boleto->resposta_consultar_boleto != null) {
             if (Storage::disk()->exists($this->resposta_consultar_boleto)) {

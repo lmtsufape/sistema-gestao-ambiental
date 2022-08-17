@@ -49,7 +49,7 @@ class Noticia extends Model
      */
     public function salvarImagem($file)
     {
-        $this->deletar_imagem();
+        $this->deletarImagem();
 
         $caminho_noticias = 'noticias/' . $this->id . '/';
         $documento_nome = $file->getClientOriginalName();
@@ -132,7 +132,7 @@ class Noticia extends Model
      *
      * @return void
      */
-    public function deletar_imagem()
+    public function deletarImagem()
     {
         if ($this->imagem_principal != null) {
             if (Storage::disk()->exists('public/' . $this->imagem_principal)) {

@@ -120,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Visita::class, 'analista_id');
     }
 
-    public function tipo_analista()
+    public function tipoAnalista()
     {
         return $this->belongsToMany(TipoAnalista::class, 'tipo_analista_user', 'user_id', 'tipo_analista_id');
     }
@@ -146,7 +146,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $users = User::where('role', User::ROLE_ENUM['analista'])->get();
 
         foreach ($users as $analista) {
-            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
+            if ($analista->tipoAnalista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) {
                 $analistas->push($analista);
             }
         }
@@ -165,7 +165,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
 
         foreach ($analistas as $analista) {
-            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
+            if ($analista->tipoAnalista()->where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) {
                 $protocolistas->push($analista);
             }
         }
@@ -184,7 +184,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $analistas = User::where('role', User::ROLE_ENUM['analista'])->get();
 
         foreach ($analistas as $analista) {
-            if ($analista->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) {
+            if ($analista->tipoAnalista()->where('tipo', TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) {
                 $analistasPoda->push($analista);
             }
         }
@@ -200,7 +200,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ehAnalista()
     {
         if ($this->role == User::ROLE_ENUM['analista']) {
-            return $this->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0;
+            return $this->tipoAnalista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0;
         }
 
         return false;

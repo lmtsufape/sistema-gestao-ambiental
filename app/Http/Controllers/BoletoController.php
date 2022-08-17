@@ -106,11 +106,11 @@ class BoletoController extends Controller
             return $boleto->URL;
         }
         try {
-            $xmlBoletoController->incluir_boleto_remessa($boleto);
+            $xmlBoletoController->incluirBoletoRemessa($boleto);
 
             return $boleto->URL;
         } catch (ErrorRemessaException $e) {
-            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
+            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
     }
 
@@ -129,11 +129,11 @@ class BoletoController extends Controller
             return $boleto->URL;
         }
         try {
-            $xmlBoletoController->incluir_boleto_remessa($boleto);
+            $xmlBoletoController->incluirBoletoRemessa($boleto);
 
             return $boleto->URL;
         } catch (ErrorRemessaException $e) {
-            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
+            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
     }
 
@@ -147,13 +147,13 @@ class BoletoController extends Controller
     private function gerarBoleto(Requerimento $requerimento)
     {
         $xmlBoletoController = new XMLCoderController();
-        $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
+        $boleto = $xmlBoletoController->gerarIncluirBoleto($requerimento);
         try {
-            $xmlBoletoController->incluir_boleto_remessa($boleto);
+            $xmlBoletoController->incluirBoletoRemessa($boleto);
 
             return $boleto->URL;
         } catch (ErrorRemessaException $e) {
-            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
+            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
     }
 
@@ -168,11 +168,11 @@ class BoletoController extends Controller
     {
         $xmlBoletoController = new XMLCoderController();
         try {
-            $xmlBoletoController->gerar_alterar_boleto($boleto);
+            $xmlBoletoController->gerarAlterarBoleto($boleto);
 
             return redirect($boleto->URL);
         } catch (ErrorRemessaException $e) {
-            throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
+            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
     }
 
@@ -182,7 +182,7 @@ class BoletoController extends Controller
      * @param string $mensagem
      * @return string $mensagem_formatada
      */
-    private function formatar_mensagem(string $mensagem)
+    private function formatarMensagem(string $mensagem)
     {
         if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
             return 'WEBSERVICE ERROR: ' . $mensagem;

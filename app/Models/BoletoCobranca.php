@@ -34,7 +34,7 @@ class BoletoCobranca extends Model
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
     }
 
-    public function salvar_arquivo($string)
+    public function salvarArquivo($string)
     {
         if ($this->caminho_arquivo_remessa != null) {
             if (Storage::disk()->exists('public/' . $this->caminho_arquivo_remessa)) {
@@ -44,11 +44,11 @@ class BoletoCobranca extends Model
 
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'incluir_boleto_remessa_' . $this->id . '.xml';
-        $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
+        $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
         $this->caminho_arquivo_remessa = $caminho_arquivo . $documento_nome;
     }
 
-    private function gerar_arquivo($string, $caminho)
+    private function gerarArquivo($string, $caminho)
     {
         $file = fopen(storage_path('') . '/app/' . $caminho, 'w+');
 
@@ -57,7 +57,7 @@ class BoletoCobranca extends Model
         fclose($file);
     }
 
-    public function salvar_arquivo_resposta($string)
+    public function salvarArquivoResposta($string)
     {
         if ($this->resposta_incluir_boleto != null) {
             if (Storage::disk()->exists('public/' . $this->resposta_incluir_boleto)) {
@@ -67,11 +67,11 @@ class BoletoCobranca extends Model
 
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_incluir_boleto_remessa_' . $this->id . '.xml';
-        $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
+        $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
         $this->resposta_incluir_boleto = $caminho_arquivo . $documento_nome;
     }
 
-    public function salvar_arquivo_resposta_alterar_boleto($string)
+    public function salvarArquivoRespostaAlterarBoleto($string)
     {
         if ($this->resposta_alterar_boleto != null) {
             if (Storage::disk()->exists('public/' . $this->resposta_alterar_boleto)) {
@@ -81,7 +81,7 @@ class BoletoCobranca extends Model
 
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_alterar_boleto_remessa_' . $this->id . '.xml';
-        $this->gerar_arquivo($string, $caminho_arquivo . $documento_nome);
+        $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
         $this->resposta_alterar_boleto = $caminho_arquivo . $documento_nome;
     }
 }

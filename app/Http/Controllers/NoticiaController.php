@@ -113,7 +113,7 @@ class NoticiaController extends Controller
         $noticia = Noticia::find($id);
         $this->authorize('delete', $noticia);
 
-        $noticia->deletar_imagem();
+        $noticia->deletarImagem();
         $noticia->delete();
 
         return redirect(route('noticias.index'))->with(['success' => 'Notícia deletada com sucesso!']);

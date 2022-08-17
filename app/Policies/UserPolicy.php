@@ -51,7 +51,7 @@ class UserPolicy
         if ($this->isAnalista($user)) {
             $protocolista = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->first();
 
-            return $user->tipo_analista()->where('tipo_analista_id', $protocolista->id)->first() != null;
+            return $user->tipoAnalista()->where('tipo_analista_id', $protocolista->id)->first() != null;
         }
 
         return false;
@@ -67,7 +67,7 @@ class UserPolicy
         if ($this->isAnalista($user)) {
             $processo = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['processo'])->first();
 
-            return $user->tipo_analista()->where('tipo_analista_id', $processo->id)->first() != null;
+            return $user->tipoAnalista()->where('tipo_analista_id', $processo->id)->first() != null;
         }
 
         return false;
@@ -83,7 +83,7 @@ class UserPolicy
         if ($this->isAnalista($user)) {
             $analistaPoda = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['poda'])->first();
 
-            return $analistaPoda != null && $user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null;
+            return $analistaPoda != null && $user->tipoAnalista()->where('tipo_analista_id', $analistaPoda->id)->first() != null;
         }
 
         return false;

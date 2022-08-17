@@ -42,14 +42,14 @@ class ConsultarBoletoRemessa extends Remessa
      * Gera o arquivo de remessa.
      * @return string $cabeçalho
      */
-    public function gerar_remessa()
+    public function gerarRemessa()
     {
         $xml_array = [
             'soapenv:Body' => [
                 'ext:SERVICO_ENTRADA' => [
                     'sib:HEADER' => [
                         'VERSAO' => $this->versao,
-                        'AUTENTICACAO' => $this->gerar_autenticacao(),
+                        'AUTENTICACAO' => $this->gerarAutenticacao(),
                         'USUARIO_SERVICO' => $this->usuario_servico,
                         'OPERACAO' => $this->operacao,
                         'SISTEMA_ORIGEM' => $this->sistema_origem,
@@ -80,9 +80,9 @@ class ConsultarBoletoRemessa extends Remessa
      * Gera a hash de atutenticação do cabeçalho do arquivo.
      * @return string $cabeçalho
      */
-    private function gerar_autenticacao()
+    private function gerarAutenticacao()
     {
-        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . '00000000' . '000000000000000' . $this->retirar_formatacao($this->beneficiario->cnpj);
+        $autenticacao = $this->codigo_beneficiario . $this->nosso_numero . '00000000' . '000000000000000' . $this->retirarFormatacao($this->beneficiario->cnpj);
         $hash = hash('sha256', $autenticacao, true);
 
         return base64_encode($hash);
