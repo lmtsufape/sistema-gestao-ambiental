@@ -123,7 +123,8 @@ class SolicitacaoPodaController extends Controller
         $solicitacao->save();
 
         if (array_key_exists('imagem', $data)) {
-            for ($i = 0; $i < count($data['imagem']); $i++) {
+            $count = count($data['imagem']);
+            for ($i = 0; $i < $count; $i++) {
                 $foto_poda = new FotoPoda();
                 $foto_poda->solicitacao_poda_id = $solicitacao->id;
                 $foto_poda->comentario = $data['comentarios'][$i] ?? '';

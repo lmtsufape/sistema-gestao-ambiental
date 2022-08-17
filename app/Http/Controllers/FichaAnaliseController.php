@@ -25,7 +25,8 @@ class FichaAnaliseController extends Controller
         $ficha->solicitacao_poda_id = $solicitacao->id;
         $ficha->fill($data);
         $ficha->save();
-        for ($i = 0; $i < count($data['imagem']); $i++) {
+        $count = count($data['imagem']);
+        for ($i = 0; $i < $count; $i++) {
             $foto_ficha = new FotoFichaAnalise();
             $foto_ficha->ficha_analise_id = $ficha->id;
             $foto_ficha->comentario = $data['comentario'][$i] ?? '';

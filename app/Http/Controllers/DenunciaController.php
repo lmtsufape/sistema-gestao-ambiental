@@ -102,7 +102,8 @@ class DenunciaController extends Controller
         $denuncia->save();
 
         if (array_key_exists('imagem', $data)) {
-            for ($i = 0; $i < count($data['imagem']); $i++) {
+            $count = count($data['imagem']);
+            for ($i = 0; $i < $count; $i++) {
                 $foto_denuncia = new FotoDenuncia();
                 $foto_denuncia->denuncia_id = $denuncia->id;
                 $foto_denuncia->comentario = $data['comentario'][$i] ?? '';
@@ -112,7 +113,8 @@ class DenunciaController extends Controller
         }
 
         if (array_key_exists('video', $data)) {
-            for ($i = 0; $i < count($data['video']); $i++) {
+            $count = count($data['video']);
+            for ($i = 0; $i < $count; $i++) {
                 $video_denuncia = new VideoDenuncia();
                 $video_denuncia->denuncia_id = $denuncia->id;
                 $video_denuncia->comentario = $data['comentario'][$i] ?? '';

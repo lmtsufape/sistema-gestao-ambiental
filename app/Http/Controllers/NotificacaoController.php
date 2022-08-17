@@ -79,7 +79,8 @@ class NotificacaoController extends Controller
         $notificacao->autor_id = auth()->user()->id;
         $notificacao->save();
         if (array_key_exists('imagem', $data)) {
-            for ($i = 0; $i < count($data['imagem']); $i++) {
+            $count = count($data['imagem']);
+            for ($i = 0; $i < $count; $i++) {
                 $foto_notificacao = new FotoNotificacao();
                 $foto_notificacao->notificacao_id = $notificacao->id;
                 $foto_notificacao->comentario = $data['comentario'][$i] ?? '';

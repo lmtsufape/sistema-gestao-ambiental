@@ -25,7 +25,8 @@ class LaudoTecnicoController extends Controller
         $laudo->solicitacao_poda_id = $solicitacao->id;
         $laudo->fill($data);
         $laudo->save();
-        for ($i = 0; $i < count($data['imagem']); $i++) {
+        $count = count($data['imagem']);
+        for ($i = 0; $i < $count; $i++) {
             $foto_laudo = new FotoLaudoTecnico();
             $foto_laudo->laudo_tecnico_id = $laudo->id;
             $foto_laudo->comentario = $data['comentario'][$i] ?? '';
