@@ -35,9 +35,9 @@ class VisitaController extends Controller
                 case 'requerimento':
                     $analistas = User::analistas();
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
-                            $qry->where('status', '!=', Requerimento::STATUS_ENUM)
+                        $qry->where('status', '!=', Requerimento::STATUS_ENUM)
                                 ->where('cancelada', false);
-                        })
+                    })
                         ->orderBy('data_marcada', 'DESC')
                         ->paginate(10);
                     break;
@@ -54,9 +54,9 @@ class VisitaController extends Controller
             switch ($filtro) {
                 case 'requerimento':
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
-                            $qry->where('status', '!=', Requerimento::STATUS_ENUM)
+                        $qry->where('status', '!=', Requerimento::STATUS_ENUM)
                                 ->where('cancelada', false);
-                        })
+                    })
                         ->where('analista_id', auth()->user()->id)
                         ->orderBy('data_marcada', 'DESC')
                         ->paginate(10);
