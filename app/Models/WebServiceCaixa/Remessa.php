@@ -14,15 +14,14 @@ use DOMElement;
  */
 abstract class Remessa extends BoletoCobranca
 {
-
     // VERSAO : char[10]
-    public $versao = "2.1";
+    public $versao = '2.1';
 
     // AUTENTICACAO : char[64]
     public $autenticacao;
 
     // USUARIO_SERVICO : char[8]
-    public $usuario_servico = "SGCBS02P";
+    public $usuario_servico = 'SGCBS02P';
 
     // USUARIO : char[8]
     public $usuario;
@@ -31,7 +30,7 @@ abstract class Remessa extends BoletoCobranca
     public $indice;
 
     // SISTEMA_ORIGEM : char[5]
-    public $sistema_origem = "SIGCB";
+    public $sistema_origem = 'SIGCB';
 
     // UNIDADE : char[4]
     public $unidade;
@@ -48,51 +47,54 @@ abstract class Remessa extends BoletoCobranca
     /**
      * Gera o valor do boleto com 15 casas, zeros a esquerda.
      *
-     * @return String $cabeçalho
-    */
+     * @return string $cabeçalho
+     */
     protected function gerar_valor_atutenticacao()
     {
-        $valor_string = number_format($this->valor, 2, "", "");
-        return str_pad($valor_string, 15, "0", STR_PAD_LEFT);
+        $valor_string = number_format($this->valor, 2, '', '');
+
+        return str_pad($valor_string, 15, '0', STR_PAD_LEFT);
     }
 
     /**
      * Retorna a string sem pontos, barras e traços.
      *
-     * @param String $string
-     * @return String $string
-    */
+     * @param string $string
+     * @return string $string
+     */
     protected function retirar_formatacao($string)
     {
-        $nova = "";
+        $nova = '';
         for ($i = 0; $i < strlen($string); $i++) {
-            if ($string[$i] != "." && $string[$i] != "/" && $string[$i] != "-") {
+            if ($string[$i] != '.' && $string[$i] != '/' && $string[$i] != '-') {
                 $nova .= $string[$i];
             }
         }
+
         return $nova;
     }
 
     /**
      * Retorna a 'string' do valor com ponto.
      *
-     * @param double $valor Valor em double para ser formatado
+     * @param float $valor Valor em double para ser formatado
      * @param int $num_casas Quantidade de casas decimais
      * @return string $string do valor com duas casas decimais
-    */
+     */
     protected function gerar_valor($valor, $num_casas): string
     {
-        return number_format($valor, $num_casas, '.', "");
+        return number_format($valor, $num_casas, '.', '');
     }
 
     /**
      * Retorna a data formatada (yyyy-mm-dd), se tiver.
      *
      * @return string $string : parte do xml dos descontos
-    */
+     */
     protected function formatar_data($data): string
     {
         $data = new Carbon($data);
+
         return $data->format('Y-m-d');
     }
 
@@ -103,7 +105,7 @@ abstract class Remessa extends BoletoCobranca
      * @param string $string Texto que deve ser validado e formatada
      * @param int $tamanho Tamanho limite da string
      * @return string $string string formatada
-    */
+     */
     protected function validar_formartar_tamanho(string $string, int $tamanho): string
     {
         $tam_string = strlen($string);
@@ -111,6 +113,7 @@ abstract class Remessa extends BoletoCobranca
         if ($tam_string > $tamanho) {
             return substr($string, 0, $tamanho);
         }
+
         return $string;
     }
 
@@ -119,7 +122,7 @@ abstract class Remessa extends BoletoCobranca
      *
      * @param string $string string que o acento será retirado
      * @return string $string string sem acentos
-    */
+     */
     protected function retirar_acento(string $string): string
     {
         return strtr(
@@ -134,13 +137,14 @@ abstract class Remessa extends BoletoCobranca
      *
      * @param string $string_response string responsiva com conteudo em xml
      * @return array $array_conteudo array na forma ['tag' => 'conteudo_da_tag']
-    */
+     */
     public function to_array(string $string_response)
     {
         $dom_document = new DOMDocument();
         $dom_document->loadXML($string_response);
         $conteudo = $dom_document->childNodes[0]->childNodes[0]->childNodes[0];
         $arvore_conteudo = $this->gerar_arvore_de_conteudo($conteudo);
+
         return $this->passa_para_array($arvore_conteudo);
     }
 
@@ -148,14 +152,14 @@ abstract class Remessa extends BoletoCobranca
      *
      * @param DOMElement $lista_de_nos : Lista de elmentos xml
      * @return array $arvore : arvore de conteudo do xml como ['tag' => 'conteudo_da_tag']
-    */
+     */
     private function gerar_arvore_de_conteudo(DOMElement $lista_de_nos): array
     {
         $arvore = [];
         if ($lista_de_nos != null) {
             if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length == 1 && $lista_de_nos->childNodes[0]->childNodes->length == 0) {
                 return [$lista_de_nos->tagName => $lista_de_nos->childNodes->item(0)->data];
-            } else if ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length > 1) {
+            } elseif ($lista_de_nos->childNodes != null && $lista_de_nos->childNodes->length > 1) {
                 for ($i = 0; $i < $lista_de_nos->childNodes->length; $i++) {
                     $arvore[] = $this->gerar_arvore_de_conteudo($lista_de_nos->childNodes[$i]);
                 }
@@ -165,6 +169,7 @@ abstract class Remessa extends BoletoCobranca
                 }
             }
         }
+
         return $arvore;
     }
 
@@ -185,12 +190,11 @@ abstract class Remessa extends BoletoCobranca
             if ($arvore != []) {
                 $chave = array_key_first($arvore);
                 if (array_key_exists($chave, $array)) {
-                    $combinacao = array( $chave =>
-                        [
-                            'HEADER' => $array[$chave],
-                            'DADOS' => $arvore[$chave],
-                        ],
-                    );
+                    $combinacao = [$chave => [
+                        'HEADER' => $array[$chave],
+                        'DADOS' => $arvore[$chave],
+                    ],
+                    ];
                     unset($array[$chave]);
                     $array = array_merge($array, $combinacao);
                 } else {
@@ -198,6 +202,7 @@ abstract class Remessa extends BoletoCobranca
                 }
             }
         }
+
         return $array;
     }
 
@@ -205,13 +210,14 @@ abstract class Remessa extends BoletoCobranca
      *
      * @param string $string string a qual vai ser convertida
      * @return string $resultado resultado em ‘string’ com os valores de cada caracter concatenados
-    */
+     */
     protected function string_to_bytes(string $string): string
     {
         $resultado = '';
-        for($i = 0; $i < strlen($string); $i++){
+        for ($i = 0; $i < strlen($string); $i++) {
             $resultado .= ord($string[$i]);
         }
+
         return $resultado;
     }
 }

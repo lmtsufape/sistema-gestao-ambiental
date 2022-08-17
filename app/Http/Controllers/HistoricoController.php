@@ -84,7 +84,8 @@ class HistoricoController extends Controller
         //
     }
 
-    public function historicoEmpresa($id){
+    public function historicoEmpresa($id)
+    {
         $this->authorize('isSecretario', User::class);
         $empresa = Empresa::find($id);
         $historico = Historico::where('empresa_id', $id)->orderBy('created_at', 'DESC')->get();

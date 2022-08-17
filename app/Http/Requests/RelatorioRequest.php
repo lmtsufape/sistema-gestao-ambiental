@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 
 class RelatorioRequest extends FormRequest
 {
@@ -26,7 +26,7 @@ class RelatorioRequest extends FormRequest
     {
         return [
             'visita' => 'required',
-            'texto'  => 'required|string|max:65000',
+            'texto' => 'required|string|max:65000',
         ];
     }
 }

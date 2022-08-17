@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitacaoMuda extends Model
 {
     use HasFactory;
+
     protected $table = 'solicitacoes_mudas';
+
     protected $fillable = [
         'protocolo',
         'comentario',
@@ -18,7 +20,7 @@ class SolicitacaoMuda extends Model
 
     public const STATUS_ENUM = [
         'registrada' => 1,
-        'deferido'   => 2,
+        'deferido' => 2,
         'indeferido' => 3,
     ];
 
@@ -39,15 +41,15 @@ class SolicitacaoMuda extends Model
 
     public function statusSolicitacao()
     {
-        switch($this->status){
+        switch ($this->status) {
             case SolicitacaoMuda::STATUS_ENUM['registrada']:
-                return "registrada";
+                return 'registrada';
                 break;
             case SolicitacaoMuda::STATUS_ENUM['deferido']:
-                return "deferida";
+                return 'deferida';
                 break;
             case SolicitacaoMuda::STATUS_ENUM['indeferido']:
-                return "indeferida";
+                return 'indeferida';
                 break;
         }
     }

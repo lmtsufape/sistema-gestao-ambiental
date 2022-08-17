@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Checklist extends Pivot
@@ -17,9 +15,9 @@ class Checklist extends Pivot
 
     public const STATUS_ENUM = [
         'nao_enviado' => 1,
-        'enviado'     => 2,
-        'aceito'      => 3,
-        'analisado'   => 4,
-        'recusado'    => 5,
+        'enviado' => 2,
+        'aceito' => 3,
+        'analisado' => 4,
+        'recusado' => 5,
     ];
 }

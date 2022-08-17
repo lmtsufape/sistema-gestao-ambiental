@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cnae;
 use App\Models\Setor;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class CnaeController extends Controller
 {
@@ -19,6 +19,7 @@ class CnaeController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $cnaes = Cnae::orderBy('nome')->paginate(20);
+
         return view('cnae.index', compact('cnaes'));
     }
 
@@ -32,6 +33,7 @@ class CnaeController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $setor = Setor::find($id);
+
         return view('cnae.create', compact('setor'));
     }
 
@@ -50,8 +52,8 @@ class CnaeController extends Controller
         // }
 
         $validator = $request->validate([
-            'nome'      => 'required|string',
-            'codigo'    => 'nullable|string|unique:cnaes,codigo',
+            'nome' => 'required|string',
+            'codigo' => 'nullable|string|unique:cnaes,codigo',
             'potencial_poluidor' => 'required',
         ]);
 
@@ -86,6 +88,7 @@ class CnaeController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $cnae = Cnae::find($id);
+
         return view('cnae.edit', compact('cnae'));
     }
 
@@ -106,11 +109,10 @@ class CnaeController extends Controller
         $cnae = Cnae::find($id);
 
         $validator = $request->validate([
-            'nome'      => 'required|string',
-            'codigo'    => 'nullable|string|unique:cnaes,codigo,'.$cnae->id,
+            'nome' => 'required|string',
+            'codigo' => 'nullable|string|unique:cnaes,codigo,' . $cnae->id,
             'potencial_poluidor' => 'required',
         ]);
-
 
         $cnae->setAtributes($request);
         $cnae->potencial_poluidor = Cnae::POTENCIAL_POLUIDOR_ENUM[$request->potencial_poluidor];
@@ -128,7 +130,7 @@ class CnaeController extends Controller
     public function destroy($id)
     {
         $this->authorize('isSecretario', User::class);
-        
+
         $cnae = Cnae::find($id);
         $setor = $cnae->setor;
 

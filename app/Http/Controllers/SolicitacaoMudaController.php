@@ -26,10 +26,10 @@ class SolicitacaoMudaController extends Controller
     {
         $this->authorize('index', SolicitacaoMuda::class);
         $registradas = SolicitacaoMuda::where('status', '1')->paginate(20);
-        $deferidas   = SolicitacaoMuda::where('status', '2')->paginate(20);
+        $deferidas = SolicitacaoMuda::where('status', '2')->paginate(20);
         $indeferidas = SolicitacaoMuda::where('status', '3')->paginate(20);
 
-        switch($filtro){
+        switch ($filtro) {
             case 'pendentes':
                 $mudas = $registradas;
                 break;
@@ -41,22 +41,23 @@ class SolicitacaoMudaController extends Controller
                 break;
         }
 
-        return view('solicitacoes.mudas.index', compact('mudas','filtro'));
+        return view('solicitacoes.mudas.index', compact('mudas', 'filtro'));
     }
 
     public function requerenteIndex()
     {
         $this->authorize('requerenteIndex', SolicitacaoMuda::class);
         $solicitacoes = SolicitacaoMuda::where('requerente_id', auth()->user()->requerente->id)->orderBy('created_at', 'DESC')->paginate(10);
+
         return view('solicitacoes.mudas.requerente.index', compact('solicitacoes'));
     }
-
 
     public function create()
     {
         $this->authorize('create', SolicitacaoMuda::class);
 
         $especies = EspecieMuda::orderBy('nome')->get();
+
         return view('solicitacoes.mudas.requerente.create', compact('especies'));
     }
 
@@ -75,19 +76,20 @@ class SolicitacaoMudaController extends Controller
         $solicitacao->requerente_id = auth()->user()->requerente->id;
         $protocolo = null;
         do {
-            $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
+            $protocolo = substr(str_shuffle(Hash::make(date('Y-m-d H:i:s'))), 0, 20);
             $check = SolicitacaoMuda::where('protocolo', $protocolo)->first();
-        } while($check != null);
+        } while ($check != null);
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
-        foreach($request->especie as $i => $especie){
+        foreach ($request->especie as $i => $especie) {
             MudaSolicitada::create([
                 'solicitacao_id' => $solicitacao->id,
                 'especie_id' => $especie,
-                'qtd_mudas' => $request->qtd_mudas[$i]
+                'qtd_mudas' => $request->qtd_mudas[$i],
             ]);
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
+
         return redirect()->back()->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
@@ -100,13 +102,14 @@ class SolicitacaoMudaController extends Controller
     public function show(SolicitacaoMuda $solicitacao)
     {
         $this->authorize('viewAny', SolicitacaoMuda::class);
+
         return view('solicitacoes.mudas.show', ['solicitacao' => $solicitacao]);
     }
 
     public function documento(Request $request, $id)
     {
         $solicitacao = SolicitacaoMuda::find($id);
-        if($solicitacao == null){
+        if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada.']);
         } else {
             return Storage::download($solicitacao->arquivo);
@@ -116,9 +119,9 @@ class SolicitacaoMudaController extends Controller
     public function status(Request $request)
     {
         $solicitacao = SolicitacaoMuda::where('protocolo', $request->protocolo)->first();
-        if($solicitacao == null){
+        if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
-        }else{
+        } else {
             return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
         }
     }
@@ -126,12 +129,14 @@ class SolicitacaoMudaController extends Controller
     public function mostrar(SolicitacaoMuda $solicitacao)
     {
         $this->authorize('view', $solicitacao);
+
         return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
     }
 
     public function edit(SolicitacaoMuda $solicitacao)
     {
         $this->authorize('edit', SolicitacaoMuda::class);
+
         return view('solicitacoes.mudas.edit', ['solicitacao' => $solicitacao]);
     }
 
@@ -155,6 +160,7 @@ class SolicitacaoMudaController extends Controller
             Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'muda', 'indeferida', $data['motivo_indeferimento']));
         }
         $solicitacao->update();
+
         return redirect()->route('mudas.index', 'pendentes')->with('success', 'Solicitação de muda avalida com sucesso');
     }
 

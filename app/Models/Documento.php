@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Requests\DocumentoRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\DocumentoRequest;
 use Illuminate\Support\Facades\Storage;
 
 class Documento extends Model
@@ -38,22 +38,24 @@ class Documento extends Model
         $this->padrao_regularizacao = $request->input('regularização') != null;
     }
 
-    public function existemRequerimentos() {
+    public function existemRequerimentos()
+    {
         if ($this->requerimentos->count() > 0) {
             return true;
         }
+
         return false;
     }
 
     public function salvarDocumento($file)
     {
         if ($this->documento_modelo != null) {
-            if (Storage::disk()->exists('public/'. $this->documento_modelo)) {
-                Storage::delete('public/'. $this->documento_modelo);
+            if (Storage::disk()->exists('public/' . $this->documento_modelo)) {
+                Storage::delete('public/' . $this->documento_modelo);
             }
         }
 
-        $caminho_licencas = "documentos/licencas/";
+        $caminho_licencas = 'documentos/licencas/';
         $documento_nome = $file->getClientOriginalName();
         Storage::putFileAs('public/' . $caminho_licencas, $file, $documento_nome);
         $this->documento_modelo = $caminho_licencas . $file->getClientOriginalName();
@@ -62,8 +64,8 @@ class Documento extends Model
     public function deletar()
     {
         if ($this->documento_modelo != null) {
-            if (Storage::disk()->exists('public/'. $this->documento_modelo)) {
-                Storage::delete('public/'. $this->documento_modelo);
+            if (Storage::disk()->exists('public/' . $this->documento_modelo)) {
+                Storage::delete('public/' . $this->documento_modelo);
             }
         }
 

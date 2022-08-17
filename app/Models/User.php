@@ -7,14 +7,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -95,15 +94,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosDocumentosAnexadosNotificacao()
     {
-        $requerimento = Requerimento::
-            where('status', '=', Requerimento::STATUS_ENUM['documentos_requeridos'])
+        $requerimento = Requerimento::where('status', '=', Requerimento::STATUS_ENUM['documentos_requeridos'])
             ->where('cancelada', false)
             ->whereRelation('empresa', 'user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')
             ->first();
-        if($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->count() > 0){
+        if ($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->count() > 0) {
             $requerimento = null;
         }
+
         return $requerimento;
     }
 
@@ -111,7 +110,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->name = $input['name'];
         $this->email = $input['email'];
-        if($input['password'] != null){
+        if ($input['password'] != null) {
             $this->password = Hash::make($input['password']);
         }
     }
@@ -201,7 +200,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ehAnalista()
     {
         if ($this->role == User::ROLE_ENUM['analista']) {
-            return $this->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count()  > 0;
+            return $this->tipo_analista()->where('tipo', TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0;
         }
 
         return false;
@@ -211,7 +210,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * salva a foto do perfil do usuário.
      *
      * @param Request $request
-     * @return boolean
+     * @return bool
      */
     public function salvarFoto(Request $request)
     {
@@ -219,8 +218,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if ($file != null) {
             if ($this->profile_photo_path != null) {
-                if (Storage::disk()->exists('public/'. $this->profile_photo_path)) {
-                    Storage::delete('public/'. $this->profile_photo_path);
+                if (Storage::disk()->exists('public/' . $this->profile_photo_path)) {
+                    Storage::delete('public/' . $this->profile_photo_path);
                 }
             }
 
@@ -247,11 +246,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $notificacoes;
     }
 
-
     /**
      * Retorna se ha notificacoes nao vistas.
      *
-     * @return boolean
+     * @return bool
      */
     public function notificacoesNaoVistas()
     {
@@ -259,7 +257,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $query->where('user_id', auth()->user()->id);
         })->where('visto', false)->first();
 
-        return $notificacoes  != null;
+        return $notificacoes != null;
     }
 
     /**
@@ -267,14 +265,15 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return string $filtro
      */
-
-    public function getUserType(){
+    public function getUserType()
+    {
         $userPolicy = new UserPolicy();
-        if($userPolicy->isAnalistaPoda($this)){
+        if ($userPolicy->isAnalistaPoda($this)) {
             $filtro = 'poda';
-        }else{
+        } else {
             $filtro = 'requerimento';
         }
+
         return $filtro;
     }
 }

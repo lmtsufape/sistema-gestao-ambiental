@@ -31,6 +31,7 @@ class RequerimentoPolicy
     public function view(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
+
         return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
     }
 
@@ -67,7 +68,7 @@ class RequerimentoPolicy
     public function delete(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
-        
+
         return $user->empresas->contains('id', $requerimento->empresa->id) || $userPolicy->isSecretario($user);
     }
 
@@ -100,7 +101,7 @@ class RequerimentoPolicy
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\Requerimento  $requerimento
-     * @return boolean
+     * @return bool
      */
     private function analises(User $user, Requerimento $requerimento)
     {
@@ -115,13 +116,14 @@ class RequerimentoPolicy
     public function requerimentoDocumentacao(User $user, Requerimento $requerimento)
     {
         $userPolicy = new UserPolicy();
-        if(!$requerimento->cancelado()){
+        if (! $requerimento->cancelado()) {
             if ($userPolicy->isRequerente($user)) {
                 return $requerimento->empresa->user_id == $user->id;
-            }elseif($userPolicy->isSecretario($user)){
+            } elseif ($userPolicy->isSecretario($user)) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -130,9 +132,9 @@ class RequerimentoPolicy
         $userPolicy = new UserPolicy();
         if ($userPolicy->isRequerente($user)) {
             return $requerimento->empresa->user_id == $user->id;
-        }elseif($userPolicy->isSecretario($user)){
+        } elseif ($userPolicy->isSecretario($user)) {
             return true;
-        }else{
+        } else {
             return $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
         }
     }

@@ -89,11 +89,11 @@ class DenunciaController extends Controller
      * @response status=200 scenario="success" {file}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     *
      */
     public function getArquivoFotoDenuncia(Request $request)
     {
         $foto = FotoDenuncia::find($request->id_foto);
+
         return Storage::download($foto['caminho']);
     }
 }

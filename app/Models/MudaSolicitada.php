@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MudaSolicitada extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'solicitacao_id',
         'especie_id',

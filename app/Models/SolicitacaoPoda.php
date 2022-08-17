@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SolicitacaoPoda extends Model
 {
     use HasFactory;
+
     protected $table = 'solicitacoes_podas';
+
     protected $fillable = [
         'protocolo',
         'motivo_indeferimento',
@@ -21,7 +23,7 @@ class SolicitacaoPoda extends Model
 
     public const STATUS_ENUM = [
         'registrada' => 1,
-        'deferido'   => 2,
+        'deferido' => 2,
         'indeferido' => 3,
     ];
 

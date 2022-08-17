@@ -31,18 +31,16 @@ class SolicitacaoPodaController extends Controller
 
         $userPolicy = new UserPolicy();
         if ($userPolicy->isAnalistaPoda(auth()->user())) {
-            $concluidas = SolicitacaoPoda::
-                whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])
+            $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
-            $deferidas = SolicitacaoPoda::
-                whereNotIn('id', $concluidas->pluck('id'))
+            $deferidas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
                 ->where('status', 2)
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
-            switch($filtro) {
+            switch ($filtro) {
                 case 'deferidas':
                     $solicitacoes = $deferidas;
                     break;
@@ -51,14 +49,15 @@ class SolicitacaoPodaController extends Controller
                     break;
             }
             $analistas = User::analistasPoda();
+
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
-        }else{
-            switch($filtro){
+        } else {
+            switch ($filtro) {
                 case 'pendentes':
                     $solicitacoes = SolicitacaoPoda::where('status', '1')->paginate(20);
                     break;
                 case 'deferidas':
-                    $concluidas   = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
+                    $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
                     $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->paginate(20);
                     break;
                 case 'indeferidas':
@@ -69,6 +68,7 @@ class SolicitacaoPodaController extends Controller
                     break;
             }
             $analistas = User::analistasPoda();
+
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }
     }
@@ -90,11 +90,11 @@ class SolicitacaoPodaController extends Controller
         return response()->json($solicitacaoInfo);
     }
 
-
     public function requerenteIndex()
     {
         $this->authorize('requerenteIndex', SolicitacaoPoda::class);
         $solicitacoes = SolicitacaoPoda::where('requerente_id', auth()->user()->requerente->id)->orderBy('created_at', 'DESC')->get();
+
         return view('solicitacoes.podas.requerente.index', compact('solicitacoes'));
     }
 
@@ -116,22 +116,23 @@ class SolicitacaoPodaController extends Controller
         $solicitacao->requerente_id = auth()->user()->requerente->id;
         $protocolo = null;
         do {
-            $protocolo = substr(str_shuffle(Hash::make(date("Y-m-d H:i:s"))), 0, 20);
+            $protocolo = substr(str_shuffle(Hash::make(date('Y-m-d H:i:s'))), 0, 20);
             $check = SolicitacaoPoda::where('protocolo', $protocolo)->first();
-        } while($check != null);
+        } while ($check != null);
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
 
-        if (array_key_exists("imagem", $data)) {
+        if (array_key_exists('imagem', $data)) {
             for ($i = 0; $i < count($data['imagem']); $i++) {
                 $foto_poda = new FotoPoda();
                 $foto_poda->solicitacao_poda_id = $solicitacao->id;
-                $foto_poda->comentario = $data['comentarios'][$i] ?? "";
+                $foto_poda->comentario = $data['comentarios'][$i] ?? '';
                 $foto_poda->caminho = $data['imagem'][$i]->store("podas/{$solicitacao->id}/imagens");
                 $foto_poda->save();
             }
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
+
         return redirect()->back()->with(['success' => 'Solicitação de poda/supressão realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
@@ -144,22 +145,23 @@ class SolicitacaoPodaController extends Controller
     public function show(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('viewAny', SolicitacaoPoda::class);
+
         return view('solicitacoes.podas.show', ['solicitacao' => $solicitacao]);
     }
 
     public function foto(SolicitacaoPoda $solicitacao, FotoPoda $foto)
     {
         $this->authorize('view', $solicitacao);
+
         return Storage::download($foto->caminho);
     }
-
 
     public function status(Request $request)
     {
         $solicitacao = SolicitacaoPoda::where('protocolo', $request->protocolo)->first();
-        if($solicitacao == null){
+        if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
-        }else{
+        } else {
             return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
         }
     }
@@ -167,24 +169,28 @@ class SolicitacaoPodaController extends Controller
     public function mostrar(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('view', $solicitacao);
+
         return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
     }
 
     public function edit(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('edit', SolicitacaoPoda::class);
+
         return view('solicitacoes.podas.edit', ['solicitacao' => $solicitacao]);
     }
 
     public function ficha(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('viewAny', SolicitacaoPoda::class);
+
         return view('solicitacoes.podas.fichas.create', ['solicitacao' => $solicitacao]);
     }
 
     public function laudo(SolicitacaoPoda $solicitacao)
     {
         $this->authorize('viewAny', SolicitacaoPoda::class);
+
         return view('solicitacoes.podas.laudos.create', ['solicitacao' => $solicitacao]);
     }
 
@@ -194,7 +200,7 @@ class SolicitacaoPodaController extends Controller
 
         $request->validate([
             'solicitacao_id_analista' => 'required',
-            'analista'                => 'required',
+            'analista' => 'required',
         ]);
 
         $solicitacao = SolicitacaoPoda::find($request->solicitacao_id_analista);
@@ -222,6 +228,7 @@ class SolicitacaoPodaController extends Controller
             Notification::send($solicitacao->requerente->user, new ParecerSolicitacao($solicitacao, 'poda', 'indeferida', $data['motivo_indeferimento']));
         }
         $solicitacao->update();
+
         return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avalida com sucesso');
     }
 

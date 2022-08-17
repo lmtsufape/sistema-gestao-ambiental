@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\BoletoCobranca;
-use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;

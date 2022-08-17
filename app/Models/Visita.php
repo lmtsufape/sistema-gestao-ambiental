@@ -38,7 +38,7 @@ class Visita extends Model
 
     public function fotos()
     {
-        return $this->hasMany(FotoVisita::class,  'visita_id');
+        return $this->hasMany(FotoVisita::class, 'visita_id');
     }
 
     public function relatorio()
@@ -62,7 +62,7 @@ class Visita extends Model
 
     /**
      * Retorna se a visita foi realizada ou está pendente.
-     * 
+     *
      * @return string $string
      */
     public function status()
@@ -70,6 +70,7 @@ class Visita extends Model
         if ($this->data_realizada != null) {
             return 'Realizada';
         }
+
         return 'Pendente';
     }
 }

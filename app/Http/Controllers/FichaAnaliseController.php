@@ -28,10 +28,11 @@ class FichaAnaliseController extends Controller
         for ($i = 0; $i < count($data['imagem']); $i++) {
             $foto_ficha = new FotoFichaAnalise();
             $foto_ficha->ficha_analise_id = $ficha->id;
-            $foto_ficha->comentario = $data['comentario'][$i] ?? "";
+            $foto_ficha->comentario = $data['comentario'][$i] ?? '';
             $foto_ficha->caminho = $data['imagem'][$i]->store("fichas/{$ficha->id}/imagens");
             $foto_ficha->save();
         }
+
         return view('solicitacoes.podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Ficha de análise criada com sucesso');
     }
 
@@ -43,6 +44,7 @@ class FichaAnaliseController extends Controller
     public function foto(FichaAnalise $ficha, FotoFichaAnalise $foto)
     {
         $this->authorize('isAnalistaPodaOrSecretario', User::class);
+
         return Storage::download($foto->caminho);
     }
 }

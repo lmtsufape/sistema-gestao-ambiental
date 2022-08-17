@@ -2,8 +2,8 @@
 
 namespace App\Models\WebServiceCaixa;
 
-use \DOMDocument;
-use \DOMElement;
+use DOMDocument;
+use DOMElement;
 
 class XmlDomConstruct extends DOMDocument
 {

@@ -92,7 +92,8 @@ class EmpresaPolicy
         //
     }
 
-    private function ehDono(User $user, Empresa $empresa) {
+    private function ehDono(User $user, Empresa $empresa)
+    {
         return $empresa->user_id == $user->id;
     }
 }

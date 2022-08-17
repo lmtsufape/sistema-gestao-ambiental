@@ -53,6 +53,7 @@ class EmpresaController extends Controller
     public function getDocumentos(Request $request)
     {
         $requerimento = Requerimento::find($request->id_requerimento);
+
         return $requerimento->documentos->map->only(['id', 'nome']);
     }
 
@@ -75,6 +76,7 @@ class EmpresaController extends Controller
     public function getDocumento(Request $request)
     {
         $requerimento = Requerimento::find($request->id_requerimento);
+
         return $requerimento->documentos()->where('documento_id', $request->id_documento)->first()->only(['id', 'nome']);
     }
 
@@ -90,12 +92,12 @@ class EmpresaController extends Controller
      * @response status=200 scenario="success" {file}
      *
      * @response status=401 scenario="usuario nao autenticado" {"message": "Unauthenticated."}
-     *
      */
     public function getDocumentoRequerido(Request $request)
     {
         $requerimento = Requerimento::find($request->id_requerimento);
         $caminho = $requerimento->documentos()->where('documento_id', $request->id_documento)->first()->pivot->caminho;
+
         return Storage::download($caminho);
     }
 }

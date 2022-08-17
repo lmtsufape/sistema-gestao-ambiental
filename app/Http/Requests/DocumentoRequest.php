@@ -25,23 +25,23 @@ class DocumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'                  => 'required|string|min:10|max:290',
-            'documento_modelo'      => 'nullable|file|mimes:pdf|max:2048',
-            'prêvia'                => 'nullable',
-            'instalação'            => 'nullable',
-            'operação'              => 'nullable',
-            'simplificada'          => 'nullable',
+            'nome' => 'required|string|min:10|max:290',
+            'documento_modelo' => 'nullable|file|mimes:pdf|max:2048',
+            'prêvia' => 'nullable',
+            'instalação' => 'nullable',
+            'operação' => 'nullable',
+            'simplificada' => 'nullable',
             'autorização_ambiental' => 'nullable',
-            'regularização'         => 'nullable',
+            'regularização' => 'nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'documento_modelo.required'     => "O modelo do documento é obrigatório",
-            'documento_modelo.max'          => "O modelo do documento deve ter no máximo 2MB",
-            'documento_modelo.mimes'        => "O modelo do documento deve ser um PDF",
+            'documento_modelo.required' => 'O modelo do documento é obrigatório',
+            'documento_modelo.max' => 'O modelo do documento deve ter no máximo 2MB',
+            'documento_modelo.mimes' => 'O modelo do documento deve ser um PDF',
         ];
     }
 }

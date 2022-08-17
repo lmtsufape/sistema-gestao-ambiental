@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Historico;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,6 +12,7 @@ class EmpresaModificadaNotification extends Notification
     use Queueable;
 
     public $historico;
+
     public $assunto;
 
     /**

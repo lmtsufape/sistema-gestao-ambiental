@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\WebServiceCaixa;
 
 use App\Http\Controllers\Controller;
-use App\Models\WebServiceCaixa\GerirBoletoRemessa;
-use App\Models\WebServiceCaixa\Pessoa;
-use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
 use App\Models\WebServiceCaixa\AlterarBoletoRemessa;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use App\Models\WebServiceCaixa\GerirBoletoRemessa;
+use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
+use App\Models\WebServiceCaixa\Pessoa;
 use Illuminate\Support\Facades\Storage;
 
 class XMLCoderController extends Controller
@@ -32,7 +32,7 @@ class XMLCoderController extends Controller
 
         $boleto = new IncluirBoletoRemessa([
             'data_vencimento' => $data_vencimento,
-            'requerimento_id' => $requerimento->id
+            'requerimento_id' => $requerimento->id,
         ]);
         $boleto->save();
 
@@ -67,7 +67,7 @@ class XMLCoderController extends Controller
     {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => IncluirBoletoRemessa::URL,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -77,12 +77,12 @@ class XMLCoderController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $boleto->caminho_arquivo_remessa),
+            CURLOPT_HTTPHEADER => [
                 'SoapAction: INCLUI_BOLETO',
-                'Content-Type: text/plain'
-            ),
-        ));
+                'Content-Type: text/plain',
+            ],
+        ]);
 
         $response = curl_exec($curl);
 
@@ -168,13 +168,13 @@ class XMLCoderController extends Controller
             'numero_do_documento' => strval($boleto->id),
         ]);
 
-        $caminho = 'remessas/alterar_boleto_remessa_'.$boleto->id.'.xml';
+        $caminho = 'remessas/alterar_boleto_remessa_' . $boleto->id . '.xml';
         Storage::put($caminho, $remessa_alterar_boleto->gerar_remessa());
         $boleto->update();
 
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => GerirBoletoRemessa::URL,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -184,12 +184,12 @@ class XMLCoderController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$caminho),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $caminho),
+            CURLOPT_HTTPHEADER => [
                 'SoapAction: ALTERA_BOLETO',
-                'Content-Type: text/plain'
-            ),
-        ));
+                'Content-Type: text/plain',
+            ],
+        ]);
 
         $response = curl_exec($curl);
         curl_close($curl);
@@ -199,7 +199,7 @@ class XMLCoderController extends Controller
             switch ($resultado['COD_RETORNO']['DADOS']) {
                 case 0:
                     $boleto->salvar_arquivo_resposta($response);
-                    Storage::put('resposta_alterar_boleto_remessa_'.$boleto->id.'.xml', $response);
+                    Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
                     $this->salvar_resposta_alterar_boleto_remessa($boleto, $resultado);
                     break;
                 default:

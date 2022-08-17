@@ -2,17 +2,17 @@
 
 namespace App\Notifications;
 
+use App\Models\Requerimento;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Requerimento;
 
 class DocumentosEnviadosNotification extends Notification
 {
     use Queueable;
 
     public $requerimento;
+
     public $assunto;
 
     /**

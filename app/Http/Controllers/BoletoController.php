@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
+use App\Models\BoletoCobranca;
+use App\Models\Requerimento;
+use App\Models\User;
+use App\Models\WebServiceCaixa\ErrorRemessaException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
-use App\Models\User;
-use App\Models\BoletoCobranca;
-use App\Models\Requerimento;
-use App\Models\WebServiceCaixa\ErrorRemessaException;
 use Illuminate\Routing\Redirector;
 use PDF;
 
-
 class BoletoController extends Controller
 {
-
     public function index(Request $request, $filtragem)
     {
         $this->authorize('isSecretario', auth()->user());
@@ -29,7 +27,7 @@ class BoletoController extends Controller
         $dataDe = $retorno[4];
         $filtro = $retorno[5];
 
-        switch($filtragem){
+        switch ($filtragem) {
             case 'pendentes':
                 $pagamentos = $pendentes;
                 break;
@@ -40,43 +38,44 @@ class BoletoController extends Controller
                 $pagamentos = $vencidos;
                 break;
         }
+
         return view('boleto.index', compact('pagamentos', 'dataAte', 'dataDe', 'filtro', 'filtragem'));
     }
 
     private function filtrarBoletos(Request $request)
     {
-        if($request->filtro != null && $request->filtro == "vencimento"){
-            if($request->dataDe != null){
-                if($request->dataAte != null){
+        if ($request->filtro != null && $request->filtro == 'vencimento') {
+            if ($request->dataDe != null) {
+                if ($request->dataAte != null) {
                     $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '>=', $request->dataDe], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
-                }else{
+                } else {
                     $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '>=', $request->dataDe]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                 }
-            }elseif($request->dataAte != null){
+            } elseif ($request->dataAte != null) {
                 $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                 $pendentes = BoletoCobranca::where([['status_pagamento', null], ['data_vencimento', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                 $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['data_vencimento', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
             }
-        }else{
-            if($request->dataDe != null){
-                if($request->dataAte != null){
+        } else {
+            if ($request->dataDe != null) {
+                if ($request->dataAte != null) {
                     $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '>=', $request->dataDe], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
-                }else{
+                } else {
                     $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '>=', $request->dataDe]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                     $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '>=', $request->dataDe]])->orderBy('created_at', 'DESC')->paginate(20);
                 }
-            }elseif($request->dataAte != null){
+            } elseif ($request->dataAte != null) {
                 $vencidos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                 $pendentes = BoletoCobranca::where([['status_pagamento', null], ['created_at', '<=', $request->dataAte]])->orWhere([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
                 $pagos = BoletoCobranca::where([['status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']], ['created_at', '<=', $request->dataAte]])->orderBy('created_at', 'DESC')->paginate(20);
-            }else{
+            } else {
                 $vencidos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])->orderBy('created_at', 'DESC')->paginate(20);
                 $pendentes = BoletoCobranca::where('status_pagamento', null)->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'])->orderBy('created_at', 'DESC')->paginate(20);
                 $pagos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])->orderBy('created_at', 'DESC')->paginate(20);
@@ -91,14 +90,14 @@ class BoletoController extends Controller
 
     /**
      * Cria um pdf como relatório dos boletos.
-     *
      */
     public function gerarRelatorioBoletos(Request $request)
     {
         $retorno = $this->filtrarBoletos($request);
 
         $pdf = PDF::loadview('pdf/boletos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2],
-            'dataAte' => $retorno[3], 'dataDe' => $retorno[4], 'filtro' => $retorno[5]]);
+            'dataAte' => $retorno[3], 'dataDe' => $retorno[4], 'filtro' => $retorno[5], ]);
+
         return $pdf->setPaper('a4')->stream('boletos.pdf');
     }
 
@@ -125,6 +124,7 @@ class BoletoController extends Controller
                 } else {
                     try {
                         $xmlBoletoController->incluir_boleto_remessa($boleto);
+
                         return $boleto->URL;
                     } catch (ErrorRemessaException $e) {
                         throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
@@ -150,6 +150,7 @@ class BoletoController extends Controller
                 } else {
                     try {
                         $xmlBoletoController->incluir_boleto_remessa($boleto);
+
                         return $boleto->URL;
                     } catch (ErrorRemessaException $e) {
                         throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
@@ -172,6 +173,7 @@ class BoletoController extends Controller
         $boleto = $xmlBoletoController->gerar_incluir_boleto($requerimento);
         try {
             $xmlBoletoController->incluir_boleto_remessa($boleto);
+
             return $boleto->URL;
         } catch (ErrorRemessaException $e) {
             throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
@@ -190,6 +192,7 @@ class BoletoController extends Controller
         $xmlBoletoController = new XMLCoderController();
         try {
             $xmlBoletoController->gerar_alterar_boleto($boleto);
+
             return redirect($boleto->URL);
         } catch (ErrorRemessaException $e) {
             throw new ErrorRemessaException($this->formatar_mensagem($e->getMessage()));
@@ -211,12 +214,12 @@ class BoletoController extends Controller
             $mensagem_lower = strtolower($mensagem);
             $numeros_parenteses = '1234567890()';
             for ($i = 0; $i < strlen($mensagem_lower); $i++) {
-                if (!(strpos($numeros_parenteses, $mensagem_lower[$i]))) {
+                if (! (strpos($numeros_parenteses, $mensagem_lower[$i]))) {
                     $mensagem_formatada .= $mensagem_lower[$i];
                 }
             }
+
             return ucfirst($mensagem_formatada);
         }
     }
-
 }

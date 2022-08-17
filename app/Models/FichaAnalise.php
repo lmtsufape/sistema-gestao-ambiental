@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class FichaAnalise extends Model
 {
     use HasFactory;
+
     protected $table = 'fichas_analises';
+
     protected $fillable = [
         'condicoes',
         'localizacao',

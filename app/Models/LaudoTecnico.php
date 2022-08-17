@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LaudoTecnico extends Model
 {
     use HasFactory;
+
     protected $table = 'laudos_tecnicos';
+
     protected $fillable = [
         'condicoes',
         'localizacao',
