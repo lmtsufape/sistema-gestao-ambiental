@@ -967,7 +967,7 @@ a.article:hover {
 }
 
 .texto-card-highlight{
-    color: #00883D; 
+    color: #00883D;
     font-weight: bold;
     font-size: 16px;
 }
@@ -1198,6 +1198,10 @@ a.article:hover {
         max-width: 70vw;
     }
 
+}
+
+.d-empty:empty {
+    display: none;
 }
 
 /* X DEMO STYLE SIDE BAR X */
