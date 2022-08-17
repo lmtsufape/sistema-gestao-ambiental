@@ -48,7 +48,7 @@ class DocumentosAnalisadosNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown(
+        return (new MailMessage())->markdown(
             'mail.documentos_analisados',
             ['documentos' => $this->documentos, 'requerimento' => $this->requerimento]
         )->subject($this->assunto);

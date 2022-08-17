@@ -35,7 +35,7 @@ class EmpresaRequest extends FormRequest
             'setor' => ['required', 'string'],
             'celular_da_empresa' => ['required', 'string', 'celular_com_ddd', 'max:255'],
             'porte' => ['required'],
-            'cep_da_empresa' => ['required', 'string', 'max:255', new CEPGaranhuns],
+            'cep_da_empresa' => ['required', 'string', 'max:255', new CEPGaranhuns()],
             'bairro_da_empresa' => ['required', 'string', 'max:255'],
             'rua_da_empresa' => ['required', 'string', 'max:255'],
             'número_da_empresa' => ['required', 'string', 'max:255'],

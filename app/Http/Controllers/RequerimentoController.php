@@ -135,7 +135,7 @@ class RequerimentoController extends Controller
             return redirect()->back()->withErrors(['tipo' => 'Você já tem um requerimento pendente.', 'error_modal' => 1]);
         }
 
-        $requerimento = new Requerimento;
+        $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
@@ -589,7 +589,7 @@ class RequerimentoController extends Controller
         }
 
         if ($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)) {
-            $historico = new Historico;
+            $historico = new Historico();
             $historico->user_id = auth()->user()->id;
             $historico->empresa_id = $requerimento->empresa->id;
             $historico->save();
@@ -598,19 +598,19 @@ class RequerimentoController extends Controller
                     $cnae = Cnae::find($cnae_id);
                     if (! $requerimento->empresa->cnaes->contains($cnae)) {
                         $requerimento->empresa->cnaes()->attach($cnae);
-                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
                     } else {
-                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
 
-                        $modifcacaoCnae3 = new ModificacaoCnae;
+                        $modifcacaoCnae3 = new ModificacaoCnae();
                         $modifcacaoCnae3->novo = false;
                         $modifcacaoCnae3->cnae_id = $cnae_id;
                         $modifcacaoCnae3->historico_id = $historico->id;
@@ -620,7 +620,7 @@ class RequerimentoController extends Controller
                 foreach ($requerimento->empresa->cnaes as $cnae) {
                     if (! in_array($cnae->id, $request->cnaes_id)) {
                         $requerimento->empresa->cnaes()->detach($cnae);
-                        $modifcacaoCnae2 = new ModificacaoCnae;
+                        $modifcacaoCnae2 = new ModificacaoCnae();
                         $modifcacaoCnae2->novo = false;
                         $modifcacaoCnae2->cnae_id = $cnae->id;
                         $modifcacaoCnae2->historico_id = $historico->id;
@@ -629,7 +629,7 @@ class RequerimentoController extends Controller
                 }
             }
             if ($this->possuiModificacaoPorte($request, $id)) {
-                $modifcacaoPorte = new ModificacaoPorte;
+                $modifcacaoPorte = new ModificacaoPorte();
                 $modifcacaoPorte->porte_antigo = $requerimento->empresa->porte;
                 $modifcacaoPorte->porte_atual = Empresa::PORTE_ENUM[$request->porte];
                 $modifcacaoPorte->historico_id = $historico->id;

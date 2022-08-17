@@ -45,7 +45,7 @@ class ContatoNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown(
+        return (new MailMessage())->markdown(
             'mail.contato',
             ['dados' => $this->request]
         )->subject($this->assunto);

@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SolicitacaoMudasCriada extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     private $solicitacao;
 

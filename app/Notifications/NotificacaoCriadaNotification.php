@@ -53,7 +53,7 @@ class NotificacaoCriadaNotification extends Notification
             }
         }
 
-        $message = (new MailMessage)
+        $message = (new MailMessage())
             ->markdown(
                 'mail.notificacao_criada',
                 [

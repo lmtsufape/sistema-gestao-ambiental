@@ -56,8 +56,7 @@ class AtualizarStatusBoletos extends Command
                                     ['data_vencimento', '>', now()->subDays(5)],
                                 ]
                             );
-                    }
-                    );
+                    });
             })
             ->lazy()->each(function ($boleto) {
                 $dados = $this->consultaStatus($boleto);
@@ -133,11 +132,10 @@ class AtualizarStatusBoletos extends Command
                         return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'], 'data' => now()];
                     default:
                         return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
-                        break;
                 }
+                break;
             default:
                 return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];
-                break;
         }
 
         return ['status' => BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago'], 'data' => null];

@@ -47,7 +47,7 @@ class VisitaMarcadaRequerimento extends Notification
     {
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->markdown(
                 'mail.visita-marcada-requerimento',
                 [

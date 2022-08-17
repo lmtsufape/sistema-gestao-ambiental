@@ -45,7 +45,7 @@ class EmpresaModificadaNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown(
+        return (new MailMessage())->markdown(
             'mail.empresa_modificada',
             ['historico' => $this->historico]
         )->subject($this->assunto);
