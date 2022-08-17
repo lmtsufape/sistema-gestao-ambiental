@@ -49,9 +49,9 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
         } elseif ($user->role == User::ROLE_ENUM['analista']) {
             $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
-                    ->where('analista_id', $user->id)
-                    ->orwhere('analista_processo_id', $user->id)
-                    ->orderBy('created_at')->paginate(20);
+                ->where('analista_id', $user->id)
+                ->orwhere('analista_processo_id', $user->id)
+                ->orderBy('created_at')->paginate(20);
         } else {
             $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
             $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
@@ -276,7 +276,7 @@ class RequerimentoController extends Controller
     public function atribuirAnalista(Request $request, $tipo)
     {
         $this->authorize('isSecretario', User::class);
-        $validated = $request->validate([
+        $request->validate([
             'analista' => 'required',
             'requerimento' => 'required',
         ]);
@@ -304,7 +304,7 @@ class RequerimentoController extends Controller
      */
     public function storeChecklist(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
@@ -371,7 +371,7 @@ class RequerimentoController extends Controller
      */
     public function updateChecklist(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
@@ -682,8 +682,8 @@ class RequerimentoController extends Controller
     private function protocolistaComMenosRequerimentos()
     {
         return User::withCount(['requerimentos' => function (Builder $qry) {
-            $qry->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos']);
-        }])
+                $qry->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos']);
+            }])
             ->orderBy('requerimentos_count', 'ASC')
             ->first();
     }
@@ -692,7 +692,7 @@ class RequerimentoController extends Controller
     {
         $this->authorize('isSecretarioOrProtocolista', User::class);
 
-        $validator = $request->validate([
+        $request->validate([
             'potencial_poluidor' => 'required',
         ]);
 
