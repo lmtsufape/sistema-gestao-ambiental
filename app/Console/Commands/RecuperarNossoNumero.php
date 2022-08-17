@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\BoletoCobranca;
+use DOMDocument;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +49,7 @@ class RecuperarNossoNumero extends Command
                 if (Storage::exists($boleto->resposta_incluir_boleto)) {
                     $response = Storage::disk('local')->get($boleto->resposta_incluir_boleto);
                     if ($response) {
-                        $dom_document = new \DOMDocument();
+                        $dom_document = new DOMDocument();
                         $dom_document->loadXML($response);
                         $nosso_numero = $dom_document->getElementsByTagName('NOSSO_NUMERO');
                         if (count($nosso_numero)) {
