@@ -132,10 +132,8 @@ class RequerimentoPolicy
         $userPolicy = new UserPolicy();
         if ($userPolicy->isRequerente($user)) {
             return $requerimento->empresa->user_id == $user->id;
-        } elseif ($userPolicy->isSecretario($user)) {
-            return true;
-        } else {
-            return $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
         }
+
+        return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
     }
 }

@@ -50,12 +50,11 @@ class UserPolicy
     {
         if ($this->isAnalista($user)) {
             $protocolista = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->first();
-            if ($user->tipo_analista()->where('tipo_analista_id', $protocolista->id)->first() != null) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return $user->tipo_analista()->where('tipo_analista_id', $protocolista->id)->first() != null;
         }
+
+        return false;
     }
 
     /**
@@ -67,12 +66,11 @@ class UserPolicy
     {
         if ($this->isAnalista($user)) {
             $processo = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['processo'])->first();
-            if ($user->tipo_analista()->where('tipo_analista_id', $processo->id)->first() != null) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return $user->tipo_analista()->where('tipo_analista_id', $processo->id)->first() != null;
         }
+
+        return false;
     }
 
     /**
@@ -84,12 +82,11 @@ class UserPolicy
     {
         if ($this->isAnalista($user)) {
             $analistaPoda = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['poda'])->first();
-            if ($analistaPoda != null && $user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null) {
-                return true;
-            } else {
-                return false;
-            }
+
+            return $analistaPoda != null && $user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null;
         }
+
+        return false;
     }
 
     /**

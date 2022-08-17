@@ -99,9 +99,8 @@ class XMLCoderController extends Controller
                 default:
                     throw new ErrorRemessaException($resultado['RETORNO']);
             }
-        } else {
-            throw new ErrorRemessaException($response);
         }
+        throw new ErrorRemessaException($response);
     }
 
     /**
@@ -205,8 +204,7 @@ class XMLCoderController extends Controller
                 default:
                     throw new ErrorRemessaException($resultado['RETORNO']);
             }
-        } else {
-            throw new ErrorRemessaException($response);
         }
+        throw new ErrorRemessaException($response);
     }
 }

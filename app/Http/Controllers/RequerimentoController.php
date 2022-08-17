@@ -44,17 +44,15 @@ class RequerimentoController extends Controller
         $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = auth()->user()->requerimentosRequerente();
-        } else {
-            if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where('analista_id', $user->id)
+        } elseif ($user->role == User::ROLE_ENUM['analista']) {
+            $requerimentos = Requerimento::where('analista_id', $user->id)
                 ->orwhere('analista_processo_id', $user->id)
                 ->where([['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
                 ->orderBy('created_at', 'DESC')->paginate(20);
-            } else {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
-                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at', 'DESC')->paginate(20);
-                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at', 'DESC')->paginate(20);
-            }
+        } else {
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at', 'DESC')->paginate(20);
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at', 'DESC')->paginate(20);
         }
         switch ($filtro) {
             case 'atuais':

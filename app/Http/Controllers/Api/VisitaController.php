@@ -260,11 +260,7 @@ class VisitaController extends Controller
         ]);
 
         $foto = FotoVisita::find($request->id_foto);
-        if ($request->comentario != null) {
-            $foto->comentario = $request->comentario;
-        } else {
-            $foto->comentario = null;
-        }
+        $foto->comentario = $request->comentario;
         $foto->update();
 
         return response()->json(['success' => 'success'], 200);

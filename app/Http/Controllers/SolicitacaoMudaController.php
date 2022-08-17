@@ -111,9 +111,9 @@ class SolicitacaoMudaController extends Controller
         $solicitacao = SolicitacaoMuda::find($id);
         if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada.']);
-        } else {
-            return Storage::download($solicitacao->arquivo);
         }
+
+        return Storage::download($solicitacao->arquivo);
     }
 
     public function status(Request $request)
@@ -121,9 +121,9 @@ class SolicitacaoMudaController extends Controller
         $solicitacao = SolicitacaoMuda::where('protocolo', $request->protocolo)->first();
         if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
-        } else {
-            return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
         }
+
+        return view('solicitacoes.mudas.requerente.status', compact('solicitacao'));
     }
 
     public function mostrar(SolicitacaoMuda $solicitacao)

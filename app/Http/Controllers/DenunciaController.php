@@ -205,9 +205,9 @@ class DenunciaController extends Controller
         $denuncia = Denuncia::where('protocolo', $request->protocolo)->first();
         if ($denuncia == null) {
             return redirect()->back()->with(['error' => 'A denúncia informada não se encontra no banco de registro de denúncias.']);
-        } else {
-            return view('denuncia.status', compact('denuncia'));
         }
+
+        return view('denuncia.status', compact('denuncia'));
     }
 
     private function gerarProtocolo($texto)

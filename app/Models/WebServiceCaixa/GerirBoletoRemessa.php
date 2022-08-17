@@ -511,12 +511,12 @@ abstract class GerirBoletoRemessa extends Remessa
                     'CPF' => $this->retirar_formatacao($this->sacador_avalista->cpf),
                     'NOME' => $this->validar_formartar_tamanho($this->sacador_avalista->nome, 40),
                 ];
-            } else {
-                return [
-                    'CNPJ' => $this->retirar_formatacao($this->sacador_avalista->cnpj),
-                    'RAZAO_SOCIAL' => $this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40),
-                ];
             }
+
+            return [
+                'CNPJ' => $this->retirar_formatacao($this->sacador_avalista->cnpj),
+                'RAZAO_SOCIAL' => $this->validar_formartar_tamanho($this->sacador_avalista->razao_social, 40),
+            ];
         }
 
         return [];

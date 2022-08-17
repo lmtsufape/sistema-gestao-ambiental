@@ -161,9 +161,9 @@ class SolicitacaoPodaController extends Controller
         $solicitacao = SolicitacaoPoda::where('protocolo', $request->protocolo)->first();
         if ($solicitacao == null) {
             return redirect()->back()->with(['error' => 'Solicitação não encontrada. Verifique o protocolo informado.']);
-        } else {
-            return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
         }
+
+        return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
     }
 
     public function mostrar(SolicitacaoPoda $solicitacao)
