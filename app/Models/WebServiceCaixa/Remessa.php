@@ -138,7 +138,7 @@ abstract class Remessa extends BoletoCobranca
      * @param string $string_response string responsiva com conteudo em xml
      * @return array $array_conteudo array na forma ['tag' => 'conteudo_da_tag']
      */
-    public function toArray(string $string_response)
+    public function xmlToArray(string $string_response)
     {
         $dom_document = new DOMDocument();
         $dom_document->loadXML($string_response);

@@ -88,7 +88,7 @@ class XMLCoderController extends Controller
 
         curl_close($curl);
 
-        $resultado = (new IncluirBoletoRemessa())->toArray($response);
+        $resultado = (new IncluirBoletoRemessa())->xmlToArray($response);
 
         if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
             switch ($resultado['COD_RETORNO']['DADOS']) {
@@ -192,7 +192,7 @@ class XMLCoderController extends Controller
 
         $response = curl_exec($curl);
         curl_close($curl);
-        $resultado = (new AlterarBoletoRemessa())->toArray($response);
+        $resultado = (new AlterarBoletoRemessa())->xmlToArray($response);
 
         if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
             switch ($resultado['COD_RETORNO']['DADOS']) {

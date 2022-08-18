@@ -106,7 +106,7 @@ class AtualizarStatusBoletos extends Command
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $resultado = (new ConsultarBoletoRemessa())->toArray($response);
+        $resultado = (new ConsultarBoletoRemessa())->xmlToArray($response);
 
         if ($boleto->resposta_consultar_boleto != null) {
             if (Storage::disk()->exists($this->resposta_consultar_boleto)) {
