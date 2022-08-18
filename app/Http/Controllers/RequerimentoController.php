@@ -48,9 +48,9 @@ class RequerimentoController extends Controller
             $requerimentos = auth()->user()->requerimentosRequerente();
         } else {
             if ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
-                    ->where('analista_id', $user->id)
+                $requerimentos = Requerimento::where('analista_id', $user->id)
                     ->orwhere('analista_processo_id', $user->id)
+                    ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
                     ->orderBy('created_at')->paginate(20);
             } else {
                 $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
@@ -108,13 +108,9 @@ class RequerimentoController extends Controller
     public function analista()
     {
         $user = auth()->user();
-        $requerimentos = Requerimento::where(
-            [
-                ['status', '!=', Requerimento::STATUS_ENUM['finalizada']],
-                ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]
-            ])
-            ->where('analista_id', $user->id)
+        $requerimentos = Requerimento::where('analista_id', $user->id)
             ->orwhere('analista_processo_id', $user->id)
+            ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])
             ->orderBy('created_at')->paginate(20);
 
         return view('requerimento.index', compact('requerimentos'));
