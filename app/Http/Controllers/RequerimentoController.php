@@ -46,7 +46,7 @@ class RequerimentoController extends Controller
         $requerimentosCancelados = collect();
         $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = auth()->user()->requerimentosRequerente();
+            $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
         } elseif ($user->role == User::ROLE_ENUM['analista']) {
                 $requerimentos = Requerimento::where('analista_id', $user->id)
                     ->orwhere('analista_processo_id', $user->id)
