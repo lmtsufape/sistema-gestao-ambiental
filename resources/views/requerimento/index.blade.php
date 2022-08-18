@@ -185,7 +185,9 @@
                                                     @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                     <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                     @else
-                                                        <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                        @can ('isAnalistaProcesso', \App\Models\User::class)
+                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                        @endcan
                                                     @endif
                                                 @endif
                                             </td>
@@ -772,7 +774,7 @@
                                 </div>
                             </li>
                         @endcan
-                        @can('isAnalista', \App\Models\User::class)
+                        @can('isAnalistaProcesso', \App\Models\User::class)
                             <li>
                                 <div title="Revisar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Revisar licença">
