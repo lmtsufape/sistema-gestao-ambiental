@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
                 <div class="form-row">
@@ -47,7 +47,7 @@
                             <div class="col-md-8" style="text-align: right">
                                 <input type="hidden" id="especie_indice" value="-1">
                                 <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
-                                    <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar nova espécie">
+                                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar nova espécie">
                                 </a>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Ir</button>
                 </div>
             </div>
         </div>

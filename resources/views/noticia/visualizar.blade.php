@@ -1,9 +1,9 @@
 @guest
 <x-guest-layout>
 
-    <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="container-fluid" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                     </div>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card mb-3">
                     <img src="{{asset('storage/'.$noticia->imagem_principal)}}" class="card-img-top" alt="Imagem da notícia {{$noticia->titulo}}">
                     <div class="card-body">

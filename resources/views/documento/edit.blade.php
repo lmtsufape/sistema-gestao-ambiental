@@ -1,10 +1,10 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Editar documento</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('documentos.index')}}">Documentos</a> > Editar documento</h6>
                     </div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <form method="POST" id="cria-documento" action="{{route('documentos.update', $documento->id)}}" enctype="multipart/form-data">
@@ -35,9 +35,15 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="documento_modelo">{{ __('Modelo do documento') }}</label>
-                                    <input id="documento_modelo" class="form-control @error('documento_modelo') is-invalid @enderror" type="file" accept=".pdf"
-                                        name="documento_modelo" value="{{old('documento_modelo')}}" autofocus autocomplete="documento_modelo">
-
+                                    <div>
+                                        <label for="documento_modelo" class="label-input btn btn-success btn-enviar-doc w-100">
+                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                            {{ __('Clique para selecionar o arquivo') }}
+                                        </label>
+                                        <label id="labelarquivoselecionado" class="d-empty" for="documento_modelo"></label>
+                                        <input id="documento_modelo" class="input-enviar-arquivo d-none @error('documento_modelo') is-invalid @enderror" type="file" accept=".pdf"
+                                            name="documento_modelo" value="{{old('documento_modelo')}}" autofocus autocomplete="documento_modelo">
+                                    </div>
                                     @error('documento_modelo')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -128,6 +134,12 @@
             this.value = "";
         };
     });
+    $(".input-enviar-arquivo").change(function(){
+        $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+    });
+    function editar_caminho(string) {
+        return string.split("\\")[string.split("\\").length - 1];
+    }
 </script>
 @endsection
 </x-app-layout>

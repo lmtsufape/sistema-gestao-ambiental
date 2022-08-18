@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
                 <div class="form-row">
@@ -12,7 +12,7 @@
                         @elseif ($visita->solicitacao_poda != null)
                             <h4 class="card-title">Cria relátorio da solicitação de poda nº {{$visita->solicitacao_poda->id}}</h4>
                         @endif
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Visitas > Criar relátorio</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Programação</a> > Visitas > Criar relátorio</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">

@@ -1,8 +1,8 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Cnaes do grupo {{$setor->nome}} cadastrados no sistema</h4>
@@ -11,11 +11,9 @@
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a> --}}
-                        <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar cnae"></a>
+                        <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar cnae"></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
             </div>
             <div class="col-md-9">
                 <div class="card card-borda-esquerda" style="width: 100%;">
@@ -88,30 +86,31 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar CNAE">
+                            <div title="Adicionar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Adicionar CNAE
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div title="Editar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar CNAE">
+                            <div title="Editar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Editar CNAE
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div title="Deletar grupo" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar CNAE">
+                            <div title="Deletar grupo" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar CNAE">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Deletar CNAE
                                 </div>

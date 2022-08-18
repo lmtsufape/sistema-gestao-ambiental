@@ -1,16 +1,43 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
-                        @if ($relatorio->visita->requerimento != null)
-                            <h4 class="card-title">Avaliar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h4>
-                        @elseif ($relatorio->visita->denuncia != null)
-                            <h4 class="card-title">Cria relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
-                        @endif
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Visitas > Relátorio</h6>
+                    <div class="col-md-12">
+                        @can('isSecretario', \App\Models\User::class)
+                            <h4 class="card-title">
+                                @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['realizado'])
+                                    Avaliar relátorio
+                                @else
+                                    Relatório
+                                @endif
+                                @if($relatorio->visita->requerimento != null)
+                                    do requerimento nº {{$relatorio->visita->requerimento->id}}
+                                @elseif($relatorio->visita->denuncia != null)
+                                    da denúncia nº {{$relatorio->visita->denuncia->id}}
+                                @elseif($relatorio->visita->solicitacao_poda != null)
+                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacao_poda->id}}
+                                @endif
+                            </h4>
+                            @if ($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                <div class="alert alert-success" role="alert">
+                                    <h6 class="alert-heading">Relatório aprovado.</h6>
+                                </div>
+                            @endif
+                        @else
+                            <h4 class="card-title">
+                                Relatório
+                                @if($relatorio->visita->requerimento != null)
+                                    do requerimento nº {{$relatorio->visita->requerimento->id}}
+                                @elseif($relatorio->visita->denuncia != null)
+                                    da denúncia nº {{$relatorio->visita->denuncia->id}}
+                                @elseif($relatorio->visita->solicitacao_poda != null)
+                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacao_poda->id}}
+                                @endif
+                            </h4>
+                        @endcan
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Programação</a> > Visitas > Relátorio</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="javascript:window.history.back();">
@@ -19,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="form-row">
@@ -116,16 +143,18 @@
                         </div>
 
                     </div>
-                    <div class="card-footer">
-                        <div class="form-row">
-                            <div class="col-md-6 form-group">
-                                <button class="btn btn-warning" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Revisar' : 'Revisar' }}</button>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <button class="btn btn-success btn-color-dafault" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
+                    @can('isSecretario', \App\Models\User::class)
+                        <div class="card-footer">
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <button class="btn btn-warning" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-reprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['reprovado'] ? 'Revisar' : 'Revisar' }}</button>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <button class="btn btn-success btn-color-dafault" style="width: 100%;" data-toggle="modal" data-target="#staticBackdrop-aprovar-relatorio" {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'disabled' : '' }}> {{$relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] ? 'Aprovado' : 'Aprovar' }} </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
             </div>
         </div>

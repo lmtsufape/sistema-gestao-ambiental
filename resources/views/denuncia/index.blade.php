@@ -1,11 +1,11 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Denúncias @if($filtro == "concluidas") com visita realizada/concluída @else {{$filtro}} @endif</h4>
+                        <h4 class="card-title">Denúncias @if($filtro == "concluidas") com relatório aprovado @else {{$filtro}} @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -53,7 +53,7 @@
                                     <tbody>
                                         @foreach ($denuncias as $i => $denuncia)
                                             <tr>
-                                                <td>{{($i+1)}}</td>
+                                                <th>{{($i+1)}}</th>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
@@ -77,7 +77,12 @@
                                                         @endcan
                                                         @can('isSecretario', \App\Models\User::class)
                                                             @if($filtro ==  "concluidas")
-                                                                @if($denuncia->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $denuncia->visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                                @if($denuncia->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $denuncia->visita->relatorio])}}"><img class="icon-licenciamento"
+                                                                @if($denuncia->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                    src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                                @else
+                                                                    src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                                @endif alt="Icone de relatório"></a>@endif
                                                             @endif
                                                         @endcan
                                                     </div>
@@ -189,33 +194,34 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         <li>
                             @can('isSecretario', \App\Models\User::class)
-                                <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
+                                <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Relato da denúncia
                                     </div>
                                 </div>
-                                <div title="Avaliar denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar denúncia">
+                                <div title="Avaliar denúncia" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar denúncia">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Avaliar denúncia
                                     </div>
                                 </div>
-                                <div title="Atribuir denúncia a um analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir a um analista">
+                                <div title="Atribuir denúncia a um analista" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir a um analista">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Atribuir denúncia a um analista
                                     </div>
                                 </div>
-                                <div title="Agendar uma visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar uma visita">
+                                <div title="Agendar uma visita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar uma visita">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Agendar uma visita
                                     </div>
@@ -223,12 +229,22 @@
                             @endcan
                             @can('isSecretario', \App\Models\User::class)
                                 @if($filtro ==  "concluidas")
-                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Visualizar relatório
+                                    <li>
+                                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
+                                            <div style="font-size: 15px;" class="aling-middle mx-3">
+                                                Relatório aprovado
+                                            </div>
                                         </div>
-                                    </div>
+                                    </li>
+                                    <li>
+                                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                            <div style="font-size: 15px;" class="aling-middle mx-3">
+                                                Relatório com pendências
+                                            </div>
+                                        </div>
+                                    </li>
                                 @endif
                             @endcan
                         </li>
@@ -452,7 +468,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
                 </div>
             </div>
         </div>
@@ -494,7 +510,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
                     </div>
                 </div>
             </div>

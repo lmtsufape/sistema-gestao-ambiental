@@ -1,12 +1,12 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Emitir licença</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Emitir licença</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Emitir licença</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">
@@ -15,12 +15,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <form method="POST" id="emitir-licenca-form" action="{{route('licenca.store')}}" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="visita" id="visita" value="{{$visita->id}}">
                             <input type="hidden" name="requerimento" id="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
@@ -54,8 +53,15 @@
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="licenca">{{__('Licença')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input type="file" name="licença" id="licença" class="form-control" required accept=".pdf">
-
+                                    <div>
+                                        <label for="licença" class="label-input btn btn-success btn-enviar-doc w-100">
+                                            <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                            {{ __('Clique para selecionar o arquivo') }}
+                                        </label>
+                                        <label id="labelarquivoselecionado" class="d-empty" for="licença"></label>
+                                        <input id="licença" class="input-enviar-arquivo d-none @error('licença') is-invalid @enderror" type="file" accept=".pdf"
+                                            name="licença" value="{{old('licença')}}" autofocus autocomplete="licença">
+                                    </div>
                                     @error('licença')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -77,5 +83,13 @@
             </div>
         </div>
     </div>
+    <script>
+        $(".input-enviar-arquivo").change(function(){
+            $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+        });
+        function editar_caminho(string) {
+            return string.split("\\")[string.split("\\").length - 1];
+        }
+    </script>
     @endsection
 </x-app-layout>

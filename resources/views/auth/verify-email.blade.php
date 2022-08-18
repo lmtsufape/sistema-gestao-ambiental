@@ -20,7 +20,7 @@
                 @csrf
 
                 <div>
-                    <button type="submit" class="btn btn-success btn-color-dafault">
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault">
                         {{ __('Reenviar email de verificação') }}
                     </button>
                 </div>
@@ -29,7 +29,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <button type="submit" class="submeterFormBotao underline text-sm text-gray-600 hover:text-gray-900">
                     {{ __('Sair') }}
                 </button>
             </form>

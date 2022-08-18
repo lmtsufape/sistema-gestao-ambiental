@@ -10,7 +10,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $noticias = Noticia::where([['destaque', true], ['publicada', true]])->get();
+        $noticias = Noticia::where([['destaque', true], ['publicada', true]])->orderBy('created_at', 'DESC')->get();
         $empresas = Empresa::all();
 
         return view('welcome', compact('noticias', 'empresas'));

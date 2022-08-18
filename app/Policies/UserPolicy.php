@@ -113,6 +113,26 @@ class UserPolicy
     }
 
     /**
+     * Checa se o usuário logado é um analista de poda ou de processo.
+     *
+     * @return boolean
+     */
+    public function isAnalistaProcessoOrPoda(User $user)
+    {
+        return $this->isAnalistaProcesso($user) || $this->isAnalistaPoda($user);
+    }
+
+    /**
+     * Checa se o usuário logado é um analista de poda ou de processo.
+     *
+     * @return boolean
+     */
+    public function isAnalistaProcessoOrPodaOrProtocolista(User $user)
+    {
+        return $this->isAnalistaProcesso($user) || $this->isAnalistaPoda($user) || $this->isProtocolista($user);
+    }
+
+    /**
      * Checa se o usuário logado é um requerente.
      *
      * @return boolean
@@ -145,6 +165,11 @@ class UserPolicy
     public function isSecretarioOrProtocolista(User $user)
     {
         return $this->isSecretario($user) || $this->isProtocolista($user);
+    }
+
+    public function isSecretarioOrProcesso(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaProcesso($user);
     }
 
     public function usuarioInterno(User $user)

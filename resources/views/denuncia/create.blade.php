@@ -1,7 +1,5 @@
 @guest
 <x-guest-layout>
-
-
     <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
@@ -121,7 +119,7 @@
                                         <div class="col-md-4" style="text-align: right">
                                             <input type="hidden" id="imagem_indice" value="-1">
                                             <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
-                                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar imagem">
+                                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
                                             </a>
                                         </div>
                                     </div>
@@ -517,7 +515,7 @@
 @else
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-12">
                 <div class="form-row">
@@ -636,7 +634,7 @@
                                         <div class="col-md-4" style="text-align: right">
                                             <input type="hidden" id="imagem_indice" value="-1">
                                             <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
-                                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar imagem">
+                                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
                                             </a>
                                         </div>
                                     </div>

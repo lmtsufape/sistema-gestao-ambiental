@@ -1,10 +1,10 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8" style="padding-top: 15px;">
+                    <div class="col-md-12" style="padding-top: 15px;">
                         <h4 class="card-title">Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}}</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="{{route('podas.index', 'pendentes')}}">Poda/Supressão</a> > Avaliar solicitação de poda/supressão {{$solicitacao->protocolo}}</h6>
                     </div>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-1210">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="form-row">
@@ -135,7 +135,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="deferir-solicitacao">Continuar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="deferir-solicitacao">Continuar</button>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="status-solicitacao">Confirmar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="status-solicitacao">Confirmar</button>
                     </div>
                 </div>
             </div>

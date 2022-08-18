@@ -1,6 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52">
-  <g id="Grupo_1666" data-name="Grupo 1666" transform="translate(-1659 -220)">
-    <rect id="Retângulo_4117" data-name="Retângulo 4117" width="52" height="52" rx="10" transform="translate(1659 220)" fill="#4A7836"/>
-    <path id="Icon_awesome-plus" data-name="Icon awesome-plus" d="M28.937,14.493H18.92V4.476A2.226,2.226,0,0,0,16.695,2.25H14.469a2.226,2.226,0,0,0-2.226,2.226V14.493H2.226A2.226,2.226,0,0,0,0,16.719v2.226A2.226,2.226,0,0,0,2.226,21.17H12.243V31.187a2.226,2.226,0,0,0,2.226,2.226h2.226a2.226,2.226,0,0,0,2.226-2.226V21.17H28.937a2.226,2.226,0,0,0,2.226-2.226V16.719A2.226,2.226,0,0,0,28.937,14.493Z" transform="translate(1669 227.75)" fill="#fff"/>
-  </g>
+<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.5 0C3.808 0 0 3.808 0 8.5C0 13.192 3.808 17 8.5 17C13.192 17 17 13.192 17 8.5C17 3.808 13.192 0 8.5 0ZM12.75 9.35H9.35V12.75H7.65V9.35H4.25V7.65H7.65V4.25H9.35V7.65H12.75V9.35Z" fill="#00883D"/>
 </svg>

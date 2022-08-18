@@ -1,6 +1,6 @@
 @component('mail::message')
     <p style="color: black; font-family: 'Times New Roman', Times, serif;">
-        A empresa/serviço {{ $empresa }} recebeu uma notificação @if ($imagens), as imagens seguem em anexo @endif.
+        A empresa/serviço {{ $empresa }} recebeu uma notificação.@if ($imagens) Seguem as imagens anexadas.@endif
     </p>
     <div>{!! $texto !!}</div>
     @if ($comentarios)

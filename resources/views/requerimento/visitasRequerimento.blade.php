@@ -1,27 +1,16 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
-                        <h4 class="card-title">Visitas à empresa {{$requerimento->empresa->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Visitas</a> > Requerimento: @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca']) Primeira licença @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])Renovação @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])Autorização @endif</h6>
-                    </div>
-                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                        @can('isRequerente', \App\Models\User::class)
-                            {{-- <a title="Voltar"  href="javascript:window.history.back();">
-                                <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                            </a> --}}
-                        @else
-                            {{-- <a title="Voltar" href="{{route('requerimentos.show', $requerimento)}}">
-                                <img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar">
-                            </a> --}}
-                        @endcan
+                    <div class="col-md-12">
+                        <h4 class="card-title">Visitas à empresa {{$requerimento->empresa->nome}} - Requerimento de {{$requerimento->tipoString()}} </h4>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" @can('isSecretario', \App\Models\User::class) @endcan>Visitas</a> > Visitas à empresa {{$requerimento->empresa->nome}} - Requerimento de {{$requerimento->tipoString()}}</h6>
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">

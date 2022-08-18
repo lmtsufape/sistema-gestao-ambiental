@@ -1,8 +1,8 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Notificações à empresa {{$empresa->nome}}</h4>
@@ -13,13 +13,13 @@
                         </a> --}}
                         @can('create', App\Models\Notificacao::class)
                             <a title="Criar notificação" href="{{route('empresas.notificacoes.create', ['empresa' => $empresa])}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de criar notificação">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de criar notificação">
                             </a>
                         @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
@@ -36,14 +36,20 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Data</th>
+                                        <th scope="col">Autor</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($empresa->notificacoes as $i => $notificacao)
+                                    @foreach ($notificacoes as $i => $notificacao)
                                         <tr>
                                             <th>{{$i+1}}</th>
-                                            <td>{{date('d/m/Y', strtotime($notificacao->created_at))}}</td>
+                                            <td>{{date('d/m/Y H:i', strtotime($notificacao->created_at))}}</td>
+                                            <td>
+                                                @if ($notificacao->autor != null)
+                                                    {{$notificacao->autor->name}}
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a title="Visualizar notificação" href="{{route('notificacoes.show', ['notificacao' => $notificacao])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de visualizar notificação"></a>
                                             </td>

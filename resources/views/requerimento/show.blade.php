@@ -1,8 +1,8 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 2rem; padding-bottom: 8rem;">
+    <div class="container-fluid" style="padding-top: 2rem; padding-bottom: 8rem;">
         <div class="form-row justify-content-center">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <div class="form-row">
                     <div class="col-md-8" style="padding-top: 15px;">
                         <h4 class="card-title">Visualizar requerimento nº {{$requerimento->id}}</h4>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @if(session('success'))
                     <div class="alert alert-success" role="alert">
                         {{session('success')}}
@@ -28,7 +28,7 @@
                     <div class="card-body">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-md-10">
-                                <h5 class="titulo-nav-tab-custom" style="font-size: 24px; color: #4A7836;">Requerimento de
+                                <h5 class="titulo-nav-tab-custom" style="font-size: 24px; color: var(--primaria);">Requerimento de
                                     @if($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
                                         {{__('primeira licença')}}
                                     @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
@@ -47,9 +47,9 @@
                                     @else
                                         <a class="btn" data-toggle="modal" data-target="#documentos"><img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                     @endif
-                                    @if($requerimento->visitas->count() > 0)
+                                    {{--@if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
-                                    @endif
+                                    @endif--}}
                                     @if($requerimento->boletos->last() && $requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
                                         <a class="btn" data-toggle="modal" data-target="#criar-novo-boleto"><img style="height: 30px;" src="{{asset('img/boleto.png')}}" alt="Criar novo boleto" title="Criar novo boleto"></a>
                                     @endif
@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="titulo-nav-tab-custom">Empresa/Serviço</h5>
-                                <h6 class="titulo-nav-tab-custom" style="color: #4A7836;">{{$requerimento->empresa->nome}}</h6>
+                                <h6 class="titulo-nav-tab-custom" style="color: var(--primaria);">{{$requerimento->empresa->nome}}</h6>
                             </div>
                         </div>
                     </div>
@@ -348,10 +348,10 @@
                             <div class="col-md-6">
                                 <div class="shadow card" style="margin-top: 1rem;">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center">
+                                        <div class="align-items-center">
                                             <div class="row justify-content-between">
                                                 <div class="col-md-10">
-                                                    <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir protocolista</h5>
+                                                    <h5 class="titulo-nav-tab-custom" style="color: var(--primaria);">Atribuir protocolista</h5>
                                                     <span class="linha"></span>
                                                 </div>
                                                 <div class="col-md-2">
@@ -366,7 +366,7 @@
                                                 </div>
                                                 <div class="col-md-10" style="padding-left: 30px;">
                                                     <h6 class="titulo-nav-tab-custom">{{$requerimento->protocolista->name}}</h6>
-                                                    <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->protocolista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                                    <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: var(--primaria);">@if($requerimento->protocolista->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,10 +376,10 @@
                             <div class="col-md-6">
                                 <div class="shadow card" style="margin-top: 1rem;">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="row">
+                                        <div class="align-items-center">
+                                            <div class="row justify-content-between">
                                                 <div class="col-md-10">
-                                                    <h5 class="titulo-nav-tab-custom" style="color: #4A7836;">Atribuir analista de processo</h5>
+                                                    <h5 class="titulo-nav-tab-custom" style="color: var(--primaria);">Atribuir analista de processo</h5>
                                                     <span class="linha"></span>
                                                 </div>
                                                 <div class="col-md-2">
@@ -395,7 +395,7 @@
                                                 <div class="col-md-10" style="padding-left: 30px;">
                                                     <h6 class="titulo-nav-tab-custom">{{$requerimento->analistaProcesso ? $requerimento->analistaProcesso->name: "Sem analista atribuído"}}</h6>
                                                     @if($requerimento->analistaProcesso)
-                                                        <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: #4A7836;">@if($requerimento->analistaProcesso->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
+                                                        <h6 class="titulo-nav-tab-custom">Tipo de analista: <span style="color: var(--primaria);">@if($requerimento->analistaProcesso->ehAnalista()) Processo @else Protocolista @endif </span> </h6>
                                                     @endif
                                                 </div>
                                             </div>
@@ -603,7 +603,7 @@
         <div class="modal fade" id="criar-novo-boleto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #4a7836;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmar</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -629,7 +629,7 @@
         <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #4a7836;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Atribuir protocolista</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -666,7 +666,7 @@
         <div class="modal fade" id="atribuir-analista-processo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header" style="background-color: #4a7836;">
+                    <div class="modal-header" style="background-color: var(--primaria);">
                         <h5 class="modal-title" id="staticBackdropLabel2" style="color: white;">Atribuir analista de processo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>

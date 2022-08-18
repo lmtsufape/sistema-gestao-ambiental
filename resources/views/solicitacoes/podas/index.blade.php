@@ -9,12 +9,12 @@
             </ul>
         </div>
     @endif
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
-                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com visita realizada/concluída @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
+                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com relatório aprovado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -66,13 +66,20 @@
                                     <tbody>
                                         @foreach ($solicitacoes as $i => $solicitacao)
                                             <tr>
-                                                <td>{{($i+1)}}</td>
+                                                <th>{{($i+1)}}</th>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
                                                 <td style="text-align: center">
-                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    @can('isAnalistaPoda', \App\Models\User::class)
+                                                        @if($filtro ==  "concluidas")
+                                                            <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
+                                                                <img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                            </a>
+                                                        @endif
+                                                    @endcan
                                                     @can('isSecretario', \App\Models\User::class)
                                                         @if($filtro != "indeferidas" && $filtro != "pendentes")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
@@ -80,7 +87,11 @@
                                                             data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endif
                                                         @if($filtro ==  "concluidas")
-                                                            @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
+                                                            @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>@endif
                                                         @endif
                                                     @endcan
                                                 </td>
@@ -177,54 +188,61 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         <li>
-                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
+                            <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Visualizar solicitação
                                 </div>
                             </div>
-                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar solicitação">
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Avaliar solicitação
                                 </div>
                             </div>
                         {{--<li>
-                            <div title="Mídia da solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Visualizar mídia.svg')}}" alt="Mídia da solicitação">
+                            <div title="Mídia da solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar mídia.svg')}}" alt="Mídia da solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Mídia da solicitação
                                 </div>
                             </div>
                         </li>--}}
                         @can('isSecretario', \App\Models\User::class)
-                            <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir analista">
+                            <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir analista">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Atribuir solicitação a um analista
                                 </div>
                             </div>
-                            <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                <img class="aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar visita">
+                            <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar visita">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Agendar uma visita
                                 </div>
                             </div>
-                            @if($filtro ==  "concluidas")
-                                <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Visualizar relatório
-                                    </div>
-                                </div>
-                            @endif
                         @endcan
+                        @if($filtro ==  "concluidas")
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Relatório aprovado
+                                </div>
+                            </div>
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Relatório com pendências
+                                </div>
+                            </div>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -319,7 +337,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
+                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
                 </div>
             </div>
         </div>
@@ -361,7 +379,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
+                        <button type="submit" id="submeterFormBotao" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
                     </div>
                 </div>
             </div>

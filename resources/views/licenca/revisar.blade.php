@@ -1,16 +1,16 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         @can('isSecretario', auth()->user())
                             <h4 class="card-title">Editar licença</h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Editar licença</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Editar licença</h6>
                         @elsecan ('isAnalista', auth()->user())
                             <h4 class="card-title">Revisar licença</h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Programação</a> > Revisar licença</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Revisar licença</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         @can('isSecretario', auth()->user()) <form method="POST" action="{{route('licenca.update', ['licenca' => $licenca])}}" enctype="multipart/form-data"> @endif
@@ -78,8 +78,15 @@
                                     @can('isSecretario', auth()->user())
                                         <div class="col-md-12 form-group">
                                             <label for="licenca">{{__('Licença')}}</label>
-                                            <input type="file" name="licença" id="licença" class="form-control" accept=".pdf">
-
+                                            <div>
+                                                <label for="licença" class="label-input btn btn-success btn-enviar-doc w-100">
+                                                    <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                                    {{ __('Clique para selecionar o arquivo') }}
+                                                </label>
+                                                <label id="labelarquivoselecionado" class="d-empty" for="licença"></label>
+                                                <input id="licença" class="input-enviar-arquivo d-none @error('licença') is-invalid @enderror" type="file" accept=".pdf"
+                                                    name="licença" value="{{old('licença')}}" autofocus autocomplete="licença">
+                                            </div>
                                             @error('licença')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                     {{ $message }}
@@ -188,4 +195,12 @@
         </div>
     @endcan
     @endsection
+    <script>
+        $(".input-enviar-arquivo").change(function(){
+            $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+        });
+        function editar_caminho(string) {
+            return string.split("\\")[string.split("\\").length - 1];
+        }
+    </script>
 </x-app-layout>

@@ -1,12 +1,12 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Editar a visita à empresa {{$visita->requerimento->empresa->nome}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index')}}">Visitas</a> > Editar visita</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Visitas</a> > Editar visita</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" @if ($verRequerimento ?? '') href="{{route('requerimento.visitas', ['id' => $visita->requerimento])}}" @else href="{{route('visitas.index')}}" @endif>
@@ -14,21 +14,19 @@
                         </a> --}}
                     </div>
                 </div>
-                <div div class="form-row">
+                <div class="form-row">
                     <div class="col-sm-12">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                        @if(session('error'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-danger" role="alert">
+                                    <p>{{session('error')}}</p>
+                                </div>
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
                         <form method="POST" id="editar-visita" action="{{route('visitas.update', $visita->id)}}">

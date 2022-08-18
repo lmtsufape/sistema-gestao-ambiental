@@ -6,9 +6,9 @@ use App\Http\Requests\DenunciaRequest;
 use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\FotoDenuncia;
+use App\Models\Relatorio;
 use App\Models\VideoDenuncia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Notifications\DenunciaRecebida;
@@ -27,51 +27,36 @@ class DenunciaController extends Controller
         $user = auth()->user();
         switch ($user->role) {
             case User::ROLE_ENUM['secretario']:
-                $denuncias_registradas = Denuncia::where('aprovacao', '1')->orderBy('created_at', 'DESC')->paginate(20);
-                $denuncias_arquivadas  = Denuncia::where('aprovacao', '3')->orderBy('created_at', 'DESC')->paginate(20);
-
-                $denuncias_concluidas = DB::table('denuncias')->join('visitas', 'visitas.denuncia_id', '=', 'denuncias.id')
-                ->where('visitas.data_realizada', '!=', null)
-                ->get('denuncias.id');
-
-                $denuncias_aprovadas = DB::table('denuncias')
-                ->where('denuncias.aprovacao', '=', 2)
-                ->select('denuncias.id');
-
-                $denuncias_aprovadas_collection = collect();
-
-                foreach($denuncias_aprovadas->get() as $denuncia){
-                    if($denuncias_concluidas->doesntContain($denuncia)){
-                        $denuncias_aprovadas_collection->push($denuncia);
-                    }
+                switch($filtro){
+                    case 'pendentes':
+                        $denuncias = Denuncia::where('aprovacao', '1')->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                    case 'deferidas':
+                        $denuncias_concluidas  = Denuncia::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
+                        $denuncias             = Denuncia::where('aprovacao', '2')->whereNotIn('id', $denuncias_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                    case 'indeferidas':
+                        $denuncias = Denuncia::where('aprovacao', '3')->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                    case 'concluidas':
+                        $denuncias = Denuncia::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
                 }
-
-                $denuncias_aprovadas = Denuncia::whereIn('id', $denuncias_aprovadas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-                $denuncias_concluidas = Denuncia::whereIn('id', $denuncias_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-
                 break;
             case User::ROLE_ENUM['analista']:
-                $denuncias_registradas = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
-                $denuncias_aprovadas   = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
-                $denuncias_arquivadas  = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                switch($filtro){
+                    case 'pendentes':
+                        $denuncias = Denuncia::where([['aprovacao', '1'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                    case 'deferidas':
+                        $denuncias = Denuncia::where([['aprovacao', '2'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                    case 'indeferidas':
+                        $denuncias = Denuncia::where([['aprovacao', '3'], ['analista_id', $user->id]])->orderBy('created_at', 'DESC')->paginate(20);
+                        break;
+                }
                 break;
         }
-
-        switch($filtro){
-            case 'pendentes':
-                $denuncias = $denuncias_registradas;
-                break;
-            case 'deferidas':
-                $denuncias = $denuncias_aprovadas;
-                break;
-            case 'indeferidas':
-                $denuncias = $denuncias_arquivadas;
-                break;
-            case 'concluidas':
-                $denuncias = $denuncias_concluidas;
-                break;
-        }
-
         $analistas = User::analistas();
 
         return view('denuncia.index', compact('denuncias', 'analistas', 'filtro'));

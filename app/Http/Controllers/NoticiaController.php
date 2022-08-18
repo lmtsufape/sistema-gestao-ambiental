@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Noticia;
 use App\Http\Requests\NoticiaRequest;
+use App\Models\User;
 
 class NoticiaController extends Controller
 {
@@ -15,7 +16,11 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-        $noticias = Noticia::orderBy('created_at', 'DESC')->paginate(10);
+        if(auth()->user() && auth()->user()->role == User::ROLE_ENUM['secretario']){
+            $noticias = Noticia::orderBy('created_at', 'DESC')->paginate(10);
+        }else{
+            $noticias = Noticia::where('publicada', true)->orderBy('created_at', 'DESC')->paginate(10);
+        }
         return view('noticia.index', compact('noticias'));
     }
 

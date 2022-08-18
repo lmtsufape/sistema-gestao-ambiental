@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-between">
             <div class="col-md-8">
                 <div class="form-row">
@@ -49,7 +49,7 @@
                                     <tbody>
                                         @foreach ($pagamentos as $boleto)
                                             <tr>
-                                                <td>{{($loop->iteration)}}</td>
+                                                <th>{{($loop->iteration)}}</th>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
                                                 <td style="text-align: center">
                                                     R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} @if($boleto->URL) <a href="{{$boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a> @endif
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
                         Baixar relatório
                     </div>

@@ -30,14 +30,10 @@ class LicencaController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Requerimento $requerimento)
     {
-        $visita = Visita::find($id);
         $this->authorize('isSecretario', User::class);
-
-        $requerimento = $visita->requerimento;
-
-        return view('licenca.create', compact('requerimento', 'visita'));
+        return view('licenca.create', compact('requerimento'));
     }
 
     /**
@@ -48,7 +44,6 @@ class LicencaController extends Controller
      */
     public function store(LicencaRequest $request)
     {
-        $visita = Visita::find($request->visita);
         $this->authorize('isSecretario', User::class);
 
         $requerimento = Requerimento::find($request->requerimento);
@@ -58,7 +53,7 @@ class LicencaController extends Controller
 
         $requerimento->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença criada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença criada com sucesso!']);
     }
 
     /**
@@ -121,7 +116,7 @@ class LicencaController extends Controller
 
         $licenca->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença atualizada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença atualizada com sucesso!']);
     }
 
     /**
@@ -164,6 +159,6 @@ class LicencaController extends Controller
 
         $licenca->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Licença revisada com sucesso!']);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença revisada com sucesso!']);
     }
 }

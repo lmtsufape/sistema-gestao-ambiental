@@ -255,7 +255,7 @@ nav img {
 }
 
 .card {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
 }
 
 .card-borda-esquerda {
@@ -465,7 +465,9 @@ label {
     color: var(--primaria);
     font-weight: bolder;
     font-size: 23px;
-    border-bottom: solid 2px var(--primaria);
+}
+.borda-baixo{
+    border-bottom: solid 1px rgba(0, 0, 0, 0.25);
 }
 
 /* MEU PERFIL */
@@ -474,6 +476,14 @@ label {
     background-color: rgb(133, 133, 133);
     width: 120px;
     height: 120px;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.photo-perfil {
+    background-color: rgb(133, 133, 133);
+    width: 40px;
+    height: 45px;
     border-radius: 50%;
     padding: 3px;
 }
@@ -720,7 +730,7 @@ span {
     color: var(--primaria);
     font-weight: 600;
     line-height: 1.1;
-    padding: 5px 0px 5px 16px;
+    padding: 5px 0px 5px 8px;
 }
 
 #sidebar ul li a {
@@ -857,6 +867,9 @@ a.article:hover {
     border:2px solid #50c2db;
     border-radius: 60%;
     background-color: white;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo-maior-selected {
@@ -890,6 +903,9 @@ a.article:hover {
     border-radius: 60%;
     background-color: #34A877;
     cursor: pointer;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo-concluido:hover{
@@ -906,6 +922,9 @@ a.article:hover {
     border-radius: 60%;
     background-color: white;
     cursor: pointer;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
 }
 
 .circulo:hover{
@@ -919,7 +938,6 @@ a.article:hover {
     text-align: center;
     color: #50c2db;
     font-weight: bold;
-    padding-top: 3px;
 
 }
 
@@ -927,12 +945,10 @@ a.article:hover {
     text-align: center;
     color: #ffffff;
     font-weight: bold;
-    padding-top: 3px;
 }
 
 .numero {
     text-align: center;
-    padding-top: 4px;
 }
 
 #wrapper{
@@ -948,6 +964,29 @@ a.article:hover {
     top: 60%;
     left: 0;
     border-bottom: solid 4px #680072;
+}
+
+.texto-card-highlight{
+    color: #00883D;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.notificacao-card{
+    color: black;
+    border-radius: 8px;
+}
+
+.notificacao-card:hover{
+    background-color: #f8f8f8;
+}
+
+.nao-visto{
+    background: #cfebda;
+}
+
+.nao-visto:hover{
+    background-color: #ffffff;
 }
 
 .popup-texto{
@@ -1088,6 +1127,7 @@ a.article:hover {
         display: block;
     }
     #sidebar.active  ul li a {
+        padding: 5px 10px;
         display: block;
     }
 
@@ -1138,6 +1178,7 @@ a.article:hover {
     }
 
     #sidebar.active ul li a{
+        text-align: left;
         object-fit: contain;
     }
 
@@ -1157,6 +1198,10 @@ a.article:hover {
         max-width: 70vw;
     }
 
+}
+
+.d-empty:empty {
+    display: none;
 }
 
 /* X DEMO STYLE SIDE BAR X */

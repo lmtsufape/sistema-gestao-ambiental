@@ -7,12 +7,12 @@ use App\Http\Requests\SolicitacaoPodaRequest;
 use App\Mail\SolicitacaoPodasCriada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
+use App\Models\Relatorio;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Notifications\ParecerSolicitacao;
 use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -30,29 +30,19 @@ class SolicitacaoPodaController extends Controller
         $this->authorize('index', SolicitacaoPoda::class);
 
         $userPolicy = new UserPolicy();
-        if($userPolicy->isAnalistaPoda(auth()->user())){
-            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
-            ->where('visitas.data_realizada', '!=', null)
-            ->where('solicitacoes_podas.analista_id', '=',  auth()->user()->id)
-            ->get('solicitacoes_podas.id');
-
-            $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
-            ->where('solicitacoes_podas.status', '=', 2)
-            ->where('solicitacoes_podas.analista_id', '=',  auth()->user()->id)
-            ->select('solicitacoes_podas.id');
-
-            $solicitacoes_podas_deferidas_collection = collect();
-
-            foreach($solicitacoes_podas_deferidas->get() as $denuncia){
-                if($solicitacoes_podas_concluidas->doesntContain($denuncia)){
-                    $solicitacoes_podas_deferidas_collection->push($denuncia);
-                }
-            }
-
-            $deferidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_deferidas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-            $concluidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-
-            switch($filtro){
+        if ($userPolicy->isAnalistaPoda(auth()->user())) {
+            $concluidas = SolicitacaoPoda::
+                whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])
+                ->where('analista_id', auth()->user()->id)
+                ->orderBy('created_at', 'DESC')
+                ->paginate(20);
+            $deferidas = SolicitacaoPoda::
+                whereNotIn('id', $concluidas->pluck('id'))
+                ->where('status', 2)
+                ->where('analista_id', auth()->user()->id)
+                ->orderBy('created_at', 'DESC')
+                ->paginate(20);
+            switch($filtro) {
                 case 'deferidas':
                     $solicitacoes = $deferidas;
                     break;
@@ -63,40 +53,19 @@ class SolicitacaoPodaController extends Controller
             $analistas = User::analistasPoda();
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         }else{
-            $registradas = SolicitacaoPoda::where('status', '1')->paginate(20);
-            $indeferidas = SolicitacaoPoda::where('status', '3')->paginate(20);
-
-            $solicitacoes_podas_concluidas = DB::table('solicitacoes_podas')->join('visitas', 'visitas.solicitacao_poda_id', '=', 'solicitacoes_podas.id')
-                ->where('visitas.data_realizada', '!=', null)
-                ->get('solicitacoes_podas.id');
-
-            $solicitacoes_podas_deferidas = DB::table('solicitacoes_podas')
-            ->where('solicitacoes_podas.status', '=', 2)
-            ->select('solicitacoes_podas.id');
-
-            $solicitacoes_podas_deferidas_collection = collect();
-
-            foreach($solicitacoes_podas_deferidas->get() as $denuncia){
-                if($solicitacoes_podas_concluidas->doesntContain($denuncia)){
-                    $solicitacoes_podas_deferidas_collection->push($denuncia);
-                }
-            }
-
-            $deferidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_deferidas_collection->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-            $concluidas = SolicitacaoPoda::whereIn('id', $solicitacoes_podas_concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
-
             switch($filtro){
                 case 'pendentes':
-                    $solicitacoes = $registradas;
+                    $solicitacoes = SolicitacaoPoda::where('status', '1')->paginate(20);
                     break;
                 case 'deferidas':
-                    $solicitacoes = $deferidas;
+                    $concluidas   = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->paginate(20);
                     break;
                 case 'indeferidas':
-                    $solicitacoes = $indeferidas;
+                    $solicitacoes = SolicitacaoPoda::where('status', '3')->paginate(20);
                     break;
                 case 'concluidas':
-                    $solicitacoes = $concluidas;
+                    $solicitacoes = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
                     break;
             }
             $analistas = User::analistasPoda();

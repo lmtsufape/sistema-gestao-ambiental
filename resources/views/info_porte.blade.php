@@ -508,7 +508,7 @@
 @else
 <x-app-layout>
     @section('content')
-    <div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="container-fluid" style="margin-top: 50px; margin-bottom: 50px;">
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-borda-esquerda" style="width: 100%;">

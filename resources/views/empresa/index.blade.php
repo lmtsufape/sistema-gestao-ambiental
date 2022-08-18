@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         <a title="Adicionar empresa/serviço" href="{{route('empresas.create')}}">
-                            <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar empresa/serviço">
+                            <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
                         </a>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                                             <td>{{$empresa->cpf_cnpj}}</td>
                                             <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
                                             <td>
-                                                <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/Icon bell.svg')}}" alt="Icone de notificações da empresa/serviço"></a>
+                                                <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações da empresa/serviço"></a>
                                                 <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
                                                 <a title="Deletar empresa/serviço" type="button" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar empresa/serviço"></a>
                                             </td>
@@ -61,39 +61,40 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     @if($empresas->first() != null)
                         <ul class="list-group list-unstyled">
                             <li>
-                                <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar empresa/serviço">
+                                <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Adicionar empresa/serviço
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Icon bell.svg')}}" alt="Notificações">
+                                <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Notificações
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div title="Editar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar empresa/serviço">
+                                <div title="Editar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Editar empresa/serviço
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div title="Deletar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar empresa/serviço">
+                                <div title="Deletar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar empresa/serviço">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Deletar empresa/serviço
                                     </div>

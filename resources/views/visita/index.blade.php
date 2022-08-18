@@ -1,12 +1,12 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-8">
                         @can('isSecretario', \App\Models\User::class)
-                            <h4 class="card-title">Visitas</h4>
+                            <h4 class="card-title">Programação de visitas</h4>
                         @else
                             <h4 class="card-title">Visitas programadas para você</h4>
                         @endcan
@@ -15,13 +15,33 @@
                     <div class="col-md-4" style="text-align: right;">
                         <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
                         @can('isSecretario', \App\Models\User::class)
-                            <a title="Criar visita" href="{{route('visitas.create')}}">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar documento">
-                            </a>
+                            @if($filtro == 'requerimento')
+                                <a title="Criar visita" href="{{route('visitas.create')}}">
+                                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
+                                </a>
+                            @endif
                         @endif
                     </div>
                 </div>
-                <div class="card card-borda-esquerda" style="width: 100%;">
+                <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
+                    @can('isSecretarioOrProcesso', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'requerimento') active @endif" id="visitas-atuais-tab" role="tab" type="button"
+                                @if($filtro == 'requerimento') aria-selected="true" @endif href="{{route('visitas.index', 'requerimento')}}">Requerimentos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'denuncia') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
+                                @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', 'denuncia')}}">Denúncias</a>
+                        </li>
+                    @endcan
+                    @can('isAnalistaPodaOrSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'poda') active @endif" id="visitas-cancelados-tab" role="tab" type="button"
+                                @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', 'poda')}}">Poda/Supressão</a>
+                        </li>
+                    @endcan
+                </ul>
+                <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
                             @if(session('success'))
@@ -43,20 +63,28 @@
                         <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Data de requerimento</th>
-                                        <th scope="col">Data marcada</th>
-                                        <th scope="col">Data realizada</th>
-                                        <th scope="col">Requerimento</th>
-                                        <th scope="col">Empresa/serviço</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col" class="align-middle">Data de requerimento</th>
+                                        <th scope="col" class="align-middle">Data marcada</th>
+                                        <th scope="col" class="align-middle">Data realizada</th>
+                                        @if($filtro == "requerimento" || $filtro == "denuncia")
+                                            <th scope="col" class="align-middle">Empresa/serviço</th>
+                                        @else
+                                            <th scope="col" class="align-middle">Requerente</th>
+                                        @endif
+                                        @if($filtro == "requerimento")
+                                            <th scope="col" class="align-middle">Tipo</th>
+                                        @endif
                                         @can('isSecretario', \App\Models\User::class)
-                                            <th scope="col">Analista</th>
+                                            <th scope="col" class="align-middle">Analista</th>
                                         @endcan
-                                        <th scope="col">Opções</th>
+                                        <th scope="col" class="align-middle">Opções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($visitas as $visita)
+                                    @foreach ($visitas as $i => $visita)
                                         <tr>
+                                            <td scope="row" style="font-weight: bold">{{$i+1}}</td>
                                             @if($visita->requerimento != null)
                                                 <td>{{date('d/m/Y H:i', strtotime($visita->requerimento->created_at))}}</td>
                                             @elseif($visita->denuncia != null)
@@ -68,25 +96,18 @@
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
-                                                <td>{{$visita->data_realizada}}</td>
+                                                <td>{{__('Aguardando visita')}}</td>
                                             @endif
 
                                             @if($visita->requerimento != null)
-                                                @if($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['primeira_licenca'])
-                                                    <td> Primeira licença</td>
-                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['renovacao'])
-                                                    <td>Renovação</td>
-                                                @elseif($visita->requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
-                                                    <td>Autorização</td>
-                                                @endif
-
                                                 <td>{{$visita->requerimento->empresa->nome}}</td>
+                                                <td>
+                                                    {{ucfirst($visita->requerimento->tipoString())}}
+                                                </td>
                                             @elseif($visita->denuncia != null)
-                                                <td>Denúncia</td>
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @elseif ($visita->solicitacao_poda != null)
-                                                <td>Solicitação de poda</td>
-                                                <td>{{$visita->solicitacao_poda->nome}}</td>
+                                                <td>{{$visita->solicitacao_poda->requerente->user->name}}</td>
                                             @endif
 
 
@@ -95,37 +116,55 @@
                                             @endcan
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
-                                                    @if($visita->requerimento != null && $visita->requerimento->licenca != null)
-                                                        @if ($visita->requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $visita->requerimento->licenca])}}">Visualizar licença</a>
-                                                        @else
-                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['visita' => $visita, 'licenca' => $visita->requerimento->licenca])}}">Editar licença</a>
-                                                        @endif
-                                                    @elseif($visita->relatorioAceito() && $visita->requerimento_id  != null)
-                                                        <a class="btn btn-success btn-color-dafault" href="{{route('licenca.create', ['requerimento' => $visita->id])}}">Criar licença</a>
+
+                                                    @if($visita->relatorio!=null)
+                                                        <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">
+                                                            <img class="icon-licenciamento"
+                                                            @if ($visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif
+                                                            alt="Icone de relatório">
+                                                        </a>
                                                     @endif
-                                                    @if($visita->requerimento_id != null && $visita->requerimento->empresa->notificacoes->first() != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
-                                                    @if($visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>@endif
-                                                    @if($visita->requerimento != null)<a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita"></a>@endif
+                                                    @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
+                                                    @if($visita->requerimento != null)
+                                                        <a title="Editar visita" href="{{route('visitas.edit', ['visita' => $visita->id])}}">
+                                                            <img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita">
+                                                        </a>
+                                                    @else
+                                                        <a class="icon-licenciamento" style="cursor: pointer;" title="Editar visita" id="btn-criar-visita-{{$visita->id}}" data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$visita->id}})">
+                                                            <img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar visita">
+                                                        </a>
+                                                    @endif
                                                     <a title="Deletar visita" data-toggle="modal" data-target="#modalStaticDeletarVisita_{{$visita->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar visita"></a>
                                                 @else
                                                     @if ($visita->requerimento != null)
                                                         <a title="Visualizar requerimento" href="{{route('visitas.requerimento.show', ['visita_id' => $visita->id, 'requerimento_id' => $visita->requerimento->id])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}" alt="Icone de analisar requerimento"></a>
-
-                                                        <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
-                                                        @if($visita->requerimento->licenca != null)
-                                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.revisar', ['licenca' => $visita->requerimento->licenca, 'visita' => $visita])}}">Revisar licença</a>
-                                                        @endif
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório">
+                                                        @if($visita->requerimento_id != null)<a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>@endif
                                                     @elseif ($visita->denuncia != null)
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
-                                                        @if ($visita->denuncia->empresa != null)
-                                                            <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->denuncia->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
-                                                        @endif
                                                         <a title="Descrição" data-toggle="modal" data-target="#modal-texto-{{$visita->denuncia->id}}" style="cursor: pointer;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Descrição"></a>
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>
                                                     @elseif ($visita->solicitacao_poda != null)
-                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " type="submit" style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório"></a>
+                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                        <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
+                                                            @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório"></a>
                                                     @endif
                                                 @endcan
                                             </td>
@@ -152,127 +191,122 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
-                    <ul class="list-group list-unstyled">
+                    <div class="mt-2 borda-baixo"></div>
+                    <ul class="list-group list-unstyled mt-2">
                         @can('isSecretario', \App\Models\User::class)
-                            <li>
-                                <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Criar visita">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Criar visita
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Criar visita">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Criar visita para requerimento
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            {{--consulta necessaria pra verificar se tem notificacao feitas--}}
-                            <li>
-                                <div title="Visualizar notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Visualizar notificações">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Visualizar notificações
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endif
                             @if(\App\Models\Relatorio::select('relatorios.*')
                                     ->whereIn('visita_id', $visitas->pluck('id')->toArray())
                                     ->get()->count() > 0)
                                 <li>
-                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Visualizar relatório">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Visualizar relatório
+                                            Relatório aprovado
                                         </div>
                                     </div>
                                 </li>
-                            @endif
-                            @if($visitas->where('requerimento_id', '!=', null)->first() != null || $visitas->where('denuncia_id', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Deletar visita
+                                            Relatório com pendências
                                         </div>
                                     </div>
                                 </li>
                             @endif
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Notificação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações à empresa
+                                        </div>
+                                    </div>
+                                </li>
+                            @endif
+                            <li>
+                                <div title="Editar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Editar visita
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Deletar visita" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Deletar visita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Deletar visita
+                                    </div>
+                                </div>
+                            </li>
                         @else
-                            @if($visitas->where('requerimento_id', '!=', null)->first() != null)
+                            @if($filtro == 'requerimento')
                                 <li>
-                                    <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
+                                    <div title="Visualizar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar requerimento">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar requerimento
                                         </div>
                                     </div>
                                 </li>
+                            @elseif($filtro == 'denuncia')
                                 <li>
-                                    <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Notificações
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                            @elseif($visitas->where('denuncia_id', '!=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null)
-                                <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Notificações
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-                            @if($visitas->where('denuncia_id', '!=', null)->first() != null)
-                                <li>
-                                    <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
+                                    <div title="Relato da denúncia" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Relato da denúncia">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Relato da denúncia
                                         </div>
                                     </div>
                                 </li>
-                            @elseif($visitas->where('solicitacao_poda_id', '!=', null)->first() != null)
+                            @elseif($filtro == 'poda')
                                 <li>
-                                    <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
+                                    <div title="Visualizar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1" ">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visualizar solicitação">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visualizar solicitação
                                         </div>
                                     </div>
                                 </li>
+                            @endif
+                            <li>
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
+                                            Relatório aprovado
                                         </div>
                                     </div>
                                 </li>
-                            @elseif ($visitas->where('denuncia_id', '=', null)->first() != null && $visitas->where('requerimento_id', '=', null)->first() != null && $visitas->where('solicitacao_poda', '!=', null)->first() != null)
                                 <li>
-                                    <div title="Criar/editar relatório" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Criar/editar relatório">
+                                    <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Criar/editar relatório
+                                            Relatório com pendências
+                                        </div>
+                                    </div>
+                                </li>
+                            </li>
+                            @if($filtro == 'requerimento')
+                                <li>
+                                    <div title="Notificação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
+                                        <div style="font-size: 15px;" class="aling-middle mx-3">
+                                            Notificações à empresa
                                         </div>
                                     </div>
                                 </li>
@@ -438,6 +472,58 @@
             </div>--}}
         @endif
     @endforeach
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar visita</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-criar-visita-denuncia" method="POST" action="{{route('visitas.visita.edit')}}">
+                            @csrf
+                            <input type="hidden" name="filtro" id="filtro" value="{{$filtro}}">
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" required value="{{old('data')}}">
+
+                                    @error('data')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="visita_id" id="visita_id" value="">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
 
     @foreach ($visitas as $visita)
         @if ($visita->solicitacao_poda != null)
@@ -480,4 +566,23 @@
         @endif
     @endforeach
     @endsection
+    <script>
+        function adicionarId(id) {
+            document.getElementById('visita_id').value = id;
+            $("#analista-visita").val("");
+            document.getElementById('data').value = "";
+            $.ajax({
+                url:"{{route('visitas.info.ajax')}}",
+                type:"get",
+                data: {"visita_id": id},
+                dataType:'json',
+                success: function(visita) {
+                    if(visita.analista_visita != null){
+                        $("#analista-visita").val(visita.analista_visita.id).change();
+                        document.getElementById('data').value = visita.marcada;
+                    }
+                }
+            });
+        }
+    </script>
 </x-app-layout>

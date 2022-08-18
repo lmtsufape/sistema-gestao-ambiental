@@ -54,8 +54,8 @@ class RelatorioController extends Controller
             $requerimento->update();
         }
 
-
-        return redirect(route('visitas.index'))->with(['success' => 'Relátorio salvo com sucesso!']);
+        $filtro = auth()->user()->getUserType();
+        return redirect(route('visitas.index', $filtro))->with(['success' => 'Relátorio salvo com sucesso!']);
     }
 
     /**
@@ -95,12 +95,16 @@ class RelatorioController extends Controller
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
+        if($relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado']){
+            return redirect()->back()->with(['error' => 'Este relatório não pode ser editado!']);
+        }
         $request->validated();
         $relatorio->setAtributes($request);
         $relatorio->motivo_edicao = null;
         $relatorio->update();
 
-        return redirect(route('visitas.index'))->with(['success' => 'Relátorio atualizado com sucesso!']);
+        $filtro = auth()->user()->getUserType();
+        return redirect(route('visitas.index', $filtro))->with(['success' => 'Relátorio atualizado com sucesso!']);
     }
 
     /**

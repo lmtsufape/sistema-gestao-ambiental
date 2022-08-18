@@ -20,7 +20,7 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
+                <button type="submit" class="submeterFormBotao underline text-sm text-gray-600 hover:text-gray-900">
                     {{ __('Confirm') }}
                 </button>
             </div>

@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-between">
             <div class="col-md-9">
                 <div class="form-row">
@@ -18,7 +18,7 @@
                     @can('isRequerente', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right;">
                             <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
-                                <img class="icon-licenciamento add-card-btn" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de adicionar novo requerimento">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar novo requerimento">
                             </button>
                             <a id="btn-etapas-requerimento" class="btn btn-success btn-color-dafault" title="Etapas do requerimento" data-toggle="modal" data-target="#etapas" style="cursor: pointer">
                                 Etapas
@@ -79,9 +79,7 @@
                                                 <tr>
                                                     <th scope="row">{{($i+1)}}</th>
                                                     <td>
-                                                        <a href="{{route('historico.empresa', $requerimento->empresa->id)}}">
-                                                            {{$requerimento->empresa->nome}}
-                                                        </a>
+                                                        {{$requerimento->empresa->nome}}
                                                     </td>
                                                     <td>
                                                         @if($requerimento->canceladoSecretario())
@@ -104,9 +102,22 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                                    <td>
+                                                    <td style="text-align: center">
                                                         <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar" title="Analisar"></a>
                                                         <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                                        @if($requerimento->licenca != null)
+                                                            @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                                <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
+                                                            @else
+                                                                @if($filtro != "cancelados")
+                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                @endif
+                                                            @endif
+                                                        @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
+                                                            @if($filtro != "cancelados")
+                                                                <a style="cursor: pointer;" href="{{route('licenca.create', $requerimento)}}"><img class="icon-licenciamento" src="{{asset('img/Grupo 1666.svg')}}"  alt="Criar licença" title="Criar licença"></a>
+                                                            @endif
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -170,6 +181,13 @@
                                                 <div class="btn-group align-items-center">
                                                     <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
                                                 </div>
+                                                @if($requerimento->licenca != null)
+                                                    @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                    <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
+                                                    @else
+                                                        <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -197,7 +215,7 @@
                                     @endif>
                                     <div class="col-md-12"
                                     @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])
-                                        style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(241, 241, 241); max-width: fit-content;"
+                                        style="font-size: 16px; font-weight: bold; background-color: #d85f6b; color: rgb(255, 255, 255); max-width: fit-content;"
                                     @else
                                         style="font-size: 16px; font-weight: bold; color: rgb(110, 110, 110)"
                                     @endif>
@@ -636,10 +654,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div style="border-bottom:solid 2px #e0e0e0;">
+                                    <div>
                                 </div>
                                 @endif
-                                <div class="row justify-content-center align-items-center" style="text-align: center">
+                                <div class="row justify-content-center align-items-center mt-4" style="text-align: center">
                                     <div class="col-md-6">
                                         <span style="color: #00883D; font-weight: bold;">Valor:</span>
                                         @if($requerimento->valor == null)
@@ -660,28 +678,28 @@
                                         {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
+                                <div class="row mt-4">
                                     <div class="col-md-6">
                                         @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                            <a class="btn btn-success btn-color-dafault" href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}">Visualizar licença</a>
+                                            <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                         @endif
                                     </div>
                                     <div class="col-md-6" style="text-align: right">
                                         <div class="btn-group align-items-center">
-                                            @if($requerimento->visitas->count() > 0)
-                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                            @if(!$requerimento->cancelado() && $requerimento->visitas->count() > 0)
+                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer;;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                             @endif
                                             @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
-                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Enviar documentação" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-red-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @elseif($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])
-                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Documentação em análise" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @elseif($requerimento->status >= \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])
-                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
+                                                    <a title="Documentação aceita" href="{{route('requerimento.documentacao', $requerimento->id)}}" style="margin-left: 9px"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/documents-blue-svgrepo-com.svg')}}"  alt="Enviar documentos"></a>
                                                 @endif
                                             @endif
                                             @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['finalizada'] || $requerimento->canceladoSecretario())
-                                                <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
+                                                <a style="cursor: pointer; margin-left: 8px" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                             @endif
                                         </div>
                                     </div>
@@ -707,22 +725,59 @@
             <div class="col-md-3">
 
                 <div class="col-md-12 shadow-sm p-2 px-3" @can('isAnalista', \App\Models\User::class)
-                                                                style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;"
+                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @elsecan('isRequerente', \App\Models\User::class)
-                                                                style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 2.6rem;"
+                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 2.6rem;"
                                                             @else
-                                                                style="background-color: #f8f9fa; border-radius: 00.5rem; margin-top: 5.2rem;"
+                                                                style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;"
                                                             @endcan>
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
+                    <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled">
                         @can('isSecretarioOrAnalista', \App\Models\User::class)
                             <li>
-                                <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
+                                <div title="Analisar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Analisar requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Analisar requerimento
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Visualizar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Visualizar licença
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Criar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Criar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Criar licença
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Editar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Editar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Editar licença
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
+                        @can('isAnalista', \App\Models\User::class)
+                            <li>
+                                <div title="Revisar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Revisar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Revisar licença
                                     </div>
                                 </div>
                             </li>
@@ -732,8 +787,8 @@
                                     ->get()->count() > 0)
                             @can('isRequerente', \App\Models\User::class)
                                 <li>
-                                    <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visitas a empresa">
+                                    <div title="Visitas a empresa" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Visualizar.svg')}}" alt="Visitas a empresa">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Visitas à empresa
                                         </div>
@@ -743,49 +798,51 @@
                         @endif
                         @can('isRequerente', \App\Models\User::class)
                             <li>
-                                <div title="Novo requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                    <img class="aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" alt="Icone de Novo requerimento">
+                                <div title="Novo requerimento" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de Novo requerimento">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
                                         Novo requerimento
                                     </div>
                                 </div>
                             </li>
-                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])->first() != null)
-                                <li>
-                                    <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Enviar documentação
-                                        </div>
+                            <li>
+                                <div title="Enviar documentação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-red-svgrepo-com.svg')}}" alt="Enviar documentação">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Documentação pendente
                                     </div>
-                                </li>
-                            @endif
-                            @if($requerimentos->where('status', \App\Models\Requerimento::STATUS_ENUM['documentos_enviados'])->first() != null)
-                                <li>
-                                    <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Documentação em análise
-                                        </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Documentação em análise" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-yellow-svgrepo-com.svg')}}" alt="Documentação em análise">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Documentação em análise
                                     </div>
-                                </li>
-                            @endif
-                            @if($requerimentos->where('status', '>=', \App\Models\Requerimento::STATUS_ENUM['documentos_aceitos'])->first() != null)
-                                <li>
-                                    <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
-                                        <div style="font-size: 15px;" class="aling-middle mx-3">
-                                            Documentação aceita
-                                        </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Documentação aceita" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/documents-blue-svgrepo-com.svg')}}" alt="Documentação aceita">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Documentação aceita
                                     </div>
-                                </li>
-                            @endif
+                                </div>
+                            </li>
+                            <li>
+                                <div title="Visualizar licença" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Visualizar licença
+                                    </div>
+                                </div>
+                            </li>
                         @endcan
                         @can('isRequerenteOrSecretario', \App\Models\User::class)
                             @if($requerimentos->first() != null)
                                 <li>
-                                    <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1" style="border-bottom:solid 2px #e0e0e0;">
-                                        <img class="aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
+                                    <div title="Cancelar requerimento" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Cancelar requerimento">
                                         <div style="font-size: 15px;" class="aling-middle mx-3">
                                             Cancelar requerimento
                                         </div>
@@ -941,7 +998,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                Seus documentos serão recebidos e serão analisados pelo protocolista.
+                                Seus documentos serão recebidos e serão analisados por um analista.
                             </div>
                         </div>
                     </div>

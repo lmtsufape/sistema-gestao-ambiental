@@ -1,10 +1,10 @@
 <x-app-layout>
     @section('content')
-    <div class="container" style="padding-top: 3rem; padding-bottom: 6rem;">
+    <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Editar notícia</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('noticias.index')}}">Notícias</a> > Editar notícia</h6>
                     </div>
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="form-row">
@@ -42,9 +42,9 @@
                                 <div class="col-md-12 form-group">
                                     <label for="imagem_principal">Imagem principal<span style="color: red; font-weight: bold;">*</span></label> <a href="{{asset('storage/'.$noticia->imagem_principal)}}" target="_blanck">Imagem atual</a>
                                     <br>
-                                    <label class="label-input" for="enviar_arquivo"></label>
-                                    <label for="label-input-arquivo" for="enviar_arquivo">Nenhum arquivo selecionado</label>
-                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="" name="imagem_principal">
+                                    <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
+                                    <label for="enviar_arquivo"></label>
+                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept="image/*" name="imagem_principal">
 
                                     @error('imagem_principal')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
