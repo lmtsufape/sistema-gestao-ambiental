@@ -72,7 +72,7 @@
                                                             @endif
                                                             @if($filtro != "indeferidas" && $filtro != "pendentes")
                                                                 <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$denuncia->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                                    data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$denuncia->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
+                                                                    data-toggle="modal" @if($denuncia->visita)  data-target="#modal-agendar-visita-editar" onclick="adicionarIdEditar({{$denuncia->id}})" @else  data-target="#modal-agendar-visita"  onclick="adicionarId({{$denuncia->id}})" @endif><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                             @endif
                                                         @endcan
                                                         @can('isSecretario', \App\Models\User::class)
@@ -516,6 +516,58 @@
             </div>
         </div>
     @endcan
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-agendar-visita-editar" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar visita</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-editar-visita-denuncia" method="POST" action="{{route('visitas.visita.edit')}}">
+                            @csrf
+                            <input type="hidden" name="filtro" id="filtro" value="{{$filtro}}">
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input type="date" name="data" id="data-editar" class="form-control @error('data') is-invalid @enderror" required value="{{old('data')}}">
+
+                                    @error('data')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="visita_id" id="visita_id" value="">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista-visita-editar" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-editar-visita-denuncia">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
     @if (old('denuncia_id') != null)
         <script>
             $(document).ready(function() {
@@ -524,56 +576,77 @@
             });
         </script>
     @endif
-    <script>
-        function adicionarId(id) {
-            document.getElementById('denuncia_id').value = id;
-            $("#alerta-agendar").html("");
-            $("#analista-visita").val("");
-            document.getElementById('data').value = "";
-            $.ajax({
-                url:"{{route('denuncias.info.ajax')}}",
-                type:"get",
-                data: {"denuncia_id": id},
-                dataType:'json',
-                success: function(denuncia) {
-                    if(denuncia.analista_visita != null){
-                        $("#analista-visita").val(denuncia.analista_visita.id).change();
-                        document.getElementById('data').value = denuncia.marcada;
-                        let alerta = `<div class="alert alert-success" role="alert">
-                                        <p>Denúncia agendada.</p>
-                                      </div>`;
-                        $("#alerta-agendar").append(alerta);
+    @can('isSecretario', \App\Models\User::class)
+        <script>
+            function adicionarId(id) {
+                document.getElementById('denuncia_id').value = id;
+                $("#alerta-agendar").html("");
+                $("#analista-visita").val("");
+                document.getElementById('data').value = "";
+                $.ajax({
+                    url:"{{route('denuncias.info.ajax')}}",
+                    type:"get",
+                    data: {"denuncia_id": id},
+                    dataType:'json',
+                    success: function(denuncia) {
+                        if(denuncia.analista_visita != null){
+                            $("#analista-visita").val(denuncia.analista_visita.id).change();
+                            document.getElementById('data').value = denuncia.marcada;
+                            let alerta = `<div class="alert alert-success" role="alert">
+                                            <p>Denúncia agendada.</p>
+                                        </div>`;
+                            $("#alerta-agendar").append(alerta);
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-        function adicionarIdAtribuir(id) {
-            document.getElementById('denuncia_id_analista').value = id;
-            $("#alerta-atribuida").html("");
-            $("#analista-atribuido").val("");
-            $.ajax({
-                url:"{{route('denuncias.info.ajax')}}",
-                type:"get",
-                data: {"denuncia_id": id},
-                dataType:'json',
-                success: function(denuncia) {
-                    if(denuncia.analista_atribuido != null){
-                        $("#analista-atribuido").val(denuncia.analista_atribuido.id).change();
-                        let alerta = `<div class="alert alert-success" role="alert">
-                                        <p>Denúncia atribuída a um analista.</p>
-                                      </div>`;
-                        $("#alerta-atribuida").append(alerta);
+            function adicionarIdAtribuir(id) {
+                document.getElementById('denuncia_id_analista').value = id;
+                $("#alerta-atribuida").html("");
+                $("#analista-atribuido").val("");
+                $.ajax({
+                    url:"{{route('denuncias.info.ajax')}}",
+                    type:"get",
+                    data: {"denuncia_id": id},
+                    dataType:'json',
+                    success: function(denuncia) {
+                        if(denuncia.analista_atribuido != null){
+                            $("#analista-atribuido").val(denuncia.analista_atribuido.id).change();
+                            let alerta = `<div class="alert alert-success" role="alert">
+                                            <p>Denúncia atribuída a um analista.</p>
+                                        </div>`;
+                            $("#alerta-atribuida").append(alerta);
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-        function atualizarInputAprovar(resultado, id){
-            document.getElementById('inputAprovar-'+id).value = resultado;
-            var form = document.getElementById('form-avaliar-denuncia-'+id);
-            form.submit();
-        }
-    </script>
+            function atualizarInputAprovar(resultado, id){
+                document.getElementById('inputAprovar-'+id).value = resultado;
+                var form = document.getElementById('form-avaliar-denuncia-'+id);
+                form.submit();
+            }
+        </script>
+        <script>
+            function adicionarIdEditar(id) {
+                document.getElementById('visita_id').value = id;
+                $("#analista-visita-editar").val("");
+                document.getElementById('data-editar').value = "";
+                $.ajax({
+                    url:"{{route('visitas.info.ajax')}}",
+                    type:"get",
+                    data: {"visita_id": id},
+                    dataType:'json',
+                    success: function(visita) {
+                        if(visita.analista_visita != null){
+                            $("#analista-visita-editar").val(visita.analista_visita.id).change();
+                            document.getElementById('data-editar').value = visita.marcada;
+                        }
+                    }
+                });
+            }
+        </script>
+    @endcan
     @endsection
 </x-app-layout>
