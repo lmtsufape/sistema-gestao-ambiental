@@ -379,29 +379,19 @@ class RequerimentoController extends Controller
 
         $requerimento = Requerimento::find($request->requerimento);
         $this->atribuirValor($request, $requerimento);
-
-        // Documentos desmarcados
-        foreach ($requerimento->documentos as $documento) {
-            if (! in_array($documento->id, $request->documentos)) {
-                $requerimento->documentos()->detach($documento->id);
-            }
+        $documentos_requerimento = $requerimento->documentos->pluck('id')->all();
+        $documentos_view = $request->documentos;
+        $documentos_desmarcados = array_diff($documentos_requerimento, $documentos_view);
+        $caminhos_desmarcados = $requerimento->documentos()->whereIn('documento_id', $documentos_desmarcados)->where('status', '!=', Checklist::STATUS_ENUM['nao_enviado'])->withPivot('caminho')->get()->pluck('pivot.caminho');
+        $requerimento->documentos()->detach($documentos_desmarcados);
+        foreach ($caminhos_desmarcados as $caminho) {
+            delete_file($caminho);
         }
-
-        // Documentos marcados
-        foreach ($request->documentos as $documento_id) {
-            if (! $requerimento->documentos->contains('id', $documento_id)) {
-                $requerimento->documentos()->attach($documento_id);
-                $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-                $documento->status = Checklist::STATUS_ENUM['nao_enviado'];
-                $documento->update();
-            }
-        }
-
+        $documentos_marcados = array_diff($documentos_view, $documentos_requerimento);
+        $requerimento->documentos()->attach($documentos_marcados, ['status' => Checklist::STATUS_ENUM['nao_enviado']]);
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-
         $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
-
         $requerimento->refresh();
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Alteração dos documentos requeridos'));
 
