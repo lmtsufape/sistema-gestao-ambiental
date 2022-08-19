@@ -17,3 +17,5 @@ yarn-error.log
 /tools/php-cs-fixer/vendor
 .php-cs-fixer.cache
 phpout.xml
+/.scribe
+/public/docs
