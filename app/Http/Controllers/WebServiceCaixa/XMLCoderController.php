@@ -90,17 +90,17 @@ class XMLCoderController extends Controller
 
         $resultado = (new IncluirBoletoRemessa())->xmlToArray($response);
 
-        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
-            switch ($resultado['COD_RETORNO']['DADOS']) {
-                case 0:
-                    $boleto->salvarArquivoResposta($response);
-                    $this->salvarRespostaIncluirBoletoRemessa($boleto, $resultado);
-                    break;
-                default:
-                    throw new ErrorRemessaException($resultado['RETORNO']);
-            }
+        if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
+            throw new ErrorRemessaException($response);
         }
-        throw new ErrorRemessaException($response);
+        switch ($resultado['COD_RETORNO']['DADOS']) {
+            case 0:
+                $boleto->salvarArquivoResposta($response);
+                $this->salvarRespostaIncluirBoletoRemessa($boleto, $resultado);
+                break;
+            default:
+                throw new ErrorRemessaException($resultado['RETORNO']);
+        }
     }
 
     /**
@@ -194,17 +194,17 @@ class XMLCoderController extends Controller
         curl_close($curl);
         $resultado = (new AlterarBoletoRemessa())->xmlToArray($response);
 
-        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
-            switch ($resultado['COD_RETORNO']['DADOS']) {
-                case 0:
-                    $boleto->salvarArquivoResposta($response);
-                    Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
-                    $this->salvarRespostaAlterarBoletoRemessa($boleto, $resultado);
-                    break;
-                default:
-                    throw new ErrorRemessaException($resultado['RETORNO']);
-            }
+        if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
+            throw new ErrorRemessaException($response);
         }
-        throw new ErrorRemessaException($response);
+        switch ($resultado['COD_RETORNO']['DADOS']) {
+            case 0:
+                $boleto->salvarArquivoResposta($response);
+                Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $this->salvarRespostaAlterarBoletoRemessa($boleto, $resultado);
+                break;
+            default:
+                throw new ErrorRemessaException($resultado['RETORNO']);
+        }
     }
 }
