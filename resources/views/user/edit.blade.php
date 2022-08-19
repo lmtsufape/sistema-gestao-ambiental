@@ -52,11 +52,11 @@
                                             <div class="form-check">
                                                 <input class="checkbox_tipo checkbox-licenciamento" type="checkbox" name="tipos_analista[]" value="{{$tipo->id}}" id="tipo_{{$tipo->id}}"
                                                 @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'] &&
-                                                    $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) checked
+                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])->get()->count() > 0) checked
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['processo'] &&
-                                                    $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) checked
+                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) checked
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'] &&
-                                                    $usuario->tipo_analista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) checked
+                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) checked
                                                 @endif>
                                                 <label class="form-check-label" for="tipo_{{$tipo->id}}">
                                                     @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])

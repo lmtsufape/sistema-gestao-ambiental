@@ -89,8 +89,8 @@
                                                 <td>{{date('d/m/Y H:i', strtotime($visita->requerimento->created_at))}}</td>
                                             @elseif($visita->denuncia != null)
                                                 <td>{{date('d/m/Y H:i', strtotime($visita->denuncia->created_at))}}</td>
-                                            @elseif($visita->solicitacao_poda != null)
-                                                <td>{{date('d/m/Y H:i', strtotime($visita->solicitacao_poda->created_at))}}</td>
+                                            @elseif($visita->solicitacaoPoda != null)
+                                                <td>{{date('d/m/Y H:i', strtotime($visita->solicitacaoPoda->created_at))}}</td>
                                             @endif
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             @if ($visita->data_realizada != null)
@@ -106,8 +106,8 @@
                                                 </td>
                                             @elseif($visita->denuncia != null)
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
-                                            @elseif ($visita->solicitacao_poda != null)
-                                                <td>{{$visita->solicitacao_poda->requerente->user->name}}</td>
+                                            @elseif ($visita->solicitacaoPoda != null)
+                                                <td>{{$visita->solicitacaoPoda->requerente->user->name}}</td>
                                             @endif
 
 
@@ -157,8 +157,8 @@
                                                             @else
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
                                                             @endif alt="Icone de relatório"></a>
-                                                    @elseif ($visita->solicitacao_poda != null)
-                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacao_poda)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
+                                                    @elseif ($visita->solicitacaoPoda != null)
+                                                        <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $visita->solicitacaoPoda)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                         <a title="Relatório" href="@if($visita->relatorio != null){{route('relatorios.edit', ['relatorio' => $visita->relatorio])}}@else{{route('relatorios.create', ['visita' => $visita->id])}}@endif"><img class="icon-licenciamento"
                                                             @if ($visita->relatorio != null && $visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"
@@ -526,9 +526,9 @@
     @endcan
 
     @foreach ($visitas as $visita)
-        @if ($visita->solicitacao_poda != null)
+        @if ($visita->solicitacaoPoda != null)
             @php
-                $solicitacao = $visita->solicitacao_poda;
+                $solicitacao = $visita->solicitacaoPoda;
             @endphp
             <div class="modal fade bd-example-modal-lg" id="modal-imagens-solicitacao-{{$solicitacao->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">

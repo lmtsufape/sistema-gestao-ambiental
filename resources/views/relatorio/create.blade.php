@@ -9,8 +9,8 @@
                             <h4 class="card-title">Cria relátorio do requerimento nº {{$visita->requerimento->id}}</h4>
                         @elseif ($visita->denuncia != null)
                             <h4 class="card-title">Cria relátorio da denúncia nº {{$visita->denuncia->id}}</h4>
-                        @elseif ($visita->solicitacao_poda != null)
-                            <h4 class="card-title">Cria relátorio da solicitação de poda nº {{$visita->solicitacao_poda->id}}</h4>
+                        @elseif ($visita->solicitacaoPoda != null)
+                            <h4 class="card-title">Cria relátorio da solicitação de poda nº {{$visita->solicitacaoPoda->id}}</h4>
                         @endif
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Programação</a> > Visitas > Criar relátorio</h6>
                     </div>

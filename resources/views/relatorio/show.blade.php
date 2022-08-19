@@ -16,8 +16,8 @@
                                     do requerimento nº {{$relatorio->visita->requerimento->id}}
                                 @elseif($relatorio->visita->denuncia != null)
                                     da denúncia nº {{$relatorio->visita->denuncia->id}}
-                                @elseif($relatorio->visita->solicitacao_poda != null)
-                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacao_poda->id}}
+                                @elseif($relatorio->visita->solicitacaoPoda != null)
+                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}
                                 @endif
                             </h4>
                             @if ($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
@@ -32,8 +32,8 @@
                                     do requerimento nº {{$relatorio->visita->requerimento->id}}
                                 @elseif($relatorio->visita->denuncia != null)
                                     da denúncia nº {{$relatorio->visita->denuncia->id}}
-                                @elseif($relatorio->visita->solicitacao_poda != null)
-                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacao_poda->id}}
+                                @elseif($relatorio->visita->solicitacaoPoda != null)
+                                    da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}
                                 @endif
                             </h4>
                         @endcan
