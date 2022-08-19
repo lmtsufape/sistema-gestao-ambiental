@@ -102,22 +102,6 @@ class RequerimentoController extends Controller
     }
 
     /**
-     * Retorna a view dos requerimentos do analista logado.
-     *
-     * @return View
-     */
-    public function analista()
-    {
-        $user = auth()->user();
-        $requerimentos = Requerimento::where('analista_id', $user->id)
-            ->orwhere('analista_processo_id', $user->id)
-            ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])
-            ->orderBy('created_at')->paginate(20);
-
-        return view('requerimento.index', compact('requerimentos'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return Response
