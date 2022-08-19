@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\SolicitacaoPoda;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,7 +12,9 @@ class VisitaCanceladaPoda extends Notification
     use Queueable;
 
     public SolicitacaoPoda $poda;
+
     public $data_marcada;
+
     /**
      * Create a new notification instance.
      *
@@ -45,12 +46,13 @@ class VisitaCanceladaPoda extends Notification
     public function toMail($notifiable)
     {
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
-        return (new MailMessage)
+
+        return (new MailMessage())
             ->markdown(
                 'mail.visita-cancelada-poda',
                 [
                     'poda' => $this->poda,
-                    'data_marcada' => strftime('%A, %d de %B de %Y', strtotime($this->data_marcada))
+                    'data_marcada' => strftime('%A, %d de %B de %Y', strtotime($this->data_marcada)),
                 ]
             )->subject('Visita cancelada');
     }

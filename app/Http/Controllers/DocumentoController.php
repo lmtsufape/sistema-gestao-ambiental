@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DocumentoRequest;
 use App\Models\Documento;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use App\Models\Licenca;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoController extends Controller
 {
@@ -14,12 +14,14 @@ class DocumentoController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $documentos = Documento::orderBy('nome')->paginate(25);
+
         return view('documento.index', compact('documentos'));
     }
 
     public function create()
     {
         $this->authorize('isSecretario', User::class);
+
         return view('documento.create');
     }
 
@@ -43,8 +45,9 @@ class DocumentoController extends Controller
         //$this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
 
-        if ($documento)
-            return Storage::disk()->exists('public/' . $documento->documento_modelo) ? response()->file("storage/" . $documento->documento_modelo) : abort(404);
+        if ($documento) {
+            return Storage::disk()->exists('public/' . $documento->documento_modelo) ? response()->file('storage/' . $documento->documento_modelo) : abort(404);
+        }
     }
 
     public function edit($id)
@@ -52,7 +55,7 @@ class DocumentoController extends Controller
         $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
 
-        return view('documento.edit', compact("documento"));
+        return view('documento.edit', compact('documento'));
     }
 
     public function update(DocumentoRequest $request, $id)
@@ -60,7 +63,7 @@ class DocumentoController extends Controller
         $this->authorize('isSecretario', User::class);
         $documento = Documento::find($id);
         $documento->setAtributes($request);
-        
+
         if ($request->file('documento_modelo') != null) {
             $documento->salvarDocumento($request->file('documento_modelo'));
         }
@@ -77,7 +80,7 @@ class DocumentoController extends Controller
         if ($documento->existemRequerimentos()) {
             return redirect()->back()->withErrors(['error' => 'Existem requerimentos que utilizam este documento, logo o mesmo não pode ser deletado.']);
         }
-        
+
         $documento->deletar();
 
         return redirect(route('documentos.index'))->with(['success' => 'Documento deletado com sucesso!']);
@@ -87,11 +90,11 @@ class DocumentoController extends Controller
     {
         $documentos = Documento::orderBy('nome')->get();
         $json = $this->gerarJson($request, $documentos);
-        
+
         return response()->json($json);
     }
 
-    private function gerarJson(Request $request, $documentos) 
+    private function gerarJson(Request $request, $documentos)
     {
         $docs = collect();
         switch ($request->licenca_enum) {
@@ -144,6 +147,7 @@ class DocumentoController extends Controller
                 }
                 break;
         }
+
         return $docs;
     }
 }

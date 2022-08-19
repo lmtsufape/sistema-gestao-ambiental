@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Requests\LicencaRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\LicencaRequest;
 use Illuminate\Support\Facades\Storage;
 
 class Licenca extends Model
@@ -12,18 +12,18 @@ class Licenca extends Model
     use HasFactory;
 
     public const STATUS_ENUM = [
-        'gerada'    => 1,
-        'aprovada'   => 2,
-        'revisar'     => 3,
+        'gerada' => 1,
+        'aprovada' => 2,
+        'revisar' => 3,
     ];
 
     public const TIPO_ENUM = [
-        'previa'                => 1,
-        'instalacao'            => 2,
-        'operacao'              => 3,
-        'simplificada'          => 4,
+        'previa' => 1,
+        'instalacao' => 2,
+        'operacao' => 3,
+        'simplificada' => 4,
         'autorizacao_ambiental' => 5,
-        'regularizacao'         => 6,
+        'regularizacao' => 6,
     ];
 
     protected $fillable = [
@@ -31,7 +31,7 @@ class Licenca extends Model
         'status',
         'tipo',
         'validade',
-        'caminho'
+        'caminho',
     ];
 
     public function requerimento()
@@ -58,6 +58,7 @@ class Licenca extends Model
                 Storage::delete($this->caminho);
             }
         }
+
         return $file->store("requerimentos/{$requerimento->id}/licenca/{$this->id}");
     }
 
@@ -69,10 +70,9 @@ class Licenca extends Model
         $protocolo = null;
         do {
             $protocolo = rand($min, $max);
-            $checagem = Licenca::where('protocolo',$protocolo)->first();
+            $checagem = Licenca::where('protocolo', $protocolo)->first();
         } while ($checagem != null);
 
         return $protocolo;
     }
-
 }

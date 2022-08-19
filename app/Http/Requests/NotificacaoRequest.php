@@ -15,6 +15,7 @@ class NotificacaoRequest extends FormRequest
     public function authorize()
     {
         $role = auth()->user()->role;
+
         return $role == User::ROLE_ENUM['analista'] || $role == User::ROLE_ENUM['secretario'];
     }
 
@@ -26,9 +27,9 @@ class NotificacaoRequest extends FormRequest
     public function rules()
     {
         return [
-            'texto'    => ['required', 'min:20', 'string'],
-            "imagem.*" => ['nullable', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
-            "comentario.*" => ['nullable', 'string'],
+            'texto' => ['required', 'min:20', 'string'],
+            'imagem.*' => ['nullable', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
+            'comentario.*' => ['nullable', 'string'],
         ];
     }
 }

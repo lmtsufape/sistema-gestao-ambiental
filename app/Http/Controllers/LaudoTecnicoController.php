@@ -25,13 +25,15 @@ class LaudoTecnicoController extends Controller
         $laudo->solicitacao_poda_id = $solicitacao->id;
         $laudo->fill($data);
         $laudo->save();
-        for ($i = 0; $i < count($data['imagem']); $i++) {
+        $count = count($data['imagem']);
+        for ($i = 0; $i < $count; $i++) {
             $foto_laudo = new FotoLaudoTecnico();
             $foto_laudo->laudo_tecnico_id = $laudo->id;
-            $foto_laudo->comentario = $data['comentario'][$i] ?? "";
+            $foto_laudo->comentario = $data['comentario'][$i] ?? '';
             $foto_laudo->caminho = $data['imagem'][$i]->store("laudos/{$laudo->id}/imagens");
             $foto_laudo->save();
         }
+
         return view('solicitacoes.podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Laudo tecnico criado com sucesso');
     }
 
@@ -43,6 +45,7 @@ class LaudoTecnicoController extends Controller
     public function foto(LaudoTecnico $laudo, FotoLaudoTecnico $foto)
     {
         $this->authorize('isAnalistaPodaOrSecretario', User::class);
+
         return Storage::download($foto->caminho);
     }
 }

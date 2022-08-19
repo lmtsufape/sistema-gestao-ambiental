@@ -19,6 +19,7 @@ class SolicitacaoPodaPolicy
     public function index(User $user)
     {
         $userPolicy = new UserPolicy();
+
         return $userPolicy->isAnalistaPodaOrSecretario($user);
     }
 

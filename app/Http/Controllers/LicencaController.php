@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Requerimento;
 use App\Http\Requests\LicencaRequest;
 use App\Models\Licenca;
-use App\Models\Visita;
+use App\Models\Requerimento;
 use App\Models\User;
+use App\Models\Visita;
 use App\Notifications\LicencaAprovada;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,6 +33,7 @@ class LicencaController extends Controller
     public function create(Requerimento $requerimento)
     {
         $this->authorize('isSecretario', User::class);
+
         return view('licenca.create', compact('requerimento'));
     }
 
@@ -71,7 +72,7 @@ class LicencaController extends Controller
 
     public function documento(Licenca $licenca)
     {
-        return response()->file(storage_path('app/'.$licenca->caminho));
+        return response()->file(storage_path('app/' . $licenca->caminho));
     }
 
     /**
@@ -85,6 +86,7 @@ class LicencaController extends Controller
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisitaOrSecretario', $visita);
         $licenca = Licenca::find($licenca_id);
+
         return view('licenca.revisar', compact('visita', 'licenca'));
     }
 
@@ -102,7 +104,7 @@ class LicencaController extends Controller
         $request->validate([
             'tipo_de_licença' => 'required',
             'data_de_validade' => 'required',
-            'licença'   => 'nullable|file|mimes:pdf|max:2048',
+            'licença' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         $licenca = Licenca::find($id);
@@ -136,7 +138,7 @@ class LicencaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function salvar_revisao(Request $request, $licenca_id, $visita_id)
+    public function salvarRevisao(Request $request, $licenca_id, $visita_id)
     {
         $visita = Visita::find($visita_id);
         $this->authorize('analistaDaVisita', $visita);

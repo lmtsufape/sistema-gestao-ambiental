@@ -11,8 +11,10 @@ class LaudoTecnicoRequest extends FormRequest
     public function authorize()
     {
         $user = Auth::user();
+
         return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
     }
+
     /**
      * Determine if the user is authorized to make this request.
      *

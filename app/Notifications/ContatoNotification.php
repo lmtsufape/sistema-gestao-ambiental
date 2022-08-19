@@ -3,16 +3,18 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Http\Request;
 
 class ContatoNotification extends Notification
 {
     use Queueable;
+
     public $request;
+
     public $assunto;
+
     /**
      * Create a new notification instance.
      *
@@ -43,7 +45,7 @@ class ContatoNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown(
+        return (new MailMessage())->markdown(
             'mail.contato',
             ['dados' => $this->request]
         )->subject($this->assunto);

@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Requests\NoticiaRequest;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Http\Requests\NoticiaRequest;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
-use DateInterval;
 
 class Noticia extends Model
 {
@@ -37,8 +35,8 @@ class Noticia extends Model
     {
         $this->titulo = $request->input('título');
         $this->texto = $request->texto;
-        $this->publicada = $request->publicar == "on";
-        $this->destaque = $request->destaque == "on";
+        $this->publicada = $request->publicar == 'on';
+        $this->destaque = $request->destaque == 'on';
         $this->link = $this->gerarLinkDivulgacao($request->input('título'));
         $this->autor_id = auth()->user()->id;
     }
@@ -51,25 +49,22 @@ class Noticia extends Model
      */
     public function salvarImagem($file)
     {
-        $this->deletar_imagem();
+        $this->deletarImagem();
 
-        $caminho_noticias = "noticias/" . $this->id . "/";
+        $caminho_noticias = 'noticias/' . $this->id . '/';
         $documento_nome = $file->getClientOriginalName();
         Storage::putFileAs('public/' . $caminho_noticias, $file, $documento_nome);
         $this->imagem_principal = $caminho_noticias . $file->getClientOriginalName();
     }
 
     /**
-     * Chega se a noticia sofreu alguma atualização.
+     * Checa se a noticia sofreu alguma atualização.
      *
-     * @return boolean
+     * @return bool
      */
     public function exibirDatas()
     {
-        if ((new Carbon($this->created_at)) == (new Carbon($this->updated_at))) {
-            return true;
-        }
-        return false;
+        return (new Carbon($this->created_at)) == (new Carbon($this->updated_at));
     }
 
     /**
@@ -82,13 +77,13 @@ class Noticia extends Model
         $ultima = now()->diff(new Carbon($this->created_at));
         if ($ultima->d >= 1) {
             return 'Publicada em ' . (new Carbon($this->created_at))->format('d/m/Y') . ' às ' . (new Carbon($this->created_at))->format('H:m');
-        } else if ($ultima->h >= 1 && $ultima->h < 2) {
+        } elseif ($ultima->h >= 1 && $ultima->h < 2) {
             return 'Publicada há ' . $ultima->h . ' hora atrás.';
-        } else if ($ultima->h >= 2) {
+        } elseif ($ultima->h >= 2) {
             return 'Publicada há ' . $ultima->h . ' horas atrás.';
-        } else if ($ultima->m <= 1) {
+        } elseif ($ultima->m <= 1) {
             return 'Publicada agora.';
-        } else if ($ultima->m > 1) {
+        } elseif ($ultima->m > 1) {
             return 'Publicada há ' . $ultima->m . ' minutos atrás.';
         }
     }
@@ -103,13 +98,13 @@ class Noticia extends Model
         $ultima = now()->diff(new Carbon($this->updated_at));
         if ($ultima->d >= 1) {
             return 'Atualizado em ' . (new Carbon($this->updated_at))->format('d/m/Y às H:m');
-        } else if ($ultima->h >= 1 && $ultima->h < 2) {
+        } elseif ($ultima->h >= 1 && $ultima->h < 2) {
             return 'Última atualização à ' . $ultima->h . ' hora atrás.';
-        } else if ($ultima->h >= 2) {
+        } elseif ($ultima->h >= 2) {
             return 'Última atualização à ' . $ultima->h . ' horas atrás.';
-        } else if ($ultima->m <= 1) {
+        } elseif ($ultima->m <= 1) {
             return 'Atualizado agora.';
-        } else if ($ultima->m > 1) {
+        } elseif ($ultima->m > 1) {
             return 'Última atualização à ' . $ultima->m . ' minutos atrás.';
         }
     }
@@ -122,8 +117,9 @@ class Noticia extends Model
      */
     private function gerarLinkDivulgacao($string)
     {
-        $string = iconv( "UTF-8" , "ASCII//TRANSLIT//IGNORE" , $string );
-        $complemento = preg_replace( array( '/[ ]/' , '/[^A-Za-z0-9\-]/' ) , array( '' , '' ) , $string );
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+        $complemento = preg_replace(['/[ ]/', '/[^A-Za-z0-9\-]/'], ['', ''], $string);
+
         return route('welcome') . '/noticias/' . $complemento;
     }
 
@@ -132,11 +128,11 @@ class Noticia extends Model
      *
      * @return void
      */
-    public function deletar_imagem()
+    public function deletarImagem()
     {
         if ($this->imagem_principal != null) {
-            if (Storage::disk()->exists('public/'. $this->imagem_principal)) {
-                Storage::delete('public/'. $this->imagem_principal);
+            if (Storage::disk()->exists('public/' . $this->imagem_principal)) {
+                Storage::delete('public/' . $this->imagem_principal);
             }
         }
     }

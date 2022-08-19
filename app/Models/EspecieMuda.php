@@ -22,5 +22,4 @@ class EspecieMuda extends Model
     {
         return $this->hasMany(MudaSolicitada::class, 'especie_id');
     }
-
 }

@@ -2,18 +2,19 @@
 
 namespace App\Notifications;
 
+use App\Models\Requerimento;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Requerimento;
 
 class DocumentosAnalisadosNotification extends Notification
 {
     use Queueable;
 
     public $assunto;
+
     public $requerimento;
+
     public $documentos;
 
     /**
@@ -47,7 +48,7 @@ class DocumentosAnalisadosNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown(
+        return (new MailMessage())->markdown(
             'mail.documentos_analisados',
             ['documentos' => $this->documentos, 'requerimento' => $this->requerimento]
         )->subject($this->assunto);

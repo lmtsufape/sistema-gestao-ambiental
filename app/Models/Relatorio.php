@@ -12,7 +12,7 @@ class Relatorio extends Model
 
     public const APROVACAO_ENUM = [
         'realizado' => 1,
-        'aprovado'  => 2,
+        'aprovado' => 2,
         'reprovado' => 3,
     ];
 

@@ -16,6 +16,7 @@ class FichaAnaliseRequest extends FormRequest
     public function authorize()
     {
         $user = Auth::user();
+
         return $user->role == User::ROLE_ENUM['secretario'] || $user->role == User::ROLE_ENUM['analista'];
     }
 

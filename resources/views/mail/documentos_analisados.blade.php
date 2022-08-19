@@ -1,6 +1,6 @@
 @component('mail::message')
     <p style="color: black; font-family: 'Times New Roman', Times, serif;">
-        O status do requerimento nº {{$requerimento->id}} foi alterado para
+        O status do seu requerimento nº {{$requerimento->id}}, da empresa/serviço {{$requerimento->empresa->nome}} com {{$requerimento->empresa->eh_cnpj ? 'CNPJ' : 'CPF'}} {{$requerimento->empresa->cpf_cnpj}} foi alterado para
         @switch($requerimento->status)
             @case(\App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
                 documentos requeridos.

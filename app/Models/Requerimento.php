@@ -10,27 +10,27 @@ class Requerimento extends Model
     use HasFactory;
 
     public const STATUS_ENUM = [
-        'requerida'     => 1,
-        'em_andamento'  => 2,
+        'requerida' => 1,
+        'em_andamento' => 2,
         'documentos_requeridos' => 3,
         'documentos_enviados' => 4,
         'documentos_aceitos' => 5,
         'visita_marcada' => 6,
         'visita_realizada' => 7,
-        'finalizada'    => 8,
-        'cancelada'     => 9,
+        'finalizada' => 8,
+        'cancelada' => 9,
     ];
 
     public const DEFINICAO_VALOR_ENUM = [
-        'manual'     => 'Definir de forma manual',
-        'automatica'  => 'Definir de forma automática',
+        'manual' => 'Definir de forma manual',
+        'automatica' => 'Definir de forma automática',
         'automatica_com_juros' => 'Definir de forma automática com juros',
     ];
 
     public const TIPO_ENUM = [
         'primeira_licenca' => 1,
-        'renovacao'        => 2,
-        'autorizacao'      => 3,
+        'renovacao' => 2,
+        'autorizacao' => 3,
     ];
 
     public const TIPO_LICENCA_ENUM = Licenca::TIPO_ENUM;
@@ -41,7 +41,7 @@ class Requerimento extends Model
         'valor',
         'potencial_poluidor_atribuido',
         'cancelada',
-        'motivo_cancelamento'
+        'motivo_cancelamento',
     ];
 
     public function protocolista()
@@ -121,10 +121,10 @@ class Requerimento extends Model
                 return 'documentos aceitos';
                 break;
             case $this::STATUS_ENUM['visita_marcada']:
-                return 'visita marcada para '.date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
+                return 'visita marcada para ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
                 break;
             case $this::STATUS_ENUM['visita_realizada']:
-                return 'visita feita em '.date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
+                return 'visita feita em ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
                 break;
             case $this::STATUS_ENUM['finalizada']:
                 return 'finalizado';
@@ -141,22 +141,22 @@ class Requerimento extends Model
     public function tipoDeLicenca()
     {
         switch ($this->tipo_licenca) {
-            case $this::TIPO_LICENCA_ENUM['previa']: 
+            case $this::TIPO_LICENCA_ENUM['previa']:
                 return 'prévia';
                 break;
-            case $this::TIPO_LICENCA_ENUM['instalacao']: 
+            case $this::TIPO_LICENCA_ENUM['instalacao']:
                 return 'instalação';
                 break;
-            case $this::TIPO_LICENCA_ENUM['operacao']: 
+            case $this::TIPO_LICENCA_ENUM['operacao']:
                 return 'operação';
                 break;
             case $this::TIPO_LICENCA_ENUM['simplificada']:
-                return 'simplificada'; 
+                return 'simplificada';
                 break;
-            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']: 
+            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']:
                 return 'autorização ambiental';
                 break;
-            case $this::TIPO_LICENCA_ENUM['regularizacao']: 
+            case $this::TIPO_LICENCA_ENUM['regularizacao']:
                 return 'regularização';
                 break;
         }
@@ -167,7 +167,8 @@ class Requerimento extends Model
         return $this->visitas()->latest('data_marcada')->first();
     }
 
-    public function gerarMensagemCompesacao() {
+    public function gerarMensagemCompesacao()
+    {
         switch ($this->tipo) {
             case $this::TIPO_ENUM['primeira_licenca']:
                 return [
@@ -187,30 +188,32 @@ class Requerimento extends Model
         }
     }
 
-    private function tipoDeLicencaCompensacao() {
+    private function tipoDeLicencaCompensacao()
+    {
         switch ($this->tipo_licenca) {
-            case $this::TIPO_LICENCA_ENUM['previa']: 
+            case $this::TIPO_LICENCA_ENUM['previa']:
                 return 'PREVIA';
                 break;
-            case $this::TIPO_LICENCA_ENUM['instalacao']: 
+            case $this::TIPO_LICENCA_ENUM['instalacao']:
                 return 'INSTALACAO';
                 break;
-            case $this::TIPO_LICENCA_ENUM['operacao']: 
+            case $this::TIPO_LICENCA_ENUM['operacao']:
                 return 'OPERACAO';
                 break;
             case $this::TIPO_LICENCA_ENUM['simplificada']:
-                return 'SIMPLIFICADA'; 
+                return 'SIMPLIFICADA';
                 break;
-            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']: 
+            case $this::TIPO_LICENCA_ENUM['autorizacao_ambiental']:
                 return 'AUTORIZACAO AMBIENTAL';
                 break;
-            case $this::TIPO_LICENCA_ENUM['regularizacao']: 
+            case $this::TIPO_LICENCA_ENUM['regularizacao']:
                 return 'REGULARIZACAO';
                 break;
         }
     }
 
-    public function textoEtapa(){
+    public function textoEtapa()
+    {
         switch ($this->status) {
             case $this::STATUS_ENUM['requerida']:
                 return 'Seu requerimento será enviado para o banco de requerimentos da secretaria.';
@@ -228,10 +231,10 @@ class Requerimento extends Model
                 return 'Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.';
                 break;
             case $this::STATUS_ENUM['visita_marcada']:
-                return 'A visita à empresa/serviço '. $this->empresa->nome .' foi agendada, aguarde a equipe da secretaria na data informada.';
+                return 'A visita à empresa/serviço ' . $this->empresa->nome . ' foi agendada, aguarde a equipe da secretaria na data informada.';
                 break;
             case $this::STATUS_ENUM['visita_realizada']:
-                return 'A visita à empresa/serviço '. $this->empresa->nome .'foi realizada, aguarde a análise da secretaria para receber sua licença.';
+                return 'A visita à empresa/serviço ' . $this->empresa->nome . 'foi realizada, aguarde a análise da secretaria para receber sua licença.';
                 break;
             case $this::STATUS_ENUM['finalizada']:
                 return 'Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".';
@@ -244,11 +247,14 @@ class Requerimento extends Model
                 break;
         }
     }
-    public function cancelado(){
+
+    public function cancelado()
+    {
         return $this->status == $this::STATUS_ENUM['cancelada'] || $this->cancelada;
     }
 
-    public function canceladoSecretario(){
-        return $this->cancelada;    
+    public function canceladoSecretario()
+    {
+        return $this->cancelada;
     }
 }

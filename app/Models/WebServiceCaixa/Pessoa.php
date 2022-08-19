@@ -40,8 +40,8 @@ class Pessoa
      * Função que seta os dados do pagador através de uma empresa passada.
      * @param  Empresa $empresa
      * @return void
-    */
-    public function gerar_pagador(Empresa $empresa)
+     */
+    public function gerarPagador(Empresa $empresa)
     {
         if ($empresa->eh_cnpj) {
             $this->cnpj = $empresa->cpf_cnpj;
@@ -60,8 +60,8 @@ class Pessoa
     /**
      * Função que seta os dados do beneficiário através dos dados configurados no .env.
      * @return void
-    */
-    public function gerar_beneficiario()
+     */
+    public function gerarBeneficiario()
     {
         $this->cnpj = env('CNPJ_EMPRESA_BENEFICIADA');
         $this->razao_social = env('NOME_EMPRESA_BENEFICIADA');

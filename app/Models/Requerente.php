@@ -32,8 +32,8 @@ class Requerente extends Model
 
     public function setAtributes($input)
     {
-        $this->cpf              = $input['cpf'];
-        $this->rg               = $input['rg'];
-        $this->orgao_emissor    = $input['orgão_emissor'];
+        $this->cpf = $input['cpf'];
+        $this->rg = $input['rg'];
+        $this->orgao_emissor = $input['orgão_emissor'];
     }
 }

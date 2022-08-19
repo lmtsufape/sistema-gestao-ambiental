@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,9 +11,13 @@ class ParecerSolicitacao extends Notification
     use Queueable;
 
     public $solicitacao;
+
     public $parecer;
+
     public $tipo;
+
     public $motivo;
+
     /**
      * Create a new notification instance.
      *
@@ -47,9 +50,9 @@ class ParecerSolicitacao extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
                     ->line("Sua solicitação de {$this->tipo} com protocolo {$this->solicitacao->protocolo} foi {$this->parecer}")
-                    ->line($this->motivo != null ? "Justificativa: {$this->motivo}" : "")
+                    ->line($this->motivo != null ? "Justificativa: {$this->motivo}" : '')
                     ->subject("Solicitacão {$this->parecer}");
     }
 

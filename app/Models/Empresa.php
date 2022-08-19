@@ -74,7 +74,7 @@ class Empresa extends Model
 
     /**
      * Retorna o maior pontecial poluidor da empresa.
-     * 
+     *
      * @return string $string
      */
     public function potencialPoluidor()

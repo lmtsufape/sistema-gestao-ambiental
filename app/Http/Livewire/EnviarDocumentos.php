@@ -20,9 +20,13 @@ class EnviarDocumentos extends Component
     use WithFileUploads;
 
     public $documentos;
+
     public $arquivos;
+
     public $status;
+
     public $requerimentoStatus;
+
     protected $validationAttributes = [];
 
     public function mount(Requerimento $requerimento)
@@ -32,8 +36,8 @@ class EnviarDocumentos extends Component
         $this->arquivos = $this->documentos->pluck('', 'id')->toArray();
         $this->regras = [];
         foreach ($this->documentos as $value) {
-            $this->regras['arquivos.'.$value->id] = ['required', 'file', 'mimes:pdf', 'max:2048'];
-            $this->validationAttributes['arquivos.'.$value->id] = $value->nome;
+            $this->regras['arquivos.' . $value->id] = ['required', 'file', 'mimes:pdf', 'max:2048'];
+            $this->validationAttributes['arquivos.' . $value->id] = $value->nome;
         }
         $this->status = Checklist::STATUS_ENUM;
         $this->requerimentoStatus = Requerimento::STATUS_ENUM;
@@ -47,14 +51,13 @@ class EnviarDocumentos extends Component
         if ($documento->pivot->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == \App\Models\Checklist::STATUS_ENUM['recusado'] || ($this->requerimento->status == $this->requerimentoStatus['documentos_requeridos'] || $documento->status == \App\Models\Checklist::STATUS_ENUM['enviado'])) {
             $this->withValidator(function (Validator $validator) {
                 if ($validator->fails()) {
-
                     $this->dispatchBrowserEvent('swal:fire', [
                         'icon' => 'error',
-                        'title' => 'Erro ao enviar o arquivo, verifique o campo inválido!'
+                        'title' => 'Erro ao enviar o arquivo, verifique o campo inválido!',
                     ]);
                 }
             })->validateOnly($propertyName, $this->regras);
-            if($documento->caminho != null&& Storage::exists($documento->caminho)){
+            if ($documento->caminho != null && Storage::exists($documento->caminho)) {
                 Storage::delete($documento->caminho);
             }
             $this->requerimento->documentos()->updateExistingPivot($id, [
@@ -63,7 +66,7 @@ class EnviarDocumentos extends Component
             ]);
             $this->dispatchBrowserEvent('swal:fire', [
                 'icon' => 'success',
-                'title' => 'Documento anexado!'
+                'title' => 'Documento anexado!',
             ]);
         }
     }
@@ -71,7 +74,7 @@ class EnviarDocumentos extends Component
     public function attributes()
     {
         foreach ($this->documentos as $value) {
-            $this->validationAttributes['arquivos.'.$value->id] = $value->nome;
+            $this->validationAttributes['arquivos.' . $value->id] = $value->nome;
         }
     }
 
@@ -79,8 +82,9 @@ class EnviarDocumentos extends Component
     {
         $rules = [];
         foreach ($this->documentos->pluck('id') as $key) {
-            $rules['arquivos.'.$key] = [new ArquivoEnviado($this->requerimento, $key)];
+            $rules['arquivos.' . $key] = [new ArquivoEnviado($this->requerimento, $key)];
         }
+
         return $rules;
     }
 
@@ -91,21 +95,20 @@ class EnviarDocumentos extends Component
             if ($validator->fails()) {
                 $this->dispatchBrowserEvent('swal:fire', [
                     'icon' => 'error',
-                    'title' => 'Erro ao enviar os arquivos, verifique os campos inválidos!'
+                    'title' => 'Erro ao enviar os arquivos, verifique os campos inválidos!',
                 ]);
             }
         })->validate($this->rulesSubmit());
         $this->requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $this->requerimento->update();
 
-        if($this->requerimento->analistaProcesso != null){
+        if ($this->requerimento->analistaProcesso != null) {
             Notification::send($this->requerimento->analistaProcesso, new DocumentosEnviadosNotification($this->requerimento, 'Documentos enviados'));
-        }else{
+        } else {
             Notification::send($this->requerimento->protocolista, new DocumentosEnviadosNotification($this->requerimento, 'Documentos enviados'));
         }
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
-
     }
 
     public function render()
@@ -115,14 +118,18 @@ class EnviarDocumentos extends Component
 
     protected function cleanupOldUploads()
     {
-        if (FileUploadConfiguration::isUsingS3()) return;
+        if (FileUploadConfiguration::isUsingS3()) {
+            return;
+        }
 
         $storage = FileUploadConfiguration::storage();
 
         foreach ($storage->allFiles(FileUploadConfiguration::path()) as $filePathname) {
             // On busy websites, this cleanup code can run in multiple threads causing part of the output
             // of allFiles() to have already been deleted by another thread.
-            if (! $storage->exists($filePathname)) continue;
+            if (! $storage->exists($filePathname)) {
+                continue;
+            }
 
             $yesterdaysStamp = now()->subMinutes(20)->timestamp;
             if ($yesterdaysStamp > $storage->lastModified($filePathname)) {

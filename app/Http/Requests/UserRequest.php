@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Laravel\Jetstream\Jetstream;
-use App\Models\User;
 
 class UserRequest extends FormRequest
 {
@@ -26,10 +26,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:8|confirmed',
-            'terms'     => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['required', 'accepted'] : '',
             'tipos_analista' => 'required',
             'tipos_analista.*' => 'required',
         ];
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'tipos_analista.required'     => "Selecione ao menos um cargo para o analista",
+            'tipos_analista.required' => 'Selecione ao menos um cargo para o analista',
         ];
     }
 }

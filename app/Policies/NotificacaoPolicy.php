@@ -42,6 +42,7 @@ class NotificacaoPolicy
     public function create(User $user)
     {
         $userPolicy = new UserPolicy();
+
         return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user);
     }
 

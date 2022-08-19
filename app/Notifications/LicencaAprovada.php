@@ -5,17 +5,17 @@ namespace App\Notifications;
 use App\Models\Licenca;
 use App\Models\Requerimento;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Storage;
 
 class LicencaAprovada extends Notification
 {
     use Queueable;
 
     public Requerimento $requerimento;
+
     public Licenca $licenca;
+
     /**
      * Create a new notification instance.
      *
@@ -46,10 +46,10 @@ class LicencaAprovada extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
                     ->line("A licença do requerimento de {$this->requerimento->tipoString()} da empresa {$this->requerimento->empresa->nome} foi aprovada.")
-                    ->line("A licença segue em anexo e também está disponível no site.")
-                    ->attach(storage_path('app/'.$this->licenca->caminho), ['as' => 'licenca.pdf', 'mime' => 'application/pdf'])
+                    ->line('A licença segue em anexo e também está disponível no site.')
+                    ->attach(storage_path('app/' . $this->licenca->caminho), ['as' => 'licenca.pdf', 'mime' => 'application/pdf'])
                     ->subject('Licença aprovada!');
     }
 

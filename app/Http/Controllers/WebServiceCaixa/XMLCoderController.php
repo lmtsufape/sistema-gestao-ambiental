@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\WebServiceCaixa;
 
 use App\Http\Controllers\Controller;
-use App\Models\WebServiceCaixa\GerirBoletoRemessa;
-use App\Models\WebServiceCaixa\Pessoa;
-use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
 use App\Models\WebServiceCaixa\AlterarBoletoRemessa;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
+use App\Models\WebServiceCaixa\GerirBoletoRemessa;
+use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
+use App\Models\WebServiceCaixa\Pessoa;
 use Illuminate\Support\Facades\Storage;
 
 class XMLCoderController extends Controller
@@ -20,19 +20,19 @@ class XMLCoderController extends Controller
      * @param Requerimento $requerimento
      * @return BoletoCobranca $boleto
      */
-    public function gerar_incluir_boleto(Requerimento $requerimento)
+    public function gerarIncluirBoleto(Requerimento $requerimento)
     {
         $pagador = new Pessoa();
         $beneficiario = new Pessoa();
 
-        $pagador->gerar_pagador($requerimento->empresa);
-        $beneficiario->gerar_beneficiario();
+        $pagador->gerarPagador($requerimento->empresa);
+        $beneficiario->gerarBeneficiario();
 
         $data_vencimento = now()->addDays(30)->format('Y-m-d');
 
         $boleto = new IncluirBoletoRemessa([
             'data_vencimento' => $data_vencimento,
-            'requerimento_id' => $requerimento->id
+            'requerimento_id' => $requerimento->id,
         ]);
         $boleto->save();
 
@@ -49,7 +49,7 @@ class XMLCoderController extends Controller
             'mensagens_compensacao' => $requerimento->gerarMensagemCompesacao(),
         ]);
 
-        $boleto->salvar_arquivo($boleto->gerar_remessa());
+        $boleto->salvarArquivo($boleto->gerarRemessa());
         $boleto->update();
 
         return $boleto;
@@ -63,11 +63,11 @@ class XMLCoderController extends Controller
      * @return void
      * @throws ErrorRemessaException
      */
-    public function incluir_boleto_remessa(BoletoCobranca $boleto)
+    public function incluirBoletoRemessa(BoletoCobranca $boleto)
     {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => IncluirBoletoRemessa::URL,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -77,30 +77,29 @@ class XMLCoderController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$boleto->caminho_arquivo_remessa),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $boleto->caminho_arquivo_remessa),
+            CURLOPT_HTTPHEADER => [
                 'SoapAction: INCLUI_BOLETO',
-                'Content-Type: text/plain'
-            ),
-        ));
+                'Content-Type: text/plain',
+            ],
+        ]);
 
         $response = curl_exec($curl);
 
         curl_close($curl);
 
-        $resultado = (new IncluirBoletoRemessa())->to_array($response);
+        $resultado = (new IncluirBoletoRemessa())->xmlToArray($response);
 
-        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
-            switch ($resultado['COD_RETORNO']['DADOS']) {
-                case 0:
-                    $boleto->salvar_arquivo_resposta($response);
-                    $this->salvar_resposta_incluir_boleto_remessa($boleto, $resultado);
-                    break;
-                default:
-                    throw new ErrorRemessaException($resultado['RETORNO']);
-            }
-        } else {
+        if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
             throw new ErrorRemessaException($response);
+        }
+        switch ($resultado['COD_RETORNO']['DADOS']) {
+            case 0:
+                $boleto->salvarArquivoResposta($response);
+                $this->salvarRespostaIncluirBoletoRemessa($boleto, $resultado);
+                break;
+            default:
+                throw new ErrorRemessaException($resultado['RETORNO']);
         }
     }
 
@@ -111,7 +110,7 @@ class XMLCoderController extends Controller
      * @param array $resultado
      * @return void
      */
-    private function salvar_resposta_incluir_boleto_remessa(BoletoCobranca $boleto, $resultado)
+    private function salvarRespostaIncluirBoletoRemessa(BoletoCobranca $boleto, $resultado)
     {
         $boleto = BoletoCobranca::find($boleto->id);
         $boleto->codigo_de_barras = $resultado['CODIGO_BARRAS'];
@@ -128,7 +127,7 @@ class XMLCoderController extends Controller
      * @param array $resultado
      * @return void
      */
-    private function salvar_resposta_alterar_boleto_remessa(BoletoCobranca $boleto, array $resultado)
+    private function salvarRespostaAlterarBoletoRemessa(BoletoCobranca $boleto, array $resultado)
     {
         $boleto = BoletoCobranca::find($boleto->id);
         $boleto->codigo_de_barras = $resultado['CODIGO_BARRAS'];
@@ -144,14 +143,14 @@ class XMLCoderController extends Controller
      * @return void
      * @throws ErrorRemessaException
      */
-    public function gerar_alterar_boleto(BoletoCobranca $boleto)
+    public function gerarAlterarBoleto(BoletoCobranca $boleto)
     {
         $pagador = new Pessoa();
         $beneficiario = new Pessoa();
         $remessa_alterar_boleto = new AlterarBoletoRemessa();
 
-        $pagador->gerar_pagador($boleto->requerimento->empresa);
-        $beneficiario->gerar_beneficiario();
+        $pagador->gerarPagador($boleto->requerimento->empresa);
+        $beneficiario->gerarBeneficiario();
         $data_vencimento = now()->addDays(30)->format('Y-m-d');
         $remessa_alterar_boleto->setAttributes([
             'codigo_beneficiario' => $beneficiario->cod_beneficiario,
@@ -168,13 +167,13 @@ class XMLCoderController extends Controller
             'numero_do_documento' => strval($boleto->id),
         ]);
 
-        $caminho = 'remessas/alterar_boleto_remessa_'.$boleto->id.'.xml';
-        Storage::put($caminho, $remessa_alterar_boleto->gerar_remessa());
+        $caminho = 'remessas/alterar_boleto_remessa_' . $boleto->id . '.xml';
+        Storage::put($caminho, $remessa_alterar_boleto->gerarRemessa());
         $boleto->update();
 
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_URL => GerirBoletoRemessa::URL,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
@@ -184,29 +183,28 @@ class XMLCoderController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('').'/app/'.$caminho),
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $caminho),
+            CURLOPT_HTTPHEADER => [
                 'SoapAction: ALTERA_BOLETO',
-                'Content-Type: text/plain'
-            ),
-        ));
+                'Content-Type: text/plain',
+            ],
+        ]);
 
         $response = curl_exec($curl);
         curl_close($curl);
-        $resultado = (new AlterarBoletoRemessa())->to_array($response);
+        $resultado = (new AlterarBoletoRemessa())->xmlToArray($response);
 
-        if (array_key_exists('COD_RETORNO', $resultado) && is_array($resultado['COD_RETORNO']) && array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
-            switch ($resultado['COD_RETORNO']['DADOS']) {
-                case 0:
-                    $boleto->salvar_arquivo_resposta($response);
-                    Storage::put('resposta_alterar_boleto_remessa_'.$boleto->id.'.xml', $response);
-                    $this->salvar_resposta_alterar_boleto_remessa($boleto, $resultado);
-                    break;
-                default:
-                    throw new ErrorRemessaException($resultado['RETORNO']);
-            }
-        } else {
+        if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
             throw new ErrorRemessaException($response);
+        }
+        switch ($resultado['COD_RETORNO']['DADOS']) {
+            case 0:
+                $boleto->salvarArquivoResposta($response);
+                Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $this->salvarRespostaAlterarBoletoRemessa($boleto, $resultado);
+                break;
+            default:
+                throw new ErrorRemessaException($resultado['RETORNO']);
         }
     }
 }

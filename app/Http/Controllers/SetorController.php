@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setor;
 use App\Models\Cnae;
+use App\Models\Setor;
 use Illuminate\Http\Request;
 
 class SetorController extends Controller
@@ -18,6 +18,7 @@ class SetorController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $setores = Setor::orderBy('nome')->paginate(20);
+
         return view('setor.index', compact('setores'));
     }
 
@@ -44,7 +45,7 @@ class SetorController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $validator = $request->validate([
-            'nome'      => 'required|string',
+            'nome' => 'required|string',
             'descricao' => 'required|string',
         ]);
 
@@ -67,6 +68,7 @@ class SetorController extends Controller
 
         $setor = Setor::find($id);
         $cnaes = Cnae::where('setor_id', '=', $setor->id)->orderBy('nome', 'ASC')->paginate(20);
+
         return view('setor.show', compact('setor', 'cnaes'));
     }
 
@@ -81,6 +83,7 @@ class SetorController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $setor = Setor::find($id);
+
         return view('setor.edit', compact('setor'));
     }
 
@@ -98,7 +101,7 @@ class SetorController extends Controller
         $setor = Setor::find($id);
 
         $validator = $request->validate([
-            'nome'      => 'required|string',
+            'nome' => 'required|string',
             'descricao' => 'required|string',
         ]);
 
@@ -117,7 +120,7 @@ class SetorController extends Controller
     public function destroy($id)
     {
         $this->authorize('isSecretario', User::class);
-        
+
         $setor = Setor::find($id);
 
         if ($setor->existemEmpresas()) {
@@ -133,10 +136,10 @@ class SetorController extends Controller
     public function ajaxCnaes(Request $request)
     {
         $cnaes = Cnae::where('setor_id', '=', $request->setor_id)->orderBy('nome', 'ASC')->get();
-        $data = array(
-            'success'   => true,
-            'cnaes'     => $cnaes,
-        );
+        $data = [
+            'success' => true,
+            'cnaes' => $cnaes,
+        ];
         echo json_encode($data);
     }
 }

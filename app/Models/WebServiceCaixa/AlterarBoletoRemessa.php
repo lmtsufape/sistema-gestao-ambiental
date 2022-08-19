@@ -2,8 +2,6 @@
 
 namespace App\Models\WebServiceCaixa;
 
-use Carbon\Carbon;
-
 /**
  * Utilizada para alterar dados de um boleto registrado na CAIXA. Útil para situações onde o
  * pagador necessita de atualização de instruções de devolução/protesto, prazos,
@@ -21,6 +19,6 @@ class AlterarBoletoRemessa extends GerirBoletoRemessa
     public function setAttributes(array $data)
     {
         parent::setAttributes($data);
-        $this->data_juros_mora = array_key_exists("data_juros_mora", $data) ? now()->addDays($data["data_juros_mora"])->format("Y-m-d") : now()->addDays(31)->format("Y-m-d");
+        $this->data_juros_mora = array_key_exists('data_juros_mora', $data) ? now()->addDays($data['data_juros_mora'])->format('Y-m-d') : now()->addDays(31)->format('Y-m-d');
     }
 }

@@ -99,7 +99,6 @@ class VisitaPolicy
      * @param  \App\Models\Visita  $visita
      * @return \Illuminate\Auth\Access\Response|bool
      */
-
     public function analistaDaVisita(User $user, Visita $visita)
     {
         return $user->id == $visita->analista_id;
@@ -112,10 +111,10 @@ class VisitaPolicy
      * @param  \App\Models\Visita  $visita
      * @return \Illuminate\Auth\Access\Response|bool
      */
-
     public function analistaDaVisitaOrSecretario(User $user, Visita $visita)
     {
         $userPolicy = new UserPolicy();
+
         return $user->id == $visita->analista_id || $userPolicy->isSecretario($user);
     }
 }

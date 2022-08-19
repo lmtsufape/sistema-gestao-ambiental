@@ -24,6 +24,7 @@ use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,18 +46,16 @@ class RequerimentoController extends Controller
         $requerimentosCancelados = collect();
         $requerimentosFinalizados = collect();
         if ($user->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = auth()->user()->requerimentosRequerente();
-        } else {
-            if ($user->role == User::ROLE_ENUM['analista']) {
+            $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
+        } elseif ($user->role == User::ROLE_ENUM['analista']) {
                 $requerimentos = Requerimento::where('analista_id', $user->id)
                     ->orwhere('analista_processo_id', $user->id)
                     ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
                     ->orderBy('created_at')->paginate(20);
-            } else {
-                $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-                $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
-                $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
-            }
+        } else {
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
+            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
         }
         switch ($filtro) {
             case 'atuais':
@@ -137,7 +136,7 @@ class RequerimentoController extends Controller
         $request->validated();
         $empresa = Empresa::find($request->empresa);
 
-        $requerimento = new Requerimento;
+        $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
@@ -172,7 +171,6 @@ class RequerimentoController extends Controller
      * @return View
      * @throws AuthorizationException
      */
-
     public function verRequerimentoVisita($visita_id, $requerimento_id)
     {
         $requerimento = Requerimento::find($requerimento_id);
@@ -224,7 +222,7 @@ class RequerimentoController extends Controller
         if ($userPolicy->isSecretario(auth()->user())) {
             if ($requerimento->motivo_cancelamento == null) {
                 $request->validate([
-                    'motivo_cancelamento' => 'required'
+                    'motivo_cancelamento' => 'required',
                 ]);
                 $requerimento->cancelada = true;
                 $requerimento->motivo_cancelamento = $request->motivo_cancelamento;
@@ -259,7 +257,6 @@ class RequerimentoController extends Controller
 
                 return redirect()->back()->with(['success' => 'Requerimento cancelado com sucesso.']);
             }
-
         }
     }
 
@@ -274,7 +271,7 @@ class RequerimentoController extends Controller
     public function atribuirAnalista(Request $request, $tipo)
     {
         $this->authorize('isSecretario', User::class);
-        $validated = $request->validate([
+        $request->validate([
             'analista' => 'required',
             'requerimento' => 'required',
         ]);
@@ -284,14 +281,14 @@ class RequerimentoController extends Controller
         if ($requerimento->analista_id == null) {
             $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         }
-        if ($tipo == "protocolista") {
+        if ($tipo == 'protocolista') {
             $requerimento->analista_id = $analista->id;
         } else {
             $requerimento->analista_processo_id = $analista->id;
         }
         $requerimento->update();
 
-        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => "Requerimento nº " . $requerimento->id . " atribuído com sucesso a " . $analista->name]);
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento nº ' . $requerimento->id . ' atribuído com sucesso a ' . $analista->name]);
     }
 
     /**
@@ -302,7 +299,7 @@ class RequerimentoController extends Controller
      */
     public function storeChecklist(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
@@ -357,6 +354,7 @@ class RequerimentoController extends Controller
                 ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
                 ->withInput();
         }
+
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Boleto gerado com sucesso.']);
     }
 
@@ -368,7 +366,7 @@ class RequerimentoController extends Controller
      */
     public function updateChecklist(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'licença' => 'required',
             'opcão_taxa_serviço' => 'required',
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
@@ -381,29 +379,19 @@ class RequerimentoController extends Controller
 
         $requerimento = Requerimento::find($request->requerimento);
         $this->atribuirValor($request, $requerimento);
-
-        // Documentos desmarcados
-        foreach ($requerimento->documentos as $documento) {
-            if (!in_array($documento->id, $request->documentos)) {
-                $requerimento->documentos()->detach($documento->id);
-            }
+        $documentos_requerimento = $requerimento->documentos->pluck('id')->all();
+        $documentos_view = $request->documentos;
+        $documentos_desmarcados = array_diff($documentos_requerimento, $documentos_view);
+        $caminhos_desmarcados = $requerimento->documentos()->whereIn('documento_id', $documentos_desmarcados)->where('status', '!=', Checklist::STATUS_ENUM['nao_enviado'])->withPivot('caminho')->get()->pluck('pivot.caminho');
+        $requerimento->documentos()->detach($documentos_desmarcados);
+        foreach ($caminhos_desmarcados as $caminho) {
+            delete_file($caminho);
         }
-
-        // Documentos marcados
-        foreach ($request->documentos as $documento_id) {
-            if (!$requerimento->documentos->contains('id', $documento_id)) {
-                $requerimento->documentos()->attach($documento_id);
-                $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
-                $documento->status = Checklist::STATUS_ENUM['nao_enviado'];
-                $documento->update();
-            }
-        }
-
+        $documentos_marcados = array_diff($documentos_view, $documentos_requerimento);
+        $requerimento->documentos()->attach($documentos_marcados, ['status' => Checklist::STATUS_ENUM['nao_enviado']]);
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
-
         $requerimento->tipo_licenca = $request->input('licença');
         $requerimento->update();
-
         $requerimento->refresh();
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Alteração dos documentos requeridos'));
 
@@ -417,7 +405,6 @@ class RequerimentoController extends Controller
      * @param Requerimento $requerimento
      * @return void
      */
-
     private function atribuirValor(Request $request, Requerimento $requerimento)
     {
         $valor = null;
@@ -452,18 +439,14 @@ class RequerimentoController extends Controller
     /**
      * Checa se é a primeira licença do usuário.
      *
-     * @return boolean
+     * @return bool
      */
     private function primeiroRequerimento()
     {
-
         if (auth()->user()->role == User::ROLE_ENUM['requerente']) {
-            $requerimentos = Requerimento::where('empresa_id', auth()->user()->empresa->id)->get();
-            if ($requerimentos->count() > 0) {
-                return false;
-            }
-            return true;
+            return ! auth()->user()->requerimentosRequerente()->exists();
         }
+
         return false;
     }
 
@@ -479,6 +462,7 @@ class RequerimentoController extends Controller
         if (auth()->user()->role == User::ROLE_ENUM['analista']) {
             return view('requerimento.analise-documentos', compact('requerimento', 'documentos'));
         }
+
         return view('requerimento.envio-documentos', compact('requerimento', 'documentos', 'status'));
     }
 
@@ -495,7 +479,7 @@ class RequerimentoController extends Controller
         }
 
         foreach ($request->documentos_id as $documento_id) {
-            if (!$requerimento->documentos->contains('id', $documento_id)) {
+            if (! $requerimento->documentos->contains('id', $documento_id)) {
                 return redirect()->back()->withErrors(['error' => 'Anexe os documentos que devem ser enviados.'])->withInput($request->all());
             }
         }
@@ -535,6 +519,7 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($requerimento_id);
         $this->authorize('verDocumentacao', $requerimento);
         $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
+
         return Storage::exists($documento->caminho) ? Storage::download($documento->caminho) : abort(404);
     }
 
@@ -568,8 +553,8 @@ class RequerimentoController extends Controller
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos aceitos'));
         }
         $requerimento->update();
-        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
 
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
     }
 
     /**
@@ -583,7 +568,7 @@ class RequerimentoController extends Controller
 
         $setoresSelecionados = collect();
         foreach ($requerimento->empresa->cnaes as $cnae) {
-            if (!$setoresSelecionados->contains($cnae->setor)) {
+            if (! $setoresSelecionados->contains($cnae->setor)) {
                 $setoresSelecionados->push($cnae->setor);
             }
         }
@@ -599,28 +584,28 @@ class RequerimentoController extends Controller
         }
 
         if ($this->possuiModificacaoCnae($request, $id) || $this->possuiModificacaoPorte($request, $id)) {
-            $historico = new Historico;
+            $historico = new Historico();
             $historico->user_id = auth()->user()->id;
             $historico->empresa_id = $requerimento->empresa->id;
             $historico->save();
             if ($this->possuiModificacaoCnae($request, $id)) {
                 foreach ($request->cnaes_id as $cnae_id) {
                     $cnae = Cnae::find($cnae_id);
-                    if (!$requerimento->empresa->cnaes->contains($cnae)) {
+                    if (! $requerimento->empresa->cnaes->contains($cnae)) {
                         $requerimento->empresa->cnaes()->attach($cnae);
-                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
                     } else {
-                        $modifcacaoCnae = new ModificacaoCnae;
+                        $modifcacaoCnae = new ModificacaoCnae();
                         $modifcacaoCnae->novo = true;
                         $modifcacaoCnae->cnae_id = $cnae_id;
                         $modifcacaoCnae->historico_id = $historico->id;
                         $modifcacaoCnae->save();
 
-                        $modifcacaoCnae3 = new ModificacaoCnae;
+                        $modifcacaoCnae3 = new ModificacaoCnae();
                         $modifcacaoCnae3->novo = false;
                         $modifcacaoCnae3->cnae_id = $cnae_id;
                         $modifcacaoCnae3->historico_id = $historico->id;
@@ -628,9 +613,9 @@ class RequerimentoController extends Controller
                     }
                 }
                 foreach ($requerimento->empresa->cnaes as $cnae) {
-                    if (!in_array($cnae->id, $request->cnaes_id)) {
+                    if (! in_array($cnae->id, $request->cnaes_id)) {
                         $requerimento->empresa->cnaes()->detach($cnae);
-                        $modifcacaoCnae2 = new ModificacaoCnae;
+                        $modifcacaoCnae2 = new ModificacaoCnae();
                         $modifcacaoCnae2->novo = false;
                         $modifcacaoCnae2->cnae_id = $cnae->id;
                         $modifcacaoCnae2->historico_id = $historico->id;
@@ -639,7 +624,7 @@ class RequerimentoController extends Controller
                 }
             }
             if ($this->possuiModificacaoPorte($request, $id)) {
-                $modifcacaoPorte = new ModificacaoPorte;
+                $modifcacaoPorte = new ModificacaoPorte();
                 $modifcacaoPorte->porte_antigo = $requerimento->empresa->porte;
                 $modifcacaoPorte->porte_atual = Empresa::PORTE_ENUM[$request->porte];
                 $modifcacaoPorte->historico_id = $historico->id;
@@ -648,37 +633,30 @@ class RequerimentoController extends Controller
                 $requerimento->empresa->update();
             }
             Notification::send($requerimento->empresa->user, new EmpresaModificadaNotification($historico, 'Informações modificadas da empresa'));
+
             return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Informações atualizadas com sucesso.']);
         }
+
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Nenhuma modificação feita.']);
     }
 
     public function possuiModificacaoCnae($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        foreach ($request->cnaes_id as $cnae_id) {
-            $cnae = Cnae::find($cnae_id);
-            if (!$requerimento->empresa->cnaes->contains($cnae)) {
-                return true;
-            }
-        }
+        $cnaes_view = $request->cnaes_id;
+        $empresa_canes = $requerimento->empresa->cnaes->pluck('id')->all();
+        $cnaes_adicionados = array_diff($cnaes_view, $empresa_canes);
+        $cnaes_removidos = array_diff($empresa_canes, $cnaes_view);
+        $diff = array_merge($cnaes_adicionados, $cnaes_removidos);
 
-        foreach ($requerimento->empresa->cnaes as $cnae) {
-            if (!in_array($cnae->id, $request->cnaes_id)) {
-                return true;
-            }
-        }
-
-        return false;
+        return ! empty($diff);
     }
 
     public function possuiModificacaoPorte($request, $id)
     {
         $requerimento = Requerimento::find($id);
-        if ($requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte]) {
-            return true;
-        }
-        return false;
+
+        return $requerimento->empresa->porte != Empresa::PORTE_ENUM[$request->porte];
     }
 
     /**
@@ -688,28 +666,18 @@ class RequerimentoController extends Controller
      */
     private function protocolistaComMenosRequerimentos()
     {
-        $protocolistas = User::protocolistas();
-        $protocolistaComMenosRequerimentos = null;
-        $min = 30000;
-        foreach ($protocolistas as $protocolista) {
-            $quantRequerimentos = $protocolista->requerimentos()->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos'])->get()->count();
-            if ($quantRequerimentos < $min) {
-                $min = $quantRequerimentos;
-                $protocolistaComMenosRequerimentos = $protocolista;
-            }
-        }
-
-        return $protocolistaComMenosRequerimentos;
+        return User::withCount(['requerimentos' => function (Builder $qry) {
+                $qry->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos']);
+            }])
+            ->orderBy('requerimentos_count', 'ASC')
+            ->first();
     }
 
-    /**
-     * @throws AuthorizationException
-     */
     public function atribuirPotencialPoluidor(Request $request, $id)
     {
         $this->authorize('isSecretarioOrProtocolista', User::class);
 
-        $validator = $request->validate([
+        $request->validate([
             'potencial_poluidor' => 'required',
         ]);
 
@@ -745,5 +713,4 @@ class RequerimentoController extends Controller
 
         return response()->json($requerimentoInfo);
     }
-
 }

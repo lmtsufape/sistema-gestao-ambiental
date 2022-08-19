@@ -11,8 +11,8 @@ class Denuncia extends Model
 
     public const APROVACAO_ENUM = [
         'registrada' => 1,
-        'aprovada'   => 2,
-        'arquivada'  => 3,
+        'aprovada' => 2,
+        'arquivada' => 3,
     ];
 
     protected $fillable = [

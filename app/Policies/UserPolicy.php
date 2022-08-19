@@ -23,7 +23,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um secretario.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecretario(User $user)
     {
@@ -34,7 +34,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um analista.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalista(User $user)
     {
@@ -44,58 +44,55 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um protocolista.
      *
-     * @return boolean
+     * @return bool
      */
     public function isProtocolista(User $user)
     {
-        if($this->isAnalista($user)){
+        if ($this->isAnalista($user)) {
             $protocolista = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['protocolista'])->first();
-            if($user->tipo_analista()->where('tipo_analista_id', $protocolista->id)->first() != null){
-                return True;
-            }else{
-                return False;
-            }
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $protocolista->id)->first() != null;
         }
+
+        return false;
     }
 
     /**
      * Checa se o usuário logado é um analista de processo.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalistaProcesso(User $user)
     {
-        if($this->isAnalista($user)){
+        if ($this->isAnalista($user)) {
             $processo = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['processo'])->first();
-            if($user->tipo_analista()->where('tipo_analista_id', $processo->id)->first() != null){
-                return True;
-            }else{
-                return False;
-            }
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $processo->id)->first() != null;
         }
+
+        return false;
     }
 
     /**
      * Checa se o usuário logado é um analista de poda.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalistaPoda(User $user)
     {
-        if($this->isAnalista($user)){
+        if ($this->isAnalista($user)) {
             $analistaPoda = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['poda'])->first();
-            if($analistaPoda != null && $user->tipo_analista()->where('tipo_analista_id', $analistaPoda->id)->first() != null){
-                return True;
-            }else{
-                return False;
-            }
+
+            return $analistaPoda != null && $user->tipoAnalista()->where('tipo_analista_id', $analistaPoda->id)->first() != null;
         }
+
+        return false;
     }
 
     /**
      * Checa se o usuário logado é um analista de poda ou secretario.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalistaPodaOrSecretario(User $user)
     {
@@ -105,7 +102,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um analista de poda ou secretario.
      *
-     * @return boolean
+     * @return bool
      */
     public function isProcessoOrProtocolista(User $user)
     {
@@ -115,7 +112,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um analista de poda ou de processo.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalistaProcessoOrPoda(User $user)
     {
@@ -125,7 +122,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um analista de poda ou de processo.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAnalistaProcessoOrPodaOrProtocolista(User $user)
     {
@@ -135,7 +132,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um requerente.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRequerente(User $user)
     {
@@ -145,7 +142,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um secretario ou requerente.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRequerenteOrSecretario(User $user)
     {
@@ -155,7 +152,7 @@ class UserPolicy
     /**
      * Checa se o usuário logado é um secretario ou analista.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecretarioOrAnalista(User $user)
     {

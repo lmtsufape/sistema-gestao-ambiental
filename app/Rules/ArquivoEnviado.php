@@ -40,8 +40,9 @@ class ArquivoEnviado implements ImplicitRule
     public function message()
     {
         if ($this->documento->status == $this->status['recusado']) {
-            return 'Faça o reenvio do arquivo '.$this->documento->nome;
+            return 'Faça o reenvio do arquivo ' . $this->documento->nome;
         }
-        return 'O campo '.$this->documento->nome.' é obrigatório';
+
+        return 'O campo ' . $this->documento->nome . ' é obrigatório';
     }
 }

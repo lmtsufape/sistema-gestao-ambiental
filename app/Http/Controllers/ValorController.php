@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ValorRequerimento;
 use App\Http\Requests\ValorRequest;
+use App\Models\ValorRequerimento;
 
 class ValorController extends Controller
 {
@@ -82,7 +81,7 @@ class ValorController extends Controller
         $tipos_licenca = ValorRequerimento::TIPO_LICENCA_ENUM;
         $valor = ValorRequerimento::find($id);
 
-        return view('valor.edit', compact('valor','potenciais_poluidores', 'portes', 'tipos_licenca'));
+        return view('valor.edit', compact('valor', 'potenciais_poluidores', 'portes', 'tipos_licenca'));
     }
 
     /**

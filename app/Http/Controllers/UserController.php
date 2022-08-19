@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use App\Models\TipoAnalista;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -20,6 +18,7 @@ class UserController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $users = User::where('role', '!=', User::ROLE_ENUM['secretario'])->orderBy('name')->paginate(20);
+
         return view('user.index', compact('users'));
     }
 
@@ -32,6 +31,7 @@ class UserController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $tipos = TipoAnalista::all();
+
         return view('user.create', compact('tipos'));
     }
 
@@ -46,9 +46,9 @@ class UserController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:8|confirmed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
             'tipos_analista' => 'required',
             'tipos_analista.*' => 'required',
         ]);
@@ -58,9 +58,10 @@ class UserController extends Controller
         $user->role = User::ROLE_ENUM['analista'];
         $user->email_verified_at = now();
         $user->save();
-        foreach($request->tipos_analista as $tipo_id){
-            $user->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+        foreach ($request->tipos_analista as $tipo_id) {
+            $user->tipoAnalista()->attach(TipoAnalista::find($tipo_id));
         }
+
         return redirect(route('usuarios.index'))->with(['success' => 'Analista cadastrado com sucesso!']);
     }
 
@@ -86,9 +87,9 @@ class UserController extends Controller
         $this->authorize('isSecretario', User::class);
         $usuario = User::find($id);
         $tipos = TipoAnalista::all();
+
         return view('user.edit', compact('tipos', 'usuario'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -103,7 +104,7 @@ class UserController extends Controller
         $usuario = User::find($id);
         $input = $request->all();
 
-        if($usuario->role == User::ROLE_ENUM['analista']){
+        if ($usuario->role == User::ROLE_ENUM['analista']) {
             $request->validate([
                 'tipos_analista' => 'required',
                 'tipos_analista.*' => 'required',
@@ -111,8 +112,8 @@ class UserController extends Controller
         }
 
         $validated = $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => ['required', 'string', 'email','max:255'],
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255'],
         ]);
 
         if ($input['email'] != $usuario->email) {
@@ -125,23 +126,23 @@ class UserController extends Controller
         $usuario->setAtributes($request);
         $usuario->update();
 
-        if($request->tipos_analista != null){
-            $analista_tipos =  collect();
-            foreach($usuario->tipo_analista as $tipo){
-                if(!array_key_exists($tipo->pivot->tipo_analista_id, $request->tipos_analista)){
+        if ($request->tipos_analista != null) {
+            $analista_tipos = collect();
+            foreach ($usuario->tipoAnalista as $tipo) {
+                if (! array_key_exists($tipo->pivot->tipo_analista_id, $request->tipos_analista)) {
                     $tipo->pivot->delete();
-                }else{
+                } else {
                     $analista_tipos->push($tipo->pivot->tipo_analista_id);
                 }
             }
-            
-            foreach($request->tipos_analista as $tipo_id){
-                if(!$analista_tipos->contains($tipo_id)){
-                    $usuario->tipo_analista()->attach(TipoAnalista::find($tipo_id));
+
+            foreach ($request->tipos_analista as $tipo_id) {
+                if (! $analista_tipos->contains($tipo_id)) {
+                    $usuario->tipoAnalista()->attach(TipoAnalista::find($tipo_id));
                 }
             }
         }
-        
+
         return redirect(route('usuarios.index'))->with(['success' => 'Usuário editado com sucesso!']);
     }
 
@@ -158,8 +159,8 @@ class UserController extends Controller
         $input = $request->all();
 
         $validated = $request->validate([
-            'email'         => ['required', 'string', 'email','max:255'],
-            'password_atual'=> ['nullable','string','min:8'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password_atual' => ['nullable', 'string', 'min:8'],
         ]);
 
         if ($input['email'] != $user->email) {
@@ -170,7 +171,7 @@ class UserController extends Controller
         }
 
         if ($input['password_atual'] != null || $input['password'] != null || $input['password_confirmation'] != null) {
-            if (!Hash::check($input['password_atual'], $user->password)) {
+            if (! Hash::check($input['password_atual'], $user->password)) {
                 return redirect()->back()->withErrors(['password_atual' => 'Senha incorreta.'])->withInput($validated);
             }
             if ($input['password'] == null) {
@@ -184,7 +185,7 @@ class UserController extends Controller
             }
         }
 
-        $user->email    = $input['email'];
+        $user->email = $input['email'];
         if ($input['password_atual'] != null || $input['password'] != null || $input['password_confirmation'] != null) {
             $user->forceFill([
                 'password' => Hash::make($input['password']),
@@ -205,7 +206,7 @@ class UserController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $user = User::find($id);
-        foreach($user->tipo_analista()->get() as $tipo){
+        foreach ($user->tipoAnalista()->get() as $tipo) {
             $tipo->pivot->delete();
         }
         $user->delete();
@@ -235,7 +236,7 @@ class UserController extends Controller
 
     /**
      * Salva os dados básicos do usuário.
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
@@ -243,19 +244,19 @@ class UserController extends Controller
     {
         $user = auth()->user();
         $requerente = $user->requerente;
-        if($requerente != null){
+        if ($requerente != null) {
             $telefone = $requerente->telefone;
 
             $request->validate([
-                'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
-                'cpf'                       => ['required', 'string', 'cpf'],
-                'telefone'                  => ['required', 'string', 'celular_com_ddd', 'max:255'],
-                'rg'                        => ['required', 'string', 'max:255'],
-                'orgão_emissor'             => ['required', 'string', 'max:255'],
-                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
+                'nome_de_exibição' => ['required', 'string', 'min:10', 'max:255'],
+                'cpf' => ['required', 'string', 'cpf'],
+                'telefone' => ['required', 'string', 'celular_com_ddd', 'max:255'],
+                'rg' => ['required', 'string', 'max:255'],
+                'orgão_emissor' => ['required', 'string', 'max:255'],
+                'foto_de_perfil' => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
             ], [
-                'cpf.cpf'                   => 'O campo CPF não é um CPF válido.',
-                'telefone.celular_com_ddd'  => 'O campo contato não é um contato com DDD válido.',
+                'cpf.cpf' => 'O campo CPF não é um CPF válido.',
+                'telefone.celular_com_ddd' => 'O campo contato não é um contato com DDD válido.',
             ]);
             $requerente->cpf = $request->cpf;
             $telefone->numero = $request->telefone;
@@ -263,40 +264,39 @@ class UserController extends Controller
             $requerente->orgao_emissor = $request->input('orgão_emissor');
             $requerente->update();
             $telefone->update();
-        }else{
+        } else {
             $request->validate([
-                'nome_de_exibição'          => ['required', 'string', 'min:10', 'max:255'],
-                'foto_de_perfil'            => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
+                'nome_de_exibição' => ['required', 'string', 'min:10', 'max:255'],
+                'foto_de_perfil' => ['nullable', 'file',   'mimes:jpg,png', 'max:2048'],
             ]);
         }
-        
+
         $user->name = $request->input('nome_de_exibição');
         $user->salvarFoto($request);
         $user->update();
-;
 
         return redirect(route('perfil'))->with(['success_dados_basicos' => 'Dados básicos atualizados com sucesso!']);
     }
 
     /**
      * Atualiza o endereço do requerente.
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function atualizarEndereco(Request $request) 
+    public function atualizarEndereco(Request $request)
     {
         $user = auth()->user();
         $endereco = $user->requerente->endereco;
 
         $request->validate([
-            'cep'                       => ['required', 'string', 'max:255'],
-            'bairro'                    => ['required', 'string', 'max:255'],
-            'rua'                       => ['required', 'string', 'max:255'],
-            'número'                    => ['required', 'string', 'max:255'],
-            'cidade'                    => ['required', 'string', 'max:255'],
-            'uf'                        => ['required', 'string', 'max:255'],
-            'complemento'               => ['nullable', 'string', 'max:255'],
+            'cep' => ['required', 'string', 'max:255'],
+            'bairro' => ['required', 'string', 'max:255'],
+            'rua' => ['required', 'string', 'max:255'],
+            'número' => ['required', 'string', 'max:255'],
+            'cidade' => ['required', 'string', 'max:255'],
+            'uf' => ['required', 'string', 'max:255'],
+            'complemento' => ['nullable', 'string', 'max:255'],
         ]);
 
         $endereco->setAtributes($request->all());

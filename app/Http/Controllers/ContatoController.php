@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Mail\ContatoMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\ContatoNotification;
 use App\Models\User;
+use App\Notifications\ContatoNotification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class ContatoController extends Controller
 {
@@ -20,8 +18,8 @@ class ContatoController extends Controller
     {
         $request->validate([
             'nome_completo' => 'required|string|min:10|max:255',
-            'email'         => 'required|email',
-            'mensagem'      => 'required|min:25|max:2000',
+            'email' => 'required|email',
+            'mensagem' => 'required|min:25|max:2000',
         ]);
 
         $user = new User();
@@ -37,11 +35,13 @@ class ContatoController extends Controller
         return view('info_porte');
     }
 
-    public function sobre() {
+    public function sobre()
+    {
         return view('sobre');
     }
 
-    public function legislacao() {
+    public function legislacao()
+    {
         return view('legislacao');
     }
 }

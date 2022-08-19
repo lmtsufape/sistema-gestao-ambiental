@@ -26,8 +26,9 @@ class CEPGaranhuns implements Rule
      */
     public function passes($attribute, $value)
     {
-        $response = Http::get("https://viacep.com.br/ws/" . $value . "/json/");
-        return $response->json()["localidade"] == "Garanhuns";
+        $response = Http::get('https://viacep.com.br/ws/' . $value . '/json/');
+
+        return $response->json()['localidade'] == 'Garanhuns';
     }
 
     /**
@@ -39,5 +40,4 @@ class CEPGaranhuns implements Rule
     {
         return 'O cadastro não está disponível para empresas fora do município de Garanhuns!';
     }
-
 }

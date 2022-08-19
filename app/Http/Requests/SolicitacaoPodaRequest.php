@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\SolicitacaoPoda;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SolicitacaoPodaRequest extends FormRequest

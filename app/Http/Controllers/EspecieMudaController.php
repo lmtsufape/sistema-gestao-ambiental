@@ -17,6 +17,7 @@ class EspecieMudaController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $especies = EspecieMuda::orderBy('nome')->paginate(20);
+
         return view('solicitacoes.mudas.especie.index', compact('especies'));
     }
 
@@ -43,7 +44,7 @@ class EspecieMudaController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $validator = $request->validate([
-            'nome'      => 'required|string|max:200',
+            'nome' => 'required|string|max:200',
         ]);
 
         $especie = new EspecieMuda();
@@ -75,6 +76,7 @@ class EspecieMudaController extends Controller
         $this->authorize('isSecretario', User::class);
 
         $especie = EspecieMuda::find($id);
+
         return view('solicitacoes.mudas.especie.edit', compact('especie'));
     }
 
@@ -92,9 +94,8 @@ class EspecieMudaController extends Controller
         $especie = EspecieMuda::find($id);
 
         $validator = $request->validate([
-            'nome'      => 'required|string|max:200',
+            'nome' => 'required|string|max:200',
         ]);
-
 
         $especie->setAtributes($request);
         $especie->update();
@@ -111,7 +112,7 @@ class EspecieMudaController extends Controller
     public function destroy($id)
     {
         $this->authorize('isSecretario', User::class);
-        
+
         $especie = EspecieMuda::find($id);
 
         if ($especie->solicitacoes()->first() != null) {

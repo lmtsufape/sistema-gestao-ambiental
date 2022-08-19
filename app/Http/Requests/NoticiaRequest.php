@@ -24,12 +24,12 @@ class NoticiaRequest extends FormRequest
     public function rules()
     {
         return [
-            'título'            => 'required|string|max:255',
-            'publicar'          => 'nullable',
-            'destaque'          => 'nullable',
-            'texto'             => 'required|string|min:50',
-            'link'              => 'nullable',
-            'imagem_principal'  => 'nullable|file|mimes:png,jpg|max:2048',
+            'título' => 'required|string|max:255',
+            'publicar' => 'nullable',
+            'destaque' => 'nullable',
+            'texto' => 'required|string|min:50',
+            'link' => 'nullable',
+            'imagem_principal' => 'nullable|file|mimes:png,jpg|max:2048',
         ];
     }
 }

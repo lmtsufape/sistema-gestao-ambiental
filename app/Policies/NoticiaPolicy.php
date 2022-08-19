@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Noticia;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Policies\UserPolicy;
 
 class NoticiaPolicy
 {
@@ -99,9 +98,10 @@ class NoticiaPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    private function opercacoesBasicas(User $user) 
+    private function opercacoesBasicas(User $user)
     {
         $userPolicy = new UserPolicy();
+
         return $userPolicy->isSecretario($user);
     }
 }
