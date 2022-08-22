@@ -66,4 +66,13 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+    public function requerente()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 1,
+            ];
+        });
+    }
 }
