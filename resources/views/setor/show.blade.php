@@ -1,15 +1,15 @@
 <x-app-layout>
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
-        <div class="form-row justify-content-center">
-            <div class="col-md-12">
+        <div class="form-row justify-content-start">
+            <div class="col-md-9">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <h4 class="card-title">Cnaes do grupo {{$setor->nome}} cadastrados no sistema</h4>
                         <h6 class="card-subtitle mb-2 text-muted">
                             <a class="text-muted" href="{{route('setores.index')}}">Grupos</a> > Cnaes do grupo {{$setor->nome}}</h6>
                     </div>
-                    <div class="col-md-4" style="text-align: right; padding-top: 15px;">
+                    <div class="col-md-2 d-flex align-self-end justify-content-end" style="padding-bottom: 5px;">
                         {{-- <a title="Voltar" href="{{route('setores.index')}}"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Icone de voltar"></a> --}}
                         <a title="Novo cnae" href="{{route('cnaes.create', $setor->id)}}"><img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar cnae"></a>
                     </div>
