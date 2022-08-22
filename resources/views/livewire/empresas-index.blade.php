@@ -40,7 +40,7 @@
                     <tbody>
                         @foreach ($empresas as $i => $empresa)
                             <tr>
-                                <th scope="row">{{$empresa->id}}</th>
+                                <th scope="row">{{ ($empresas->currentpage()-1) * $empresas->perpage() + $loop->index + 1 }}</th>
                                 <td>{{$empresa->nome}}</td>
                                 <td>{{$empresa->cpf_cnpj}}</td>
                                 <td>{{$empresa->user->name}}</td>
