@@ -193,8 +193,11 @@ class EmpresaController extends Controller
     public function statusRequerimento(Request $request)
     {
         $empresa = Empresa::find($request->empresa_id);
-
-        if ($empresa->requerimentos()->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->get()->count() == 0) {
+        $qtd_requerimentos = $empresa->requerimentos()
+            ->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
+            ->where('cancelada', false)
+            ->count();
+        if ($qtd_requerimentos == 0) {
             return response()->json([
                 [
                     'tipo' => 'Primeira licença',
@@ -204,6 +207,10 @@ class EmpresaController extends Controller
         }
 
         return response()->json([
+            [
+                'tipo' => 'Primeira licença',
+                'enum_tipo' => Requerimento::TIPO_ENUM['primeira_licenca'],
+            ],
             [
                 'tipo' => 'Renovação',
                 'enum_tipo' => Requerimento::TIPO_ENUM['renovacao'],
