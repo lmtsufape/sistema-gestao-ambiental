@@ -35,9 +35,8 @@ class EmpresaController extends Controller
     public function indexEmpresas()
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $empresas = Empresa::orderBy('nome')->paginate(20);
 
-        return view('empresa.index-empresas', compact('empresas'));
+        return view('empresa.index-empresas');
     }
 
     /**
@@ -220,5 +219,11 @@ class EmpresaController extends Controller
                 'enum_tipo' => Requerimento::TIPO_ENUM['autorizacao'],
             ],
         ]);
+    }
+
+    public function pesquisa(Request $request)
+    {
+        $empresas = Empresa::search($request->search)->get();
+        return response()->json($empresas);
     }
 }
