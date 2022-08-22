@@ -282,7 +282,7 @@ class VisitaController extends Controller
         $visita->save();
 
         if($request->filtro){
-            return redirect(route('denuncias.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);
+            return redirect()->back()->with(['success' => 'Visita editada com sucesso!']);
         }
 
         return redirect(route('visitas.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);
