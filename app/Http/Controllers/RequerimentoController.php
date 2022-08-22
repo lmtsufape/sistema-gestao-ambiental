@@ -48,13 +48,15 @@ class RequerimentoController extends Controller
         if ($user->role == User::ROLE_ENUM['requerente']) {
             $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
         } elseif ($user->role == User::ROLE_ENUM['analista']) {
-                $requerimentos = Requerimento::where('analista_id', $user->id)
-                    ->orwhere('analista_processo_id', $user->id)
-                    ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
-                    ->orderBy('created_at')->paginate(20);
+                $requerimentos = Requerimento::where(function (Builder $query) use ($user) {
+                    $query->where('analista_id', $user->id)
+                        ->orwhere('analista_processo_id', $user->id);
+                    })
+                    ->where([['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
+                    ->orderBy('created_at', 'DESC')->paginate(20);
         } else {
             $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-            $requerimentosFinalizados = Requerimento::where('status', Requerimento::STATUS_ENUM['finalizada'])->orderBy('created_at')->paginate(20);
+            $requerimentosFinalizados = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
             $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
         }
         switch ($filtro) {
@@ -97,22 +99,6 @@ class RequerimentoController extends Controller
         $verRequerimento = true;
 
         return view('visita.edit', compact('visita', 'requerimentos', 'analistas', 'verRequerimento'));
-    }
-
-    /**
-     * Retorna a view dos requerimentos do analista logado.
-     *
-     * @return View
-     */
-    public function analista()
-    {
-        $user = auth()->user();
-        $requerimentos = Requerimento::where('analista_id', $user->id)
-            ->orwhere('analista_processo_id', $user->id)
-            ->where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']]])
-            ->orderBy('created_at')->paginate(20);
-
-        return view('requerimento.index', compact('requerimentos'));
     }
 
     /**

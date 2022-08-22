@@ -113,9 +113,6 @@
                                 <x-jet-dropdown-link href="{{route('podas.index')}}" :active="request()->routeIs('solicitacoes.podas.*')">
                                     {{__('Podas')}}
                                 </x-jet-dropdown-link>
-                                <x-jet-dropdown-link href="{{route('requerimentos.analista')}}" :active="request()->routeIs('requerimentos.*')">
-                                    {{ __('Requerimentos') }}
-                                </x-jet-dropdown-link>
                             </x-slot>
                         </x-jet-dropdown>
                     </div>

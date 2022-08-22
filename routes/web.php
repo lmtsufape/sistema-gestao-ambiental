@@ -51,7 +51,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
 
-    Route::get('/requerimentos/analista', [RequerimentoController::class, 'analista'])->name('requerimentos.analista');
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
     Route::get('/requerimentos/{requerimento_id}/documentacao', [RequerimentoController::class, 'showRequerimentoDocumentacao'])->name('requerimento.documentacao');
