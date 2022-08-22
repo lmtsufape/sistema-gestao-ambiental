@@ -652,7 +652,8 @@ class RequerimentoController extends Controller
      */
     private function protocolistaComMenosRequerimentos()
     {
-        return User::withCount(['requerimentos' => function (Builder $qry) {
+        return User::whereIn('id', User::protocolistas()->pluck('id'))
+            ->withCount(['requerimentos' => function (Builder $qry) {
                 $qry->where('status', '<', Requerimento::STATUS_ENUM['documentos_aceitos']);
             }])
             ->orderBy('requerimentos_count', 'ASC')
