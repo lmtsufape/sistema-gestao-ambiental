@@ -49,7 +49,7 @@
                             <tbody>
                                 @foreach ($documentos as $i => $documento)
                                     <tr>
-                                        <th scope="row">{{$i+1}}</th>
+                                        <th scope="row">{{ ($documentos->currentpage()-1) * $documentos->perpage() + $loop->index + 1 }}</th>
                                         <td>{{$documento->nome}}</td>
                                         <td>
                                             @if ($documento->documento_modelo != null)

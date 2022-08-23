@@ -104,20 +104,20 @@
                                                     <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
                                                     <td style="text-align: center">
                                                         <a href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar" title="Analisar"></a>
-                                                        <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                         @if($requerimento->licenca != null)
                                                             @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                             @else
                                                                 @if($filtro != "cancelados")
-                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
                                                                 @endif
                                                             @endif
-                                                        @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
+                                                        @elseif($requerimento->ultimaVisitaRelatorioAceito() != null)
                                                             @if($filtro != "cancelados")
                                                                 <a style="cursor: pointer;" href="{{route('licenca.create', $requerimento)}}"><img class="icon-licenciamento" src="{{asset('img/Grupo 1666.svg')}}"  alt="Criar licença" title="Criar licença"></a>
                                                             @endif
                                                         @endif
+                                                        <a style="cursor: pointer;" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" style="margin-left: 3px" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -152,7 +152,7 @@
                                 <tbody>
                                     @foreach ($requerimentos as $i => $requerimento)
                                         <tr>
-                                            <th scope="row">{{($i+1)}}</th>
+                                            <th scope="row">{{ ($requerimentos->currentpage()-1) * $requerimentos->perpage() + $loop->index + 1 }}</th>
                                             <td>
                                                 {{$requerimento->empresa->nome}}
                                             </td>
@@ -186,7 +186,7 @@
                                                     <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                     @else
                                                         @can ('isAnalistaProcesso', \App\Models\User::class)
-                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaRelatorioAceito()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
                                                         @endcan
                                                     @endif
                                                 @endif
@@ -441,11 +441,11 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         @if($requerimento->status == 4)
-                                                                            Seus documentos foram recebidos e serão analisados por um analista.
+                                                                            Seus documentos foram recebidos e serão analisados pelo protocolista.
                                                                         @elseif($requerimento->status > 4)
-                                                                            Um analista fez a análise da documentação enviada.
+                                                                            Um protocolista fez a análise da documentação enviada.
                                                                         @else
-                                                                        Um analista analisará a documentação enviada.
+                                                                            Um protocolista analisará a documentação enviada.
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -495,9 +495,9 @@
                                                                         @if($requerimento->status == 5)
                                                                             Seus documentos foram aprovados, aguarde o agendamento da visita à empresa/serviço.
                                                                         @elseif($requerimento->status > 5)
-                                                                            O analista enviou o parecer da análise da documentação enviada.
+                                                                            O protocolista enviou o parecer da análise da documentação enviada.
                                                                         @else
-                                                                            O analista enviará o parecer da análise da documentação.
+                                                                            O protocolista enviará o parecer da análise da documentação.
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -1000,7 +1000,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                Seus documentos serão recebidos e serão analisados por um analista.
+                                Seus documentos serão recebidos e serão analisados pelo protocolista.
                             </div>
                         </div>
                     </div>

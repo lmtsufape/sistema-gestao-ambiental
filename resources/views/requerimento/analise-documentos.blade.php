@@ -90,15 +90,17 @@
                             </div>
                         </div>
                     </div>
-                    @can('isSecretarioOrAnalistaOrProtocolista', \App\Models\User::class)
-                        <div class="card-footer">
-                            <div class="form-row justify-content-center">
-                                <div class="col-md-6"></div>
-                                <div class="col-md-6" style="text-align: right;">
-                                    <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="analisar-documentos" style="width: 100%">Enviar análise</button>
+                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
+                        @if(! $requerimento->visitas()->exists())
+                            <div class="card-footer">
+                                <div class="form-row justify-content-center">
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6" style="text-align: right;">
+                                        <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="analisar-documentos" style="width: 100%">Enviar análise</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endcan
                 </div>
             </div>

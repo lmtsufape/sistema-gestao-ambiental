@@ -53,7 +53,7 @@
                                     <tbody>
                                         @foreach ($denuncias as $i => $denuncia)
                                             <tr>
-                                                <th>{{($i+1)}}</th>
+                                                <th>{{ ($denuncias->currentpage()-1) * $denuncias->perpage() + $loop->index + 1 }}</th>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}

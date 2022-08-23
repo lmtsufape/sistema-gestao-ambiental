@@ -42,7 +42,7 @@
                             <tbody>
                                 @foreach ($especies as $i => $especie)
                                     <tr>
-                                        <th scope="row">{{$i+1}}</th>
+                                        <th scope="row">{{ ($especies->currentpage()-1) * $especies->perpage() + $loop->index + 1 }}</th>
                                         <td>{{$especie->nome}}</td>
                                         <td>
                                             <a title="Editar espécie" href="{{route("especies.edit", $especie->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar especie"></a>
