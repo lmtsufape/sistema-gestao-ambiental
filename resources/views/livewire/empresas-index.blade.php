@@ -1,10 +1,10 @@
 <div class="col-md-9">
     <div class="form-row justify-content-between">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <h4 class="card-title">Empresas/Serviços</h4>
         </div>
-        <div class="col-md-6 d-flex justify-content-end">
-            <input wire:model="search" class="form-control w-100" type="search" placeholder="Procure pelo nome da empresa">
+        <div class="col-md-7 d-flex justify-content-end">
+            <input wire:model="search" class="form-control w-100" type="search" placeholder="Busque pelo nome da empresa ou pelo CNPJ/CPF">
         </div>
     </div>
     <div class="card card-borda-esquerda" style="width: 100%;">

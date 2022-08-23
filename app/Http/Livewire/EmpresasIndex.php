@@ -14,7 +14,12 @@ class EmpresasIndex extends Component
 
     public function render()
     {
-        return view('livewire.empresas-index', ['empresas' => Empresa::where('nome', 'ilike', '%' . $this->search . '%')->orderBy('nome')->paginate(20)]);
+        $search = preg_replace('/([0-9])/', '%$1', $this->search) . '%';
+        $empresas = Empresa::where('nome', 'ilike', '%' . $this->search . '%')
+            ->orWhere('cpf_cnpj', 'like', $search)
+            ->orderBy('nome')
+            ->paginate(20);
+        return view('livewire.empresas-index', ['empresas' => $empresas]);
     }
 
     public function updatingSearch()
