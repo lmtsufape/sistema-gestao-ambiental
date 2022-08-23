@@ -403,19 +403,21 @@
                             <input type="hidden" name="aprovar" id="inputAprovar-{{$denuncia->id}}" value="">
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <div class="form-row col-md-12">
-                            <p>Você deseja deferir ou indeferir esta denúncia?</p>
-                        </div>
-                        <div class="form-row col-md-12 justify-content-between">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-danger botao-form" style="padding-right: 20px; width:100%;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
+                    @if($filtro !=  "concluidas")
+                        <div class="modal-footer">
+                            <div class="form-row col-md-12">
+                                <p>Você deseja deferir ou indeferir esta denúncia?</p>
                             </div>
-                            <div class="col-md-6" id="botaoDeferir">
-                                <button type="button" class="btn btn-success btn-color-dafault botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
+                            <div class="form-row col-md-12 justify-content-between">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-danger botao-form" style="padding-right: 20px; width:100%;" onclick="atualizarInputAprovar(false, {{$denuncia->id}})">Indeferir</button>
+                                </div>
+                                <div class="col-md-6" id="botaoDeferir">
+                                    <button type="button" class="btn btn-success btn-color-dafault botao-form" style="width:100%" onclick="atualizarInputAprovar(true, {{$denuncia->id}})">Deferir</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -466,10 +468,12 @@
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
-                </div>
+                @if($filtro !=  "concluidas")
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Agendar</button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -508,10 +512,12 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
-                    </div>
+                    @if($filtro !=  "concluidas")
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault  submeterFormBotao" form="form-atribuir-analista-denuncia">Atribuir</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -560,10 +566,12 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-editar-visita-denuncia">Editar</button>
-                    </div>
+                    @if($filtro !=  "concluidas")
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-editar-visita-denuncia">Editar</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

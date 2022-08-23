@@ -20,7 +20,7 @@
                                     da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}
                                 @endif
                             </h4>
-                            @if ($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                            @if ($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'] && ! session('success'))
                                 <div class="alert alert-success" role="alert">
                                     <h6 class="alert-heading">Relatório aprovado.</h6>
                                 </div>

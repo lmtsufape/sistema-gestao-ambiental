@@ -81,7 +81,7 @@ class VisitaController extends Controller
     public function create()
     {
         $this->authorize('isSecretario', User::class);
-        $requerimentos = Requerimento::where([['status', '>=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['status', '<=', Requerimento::STATUS_ENUM['visita_realizada']], ['cancelada', false]])->orderBy('created_at', 'ASC')->get();
+        $requerimentos = Requerimento::where([['status', '=', Requerimento::STATUS_ENUM['documentos_aceitos']], ['cancelada', false]])->orderBy('created_at', 'ASC')->get();
         $analistas = User::analistas();
 
         return view('visita.create', compact('requerimentos', 'analistas'));
@@ -145,7 +145,7 @@ class VisitaController extends Controller
     {
         $this->authorize('isSecretario', User::class);
         $visita = Visita::find($id);
-        $requerimentos = Requerimento::where('status', Requerimento::STATUS_ENUM['documentos_aceitos'])->orderBy('created_at', 'ASC')->get();
+        $requerimentos = collect();
         $requerimentos->push($visita->requerimento);
         $analistas = User::analistas();
 
@@ -282,7 +282,7 @@ class VisitaController extends Controller
         $visita->save();
 
         if($request->filtro){
-            return redirect(route('denuncias.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);
+            return redirect()->back()->with(['success' => 'Visita editada com sucesso!']);
         }
 
         return redirect(route('visitas.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);

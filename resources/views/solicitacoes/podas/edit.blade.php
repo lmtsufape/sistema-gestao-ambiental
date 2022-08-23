@@ -101,14 +101,16 @@
                             </div>
                         </div>
                         @can('isSecretario', \App\Models\User::class)
-                            <div class="form-row col-md-12">
-                                <div class="col-md-6" >
-                                    <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
+                            @if(! $solicitacao->visita || ! $solicitacao->visita->relatorioAceito())
+                                <div class="form-row col-md-12">
+                                    <div class="col-md-6" >
+                                        <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
-                                </div>
-                            </div>
+                            @endif
                         @endcan
                     </div>
                 </div>

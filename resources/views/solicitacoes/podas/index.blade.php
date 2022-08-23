@@ -84,7 +84,7 @@
                                                         @if($filtro != "indeferidas" && $filtro != "pendentes")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                             <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
+                                                            data-toggle="modal" @if($solicitacao->visita) data-target="#modal-agendar-visita-editar" onclick="adicionarIdEditar({{$solicitacao->visita->id}})" @else data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})" @endif ><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endif
                                                         @if($filtro ==  "concluidas")
                                                             @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
@@ -289,59 +289,113 @@
         </div>
     @endforeach
     --}}
-    <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Agendar visita para a solicitação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12" id="alerta-agendar">
-                        </div>
+    @can('isSecretario', \App\Models\User::class)
+        <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Agendar visita para a solicitação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <form id="form-criar-visita-solicitacao" method="POST" action="{{route('solicitacoes.visita.create')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}" required>
-
-                                @error('data')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12" id="alerta-agendar">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                 <input type="hidden" name="solicitacao_id" id="solicitacao_id" value="">
-                                <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
-                                    <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
-                                    @foreach ($analistas as $analista)
-                                        <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
-                                    @endforeach
-                                </select>
+                        <form id="form-criar-visita-solicitacao" method="POST" action="{{route('solicitacoes.visita.create')}}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}" required>
 
-                                @error('analista')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                    @error('data')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="solicitacao_id" id="solicitacao_id" value="">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="modal fade" id="modal-agendar-visita-editar" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar visita</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-editar-visita-denuncia" method="POST" action="{{route('visitas.visita.edit')}}">
+                            @csrf
+                            <input type="hidden" name="filtro" id="filtro" value="{{$filtro}}">
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input type="date" name="data" id="data-editar" class="form-control @error('data') is-invalid @enderror" required value="{{old('data')}}">
+
+                                    @error('data')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <input type="hidden" name="visita_id" id="visita_id" value="">
+                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select name="analista" id="analista-visita-editar" class="form-control @error('analista') is-invalid @enderror" required>
+                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
+                                        @foreach ($analistas as $analista)
+                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('analista')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    @if($filtro !=  "concluidas")
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-editar-visita-denuncia">Editar</button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endcan
     @can('isSecretario', \App\Models\User::class)
         <div class="modal fade" id="modal-atribuir" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -377,10 +431,12 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" id="submeterFormBotao" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
-                    </div>
+                    @if($filtro !=  "concluidas")
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                            <button type="submit" id="submeterFormBotao" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-atribuir-analista-solicitacao">Atribuir</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -433,6 +489,25 @@
                                         <p>Solicitação atribuída a um analista.</p>
                                       </div>`;
                         $("#alerta-atribuida").append(alerta);
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        function adicionarIdEditar(id) {
+            document.getElementById('visita_id').value = id;
+            $("#analista-visita-editar").val("");
+            document.getElementById('data-editar').value = "";
+            $.ajax({
+                url:"{{route('visitas.info.ajax')}}",
+                type:"get",
+                data: {"visita_id": id},
+                dataType:'json',
+                success: function(visita) {
+                    if(visita.analista_visita != null){
+                        $("#analista-visita-editar").val(visita.analista_visita.id).change();
+                        document.getElementById('data-editar').value = visita.marcada;
                     }
                 }
             });
