@@ -39,7 +39,7 @@
                                 <tbody>
                                     @foreach ($valores as $i => $valor)
                                         <tr>
-                                            <th scope="row">{{$i+1}}</th>
+                                            <th scope="row">{{ ($valores->currentpage()-1) * $valores->perpage() + $loop->index + 1 }}</th>
                                             <td>
                                                 @switch($valor->porte)
                                                     @case($portes['micro'])
