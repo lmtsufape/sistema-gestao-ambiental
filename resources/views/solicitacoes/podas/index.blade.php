@@ -66,7 +66,7 @@
                                     <tbody>
                                         @foreach ($solicitacoes as $i => $solicitacao)
                                             <tr>
-                                                <th>{{($i+1)}}</th>
+                                                <th>{{ ($solicitacoes->currentpage()-1) * $solicitacoes->perpage() + $loop->index + 1 }}</th>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>

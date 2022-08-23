@@ -84,7 +84,7 @@
                                 <tbody>
                                     @foreach ($visitas as $i => $visita)
                                         <tr>
-                                            <td scope="row" style="font-weight: bold">{{$i+1}}</td>
+                                            <td scope="row" style="font-weight: bold">{{ ($visitas->currentpage()-1) * $visitas->perpage() + $loop->index + 1 }}</td>
                                             @if($visita->requerimento != null)
                                                 <td>{{date('d/m/Y H:i', strtotime($visita->requerimento->created_at))}}</td>
                                             @elseif($visita->denuncia != null)

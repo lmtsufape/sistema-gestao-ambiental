@@ -49,7 +49,7 @@
                                     <tbody>
                                         @foreach ($pagamentos as $boleto)
                                             <tr>
-                                                <th>{{($loop->iteration)}}</th>
+                                                <th>{{ ($pagamentos->currentpage()-1) * $pagamentos->perpage() + $loop->index + 1 }}</th>
                                                 <td style="text-align: center">{{ $boleto->requerimento->empresa->nome }}</td>
                                                 <td style="text-align: center">
                                                     R$ {{number_format($boleto->requerimento->valor, 2, ',', ' ')}} @if($boleto->URL) <a href="{{$boleto->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a> @endif
@@ -218,7 +218,7 @@
                         <input type="hidden" value="{{$filtro}}" name="filtro">
                         <input type="hidden" value="{{$dataDe}}" name="dataDe">
                         <input type="hidden" value="{{$dataAte}}" name="dataAte">
-                        
+
                         <div class="form-row justify-content-center mb-2">
                             <button id="submitBaixarRelatorio" type="submit" class="btn btn-success btn-color-dafault" form="baixar-relatorio">Fazer download</button>
                         </div>

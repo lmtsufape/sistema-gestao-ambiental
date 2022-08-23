@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach ($setores as $i => $setor)
                                         <tr>
-                                            <th scope="row">{{$i+1}}</th>
+                                            <th scope="row">{{ ($setores->currentpage()-1) * $setores->perpage() + $loop->index + 1 }}</th>
                                             <td>{{$setor->nome}}</td>
                                             <td>
                                                 @if(Auth::user()->role == \App\Models\User::ROLE_ENUM['secretario'])

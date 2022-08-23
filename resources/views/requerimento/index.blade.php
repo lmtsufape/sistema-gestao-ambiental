@@ -152,7 +152,7 @@
                                 <tbody>
                                     @foreach ($requerimentos as $i => $requerimento)
                                         <tr>
-                                            <th scope="row">{{($i+1)}}</th>
+                                            <th scope="row">{{ ($requerimentos->currentpage()-1) * $requerimentos->perpage() + $loop->index + 1 }}</th>
                                             <td>
                                                 {{$requerimento->empresa->nome}}
                                             </td>

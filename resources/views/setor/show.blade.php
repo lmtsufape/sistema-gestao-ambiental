@@ -53,7 +53,7 @@
                                 <tbody>
                                     @foreach ($cnaes as $i => $cnae)
                                         <tr>
-                                            <td scope="row">{{$i+1}}</td>
+                                            <td scope="row">{{ ($cnaes->currentpage()-1) * $cnaes->perpage() + $loop->index + 1 }}</td>
                                             <td>{{$cnae->nome}}</td>
                                             <td>{{$cnae->codigo}}</td>
                                             <td>

@@ -37,7 +37,7 @@
                                 <tbody>
                                     @foreach ($solicitacoes as $i => $solicitacao)
                                         <tr>
-                                            <th scope="row">{{$i+1}}</th>
+                                            <th scope="row">{{ ($solicitacoes->currentpage()-1) * $solicitacoes->perpage() + $loop->index + 1 }}</th>
                                             <td>{{$solicitacao->created_at->format('d/m/Y H:i')}}</td>
                                             <td>{{ucfirst($solicitacao->statusSolicitacao())}}</td>
                                             <td>
