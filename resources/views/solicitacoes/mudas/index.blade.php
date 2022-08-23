@@ -46,7 +46,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($c as $i => $solicitacao)
+                                        @foreach ($mudas as $i => $solicitacao)
                                             <tr>
                                                 <th>{{ ($mudas->currentpage()-1) * $mudas->perpage() + $loop->index + 1 }}</th>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
