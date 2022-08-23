@@ -55,11 +55,9 @@
                                     @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
-                                    @can('isAnalistaProcesso', \App\Models\User::class)
-                                        @if ($requerimento->documentos->count() > 0)
-                                            <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
-                                        @endif
-                                    @endcan
+                                    @if ($requerimento->documentos->count() > 0)
+                                        <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
+                                    @endif
                                     @can('isProtocolista', \App\Models\User::class)
                                         <a  href="{{route('requerimentos.editar.empresa', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/building-svgrepo-com.svg')}}"  alt="Editar empresa" title="Editar Informações da Empresa/Serviço"></a>
                                         @if ($requerimento->documentos->count() > 0)
@@ -404,7 +402,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                     @endif
                 @endcan
             </div>

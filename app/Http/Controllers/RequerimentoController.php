@@ -488,11 +488,7 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['documentos_enviados'];
         $requerimento->update();
 
-        if ($requerimento->analistaProcesso != null) {
-            Notification::send($requerimento->analistaProcesso, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
-        } else {
-            Notification::send($requerimento->protocolista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
-        }
+        Notification::send($requerimento->protocolista, new DocumentosEnviadosNotification($requerimento, 'Documentos enviados'));
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Documentação enviada com sucesso. Aguarde o resultado da avaliação dos documentos.']);
     }

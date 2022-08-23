@@ -110,6 +110,8 @@ class VisitaController extends Controller
         $visita->save();
 
         $requerimento = Requerimento::find($request['requerimento']);
+        $requerimento->analista_processo_id = $request->analista;
+        $requerimento->update();
         $user = $requerimento->empresa->user;
         $data_marcada = $request['data_marcada'];
         Notification::send($user, new VisitaMarcadaRequerimento($requerimento, $data_marcada));
