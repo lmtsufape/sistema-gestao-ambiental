@@ -110,10 +110,10 @@
                                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                             @else
                                                                 @if($filtro != "cancelados")
-                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaMarcada(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
                                                                 @endif
                                                             @endif
-                                                        @elseif($requerimento->ultimaVisitaMarcada() != null && $requerimento->ultimaVisitaMarcada()->relatorioAceito())
+                                                        @elseif($requerimento->ultimaVisitaRelatorioAceito() != null)
                                                             @if($filtro != "cancelados")
                                                                 <a style="cursor: pointer;" href="{{route('licenca.create', $requerimento)}}"><img class="icon-licenciamento" src="{{asset('img/Grupo 1666.svg')}}"  alt="Criar licença" title="Criar licença"></a>
                                                             @endif
@@ -186,7 +186,7 @@
                                                     <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
                                                     @else
                                                         @can ('isAnalistaProcesso', \App\Models\User::class)
-                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaMarcada()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaRelatorioAceito()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
                                                         @endcan
                                                     @endif
                                                 @endif

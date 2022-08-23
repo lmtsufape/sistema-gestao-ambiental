@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -165,6 +166,14 @@ class Requerimento extends Model
     public function ultimaVisitaMarcada()
     {
         return $this->visitas()->latest('data_marcada')->first();
+    }
+
+    public function ultimaVisitaRelatorioAceito()
+    {
+        return $this->visitas()->whereHas('relatorio', function (Builder $qry) {
+            $qry->where('aprovacao', '=', Relatorio::APROVACAO_ENUM['aprovado']);
+        })
+        ->latest('data_marcada')->first();
     }
 
     public function gerarMensagemCompesacao()
