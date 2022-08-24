@@ -50,7 +50,6 @@
                                         </tr>
                                         @if(! $empresa->cnaes()->exists())
                                             <tr><td colspan="5" style="border-top: none; color: #dc3545; text-align: center; padding-top: 0px">Edite a sua empresa <span style="font-weight: bold">"{{$empresa->nome}}"</span> e adicione CNAEs válidos</td></tr>
-                                            <tr><td colspan="5"></td></tr>
                                         @endif
                                     @endforeach
                                 </tbody>
