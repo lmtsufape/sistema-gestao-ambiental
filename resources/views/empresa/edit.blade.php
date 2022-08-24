@@ -186,7 +186,7 @@
                                             @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
                                         <option value="">-- Selecionar o Grupo --</option>
                                         @foreach ($setores as $setor)
-                                            <option @if($empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
+                                            <option @if($empresa->cnaes()->exists() && $empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                         @endforeach
                                     </select>
                                     @error('setor')

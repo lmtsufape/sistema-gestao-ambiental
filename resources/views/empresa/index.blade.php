@@ -41,13 +41,17 @@
                                             <th scope="row">{{$i+1}}</th>
                                             <td>{{$empresa->nome}}</td>
                                             <td>{{$empresa->cpf_cnpj}}</td>
-                                            <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
+                                            <td>{{$empresa->cnaes()->first() ? $empresa->cnaes()->first()->setor->nome : "Sem cnae cadastrado"}}</td>
                                             <td>
                                                 <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações da empresa/serviço"></a>
                                                 <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
                                                 <a title="Deletar empresa/serviço" type="button" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar empresa/serviço"></a>
                                             </td>
                                         </tr>
+                                        @if(! $empresa->cnaes()->exists())
+                                            <tr><td colspan="5" style="border-top: none; color: #dc3545; text-align: center; padding-top: 0px">Edite a sua empresa <span style="font-weight: bold">"{{$empresa->nome}}"</span> e adicione CNAEs válidos</td></tr>
+                                            <tr><td colspan="5"></td></tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                         </table>

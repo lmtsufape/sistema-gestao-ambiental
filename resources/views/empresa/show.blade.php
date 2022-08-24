@@ -87,7 +87,7 @@
                                         <div class="col-md-6 form-group">
                                             <label for="setor">{{ __('Grupo da empresa') }}</label>
                                             <select id="setor" class="form-control @error('setor') is-invalid @enderror" type="text" name="setor" required autofocus autocomplete="setor" disabled>
-                                                <option value="">{{$empresa->cnaes[0]->setor->nome}}</option>
+                                                <option value="">{{$empresa->cnaes()->first() ? $empresa->cnaes()->first()->setor->nome : "Sem cnae cadastrado"}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                         <div class="col-md-8 form-group">
                                             <h3>Cnaes</h3>
                                         </div>
-                                        @if($empresa->cnaes->first()->nome == "Atividades similares")
+                                        @if($empresa->cnaes()->exists() && $empresa->cnaes->first()->nome == "Atividades similares")
                                             <div class="col-md-4 form-group">
                                                 <a class="btn btn-success btn-color-dafault" data-toggle="modal" data-target="#atribuir_potencial_poluidor" style="float: right;">Atribuir potencial poluidor</a>
                                             </div>

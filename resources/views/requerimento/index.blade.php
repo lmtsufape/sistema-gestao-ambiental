@@ -883,7 +883,9 @@
                         <select name="empresa" id="empresa" class="form-control @error('empresa') is-invalid @enderror" required onchange="tiposPossiveis(this)">
                             <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
                             @foreach (auth()->user()->empresas as $empresa)
-                                <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                                @if($empresa->cnaes()->exists())
+                                    <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                                @endif
                             @endforeach
                         </select>
 
