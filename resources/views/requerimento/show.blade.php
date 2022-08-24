@@ -283,7 +283,7 @@
                                             <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5" disabled>{{$requerimento->empresa->endereco->complemento}}</textarea>
                                         </div>
                                     </div>
-                                    @can('isAnalista', \App\Models\User::class)
+                                    @can('isSecretarioOrAnalista', \App\Models\User::class)
                                     <div class="form-row">
                                         <div class="col-md-8 form-group">
                                             <h3>Cnaes</h3>

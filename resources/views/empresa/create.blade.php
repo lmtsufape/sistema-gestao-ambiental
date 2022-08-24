@@ -381,12 +381,6 @@
 
         window.add_Lista = function($setor, $id) {
             var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var cnae_id = document.createElement('input');
-            cnae_id.setAttribute('type', 'hidden');
-            cnae_id.setAttribute('name', 'cnaes_id[]');
-            cnae_id.setAttribute('value', $id );
-            elemento.appendChild(cnae_id);
-
             var naTabela = document.getElementById('dentroTabelaCnaes');
             var divBtn = elemento.children[1].children[0].children[0];
 
@@ -395,6 +389,8 @@
                 divBtn.style.backgroundColor = "#dc3545";
                 divBtn.style.borderColor = "#dc3545";
                 divBtn.textContent = "Remover";
+                var html = `<input id ="inputCnae_`+$id+`" hidden name="cnaes_id[]" value="`+$id+`">`;
+                $('#cnaeCard_'+$setor+'_'+$id).append(html);
             }else{
                 var historySelectList = $('select#idSelecionarSetor');
                 var $setor_id = $('option:selected', historySelectList).val();
@@ -403,6 +399,7 @@
                     divBtn.style.backgroundColor = "var(--primaria)";
                     divBtn.style.borderColor = "var(--primaria)";
                     divBtn.textContent = "Adicionar";
+                    $('#inputCnae_'+$id).remove();
                 }else{
                     document.getElementById('listaCnaes').removeChild(elemento);
                 }

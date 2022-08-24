@@ -44,7 +44,7 @@
                                 <td>{{$empresa->nome}}</td>
                                 <td>{{$empresa->cpf_cnpj}}</td>
                                 <td>{{$empresa->user->name}}</td>
-                                <td>{{$empresa->cnaes()->first()->setor->nome}}</td>
+                                <td>{{$empresa->cnaes()->first() ? $empresa->cnaes()->first()->setor->nome : "Sem cnae cadastrado"}}</td>
                                 <td>
                                     <a  href="{{route('empresas.show', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar a empresa" title="Visualizar a empresa"></a>
                                 </td>
