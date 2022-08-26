@@ -577,84 +577,88 @@
         </div>
     @endcan
     @if (old('denuncia_id') != null)
-        <script>
-            $(document).ready(function() {
-                $('#link-denuncias-aprovados').click();
-                $("#btn-criar-visita-{{old('denuncia_id')}}").click();
-            });
-        </script>
+        @push ('scripts')
+            <script>
+                $(document).ready(function() {
+                    $('#link-denuncias-aprovados').click();
+                    $("#btn-criar-visita-{{old('denuncia_id')}}").click();
+                });
+            </script>
+        @endpush
     @endif
     @can('isSecretario', \App\Models\User::class)
-        <script>
-            function adicionarId(id) {
-                document.getElementById('denuncia_id').value = id;
-                $("#alerta-agendar").html("");
-                $("#analista-visita").val("");
-                document.getElementById('data').value = "";
-                $.ajax({
-                    url:"{{route('denuncias.info.ajax')}}",
-                    type:"get",
-                    data: {"denuncia_id": id},
-                    dataType:'json',
-                    success: function(denuncia) {
-                        if(denuncia.analista_visita != null){
-                            $("#analista-visita").val(denuncia.analista_visita.id).change();
-                            document.getElementById('data').value = denuncia.marcada;
-                            let alerta = `<div class="alert alert-success" role="alert">
-                                            <p>Denúncia agendada.</p>
-                                        </div>`;
-                            $("#alerta-agendar").append(alerta);
+        @push ('scripts')
+            <script>
+                function adicionarId(id) {
+                    document.getElementById('denuncia_id').value = id;
+                    $("#alerta-agendar").html("");
+                    $("#analista-visita").val("");
+                    document.getElementById('data').value = "";
+                    $.ajax({
+                        url:"{{route('denuncias.info.ajax')}}",
+                        type:"get",
+                        data: {"denuncia_id": id},
+                        dataType:'json',
+                        success: function(denuncia) {
+                            if(denuncia.analista_visita != null){
+                                $("#analista-visita").val(denuncia.analista_visita.id).change();
+                                document.getElementById('data').value = denuncia.marcada;
+                                let alerta = `<div class="alert alert-success" role="alert">
+                                                <p>Denúncia agendada.</p>
+                                            </div>`;
+                                $("#alerta-agendar").append(alerta);
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-            function adicionarIdAtribuir(id) {
-                document.getElementById('denuncia_id_analista').value = id;
-                $("#alerta-atribuida").html("");
-                $("#analista-atribuido").val("");
-                $.ajax({
-                    url:"{{route('denuncias.info.ajax')}}",
-                    type:"get",
-                    data: {"denuncia_id": id},
-                    dataType:'json',
-                    success: function(denuncia) {
-                        if(denuncia.analista_atribuido != null){
-                            $("#analista-atribuido").val(denuncia.analista_atribuido.id).change();
-                            let alerta = `<div class="alert alert-success" role="alert">
-                                            <p>Denúncia atribuída a um analista.</p>
-                                        </div>`;
-                            $("#alerta-atribuida").append(alerta);
+                function adicionarIdAtribuir(id) {
+                    document.getElementById('denuncia_id_analista').value = id;
+                    $("#alerta-atribuida").html("");
+                    $("#analista-atribuido").val("");
+                    $.ajax({
+                        url:"{{route('denuncias.info.ajax')}}",
+                        type:"get",
+                        data: {"denuncia_id": id},
+                        dataType:'json',
+                        success: function(denuncia) {
+                            if(denuncia.analista_atribuido != null){
+                                $("#analista-atribuido").val(denuncia.analista_atribuido.id).change();
+                                let alerta = `<div class="alert alert-success" role="alert">
+                                                <p>Denúncia atribuída a um analista.</p>
+                                            </div>`;
+                                $("#alerta-atribuida").append(alerta);
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-            function atualizarInputAprovar(resultado, id){
-                document.getElementById('inputAprovar-'+id).value = resultado;
-                var form = document.getElementById('form-avaliar-denuncia-'+id);
-                form.submit();
-            }
-        </script>
-        <script>
-            function adicionarIdEditar(id) {
-                document.getElementById('visita_id').value = id;
-                $("#analista-visita-editar").val("");
-                document.getElementById('data-editar').value = "";
-                $.ajax({
-                    url:"{{route('visitas.info.ajax')}}",
-                    type:"get",
-                    data: {"visita_id": id},
-                    dataType:'json',
-                    success: function(visita) {
-                        if(visita.analista_visita != null){
-                            $("#analista-visita-editar").val(visita.analista_visita.id).change();
-                            document.getElementById('data-editar').value = visita.marcada;
+                function atualizarInputAprovar(resultado, id){
+                    document.getElementById('inputAprovar-'+id).value = resultado;
+                    var form = document.getElementById('form-avaliar-denuncia-'+id);
+                    form.submit();
+                }
+            </script>
+            <script>
+                function adicionarIdEditar(id) {
+                    document.getElementById('visita_id').value = id;
+                    $("#analista-visita-editar").val("");
+                    document.getElementById('data-editar').value = "";
+                    $.ajax({
+                        url:"{{route('visitas.info.ajax')}}",
+                        type:"get",
+                        data: {"visita_id": id},
+                        dataType:'json',
+                        success: function(visita) {
+                            if(visita.analista_visita != null){
+                                $("#analista-visita-editar").val(visita.analista_visita.id).change();
+                                document.getElementById('data-editar').value = visita.marcada;
+                            }
                         }
-                    }
-                });
-            }
-        </script>
+                    });
+                }
+            </script>
+        @endpush
     @endcan
     @endsection
 </x-app-layout>

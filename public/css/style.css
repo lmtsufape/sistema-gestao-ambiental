@@ -1204,4 +1204,14 @@ a.article:hover {
     display: none;
 }
 
+/* select with search */
+.bootstrap-select.form-control {
+    border: 1px solid black;
+    padding: 1px;
+}
+
+.bootstrap-select.form-control button.dropdown-toggle{
+    background-color: white;
+}
+
 /* X DEMO STYLE SIDE BAR X */

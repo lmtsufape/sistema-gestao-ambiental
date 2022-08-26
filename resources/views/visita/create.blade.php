@@ -82,22 +82,24 @@
         </div>
     </div>
     @endsection
-    <script>
-        function selecionarAnalista(requerimento){
-            id = requerimento.value;
-            $.ajax({
-                url:"{{route('requerimentos.get.analista')}}",
-                type:"get",
-                data: {"requerimento_id": id},
-                dataType:'json',
-                success: function(requerimento) {
-                    if(requerimento.analista_atribuido != null){
-                        $("#analista").val(requerimento.analista_atribuido.id).change();
-                    }else{
-                        $("#analista").val('').change();
+    @push ('scripts')
+        <script>
+            function selecionarAnalista(requerimento){
+                id = requerimento.value;
+                $.ajax({
+                    url:"{{route('requerimentos.get.analista')}}",
+                    type:"get",
+                    data: {"requerimento_id": id},
+                    dataType:'json',
+                    success: function(requerimento) {
+                        if(requerimento.analista_atribuido != null){
+                            $("#analista").val(requerimento.analista_atribuido.id).change();
+                        }else{
+                            $("#analista").val('').change();
+                        }
                     }
-                }
-            });
-        }
-    </script>
+                });
+            }
+        </script>
+    @endpush
 </x-app-layout>

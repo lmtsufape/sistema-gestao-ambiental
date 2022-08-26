@@ -81,21 +81,23 @@
     </div>
 
 
-    <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{route('notificacoes.get')}}",
-                method: 'get',
-                type: 'get',
-                data: {"notificacao_id": "{{$notificacao->id}}"},
-                dataType:'json',
-                success: function(notificacao){
-                    var divNificacao = document.getElementById('notificacao');
-                    divNificacao.innerHTML = notificacao.texto;
-                },
+    @push ('scripts')
+        <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{route('notificacoes.get')}}",
+                    method: 'get',
+                    type: 'get',
+                    data: {"notificacao_id": "{{$notificacao->id}}"},
+                    dataType:'json',
+                    success: function(notificacao){
+                        var divNificacao = document.getElementById('notificacao');
+                        divNificacao.innerHTML = notificacao.texto;
+                    },
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

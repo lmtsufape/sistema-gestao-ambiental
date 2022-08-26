@@ -137,22 +137,24 @@
         </div>
     </div>
 
-    <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{route('denuncias.get')}}",
-                method: 'get',
-                type: 'get',
-                data: {"denuncia_id": "{{$denuncia->id}}"},
-                dataType:'json',
-                success: function(denuncia){
-                    var divDenuncia = document.getElementById('relato');
-                    divDenuncia.innerHTML = denuncia.texto;
-                },
+    @push ('scripts')
+        <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{route('denuncias.get')}}",
+                    method: 'get',
+                    type: 'get',
+                    data: {"denuncia_id": "{{$denuncia->id}}"},
+                    dataType:'json',
+                    success: function(denuncia){
+                        var divDenuncia = document.getElementById('relato');
+                        divDenuncia.innerHTML = denuncia.texto;
+                    },
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
 </x-guest-layout>
 @else
 <x-app-layout>
@@ -293,22 +295,24 @@
         </div>
     </div>
 
-    <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{route('denuncias.get')}}",
-                method: 'get',
-                type: 'get',
-                data: {"denuncia_id": "{{$denuncia->id}}"},
-                dataType:'json',
-                success: function(denuncia){
-                    var divDenuncia = document.getElementById('relato');
-                    divDenuncia.innerHTML = denuncia.texto;
-                },
+    @push ('scripts')
+        <script scr="{{asset('ckeditor/ckeditor.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{route('denuncias.get')}}",
+                    method: 'get',
+                    type: 'get',
+                    data: {"denuncia_id": "{{$denuncia->id}}"},
+                    dataType:'json',
+                    success: function(denuncia){
+                        var divDenuncia = document.getElementById('relato');
+                        divDenuncia.innerHTML = denuncia.texto;
+                    },
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
 @endguest

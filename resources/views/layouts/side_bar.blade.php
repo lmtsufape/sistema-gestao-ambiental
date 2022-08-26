@@ -304,24 +304,27 @@
     </div>
 </div>
 
-<script>
-    function toggleSideBar(){
-        if($('#logoSGA').is(":hidden")){
-            $('#logoSGA').show();
-            $('#sidebarCollapse').hide();
-            $('#sidebarCollapseClose').show();
-            $('#logoImage').hide();
-        }else{
-            $('#logoSGA').hide();
-            $('#sidebarCollapse').show();
-            $('#sidebarCollapseClose').hide();
-            if($('#logoImage').is(":hidden")){
-                $('#logoImage').show();
+@push ('scripts')
+    <script>
+        function toggleSideBar(){
+            if($('#logoSGA').is(":hidden")){
+                $('#logoSGA').show();
+                $('#sidebarCollapse').hide();
+                $('#sidebarCollapseClose').show();
+                $('#logoImage').hide();
+            }else{
+                $('#logoSGA').hide();
+                $('#sidebarCollapse').show();
+                $('#sidebarCollapseClose').hide();
+                if($('#logoImage').is(":hidden")){
+                    $('#logoImage').show();
+                }
             }
+            $('#sidebar').toggleClass('active');
         }
-        $('#sidebar').toggleClass('active');
-    }
-    $('#card-notificacao .close').click(function(){
-        $('#card-notificacao').slideUp();
-    })
-</script>
+        $('#card-notificacao .close').click(function(){
+            $('#card-notificacao').slideUp();
+        })
+    </script>
+
+@endpush

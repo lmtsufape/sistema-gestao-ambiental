@@ -442,36 +442,39 @@
         </div>
     @endcan
     @if (old('solicitacao_id') != null)
-        <script>
-            $(document).ready(function() {
-                $('#link-solicitacoes-aprovados').click();
-                $("#btn-criar-visita-{{old('solicitacao_id')}}").click();
-            });
-        </script>
+        @push ('scripts')
+            <script>
+                $(document).ready(function() {
+                    $('#link-solicitacoes-aprovados').click();
+                    $("#btn-criar-visita-{{old('solicitacao_id')}}").click();
+                });
+            </script>
+        @endpush
     @endif
-    <script>
-        function adicionarId(id) {
-            document.getElementById('solicitacao_id').value = id;
-            $("#alerta-agendar").html("");
-            $("#analista-visita").val("");
-            document.getElementById('data').value = "";
-            $.ajax({
-                url:"{{route('podas.info.ajax')}}",
-                type:"get",
-                data: {"solicitacao_id": id},
-                dataType:'json',
-                success: function(solicitacao) {
-                    if(solicitacao.analista_visita != null){
-                        $("#analista-visita").val(solicitacao.analista_visita.id).change();
-                        document.getElementById('data').value = solicitacao.marcada;
-                        let alerta = `<div class="alert alert-success" role="alert">
-                                        <p>Visita da solicitação agendada.</p>
-                                      </div>`;
-                        $("#alerta-agendar").append(alerta);
+    @push ('scripts')
+        <script>
+            function adicionarId(id) {
+                document.getElementById('solicitacao_id').value = id;
+                $("#alerta-agendar").html("");
+                $("#analista-visita").val("");
+                document.getElementById('data').value = "";
+                $.ajax({
+                    url:"{{route('podas.info.ajax')}}",
+                    type:"get",
+                    data: {"solicitacao_id": id},
+                    dataType:'json',
+                    success: function(solicitacao) {
+                        if(solicitacao.analista_visita != null){
+                            $("#analista-visita").val(solicitacao.analista_visita.id).change();
+                            document.getElementById('data').value = solicitacao.marcada;
+                            let alerta = `<div class="alert alert-success" role="alert">
+                                            <p>Visita da solicitação agendada.</p>
+                                          </div>`;
+                            $("#alerta-agendar").append(alerta);
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
         function adicionarIdAtribuir(id) {
             document.getElementById('solicitacao_id_analista').value = id;

@@ -402,6 +402,7 @@
                                 </div>
                             </div>
                         </div>
+
                     @endif
                 @endcan
             </div>
@@ -743,71 +744,73 @@
         </div>
     @endcan
 
-    <script>
-        function defaultDocs(select) {
-            $.ajax({
-                url:"{{route('documentos.default')}}",
-                type:"get",
-                data: {"licenca_enum": select.value},
-                dataType:'json',
-                success: function(data) {
-                    var documento = null;
-                    if(data.length > 0){
-                        for(var i = 0; i < data.length; i++){
-                            documento = document.getElementById('documento-'+data[i].id);
-                            console.log(documento);
-                            if (data[i].padrao) {
-                                documento.checked = true;
-                            } else if (data[i].padrao == null) {
-                                documento.checked = false;
-                            } else {
-                                documento.checked = false;
+    @push ('scripts')
+        <script>
+            function defaultDocs(select) {
+                $.ajax({
+                    url:"{{route('documentos.default')}}",
+                    type:"get",
+                    data: {"licenca_enum": select.value},
+                    dataType:'json',
+                    success: function(data) {
+                        var documento = null;
+                        if(data.length > 0){
+                            for(var i = 0; i < data.length; i++){
+                                documento = document.getElementById('documento-'+data[i].id);
+                                console.log(documento);
+                                if (data[i].padrao) {
+                                    documento.checked = true;
+                                } else if (data[i].padrao == null) {
+                                    documento.checked = false;
+                                } else {
+                                    documento.checked = false;
+                                }
                             }
                         }
                     }
+                });
+            }
+
+            function mostrarInput(select) {
+                var div_taxa_servico = document.getElementById('div_taxa_servico_manual');
+                var div_taxa_juros = document.getElementById('div_taxa_servico_juros');
+
+                switch (select.value) {
+                    case "{{$definir_valor['manual']}}":
+                        div_taxa_servico.style.display = "block";
+                        div_taxa_juros.style.display = "none";
+                        break;
+                    case "{{$definir_valor['automatica']}}":
+                        div_taxa_servico.style.display = "none";
+                        div_taxa_juros.style.display = "none";
+                        break;
+                    case "{{$definir_valor['automatica_com_juros']}}":
+                        div_taxa_servico.style.display = "none";
+                        div_taxa_juros.style.display = "block";
+                        break;
                 }
-            });
-        }
-
-        function mostrarInput(select) {
-            var div_taxa_servico = document.getElementById('div_taxa_servico_manual');
-            var div_taxa_juros = document.getElementById('div_taxa_servico_juros');
-
-            switch (select.value) {
-                case "{{$definir_valor['manual']}}":
-                    div_taxa_servico.style.display = "block";
-                    div_taxa_juros.style.display = "none";
-                    break;
-                case "{{$definir_valor['automatica']}}":
-                    div_taxa_servico.style.display = "none";
-                    div_taxa_juros.style.display = "none";
-                    break;
-                case "{{$definir_valor['automatica_com_juros']}}":
-                    div_taxa_servico.style.display = "none";
-                    div_taxa_juros.style.display = "block";
-                    break;
             }
-        }
 
-        function mostrarInputEdit(select) {
-            var div_taxa_servico = document.getElementById('div_taxa_servico_manual_edit');
-            var div_taxa_juros = document.getElementById('div_taxa_servico_juros_edit');
+            function mostrarInputEdit(select) {
+                var div_taxa_servico = document.getElementById('div_taxa_servico_manual_edit');
+                var div_taxa_juros = document.getElementById('div_taxa_servico_juros_edit');
 
-            switch (select.value) {
-                case "{{$definir_valor['manual']}}":
-                    div_taxa_servico.style.display = "block";
-                    div_taxa_juros.style.display = "none";
-                    break;
-                case "{{$definir_valor['automatica']}}":
-                    div_taxa_servico.style.display = "none";
-                    div_taxa_juros.style.display = "none";
-                    break;
-                case "{{$definir_valor['automatica_com_juros']}}":
-                    div_taxa_servico.style.display = "none";
-                    div_taxa_juros.style.display = "block";
-                    break;
+                switch (select.value) {
+                    case "{{$definir_valor['manual']}}":
+                        div_taxa_servico.style.display = "block";
+                        div_taxa_juros.style.display = "none";
+                        break;
+                    case "{{$definir_valor['automatica']}}":
+                        div_taxa_servico.style.display = "none";
+                        div_taxa_juros.style.display = "none";
+                        break;
+                    case "{{$definir_valor['automatica_com_juros']}}":
+                        div_taxa_servico.style.display = "none";
+                        div_taxa_juros.style.display = "block";
+                        break;
+                }
             }
-        }
-    </script>
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

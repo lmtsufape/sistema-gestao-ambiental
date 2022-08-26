@@ -307,148 +307,149 @@
         </div>
     </div>
 
-
-    <script>
-        $(document).ready(function($) {
-            $('#cpf').mask('000.000.000-00');
-            $('#rg').mask('00000000');
-            $('#cnpj').mask('00.000.000/0000-00');
-            var SPMaskBehavior = function(val) {
-                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-                },
-                spOptions = {
-                    onKeyPress: function(val, e, field, options) {
-                        field.mask(SPMaskBehavior.apply({}, arguments), options);
+    @push ('scripts')
+        <script>
+            $(document).ready(function($) {
+                $('#cpf').mask('000.000.000-00');
+                $('#rg').mask('00000000');
+                $('#cnpj').mask('00.000.000/0000-00');
+                var SPMaskBehavior = function(val) {
+                        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    },
+                    spOptions = {
+                        onKeyPress: function(val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        }
+                    };
+                $('.celular').mask(SPMaskBehavior, spOptions);
+                $('.cep').mask('00000-000');
+                $(".apenas_letras").mask("#", {
+                    maxlength: true,
+                    translation: {
+                        '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
                     }
-                };
-            $('.celular').mask(SPMaskBehavior, spOptions);
-            $('.cep').mask('00000-000');
-            $(".apenas_letras").mask("#", {
-                maxlength: true,
-                translation: {
-                    '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
-                }
+                });
             });
-        });
 
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-        }
-
-        function limpa_formulário_cep_empresa() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua_da_empresa').value=("");
-            document.getElementById('bairro_da_empresa').value=("");
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value=(conteudo.logradouro);
-                document.getElementById('bairro').value=(conteudo.bairro);
-                document.getElementById('cidade').value=(conteudo.localidade);
-                document.getElementById('uf').value=(conteudo.uf);
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep();
-                // exibirModalCep();
+            function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua').value=("");
+                document.getElementById('bairro').value=("");
+                document.getElementById('cidade').value=("");
+                document.getElementById('uf').value=("");
             }
-        }
 
-        function meu_callback_empresa(conteudo) {
-            console.log(conteudo);
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
-                document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
-                if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    exibirModal();
-                }
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep_empresa();
-                exibirModalCep();
+            function limpa_formulário_cep_empresa() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua_da_empresa').value=("");
+                document.getElementById('bairro_da_empresa').value=("");
             }
-        }
 
-        function pesquisacep(valor) {
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-                //Valida o formato do CEP.
-                if(validacep.test(cep)) {
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value="...";
-                    document.getElementById('bairro').value="...";
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value=(conteudo.logradouro);
+                    document.getElementById('bairro').value=(conteudo.bairro);
+                    document.getElementById('cidade').value=(conteudo.localidade);
+                    document.getElementById('uf').value=(conteudo.uf);
                 } //end if.
                 else {
-                    //cep é inválido.
+                    //CEP não Encontrado.
                     limpa_formulário_cep();
-                    exibirModalCepInvalido();;
+                    // exibirModalCep();
                 }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
             }
-        }
 
-        function pesquisacepEmpresa(valor) {
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-                //Valida o formato do CEP.
-                if(validacep.test(cep)) {
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua_da_empresa').value="...";
-                    document.getElementById('bairro_da_empresa').value="...";
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
+            function meu_callback_empresa(conteudo) {
+                console.log(conteudo);
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
+                    document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
+                    if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
+                        exibirModal();
+                    }
                 } //end if.
                 else {
-                    //cep é inválido.
+                    //CEP não Encontrado.
                     limpa_formulário_cep_empresa();
-                    exibirModalCepInvalido();
+                    exibirModalCep();
                 }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep_empresa();
             }
-        }
 
-        function exibirModal() {
-            $('#btn-modal-aviso').click();
-        }
+            function pesquisacep(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value="...";
+                        document.getElementById('bairro').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        exibirModalCepInvalido();;
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            }
 
-        function exibirModalCep() {
-            $('#btn-modal-cep-nao-encontrado').click();
-        }
+            function pesquisacepEmpresa(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua_da_empresa').value="...";
+                        document.getElementById('bairro_da_empresa').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep_empresa();
+                        exibirModalCepInvalido();
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep_empresa();
+                }
+            }
 
-        function exibirModalCepInvalido() {
-            $('#btn-modal-cep-invalido').click();
-        }
-    </script>
+            function exibirModal() {
+                $('#btn-modal-aviso').click();
+            }
+
+            function exibirModalCep() {
+                $('#btn-modal-cep-nao-encontrado').click();
+            }
+
+            function exibirModalCepInvalido() {
+                $('#btn-modal-cep-invalido').click();
+            }
+        </script>
+    @endpush
 </x-guest-layout>

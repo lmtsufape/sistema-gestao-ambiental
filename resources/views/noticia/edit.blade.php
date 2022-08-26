@@ -89,19 +89,21 @@
             </div>
         </div>
     </div>
-    <script>
-        CKEDITOR.replace('texto');
+    @push ('scripts')
+        <script>
+            CKEDITOR.replace('texto');
 
-        $(document).ready(function() {
-            $(".input-enviar-arquivo").change(function(){
-                var label = this.parentElement.children[3];
-                label.textContent = editar_caminho($(this).val());
+            $(document).ready(function() {
+                $(".input-enviar-arquivo").change(function(){
+                    var label = this.parentElement.children[3];
+                    label.textContent = editar_caminho($(this).val());
+                });
             });
-        });
 
-        function editar_caminho(string) {
-            return string.split("\\")[string.split("\\").length - 1];
-        }
-    </script>
+            function editar_caminho(string) {
+                return string.split("\\")[string.split("\\").length - 1];
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

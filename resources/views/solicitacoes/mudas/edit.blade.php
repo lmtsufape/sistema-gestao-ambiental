@@ -178,12 +178,14 @@
     </div>
 
     @if(count($errors) > 0)
-        <script>
-            $(function() {
-                jQuery.noConflict();
-                $('#modalIndeferir').modal('show');
-            });
-        </script>
+        @push ('scripts')
+            <script>
+                $(function() {
+                    jQuery.noConflict();
+                    $('#modalIndeferir').modal('show');
+                });
+            </script>
+        @endpush
     @endif
     @endsection
 </x-app-layout>

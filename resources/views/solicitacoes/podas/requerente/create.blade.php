@@ -37,12 +37,14 @@
                                 </div>
                             @endif
                             @if (session('success'))
-                                <script>
-                                    $(function() {
-                                        jQuery.noConflict();
-                                        $('#modalProtocolo').modal('show');
-                                    });
-                                </script>
+                                @push ('scripts')
+                                    <script>
+                                        $(function() {
+                                            jQuery.noConflict();
+                                            $('#modalProtocolo').modal('show');
+                                        });
+                                    </script>
+                                @endpush
                             @endif
                         </div>
                         <form method="POST" id="cria-solicitacao" action="{{ route('podas.store') }}" enctype="multipart/form-data">
@@ -314,81 +316,82 @@
         </div>
     </div>
 
-    <script>
+    @push ('scripts')
+        <script>
+            function addImagem() {
+                var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
+                                        <div class="card-body">
+                                            <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
+                                            <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
+                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                            <textarea type="text" class="form-control" name="comentarios[]" id="comentarios"></textarea>
+                                            <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                        </div>
+                                    </div>`;
 
-        function addImagem() {
-            var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
-                                    <div class="card-body">
-                                        <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
-                                        <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
-                                        <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                        <textarea type="text" class="form-control" name="comentarios[]" id="comentarios"></textarea>
-                                        <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                    </div>
-                                </div>`;
+                $('#imagens').append(campo_imagem);
+            }
 
-            $('#imagens').append(campo_imagem);
-        }
-
-        function pesquisacep(valor) {
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-                //Valida o formato do CEP.
-                if(validacep.test(cep)) {
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value="...";
-                    document.getElementById('bairro').value="...";
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
+            function pesquisacep(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value="...";
+                        document.getElementById('bairro').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        exibirModalCepInvalido();;
+                    }
                 } //end if.
                 else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-                    exibirModalCepInvalido();;
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        }
-
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('cep').value=("");
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-        }
-
-        function exibirModalCepInvalido() {
-            jQuery.noConflict();
-            $('#aviso-modal-fora').modal('show');
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value=(conteudo.logradouro);
-                document.getElementById('bairro').value=(conteudo.bairro);
-                console.log(conteudo.localidade);
-                if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    exibirModalCepInvalido();
+                    //cep sem valor, limpa formulário.
                     limpa_formulário_cep();
                 }
             }
-            else {
-                limpa_formulário_cep();
+
+            function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('cep').value=("");
+                document.getElementById('rua').value=("");
+                document.getElementById('bairro').value=("");
             }
-        }
-    </script>
+
+            function exibirModalCepInvalido() {
+                jQuery.noConflict();
+                $('#aviso-modal-fora').modal('show');
+            }
+
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value=(conteudo.logradouro);
+                    document.getElementById('bairro').value=(conteudo.bairro);
+                    console.log(conteudo.localidade);
+                    if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
+                        exibirModalCepInvalido();
+                        limpa_formulário_cep();
+                    }
+                }
+                else {
+                    limpa_formulário_cep();
+                }
+            }
+        </script>
+    @endpush
 </x-guest-layout>
 @else
 <x-app-layout>
@@ -429,12 +432,14 @@
                                 </div>
                             @endif
                             @if (session('success'))
-                                <script>
-                                    $(function() {
-                                        jQuery.noConflict();
-                                        $('#modalProtocolo').modal('show');
-                                    });
-                                </script>
+                                @push ('scripts')
+                                    <script>
+                                        $(function() {
+                                            jQuery.noConflict();
+                                            $('#modalProtocolo').modal('show');
+                                        });
+                                    </script>
+                                @endpush
                             @endif
                         </div>
                         <form method="POST" id="cria-solicitacao" action="{{ route('podas.store') }}" enctype="multipart/form-data">
@@ -706,81 +711,82 @@
         </div>
     </div>
 
-    <script>
+    @push ('scripts')
+        <script>
+            function addImagem() {
+                var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
+                                        <div class="card-body">
+                                            <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
+                                            <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
+                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                            <textarea type="text" class="form-control" name="comentarios[]" id="comentarios"></textarea>
+                                            <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                        </div>
+                                    </div>`;
 
-        function addImagem() {
-            var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
-                                    <div class="card-body">
-                                        <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
-                                        <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
-                                        <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                        <textarea type="text" class="form-control" name="comentarios[]" id="comentarios"></textarea>
-                                        <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                    </div>
-                                </div>`;
+                $('#imagens').append(campo_imagem);
+            }
 
-            $('#imagens').append(campo_imagem);
-        }
-
-        function pesquisacep(valor) {
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-                //Valida o formato do CEP.
-                if(validacep.test(cep)) {
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value="...";
-                    document.getElementById('bairro').value="...";
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
+            function pesquisacep(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value="...";
+                        document.getElementById('bairro').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        exibirModalCepInvalido();;
+                    }
                 } //end if.
                 else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-                    exibirModalCepInvalido();;
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        }
-
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('cep').value=("");
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-        }
-
-        function exibirModalCepInvalido() {
-            jQuery.noConflict();
-            $('#aviso-modal-fora').modal('show');
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value=(conteudo.logradouro);
-                document.getElementById('bairro').value=(conteudo.bairro);
-                console.log(conteudo.localidade);
-                if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                    exibirModalCepInvalido();
+                    //cep sem valor, limpa formulário.
                     limpa_formulário_cep();
                 }
             }
-            else {
-                limpa_formulário_cep();
+
+            function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('cep').value=("");
+                document.getElementById('rua').value=("");
+                document.getElementById('bairro').value=("");
             }
-        }
-    </script>
+
+            function exibirModalCepInvalido() {
+                jQuery.noConflict();
+                $('#aviso-modal-fora').modal('show');
+            }
+
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value=(conteudo.logradouro);
+                    document.getElementById('bairro').value=(conteudo.bairro);
+                    console.log(conteudo.localidade);
+                    if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
+                        exibirModalCepInvalido();
+                        limpa_formulário_cep();
+                    }
+                }
+                else {
+                    limpa_formulário_cep();
+                }
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
 

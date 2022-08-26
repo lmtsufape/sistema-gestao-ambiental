@@ -228,15 +228,17 @@
             </div>
         </div>
     </div>
-    <script>
-        function refreshPage(){
-            var form = document.getElementById("baixar-relatorio");
-            document.getElementById("submitBaixarRelatorio").addEventListener("click", function () {
-                form.submit();
-            });
-            sleep(2000);
-            .then(() => window.location.reload());
-        }
-    </script>
+
+    @push ('scripts')
+        <script>
+            function refreshPage(){
+                var form = document.getElementById("baixar-relatorio");
+                document.getElementById("submitBaixarRelatorio").addEventListener("click", function () {
+                    form.submit();
+                });
+                sleep(2000).then(() => window.location.reload());
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

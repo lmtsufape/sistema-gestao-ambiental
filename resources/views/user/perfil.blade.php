@@ -360,112 +360,114 @@
     </div>
     @endif
 
-    <script>
-        function editarFoto() {
-            $('#photo_input').click();
-        }
-
-        function preview() {
-            if (this.files && this.files[0]) {
-                var file = new FileReader();
-                file.onload = function(e) {
-                    document.getElementById("photo").src = e.target.result;
-                };
-                file.readAsDataURL(this.files[0]);
+    @push ('scripts')
+        <script>
+            function editarFoto() {
+                $('#photo_input').click();
             }
-        }
 
-        document.getElementById("photo_input").addEventListener("change", preview, false);
-
-        function limpa_formulario_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value=(conteudo.logradouro);
-                document.getElementById('bairro').value=(conteudo.bairro);
-                document.getElementById('cidade').value=(conteudo.localidade);
-                document.getElementById('uf').value=(conteudo.uf);
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulario_cep();
-                // exibirModalCep();
+            function preview() {
+                if (this.files && this.files[0]) {
+                    var file = new FileReader();
+                    file.onload = function(e) {
+                        document.getElementById("photo").src = e.target.result;
+                    };
+                    file.readAsDataURL(this.files[0]);
+                }
             }
-        }
 
-        function pesquisacep(valor) {
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-                //Valida o formato do CEP.
-                if(validacep.test(cep)) {
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value="...";
-                    document.getElementById('bairro').value="...";
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
+            document.getElementById("photo_input").addEventListener("change", preview, false);
+
+            function limpa_formulario_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua').value=("");
+                document.getElementById('bairro').value=("");
+                document.getElementById('cidade').value=("");
+                document.getElementById('uf').value=("");
+            }
+
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value=(conteudo.logradouro);
+                    document.getElementById('bairro').value=(conteudo.bairro);
+                    document.getElementById('cidade').value=(conteudo.localidade);
+                    document.getElementById('uf').value=(conteudo.uf);
                 } //end if.
                 else {
-                    //cep é inválido.
+                    //CEP não Encontrado.
                     limpa_formulario_cep();
-                    exibirModalCepInvalido();;
+                    // exibirModalCep();
                 }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulario_cep();
             }
-        }
 
-        function exibirModalCep() {
-            $('#btn-modal-cep-nao-encontrado').click();
-        }
-
-        function exibirModalCepInvalido() {
-            $('#btn-modal-cep-invalido').click();
-        }
-
-        $(document).ready(function() {
-            $('#cpf').mask('000.000.000-00');
-            $('#rg').mask('00000000');
-            var SPMaskBehavior = function(val) {
-                    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-                },
-                spOptions = {
-                    onKeyPress: function(val, e, field, options) {
-                        field.mask(SPMaskBehavior.apply({}, arguments), options);
+            function pesquisacep(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value="...";
+                        document.getElementById('bairro').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulario_cep();
+                        exibirModalCepInvalido();;
                     }
-                };
-            $('.celular').mask(SPMaskBehavior, spOptions);
-            $('.cep').mask('00000-000');
-            $(".apenas_letras").mask("#", {
-                maxlength: true,
-                translation: {
-                    '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulario_cep();
                 }
-            });
-        });
-    </script>
-    @if (old('rua') != null)
-        <script>
-            $(document).ready(function(){
-                $('#edit-endereco-pessoal').click();
+            }
+
+            function exibirModalCep() {
+                $('#btn-modal-cep-nao-encontrado').click();
+            }
+
+            function exibirModalCepInvalido() {
+                $('#btn-modal-cep-invalido').click();
+            }
+
+            $(document).ready(function() {
+                $('#cpf').mask('000.000.000-00');
+                $('#rg').mask('00000000');
+                var SPMaskBehavior = function(val) {
+                        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    },
+                    spOptions = {
+                        onKeyPress: function(val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        }
+                    };
+                $('.celular').mask(SPMaskBehavior, spOptions);
+                $('.cep').mask('00000-000');
+                $(".apenas_letras").mask("#", {
+                    maxlength: true,
+                    translation: {
+                        '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
+                    }
+                });
             });
         </script>
-    @endif
+        @if (old('rua') != null)
+            <script>
+                $(document).ready(function(){
+                    $('#edit-endereco-pessoal').click();
+                });
+            </script>
+        @endif
+    @endpush
     @endsection
 </x-app-layout>

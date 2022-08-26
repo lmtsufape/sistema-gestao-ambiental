@@ -1154,30 +1154,34 @@
         </div>
     @endforeach
     @error('tipo')
-    <script>
-        $('#btn-novo-requerimento').click();
-    </script>
+        @push ('scripts')
+            <script>
+                $('#btn-novo-requerimento').click();
+            </script>
+        @endpush
     @enderror
-    <script>
-        function tiposPossiveis(select) {
-            $.ajax({
-                url:"{{route('status.requerimento')}}",
-                type:"get",
-                data: {"empresa_id": select.value},
-                dataType:'json',
-                success: function(data) {
-                    $("#tipo").html("");
-                    opt = `<option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>`;
-                    if (data.length > 0) {
-                        for (var i = 0; i < data.length; i++) {
-                            opt += `<option value="${data[i].enum_tipo}">${data[i].tipo}</option>`;
+    @push ('scripts')
+        <script>
+            function tiposPossiveis(select) {
+                $.ajax({
+                    url:"{{route('status.requerimento')}}",
+                    type:"get",
+                    data: {"empresa_id": select.value},
+                    dataType:'json',
+                    success: function(data) {
+                        $("#tipo").html("");
+                        opt = `<option value="" selected disabled>{{__('-- Selecione o tipo de requerimento --')}}</option>`;
+                        if (data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                opt += `<option value="${data[i].enum_tipo}">${data[i].tipo}</option>`;
+                            }
                         }
-                    }
 
-                    $("#tipo").append(opt);
-                }
-            });
-        }
-    </script>
+                        $("#tipo").append(opt);
+                    }
+                });
+            }
+        </script>
+    @endpush
 @endsection
 </x-app-layout>

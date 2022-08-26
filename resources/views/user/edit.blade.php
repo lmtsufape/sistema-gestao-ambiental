@@ -91,24 +91,26 @@
             </div>
         </div>
     </div>
-    <script>
-        function checkForm(nome_classe)
-        {
-            let checkboxes = document.getElementsByClassName(nome_classe);
-            let form = document.getElementById('editar-usuario');
-            let selecionado = false;
-            for(let i = 0; i < checkboxes.length; i++){
-                if(checkboxes[i].checked){
-                    selecionado = true;
-                    break
+    @push ('scripts')
+        <script>
+            function checkForm(nome_classe)
+            {
+                let checkboxes = document.getElementsByClassName(nome_classe);
+                let form = document.getElementById('editar-usuario');
+                let selecionado = false;
+                for(let i = 0; i < checkboxes.length; i++){
+                    if(checkboxes[i].checked){
+                        selecionado = true;
+                        break
+                    }
+                }
+                if (!selecionado){
+                    alert('Selecione um cargo para o analista!');
                 }
             }
-            if (!selecionado){
-                alert('Selecione um cargo para o analista!');
-            }
-        }
 
-    </script>
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
 

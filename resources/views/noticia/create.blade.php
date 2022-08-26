@@ -91,29 +91,31 @@
             </div>
         </div>
     </div>
-    <script>
-        CKEDITOR.replace('texto');
+    @push ('scripts')
+        <script>
+            CKEDITOR.replace('texto');
 
-        document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
-        if (document.getElementById("enviar_arquivo").files.length == 0 ) {
-            $('#labelImagem').focus();
-            $('#msgImagemNull').show();
-            event.preventDefault();
-        } else {
-            $('#msgImagemNull').hide();
-        }
-    });
-
-        $(document).ready(function() {
-            $(".input-enviar-arquivo").change(function(){
-                var label = this.parentElement.children[3];
-                label.textContent = editar_caminho($(this).val());
+            document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+                if (document.getElementById("enviar_arquivo").files.length == 0 ) {
+                    $('#labelImagem').focus();
+                    $('#msgImagemNull').show();
+                    event.preventDefault();
+                } else {
+                    $('#msgImagemNull').hide();
+                }
             });
-        });
 
-        function editar_caminho(string) {
-            return string.split("\\")[string.split("\\").length - 1];
-        }
-    </script>
+            $(document).ready(function() {
+                $(".input-enviar-arquivo").change(function(){
+                    var label = this.parentElement.children[3];
+                    label.textContent = editar_caminho($(this).val());
+                });
+            });
+
+            function editar_caminho(string) {
+                return string.split("\\")[string.split("\\").length - 1];
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
