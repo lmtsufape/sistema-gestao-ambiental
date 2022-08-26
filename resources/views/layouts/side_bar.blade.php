@@ -20,7 +20,7 @@
                         </li>
                         <li>
                             <a class="navbar-brand nav-link-logo" href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank">
-                                <img class="img-logo" src="{{asset('img/whatsapp.svg')}}" alt="Logo whatsapp" style="height: 50px; width: 50px; padding-bottom: 5px">
+                                <img class="img-logo" src="{{asset('img/whatsapp.svg')}}" alt="Logo whatsapp" style="height: 40px; width: 40px;">
                             </a>
                         </li>
                     </ul>
