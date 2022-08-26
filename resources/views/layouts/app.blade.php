@@ -45,6 +45,7 @@
         <!-- Scripts -->
         <script src="{{asset('js/app.js')}}" defer></script>
         <script src="{{asset('js/main.js')}}"></script>
+        <script src="{{asset('js/submit.js')}}"></script>
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
         @livewireScripts
         @stack('scripts')

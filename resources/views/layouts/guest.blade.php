@@ -46,22 +46,9 @@
         <!-- Scripts -->
         <script src="{{asset('js/app.js')}}" defer></script>
         <script src="{{asset('js/main.js')}}"></script>
+        <script src="{{asset('js/submit.js')}}"></script>
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
         @livewireScripts
         @stack('scripts')
-        <script>
-            $(document).ready(function () {
-                var btn = document.getElementsByClassName("submeterFormBotao");
-                if(btn.length > 0){
-                    $(document).on('submit', 'form', function() {
-                        $('button').attr('disabled', 'disabled');
-                        for (var i = 0; i < btn.length; i++) {
-                            btn[i].textContent = 'Aguarde...';
-                            btn[i].style.backgroundColor = btn.style.backgroundColor + 'd8';
-                        }
-                    });
-                }
-            })
-        </script>
     </body>
 </html>

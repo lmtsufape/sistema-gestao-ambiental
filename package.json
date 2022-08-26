@@ -28,6 +28,7 @@
         "bootstrap-select": "^1.13.18",
         "jquery": "^3.6.0",
         "jquery-mask-plugin": "^1.14.16",
-        "sass": "^1.54.5"
+        "sass": "^1.54.5",
+        "sweetalert2": "^11.4.29"
     }
 }
