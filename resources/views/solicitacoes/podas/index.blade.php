@@ -476,45 +476,46 @@
                 });
             }
 
-        function adicionarIdAtribuir(id) {
-            document.getElementById('solicitacao_id_analista').value = id;
-            $("#alerta-atribuida").html("");
-            $("#analista-atribuido").val("");
-            $.ajax({
-                url:"{{route('podas.info.ajax')}}",
-                type:"get",
-                data: {"solicitacao_id": id},
-                dataType:'json',
-                success: function(solicitacao) {
-                    if(solicitacao.analista_atribuido != null){
-                        $("#analista-atribuido").val(solicitacao.analista_atribuido.id).change();
-                        let alerta = `<div class="alert alert-success" role="alert">
-                                        <p>Solicitação atribuída a um analista.</p>
-                                      </div>`;
-                        $("#alerta-atribuida").append(alerta);
+            function adicionarIdAtribuir(id) {
+                document.getElementById('solicitacao_id_analista').value = id;
+                $("#alerta-atribuida").html("");
+                $("#analista-atribuido").val("");
+                $.ajax({
+                    url:"{{route('podas.info.ajax')}}",
+                    type:"get",
+                    data: {"solicitacao_id": id},
+                    dataType:'json',
+                    success: function(solicitacao) {
+                        if(solicitacao.analista_atribuido != null){
+                            $("#analista-atribuido").val(solicitacao.analista_atribuido.id).change();
+                            let alerta = `<div class="alert alert-success" role="alert">
+                                            <p>Solicitação atribuída a um analista.</p>
+                                        </div>`;
+                            $("#alerta-atribuida").append(alerta);
+                        }
                     }
-                }
-            });
-        }
-    </script>
-    <script>
-        function adicionarIdEditar(id) {
-            document.getElementById('visita_id').value = id;
-            $("#analista-visita-editar").val("");
-            document.getElementById('data-editar').value = "";
-            $.ajax({
-                url:"{{route('visitas.info.ajax')}}",
-                type:"get",
-                data: {"visita_id": id},
-                dataType:'json',
-                success: function(visita) {
-                    if(visita.analista_visita != null){
-                        $("#analista-visita-editar").val(visita.analista_visita.id).change();
-                        document.getElementById('data-editar').value = visita.marcada;
+                });
+            }
+        </script>
+        <script>
+            function adicionarIdEditar(id) {
+                document.getElementById('visita_id').value = id;
+                $("#analista-visita-editar").val("");
+                document.getElementById('data-editar').value = "";
+                $.ajax({
+                    url:"{{route('visitas.info.ajax')}}",
+                    type:"get",
+                    data: {"visita_id": id},
+                    dataType:'json',
+                    success: function(visita) {
+                        if(visita.analista_visita != null){
+                            $("#analista-visita-editar").val(visita.analista_visita.id).change();
+                            document.getElementById('data-editar').value = visita.marcada;
+                        }
                     }
-                }
-            });
-        }
-    </script>
+                });
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
