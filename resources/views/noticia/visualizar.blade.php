@@ -21,7 +21,9 @@
             </div>
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <img src="{{asset('storage/'.$noticia->imagem_principal)}}" class="card-img-top" alt="Imagem da notícia {{$noticia->titulo}}">
+                    <div class="d-flex justify-content-center">
+                        <img src="{{asset('storage/'.$noticia->imagem_principal)}}" alt="Imagem da notícia {{$noticia->titulo}}">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{$noticia->titulo}}</h5>
                         <p class="card-text">{!! $noticia->texto !!}</p>
@@ -56,7 +58,9 @@
                 </div>
                 <div class="col-md-10">
                     <div class="card mb-3">
-                        <img src="{{asset('storage/'.$noticia->imagem_principal)}}" class="card-img-top" alt="Imagem da notícia {{$noticia->titulo}}">
+                        <div class="d-flex justify-content-center">
+                            <img src="{{asset('storage/'.$noticia->imagem_principal)}}" alt="Imagem da notícia {{$noticia->titulo}}">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{$noticia->titulo}}</h5>
                             <p class="card-text">{!! $noticia->texto !!}</p>
