@@ -131,20 +131,22 @@
             </div>
         </div>
     </div>
-    <script>
-        function addImagem() {
-            var campo_imagem = `<div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                        <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                        <input type="file" name="imagem[]" id="imagem">
-                                        <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                        <input type="text" class="form-control" name="comentario[]" id="comentario">
-                                        <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                </div>`;
+    @push ('scripts')
+        <script>
+            function addImagem() {
+                var campo_imagem = `<div class="col-md-5" style="margin: 10px 10px 0 0;">
+                                            <label for="imagem">{{ __('Selecione a imagem') }}</label>
+                                            <input type="file" name="imagem[]" id="imagem">
+                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                            <input type="text" class="form-control" name="comentario[]" id="comentario">
+                                            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                    </div>`;
 
-            $('#imagens').append(campo_imagem);
-        }
+                $('#imagens').append(campo_imagem);
+            }
 
-        CKEDITOR.replace('texto');
-    </script>
+            CKEDITOR.replace('texto');
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

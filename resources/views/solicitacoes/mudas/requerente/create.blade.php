@@ -35,12 +35,14 @@
                                 </div>
                             @endif
                             @if (session('success'))
-                                <script>
-                                    $(function() {
-                                        jQuery.noConflict();
-                                        $('#modalProtocolo').modal('show');
-                                    });
-                                </script>
+                                @push ('scripts')
+                                    <script>
+                                        $(function() {
+                                            jQuery.noConflict();
+                                            $('#modalProtocolo').modal('show');
+                                        });
+                                    </script>
+                                @endpush
                             @endif
                         </div>
                         <div class="form-row justify-content-between">
@@ -183,45 +185,47 @@
             </div>
         </div>
     </div>
-<script>
-    function addEspecie() {
-        var indice = document.getElementById("especie_indice");
-        var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
-        indice.value = especie_indice;
+    @push ('scripts')
+        <script>
+            function addEspecie() {
+                var indice = document.getElementById("especie_indice");
+                var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
+                indice.value = especie_indice;
 
-        var campo_especie = `<tr>
-                                <td>
-                                    <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
-                                        <option value="" disabled selected>-- Selecionar a espécie--</option>
-                                        @foreach ($especies as $especie)
-                                            <option value={{$especie->id}}>{{$especie->nome}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('especie.*')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </td>
-                                <td>
-                                    <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
-                                        type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
-                                        autocomplete="qtd_mudas" required>
-                                    @error('qtd_mudas.*')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </td>
-                                <td>
-                                    <div>
-                                        <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
-                                    </div>
-                                </td>
-                            </tr>`;
+                var campo_especie = `<tr>
+                                        <td>
+                                            <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
+                                                <option value="" disabled selected>-- Selecionar a espécie--</option>
+                                                @foreach ($especies as $especie)
+                                                    <option value={{$especie->id}}>{{$especie->nome}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('especie.*')
+                                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </td>
+                                        <td>
+                                            <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
+                                                type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                                autocomplete="qtd_mudas" required>
+                                            @error('qtd_mudas.*')
+                                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                            </div>
+                                        </td>
+                                    </tr>`;
 
-        $('#especies tbody').append(campo_especie);
-    }
-</script>
+                $('#especies tbody').append(campo_especie);
+            }
+        </script>
+    @endpush
 @endsection
 </x-app-layout>

@@ -126,19 +126,21 @@
             </div>
         </div>
     </div>
-<script>
-    $("#documento_modelo").change(function(){
-        if(this.files[0].size > 2097152){
-            alert("O arquivo deve ter no máximo 2MB!");
-            this.value = "";
-        };
-    });
-    $(".input-enviar-arquivo").change(function(){
-        $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
-    });
-    function editar_caminho(string) {
-        return string.split("\\")[string.split("\\").length - 1];
-    }
-</script>
+@push ('scripts')
+    <script>
+        $("#documento_modelo").change(function(){
+            if(this.files[0].size > 2097152){
+                alert("O arquivo deve ter no máximo 2MB!");
+                this.value = "";
+            };
+        });
+        $(".input-enviar-arquivo").change(function(){
+            $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+        });
+        function editar_caminho(string) {
+            return string.split("\\")[string.split("\\").length - 1];
+        }
+    </script>
+@endpush
 @endsection
 </x-app-layout>

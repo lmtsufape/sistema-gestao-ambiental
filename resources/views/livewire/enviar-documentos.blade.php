@@ -239,7 +239,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #f3c062;">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmação</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -247,8 +247,8 @@
                     Tem certeza que deseja enviar estes documentos? A modificação de algum documento só poderá ser feita caso o mesmo seja recusado pelo analista.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos" data-bs-dismiss="modal">Concluir</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos" data-dismiss="modal">Concluir</button>
                 </div>
             </div>
         </div>

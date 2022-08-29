@@ -195,12 +195,14 @@
         </div>
     @endcan
     @endsection
-    <script>
-        $(".input-enviar-arquivo").change(function(){
-            $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
-        });
-        function editar_caminho(string) {
-            return string.split("\\")[string.split("\\").length - 1];
-        }
-    </script>
+    @push ('scripts')
+        <script>
+            $(".input-enviar-arquivo").change(function(){
+                $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
+            });
+            function editar_caminho(string) {
+                return string.split("\\")[string.split("\\").length - 1];
+            }
+        </script>
+    @endpush
 </x-app-layout>

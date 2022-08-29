@@ -18,6 +18,17 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "postcss-import": "^14.0.1",
+        "resolve-url-loader": "^4.0.0",
+        "sass-loader": "^12.6.0",
         "tailwindcss": "^2.2.2"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.6",
+        "bootstrap": "^4.6.0",
+        "bootstrap-select": "^1.13.18",
+        "jquery": "^3.6.0",
+        "jquery-mask-plugin": "^1.14.16",
+        "sass": "^1.54.5",
+        "sweetalert2": "^11.4.29"
     }
 }

@@ -566,23 +566,25 @@
         @endif
     @endforeach
     @endsection
-    <script>
-        function adicionarId(id) {
-            document.getElementById('visita_id').value = id;
-            $("#analista-visita").val("");
-            document.getElementById('data').value = "";
-            $.ajax({
-                url:"{{route('visitas.info.ajax')}}",
-                type:"get",
-                data: {"visita_id": id},
-                dataType:'json',
-                success: function(visita) {
-                    if(visita.analista_visita != null){
-                        $("#analista-visita").val(visita.analista_visita.id).change();
-                        document.getElementById('data').value = visita.marcada;
+    @push ('scripts')
+        <script>
+            function adicionarId(id) {
+                document.getElementById('visita_id').value = id;
+                $("#analista-visita").val("");
+                document.getElementById('data').value = "";
+                $.ajax({
+                    url:"{{route('visitas.info.ajax')}}",
+                    type:"get",
+                    data: {"visita_id": id},
+                    dataType:'json',
+                    success: function(visita) {
+                        if(visita.analista_visita != null){
+                            $("#analista-visita").val(visita.analista_visita.id).change();
+                            document.getElementById('data').value = visita.marcada;
+                        }
                     }
-                }
-            });
-        }
-    </script>
+                });
+            }
+        </script>
+    @endpush
 </x-app-layout>

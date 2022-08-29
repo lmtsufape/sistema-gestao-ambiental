@@ -161,20 +161,22 @@
         </div>
     </div>
 
-    <script>
-        function addImagem() {
-            var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
-                                    <div class="card-body">
-                                        <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
-                                        <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
-                                        <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                        <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
-                                        <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                    </div>
-                                </div>`;
+    @push ('scripts')
+        <script>
+            function addImagem() {
+                var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
+                                        <div class="card-body">
+                                            <label for="imagem">{{ __('Selecione a imagem') }}</label><br>
+                                            <input type="file" name="imagem[]" id="imagem" accept="image/*"><br>
+                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                            <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
+                                            <button type="button" onclick="this.parentElement.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                        </div>
+                                    </div>`;
 
-            $('#imagens').append(campo_imagem);
-        }
-    </script>
+                $('#imagens').append(campo_imagem);
+            }
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

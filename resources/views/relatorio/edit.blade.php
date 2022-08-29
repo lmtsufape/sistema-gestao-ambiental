@@ -156,8 +156,10 @@
             </div>
         </div>
     </div>
-    <script>
-        CKEDITOR.replace('relatorio');
-    </script>
+    @push ('scripts')
+        <script>
+            CKEDITOR.replace('relatorio');
+        </script>
+    @endpush
     @endsection
 </x-app-layout>

@@ -55,7 +55,7 @@
                                 </tbody>
                         </table>
                         </div>
-                        @if($empresas->first() == null)
+                        @if($empresas->isEmpty())
                             <div class="col-md-12 text-center" style="font-size: 18px;">
                                 Nenhuma empresa cadastrada
                             </div>
@@ -69,7 +69,7 @@
                         Legenda
                     </div>
                     <div class="mt-2 borda-baixo"></div>
-                    @if($empresas->first() != null)
+                    @if($empresas->isEmpty())
                         <ul class="list-group list-unstyled">
                             <li>
                                 <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">

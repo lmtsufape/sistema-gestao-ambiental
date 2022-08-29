@@ -120,18 +120,20 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            $("#valor").inputmask('decimal', {
-                'alias': 'numeric',
-                'autoGroup': true,
-                'digits': 2,
-                'radixPoint': ".",
-                'digitsOptional': false,
-                'allowMinus': false,
-                'placeholder': ''
+    @push ('scripts')
+        <script>
+            $(document).ready(function() {
+                $("#valor").inputmask('decimal', {
+                    'alias': 'numeric',
+                    'autoGroup': true,
+                    'digits': 2,
+                    'radixPoint': ".",
+                    'digitsOptional': false,
+                    'allowMinus': false,
+                    'placeholder': ''
+                });
             });
-        });
-    </script>
+        </script>
+    @endpush
     @endsection
 </x-app-layout>
