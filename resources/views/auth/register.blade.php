@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cidade">{{ __('Cidade') }}</label>
+                                        <label for="cidade">{{ __('Cidade') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" name="cidade" value="Garanhuns" required autofocus autocomplete="cidade" placeholder="Digite a cidade que mora...">
                                         @error('cidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -164,7 +164,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="uf">{{ __('Estado') }}</label>
+                                        <label for="uf">{{ __('Estado') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" required autocomplete="estado" name="uf">
                                             <option value="" selected disabled >-- Selecione o UF --</option>
                                             <option @if(old('uf') == 'AC') selected @endif value="AC">Acre</option>
@@ -224,7 +224,7 @@
                                                     {!! __('Eu aceito os :terms_of_service e a :privacy_policy.', [
                                                             'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Termos de Serviço').'</a>',
                                                             'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Política de Privacidade').'</a>',
-                                                    ]) !!}
+                                                    ]) !!}<span style="color: red; font-weight: bold;">*</span>
                                                 </div>
                                             </div>
                                         </x-jet-label>
@@ -236,6 +236,7 @@
 
                                                 <div class="ml-2">
                                                     {!! __('Declaro sob as penas da lei que todas as informações prestadas são verdadeiras e estou ciente de eventual responsabilidade administrativa, cível e criminal que tais informações possam gerar.') !!}
+                                                    <span style="color: red; font-weight: bold;">*</span>
                                                 </div>
                                             </div>
                                         </x-jet-label>
