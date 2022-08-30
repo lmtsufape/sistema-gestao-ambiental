@@ -114,6 +114,9 @@
                                     <div class="col-md-6 form-group">
                                         <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
+                                        <div class="col-md-12 text-right font-weight-bold">
+                                            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Não sei meu CEP</a>
+                                        </div>
                                         @error('cep')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
