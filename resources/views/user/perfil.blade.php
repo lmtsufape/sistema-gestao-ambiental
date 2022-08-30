@@ -29,7 +29,6 @@
                     </div>
                 </div>
             @endif
-            <br>
             <div class="row">
                 <div class="col-md-6">
                     <form id="form-alterar-dados-basicos" method="POST" action="{{route('usuarios.dados')}}" enctype="multipart/form-data">
@@ -51,7 +50,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                <br>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="nome_de_exibição">Nome de exibição</label>
@@ -133,7 +131,6 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="card card-endereco-profile">
@@ -173,7 +170,7 @@
                         </div>
                     </div>
                 @endif
-                <div @can('isRequerente',  \App\Models\User::class) class="col-md-12" @else class="col-md-6" @endcan>
+                <div @can('isRequerente',  \App\Models\User::class) class="col-md-12 mt-2" @else class="col-md-6" @endcan>
                     <form id="form-alterar-email-senha" method="POST" action="{{route('usuarios.update', ['usuario' => auth()->user()->id])}}">
                         @csrf
                         @method('PUT')
@@ -193,7 +190,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                <br>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="e-mail">E-mail</label>
@@ -253,13 +249,8 @@
                     </form>
                 </div>
             </div>
-            <br>
-            <div class="row">
-
-            </div>
-            <br>
             @if(auth()->user()->requerente != null)
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-md-12 form-group">
                         <div class="form-row">
                             <div class="col-md-12">
