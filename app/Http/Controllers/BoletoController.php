@@ -95,10 +95,6 @@ class BoletoController extends Controller
     {
         $xmlBoletoController = new XMLCoderController();
         $boleto = $requerimento->boletos->last();
-
-        if (! is_null($boleto) && 3 == $boleto->status_pagamento) {
-            return redirect()->back()->with('error', 'Boleto já pago, não é possível alterar o boleto.');
-        }
         if (is_null($boleto) || is_null($boleto->nosso_numero) || is_null($boleto->URL)) {
             return $this->gerarBoleto($requerimento);
         }

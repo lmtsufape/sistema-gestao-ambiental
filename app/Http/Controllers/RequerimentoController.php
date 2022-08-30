@@ -363,6 +363,14 @@ class RequerimentoController extends Controller
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
+    /**
+     * Atualiza o valor do requerimento, assim como o boleto.
+     *
+     * @param Requerimento $requerimento
+     * @param Request $request
+     * @return Application|RedirectResponse|Redirector
+     * @throws AuthorizationException
+     */
     public function updateValor(Requerimento $requerimento, Request $request)
     {
         $this->authorize('isSecretarioOrProtocolista', auth()->user());
@@ -371,11 +379,16 @@ class RequerimentoController extends Controller
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
             'valor_do_juros' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
         ]);
+        $boleto = $requerimento->boletos->last();
+        if (! is_null($boleto) && 3 == $boleto->status_pagamento) {
+            return redirect()->back()->with('error', 'Boleto já pago, não é possível alterar o boleto.');
+        }
         $this->atribuirValor($request, $requerimento);
         $requerimento->save();
         try {
             $boletoController = new BoletoController();
             $boletoController->boleto($requerimento);
+            return redirect()->back()->with('success', 'Valor do requerimento e boleto atualizados com sucesso.');
         } catch (ErrorRemessaException $e) {
             return redirect()->back()
                 ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
