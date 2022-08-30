@@ -50,9 +50,6 @@
                                     {{--@if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                     @endif--}}
-                                    @if($requerimento->boletos->last() && $requerimento->boletos->last()->status_pagamento == \App\Models\BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $requerimento->boletos->last()->data_vencimento < now())
-                                        <a class="btn" data-toggle="modal" data-target="#criar-novo-boleto"><img style="height: 30px;" src="{{asset('img/boleto.png')}}" alt="Criar novo boleto" title="Criar novo boleto"></a>
-                                    @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
                                     @if ($requerimento->documentos->count() > 0)
@@ -62,6 +59,7 @@
                                         <a  href="{{route('requerimentos.editar.empresa', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/building-svgrepo-com.svg')}}"  alt="Editar empresa" title="Editar Informações da Empresa/Serviço"></a>
                                         @if ($requerimento->documentos->count() > 0)
                                             <a class="btn" data-toggle="modal" data-target="#documentos-edit"><img class="icon-licenciamento" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
+                                            <a class="btn" data-toggle="modal" data-target="#boleto-edit" ><img class="icon-licenciamento" src="{{asset('img/boleto.png')}}" alt="Alterar boleto" title="Alterar boleto"></a>
                                         @else
                                             <a class="btn" data-toggle="modal" data-target="#documentos"><img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                         @endif
@@ -523,7 +521,7 @@
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="licenca">{{__('Selecione a licença que a empresa terá que emitir')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="licença" id="licença" class="form-control @error('licença') is-invalid @enderror" onchange="defaultDocs(this)">
                                         <option @if(old('licença', $requerimento->tipo_licenca) == \App\Models\Licenca::TIPO_ENUM['simplificada']) selected @endif value="{{\App\Models\Licenca::TIPO_ENUM['simplificada']}}">Simplificada</option>
@@ -540,8 +538,41 @@
                                         </div>
                                     @enderror
                                 </div>
-
-                                <div class="col-md-6 form-group">
+                            </div>
+                            @foreach ($documentos as $documento)
+                                <div class="form-check @if(!$loop->first) mt-3 @endif">
+                                    <input id="documento-{{$documento->id}}" class="form-check-input" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
+                                    <label for="documento-{{$documento->id}}" class="form-check-label">{{$documento->nome}}</label>
+                                </div>
+                            @endforeach
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="documentos-form-edit">Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal valor -->
+        <div class="modal fade" id="boleto-edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: var(--primaria);">
+                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Editar valor do requerimento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="boleto-form-edit" method="POST" action="{{route('requerimento.valor.edit', $requerimento->id)}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="PUT">
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <p><b>{{__('Valor atual: R$')}} {{$requerimento->valor}}</b></p>
+                                </div>
+                                <div class="col-md-12 form-group">
                                     <label for="opcão_taxa_serviço_edit">{{__('Taxa de serviço de emissão de licença')}}<span style="color: red; font-weight: bold;">*</span></label>
                                     <select name="opcão_taxa_serviço" id="opcão_taxa_serviço_edit" class="form-control @error('opcão_taxa_serviço') is-invalid @enderror" required onchange="mostrarInputEdit(this)">
                                         <option selected disabled value="">-- Selecione uma opção --</option>
@@ -579,49 +610,17 @@
                                     @enderror
                                 </div>
                             </div>
-                            @foreach ($documentos as $documento)
-                                <div class="form-check @if(!$loop->first) mt-3 @endif">
-                                    <input id="documento-{{$documento->id}}" class="form-check-input" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if($requerimento->documentos->contains('id', $documento->id)) checked @endif>
-                                    <label for="documento-{{$documento->id}}" class="form-check-label">{{$documento->nome}}</label>
-                                </div>
-                            @endforeach
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="documentos-form-edit">Atualizar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
                     </div>
                 </div>
             </div>
         </div>
     @endif
 
-    {{-- Modal confirmar gerar boleto --}}
-    @can('isSecretario', \App\Models\User::class)
-        <div class="modal fade" id="criar-novo-boleto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: var(--primaria);">
-                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Confirmar</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-criar-novo-boleto" action="{{route('requerimentos.criar.novo.boleto')}}" method="post">
-                            @csrf
-                            <input type="hidden" name="requerimento" value="{{$requerimento->id}}">
-                            Tem certeza que deseja criar um novo boleto para o requerimento?
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="form-criar-novo-boleto">Confirmar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endcan
     @can('isSecretario', \App\Models\User::class)
         <!-- Modal atribuicao protocolista -->
         <div class="modal fade" id="atribuir-analista" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

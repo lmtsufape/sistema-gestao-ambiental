@@ -96,39 +96,20 @@ class BoletoController extends Controller
         $xmlBoletoController = new XMLCoderController();
         $boleto = $requerimento->boletos->last();
 
-        if (is_null($boleto)) {
+        if (! is_null($boleto) && 3 == $boleto->status_pagamento) {
+            return redirect()->back()->with('error', 'Boleto já pago, não é possível alterar o boleto.');
+        }
+        if (is_null($boleto) || is_null($boleto->nosso_numero) || is_null($boleto->URL)) {
             return $this->gerarBoleto($requerimento);
         }
-        if ($boleto->data_vencimento > now()) {
+        if ($boleto->data_vencimento <= now()) {
             return $this->alterarBoleto($boleto);
         }
         if ($boleto->URL != null) {
             return $boleto->URL;
         }
         try {
-            $xmlBoletoController->incluirBoletoRemessa($boleto);
-
-            return $boleto->URL;
-        } catch (ErrorRemessaException $e) {
-            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
-        }
-    }
-
-    public function criarNovoBoleto(Requerimento $requerimento)
-    {
-        $xmlBoletoController = new XMLCoderController();
-        $boleto = $requerimento->boletos->last();
-
-        if (is_null($boleto) || ($boleto->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'] && $boleto->data_vencimento < now())) {
-            return $this->gerarBoleto($requerimento);
-        }
-        if ($boleto->data_vencimento > now()) {
-            return $this->alterarBoleto($boleto);
-        }
-        if ($boleto->URL != null) {
-            return $boleto->URL;
-        }
-        try {
+            $boleto = $xmlBoletoController->gerarIncluirBoleto($requerimento);
             $xmlBoletoController->incluirBoletoRemessa($boleto);
 
             return $boleto->URL;

@@ -327,23 +327,6 @@ class RequerimentoController extends Controller
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
     }
 
-    public function criarNovoBoleto(Request $request)
-    {
-        $requerimento = Requerimento::find($request->requerimento);
-        $this->authorize('isSecretario', auth()->user());
-        try {
-            $boletoController = new BoletoController();
-            $boletoController->criarNovoBoleto($requerimento);
-        } catch (ErrorRemessaException $e) {
-            return redirect()->back()
-                ->with(['success' => 'Boleto gerado com sucesso.'])
-                ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
-                ->withInput();
-        }
-
-        return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Boleto gerado com sucesso.']);
-    }
-
     /**
      * Editar a lista de documentos para retirar a licença.
      *
@@ -354,9 +337,6 @@ class RequerimentoController extends Controller
     {
         $request->validate([
             'licença' => 'required',
-            'opcão_taxa_serviço' => 'required',
-            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
-            'valor_do_juros' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
         ]);
 
         if ($request->documentos == null) {
@@ -364,7 +344,6 @@ class RequerimentoController extends Controller
         }
 
         $requerimento = Requerimento::find($request->requerimento);
-        $this->atribuirValor($request, $requerimento);
         $documentos_requerimento = $requerimento->documentos->pluck('id')->all();
         $documentos_view = $request->documentos;
         $documentos_desmarcados = array_diff($documentos_requerimento, $documentos_view);
@@ -382,6 +361,25 @@ class RequerimentoController extends Controller
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Alteração dos documentos requeridos'));
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist atualizada com sucesso, aguarde o requerente enviar os documentos.']);
+    }
+
+    public function updateValor(Requerimento $requerimento, Request $request)
+    {
+        $request->validate([
+            'opcão_taxa_serviço' => 'required',
+            'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
+            'valor_do_juros' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros'],
+        ]);
+        $this->atribuirValor($request, $requerimento);
+        $requerimento->save();
+        try {
+            $boletoController = new BoletoController();
+            $boletoController->boleto($requerimento);
+        } catch (ErrorRemessaException $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
+                ->withInput();
+        }
     }
 
     /**
