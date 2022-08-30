@@ -68,7 +68,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('usuarios/{id}/editar-dados', [UserController::class, 'editar'])->name('usuarios.editar');
     Route::resource('usuarios', UserController::class);
     Route::get('/meu-perfil', [UserController::class, 'perfil'])->name('perfil');
-    Route::get('/informacoes-login', [UserController::class, 'infoLogin'])->name('infoLogin');
     Route::resource('documentos', DocumentoController::class);
     Route::resource('requerimentos', RequerimentoController::class)->except('index');
     Route::get('requerimentos/{filtro}/listar', [RequerimentoController::class, 'index'])->name('requerimentos.index');

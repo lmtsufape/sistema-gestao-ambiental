@@ -193,7 +193,7 @@ class UserController extends Controller
         }
         $user->update();
 
-        return redirect(route('perfil'))->with(['success' => 'Dados salvos com sucesso!']);
+        return redirect(route('perfil'))->with(['success' => 'Login atualizado com sucesso!']);
     }
 
     /**
@@ -222,16 +222,6 @@ class UserController extends Controller
     public function perfil()
     {
         return view('user.perfil');
-    }
-
-    /**
-     * Retorna para a view de informações de login do usuário atual.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function infoLogin()
-    {
-        return view('user.login');
     }
 
     /**

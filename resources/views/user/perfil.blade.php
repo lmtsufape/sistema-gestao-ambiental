@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group" style="text-align: right;">
-                                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Alterar dados</button>
+                                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Atualizar dados</button>
                                     </div>
                                 </div>
                             </div>
@@ -122,12 +122,14 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
-                    @if(auth()->user()->requerente != null)
-                        <div class="col-md-12 form-group">
+                @if(auth()->user()->requerente != null)
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-row">
                             <div class="form-row">
-                                <div class="col-md-12">
-                                    <h4 class="subtitle-form">ENDEREÇO</h4>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <h4 class="subtitle-form">ENDEREÇO</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,8 +171,91 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
+                <div @can('isRequerente',  \App\Models\User::class) class="col-md-12" @else class="col-md-6" @endcan>
+                    <form id="form-alterar-email-senha" method="POST" action="{{route('usuarios.update', ['usuario' => auth()->user()->id])}}">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-row">
+                            <div class="col-md-11">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <h4 class="subtitle-form">INFORMAÇÕES DE LOGIN</h4>
+                                    </div>
+                                </div>
+                                @if(session('success'))
+                                    <div class="form-row">
+                                        <div class="col-md-12" style="margin-top: 5px;">
+                                            <div class="alert alert-success" role="alert" style="display: block;">
+                                                <p>{{session('success')}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                <br>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="e-mail">E-mail</label>
+                                        <input type="text" id="e-mail" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email', auth()->user()->email)}}">
+
+                                        @error('email')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password_atual">Senha atual</label>
+                                        <input type="password" id="password_atual" name="password_atual" class="form-control @error('password_atual') is-invalid @enderror" value="">
+
+                                        @error('password_atual')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password">Nova senha</label>
+                                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="">
+
+                                        @error('password')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password_confirmation">Confirmar senha</label>
+                                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" value="">
+
+                                        @error('password_confirmation')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group" style="text-align: right;">
+                                        <button class="btn btn-success btn-color-dafault" style="width: 50%;">Atualizar login</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <br>
+            <div class="row">
+
             </div>
             <br>
             @if(auth()->user()->requerente != null)
@@ -338,7 +423,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">Cidade</label>
+                                    <label for="complemento">Complemento</label>
                                     <textarea id="complemento" name="complemento" type="text" class="form-control @error('complemento') is-invalid @enderror">{{old('complemento', auth()->user()->requerente->endereco->complemento)}}</textarea>
 
                                     @error('complemento')
