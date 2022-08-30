@@ -324,7 +324,7 @@
                         <div class="container">
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="cep">CEP</label>
+                                    <label for="cep">CEP<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" name="cep" type="text" class="form-control cep @error('cep') is-invalid @enderror" value="{{old('cep', auth()->user()->requerente->endereco->cep)}}" onblur="pesquisacep(this.value);">
 
                                     @error('cep')
@@ -336,7 +336,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-8 form-group">
-                                    <label for="rua">Rua</label>
+                                    <label for="rua">Rua<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" name="rua" type="text" class="form-control @error('rua') is-invalid @enderror" value="{{old('rua', auth()->user()->requerente->endereco->rua)}}">
 
                                     @error('rua')
@@ -346,7 +346,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="número">Número</label>
+                                    <label for="número">Número<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="número" name="número" type="text" class="form-control @error('número') is-invalid @enderror" value="{{old('número', auth()->user()->requerente->endereco->numero)}}">
 
                                     @error('número')
@@ -358,7 +358,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="bairro">Bairro</label>
+                                    <label for="bairro">Bairro<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="bairro" name="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{old('bairro', auth()->user()->requerente->endereco->bairro)}}">
 
                                     @error('bairro')
@@ -370,7 +370,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="cidade">Cidade</label>
+                                    <label for="cidade">Cidade<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cidade" name="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" value="{{old('cidade', auth()->user()->requerente->endereco->cidade)}}">
 
                                     @error('cidade')
@@ -382,7 +382,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="uf">Estado</label>
+                                    <label for="uf">Estado<span style="color: red; font-weight: bold;">*</span></label>
                                     <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" required autocomplete="estado" name="uf">
                                         <option value="" selected disabled >-- Selecione o UF --</option>
                                         <option @if(old('uf', auth()->user()->requerente->endereco->estado) == 'AC') selected @endif value="AC">Acre</option>
