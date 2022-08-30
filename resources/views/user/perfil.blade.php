@@ -268,10 +268,10 @@
                         </div>
                     </div>
                     @foreach (auth()->user()->empresas as $empresa)
-                        <div class="col-md-6">
-                            <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <div class="form-row h-100">
                                 <div class="col-md-11">
-                                    <div class="card card-endereco-profile">
+                                    <div class="card card-endereco-profile h-100">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-9">
