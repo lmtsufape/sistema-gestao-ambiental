@@ -39,7 +39,7 @@
                                     @foreach ($solicitacoes as $i => $solicitacao)
                                         <tr>
                                             <th scope="row">{{$i+1}}</th>
-                                            <td>{{$solicitacao->created_at}}</td>
+                                            <td>{{$solicitacao->created_at->format('d/m/Y H:i')}}</td>
                                             <td>{{ucfirst(array_search($solicitacao->status, App\Models\SolicitacaoPoda::STATUS_ENUM))}}</td>
                                             <td>{{$solicitacao->endereco->enderecoSimplificado()}}</td>
                                             <td>

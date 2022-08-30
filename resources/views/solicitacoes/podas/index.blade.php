@@ -76,7 +76,12 @@
                                                     @can('isAnalistaPoda', \App\Models\User::class)
                                                         @if($filtro ==  "concluidas")
                                                             <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
-                                                                <img class="icon-licenciamento" src="{{asset('img/report-svgrepo-com.svg')}}" alt="Icone de relatório">
+                                                                <img class="icon-licenciamento"
+                                                            @if ($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
+                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                            @else
+                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
+                                                            @endif alt="Icone de relatório">
                                                             </a>
                                                         @endif
                                                     @endcan
