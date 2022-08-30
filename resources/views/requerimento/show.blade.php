@@ -44,6 +44,7 @@
                                     @if ($requerimento->documentos->count() > 0)
                                         <a href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                         <a class="btn" data-toggle="modal" data-target="#documentos-edit" ><img class="icon-licenciamento" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
+                                        <a class="btn" data-toggle="modal" data-target="#boleto-edit" ><img class="icon-licenciamento" src="{{asset('img/boleto.png')}}" alt="Alterar boleto" title="Alterar boleto"></a>
                                     @else
                                         <a class="btn" data-toggle="modal" data-target="#documentos"><img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                     @endif
@@ -318,22 +319,6 @@
                                     @endcan
                                 </div>
                             </div>
-
-                        {{-- <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Collapsible Group Item #3
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
-                                </div>
-                            </div>
-                        </div> --}}
-
                         </div>
                     </div>
                 </div>
@@ -499,7 +484,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault  submeterFormBotao" form="documentos-form">Enviar</button>
+                        <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="documentos-form">Enviar</button>
                     </div>
                 </div>
             </div>

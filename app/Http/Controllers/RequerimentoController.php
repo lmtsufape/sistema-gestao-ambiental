@@ -365,6 +365,7 @@ class RequerimentoController extends Controller
 
     public function updateValor(Requerimento $requerimento, Request $request)
     {
+        $this->authorize('isSecretarioOrProtocolista', auth()->user());
         $request->validate([
             'opcão_taxa_serviço' => 'required',
             'valor_da_taxa_de_serviço' => 'required_if:opcão_taxa_serviço,' . Requerimento::DEFINICAO_VALOR_ENUM['manual'],
