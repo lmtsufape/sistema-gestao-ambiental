@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Noticia extends Model
 {
@@ -135,5 +136,10 @@ class Noticia extends Model
                 Storage::delete('public/' . $this->imagem_principal);
             }
         }
+    }
+
+    public function textoSemFormatacao(int $limit = PHP_INT_MAX)
+    {
+        return Str::limit(strip_tags(html_entity_decode($this->texto, ENT_QUOTES, 'UTF-8')), $limit);
     }
 }

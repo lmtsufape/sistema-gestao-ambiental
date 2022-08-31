@@ -156,7 +156,7 @@
                                                     padding-top: 5;">
                                                         <a class="link-carousel" href="{{$noticia->link}}" target="_blank"><h5>{{$noticia->titulo}}</h5></a>
                                                         <p style="font-size: 12px; color: rgb(202, 202, 202);">
-                                                            {!! mb_strimwidth(strip_tags($noticia->texto), 0, 200, "...") !!}
+                                                            {{ $noticia->textoSemFormatacao(200)}}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -180,7 +180,7 @@
                                         {{$noticia->titulo}}
                                         <br>
                                         <span style="font-weight: bold; font-size: 14px;">
-                                            {!! mb_strimwidth(strip_tags($noticia->texto), 0, 100, "...") !!}
+                                            {{ $noticia->textoSemFormatacao(100) }}
                                         </span>
                                     </div>
                                 </a>
