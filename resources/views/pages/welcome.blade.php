@@ -5,17 +5,17 @@
         </div>
     </div>
     <div class="row align-content-stretch">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#emissaoLicencaModal">
                 <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                     EMISSÃO DE LICENÇAS
                                 </p>
                             </div>
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/emissao.svg')}}" width="35px;">
                             </div>
                         </div>
@@ -23,17 +23,17 @@
                 </div>
             </button>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#renovacaoLicencaModal">
                 <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                     RENOVAÇÃO DE LICENÇA
                                 </p>
                             </div>
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/renovacao.svg')}}" width="45px;">
                             </div>
                         </div>
@@ -41,17 +41,17 @@
                 </div>
             </button>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#registroDenunciaModal">
                 <div class="card card-home">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
-                                    REGISTRO DE <br> DENÚNCIAS
+                                    REGISTRO DE DENÚNCIAS
                                 </p>
                             </div>
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/denuncias.svg')}}" width="45px;">
                             </div>
                         </div>
@@ -59,17 +59,17 @@
                 </div>
             </button>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#consultaLicencaModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                     CONSULTAS DE LICENÇAS AMBIENTAIS
                                 </p>
                             </div>
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/consulta.svg')}}" width="45px;">
                             </div>
                         </div>
@@ -77,17 +77,17 @@
                 </div>
             </button>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#acompanhamentoSolicitacoesModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center">
-                        <div class="row ">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                     ACOMPANHAMENTO DE SOLICITAÇÕES
                                 </p>
                             </div>
-                            <div class="col-md-3" style="text-align: right;">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/acompanhar.svg')}}" width="45px;">
                             </div>
                         </div>
@@ -95,17 +95,17 @@
                 </div>
             </button>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesPodaModal">
                 <div class="card card-home">
-                    <div class="card-body align-items-center">
-                        <div class="row">
-                            <div class="col-md-9">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
                                     SOLICITAÇÃO DE PODA OU SUPRESSÃO DE ÁRVORES
                                 </p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
                                 <img src="{{asset('img/poda.svg')}}" width="45px;">
                             </div>
                         </div>
