@@ -69,16 +69,16 @@
                         Legenda
                     </div>
                     <div class="mt-2 borda-baixo"></div>
-                    @if($empresas->isEmpty())
-                        <ul class="list-group list-unstyled">
-                            <li>
-                                <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                    <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
-                                    <div style="font-size: 15px;" class="aling-middle mx-3">
-                                        Adicionar empresa/serviço
-                                    </div>
+                    <ul class="list-group list-unstyled">
+                        <li>
+                            <div title="Adicionar empresa/serviço" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" style="border-radius: 50%;" width="20" src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Adicionar empresa/serviço
                                 </div>
-                            </li>
+                            </div>
+                        </li>
+                        @if(! $empresas->isEmpty())
                             <li>
                                 <div title="Notificações" class="d-flex align-items-center my-1 pt-0 pb-1">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Notificações">
