@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
+    Route::put('/requerimentos/{requerimento}/update-valor', [RequerimentoController::class, 'updateValor'])->name('requerimento.valor.edit');
     Route::get('/requerimentos/{requerimento_id}/documentacao', [RequerimentoController::class, 'showRequerimentoDocumentacao'])->name('requerimento.documentacao');
     Route::post('/requerimentos/{requerimento_id}/enviar-documentos', [RequerimentoController::class, 'enviarDocumentos'])->name('requerimento.enviar.documentos');
     Route::post('/requerimentos/{requerimento_id}/analisar-documentos', [RequerimentoController::class, 'analisarDocumentos'])->name('requerimento.analisar.documentos');
@@ -76,7 +77,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('requerimentos/{id}/editar-empresa', [RequerimentoController::class, 'updateEmpresa'])->name('requerimentos.update.empresa');
     Route::get('requerimentos/{id}/setor/ajax-listar-cnaes', [SetorController::class, 'ajaxCnaes'])->name("ajax.listar.cnaes.editar");
     Route::post('requerimentos/{id}/atribuir-potencial-poluidor', [RequerimentoController::class, 'atribuirPotencialPoluidor'])->name('requerimentos.atribuir.potencial.poluidor');
-    Route::post('requerimentos/criar-novo-boleto', [RequerimentoController::class, 'criarNovoBoleto'])->name('requerimentos.criar.novo.boleto');
 
     Route::get('/visitas/baixar-relatorio', [VisitaController::class, 'gerarRelatorioVisitas'])->name('gerar.pdf.visitas');
     Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
