@@ -29,7 +29,6 @@
                     </div>
                 </div>
             @endif
-            <br>
             <div class="row">
                 <div class="col-md-6">
                     <form id="form-alterar-dados-basicos" method="POST" action="{{route('usuarios.dados')}}" enctype="multipart/form-data">
@@ -51,7 +50,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                <br>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="nome_de_exibição">Nome de exibição</label>
@@ -114,7 +112,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12 form-group" style="text-align: right;">
-                                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Alterar dados</button>
+                                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" style="width: 50%;" form="form-alterar-dados-basicos">Atualizar dados</button>
                                     </div>
                                 </div>
                             </div>
@@ -122,16 +120,17 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
-                    @if(auth()->user()->requerente != null)
-                        <div class="col-md-12 form-group">
+                @if(auth()->user()->requerente != null)
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-row">
                             <div class="form-row">
-                                <div class="col-md-12">
-                                    <h4 class="subtitle-form">ENDEREÇO</h4>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <h4 class="subtitle-form">ENDEREÇO</h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <br>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="card card-endereco-profile">
@@ -169,12 +168,89 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+                @endif
+                <div @can('isRequerente',  \App\Models\User::class) class="col-md-12 mt-2" @else class="col-md-6" @endcan>
+                    <form id="form-alterar-email-senha" method="POST" action="{{route('usuarios.update', ['usuario' => auth()->user()->id])}}">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-row">
+                            <div class="col-md-11">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <h4 class="subtitle-form">INFORMAÇÕES DE LOGIN</h4>
+                                    </div>
+                                </div>
+                                @if(session('success'))
+                                    <div class="form-row">
+                                        <div class="col-md-12" style="margin-top: 5px;">
+                                            <div class="alert alert-success" role="alert" style="display: block;">
+                                                <p>{{session('success')}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="e-mail">E-mail</label>
+                                        <input type="text" id="e-mail" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email', auth()->user()->email)}}">
+
+                                        @error('email')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password_atual">Senha atual</label>
+                                        <input type="password" id="password_atual" name="password_atual" class="form-control @error('password_atual') is-invalid @enderror" value="">
+
+                                        @error('password_atual')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password">Nova senha</label>
+                                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="">
+
+                                        @error('password')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="password_confirmation">Confirmar senha</label>
+                                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" value="">
+
+                                        @error('password_confirmation')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group" style="text-align: right;">
+                                        <button class="btn btn-success btn-color-dafault" style="width: 50%;">Atualizar login</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <br>
             @if(auth()->user()->requerente != null)
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-md-12 form-group">
                         <div class="form-row">
                             <div class="col-md-12">
@@ -183,10 +259,10 @@
                         </div>
                     </div>
                     @foreach (auth()->user()->empresas as $empresa)
-                        <div class="col-md-6">
-                            <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <div class="form-row h-100">
                                 <div class="col-md-11">
-                                    <div class="card card-endereco-profile">
+                                    <div class="card card-endereco-profile h-100">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-9">
@@ -239,7 +315,7 @@
                         <div class="container">
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="cep">CEP</label>
+                                    <label for="cep">CEP<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" name="cep" type="text" class="form-control cep @error('cep') is-invalid @enderror" value="{{old('cep', auth()->user()->requerente->endereco->cep)}}" onblur="pesquisacep(this.value);">
 
                                     @error('cep')
@@ -251,7 +327,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-8 form-group">
-                                    <label for="rua">Rua</label>
+                                    <label for="rua">Rua<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="rua" name="rua" type="text" class="form-control @error('rua') is-invalid @enderror" value="{{old('rua', auth()->user()->requerente->endereco->rua)}}">
 
                                     @error('rua')
@@ -261,7 +337,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="número">Número</label>
+                                    <label for="número">Número<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="número" name="número" type="text" class="form-control @error('número') is-invalid @enderror" value="{{old('número', auth()->user()->requerente->endereco->numero)}}">
 
                                     @error('número')
@@ -273,7 +349,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="bairro">Bairro</label>
+                                    <label for="bairro">Bairro<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="bairro" name="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" value="{{old('bairro', auth()->user()->requerente->endereco->bairro)}}">
 
                                     @error('bairro')
@@ -285,7 +361,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="cidade">Cidade</label>
+                                    <label for="cidade">Cidade<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cidade" name="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" value="{{old('cidade', auth()->user()->requerente->endereco->cidade)}}">
 
                                     @error('cidade')
@@ -297,7 +373,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="uf">Estado</label>
+                                    <label for="uf">Estado<span style="color: red; font-weight: bold;">*</span></label>
                                     <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" required autocomplete="estado" name="uf">
                                         <option value="" selected disabled >-- Selecione o UF --</option>
                                         <option @if(old('uf', auth()->user()->requerente->endereco->estado) == 'AC') selected @endif value="AC">Acre</option>
@@ -338,7 +414,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">Cidade</label>
+                                    <label for="complemento">Complemento</label>
                                     <textarea id="complemento" name="complemento" type="text" class="form-control @error('complemento') is-invalid @enderror">{{old('complemento', auth()->user()->requerente->endereco->complemento)}}</textarea>
 
                                     @error('complemento')

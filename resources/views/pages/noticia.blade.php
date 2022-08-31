@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-4" style="text-align: right">
                     @can('create', App\Models\Noticia::class)
-                        <a title="Criar notificação" href="{{route('noticias.create')}}">
+                        <a title="Criar notícia" href="{{route('noticias.create')}}">
                             <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de criar notícia">
                         </a>
                     @endcan
@@ -28,7 +28,7 @@
                     </div>
                 @endif
             </div>
-            @foreach ($noticias as $noticia)
+            @forelse ($noticias as $noticia)
                 <div class="row justify-content-center">
                     <div class="col-md-12">
                         <div class="card mb-3" style="max-width: 100%;">
@@ -59,7 +59,23 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card" style="width: 100%;">
+                            <div class="card-body">
+                                <div class="col-md-12 text-center" style="font-size: 18px;">
+                                    @can('isSecretario', app\Models\User::class)
+                                        {{__('Nenhuma notícia criada')}}
+                                    @else
+                                        {{__('Nenhuma notícia publicada')}}
+                                    @endcan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
     <div class="form-row justify-content-center">
