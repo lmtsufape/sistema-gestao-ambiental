@@ -57,9 +57,7 @@ class EnviarDocumentos extends Component
                     ]);
                 }
             })->validateOnly($propertyName, $this->regras);
-            if ($documento->caminho != null && Storage::exists($documento->caminho)) {
-                Storage::delete($documento->caminho);
-            }
+            delete_file($documento->caminho);
             $this->requerimento->documentos()->updateExistingPivot($id, [
                 'caminho' => $value->store("documentos/requerimentos/{$this->requerimento->id}"),
                 'status' => Checklist::STATUS_ENUM['enviado'],

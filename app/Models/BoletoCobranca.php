@@ -36,12 +36,7 @@ class BoletoCobranca extends Model
 
     public function salvarArquivo($string)
     {
-        if ($this->caminho_arquivo_remessa != null) {
-            if (Storage::disk()->exists('public/' . $this->caminho_arquivo_remessa)) {
-                Storage::delete('public/' . $this->caminho_arquivo_remessa);
-            }
-        }
-
+        delete_file($this->caminho_arquivo_remessa);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'incluir_boleto_remessa_' . $this->id . '.xml';
         $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
@@ -59,12 +54,7 @@ class BoletoCobranca extends Model
 
     public function salvarArquivoResposta($string)
     {
-        if ($this->resposta_incluir_boleto != null) {
-            if (Storage::disk()->exists('public/' . $this->resposta_incluir_boleto)) {
-                Storage::delete('public/' . $this->resposta_incluir_boleto);
-            }
-        }
-
+        delete_file($this->resposta_incluir_boleto);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_incluir_boleto_remessa_' . $this->id . '.xml';
         $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
@@ -73,12 +63,7 @@ class BoletoCobranca extends Model
 
     public function salvarArquivoRespostaAlterarBoleto($string)
     {
-        if ($this->resposta_alterar_boleto != null) {
-            if (Storage::disk()->exists('public/' . $this->resposta_alterar_boleto)) {
-                Storage::delete('public/' . $this->resposta_alterar_boleto);
-            }
-        }
-
+        delete_file($this->resposta_alterar_boleto);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_alterar_boleto_remessa_' . $this->id . '.xml';
         $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);

@@ -131,11 +131,7 @@ class Noticia extends Model
      */
     public function deletarImagem()
     {
-        if ($this->imagem_principal != null) {
-            if (Storage::disk()->exists('public/' . $this->imagem_principal)) {
-                Storage::delete('public/' . $this->imagem_principal);
-            }
-        }
+        delete_file($this->imagem_principal, 'public');
     }
 
     public function textoSemFormatacao(int $limit = PHP_INT_MAX)

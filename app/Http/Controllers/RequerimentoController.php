@@ -486,9 +486,7 @@ class RequerimentoController extends Controller
         foreach ($request->documentos_id as $documento_id) {
             $documento = $requerimento->documentos()->where('documento_id', $documento_id)->first()->pivot;
             if ($documento->status == Checklist::STATUS_ENUM['nao_enviado'] || $documento->status == Checklist::STATUS_ENUM['recusado']) {
-                if (Storage::exists($documento->caminho)) {
-                    Storage::delete($documento->caminho);
-                }
+                delete_file($documento->caminho);
                 $arquivo = $request->documentos[$id];
                 $documento->caminho = $arquivo->store("documentos/requerimentos/{$requerimento->id}");
                 $documento->comentario = null;

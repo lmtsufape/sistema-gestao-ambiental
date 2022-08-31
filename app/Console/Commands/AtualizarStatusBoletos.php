@@ -107,12 +107,7 @@ class AtualizarStatusBoletos extends Command
 
         curl_close($curl);
         $resultado = (new ConsultarBoletoRemessa())->xmlToArray($response);
-
-        if ($boleto->resposta_consultar_boleto != null) {
-            if (Storage::disk()->exists($this->resposta_consultar_boleto)) {
-                Storage::delete($this->resposta_consultar_boleto);
-            }
-        }
+        delete_file($boleto->resposta_consultar_boleto);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_consultar_boleto_remessa_' . $boleto->requerimento->id . '.xml';
 

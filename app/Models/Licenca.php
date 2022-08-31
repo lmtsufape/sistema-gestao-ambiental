@@ -53,11 +53,7 @@ class Licenca extends Model
 
     public function salvarLicenca($file, Requerimento $requerimento)
     {
-        if ($this->caminho != null) {
-            if (Storage::exists($this->caminho)) {
-                Storage::delete($this->caminho);
-            }
-        }
+        delete_file($this->caminho);
 
         return $file->store("requerimentos/{$requerimento->id}/licenca/{$this->id}");
     }

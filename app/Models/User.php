@@ -217,12 +217,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $file = $request->foto_de_perfil;
 
         if ($file != null) {
-            if ($this->profile_photo_path != null) {
-                if (Storage::disk()->exists('public/' . $this->profile_photo_path)) {
-                    Storage::delete('public/' . $this->profile_photo_path);
-                }
-            }
-
+            delete_file($this->profile_photo_path, 'public');
             $caminho = 'users/' . $this->id . '/';
             $nome = $file->getClientOriginalName();
             Storage::putFileAs('public/' . $caminho, $file, $nome);
