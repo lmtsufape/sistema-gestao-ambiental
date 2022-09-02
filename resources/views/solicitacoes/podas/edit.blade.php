@@ -94,22 +94,26 @@
                             </div>--}}
                             <div class="col-md-12 form-group">
                                 @empty($solicitacao->laudo)
-                                    <a href="{{route('podas.laudo', $solicitacao)}}">Laudo Técnico Ambiental</a>
+                                    <a class="align-middle" href="{{route('podas.laudo', $solicitacao)}}">Laudo Técnico Ambiental</a>
+                                    <img class="icon-licenciamento align-middle" width="20px;" src="{{asset('img/pendente.svg')}}"  alt="Icone de etapa pendente" title="Etapa pendente">
                                 @else
-                                    <a href="{{route('podas.laudos.show', $solicitacao->laudo)}}">Laudo Técnico Ambiental</a>
+                                    <a class="align-middle" href="{{route('podas.laudos.show', $solicitacao->laudo)}}">Laudo Técnico Ambiental</a>
+                                    <img class="icon-licenciamento align-middle" width="20px;" src="{{asset('img/concluido.svg')}}"  alt="Icone de etapa concluída" title="Etapa concluída">
                                 @endempty
                             </div>
                         </div>
                         @can('isSecretario', \App\Models\User::class)
                             @if(! $solicitacao->visita || ! $solicitacao->visita->relatorioAceito())
-                                <div class="form-row col-md-12">
-                                    <div class="col-md-6" >
-                                        <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
+                                @if($solicitacao->laudo)
+                                    <div class="form-row col-md-12">
+                                        <div class="col-md-6" >
+                                            <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
-                                    </div>
-                                </div>
+                                @endif
                             @endif
                         @endcan
                     </div>

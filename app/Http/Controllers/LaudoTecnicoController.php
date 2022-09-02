@@ -34,7 +34,7 @@ class LaudoTecnicoController extends Controller
             $foto_laudo->save();
         }
 
-        return view('solicitacoes.podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Laudo tecnico criado com sucesso');
+        return redirect()->route('podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Laudo tecnico criado com sucesso');
     }
 
     public function show(LaudoTecnico $laudo)

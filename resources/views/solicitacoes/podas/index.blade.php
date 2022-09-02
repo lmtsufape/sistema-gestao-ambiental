@@ -91,6 +91,9 @@
                                                             <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
                                                             data-toggle="modal" @if($solicitacao->visita) data-target="#modal-agendar-visita-editar" onclick="adicionarIdEditar({{$solicitacao->visita->id}})" @else data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})" @endif ><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endif
+                                                        @if($filtro == "pendentes")
+                                                            <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
+                                                        @endif
                                                         @if($filtro ==  "concluidas")
                                                             @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
                                                                 src="{{asset('img/Relatório Aprovado.svg')}}"

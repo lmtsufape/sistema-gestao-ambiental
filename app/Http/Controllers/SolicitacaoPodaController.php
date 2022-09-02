@@ -36,12 +36,15 @@ class SolicitacaoPodaController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
             $deferidas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
-                ->where('status', 2)
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
             switch ($filtro) {
                 case 'deferidas':
+                    $solicitacoes = $deferidas;
+                    break;
+                case 'pendentes':
+                    $filtro = 'deferidas';
                     $solicitacoes = $deferidas;
                     break;
                 case 'concluidas':
@@ -54,17 +57,17 @@ class SolicitacaoPodaController extends Controller
         } else {
             switch ($filtro) {
                 case 'pendentes':
-                    $solicitacoes = SolicitacaoPoda::where('status', '1')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', '1')->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'deferidas':
-                    $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
-                    $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->paginate(20);
+                    $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'indeferidas':
                     $solicitacoes = SolicitacaoPoda::where('status', '3')->paginate(20);
                     break;
                 case 'concluidas':
-                    $solicitacoes = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
             }
             $analistas = User::analistasPoda();
