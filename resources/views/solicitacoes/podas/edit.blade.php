@@ -190,10 +190,7 @@
     @if(count($errors) > 0)
         @push ('scripts')
             <script>
-                $(function() {
-                    jQuery.noConflict();
-                    $('#modalIndeferir').modal('show');
-                });
+                $('#modalIndeferir').modal('show');
             </script>
         @endpush
     @endif
