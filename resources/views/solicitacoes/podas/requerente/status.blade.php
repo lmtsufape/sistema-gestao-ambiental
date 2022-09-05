@@ -294,13 +294,16 @@
                                     </div>
                                     <div class="col-md-12">
                                         @switch($solicitacao->status)
-                                            @case(\App\Models\SolicitacaoMuda::STATUS_ENUM['registrada'])
+                                            @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['registrada'])
                                                 <h5>Solicitação em análise.</h5>
                                             @break
-                                            @case(\App\Models\SolicitacaoMuda::STATUS_ENUM['deferido'])
+                                            @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['encaminhada'])
+                                                <h5>Solicitação encaminhada</h5>
+                                            @break
+                                            @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['deferido'])
                                                 <h5>Solicitação deferida</h5>
                                             @break
-                                            @case(\App\Models\SolicitacaoMuda::STATUS_ENUM['indeferido'])
+                                            @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['indeferido'])
                                                 <h5>Solicitação indeferida</h5>
                                                 <p>Motivo: {{$solicitacao->motivo_indeferimento}}</p>
                                             @break
