@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SolicitacaoPodaAvaliarRequest;
 use App\Http\Requests\SolicitacaoPodaRequest;
 use App\Mail\SolicitacaoPodasCriada;
+use App\Mail\SolicitacaoPodasEncaminhada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\Relatorio;
@@ -212,6 +213,8 @@ class SolicitacaoPodaController extends Controller
         $solicitacao->analista_id = $request->analista;
         $solicitacao->status = SolicitacaoPoda::STATUS_ENUM['encaminhada'];
         $solicitacao->update();
+
+        Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasEncaminhada($solicitacao));
 
         return redirect()->back()->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
     }
