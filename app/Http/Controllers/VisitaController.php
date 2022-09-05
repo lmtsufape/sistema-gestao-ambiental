@@ -39,15 +39,16 @@ class VisitaController extends Controller
                                 ->where('cancelada', false);
                     })
                         ->orderBy('data_marcada', 'DESC')
+                        ->orderBy('created_at', 'DESC')
                         ->paginate(10);
                     break;
                 case 'denuncia':
                     $analistas = User::analistas();
-                    $visitas = Visita::where('denuncia_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::where('denuncia_id', '!=', null)->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
                     break;
                 case 'poda':
                     $analistas = User::analistasPoda();
-                    $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
                     break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
@@ -59,13 +60,14 @@ class VisitaController extends Controller
                     })
                         ->where('analista_id', auth()->user()->id)
                         ->orderBy('data_marcada', 'DESC')
+                        ->orderBy('created_at', 'DESC')
                         ->paginate(10);
                     break;
                 case 'denuncia':
-                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
                     break;
                 case 'poda':
-                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
                     break;
             }
         }
