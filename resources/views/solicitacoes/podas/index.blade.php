@@ -60,6 +60,7 @@
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Analista</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Data</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
+                                                <td>{{$solicitacao->created_at->format('d/m/Y H:i')}}</td>
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                     <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
@@ -86,13 +88,10 @@
                                                         @endif
                                                     @endcan
                                                     @can('isSecretario', \App\Models\User::class)
-                                                        @if($filtro != "indeferidas" && $filtro != "pendentes")
+                                                        @if($filtro != "indeferidas")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                             <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
                                                             data-toggle="modal" @if($solicitacao->visita) data-target="#modal-agendar-visita-editar" onclick="adicionarIdEditar({{$solicitacao->visita->id}})" @else data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})" @endif ><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
-                                                        @endif
-                                                        @if($filtro == "pendentes")
-                                                            <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                         @endif
                                                         @if($filtro ==  "concluidas")
                                                             @if($solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
