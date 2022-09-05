@@ -60,6 +60,7 @@
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Analista</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Data</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,7 @@
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">@isset($solicitacao->analista){{ $solicitacao->analista->name }}</td>@endisset
                                                 <td style="text-align: center">{{ $solicitacao->endereco->enderecoSimplificado() }}</td>
+                                                <td>{{$solicitacao->created_at->format('d/m/Y H:i')}}</td>
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                     <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
