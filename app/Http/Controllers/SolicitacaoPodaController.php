@@ -36,7 +36,7 @@ class SolicitacaoPodaController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
             $deferidas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
-                ->where('status', 2)->orWhere('status', 1)
+                ->whereIn('status', [1, 2])
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
