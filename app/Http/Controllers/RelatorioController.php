@@ -57,7 +57,7 @@ class RelatorioController extends Controller
 
         $filtro = auth()->user()->getUserType();
 
-        return redirect(route('visitas.index', $filtro))->with(['success' => 'Relátorio salvo com sucesso!']);
+        return redirect(route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Relátorio salvo com sucesso!']);
     }
 
     /**
@@ -109,7 +109,7 @@ class RelatorioController extends Controller
 
         $filtro = auth()->user()->getUserType();
 
-        return redirect(route('visitas.index', $filtro))->with(['success' => 'Relátorio atualizado com sucesso!']);
+        return redirect(route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Relátorio atualizado com sucesso!']);
     }
 
     /**

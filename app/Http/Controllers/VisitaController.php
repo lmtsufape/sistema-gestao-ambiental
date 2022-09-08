@@ -26,7 +26,7 @@ class VisitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($filtro)
+    public function index($filtro, $ordenacao, $ordem)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $analistas = collect();
@@ -38,17 +38,17 @@ class VisitaController extends Controller
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
                                 ->where('cancelada', false);
                     })
-                        ->orderBy('data_marcada', 'DESC')
+                        ->orderBy($ordenacao, $ordem)
                         ->orderBy('created_at', 'DESC')
                         ->paginate(10);
                     break;
                 case 'denuncia':
                     $analistas = User::analistas();
-                    $visitas = Visita::where('denuncia_id', '!=', null)->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where('denuncia_id', '!=', null)->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
                     break;
                 case 'poda':
                     $analistas = User::analistasPoda();
-                    $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
                     break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
@@ -59,20 +59,20 @@ class VisitaController extends Controller
                                 ->where('cancelada', false);
                     })
                         ->where('analista_id', auth()->user()->id)
-                        ->orderBy('data_marcada', 'DESC')
+                        ->orderBy($ordenacao, $ordem)
                         ->orderBy('created_at', 'DESC')
                         ->paginate(10);
                     break;
                 case 'denuncia':
-                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
                     break;
                 case 'poda':
-                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy('data_marcada', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
                     break;
             }
         }
 
-        return view('visita.index', compact('visitas', 'filtro', 'analistas'));
+        return view('visita.index', compact('visitas', 'filtro', 'analistas', 'ordenacao', 'ordem'));
     }
 
     /**
@@ -118,7 +118,7 @@ class VisitaController extends Controller
         $data_marcada = $request['data_marcada'];
         Notification::send($user, new VisitaMarcadaRequerimento($requerimento, $data_marcada));
 
-        return redirect(route('visitas.index', 'requerimento'))->with(['success' => 'Visita programada com sucesso!']);
+        return redirect(route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Visita programada com sucesso!']);
     }
 
     /**
@@ -200,7 +200,7 @@ class VisitaController extends Controller
         $requerimento = Requerimento::find($visita->requerimento_id);
         $requerimento->update(['status' => Requerimento::STATUS_ENUM['visita_marcada']]);
 
-        return redirect(route('visitas.index', 'requerimento'))->with(['success' => 'Visita editada com sucesso!']);
+        return redirect(route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Visita editada com sucesso!']);
     }
 
     /**
@@ -236,7 +236,7 @@ class VisitaController extends Controller
 
         $visita->delete();
 
-        return redirect(route('visitas.index', 'requerimento'))->with(['success' => 'Visita deletada com sucesso!']);
+        return redirect(route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Visita deletada com sucesso!']);
     }
 
     /**
@@ -289,7 +289,7 @@ class VisitaController extends Controller
             return redirect()->back()->with(['success' => 'Visita editada com sucesso!']);
         }
 
-        return redirect(route('visitas.index', $request->filtro))->with(['success' => 'Visita editada com sucesso!']);
+        return redirect(route('visitas.index', ['filtro' => $request->filtro, 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Visita editada com sucesso!']);
     }
 
     /**

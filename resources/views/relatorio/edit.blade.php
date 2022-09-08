@@ -12,7 +12,7 @@
                         @elseif ($relatorio->visita->solicitacaoPoda != null)
                             <h4 class="card-title">Editar relátorio da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}</h4>
                         @endif
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Programação</a> > Visitas > Editar relátorio</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Programação</a> > Visitas > Editar relátorio</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">

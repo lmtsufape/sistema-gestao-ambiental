@@ -181,7 +181,7 @@
                                     </a>
                                 </li>
                                 <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
-                                    <a href="{{route('visitas.index', 'requerimento')}}">
+                                    <a href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">
                                         Programação
                                     </a>
                                 </li>
@@ -229,13 +229,13 @@
                             @can('isAnalistaProcessoOrPoda', \App\Models\User::class)
                                 @can('isAnalistaProcesso', \App\Models\User::class)
                                     <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
-                                        <a href="{{route('visitas.index', 'requerimento')}}">
+                                        <a href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">
                                             Programação
                                         </a>
                                     </li>
                                 @else
                                     <li class="mb-2 item-align @if(request()->routeIs('visitas*') || request()->routeIs('relatorios*')) active @endif">
-                                        <a href="{{route('visitas.index', 'poda')}}">
+                                        <a href="{{route('visitas.index', ['filtro' => 'poda', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">
                                             Programação
                                         </a>
                                     </li>
