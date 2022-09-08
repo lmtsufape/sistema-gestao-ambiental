@@ -37,18 +37,18 @@ class VisitaController extends Controller
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
                                 ->where('cancelada', false);
-                    })
-                        ->orderBy($ordenacao, $ordem)
-                        ->orderBy('created_at', 'DESC')
-                        ->paginate(10);
+                    });
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'denuncia':
                     $analistas = User::analistas();
-                    $visitas = Visita::where('denuncia_id', '!=', null)->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where('denuncia_id', '!=', null);
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'poda':
                     $analistas = User::analistasPoda();
-                    $visitas = Visita::where('solicitacao_poda_id', '!=', null)->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where('solicitacao_poda_id', '!=', null);
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
@@ -57,22 +57,70 @@ class VisitaController extends Controller
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
                                 ->where('cancelada', false);
-                    })
-                        ->where('analista_id', auth()->user()->id)
-                        ->orderBy($ordenacao, $ordem)
-                        ->orderBy('created_at', 'DESC')
-                        ->paginate(10);
+                    })->where('analista_id', auth()->user()->id);
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'denuncia':
-                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['denuncia_id', '!=', null], ['analista_id', auth()->user()->id]]);
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'poda':
-                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]])->orderBy($ordenacao, $ordem)->orderBy('created_at', 'DESC')->paginate(10);
+                    $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]]);
+                    $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
             }
         }
 
         return view('visita.index', compact('visitas', 'filtro', 'analistas', 'ordenacao', 'ordem'));
+    }
+
+    private function ordenar($qry,$filtro, $ordenacao, $ordem)
+    {
+
+        switch ($ordenacao) {
+            case 'created_at':
+                $qry = $qry->orderBy($ordenacao, $ordem);
+                break;
+            case 'data_marcada':
+                $qry = $qry->orderBy($ordenacao, $ordem);
+                break;
+            case 'data_realizada':
+                $qry = $qry->orderBy($ordenacao, $ordem);
+                break;
+            case 'empresa':
+                switch ($filtro) {
+                    case 'requerimento':
+                        $qry = $qry->whereHas('requerimento', function (Builder $qry) use ($ordem) {
+                            $qry->whereHas('empresa',  function (Builder $qry) use ($ordem) {
+                                $qry->orderBy('nome', $ordem);
+                            });
+                        });
+                        break;
+                    case 'denuncia':
+                        $qry = $qry->whereHas('denuncia', function (Builder $qry) use ($ordem) {
+                            $qry->whereHas('empresa',  function (Builder $qry) use ($ordem) {
+                                $qry->orderBy('nome', $ordem);
+                            })->orWhere('empresa_nao_cadastrada', '!=', null)->orderBy('empresa_nao_cadastrada', $ordem);
+                        });
+                        break;
+                }
+                break;
+            case 'analista':
+                $qry = $qry->whereHas('analista', function (Builder $qry) use ($ordem) {
+                    $qry->orderBy('name', $ordem);
+                });
+                break;
+            case 'requerente':
+                $qry = $qry->whereHas('solicitacaoPoda', function (Builder $qry) use ($ordem) {
+                    $qry->whereHas('requerente',  function (Builder $qry) use ($ordem) {
+                        $qry->whereHas('user',  function (Builder $qry) use ($ordem) {
+                            $qry->orderBy('name', $ordem);
+                        });
+                    });
+                });
+                break;
+        }
+        return $qry;
     }
 
     /**

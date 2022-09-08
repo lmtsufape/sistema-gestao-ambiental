@@ -20,6 +20,18 @@
                                         @case('created_at')
                                             Data de requerimento
                                             @break
+                                        @case('data_realizada')
+                                            Data realizada
+                                            @break
+                                        @case('empresa')
+                                            Empresa
+                                            @break
+                                        @case('requerente')
+                                            Requerente
+                                            @break
+                                        @case('analista')
+                                            Analista
+                                            @break
                                         @default
                                             Data de requerimento
                                             @break
@@ -32,19 +44,52 @@
                                 </button>
                                 <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
                                     <div class="form-check link-ordenacao">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @if($ordenacao == 'data_marcada') checked @endif>
-                                        <label class="form-check-label" for="flexRadioDefault2">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @if($ordenacao == 'data_marcada') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault1">
                                             Data marcada
                                         </label>
                                         <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => $ordem])}}"></a>
                                     </div>
                                     <div class="form-check link-ordenacao">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @if($ordenacao == 'created_at') checked @endif>
-                                        <label class="form-check-label" for="flexRadioDefault1">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @if($ordenacao == 'created_at') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault2">
                                             Data de requerimento
                                         </label>
                                         <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'created_at', 'ordem' => $ordem])}}"></a>
                                     </div>
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @if($ordenacao == 'data_realizada') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault3">
+                                            Data realizada
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'data_realizada', 'ordem' => $ordem])}}"></a>
+                                    </div>
+                                    @if($filtro == 'requerimento' || $filtro == 'denuncia')
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @if($ordenacao == 'empresa') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Empresa
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'empresa', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @else
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @if($ordenacao == 'requerente') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Requerente
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'requerente', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @endif
+                                    @can('isSecretario', \App\Models\User::class)
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" @if($ordenacao == 'analista') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault5">
+                                                Analista
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'analista', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @endcan
                                     <div class="dropdown-divider"></div>
                                     <div class="form-check link-ordenacao">
                                         <input class="form-check-input" type="checkbox" name="ordem" id="flexCheckDefault" @if($ordem == 'DESC') checked @endif>
