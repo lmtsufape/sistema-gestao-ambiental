@@ -120,7 +120,7 @@ class VisitaController extends Controller
                 });
                 break;
         }
-        return $qry;
+        return $qry->orderBy('created_at', 'DESC');
     }
 
     /**
