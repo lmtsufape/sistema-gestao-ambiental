@@ -6,7 +6,7 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         <h4 class="card-title">Criar uma visita</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', 'requerimento')}}">Visitas</a> > Criar visita</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Visitas</a> > Criar visita</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">

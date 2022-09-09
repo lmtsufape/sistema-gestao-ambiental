@@ -2,7 +2,7 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="form-row">
                     <div class="col-md-8">
                         @can('isSecretario', \App\Models\User::class)
@@ -10,6 +10,104 @@
                         @else
                             <h4 class="card-title">Visitas programadas para você</h4>
                         @endcan
+                        <div class="d-flex align-items-center">
+                            <div class="ps-1 mt-0 pt-0" style="font-size: 14px; color: black;">
+                                <span style="font-weight: bolder;">Ordenação:
+                                    @switch($ordenacao)
+                                        @case('data_marcada')
+                                            Data marcada
+                                            @break
+                                        @case('created_at')
+                                            Data de requerimento
+                                            @break
+                                        @case('data_realizada')
+                                            Data realizada
+                                            @break
+                                        @case('empresa')
+                                            Empresa
+                                            @break
+                                        @case('requerente')
+                                            Requerente
+                                            @break
+                                        @case('analista')
+                                            Analista
+                                            @break
+                                        @default
+                                            Data de requerimento
+                                            @break
+                                    @endswitch
+                                </span>
+                            </div>
+                            <div class="dropdown">
+                                <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img width="35" style="padding-left: 5px; border-radius: 10px" src="{{asset('img/ordenacao.svg')}}" alt="Icone de ordenação de candidatos">
+                                </button>
+                                <div class="dropdown-menu px-2" aria-labelledby="dropdownMenuButton">
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @if($ordenacao == 'data_marcada') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Data marcada
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => $ordem])}}"></a>
+                                    </div>
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @if($ordenacao == 'created_at') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Data de requerimento
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'created_at', 'ordem' => $ordem])}}"></a>
+                                    </div>
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @if($ordenacao == 'data_realizada') checked @endif>
+                                        <label class="form-check-label" for="flexRadioDefault3">
+                                            Data realizada
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'data_realizada', 'ordem' => $ordem])}}"></a>
+                                    </div>
+                                    @if($filtro == 'requerimento' || $filtro == 'denuncia')
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @if($ordenacao == 'empresa') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Empresa
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'empresa', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @else
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @if($ordenacao == 'requerente') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Requerente
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'requerente', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @endif
+                                    @can('isSecretario', \App\Models\User::class)
+                                        <div class="form-check link-ordenacao">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" @if($ordenacao == 'analista') checked @endif>
+                                            <label class="form-check-label" for="flexRadioDefault5">
+                                                Analista
+                                            </label>
+                                            <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'analista', 'ordem' => $ordem])}}"></a>
+                                        </div>
+                                    @endcan
+                                    <div class="dropdown-divider"></div>
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="checkbox" name="ordem" id="flexCheckDefault" @if($ordem == 'DESC') checked @endif>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Decrescente
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => $ordenacao, 'ordem' => 'DESC'])}}"></a>
+                                    </div>
+                                    <div class="form-check link-ordenacao">
+                                        <input class="form-check-input" type="checkbox" name="ordem" id="flexCheckDefault2" @if($ordem == 'ASC') checked @endif>
+                                        <label class="form-check-label" for="flexCheckDefault2">
+                                            Crescente
+                                        </label>
+                                        <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => $ordenacao, 'ordem' => 'ASC'])}}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-4" style="text-align: right;">
@@ -23,21 +121,25 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="col-md-9">
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
                     @can('isSecretarioOrProcesso', \App\Models\User::class)
                         <li class="nav-item">
                             <a class="nav-link @if($filtro == 'requerimento') active @endif" id="visitas-atuais-tab" role="tab" type="button"
-                                @if($filtro == 'requerimento') aria-selected="true" @endif href="{{route('visitas.index', 'requerimento')}}">Requerimentos</a>
+                                @if($filtro == 'requerimento') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Requerimentos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if($filtro == 'denuncia') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
-                                @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', 'denuncia')}}">Denúncias</a>
+                                @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'denuncia', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Denúncias</a>
                         </li>
                     @endcan
                     @can('isAnalistaPodaOrSecretario', \App\Models\User::class)
                         <li class="nav-item">
                             <a class="nav-link @if($filtro == 'poda') active @endif" id="visitas-cancelados-tab" role="tab" type="button"
-                                @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', 'poda')}}">Poda/Supressão</a>
+                                @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'poda', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Poda/Supressão</a>
                         </li>
                     @endcan
                 </ul>
@@ -191,7 +293,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
@@ -585,6 +687,10 @@
                     }
                 });
             }
+
+            $('.link-ordenacao').click(function() {
+                window.location = this.children[2].href;
+            });
         </script>
     @endpush
 </x-app-layout>
