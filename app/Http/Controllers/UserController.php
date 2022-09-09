@@ -117,7 +117,7 @@ class UserController extends Controller
         ]);
 
         if ($input['email'] != $usuario->email) {
-            $userCheckEmail = User::where('email', $input['email'])->first();
+            $userCheckEmail = User::where('email', 'ilike', $input['email'])->first();
             if ($userCheckEmail != null) {
                 return redirect()->back()->withErrors(['email' => 'Esse email já está sendo utilizado.'])->withInput($validated);
             }
@@ -164,7 +164,7 @@ class UserController extends Controller
         ]);
 
         if ($input['email'] != $user->email) {
-            $userCheckEmail = User::where('email', $input['email'])->first();
+            $userCheckEmail = User::where('email', 'ilike', $input['email'])->first();
             if ($userCheckEmail != null) {
                 return redirect()->back()->withErrors(['email' => 'Esse email já está sendo utilizado.'])->withInput($validated);
             }

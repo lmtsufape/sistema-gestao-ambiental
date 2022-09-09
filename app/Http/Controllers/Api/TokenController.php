@@ -37,7 +37,7 @@ class TokenController extends Controller
             'device_name' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->where('role', User::ROLE_ENUM['analista'])->first();
+        $user = User::where('email', 'ilike', $request->email)->where('role', User::ROLE_ENUM['analista'])->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([

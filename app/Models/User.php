@@ -112,6 +112,11 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
     public function visitas()
     {
         return $this->hasMany(Visita::class, 'analista_id');
