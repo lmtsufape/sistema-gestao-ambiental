@@ -681,15 +681,13 @@
                                     </div>
                                 </div>
                                 <div class="row mt-4">
-                                    <div class="col-md-6">
-                                        @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                            <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-6" style="text-align: right">
+                                    <div class="col-md-12" style="text-align: right">
                                         <div class="btn-group align-items-center">
+                                            @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="30px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
+                                            @endif
                                             @if(!$requerimento->cancelado() && $requerimento->visitas->count() > 0)
-                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer;;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
+                                                <a  href="{{route('requerimento.visitas', ['id' => $requerimento])}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                             @endif
                                             @if ($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                                 @if ($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['documentos_requeridos'])
