@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Denuncia;
+use App\Models\Empresa;
 use App\Models\FotoVisita;
 use App\Models\Requerimento;
 use App\Models\SolicitacaoPoda;
@@ -15,6 +17,7 @@ use App\Notifications\VisitaMarcadaPoda;
 use App\Notifications\VisitaMarcadaRequerimento;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
@@ -90,34 +93,37 @@ class VisitaController extends Controller
             case 'empresa':
                 switch ($filtro) {
                     case 'requerimento':
-                        $qry = $qry->whereHas('requerimento', function (Builder $qry) use ($ordem) {
-                            $qry->whereHas('empresa',  function (Builder $qry) use ($ordem) {
-                                $qry->orderBy('nome', $ordem);
-                            });
-                        });
+                        $qry->orderBy(
+                            Empresa::join('requerimentos', 'empresas.id', 'requerimentos.empresa_id')
+                                ->whereColumn('visitas.requerimento_id', 'requerimentos.id')
+                                ->select('empresas.nome'),
+                            $ordem
+                        );
                         break;
                     case 'denuncia':
-                        $qry = $qry->whereHas('denuncia', function (Builder $qry) use ($ordem) {
-                            $qry->whereHas('empresa',  function (Builder $qry) use ($ordem) {
-                                $qry->orderBy('nome', $ordem);
-                            })->orWhere('empresa_nao_cadastrada', '!=', null)->orderBy('empresa_nao_cadastrada', $ordem);
-                        });
+                        $qry->orderBy(
+                            Denuncia::leftJoin('empresas', 'empresas.id', 'denuncias.empresa_id')
+                                ->whereColumn('visitas.denuncia_id', 'denuncias.id')
+                                ->select(DB::raw("CASE WHEN denuncias.empresa_id IS NULL THEN denuncias.empresa_nao_cadastrada ELSE empresas.nome END AS nome")),
+                            $ordem
+                        );
                         break;
                 }
                 break;
             case 'analista':
-                $qry = $qry->whereHas('analista', function (Builder $qry) use ($ordem) {
-                    $qry->orderBy('name', $ordem);
-                });
+                $qry->orderBy(
+                    User::select('name')->whereColumn('users.id', 'visitas.analista_id'),
+                    $ordem
+                );
                 break;
             case 'requerente':
-                $qry = $qry->whereHas('solicitacaoPoda', function (Builder $qry) use ($ordem) {
-                    $qry->whereHas('requerente',  function (Builder $qry) use ($ordem) {
-                        $qry->whereHas('user',  function (Builder $qry) use ($ordem) {
-                            $qry->orderBy('name', $ordem);
-                        });
-                    });
-                });
+                $qry->orderBy(
+                    User::join('requerentes', 'users.id', 'requerentes.user_id')
+                        ->join('solicitacoes_podas', 'requerentes.id', 'solicitacoes_podas.requerente_id')
+                        ->whereColumn('solicitacoes_podas.id', 'visitas.solicitacao_poda_id')
+                        ->select('users.name'),
+                    $ordem
+                );
                 break;
         }
         return $qry->orderBy('created_at', 'DESC');
