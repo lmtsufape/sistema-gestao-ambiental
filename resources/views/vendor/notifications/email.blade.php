@@ -44,9 +44,8 @@
 {{ $salutation }}
 @else
 @lang('Regards'),<br>
-{{ config('app.name') }}<br>
-Laboratório Multidisciplinar de Tecnologias Sociais<br>
-Universidade Federal do Agreste de Pernambuco
+Secretaria Municipal de Meio Ambiente
+Prefeitura Municipal de Garanhuns - PE
 @endif
 
 {{-- Subcopy --}}

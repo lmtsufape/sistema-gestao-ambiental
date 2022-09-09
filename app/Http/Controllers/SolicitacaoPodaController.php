@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SolicitacaoPodaAvaliarRequest;
 use App\Http\Requests\SolicitacaoPodaRequest;
 use App\Mail\SolicitacaoPodasCriada;
+use App\Mail\SolicitacaoPodasEncaminhada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\Relatorio;
@@ -36,6 +37,7 @@ class SolicitacaoPodaController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
             $deferidas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
+                ->whereIn('status', [1, 2, 4])
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
@@ -57,14 +59,14 @@ class SolicitacaoPodaController extends Controller
         } else {
             switch ($filtro) {
                 case 'pendentes':
-                    $solicitacoes = SolicitacaoPoda::where('status', '1')->orderBy('created_at', 'DESC')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::whereIn('status', [1, 4])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'deferidas':
                     $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
                     $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'indeferidas':
-                    $solicitacoes = SolicitacaoPoda::where('status', '3')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', '3')->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'concluidas':
                     $solicitacoes = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
@@ -209,7 +211,10 @@ class SolicitacaoPodaController extends Controller
 
         $solicitacao = SolicitacaoPoda::find($request->solicitacao_id_analista);
         $solicitacao->analista_id = $request->analista;
+        $solicitacao->status = SolicitacaoPoda::STATUS_ENUM['encaminhada'];
         $solicitacao->update();
+
+        Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasEncaminhada($solicitacao));
 
         return redirect()->back()->with(['success' => 'Solicitação atribuida com sucesso ao analista.']);
     }

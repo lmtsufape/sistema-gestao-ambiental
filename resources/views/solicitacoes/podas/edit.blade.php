@@ -103,17 +103,15 @@
                             </div>
                         </div>
                         @can('isSecretario', \App\Models\User::class)
-                            @if(! $solicitacao->visita || ! $solicitacao->visita->relatorioAceito())
-                                @if($solicitacao->laudo)
-                                    <div class="form-row col-md-12">
-                                        <div class="col-md-6" >
-                                            <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
-                                        </div>
+                            @if($solicitacao->laudo)
+                                <div class="form-row col-md-12">
+                                    <div class="col-md-6" >
+                                        <button type="button" class="btn btn-secondary" style="width: 100%" data-toggle="modal" data-target="#modalIndeferir">Indeferir</button>
                                     </div>
-                                @endif
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%" data-toggle="modal" data-target="#modalDeferir">Deferir</button>
+                                    </div>
+                                </div>
                             @endif
                         @endcan
                     </div>
@@ -190,10 +188,7 @@
     @if(count($errors) > 0)
         @push ('scripts')
             <script>
-                $(function() {
-                    jQuery.noConflict();
-                    $('#modalIndeferir').modal('show');
-                });
+                $('#modalIndeferir').modal('show');
             </script>
         @endpush
     @endif
