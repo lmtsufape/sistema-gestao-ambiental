@@ -1,41 +1,7 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-	<title>sort-switch-svgrepo-com-svg</title>
-	<style>
-		.s0 { fill: #00883d } 
-	</style>
-	<g id="Layer">
-		<g id="Layer">
-			<path id="Layer" fill-rule="evenodd" class="s0" d="m512 0v512h-512v-512zm-219.6 347.6c-8.3-8.4-21.8-8.4-30.2 0l-48.9 48.9v-183.2c0-11.7-9.5-21.3-21.3-21.3-11.8 0-21.3 9.6-21.3 21.3v183.2l-49-48.9c-8.3-8.4-21.8-8.4-30.1 0-8.4 8.3-8.4 21.8 0 30.1l85.3 85.4c2 1.9 4.3 3.5 7 4.6 2.6 1.1 5.3 1.6 8.1 1.6 2.8 0 5.5-0.5 8.1-1.6 2.7-1.1 5-2.7 7-4.6l85.3-85.4c8.4-8.3 8.4-21.8 0-30.1zm128-213.3l-85.3-85.4c-2-1.9-4.3-3.5-7-4.6-5.2-2.1-11-2.1-16.2 0-2.7 1.1-5 2.7-7 4.6l-85.3 85.4c-8.4 8.3-8.4 21.8 0 30.1 4.1 4.2 9.6 6.3 15.1 6.3 5.4 0 10.9-2.1 15.1-6.3l48.9-48.9v183.2c0 11.7 9.5 21.3 21.3 21.3 11.8 0 21.3-9.6 21.3-21.3v-183.2l48.9 48.9c4.2 4.2 9.7 6.3 15.1 6.3 5.5 0 11-2.1 15.1-6.3 8.4-8.3 8.4-21.8 0-30.1z"/>
-		</g>
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
-	<g id="Layer">
-	</g>
+<svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17.5" cy="17.5" r="17.5" fill="#00883D"/>
+<path d="M18.2045 12.1023L13.1023 7L8 12.1023" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.0975 21.7398V7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27.8421 23.4406L22.7398 28.5428L17.6376 23.4406" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.7351 13.803V28.5429" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
