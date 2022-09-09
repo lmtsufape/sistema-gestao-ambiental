@@ -490,14 +490,12 @@ label {
 
 #selecionar {
     background-color: rgba(231, 231, 231, 0.856);
-    width: 100px;
     height: 30px;
-    position: absolute;
-    bottom: 0px;
-    left: 25px;
+    position: relative;
+    bottom: 25px;
+    left: 0px;
     text-align: center;
     cursor: pointer;
-    border-radius: 0px 0px 50% 50%;
 }
 
 .title-profile {
