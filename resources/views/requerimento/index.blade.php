@@ -723,7 +723,7 @@
                         {{$requerimentos->links()}}
                     </div>
                 </div>
-                <canvas id="myChart"></canvas>
+                {{--<canvas id="myChart"></canvas>--}}
             </div>
             <div class="col-md-3">
 
@@ -1182,46 +1182,46 @@
                     }
                 });
             }
-            Chart.register(ChartDataLabels);
-            const dados = @json($data);
+            // Chart.register(ChartDataLabels);
+            //const dados = @ json($data);
 
-            const data = {
-                labels: Object.keys(dados),
-                datasets: [{
-                    data: Object.values(dados),
-                    backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
-                    hoverOffset: 0,
-                }]
-            };
-            const options = {
-                responsive: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Requerimentos por status',
-                    },
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: 'black',
-                            pointStyle: 'rectRounded',
-                            usePointStyle: true,
-                        }
-                    },
-                    datalabels: {
-                        color: 'white'
-                    }
-                }
-            };
-            const config = {
-                type: 'pie',
-                data: data,
-                options: options,
-            };
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
+            // const data = {
+            //     labels: Object.keys(dados),
+            //     datasets: [{
+            //         data: Object.values(dados),
+            //         backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+            //         hoverOffset: 0,
+            //     }]
+            // };
+            // const options = {
+            //     responsive: false,
+            //     plugins: {
+            //         title: {
+            //             display: true,
+            //             text: 'Requerimentos por status',
+            //         },
+            //         legend: {
+            //             display: true,
+            //             labels: {
+            //                 color: 'black',
+            //                 pointStyle: 'rectRounded',
+            //                 usePointStyle: true,
+            //             }
+            //         },
+            //         datalabels: {
+            //             color: 'white'
+            //         }
+            //     }
+            // };
+            // const config = {
+            //     type: 'pie',
+            //     data: data,
+            //     options: options,
+            // };
+            // const myChart = new Chart(
+            //     document.getElementById('myChart'),
+            //     config
+            // );
         </script>
     @endpush
 @endsection
