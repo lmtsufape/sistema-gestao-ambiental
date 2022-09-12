@@ -3,29 +3,25 @@
     <div class="container container-profile" style="padding-top: 5rem; padding-bottom: 8rem;">
         <div class="container">
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                <div class="row">
-                    <div class="col-md-2 form-group justify-content-center">
-                        <img id="photo"src="{{auth()->user()->profile_photo_path != null ? asset('storage/'.auth()->user()->profile_photo_path) : asset('img/user_img_perfil.png')}}" alt="Imagem de perfil">
+                <div class="d-flex mb-3">
+                    <div id="photo" class="overflow-hidden">
+                        <img src="{{auth()->user()->profile_photo_path != null ? asset('storage/'.auth()->user()->profile_photo_path) : asset('img/user_img_perfil.png')}}" alt="Imagem de perfil">
                         <div id="selecionar" onclick="editarFoto()">
                             Editar
                         </div>
+                    </div>
+                    <div class="d-flex flex-col ml-5">
                         <div class="form-photo-profile" style="display: none;">
                             <input id="photo_input" type="file" name="foto_de_perfil" form="form-alterar-dados-basicos">
                         </div>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row" style="margin-top: 10px;">
-                            <label class="title-profile">{{auth()->user()->name}}</label>
-                        </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <label class="subtitle-profile">Usuário</label>
+                        <label class="title-profile" style="margin-top: 10px;">{{auth()->user()->name}}</label>
+                        <label class="subtitle-profile" style="margin-bottom: 10px;">Usuário</label>
 
-                            @error('foto_de_perfil')
-                                <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
+                        @error('foto_de_perfil')
+                            <div id="validationServer03Feedback" class="invalid-feedback" style="display: block;">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
             @endif

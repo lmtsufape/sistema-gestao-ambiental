@@ -96,7 +96,7 @@ class VisitaController extends Controller
                         $qry->orderBy(
                             Empresa::join('requerimentos', 'empresas.id', 'requerimentos.empresa_id')
                                 ->whereColumn('visitas.requerimento_id', 'requerimentos.id')
-                                ->select('empresa.nome'),
+                                ->select('empresas.nome'),
                             $ordem
                         );
                         break;

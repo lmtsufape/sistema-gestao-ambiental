@@ -478,6 +478,7 @@ label {
     height: 120px;
     border-radius: 50%;
     padding: 3px;
+    position: relative;
 }
 
 .photo-perfil {
@@ -490,14 +491,12 @@ label {
 
 #selecionar {
     background-color: rgba(231, 231, 231, 0.856);
-    width: 100px;
     height: 30px;
+    width: 100%;
     position: absolute;
     bottom: 0px;
-    left: 25px;
     text-align: center;
     cursor: pointer;
-    border-radius: 0px 0px 50% 50%;
 }
 
 .title-profile {
@@ -1085,7 +1084,7 @@ a.article:hover {
         border-right: 1px white solid;
     }
 }
-@media (max-width: 650px) {
+@media (max-width: 900px) {
     #conteudo .container-fluid{
         padding-left: 1rem;
         padding-right: 1rem;

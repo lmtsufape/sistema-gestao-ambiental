@@ -128,8 +128,8 @@
         </nav>
         <div class="mb-4" id="conteudo">
             <div class="container-fluid" style="padding-left: 20px; padding-right: 20px">
-                <div class="row justify-content-between">
-                    <div class="col-md-2" style="padding-top: 3rem; padding-right: 0px; clip-path: inset(0px -12px 0px 0px); max-width: fit-content; padding-left: 25px;">
+                <div class="d-flex">
+                    <div style="padding-top: 3rem; padding-right: 0px; clip-path: inset(0px -12px 0px 0px); max-width: fit-content; padding-left: 25px;">
                         <ul id="sidebar" class="list-unstyled">
                             @can('isSecretario', \App\Models\User::class)
                                 <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
@@ -267,7 +267,7 @@
                             @endcan
                         </ul>
                     </div>
-                    <div id="pagina-carregada" class="col-md-10">
+                    <div id="pagina-carregada" class="w-100">
                         @can('isRequerente', \App\Models\User::class)
                             @if(Auth::user()->requerimentosDocumentosAnexadosNotificacao() != null)
                                 <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">

@@ -99,9 +99,6 @@ class User extends Authenticatable implements MustVerifyEmail
             ->whereRelation('empresa', 'user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')
             ->first();
-        if ($requerimento != null && $requerimento->documentos()->where('status', Checklist::STATUS_ENUM['enviado'])->count() > 0) {
-            $requerimento = null;
-        }
 
         return $requerimento;
     }
@@ -113,6 +110,11 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($input['password'] != null) {
             $this->password = Hash::make($input['password']);
         }
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
     }
 
     public function visitas()
