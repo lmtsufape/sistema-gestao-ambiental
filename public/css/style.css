@@ -478,6 +478,7 @@ label {
     height: 120px;
     border-radius: 50%;
     padding: 3px;
+    position: relative;
 }
 
 .photo-perfil {
@@ -491,9 +492,9 @@ label {
 #selecionar {
     background-color: rgba(231, 231, 231, 0.856);
     height: 30px;
-    position: relative;
-    bottom: 25px;
-    left: 0px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
     text-align: center;
     cursor: pointer;
 }
