@@ -86,7 +86,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class)->except('index');
-    Route::get('visitas/{filtro}/listar', [VisitaController::class, 'index'])->name('visitas.index');
+    Route::get('visitas/{filtro}/listar/{ordenacao}-{ordem}', [VisitaController::class, 'index'])->name('visitas.index');
     Route::get('/visitas/{visita}/foto/{foto}', [VisitaController::class, 'foto'])->name('visitas.foto');
     Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
 
