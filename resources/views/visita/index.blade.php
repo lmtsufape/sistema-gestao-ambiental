@@ -1,10 +1,10 @@
 <x-app-layout>
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
-        <div class="form-row justify-content-center">
-            <div class="col-md-12">
-                <div class="form-row">
-                    <div class="col-md-8">
+        <div class="form-row justify-content-start">
+            <div class="col-md-9 col-span-3">
+                <div class="form-row justify-content-between">
+                    <div class="col-xs-8">
                         @can('isSecretario', \App\Models\User::class)
                             <h4 class="card-title">Programação de visitas</h4>
                         @else
@@ -110,11 +110,11 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4" style="text-align: right;">
-                        <a class="btn btn-success btn-color-dafault" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
+                    <div class="col-xs-4 d-flex align-items-start">
+                        <a class="btn btn-success btn-color-dafault mb-2" href="{{route('gerar.pdf.visitas')}}">Baixar</a>
                         @can('isSecretario', \App\Models\User::class)
                             @if($filtro == 'requerimento')
-                                <a title="Criar visita" href="{{route('visitas.create')}}">
+                                <a title="Criar visita" class="ml-2" href="{{route('visitas.create')}}">
                                     <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar documento">
                                 </a>
                             @endif
@@ -292,7 +292,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" style="margin-top: 2.5rem;">
                 <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem;">
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
