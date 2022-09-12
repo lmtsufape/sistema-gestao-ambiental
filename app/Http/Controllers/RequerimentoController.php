@@ -71,6 +71,11 @@ class RequerimentoController extends Controller
         }
         $tipos = Requerimento::TIPO_ENUM;
 
+        /*$data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
+            ->get()
+            ->groupBy('status_string')
+            ->map->count();*/
+
         return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro'));
     }
 

@@ -234,7 +234,7 @@
     </div>
 
     <!-- Modal confirmar envio -->
-    <div class="modal fade" id="modalStaticConfirmarEnvio" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="modalStaticConfirmarEnvio" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #f3c062;">
@@ -248,7 +248,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos" data-dismiss="modal">Concluir</button>
+                    <button type="submit" class="btn btn-warning submeterFormBotao" form="enviar-documentos">Concluir</button>
                 </div>
             </div>
         </div>

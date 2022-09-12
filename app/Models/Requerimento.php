@@ -139,6 +139,11 @@ class Requerimento extends Model
         }
     }
 
+    public function getStatusStringAttribute()
+    {
+        return ucwords(str_replace('_', ' ', array_search($this->status, $this::STATUS_ENUM)));
+    }
+
     public function tipoDeLicenca()
     {
         switch ($this->tipo_licenca) {

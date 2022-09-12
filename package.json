@@ -26,6 +26,8 @@
         "@popperjs/core": "^2.11.6",
         "bootstrap": "^4.6.0",
         "bootstrap-select": "^1.13.18",
+        "chart.js": "^3.9.1",
+        "chartjs-plugin-datalabels": "^2.1.0",
         "jquery": "^3.6.0",
         "jquery-mask-plugin": "^1.14.16",
         "sass": "^1.54.5",
