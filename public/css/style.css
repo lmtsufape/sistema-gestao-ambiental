@@ -1085,7 +1085,7 @@ a.article:hover {
         border-right: 1px white solid;
     }
 }
-@media (max-width: 650px) {
+@media (max-width: 900px) {
     #conteudo .container-fluid{
         padding-left: 1rem;
         padding-right: 1rem;
