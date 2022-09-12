@@ -28,6 +28,14 @@ class CEPGaranhuns implements Rule
     {
         $response = Http::get('https://viacep.com.br/ws/' . $value . '/json/');
 
+        if ($value == env('CEP_GERAL')) {
+            return true;
+        }
+
+        if ($response->json()['erro']) {
+            return false;
+        }
+
         return $response->json()['localidade'] == 'Garanhuns';
     }
 
