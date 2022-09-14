@@ -98,7 +98,7 @@ class BoletoController extends Controller
         if (is_null($boleto) || is_null($boleto->nosso_numero) || is_null($boleto->URL)) {
             return $this->gerarBoleto($requerimento);
         }
-        if ($boleto->data_vencimento <= now()) {
+        if ($boleto->data_vencimento >= now()) {
             return $this->alterarBoleto($boleto);
         }
         try {
