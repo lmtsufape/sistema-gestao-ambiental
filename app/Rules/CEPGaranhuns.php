@@ -33,7 +33,7 @@ class CEPGaranhuns implements Rule
         $response = Http::get('https://viacep.com.br/ws/' . $value . '/json/');
         $data = $response->json();
 
-        if ($data['erro']) {
+        if (array_key_exists('erro', $data) && $data['erro']) {
             return false;
         }
 
