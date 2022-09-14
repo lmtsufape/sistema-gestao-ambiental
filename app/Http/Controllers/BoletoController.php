@@ -101,9 +101,6 @@ class BoletoController extends Controller
         if ($boleto->data_vencimento <= now()) {
             return $this->alterarBoleto($boleto);
         }
-        if ($boleto->URL != null) {
-            return $boleto->URL;
-        }
         try {
             $boleto = $xmlBoletoController->gerarIncluirBoleto($requerimento);
             $xmlBoletoController->incluirBoletoRemessa($boleto);
