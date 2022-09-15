@@ -72,6 +72,14 @@
                         &nbsp;<a href="mailto:meioambientegaranhuns@gmail.com" style="text-decoration: none; color:black;">meioambientegaranhuns@gmail.com</a>
                     </div>
                 </div>
+                <div class="form-row mt-1">
+                    <div class="col-md-12">
+                        <a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank">
+                            <img class="img-logo" src="{{asset('img/whatsapp.svg')}}" alt="Logo whatsapp" style="display: inline; height: 40px; width: 40px;">
+                        </a>
+                        &nbsp;<a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank" style="text-decoration: none; color:black;">Whatsapp: +55 87 3762-7086</a>
+                    </div>
+                </div>
                 <div class="form-row mt-3">
                     <div class="col-md-12" style="margin-bottom: 5px;">
                         Localização
@@ -183,6 +191,14 @@
                     <div class="col-md-12">
                         <img src="{{asset('img/Icon-zocial-email.png')}}" alt="E-mail alternativo" style="display: inline;">
                         &nbsp;<a href="mailto:meioambientegaranhuns@gmail.com" style="text-decoration: none; color:black;">meioambientegaranhuns@gmail.com</a>
+                    </div>
+                </div>
+                <div class="form-row mt-1">
+                    <div class="col-md-12">
+                        <a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank">
+                            <img class="img-logo" src="{{asset('img/whatsapp.svg')}}" alt="Logo whatsapp" style="display: inline; height: 40px; width: 40px;">
+                        </a>
+                        &nbsp;<a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank" style="text-decoration: none; color:black;">Whatsapp: +55 87 3762-7086</a>
                     </div>
                 </div>
                 <div class="form-row mt-3">
