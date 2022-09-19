@@ -319,14 +319,16 @@ class RequerimentoController extends Controller
 
         Notification::send($requerimento->empresa->user, new DocumentosNotification($requerimento, $requerimento->documentos, 'Documentos requeridos'));
 
-        try {
-            $boletoController = new BoletoController();
-            $boletoController->boleto($requerimento);
-        } catch (ErrorRemessaException $e) {
-            return redirect()->back()
-                ->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.'])
-                ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
-                ->withInput();
+        if ($requerimento->valor != 0) {
+            try {
+                $boletoController = new BoletoController();
+                $boletoController->boleto($requerimento);
+            } catch (ErrorRemessaException $e) {
+                return redirect()->back()
+                    ->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.'])
+                    ->withErrors(['error' => 'Erro na geração do boleto: ' . $e->getMessage()])
+                    ->withInput();
+            }
         }
 
         return redirect(route('requerimentos.show', ['requerimento' => $requerimento->id]))->with(['success' => 'Checklist salva com sucesso, aguarde o requerente enviar os documentos.']);
