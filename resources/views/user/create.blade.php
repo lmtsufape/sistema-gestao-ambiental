@@ -74,6 +74,8 @@
                                                     Mudas e poda
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])
                                                     Orçamento
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['definir_mudas'])
+                                                    Função de definir mudas
                                                 @endif
                                             </label>
                                         </div>

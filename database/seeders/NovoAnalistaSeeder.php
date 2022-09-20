@@ -17,5 +17,9 @@ class NovoAnalistaSeeder extends Seeder
         TipoAnalista::create([
             'tipo' => "4",
         ]);
+
+        TipoAnalista::create([
+            'tipo' => "5",
+        ]);
     }
 }

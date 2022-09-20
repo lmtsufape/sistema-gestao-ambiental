@@ -106,6 +106,22 @@ class UserPolicy
     }
 
     /**
+     * Checa se o usuário logado é um analista de que pode definir mudas.
+     *
+     * @return bool
+     */
+    public function isAnalistaDefinirMudas(User $user)
+    {
+        if ($this->isAnalista($user)) {
+            $definir = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['definir_mudas'])->first();
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $definir->id)->first() != null;
+        }
+
+        return false;
+    }
+
+    /**
      * Checa se o usuário logado é um analista de poda ou secretario.
      *
      * @return bool
@@ -188,6 +204,11 @@ class UserPolicy
     public function isSecretarioOrOrcamento(User $user)
     {
         return $this->isSecretario($user) || $this->isAnalistaOrcamento($user);
+    }
+
+    public function isSecretarioOrDefinirMudas(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaDefinirMudas($user);
     }
 
     public function usuarioInterno(User $user)

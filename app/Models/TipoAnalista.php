@@ -14,6 +14,7 @@ class TipoAnalista extends Model
         'processo' => 2,
         'poda' => 3,
         'orcamento' => 4,
+        'definir_mudas' => 5,
     ];
 
     public function users()
@@ -35,6 +36,9 @@ class TipoAnalista extends Model
                 break;
             case $this::TIPO_ENUM['orcamento']:
                 return 'Analista de orçamentos';
+                break;
+            case $this::TIPO_ENUM['definir_mudas']:
+                return 'Analista para definição de mudas';
                 break;
         }
     }
