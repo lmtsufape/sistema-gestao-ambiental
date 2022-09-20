@@ -57,6 +57,8 @@
                                                     $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) checked
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'] &&
                                                     $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) checked
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'] &&
+                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])->get()->count() > 0) checked
                                                 @endif>
                                                 <label class="form-check-label" for="tipo_{{$tipo->id}}">
                                                     @if($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['protocolista'])
@@ -65,6 +67,8 @@
                                                         Processo
                                                     @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'])
                                                         Mudas e poda
+                                                    @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])
+                                                        Orçamento
                                                     @endif
                                                 </label>
                                             </div>

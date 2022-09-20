@@ -13,6 +13,7 @@ class TipoAnalista extends Model
         'protocolista' => 1,
         'processo' => 2,
         'poda' => 3,
+        'orcamento' => 4,
     ];
 
     public function users()
@@ -31,6 +32,9 @@ class TipoAnalista extends Model
                 break;
             case $this::TIPO_ENUM['poda']:
                 return 'Analista de podas e mudas';
+                break;
+            case $this::TIPO_ENUM['orcamento']:
+                return 'Analista de orçamentos';
                 break;
         }
     }

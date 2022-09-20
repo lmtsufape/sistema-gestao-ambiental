@@ -72,6 +72,8 @@
                                                     Processo
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'])
                                                     Mudas e poda
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])
+                                                    Orçamento
                                                 @endif
                                             </label>
                                         </div>
