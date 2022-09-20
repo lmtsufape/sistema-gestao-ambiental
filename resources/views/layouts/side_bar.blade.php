@@ -218,7 +218,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can ('isAnalistaProcessoOrPodaOrProtocolista', \App\Models\User::class)
+                            @can ('isAnalista', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
                                     <a href="{{route('empresas.listar')}}">
                                         Empresas/<br>
@@ -240,6 +240,13 @@
                                         </a>
                                     </li>
                                 @endcan
+                            @endcan
+                            @can('isAnalistaOrcamento', \App\Models\User::class)
+                                <li class="mb-2 item-align @if(request()->routeIs('boletos*')) active @endif">
+                                    <a href="{{route('boletos.index', 'pendentes')}}">
+                                        Pagamentos
+                                    </a>
+                                </li>
                             @endcan
                             @can('isRequerente', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">

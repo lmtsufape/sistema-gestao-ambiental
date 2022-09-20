@@ -90,6 +90,22 @@ class UserPolicy
     }
 
     /**
+     * Checa se o usuário logado é um analista de orçamentos.
+     *
+     * @return bool
+     */
+    public function isAnalistaOrcamento(User $user)
+    {
+        if ($this->isAnalista($user)) {
+            $orcamento = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['orcamento'])->first();
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $orcamento->id)->first() != null;
+        }
+
+        return false;
+    }
+
+    /**
      * Checa se o usuário logado é um analista de poda ou secretario.
      *
      * @return bool
@@ -167,6 +183,11 @@ class UserPolicy
     public function isSecretarioOrProcesso(User $user)
     {
         return $this->isSecretario($user) || $this->isAnalistaProcesso($user);
+    }
+
+    public function isSecretarioOrOrcamento(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaOrcamento($user);
     }
 
     public function usuarioInterno(User $user)
