@@ -3,8 +3,5 @@
         Foi agendada uma visita para o endereço {{$poda->endereco->enderecoSimplificado()}} referente a uma solicitação de poda/supressão. <br>
         A visita será realizada até {{$data_marcada}}.
     </p>
-    @lang('Regards'),<br>
-    {{ config('app.name') }}<br>
-    Laboratório Multidisciplinar de Tecnologias Sociais<br>
-    Universidade Federal do Agreste de Pernambuco
+    @include('mail.footer')
 @endcomponent

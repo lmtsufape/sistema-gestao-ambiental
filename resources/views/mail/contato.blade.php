@@ -8,8 +8,5 @@
 <p  style="color: black; font-family: 'Times New Roman', Times, serif;">
     Mensagem: {{$dados->mensagem}}
 </p>
-@lang('Regards'),<br>
-{{ config('app.name') }}<br>
-Laboratório Multidisciplinar de Tecnologias Sociais<br>
-Universidade Federal do Agreste de Pernambuco
+@include('mail.footer')
 @endcomponent
