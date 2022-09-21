@@ -16,6 +16,7 @@ class SolicitacaoMuda extends Model
         'comentario',
         'motivo_indeferimento',
         'status',
+        'local'
     ];
 
     public const STATUS_ENUM = [

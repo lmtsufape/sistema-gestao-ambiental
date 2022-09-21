@@ -94,9 +94,14 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 form-group">
+                                <label for="local">{{ __('Local de plantio') }}</label>
+                                <textarea id="local" class="form-control" type="text" name="local" disabled>{{$solicitacao->local}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
                                 <label for="comentario">{{ __('Comentário') }}</label>
-                                <textarea id="comentario" class="form-control" type="text" name="comentario" value="Garanhuns" disabled>{{$solicitacao->comentario}}
-                                </textarea>
+                                <textarea id="comentario" class="form-control" type="text" name="comentario" disabled>{{$solicitacao->comentario}}</textarea>
                             </div>
                         </div>
                         <div class="form-row">

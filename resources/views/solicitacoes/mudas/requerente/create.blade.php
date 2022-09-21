@@ -99,15 +99,28 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Favor mencionar o local onde será plantada)</span></label>
-                                    <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
-                                        name="comentario" value="{{ old('comentario') }}"
-                                        autocomplete="comentario" rows="3" required>{{old('comentario')}}</textarea>
-                                    @error('comentario')
+                                    <div class="form-row mb-2">
+                                        <label for="local">Local de plantio<span style="font-weight: bold; color: red">*</span><span style="font-weight: normal; color: rgb(88, 88, 88)">(Informar local onde as mudas serão plantadas)</span></label>
+                                        <textarea id="local" class="form-control @error('local') is-invalid @enderror"
+                                                  name="local"
+                                                  autocomplete="local" rows="3" required>{{old('local')}}</textarea>
+                                        @error('local')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
-                                    @enderror
+                                        @enderror
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Mencionar informação que julgar necessária)</span></label>
+                                        <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
+                                                  name="comentario"
+                                                  autocomplete="comentario" rows="3">{{old('comentario')}}</textarea>
+                                        @error('comentario')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <br>
