@@ -26,6 +26,7 @@ class RequerimentoRequest extends FormRequest
         return [
             'tipo' => 'required',
             'empresa' => 'required',
+            'descricao' => ['nullable', 'max:1500', 'string'],
         ];
     }
 }

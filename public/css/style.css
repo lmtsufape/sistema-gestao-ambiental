@@ -965,6 +965,29 @@ a.article:hover {
     border-bottom: solid 4px #680072;
 }
 
+.modulo {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+.modulo .ler-mais.collapse:not(.show) {
+    display: block;
+    height: 3rem;
+    overflow: hidden;
+}
+
+.modulo .ler-mais.collapsing {
+    height: 3rem;
+}
+
+.modulo a.collapsed::after {
+    content: '+ Ler mais';
+}
+
+.modulo a:not(.collapsed)::after {
+    content: '- Ler menos';
+}
+
 .texto-card-highlight{
     color: #00883D;
     font-weight: bold;

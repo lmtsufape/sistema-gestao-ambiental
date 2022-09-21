@@ -680,6 +680,21 @@
                                         {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
                                     </div>
                                 </div>
+                                @if ($requerimento->descricao)
+                                    <div class="row mt-4">
+                                        <div class="col-md-12" style="font-size: 16px; font-weight: bold;">
+                                            Descrição
+                                        </div>
+                                    </div>
+                                    <div class="row modulo">
+                                        <div class="col-md-12 collapse ler-mais" id="collapseExample{{$requerimento->id}}" aria-expanded="false">
+                                            {{$requerimento->descricao}}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <a role="button" class="collapsed" data-toggle="collapse" href="#collapseExample{{$requerimento->id}}" aria-expanded="false" aria-controls="collapseExample{{$requerimento->id}}"></a>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="row mt-4">
                                     <div class="col-md-12" style="text-align: right">
                                         <div class="btn-group align-items-center">
@@ -917,6 +932,17 @@
                         </select>
 
                         @error('tipo')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for="descricao">{{ __('Descrição') }} <span class="text-muted">{{ __('Informe o estado atual da empresa')}}</span> </label>
+                        <textarea id="descricao" class="form-control @error('descricao') is-invalid @enderror"
+                            name="descricao" value="{{ old('descricao') }}"
+                            autocomplete="descricao" rows="3">{{old('descricao')}}</textarea>
+                        @error('descricao')
                             <div id="validationServer03Feedback" class="invalid-feedback">
                                 {{ $message }}
                             </div>

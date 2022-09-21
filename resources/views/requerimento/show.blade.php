@@ -74,6 +74,17 @@
                                 <h6 class="titulo-nav-tab-custom" style="color: var(--primaria);">{{$requerimento->empresa->nome}}</h6>
                             </div>
                         </div>
+                        @if ($requerimento->descricao)
+                            <h6 class="titulo-nav-tab-custom">Descrição da empresa informada pelo requerente:</h6>
+                            <div class="row mt-2 modulo">
+                                <div class="col-md-12 collapse ler-mais" id="collapseDescricao" aria-expanded="false">
+                                    {{$requerimento->descricao}}
+                                </div>
+                                <div class="col-md-12">
+                                    <a role="button" class="collapsed" data-toggle="collapse" href="#collapseDescricao" aria-expanded="false" aria-controls="collapseDescricao"></a>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
