@@ -104,6 +104,18 @@ class EspecieMudaController extends Controller
     }
 
     /**
+     * Deixa espécie de muda disponível para solicitação
+     */
+    public function disponibilizar($id)
+    {
+        $this->authorize('isSecretarioOrDefinirMudas', User::class);
+
+        $especie = EspecieMuda::find($id);
+        $especie->disponivel = ! $especie->disponivel;
+        $especie->update();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\EspecieMuda  $especieMuda

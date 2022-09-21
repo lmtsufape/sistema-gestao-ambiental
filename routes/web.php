@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
     Route::resource('especies', EspecieMudaController::class);
+    Route::get('/especies/disponibilizar/{id}', [EspecieMudaController::class, 'disponibilizar'])->name('disponibilizar.especie');
     Route::get('/setores/{setor_id}/criar-cnae', [CnaeController::class, 'create'])->name('cnaes.create');
     Route::resource('valores', ValorController::class);
     Route::resource('visitas', VisitaController::class)->except('index');
