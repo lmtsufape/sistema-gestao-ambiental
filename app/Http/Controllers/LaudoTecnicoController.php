@@ -34,12 +34,23 @@ class LaudoTecnicoController extends Controller
             $foto_laudo->save();
         }
 
+        if ($request->pdf) {
+            $laudo->pdf = $data['pdf']->store("laudos/{$laudo->id}/");
+        }
+
+        $laudo->update();
+
         return redirect()->route('podas.edit', ['solicitacao' => $solicitacao])->with('success', 'Laudo tecnico criado com sucesso');
     }
 
     public function show(LaudoTecnico $laudo)
     {
         return view('solicitacoes.podas.laudos.show', ['laudo' => $laudo]);
+    }
+
+    public function pdf(LaudoTecnico $laudo)
+    {
+        return Storage::exists($laudo->pdf) ? Storage::download($laudo->pdf) : abort(404);
     }
 
     public function foto(LaudoTecnico $laudo, FotoLaudoTecnico $foto)
