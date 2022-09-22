@@ -211,7 +211,7 @@
                                     <div class="col-md-12" style="font-size: 20px; font-weight: bold; text-align: left">
                                         {{$requerimento->empresa->nome}} -  {{ucfirst($requerimento->tipoString())}}
                                         @if($requerimento->tipo_licenca)
-                                            <span class="float-right px-2" style="font-size: 16px; background-color: var(--muted); color:white">Licença @if ( $requerimento->tipoDeLicenca() != 'simplificada' && $requerimento->tipoDeLicenca() != 'prévia')de {{$requerimento->tipoDeLicenca()}} @else {{$requerimento->tipoDeLicenca()}} @endif</span>
+                                            <span class="float-right px-2" style="font-size: 16px; background-color: var(--muted); color:white">{{$requerimento->tituloTipoDeLicenca()}}</span>
                                         @endif
                                     </div>
                                 </div>

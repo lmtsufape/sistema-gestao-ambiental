@@ -37,7 +37,7 @@
                                         {{__('autorização')}}
                                     @endif
                                     @if ($requerimento->tipo_licenca)
-                                        - Licença @if ( $requerimento->tipoDeLicenca() != 'simplificada' && $requerimento->tipoDeLicenca() != 'prévia')de {{$requerimento->tipoDeLicenca()}} @else {{$requerimento->tipoDeLicenca()}} @endif
+                                        - {{$requerimento->tituloTipoDeLicenca()}}
                                     @endif
                                 </h5>
                                 <span class="linha"></span>
