@@ -57,8 +57,8 @@
                                                     $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['processo'])->get()->count() > 0) checked
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'] &&
                                                     $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['poda'])->get()->count() > 0) checked
-                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'] &&
-                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])->get()->count() > 0) checked
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['financa'] &&
+                                                    $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['financa'])->get()->count() > 0) checked
                                                 @endif
                                                 @if ($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['definir_mudas'] &&
                                                     $usuario->tipoAnalista()->where('tipo', \App\Models\TipoAnalista::TIPO_ENUM['definir_mudas'])->get()->count() > 0) checked
@@ -70,8 +70,8 @@
                                                         Processo
                                                     @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'])
                                                         Mudas e poda
-                                                    @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])
-                                                        Orçamento
+                                                    @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['financa'])
+                                                        Finanças
                                                     @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['definir_mudas'])
                                                         Analista para definição de mudas
                                                     @endif

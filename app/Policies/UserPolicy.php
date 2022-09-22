@@ -90,16 +90,16 @@ class UserPolicy
     }
 
     /**
-     * Checa se o usuário logado é um analista de orçamentos.
+     * Checa se o usuário logado é um analista de finanças.
      *
      * @return bool
      */
-    public function isAnalistaOrcamento(User $user)
+    public function isAnalistaFinanca(User $user)
     {
         if ($this->isAnalista($user)) {
-            $orcamento = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['orcamento'])->first();
+            $financa = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['financa'])->first();
 
-            return $user->tipoAnalista()->where('tipo_analista_id', $orcamento->id)->first() != null;
+            return $user->tipoAnalista()->where('tipo_analista_id', $financa->id)->first() != null;
         }
 
         return false;
@@ -201,9 +201,9 @@ class UserPolicy
         return $this->isSecretario($user) || $this->isAnalistaProcesso($user);
     }
 
-    public function isSecretarioOrOrcamento(User $user)
+    public function isSecretarioOrFinanca(User $user)
     {
-        return $this->isSecretario($user) || $this->isAnalistaOrcamento($user);
+        return $this->isSecretario($user) || $this->isAnalistaFinanca($user);
     }
 
     public function isSecretarioOrDefinirMudas(User $user)

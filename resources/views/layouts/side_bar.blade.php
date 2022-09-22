@@ -257,7 +257,7 @@
                                     </li>
                                 @endcan
                             @endcan
-                            @can('isAnalistaOrcamento', \App\Models\User::class)
+                            @can('isAnalistaFinanca', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('boletos*')) active @endif">
                                     <a href="{{route('boletos.index', 'pendentes')}}">
                                         Pagamentos

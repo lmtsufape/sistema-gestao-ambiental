@@ -17,7 +17,7 @@ class BoletoController extends Controller
 {
     public function index(Request $request, $filtragem)
     {
-        $this->authorize('isSecretarioOrOrcamento', auth()->user());
+        $this->authorize('isSecretarioOrFinanca', auth()->user());
 
         $retorno = $this->filtrarBoletos($request);
         $vencidos = $retorno[0];

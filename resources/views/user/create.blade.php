@@ -72,8 +72,8 @@
                                                     Processo
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['poda'])
                                                     Mudas e poda
-                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['orcamento'])
-                                                    Orçamento
+                                                @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['financa'])
+                                                    Finanças
                                                 @elseif($tipo->tipo == \App\Models\TipoAnalista::TIPO_ENUM['definir_mudas'])
                                                     Função de definir mudas
                                                 @endif
