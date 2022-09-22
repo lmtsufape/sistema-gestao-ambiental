@@ -90,7 +90,7 @@ class SolicitacaoMudaController extends Controller
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
 
-        return redirect()->back()->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
+        return redirect()->route('mudas.requerente.index')->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
     }
 
     /**
