@@ -62,6 +62,21 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label id="pdf" for="pdf">Arquivo pdf</label>
+                                    <br>
+                                    <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do arquivo" title="Enviar arquivo" ></label>
+                                    <label for="enviar_arquivo"></label>
+                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept=".pdf" name="pdf">
+
+                                    @error('pdf')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="imagem">{{ __('Anexar imagens') }}</label>
                                     <br/>

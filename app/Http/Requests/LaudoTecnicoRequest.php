@@ -28,6 +28,7 @@ class LaudoTecnicoRequest extends FormRequest
             'imagem' => ['required', 'array', 'min:1'],
             'comentario' => ['nullable', 'array'],
             'imagem.*' => ['required', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
+            'pdf' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
         ];
     }
 

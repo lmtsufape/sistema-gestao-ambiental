@@ -50,8 +50,14 @@
                                     type="text" name="localizacao" value="{{ $laudo->localizacao }}">
                             </div>
                         </div>
-                        <div>
-                            <a class="icon-licenciamento" title="Mídia do laudo" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="20px;" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
+                        <div class="justify-content-between">
+                            <label for="arquivos">Arquivos anexados</label>
+                            <div class="form-row align-items-center">
+                                <a class="icon-licenciamento ml-2 align-middle" title="Mídia do laudo" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="20px;" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
+                                @if($laudo->pdf)
+                                    <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.pdf', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="arquivo pdf" style="width: 17px;"></a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

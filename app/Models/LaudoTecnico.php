@@ -14,6 +14,7 @@ class LaudoTecnico extends Model
     protected $fillable = [
         'condicoes',
         'localizacao',
+        'pdf',
     ];
 
     public function fotos()

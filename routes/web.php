@@ -137,6 +137,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/solicitacoes/podas/{solicitacao}/ficha', [FichaAnaliseController::class, 'store'])->name('podas.fichas.store');
     Route::get('/solicitacoes/podas/laudo/{laudo}', [LaudoTecnicoController::class, 'show'])->name('podas.laudos.show');
     Route::get('/solicitacoes/podas/laudo/{laudo}/foto/{foto}', [LaudoTecnicoController::class, 'foto'])->name('podas.laudos.foto');
+    Route::get('/solicitacoes/podas/laudo/{laudo}/pdf', [LaudoTecnicoController::class, 'pdf'])->name('podas.laudos.pdf');
     Route::get('/solicitacoes/podas/ficha/{ficha}', [FichaAnaliseController::class, 'show'])->name('podas.fichas.show');
     Route::get('/solicitacoes/podas/ficha/{ficha}/foto/{foto}', [FichaAnaliseController::class, 'foto'])->name('podas.fichas.foto');
     Route::post('/solicitacoes/atribuir/analista', [SolicitacaoPodaController::class, 'atribuirAnalistaSolicitacao'])->name('solicitacoes.atribuir.analista');
