@@ -56,7 +56,7 @@ class SolicitacaoMudaController extends Controller
     {
         $this->authorize('create', SolicitacaoMuda::class);
 
-        $especies = EspecieMuda::orderBy('nome')->get();
+        $especies = EspecieMuda::where('disponivel', true)->orderBy('nome')->get();
 
         return view('solicitacoes.mudas.requerente.create', compact('especies'));
     }
@@ -82,11 +82,13 @@ class SolicitacaoMudaController extends Controller
         $solicitacao->protocolo = $protocolo;
         $solicitacao->save();
         foreach ($request->especie as $i => $especie) {
-            MudaSolicitada::create([
-                'solicitacao_id' => $solicitacao->id,
-                'especie_id' => $especie,
-                'qtd_mudas' => $request->qtd_mudas[$i],
-            ]);
+            if(EspecieMuda::find($especie)->disponivel){
+                MudaSolicitada::create([
+                    'solicitacao_id' => $solicitacao->id,
+                    'especie_id' => $especie,
+                    'qtd_mudas' => $request->qtd_mudas[$i],
+                ]);
+            }
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
 

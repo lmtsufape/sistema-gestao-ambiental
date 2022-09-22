@@ -90,6 +90,38 @@ class UserPolicy
     }
 
     /**
+     * Checa se o usuário logado é um analista de finanças.
+     *
+     * @return bool
+     */
+    public function isAnalistaFinanca(User $user)
+    {
+        if ($this->isAnalista($user)) {
+            $financa = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['financa'])->first();
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $financa->id)->first() != null;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checa se o usuário logado é um analista de que pode definir mudas.
+     *
+     * @return bool
+     */
+    public function isAnalistaDefinirMudas(User $user)
+    {
+        if ($this->isAnalista($user)) {
+            $definir = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['definir_mudas'])->first();
+
+            return $user->tipoAnalista()->where('tipo_analista_id', $definir->id)->first() != null;
+        }
+
+        return false;
+    }
+
+    /**
      * Checa se o usuário logado é um analista de poda ou secretario.
      *
      * @return bool
@@ -167,6 +199,16 @@ class UserPolicy
     public function isSecretarioOrProcesso(User $user)
     {
         return $this->isSecretario($user) || $this->isAnalistaProcesso($user);
+    }
+
+    public function isSecretarioOrFinanca(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaFinanca($user);
+    }
+
+    public function isSecretarioOrDefinirMudas(User $user)
+    {
+        return $this->isSecretario($user) || $this->isAnalistaDefinirMudas($user);
     }
 
     public function usuarioInterno(User $user)

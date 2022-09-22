@@ -36,6 +36,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nome</th>
+                                    <th scope="col" class="text-center">Disponível</th>
                                     <th scope="col">Opções</th>
                                 </tr>
                             </thead>
@@ -44,6 +45,7 @@
                                     <tr>
                                         <th scope="row">{{ ($especies->currentpage()-1) * $especies->perpage() + $loop->index + 1 }}</th>
                                         <td>{{$especie->nome}}</td>
+                                        <td class="text-center"><input class="disponibilidade" type="checkbox" class="form-check-input" @if($especie->disponivel) checked @endif href="{{ route('disponibilizar.especie', $especie->id) }}"></td>
                                         <td>
                                             <a title="Editar espécie" href="{{route("especies.edit", $especie->id)}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar especie"></a>
                                             <a title="Deletar espécie" data-toggle="modal" data-target="#modalStaticDeletarEspecie_{{$especie->id}}" style="cursor: pointer;"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar especie"></a>
@@ -125,4 +127,15 @@
         </div>
     @endforeach
     @endsection
+    @push('scripts')
+    <script>
+        $('.disponibilidade').on('change', function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: $(this).attr('href'),
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>

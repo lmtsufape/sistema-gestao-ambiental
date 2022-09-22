@@ -205,11 +205,27 @@
                                         Poda/Supressão
                                     </a>
                                 </li>
-                                <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
-                                    <a href="{{route('mudas.index', 'pendentes')}}" >
-                                        Mudas
-                                    </a>
-                                </li>
+                                @can('isAnalistaDefinirMudas', \App\Models\User::class)
+                                    <li class="mb-2 @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                        <button href="#mudasSubmenu" data-toggle="collapse" @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
+                                            Mudas
+                                        </button>
+                                        <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) show @endif" id="mudasSubmenu">
+                                            <li class="@if(request()->is('solicitacoes/mudas/pendentes/listar')) active @endif">
+                                                <a href="{{route('mudas.index', 'pendentes')}}" >Solicitações</a>
+                                            </li>
+                                            <li class="@if(request()->routeIs('especies*')) active @endif">
+                                                <a href="{{route('especies.index')}}">Definição de espécies de mudas</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @else
+                                    <li class="mb-2 item-align @if(request()->routeIs('mudas*') || request()->routeIs('especies*')) active @endif">
+                                        <a href="{{route('mudas.index', 'pendentes')}}" >
+                                            Mudas
+                                        </a>
+                                    </li>
+                                @endcan
                             @endcan
                             @can('isProcessoOrProtocolista', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
@@ -218,7 +234,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can ('isAnalistaProcessoOrPodaOrProtocolista', \App\Models\User::class)
+                            @can ('isAnalista', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
                                     <a href="{{route('empresas.listar')}}">
                                         Empresas/<br>
@@ -240,6 +256,13 @@
                                         </a>
                                     </li>
                                 @endcan
+                            @endcan
+                            @can('isAnalistaFinanca', \App\Models\User::class)
+                                <li class="mb-2 item-align @if(request()->routeIs('boletos*')) active @endif">
+                                    <a href="{{route('boletos.index', 'pendentes')}}">
+                                        Pagamentos
+                                    </a>
+                                </li>
                             @endcan
                             @can('isRequerente', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">

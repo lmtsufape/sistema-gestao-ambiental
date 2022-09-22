@@ -11,6 +11,7 @@ class EspecieMuda extends Model
 
     protected $fillable = [
         'nome',
+        'disponivel',
     ];
 
     public function setAtributes($input)
