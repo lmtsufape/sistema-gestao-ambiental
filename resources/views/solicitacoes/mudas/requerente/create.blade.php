@@ -84,7 +84,7 @@
                                                         </td>
                                                         <td>
                                                             <input id="qtd_mudas-1" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
-                                                                type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                                                type="number" min="1" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
                                                                 autocomplete="qtd_mudas" required>
                                                             @error('qtd_mudas.*')
                                                                 <div id="validationServer03Feedback" class="invalid-feedback">
@@ -221,7 +221,7 @@
                                         </td>
                                         <td>
                                             <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
-                                                type="number" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                                type="number" min="1" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
                                                 autocomplete="qtd_mudas" required>
                                             @error('qtd_mudas.*')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
