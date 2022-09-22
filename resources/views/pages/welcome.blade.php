@@ -216,7 +216,7 @@
                             <label for="selectEmpresa"> Empresas Cadastradas <span style="color: red">*</span></label>
                             <select class="form-control selectpicker" id="selectEmpresa" name="empresa" data-live-search="true" title="Selecione uma empresa">
                                 @foreach($empresas as $empresa)
-                                    <option value="{{$empresa->id}}">{{$empresa->nome}} - {{$empresa->cpf_cnpj}}</option>
+                                    <option value="{{$empresa['id']}}">{{$empresa['nome']}} - {{$empresa['cpf_cnpj']}}</option>
                                 @endforeach
                             </select>
                         </div>
