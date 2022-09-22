@@ -168,6 +168,16 @@ class Requerimento extends Model
         }
     }
 
+    public function tituloTipoDeLicenca()
+    {
+        $titulo = "Licença ";
+        if ($this->tipoDeLicenca() != 'simplificada' && $this->tipoDeLicenca() != 'prévia') {
+            $titulo .= "de ";
+        }
+
+        return $titulo.$this->tipoDeLicenca();
+    }
+
     public function ultimaVisitaMarcada()
     {
         return $this->visitas()->latest('data_marcada')->first();

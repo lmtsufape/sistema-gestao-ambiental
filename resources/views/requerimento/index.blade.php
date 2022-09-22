@@ -208,8 +208,11 @@
                         <div class="card card-borda-esquerda @if($i>0)mt-3 @endif" style="width: 100%;">
                             <div class="card-body" style="padding-top: 10px;">
                                 <div class="row">
-                                    <div class="col-md-12" style="font-size: 20px; font-weight: bold;">
+                                    <div class="col-md-12" style="font-size: 20px; font-weight: bold; text-align: left">
                                         {{$requerimento->empresa->nome}} -  {{ucfirst($requerimento->tipoString())}}
+                                        @if($requerimento->tipo_licenca)
+                                            <span class="float-right px-2" style="font-size: 16px; background-color: var(--muted); color:white">{{$requerimento->tituloTipoDeLicenca()}}</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row" @if($requerimento->canceladoSecretario() || $requerimento->status == \App\Models\Requerimento::STATUS_ENUM['cancelada'])

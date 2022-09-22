@@ -36,6 +36,9 @@
                                     @elseif($requerimento->tipo == \App\Models\Requerimento::TIPO_ENUM['autorizacao'])
                                         {{__('autorização')}}
                                     @endif
+                                    @if ($requerimento->tipo_licenca)
+                                        - {{$requerimento->tituloTipoDeLicenca()}}
+                                    @endif
                                 </h5>
                                 <span class="linha"></span>
                             </div>
