@@ -42,6 +42,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col" style="text-align: center">Nome</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
+                                            <th scope="col" style="text-align: center">Data</th>
                                             <th scope="col" style="text-align: center">Ações</th>
                                         </tr>
                                     </thead>
@@ -51,6 +52,7 @@
                                                 <th>{{ ($mudas->currentpage()-1) * $mudas->perpage() + $loop->index + 1 }}</th>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->user->name }}</td>
                                                 <td style="text-align: center">{{ $solicitacao->requerente->endereco->rua }}</td>
+                                                <td style="text-align: center">{{ $solicitacao->created_at->format('d/m/Y H:i') }}</td>
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('mudas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                     <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('mudas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>

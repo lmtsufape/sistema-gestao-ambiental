@@ -127,8 +127,5 @@
         </div>
         <br>
     @endif
-    @lang('Regards'),<br>
-    {{ config('app.name') }}<br>
-    Laboratório Multidisciplinar de Tecnologias Sociais<br>
-    Universidade Federal do Agreste de Pernambuco
+    @include('mail.footer')
 @endcomponent

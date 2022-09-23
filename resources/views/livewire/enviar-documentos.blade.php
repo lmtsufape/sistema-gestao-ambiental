@@ -145,6 +145,7 @@
                                                                         <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
                                                                         <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo " accept=".pdf" wire:model="arquivos.{{$documento->id}}">
+                                                                        <small>Enviar arquivo com extensão .pdf e tamanho máximo de 2mb</small>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -174,6 +175,7 @@
                                                                         <label class="label-input-novo btn btn-success btn-enviar-doc" for="enviar_arquivo_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
                                                                         <br><label for="label-input-arquivo" for="enviar_arquivo_{{$documento->id}}"></label>
                                                                         <input id="enviar_arquivo_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('{{$documento->id}}') is-invalid @enderror" accept=".pdf" wire:model="arquivos.{{$documento->id}}">
+                                                                        <small>Enviar arquivo com extensão .pdf e tamanho máximo de 2mb</small>
                                                                         @endif
                                                                     </div>
                                                                 </div>

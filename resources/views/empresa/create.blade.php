@@ -31,7 +31,7 @@
                             @endif
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="nome_empresa">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="nome_empresa">{{ __('Razão social/Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome_empresa" class="form-control @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa')}}" required autofocus autocomplete="nome_empresa">
                                     @error('nome_da_empresa')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

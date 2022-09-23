@@ -102,9 +102,14 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Comentário') }}</label>
-                                    <textarea class="form-control" type="text" disabled>{{$solicitacao->comentario}}
-                                    </textarea>
+                                    <label for="local">{{ __('Local de plantio') }}</label>
+                                    <textarea id="local" class="form-control" type="text" disabled>{{$solicitacao->local}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <textarea id="comentario" class="form-control" type="text" disabled>{{$solicitacao->comentario}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -257,9 +262,14 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Comentário') }}</label>
-                                    <textarea class="form-control" type="text" disabled>{{$solicitacao->comentario}}
-                                    </textarea>
+                                    <label for="local">{{ __('Local de plantio') }}</label>
+                                    <textarea id="local" class="form-control" type="text" disabled>{{$solicitacao->local}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <textarea id="comentario" class="form-control" type="text" disabled>{{$solicitacao->comentario}}</textarea>
                                 </div>
                             </div>
                         </div>
