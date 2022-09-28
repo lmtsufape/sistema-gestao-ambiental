@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="titulo-nav-tab-custom">Empresa/Serviço</h5>
-                                <h6 class="titulo-nav-tab-custom" style="color: var(--primaria);">{{$requerimento->empresa->nome}}</h6>
+                                <h6 class="titulo-nav-tab-custom" style="color: var(--primaria);">{{$requerimento->empresa->nome}}@if($requerimento->status_empresa) (status: {{lcfirst($requerimento->status_empresa)}})@endif</h6>
                             </div>
                         </div>
                     </div>

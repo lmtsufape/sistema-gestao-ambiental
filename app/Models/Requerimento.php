@@ -43,6 +43,7 @@ class Requerimento extends Model
         'potencial_poluidor_atribuido',
         'cancelada',
         'motivo_cancelamento',
+        'status_requerimento',
     ];
 
     public function protocolista()
@@ -122,7 +123,7 @@ class Requerimento extends Model
                 return 'documentos aceitos';
                 break;
             case $this::STATUS_ENUM['visita_marcada']:
-                return 'visita marcada para ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
+                return 'visita marcada para até ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
                 break;
             case $this::STATUS_ENUM['visita_realizada']:
                 return 'visita feita em ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));

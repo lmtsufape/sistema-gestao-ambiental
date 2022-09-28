@@ -55,9 +55,9 @@ class RequerimentoController extends Controller
                     ->where([['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])
                     ->orderBy('created_at', 'DESC')->paginate(20);
         } else {
-            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-            $requerimentosFinalizados = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at')->paginate(20);
-            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at')->paginate(20);
+            $requerimentos = Requerimento::where([['status', '!=', Requerimento::STATUS_ENUM['finalizada']], ['status', '!=', Requerimento::STATUS_ENUM['cancelada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+            $requerimentosFinalizados = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+            $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at', 'DESC')->paginate(20);
         }
         switch ($filtro) {
             case 'atuais':
@@ -132,6 +132,7 @@ class RequerimentoController extends Controller
         $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
         $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
+        $requerimento->status_empresa = $request->status_empresa;
         $requerimento->save();
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento realizado com sucesso.']);
