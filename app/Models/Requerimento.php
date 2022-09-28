@@ -43,7 +43,7 @@ class Requerimento extends Model
         'potencial_poluidor_atribuido',
         'cancelada',
         'motivo_cancelamento',
-        'status_requerimento',
+        'status_empresa',
     ];
 
     public function protocolista()
