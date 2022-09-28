@@ -236,10 +236,17 @@
                                         @if($requerimento->canceladoSecretario())
                                             A secretaria cancelou ou indeferiu o seu requerimento. Veja o motivo clicando no ícone de "Cancelar requerimento".
                                         @else
-                                            {{$requerimento->textoEtapa()}}
+                                            {{$requerimento->textoEtapa()}}.
                                         @endif
                                     </div>
                                 </div>
+                                @if($requerimento->status_empresa)
+                                    <div class="row mt-2">
+                                        <div class="col-md-12" style="font-size: 16px; padding-left: 27px;">
+                                            <span style="color: #00883D; font-weight: bold;">Status da empresa/serviço:</span> {{lcfirst($requerimento->status_empresa)}}.
+                                        </div>
+                                    </div>
+                                @endif
                                 @if($requerimento->status != \App\Models\Requerimento::STATUS_ENUM['cancelada'])
                                     <div id="wrapper">
                                         <div class="row" style="@if($requerimento->canceladoSecretario()) opacity: 0.5 @endif">
@@ -548,7 +555,7 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         @if($requerimento->status == 6)
-                                                                            A visita à empresa/serviço foi agendada, aguarde a equipe da secretaria na data informada.
+                                                                            A visita à empresa/serviço foi agendada, aguarde a equipe da secretaria até a data informada.
                                                                         @elseif($requerimento->status > 6)
                                                                             A visita à empresa/serviço foi agendada.
                                                                         @else
@@ -925,6 +932,21 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="col-md-12 form-group">
+                        <label for="status_empresa">{{ __('Status da empresa/serviço') }}<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="status_empresa" id="status_empresa" class="form-control @error('status_empresa') is-invalid @enderror" required >
+                            <option value="" selected disabled>{{__('-- Selecione o status da empresa/serviço --')}}</option>
+                            <option @if(old('status_empresa') == "Em implantação") selected @endif value="Em implantação">{{__('Em implantação')}}</option>
+                            <option @if(old('status_empresa') == "Em construção") selected @endif value="Em construção">{{__('Em construção')}}</option>
+                            <option @if(old('status_empresa') == "Em funcionamento") selected @endif value="Em funcionamento">{{__('Em funcionamento')}}</option>
+                        </select>
+
+                        @error('status_empresa')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -949,7 +971,7 @@
                 <div class="alert alert-warning">
                     <div class="row">
                         <div class="col-md-12">
-                            Todas as etapas do processo de emissão da licença seguem de forma sequencial. Para chegar na etapa 8, onde você receberá a sua licença, é necessário passar por todos as outras 7 etapas.
+                            Todas as etapas do processo de emissão da licença seguem de forma sequencial. Para chegar na etapa 8, onde você receberá a sua licença, é necessário passar por todas as outras 7 etapas.
                         </div>
                     </div>
                 </div>
@@ -1032,7 +1054,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                A visita à empresa/serviço será agendada, aguarde a equipe da secretaria na data informada.
+                                A visita à empresa/serviço será agendada, aguarde a equipe da secretaria até a data informada.
                             </div>
                         </div>
                     </div>

@@ -132,7 +132,7 @@
                         @method('PUT')
                         @csrf
                         <input id="status" type="hidden" name="status" value="{{ \App\Models\SolicitacaoMuda::STATUS_ENUM['deferido'] }}">
-                        <input type="file" name="arquivo" id="arquivo">
+                        <input type="file" name="arquivo" id="arquivo" accept=".pdf">
                     </form>
                 </div>
                 <div class="modal-footer">

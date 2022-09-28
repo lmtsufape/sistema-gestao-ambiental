@@ -26,6 +26,7 @@ class RequerimentoRequest extends FormRequest
         return [
             'tipo' => 'required',
             'empresa' => 'required',
+            'status_empresa' => 'required',
         ];
     }
 }
