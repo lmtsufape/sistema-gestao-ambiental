@@ -25,9 +25,9 @@ class SolicitacaoMudaController extends Controller
     public function index($filtro)
     {
         $this->authorize('index', SolicitacaoMuda::class);
-        $registradas = SolicitacaoMuda::where('status', '1')->paginate(20);
-        $deferidas = SolicitacaoMuda::where('status', '2')->paginate(20);
-        $indeferidas = SolicitacaoMuda::where('status', '3')->paginate(20);
+        $registradas = SolicitacaoMuda::where('status', '1')->orderBy('created_at', 'DESC')->paginate(20);
+        $deferidas = SolicitacaoMuda::where('status', '2')->orderBy('created_at', 'DESC')->paginate(20);
+        $indeferidas = SolicitacaoMuda::where('status', '3')->orderBy('created_at', 'DESC')->paginate(20);
 
         switch ($filtro) {
             case 'pendentes':
