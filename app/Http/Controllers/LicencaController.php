@@ -52,7 +52,12 @@ class LicencaController extends Controller
         $licenca = new Licenca();
         $licenca->setAtributes($request, $requerimento);
 
+        $licenca->status = Licenca::STATUS_ENUM['aprovada'];
+        $requerimento->status = Requerimento::STATUS_ENUM['finalizada'];
+        $licenca->update();
         $requerimento->update();
+
+        Notification::send($requerimento->empresa->user, new LicencaAprovada($requerimento, $licenca));
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença criada com sucesso!']);
     }
