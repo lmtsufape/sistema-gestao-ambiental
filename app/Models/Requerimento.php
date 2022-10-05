@@ -259,7 +259,7 @@ class Requerimento extends Model
                 return 'A visita à empresa/serviço ' . $this->empresa->nome . ' foi agendada, aguarde a equipe da secretaria na data informada.';
                 break;
             case $this::STATUS_ENUM['visita_realizada']:
-                return 'A visita à empresa/serviço ' . $this->empresa->nome . 'foi realizada, aguarde a análise da secretaria para receber sua licença.';
+                return 'A visita à empresa/serviço ' . $this->empresa->nome . ' foi realizada, aguarde a análise da secretaria para receber sua licença.';
                 break;
             case $this::STATUS_ENUM['finalizada']:
                 return 'Licença aprovada! Acesse o documento clicando no botão de "Visualizar licença".';

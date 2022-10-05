@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-row mb-2">
-                                        <label for="local">Local de plantio<span style="font-weight: bold; color: red">*</span><span style="font-weight: normal; color: rgb(88, 88, 88)">(Informar local onde as mudas serão plantadas)</span></label>
+                                        <label for="local">Endereço completo do local de plantio<span style="font-weight: bold; color: red">*</span><span style="font-weight: normal; color: rgb(88, 88, 88)">(Informar o endereço completo do local onde as mudas serão plantadas)</span></label>
                                         <textarea id="local" class="form-control @error('local') is-invalid @enderror"
                                                   name="local"
                                                   autocomplete="local" rows="3" required>{{old('local')}}</textarea>
