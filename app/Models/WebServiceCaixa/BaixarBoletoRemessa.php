@@ -28,8 +28,6 @@ class BaixarBoletoRemessa extends Remessa
      */
     public string $nosso_numero;
 
-    public string $versao = '2.1';
-
     public function setAttributes($data)
     {
         $this->codigo_beneficiario = $data['codigo_beneficiario'];
