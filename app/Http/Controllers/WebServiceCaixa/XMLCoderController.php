@@ -97,6 +97,7 @@ class XMLCoderController extends Controller
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
                 $boleto->salvarArquivoResposta($response);
+                $boleto->save();
                 $this->salvarRespostaIncluirBoletoRemessa($boleto, $resultado);
                 break;
             default:
