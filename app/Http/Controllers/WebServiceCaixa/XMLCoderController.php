@@ -256,7 +256,9 @@ class XMLCoderController extends Controller
         }
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
-                Storage::put('resposta_baixar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $boleto->salvarArquivoRespostaBaixarBoleto($response);
+                $boleto->status_pagamento = BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado'];
+                $boleto->save();
                 break;
             default:
                 throw new ErrorRemessaException($resultado['RETORNO']);
