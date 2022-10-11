@@ -66,7 +66,7 @@ class BoletoCobranca extends Model
         delete_file($this->resposta_alterar_boleto);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_alterar_boleto_remessa_' . $this->id . '.xml';
-        $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
+        Storage::put($caminho_arquivo.$documento_nome, $string);
         $this->resposta_alterar_boleto = $caminho_arquivo . $documento_nome;
     }
 }

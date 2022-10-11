@@ -201,8 +201,8 @@ class XMLCoderController extends Controller
         }
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
-                $boleto->salvarArquivoResposta($response);
-                Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $boleto->salvarArquivoRespostaAlterarBoleto($response);
+                $boleto->save();
                 $this->salvarRespostaAlterarBoletoRemessa($boleto, $resultado);
                 break;
             default:
