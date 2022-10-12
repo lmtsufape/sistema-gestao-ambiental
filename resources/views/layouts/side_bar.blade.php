@@ -201,7 +201,7 @@
                             @endcan
                             @can('isAnalistaPoda', \App\Models\User::class)
                                 <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">
-                                    <a href="{{route('podas.index', 'deferidas')}}" @if(request()->is('solicitacoes/podas/deferidas/listar'))@endif>
+                                    <a href="{{route('podas.index', 'encaminhadas')}}" @if(request()->is('solicitacoes/podas/encaminhadas/listar'))@endif>
                                         Poda/Supressão
                                     </a>
                                 </li>

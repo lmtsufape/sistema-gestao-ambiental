@@ -13,7 +13,7 @@
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com relatório aprovado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
@@ -34,16 +34,24 @@
                         </li>
                     @endcan
                     <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
-                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">@can('isAnalistaPoda', \App\Models\User::class)  Atribuídas @else Deferidas @endcan</a>
+                        <a class="nav-link @if($filtro == 'encaminhadas') active @endif" id="solicitacoes-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'encaminhadas') aria-selected="true" @endif href="{{route('podas.index', 'encaminhadas')}}">Encaminhadas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'concluidas') active @endif" id="solicitacoes-concluidas-tab"
-                            type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">Concluídas</a>
-                    </li>
-                    @can('isSecretario', \App\Models\User::class)
+                    @can ('isSecretario', \App\Models\User::class)
                         <li class="nav-item">
-                            <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
+                            <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
+                                type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">@can('isAnalistaPoda', \App\Models\User::class)  Atribuídas @else Deferidas @endcan</a>
+                        </li>
+                    @endcan
+                    @can ('isAnalistaPoda', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'concluidas') active @endif" id="solicitacoes-concluidas-tab"
+                                type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">Concluídas</a>
+                        </li>
+                    @endcan
+                    @can ('isSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-indeferidas-tab"
                                 type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('podas.index', 'indeferidas')}}">Indeferidas</a>
                         </li>
                     @endcan
@@ -77,18 +85,6 @@
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
                                                     <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
-                                                    @can('isAnalistaPoda', \App\Models\User::class)
-                                                        @if($filtro ==  "concluidas")
-                                                            <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
-                                                                <img class="icon-licenciamento"
-                                                            @if ($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
-                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
-                                                            @else
-                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
-                                                            @endif alt="Icone de relatório">
-                                                            </a>
-                                                        @endif
-                                                    @endcan
                                                     @can('isSecretario', \App\Models\User::class)
                                                         @if($filtro != "indeferidas")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
