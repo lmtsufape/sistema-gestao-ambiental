@@ -43,7 +43,7 @@
                                 <input id="condicoes" class="form-control" disabled
                                     type="text" name="condicoes" value="{{ $laudo->condicoes }}" autocomplete="condicoes">
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label for="localizacao">Localização</label>
                                 <input id="localizacao"
                                     class="form-control simple-field-data-mask" disabled

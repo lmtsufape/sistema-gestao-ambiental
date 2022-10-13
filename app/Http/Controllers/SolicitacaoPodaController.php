@@ -32,22 +32,21 @@ class SolicitacaoPodaController extends Controller
 
         $userPolicy = new UserPolicy();
         if ($userPolicy->isAnalistaPoda(auth()->user())) {
-            $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])
-                ->where('analista_id', auth()->user()->id)
+            if(!in_array($filtro, ['encaminhadas', 'concluidas'])) {
+                $filtro = 'encaminhadas';
+            }
+            $concluidas = SolicitacaoPoda::where('analista_id', auth()->user()->id)
+                ->whereHas('laudo')
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
-            $deferidas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
-                ->whereIn('status', [1, 2, 4])
+            $encaminhadas = SolicitacaoPoda::whereNotIn('id', $concluidas->pluck('id'))
+                ->where('status', 4)
                 ->where('analista_id', auth()->user()->id)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(20);
             switch ($filtro) {
-                case 'deferidas':
-                    $solicitacoes = $deferidas;
-                    break;
-                case 'pendentes':
-                    $filtro = 'deferidas';
-                    $solicitacoes = $deferidas;
+                case 'encaminhadas':
+                    $solicitacoes = $encaminhadas;
                     break;
                 case 'concluidas':
                     $solicitacoes = $concluidas;
@@ -57,19 +56,21 @@ class SolicitacaoPodaController extends Controller
 
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
         } else {
+            if(!in_array($filtro, ['pendentes', 'deferidas', 'indeferidas', 'encaminhadas'])) {
+                $filtro = 'pendentes';
+            }
             switch ($filtro) {
                 case 'pendentes':
-                    $solicitacoes = SolicitacaoPoda::whereIn('status', [1, 4])->orderBy('created_at', 'DESC')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', SolicitacaoPoda::STATUS_ENUM['registrada'])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'deferidas':
-                    $concluidas = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
-                    $solicitacoes = SolicitacaoPoda::where('status', '2')->whereNotIn('id', $concluidas->pluck('id'))->orderBy('created_at', 'DESC')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', SolicitacaoPoda::STATUS_ENUM['deferido'])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
                 case 'indeferidas':
-                    $solicitacoes = SolicitacaoPoda::where('status', '3')->orderBy('created_at', 'DESC')->paginate(20);
+                    $solicitacoes = SolicitacaoPoda::where('status', SolicitacaoPoda::STATUS_ENUM['indeferido'])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
-                case 'concluidas':
-                    $solicitacoes = SolicitacaoPoda::whereRelation('visita.relatorio', 'aprovacao', Relatorio::APROVACAO_ENUM['aprovado'])->orderBy('created_at', 'DESC')->paginate(20);
+                case 'encaminhadas':
+                    $solicitacoes = SolicitacaoPoda::where('status', SolicitacaoPoda::STATUS_ENUM['encaminhada'])->orderBy('created_at', 'DESC')->paginate(20);
                     break;
             }
             $analistas = User::analistasPoda();
@@ -238,7 +239,7 @@ class SolicitacaoPodaController extends Controller
         }
         $solicitacao->update();
 
-        return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avalida com sucesso');
+        return redirect()->route('podas.index', 'pendentes')->with('success', 'Solicitação de poda/supressão avaliada com sucesso');
     }
 
     /**

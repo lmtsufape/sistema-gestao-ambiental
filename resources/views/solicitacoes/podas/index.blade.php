@@ -13,8 +13,8 @@
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <div class="form-row">
-                    <div class="col-md-8">
-                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com relatório aprovado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
+                    <div class="col-md-12">
+                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com laudo enviado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
@@ -34,16 +34,24 @@
                         </li>
                     @endcan
                     <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
-                            type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">@can('isAnalistaPoda', \App\Models\User::class)  Atribuídas @else Deferidas @endcan</a>
+                        <a class="nav-link @if($filtro == 'encaminhadas') active @endif" id="solicitacoes-arquivadas-tab"
+                            type="button" role="tab" @if($filtro == 'encaminhadas') aria-selected="true" @endif href="{{route('podas.index', 'encaminhadas')}}">Encaminhadas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if($filtro == 'concluidas') active @endif" id="solicitacoes-concluidas-tab"
-                            type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">Concluídas</a>
-                    </li>
-                    @can('isSecretario', \App\Models\User::class)
+                    @can ('isSecretario', \App\Models\User::class)
                         <li class="nav-item">
-                            <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-arquivadas-tab"
+                            <a class="nav-link @if($filtro == 'deferidas') active @endif" id="solicitacoes-aprovadas-tab"
+                                type="button" role="tab" @if($filtro == 'deferidas') aria-selected="true" @endif href="{{route('podas.index', 'deferidas')}}">@can('isAnalistaPoda', \App\Models\User::class)  Atribuídas @else Deferidas @endcan</a>
+                        </li>
+                    @endcan
+                    @can ('isAnalistaPoda', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'concluidas') active @endif" id="solicitacoes-concluidas-tab"
+                                type="button" role="tab" @if($filtro == 'concluidas') aria-selected="true" @endif href="{{route('podas.index', 'concluidas')}}">Concluídas</a>
+                        </li>
+                    @endcan
+                    @can ('isSecretario', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'indeferidas') active @endif" id="solicitacoes-indeferidas-tab"
                                 type="button" role="tab" @if($filtro == 'indeferidas') aria-selected="true" @endif href="{{route('podas.index', 'indeferidas')}}">Indeferidas</a>
                         </li>
                     @endcan
@@ -76,30 +84,26 @@
                                                 <td style="text-align: center">{{ucfirst($solicitacao->statusSolicitacao())}}</td>
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
-                                                    @can('isAnalistaPoda', \App\Models\User::class)
-                                                        @if($filtro ==  "concluidas")
-                                                            <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}">
-                                                                <img class="icon-licenciamento"
-                                                            @if ($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
-                                                                src="{{asset('img/Relatório Aprovado.svg')}}"
+                                                    @can ('isAnalistaPoda', \App\Models\User::class)
+                                                        <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;">
+                                                            @if ($solicitacao->laudo()->exists())
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar">
                                                             @else
-                                                                src="{{asset('img/Relatório Sinalizado.svg')}}"
-                                                            @endif alt="Icone de relatório">
-                                                            </a>
-                                                        @endif
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar">
+                                                            @endif
+                                                        </a>
                                                     @endcan
                                                     @can('isSecretario', \App\Models\User::class)
+                                                        <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;">
+                                                            @if ($solicitacao->laudo()->exists())
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar">
+                                                            @else
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar">
+                                                            @endif
+                                                        </a>
                                                         @if($filtro != "indeferidas")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
-                                                            <a class="icon-licenciamento" title="Agendar visita" id="btn-criar-visita-{{$solicitacao->id}}" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"
-                                                            data-toggle="modal" @if($solicitacao->visita) data-target="#modal-agendar-visita-editar" onclick="adicionarIdEditar({{$solicitacao->visita->id}})" @else data-target="#modal-agendar-visita" onclick="adicionarId({{$solicitacao->id}})" @endif ><img class="icon-licenciamento" width="20px;" src="{{asset('img/Agendar.svg')}}"  alt="Agendar uma visita"></a>
                                                         @endif
-                                                        @if($solicitacao->visita && $solicitacao->visita->relatorio!=null)<a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $solicitacao->visita->relatorio])}}"><img class="icon-licenciamento" @if($solicitacao->visita->relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['aprovado'])
-                                                            src="{{asset('img/Relatório Aprovado.svg')}}"
-                                                        @else
-                                                            src="{{asset('img/Relatório Sinalizado.svg')}}"
-                                                        @endif alt="Icone de relatório"></a>@endif
                                                     @endcan
                                                 </td>
                                             </tr>
@@ -136,150 +140,45 @@
                                     Visualizar solicitação
                                 </div>
                             </div>
+                        @can('isSecretario', \App\Models\User::class)
                             <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar solicitação">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Avaliar solicitação
+                                    Avaliar solicitação (laudo não enviado)
                                 </div>
                             </div>
-                        @can('isSecretario', \App\Models\User::class)
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação (laudo enviado)
+                                </div>
+                            </div>
                             <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir analista">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
                                     Atribuir solicitação a um analista
                                 </div>
                             </div>
-                            <div title="Agendar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Agendar.svg')}}" alt="Agendar visita">
+                        @endcan
+                        @can ('isAnalistaPoda', \App\Models\User::class)
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar laudo">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Agendar uma visita
+                                    Avaliar solicitação (Laudo enviado)
+                                </div>
+                            </div>
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Laudo com pendências">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação (Laudo com pendências)
                                 </div>
                             </div>
                         @endcan
-                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
-                            <div style="font-size: 15px;" class="aling-middle mx-3">
-                                Relatório aprovado
-                            </div>
-                        </div>
-                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
-                            <div style="font-size: 15px;" class="aling-middle mx-3">
-                                Relatório com pendências
-                            </div>
-                        </div>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    @can('isSecretario', \App\Models\User::class)
-        <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Agendar visita para a solicitação</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12" id="alerta-agendar">
-                            </div>
-                        </div>
-                        <form id="form-criar-visita-solicitacao" method="POST" action="{{route('solicitacoes.visita.create')}}">
-                            @csrf
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input type="date" name="data" id="data" class="form-control @error('data') is-invalid @enderror" value="{{old('data')}}" required>
-
-                                    @error('data')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <input type="hidden" name="solicitacao_id" id="solicitacao_id" value="">
-                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="analista" id="analista-visita" class="form-control @error('analista') is-invalid @enderror" required>
-                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
-                                        @foreach ($analistas as $analista)
-                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('analista')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                        <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-solicitacao">Agendar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="modal-agendar-visita-editar" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar visita</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-editar-visita-denuncia" method="POST" action="{{route('visitas.visita.edit')}}">
-                            @csrf
-                            <input type="hidden" name="filtro" id="filtro" value="{{$filtro}}">
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="data">{{__('Data da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input type="date" name="data" id="data-editar" class="form-control @error('data') is-invalid @enderror" required value="{{old('data')}}">
-
-                                    @error('data')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <input type="hidden" name="visita_id" id="visita_id" value="">
-                                    <label for="analista">{{__('Selecione o analista da visita')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="analista" id="analista-visita-editar" class="form-control @error('analista') is-invalid @enderror" required>
-                                        <option value="" selected disabled>-- {{__('Selecione o analista da visita')}} --</option>
-                                        @foreach ($analistas as $analista)
-                                            <option @if(old('analista') == $analista->id) selected @endif value="{{$analista->id}}">{{$analista->name}}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('analista')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    @if($filtro !=  "concluidas")
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                            <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-editar-visita-denuncia">Editar</button>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endcan
     @can('isSecretario', \App\Models\User::class)
         <div class="modal fade" id="modal-atribuir" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -325,41 +224,8 @@
             </div>
         </div>
     @endcan
-    @if (old('solicitacao_id') != null)
-        @push ('scripts')
-            <script>
-                $(document).ready(function() {
-                    $('#link-solicitacoes-aprovados').click();
-                    $("#btn-criar-visita-{{old('solicitacao_id')}}").click();
-                });
-            </script>
-        @endpush
-    @endif
     @push ('scripts')
         <script>
-            function adicionarId(id) {
-                document.getElementById('solicitacao_id').value = id;
-                $("#alerta-agendar").html("");
-                $("#analista-visita").val("");
-                document.getElementById('data').value = "";
-                $.ajax({
-                    url:"{{route('podas.info.ajax')}}",
-                    type:"get",
-                    data: {"solicitacao_id": id},
-                    dataType:'json',
-                    success: function(solicitacao) {
-                        if(solicitacao.analista_visita != null){
-                            $("#analista-visita").val(solicitacao.analista_visita.id).change();
-                            document.getElementById('data').value = solicitacao.marcada;
-                            let alerta = `<div class="alert alert-success" role="alert">
-                                            <p>Visita da solicitação agendada.</p>
-                                          </div>`;
-                            $("#alerta-agendar").append(alerta);
-                        }
-                    }
-                });
-            }
-
             function adicionarIdAtribuir(id) {
                 document.getElementById('solicitacao_id_analista').value = id;
                 $("#alerta-atribuida").html("");
@@ -376,25 +242,6 @@
                                             <p>Solicitação atribuída a um analista.</p>
                                         </div>`;
                             $("#alerta-atribuida").append(alerta);
-                        }
-                    }
-                });
-            }
-        </script>
-        <script>
-            function adicionarIdEditar(id) {
-                document.getElementById('visita_id').value = id;
-                $("#analista-visita-editar").val("");
-                document.getElementById('data-editar').value = "";
-                $.ajax({
-                    url:"{{route('visitas.info.ajax')}}",
-                    type:"get",
-                    data: {"visita_id": id},
-                    dataType:'json',
-                    success: function(visita) {
-                        if(visita.analista_visita != null){
-                            $("#analista-visita-editar").val(visita.analista_visita.id).change();
-                            document.getElementById('data-editar').value = visita.marcada;
                         }
                     }
                 });
