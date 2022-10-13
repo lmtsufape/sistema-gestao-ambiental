@@ -19,13 +19,18 @@ class BoletoController extends Controller
     {
         $this->authorize('isSecretarioOrFinanca', auth()->user());
 
+        if(!in_array($filtragem, ['pendentes', 'pagos', 'vencidos', 'cancelados'])) {
+            $filtragem = 'pendentes';
+        }
+
         $retorno = $this->filtrarBoletos($request);
         $vencidos = $retorno[0];
         $pendentes = $retorno[1];
         $pagos = $retorno[2];
-        $dataAte = $retorno[3];
-        $dataDe = $retorno[4];
-        $filtro = $retorno[5];
+        $cancelados = $retorno[3];
+        $dataAte = $retorno[4];
+        $dataDe = $retorno[5];
+        $filtro = $retorno[6];
 
         switch ($filtragem) {
             case 'pendentes':
@@ -36,6 +41,9 @@ class BoletoController extends Controller
                 break;
             case 'vencidos':
                 $pagamentos = $vencidos;
+                break;
+            case 'cancelados':
+                $pagamentos = $cancelados;
                 break;
         }
 
@@ -48,6 +56,7 @@ class BoletoController extends Controller
         $dataDe = $request->dataDe;
         $filtro = $request->filtro;
         $vencidos = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido']);
+        $cancelados = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado']);
         $pendentes = BoletoCobranca::where(function ($qry) {
             $qry->whereNull('status_pagamento')
                 ->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']);
@@ -58,17 +67,20 @@ class BoletoController extends Controller
             $vencidos = $vencidos->where($condicao, '>=', $dataDe);
             $pendentes = $pendentes->where($condicao, '>=', $dataDe);
             $pagos = $pagos->where($condicao, '>=', $dataDe);
+            $cancelados = $cancelados->where($condicao, '>=', $dataDe);
         }
         if ($dataAte != null) {
             $vencidos = $vencidos->where($condicao, '<=', $dataAte);
             $pendentes = $pendentes->where($condicao, '<=', $dataAte);
             $pagos = $pagos->where($condicao, '<=', $dataAte);
+            $cancelados = $cancelados->where($condicao, '<=', $dataAte);
         }
         $vencidos = $vencidos->orderBy('created_at', 'DESC')->paginate(20);
         $pendentes = $pendentes->orderBy('created_at', 'DESC')->paginate(20);
         $pagos = $pagos->orderBy('created_at', 'DESC')->paginate(20);
+        $cancelados = $cancelados->orderBy('created_at', 'DESC')->paginate(20);
 
-        return [$vencidos, $pendentes, $pagos, $dataAte, $dataDe, $filtro];
+        return [$vencidos, $pendentes, $pagos, $cancelados, $dataAte, $dataDe, $filtro];
     }
 
     /**
@@ -79,7 +91,7 @@ class BoletoController extends Controller
         $retorno = $this->filtrarBoletos($request);
 
         $pdf = PDF::loadview('pdf/boletos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2],
-            'dataAte' => $retorno[3], 'dataDe' => $retorno[4], 'filtro' => $retorno[5], ]);
+            'cancelados' => $retorno[3], 'dataAte' => $retorno[4], 'dataDe' => $retorno[5], 'filtro' => $retorno[6], ]);
 
         return $pdf->setPaper('a4')->stream('boletos.pdf');
     }

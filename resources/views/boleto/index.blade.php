@@ -30,6 +30,10 @@
                         <a class="nav-link @if($filtragem == 'vencidos') active @endif" id="boletos-arquivadas-tab"
                             type="button" role="tab" @if($filtragem == 'vencidos') aria-selected="true" @endif href="{{route('boletos.index', 'vencidos')}}">Vencidos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if($filtragem == 'cancelados') active @endif" id="boletos-cancelados-tab"
+                            type="button" role="tab" @if($filtragem == 'cancelados') aria-selected="true" @endif href="{{route('boletos.index', 'cancelados')}}">Cancelados</a>
+                    </li>
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
@@ -71,7 +75,7 @@
                                 </div>
                                 @if($pagamentos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
-                                        Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @endswitch
+                                        Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @case('cancelados')cancelado @break @endswitch
                                     </div>
                                 @endif
                             </div>
