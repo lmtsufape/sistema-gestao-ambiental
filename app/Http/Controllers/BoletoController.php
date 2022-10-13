@@ -163,6 +163,25 @@ class BoletoController extends Controller
     }
 
     /**
+     * Realiza a ação de baixar (cancelar) boleto
+     * @param BoletoCobranca $boleto
+     */
+    private function baixarBoleto(BoletoCobranca $boleto)
+    {
+        if ($boleto && in_array($boleto->status_pagamento, [2, 3])) {
+            $xmlBoletoController = new XMLCoderController();
+            try {
+                $xmlBoletoController->gerarBaixarBoleto($boleto);
+
+                return redirect()->back()->with('success', 'Boleto cancelado com sucesso!');
+            } catch (ErrorRemessaException $e) {
+                throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
+            }
+        }
+        return redirect()->back()->with('error', 'Esse boleto não pode ser cancelado.');
+    }
+
+    /**
      * Formata a mensagem de erro
      *
      * @param string $mensagem
