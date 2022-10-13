@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <div class="form-row">
                     <div class="col-md-12">
-                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com relatório aprovado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
+                        <h4 class="card-title">Solicitações de poda/supressão @if($filtro == "concluidas") com laudo enviado @else @can('isAnalistaPoda', \App\Models\User::class) atribuídas @else {{$filtro}} @endcan @endif</h4>
                     </div>
                 </div>
                 <div div class="form-row">
