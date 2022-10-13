@@ -84,8 +84,23 @@
                                                 <td style="text-align: center">{{ucfirst($solicitacao->statusSolicitacao())}}</td>
                                                 <td style="text-align: center">
                                                     <a class="icon-licenciamento" title="Visualizar pedido" href=" {{route('podas.show', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar"></a>
-                                                    <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Avaliação.svg')}}"  alt="Avaliar"></a>
+                                                    @can ('isAnalistaPoda', \App\Models\User::class)
+                                                        <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;">
+                                                            @if ($solicitacao->laudo()->exists())
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar">
+                                                            @else
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar">
+                                                            @endif
+                                                        </a>
+                                                    @endcan
                                                     @can('isSecretario', \App\Models\User::class)
+                                                        <a class="icon-licenciamento" title="Avaliar pedido" href=" {{route('podas.edit', $solicitacao)}} " style="cursor: pointer;">
+                                                            @if ($solicitacao->laudo()->exists())
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar">
+                                                            @else
+                                                                <img  class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar">
+                                                            @endif
+                                                        </a>
                                                         @if($filtro != "indeferidas")
                                                             <a class="icon-licenciamento" title="Atribuir analista" data-toggle="modal" data-target="#modal-atribuir" onclick="adicionarIdAtribuir({{$solicitacao->id}})" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img  class="icon-licenciamento" width="20px;" src="{{asset('img/Atribuir analista.svg')}}"  alt="Atribuir a um analista"></a>
                                                         @endif
@@ -125,13 +140,19 @@
                                     Visualizar solicitação
                                 </div>
                             </div>
+                        @can('isSecretario', \App\Models\User::class)
                             <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
-                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Avaliação.svg')}}" alt="Avaliar solicitação">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Avaliar solicitação">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
-                                    Avaliar solicitação
+                                    Avaliar solicitação (laudo não enviado)
                                 </div>
                             </div>
-                        @can('isSecretario', \App\Models\User::class)
+                            <div title="Avaliar solicitação" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Avaliar solicitação">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação (laudo enviado)
+                                </div>
+                            </div>
                             <div title="Atribuir analista" class="d-flex align-items-center my-1 pt-0 pb-1">
                                 <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Atribuir analista.svg')}}" alt="Atribuir analista">
                                 <div style="font-size: 15px;" class="aling-middle mx-3">
@@ -139,18 +160,20 @@
                                 </div>
                             </div>
                         @endcan
-                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar relatório">
-                            <div style="font-size: 15px;" class="aling-middle mx-3">
-                                Relatório aprovado
+                        @can ('isAnalistaPoda', \App\Models\User::class)
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar laudo">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação (Laudo enviado)
+                                </div>
                             </div>
-                        </div>
-                        <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
-                            <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Visualizar relatório">
-                            <div style="font-size: 15px;" class="aling-middle mx-3">
-                                Relatório com pendências
+                            <div title="Visualizar relatório" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/Relatório Sinalizado.svg')}}" alt="Laudo com pendências">
+                                <div style="font-size: 15px;" class="aling-middle mx-3">
+                                    Avaliar solicitação (Laudo com pendências)
+                                </div>
                             </div>
-                        </div>
+                        @endcan
                     </ul>
                 </div>
             </div>
