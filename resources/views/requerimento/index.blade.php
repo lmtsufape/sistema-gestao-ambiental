@@ -107,9 +107,8 @@
                                                         @if($requerimento->licenca != null)
                                                             @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
-                                                            @else
-                                                                @if($filtro != "cancelados")
-                                                                    <a style="cursor: pointer;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                @if($filtro == "finalizados")
+                                                                    <a style="cursor: pointer; margin-left: 2px;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
                                                                 @endif
                                                             @endif
                                                         @elseif($requerimento->ultimaVisitaRelatorioAceito() != null)

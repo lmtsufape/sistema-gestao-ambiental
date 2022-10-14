@@ -30,7 +30,7 @@
                                     <h4 class="alert-heading">Licença aprovada</h4>
                                     @can('isSecretario', auth()->user())
                                         <hr>
-                                        <p class="mb-0">Essa licença já foi aprovado, logo edições estão desativadas.</p>
+                                        {{--<p class="mb-0">Essa licença já foi aprovado, logo edições estão desativadas.</p>--}}
                                     @endcan
                                 </div>
                             @elseif($licenca->status == \App\Models\Licenca::STATUS_ENUM['revisar'])

@@ -115,7 +115,7 @@ class LicencaController extends Controller
         $licenca = Licenca::find($id);
         $licenca->tipo = $request->input('tipo_de_licença');
         $licenca->validade = $request->data_de_validade;
-        $licenca->status = Licenca::STATUS_ENUM['gerada'];
+        //$licenca->status = Licenca::STATUS_ENUM['gerada'];
 
         if ($request->file('licença') != null) {
             $licenca->caminho = $licenca->salvarLicenca($request->file('licença'), $licenca->requerimento);
@@ -123,7 +123,7 @@ class LicencaController extends Controller
 
         $licenca->update();
 
-        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença atualizada com sucesso!']);
+        return redirect(route('requerimentos.index', 'finalizados'))->with(['success' => 'Licença atualizada com sucesso!']);
     }
 
     /**
