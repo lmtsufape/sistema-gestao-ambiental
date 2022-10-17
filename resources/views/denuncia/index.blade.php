@@ -44,6 +44,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
+                                            <th scope="col" style="text-align: center">Data de requerimento</th>
                                             <th scope="col" style="text-align: center">Empresa/serviço</th>
                                             <th scope="col" style="text-align: center">Endereço</th>
                                             <th scope="col" style="text-align: center">Analista</th>
@@ -54,6 +55,7 @@
                                         @foreach ($denuncias as $i => $denuncia)
                                             <tr>
                                                 <th>{{ ($denuncias->currentpage()-1) * $denuncias->perpage() + $loop->index + 1 }}</th>
+                                                <td>{{date('d/m/Y H:i', strtotime($denuncia->created_at))}}</td>
                                                 <td style="text-align: center">{{ $denuncia->empresa_id ? $denuncia->empresa->nome : $denuncia->empresa_nao_cadastrada }}</td>
                                                 <td style="text-align: center">
                                                     {{ $denuncia->empresa_id ? $denuncia->empresa->endereco->enderecoSimplificado() : $denuncia->endereco }}
