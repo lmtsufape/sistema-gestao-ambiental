@@ -107,7 +107,7 @@ class BoletoController extends Controller
     {
         $xmlBoletoController = new XMLCoderController();
         $boleto = $requerimento->boletos->last();
-        if (is_null($boleto) || is_null($boleto->nosso_numero) || is_null($boleto->URL)) {
+        if (is_null($boleto) || is_null($boleto->nosso_numero) || is_null($boleto->URL) || $boleto->cancelado) {
             return $this->gerarBoleto($requerimento);
         }
         if ($boleto->data_vencimento >= now()) {

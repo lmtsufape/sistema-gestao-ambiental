@@ -30,6 +30,11 @@ class BoletoCobranca extends Model
         'cancelado' => 4,
     ];
 
+    public function getCanceladoAttribute()
+    {
+        return $this->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado'];
+    }
+
     public function requerimento(): BelongsTo
     {
         return $this->belongsTo(Requerimento::class, 'requerimento_id');
@@ -79,4 +84,6 @@ class BoletoCobranca extends Model
         Storage::put($caminho_arquivo.$documento_nome, $string);
         $this->resposta_baixar_boleto = $caminho_arquivo . $documento_nome;
     }
+
+
 }
