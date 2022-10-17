@@ -606,13 +606,15 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <div>
-                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->cancelado)
+                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->cancelado && !$requerimento->boletos->last()->pago)
                                 <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#boleto-cancelar">Cancelar boleto</button>
                             @endif
                         </div>
                         <div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                            <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
+                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->pago)
+                                <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
+                            @endif
                         </div>
                     </div>
                 </div>
