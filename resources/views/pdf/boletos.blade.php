@@ -193,5 +193,53 @@
             </div>
         </div>
     @endif
+    <br/><div class="quebrar_pagina"></div>
+    <hr class="line-title">
+    <h4>Boletos cancelados</h4>
+    @php
+        $total = 0;
+    @endphp
+    @if ($cancelados->count() > 0)
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th scope="col">Data de criação</th>
+                        <th scope="col">Data de vencimento</th>
+                        <th scope="col">Requerimento</th>
+                        <th scope="col">Empresa/Serviço</th>
+                        <th scope="col">Valor R$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cancelados as $i => $boleto)
+                        @php
+                            $total += $boleto->requerimento->valor;
+                        @endphp
+                        <tr>
+                            <th>{{$i+1}}</th>
+                            <td>{{date('d/m/Y', strtotime($boleto->created_at))}}</td>
+                            <td>{{date('d/m/Y', strtotime($boleto->data_vencimento))}}</td>
+                            <td>{{$boleto->requerimento->tipoString() . ' - ' . $boleto->requerimento->tipoDeLicenca()}}</td>
+                            <td>{{$boleto->requerimento->empresa->nome}}</td>
+                            <td>{{$boleto->requerimento->valor}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align: right">
+                Valor total: <strong>R${{number_format($total, 2, ',', '.')}}</strong>
+            </div>
+        </div>
+    @else
+        <div class="row">
+            <div class="col-md-12">
+                Nenhum boleto cancelado no período informado.
+            </div>
+        </div>
+    @endif
 </body>
 </html>
