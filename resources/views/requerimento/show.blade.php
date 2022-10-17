@@ -612,7 +612,7 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->pago)
+                            @if (!$requerimento->boletos()->exists() || ($requerimento->boletos->last() && !$requerimento->boletos->last()->pago))
                                 <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
                             @endif
                         </div>
