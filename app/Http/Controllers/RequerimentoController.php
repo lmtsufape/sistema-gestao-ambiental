@@ -391,12 +391,11 @@ class RequerimentoController extends Controller
         if (! is_null($boleto) && 3 == $boleto->status_pagamento) {
             return redirect()->back()->with('error', 'Boleto já pago, não é possível alterar o boleto.');
         }
-        $this->atribuirValor($request, $requerimento);
-        $requerimento->save();
-        $requerimento->refresh();
-        if ($requerimento->valor == 0) {
+        if ($request->input('opcão_taxa_serviço') == Requerimento::DEFINICAO_VALOR_ENUM['manual'] && $request->input('valor_da_taxa_de_serviço') == 0) {
             return redirect()->back()->with('error', 'O valor do requerimento não pode ser 0.');
         }
+        $this->atribuirValor($request, $requerimento);
+        $requerimento->save();
         try {
             $boletoController = new BoletoController();
             $boletoController->boleto($requerimento);
