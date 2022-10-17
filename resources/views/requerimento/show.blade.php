@@ -597,12 +597,16 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                                @if ($requerimento->boletos->last())
+                                    <p> <strong>Obs:</strong> O boleto deste requerimento está cancelado, caso necessário atualizar o valor do requerimento para gerar um novo boleto.</p>
+                                @endif
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <div>
-                            @if ($requerimento->boletos->last())
+                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->cancelado)
                                 <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#boleto-cancelar">Cancelar boleto</button>
                             @endif
                         </div>
