@@ -393,6 +393,10 @@ class RequerimentoController extends Controller
         }
         $this->atribuirValor($request, $requerimento);
         $requerimento->save();
+        $requerimento->refresh();
+        if ($requerimento->valor == 0) {
+            return redirect()->back()->with('error', 'O valor do requerimento não pode ser 0.');
+        }
         try {
             $boletoController = new BoletoController();
             $boletoController->boleto($requerimento);
