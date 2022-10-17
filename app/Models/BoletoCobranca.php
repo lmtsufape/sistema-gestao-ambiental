@@ -27,7 +27,18 @@ class BoletoCobranca extends Model
         'pago' => 1,
         'nao_pago' => 2,
         'vencido' => 3,
+        'cancelado' => 4,
     ];
+
+    public function getCanceladoAttribute()
+    {
+        return $this->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado'];
+    }
+
+    public function getPagoAttribute()
+    {
+        return $this->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'];
+    }
 
     public function requerimento(): BelongsTo
     {
@@ -66,7 +77,18 @@ class BoletoCobranca extends Model
         delete_file($this->resposta_alterar_boleto);
         $caminho_arquivo = 'remessas/';
         $documento_nome = 'resposta_alterar_boleto_remessa_' . $this->id . '.xml';
-        $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
+        Storage::put($caminho_arquivo.$documento_nome, $string);
         $this->resposta_alterar_boleto = $caminho_arquivo . $documento_nome;
     }
+
+    public function salvarArquivoRespostaBaixarBoleto($string)
+    {
+        delete_file($this->resposta_baixar_boleto);
+        $caminho_arquivo = 'remessas/';
+        $documento_nome = 'resposta_baixar_boleto_remessa_' . $this->id . '.xml';
+        Storage::put($caminho_arquivo.$documento_nome, $string);
+        $this->resposta_baixar_boleto = $caminho_arquivo . $documento_nome;
+    }
+
+
 }

@@ -49,6 +49,7 @@ Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
+    Route::delete('/boletos/{boleto}', [BoletoController::class, 'baixarBoleto'])->name('boletos.destroy');
     Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
 
     Route::post('/requerimentos/salvar-checklist', [RequerimentoController::class, 'storeChecklist'])->name('requerimento.checklist');

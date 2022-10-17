@@ -97,6 +97,7 @@ class XMLCoderController extends Controller
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
                 $boleto->salvarArquivoResposta($response);
+                $boleto->save();
                 $this->salvarRespostaIncluirBoletoRemessa($boleto, $resultado);
                 break;
             default:
@@ -200,8 +201,8 @@ class XMLCoderController extends Controller
         }
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
-                $boleto->salvarArquivoResposta($response);
-                Storage::put('resposta_alterar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $boleto->salvarArquivoRespostaAlterarBoleto($response);
+                $boleto->save();
                 $this->salvarRespostaAlterarBoletoRemessa($boleto, $resultado);
                 break;
             default:
@@ -255,7 +256,9 @@ class XMLCoderController extends Controller
         }
         switch ($resultado['COD_RETORNO']['DADOS']) {
             case 0:
-                Storage::put('resposta_baixar_boleto_remessa_' . $boleto->id . '.xml', $response);
+                $boleto->salvarArquivoRespostaBaixarBoleto($response);
+                $boleto->status_pagamento = BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado'];
+                $boleto->save();
                 break;
             default:
                 throw new ErrorRemessaException($resultado['RETORNO']);

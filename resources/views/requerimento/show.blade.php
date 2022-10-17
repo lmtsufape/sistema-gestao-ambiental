@@ -19,11 +19,11 @@
                         {{session('success')}}
                     </div>
                 @endif
-                @error('error')
+                @if(session('error'))
                     <div class="alert alert-danger" role="alert">
-                        {{$message}}
+                        {{session('error')}}
                     </div>
-                @enderror
+                    @endif
                 <div class="shadow card" style="width: 100%;">
                     <div class="card-body">
                         <div class="row align-items-center justify-content-between">
@@ -597,12 +597,25 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                                @if ($requerimento->boletos->last())
+                                    <p> <strong>Obs:</strong> O boleto deste requerimento está cancelado, caso necessário atualizar o valor do requerimento para gerar um novo boleto.</p>
+                                @endif
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
+                    <div class="modal-footer justify-content-between">
+                        <div>
+                            @if ($requerimento->boletos->last() && !$requerimento->boletos->last()->cancelado && !$requerimento->boletos->last()->pago)
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#boleto-cancelar">Cancelar boleto</button>
+                            @endif
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                            @if (!$requerimento->boletos()->exists() || ($requerimento->boletos->last() && !$requerimento->boletos->last()->pago))
+                                <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="boleto-form-edit">Atualizar</button>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -729,6 +742,38 @@
             </div>
             </div>
         </div>
+       @if ($requerimento->boletos->last())
+        <div class="modal fade show" id="boleto-cancelar" data-backdrop="static" data-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header" style="background-color: #dc3545;">
+                         <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Cancelar boleto</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">×</span>
+                         </button>
+                     </div>
+                     <div class="modal-body">
+                         <form id="cancelar-boleto-form" method="POST" action="{{route('boletos.destroy', $requerimento->boletos->last())}}">
+                             @csrf
+                             @method('DELETE')
+                             <div class="row">
+                                 <div class="col-md-12">
+                                     <p><strong>Tem certeza que deseja cancelar o boleto deste requerimento?</strong></p>
+                                     <p>Essa ação não poderá ser desfeita.</p>
+                                 </div>
+                             </div>
+                         </form>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                         <button type="submit" class="btn btn-danger submeterFormBotao" form="cancelar-boleto-form">
+                             Cancelar boleto </button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+       @endif
     @endcan
 
     @push ('scripts')
