@@ -8,7 +8,7 @@
         <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#emissaoLicencaModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="padding-bottom: 0px;">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
@@ -20,13 +20,16 @@
                             </div>
                         </div>
                     </div>
+                    <p style="font-size: 12px; margin-top: 0px;">
+                        (requer login)
+                    </p>
                 </div>
             </button>
         </div>
         <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#renovacaoLicencaModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="padding-bottom: 0px;">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
@@ -38,6 +41,9 @@
                             </div>
                         </div>
                     </div>
+                    <p style="font-size: 12px; margin-top: 0px">
+                        (requer login)
+                    </p>
                 </div>
             </button>
         </div>
@@ -80,7 +86,7 @@
         <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#acompanhamentoSolicitacoesModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="padding-bottom: 0px;">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
@@ -92,13 +98,16 @@
                             </div>
                         </div>
                     </div>
+                    <p style="font-size: 12px; margin-top: 0px">
+                        (requer login)
+                    </p>
                 </div>
             </button>
         </div>
         <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesPodaModal">
                 <div class="card card-home">
-                    <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="card-body d-flex align-items-center justify-content-center" style="padding-bottom: 0px;">
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
@@ -110,6 +119,9 @@
                             </div>
                         </div>
                     </div>
+                    <p style="font-size: 12px; margin-top: 0px">
+                        (requer login)
+                    </p>
                 </div>
             </button>
         </div>
