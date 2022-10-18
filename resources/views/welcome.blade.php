@@ -5,7 +5,11 @@
 @else
 <x-app-layout>
     @section('content')
-        @include('pages.welcome')
+        @can('isRequerente', \App\Models\User::class)
+            @include('pages.welcome')
+        @elsecan('isSecretario', \App\Models\User::class)
+            @include('dashboard.secretario')
+        @endcan
     @endsection
 </x-app-layout>
 @endguest
