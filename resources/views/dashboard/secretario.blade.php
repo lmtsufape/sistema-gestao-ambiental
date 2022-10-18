@@ -66,6 +66,7 @@
         </div>
 
         <canvas id="pagamentosChart"></canvas>
+        <canvas id="pagamentosPie"></canvas>
     </div>
     @push ('scripts')
         <script>
@@ -148,6 +149,48 @@
                 $('.link-ordenacao').click(function() {
                     window.location = this.children[2].href;
                 });
+        </script>
+        <script>
+            Chart.register(ChartDataLabels);
+            const dadosPagamentosPie = @json($boletoData);
+
+            const dataPagamentosPie = {
+                labels: Object.keys(dadosPagamentosPie),
+                datasets: [{
+                    data: Object.values(dadosPagamentosPie),
+                    backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+                    hoverOffset: 0,
+                }]
+            };
+            const optionsPagamentosPie = {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Boletos por status',
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'black',
+                            pointStyle: 'rectRounded',
+                            usePointStyle: true,
+                        }
+                    },
+                    datalabels: {
+                        color: 'white'
+                    }
+                }
+            };
+            const configPagamentosPie = {
+                type: 'pie',
+                data: dataPagamentosPie,
+                options: optionsPagamentosPie
+            };
+            const myChartPagamentosPie = new Chart(
+                document.getElementById('pagamentosPie'),
+                configPagamentosPie
+            );
         </script>
     @endpush
     @endsection

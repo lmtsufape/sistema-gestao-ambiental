@@ -42,6 +42,7 @@ class WelcomeController extends Controller
                         $data['Cancelados'] = $canceladas;
                     }
 
+                    $boletoData = $this->totalBoleto($ordenacao);
 
                     $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
                     ->where('data_pagamento', '>=', Carbon::now()->subWeek())
@@ -76,6 +77,8 @@ class WelcomeController extends Controller
                         $data['Cancelados'] = $canceladas;
                     }
 
+                    $boletoData = $this->totalBoleto($ordenacao);
+
                     $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
                     ->where('data_pagamento', '>=', Carbon::now()->subMonth())
                     ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
@@ -107,6 +110,8 @@ class WelcomeController extends Controller
                     if ($canceladas > 0) {
                         $data['Cancelados'] = $canceladas;
                     }
+
+                    $boletoData = $this->totalBoleto($ordenacao);
 
                     $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
                     ->where('data_pagamento', '>=', Carbon::now()->subYear())
@@ -140,6 +145,8 @@ class WelcomeController extends Controller
                         $data['Cancelados'] = $canceladas;
                     }
 
+                    $boletoData = $this->totalBoleto($ordenacao);
+
                     $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
                     ->where('data_pagamento', '>=', Carbon::now()->subYears(5))
                     ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
@@ -171,6 +178,8 @@ class WelcomeController extends Controller
                         $data['Cancelados'] = $canceladas;
                     }
 
+                    $boletoData = $this->totalBoleto('7_dias');
+
                     $ordenacao = '7_dias';
                     $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
                     ->where('data_pagamento', '>=', Carbon::now()->subWeek())
@@ -191,7 +200,7 @@ class WelcomeController extends Controller
             }
             $titulo = $this->titulo($ordenacao);
 
-            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao'));
+            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData'));
         }
 
 
@@ -214,5 +223,57 @@ class WelcomeController extends Controller
                 break;
         }
         return $titulo;
+    }
+
+    private function totalBoleto($ordenacao) {
+        switch ($ordenacao) {
+            case '7_dias':
+                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
+                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
+                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
+                break;
+            case 'ultimo_mes':
+                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
+                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
+                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
+                break;
+            case 'meses':
+                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
+                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
+                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
+                break;
+            case 'anos':
+                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear(5));
+                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
+                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
+                break;
+        }
+        $boletoData = array();
+
+        $vencidos = $query
+        ->where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])
+        ->count();
+        if ($vencidos > 0) {
+            $boletoData['Vencidos'] = $vencidos;
+        }
+
+        $pagos = $query2
+        ->where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
+        ->count();
+        if ($pagos > 0) {
+            $boletoData['Pagos'] = $pagos;
+        }
+
+        $pendentes = $query3
+        ->where(function ($qry) {
+            $qry->whereNull('status_pagamento')
+                ->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']);
+        })->count();
+
+        if ($pendentes > 0) {
+            $boletoData['Pendentes'] = $pendentes;
+        }
+
+        return $boletoData;
     }
 }
