@@ -63,6 +63,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/visitas/editVisita', [VisitaController::class, 'editVisita'])->name('visitas.visita.edit');
     Route::get('/visitas/info', [VisitaController::class, 'infoVisita'])->name('visitas.info.ajax');
     Route::get('/requerimentos/visita-create-analista', [RequerimentoController::class, 'getAnalistaProcesso'])->name('requerimentos.get.analista');
+    Route::get('/requerimentos/{id}/protocolo', [RequerimentoController::class, 'protocoloRequerimento'])->name('requerimentos.protocolo');
+    Route::get('/requerimentos/{id}/protocolo-baixar', [RequerimentoController::class, 'baixarProtocoloRequerimento'])->name('requerimentos.protocolo.baixar');
 
     Route::put('usuarios/atualizar-endereco', [UserController::class, 'atualizarEndereco'])->name('usuarios.atualizar.endereco');
     Route::put('usuarios/atualizar-dados-basicos', [UserController::class, 'atualizarDadosBasicos'])->name('usuarios.dados');

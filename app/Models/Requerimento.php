@@ -179,6 +179,16 @@ class Requerimento extends Model
         return $titulo.$this->tipoDeLicenca();
     }
 
+    public function protocoloTipoDeLicenca()
+    {
+        $titulo = "Licença Ambiental Municipal ";
+        if ($this->tipoDeLicenca() != 'simplificada' && $this->tipoDeLicenca() != 'prévia') {
+            $titulo .= "de ";
+        }
+
+        return $titulo.ucfirst($this->tipoDeLicenca());
+    }
+
     public function ultimaVisitaMarcada()
     {
         return $this->visitas()->latest('data_marcada')->first();

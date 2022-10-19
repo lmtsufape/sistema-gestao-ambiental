@@ -87,13 +87,39 @@ class Empresa extends Model
                 return 'Baixo';
                 break;
             case Cnae::POTENCIAL_POLUIDOR_ENUM['medio']:
-                return 'Médio';
+                return 'MÉDIO';
                 break;
             case Cnae::POTENCIAL_POLUIDOR_ENUM['alto']:
                 return 'Alto';
                 break;
             case Cnae::POTENCIAL_POLUIDOR_ENUM['a_definir']:
                 return 'A definir';
+                break;
+        }
+    }
+
+    /**
+     * Retorna o maior pontecial poluidor da empresa.
+     *
+     * @return string $string
+     */
+    public function porte()
+    {
+        switch ($this->porte) {
+            case Empresa::PORTE_ENUM['micro']:
+                return 'Micro';
+                break;
+            case Empresa::PORTE_ENUM['pequeno']:
+                return 'Pequeno';
+                break;
+            case Empresa::PORTE_ENUM['medio']:
+                return 'Médio';
+                break;
+            case Empresa::PORTE_ENUM['grande']:
+                return 'Grande';
+                break;
+            case Empresa::PORTE_ENUM['especial']:
+                return 'Especial';
                 break;
         }
     }

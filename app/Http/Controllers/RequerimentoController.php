@@ -30,8 +30,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class RequerimentoController extends Controller
 {
@@ -713,5 +715,40 @@ class RequerimentoController extends Controller
         ];
 
         return response()->json($requerimentoInfo);
+    }
+
+    /**
+     * Recupera o analista de processo atribuído ao requerimento se ele existir.
+     *
+     * @param Request $request id do requerimento
+     * @throws AuthorizationException
+     */
+    public function protocoloRequerimento($id)
+    {
+        $requerimento = Requerimento::find($id);
+        if (! $requerimento->protocolo) {
+            $requerimento->protocolo = $this->gerarProtocolo($requerimento);
+            $requerimento->update();
+        }
+
+        return view('requerimento.protocolo', compact('requerimento'));
+    }
+
+    public function baixarProtocoloRequerimento($id)
+    {
+        $requerimento = Requerimento::find($id);
+        $protocolo = PDF::loadview('pdf/protocolo', ['requerimento' => $requerimento]);
+        return $protocolo->setPaper('a4')->stream('protocolo.pdf');
+    }
+
+    private function gerarProtocolo(Requerimento $requerimento)
+    {
+        $protocolo = null;
+        do {
+            $protocolo = preg_replace(['/[ ]/', '/[^0-9]/'], ['', ''], $requerimento->created_at);
+            $check = Requerimento::where('protocolo', $protocolo)->first();
+        } while ($check != null);
+
+        return $protocolo;
     }
 }
