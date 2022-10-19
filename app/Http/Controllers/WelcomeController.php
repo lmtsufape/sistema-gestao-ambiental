@@ -8,6 +8,7 @@ use App\Models\Noticia;
 use App\Models\Requerimento;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -22,185 +23,54 @@ class WelcomeController extends Controller
         ->only(['id', 'nome', 'cpf_cnpj']);
 
 
-        if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
+        if (auth()->user() && auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $ordenacao = $request->ordenacao;
-
 
             switch ($ordenacao) {
                 case '7_dias':
-                    $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
-                    ->where('created_at', '>=', Carbon::now()->subWeek())
-                    ->get()
-                    ->groupBy('status_string')
-                    ->map->count();
+                    $data = $this->requerimentosPieChart(Carbon::now()->subWeek());
+                    $boletoData = $this->totalBoleto(Carbon::now()->subWeek());
+                    $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek());
 
-                    $canceladas = Requerimento::where('created_at', '>=', Carbon::now()->subWeek())
-                    ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-                    ->orWhere('cancelada', true)
-                    ->count();
-                    if ($canceladas > 0) {
-                        $data['Cancelados'] = $canceladas;
-                    }
-
-                    $boletoData = $this->totalBoleto($ordenacao);
-
-                    $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-                    ->where('data_pagamento', '>=', Carbon::now()->subWeek())
-                    ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
-                    ->selectRaw("
-                    sum(requerimentos.valor) AS sum,
-                    extract(DAY FROM boleto_cobrancas.data_pagamento) AS day
-                    ")
-                    ->orderBy('day')
-                    ->groupBy('day')
-
-                    ->get();
-
-                    $pagamentos = $collection->toArray();
-                    $pagamentos = array_reduce($pagamentos, function ($result, $item) {
-                        $result[$item['day']] = $item['sum'];
-                        return $result;
-                    }, array());
                     break;
                 case 'ultimo_mes':
-                    $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
-                    ->where('created_at', '>=', Carbon::now()->subMonth())
-                    ->get()
-                    ->groupBy('status_string')
-                    ->map->count();
+                    $data = $this->requerimentosPieChart(Carbon::now()->subMonth());
+                    $boletoData = $this->totalBoleto(Carbon::now()->subMonth());
+                    $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subMonth());
 
-                    $canceladas = Requerimento::where('created_at', '>=', Carbon::now()->subMonth())
-                    ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-                    ->orWhere('cancelada', true)
-                    ->count();
-                    if ($canceladas > 0) {
-                        $data['Cancelados'] = $canceladas;
-                    }
-
-                    $boletoData = $this->totalBoleto($ordenacao);
-
-                    $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-                    ->where('data_pagamento', '>=', Carbon::now()->subMonth())
-                    ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
-                    ->selectRaw("
-                    sum(requerimentos.valor) AS sum,
-                    extract(DAY FROM boleto_cobrancas.data_pagamento) AS day
-                    ")
-                    ->orderBy('day')
-                    ->groupBy('day')
-                    ->get();
-
-                    $pagamentos = $collection->toArray();
-                    $pagamentos = array_reduce($pagamentos, function ($result, $item) {
-                        $result[$item['day']] = $item['sum'];
-                        return $result;
-                    }, array());
                     break;
                 case 'meses':
-                    $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
-                    ->where('created_at', '>=', Carbon::now()->subYear())
-                    ->get()
-                    ->groupBy('status_string')
-                    ->map->count();
+                    $data = $this->requerimentosPieChart(Carbon::now()->subYear());
+                    $boletoData = $this->totalBoleto(Carbon::now()->subYear());
+                    $pagamentos = $this->pagamentosChart($ordenacao, 'month', Carbon::now()->subYear());
 
-                    $canceladas = Requerimento::where('created_at', '>=', Carbon::now()->subYear())
-                    ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-                    ->orWhere('cancelada', true)
-                    ->count();
-                    if ($canceladas > 0) {
-                        $data['Cancelados'] = $canceladas;
-                    }
-
-                    $boletoData = $this->totalBoleto($ordenacao);
-
-                    $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-                    ->where('data_pagamento', '>=', Carbon::now()->subYear())
-                    ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
-                    ->selectRaw("
-                    sum(requerimentos.valor) AS sum,
-                    extract(MONTH FROM boleto_cobrancas.data_pagamento) AS month
-                    ")
-                    ->orderBy('month')
-                    ->groupBy('month')
-                    ->get();
-
-                    $pagamentos = $collection->toArray();
-                    $pagamentos = array_reduce($pagamentos, function ($result, $item) {
-                        $result[$item['month']] = $item['sum'];
-                        return $result;
-                    }, array());
                     break;
                 case 'anos':
-                    $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
-                    ->where('created_at', '>=', Carbon::now()->subYear(5))
-                    ->get()
-                    ->groupBy('status_string')
-                    ->map->count();
+                    $data = $this->requerimentosPieChart(Carbon::now()->subYears(5));
+                    $boletoData = $this->totalBoleto(Carbon::now()->subYears(5));
+                    $pagamentos = $this->pagamentosChart($ordenacao, 'year', Carbon::now()->subYears(5));
 
-                    $canceladas = Requerimento::where('created_at', '>=', Carbon::now()->subYear(5))
-                    ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-                    ->orWhere('cancelada', true)
-                    ->count();
-                    if ($canceladas > 0) {
-                        $data['Cancelados'] = $canceladas;
-                    }
-
-                    $boletoData = $this->totalBoleto($ordenacao);
-
-                    $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-                    ->where('data_pagamento', '>=', Carbon::now()->subYears(5))
-                    ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
-                    ->selectRaw("
-                    sum(requerimentos.valor) AS sum,
-                    extract(YEAR FROM boleto_cobrancas.data_pagamento) AS year
-                    ")
-                    ->orderBy('year')
-                    ->groupBy('year')
-                    ->get();
-                    $pagamentos = $collection->toArray();
-                    $pagamentos = array_reduce($pagamentos, function ($result, $item) {
-                        $result[$item['year']] = $item['sum'];
-                        return $result;
-                    }, array());
                     break;
                 default:
-                    $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
-                    ->where('created_at', '>=', Carbon::now()->subWeek())
-                    ->get()
-                    ->groupBy('status_string')
-                    ->map->count();
+                    if ($request->dataDe != null || $request->dataAte != null){
+                        $data = $this->requerimentosPieChart(Carbon::now()->subWeek(), $request);
+                        $boletoData = $this->totalBoleto(Carbon::now()->subWeek(), $request);
+                        $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek(), $request);
+                    } else {
+                        $data = $this->requerimentosPieChart(Carbon::now()->subWeek());
+                        $boletoData = $this->totalBoleto(Carbon::now()->subWeek());
 
-                    $canceladas = Requerimento::where('created_at', '>=', Carbon::now()->subWeek())
-                    ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-                    ->orWhere('cancelada', true)
-                    ->count();
-                    if ($canceladas > 0) {
-                        $data['Cancelados'] = $canceladas;
+                        $ordenacao = '7_dias';
+                        $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek());
                     }
 
-                    $boletoData = $this->totalBoleto('7_dias');
-
-                    $ordenacao = '7_dias';
-                    $collection = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-                    ->where('data_pagamento', '>=', Carbon::now()->subWeek())
-                    ->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id')
-                    ->selectRaw("
-                    sum(requerimentos.valor) AS sum,
-                    extract(DAY FROM boleto_cobrancas.data_pagamento) AS day
-                    ")
-                    ->orderBy('day')
-                    ->groupBy('day')
-                    ->get();
-                    $pagamentos = $collection->toArray();
-                    $pagamentos = array_reduce($pagamentos, function ($result, $item) {
-                        $result[$item['day']] = $item['sum'];
-                        return $result;
-                    }, array());
                     break;
             }
             $titulo = $this->titulo($ordenacao);
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
 
-            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData'));
+            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData', 'dataDe', 'dataAte'));
         }
 
 
@@ -221,32 +91,35 @@ class WelcomeController extends Controller
             case 'anos':
                 $titulo = "Boletos pagos nos últimos 5 anos";
                 break;
+            default:
+                $titulo = "Boletos pagos no período informado";
+                break;
         }
         return $titulo;
     }
 
-    private function totalBoleto($ordenacao) {
-        switch ($ordenacao) {
-            case '7_dias':
-                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
-                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
-                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subWeek());
-                break;
-            case 'ultimo_mes':
-                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
-                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
-                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subMonth());
-                break;
-            case 'meses':
-                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
-                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
-                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
-                break;
-            case 'anos':
-                $query = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear(5));
-                $query2 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
-                $query3 = BoletoCobranca::where('created_at', '>=', Carbon::now()->subYear());
-                break;
+    private function totalBoleto($periodo, $request = null) {
+        $query = BoletoCobranca::where('created_at', '!=', null);
+        $query2 = BoletoCobranca::where('created_at', '!=', null);
+        $query3 = BoletoCobranca::where('created_at', '!=', null);
+
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $query = $query->where('created_at', '>=', $dataDe);
+                $query2 = $query2->where('created_at', '>=', $dataDe);
+                $query3 = $query3->where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $query = $query->where('created_at', '<=', $dataAte);
+                $query2 = $query2->where('created_at', '<=', $dataAte);
+                $query3 = $query3->where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $query = BoletoCobranca::where('created_at', '>=', $periodo);
+            $query2 = BoletoCobranca::where('created_at', '>=', $periodo);
+            $query3 = BoletoCobranca::where('created_at', '>=', $periodo);
         }
         $boletoData = array();
 
@@ -275,5 +148,119 @@ class WelcomeController extends Controller
         }
 
         return $boletoData;
+    }
+
+    private function pagamentosChart($ordenacao, $group, $periodo, $request = null) {
+        $data = BoletoCobranca::where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago']);
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = $data->where('data_pagamento', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = $data->where('data_pagamento', '<=', $dataAte);
+            }
+
+            $newData = clone $data;
+
+            $menor = $newData->orderBy('data_pagamento', 'ASC')->first();
+            $maior = $newData->orderBy('data_pagamento', 'ASC')->first();
+
+            if ($menor != null && $maior != null) {
+                $datetime1 = new DateTime($menor->data_pagamento);
+                $datetime2 = new DateTime($maior->data_pagamento);
+                $interval = $datetime1->diff($datetime2);
+                $days = $interval->days;
+            } else {
+                $days = 0;
+            }
+
+            if ($days <= 31) {
+                $ordenacao = 'ultimo_mes';
+                $group = 'day';
+            } elseif ($days > 365) {
+                $ordenacao = 'anos';
+                $group = 'year';
+            } else {
+                $ordenacao = 'meses';
+                $group = 'month';
+            }
+        } else {
+            $data = $data->where('data_pagamento', '>=', $periodo);
+        }
+
+
+        $data = $data->join('requerimentos', 'requerimentos.id', '=', 'boleto_cobrancas.requerimento_id');
+
+        switch ($ordenacao) {
+            case '7_dias':
+                $collection = $data->selectRaw("
+                sum(requerimentos.valor) AS sum,
+                extract(DAY FROM boleto_cobrancas.data_pagamento) AS day
+                ");
+                break;
+            case 'ultimo_mes':
+                $collection = $data->selectRaw("
+                sum(requerimentos.valor) AS sum,
+                extract(DAY FROM boleto_cobrancas.data_pagamento) AS day
+                ");
+                break;
+            case 'meses':
+                $collection = $data->selectRaw("
+                    sum(requerimentos.valor) AS sum,
+                    extract(MONTH FROM boleto_cobrancas.data_pagamento) AS month
+                    ");
+                break;
+            case 'anos':
+                $collection = $data->selectRaw("
+                    sum(requerimentos.valor) AS sum,
+                    extract(YEAR FROM boleto_cobrancas.data_pagamento) AS year
+                    ");
+                break;
+        }
+
+        $collection = $collection->orderBy($group)
+        ->groupBy($group)
+        ->get();
+
+        $pagamentos = $collection->toArray();
+        $pagamentos = array_reduce($pagamentos, function ($result, $item) use ($group) {
+            $result[$item[$group]] = $item['sum'];
+            return $result;
+        }, array());
+
+        return $pagamentos;
+    }
+
+    private function requerimentosPieChart($periodo, $request = null) {
+        $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada']);
+
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = $data->where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = $data->where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $data = $data->where('created_at', '>=', $periodo);
+        }
+        $data = $data->get()
+        ->groupBy('status_string')
+        ->map->count();
+
+        $canceladas = Requerimento::where('created_at', '>=', $periodo)
+        ->where('status', Requerimento::STATUS_ENUM['cancelada'])
+        ->orWhere('cancelada', true)
+        ->count();
+        if ($canceladas > 0) {
+            $data['Cancelados'] = $canceladas;
+        }
+
+        return $data;
+
     }
 }

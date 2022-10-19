@@ -58,6 +58,45 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
+                    <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
+                        Filtrar período
+                    </div>
+                    <form id="form-fitrar-boleto" method="GET" action="{{route('welcome')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="dataDe">{{__('De')}}</label>
+                                <input type="date" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
+
+                                @error('dataDe')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="dataAte">{{__('Até')}}</label>
+                                <input type="date" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
+
+                                @error('dataAte')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-center">
+                            <div class="col-md-6 form-group">
+                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Filtrar</button>
+                            </div>
+                        </div>
+                        <div style="border-bottom:solid 3px #e0e0e0; margin-top: -1%; margin-bottom: 3%;">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
