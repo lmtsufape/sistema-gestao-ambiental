@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Boletos</title>
+    <title>Protocolo do requerimento</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <style>
         .linha{
@@ -89,7 +89,7 @@
                         <td colspan="10" style="padding-top: 20px"></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><p><strong>1 – Empreendimento</strong><br>{{strtoupper($requerimento->empresa->cnaes->first()->setor->nome)}}</p></td>
+                        <td colspan="3"><p><strong>1 – Empreendimento</strong><br>{{mb_strtoupper($requerimento->empresa->cnaes->first()->setor->nome, 'UTF-8')}}</p></td>
                         <td colspan="4"><p><strong>2 – Razão Social</strong><br>{{$requerimento->empresa->nome}}</p></td>
                         <td colspan="3"><p><strong>3 – Nome Fantasia</strong><br>***********</p></td>
                     </tr>
@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                         <td colspan="10"><p><strong>10 – Tipologia</strong><br>
-                            O empreendimento enquadra-se na Tipologia de {{strtoupper($requerimento->empresa->cnaes->first()->setor->nome)}}, do anexo I da Lei Municipal Nº 4.224/2015, porte {{strtoupper($requerimento->empresa->porte())}} e potencial poluidor {{strtoupper($requerimento->empresa->potencialPoluidor())}}, localizada na {{$requerimento->empresa->endereco->enderecoSimplificado()}}, GARANHUNS/PE
+                            O empreendimento enquadra-se na Tipologia de {{mb_strtoupper($requerimento->empresa->cnaes->first()->setor->nome, 'UTF-8')}}, do anexo I da Lei Municipal Nº 4.224/2015, porte {{mb_strtoupper($requerimento->empresa->porte(), 'UTF-8')}} e potencial poluidor {{mb_strtoupper($requerimento->empresa->potencialPoluidor(), 'UTF-8')}}, localizada na {{$requerimento->empresa->endereco->enderecoSimplificado()}}, GARANHUNS/PE
                         </p></td>
                     </tr>
                     <tr>

@@ -136,4 +136,9 @@ class RequerimentoPolicy
 
         return $userPolicy->isSecretario($user) || $userPolicy->isAnalista($user) || $this->analises($user, $requerimento);
     }
+
+    public function verProtocolo(User $user, Requerimento $requerimento)
+    {
+        return $this->verDocumentacao($user, $requerimento) && $requerimento->visitas()->exists();
+    }
 }

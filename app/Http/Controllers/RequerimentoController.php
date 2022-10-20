@@ -718,7 +718,7 @@ class RequerimentoController extends Controller
     }
 
     /**
-     * Recupera o analista de processo atribuído ao requerimento se ele existir.
+     * Recupera o requerimento e gera o protocolo caso ele não exista.
      *
      * @param Request $request id do requerimento
      * @throws AuthorizationException
@@ -726,6 +726,7 @@ class RequerimentoController extends Controller
     public function protocoloRequerimento($id)
     {
         $requerimento = Requerimento::find($id);
+        $this->authorize('verProtocolo', $requerimento);
         if (! $requerimento->protocolo) {
             $requerimento->protocolo = $this->gerarProtocolo($requerimento);
             $requerimento->update();
@@ -737,18 +738,21 @@ class RequerimentoController extends Controller
     public function baixarProtocoloRequerimento($id)
     {
         $requerimento = Requerimento::find($id);
+        $this->authorize('verProtocolo', $requerimento);
         $protocolo = PDF::loadview('pdf/protocolo', ['requerimento' => $requerimento]);
         return $protocolo->setPaper('a4')->stream('protocolo.pdf');
     }
 
     private function gerarProtocolo(Requerimento $requerimento)
     {
-        $protocolo = null;
+        $protocolo = intval(preg_replace(['/[ ]/', '/[^0-9]/'], ['', ''], $requerimento->created_at));
+        $incre = 0;
         do {
-            $protocolo = preg_replace(['/[ ]/', '/[^0-9]/'], ['', ''], $requerimento->created_at);
-            $check = Requerimento::where('protocolo', $protocolo)->first();
+            $protocolo += $incre;
+            $check = Requerimento::where('protocolo', $protocolo)->exists();
+            $incre += 1;
         } while ($check != null);
 
-        return $protocolo;
+        return strval($protocolo);
     }
 }

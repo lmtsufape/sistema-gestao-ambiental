@@ -711,7 +711,7 @@
                                                 <a style="cursor: pointer; margin-left: 8px" data-toggle="modal" data-target="#cancelar_requerimento_{{$requerimento->id}}"><img class="icon-licenciamento" style="width: 30px" src="{{asset('img/trash-svgrepo-com.svg')}}"  alt="Cancelar" title="Cancelar"></a>
                                             @endif
                                             @if($requerimento->visitas->first() != null)
-                                                <a class="btn btn-info" href="{{route('requerimentos.protocolo', $requerimento)}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;">Protocolo</a>
+                                                <a class="btn btn-color-dafault rounded text-white" href="{{route('requerimentos.protocolo', $requerimento)}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;">Protocolo</a>
                                             @endif
                                         </div>
                                     </div>

@@ -87,7 +87,7 @@ class Empresa extends Model
                 return 'Baixo';
                 break;
             case Cnae::POTENCIAL_POLUIDOR_ENUM['medio']:
-                return 'MÉDIO';
+                return 'Médio';
                 break;
             case Cnae::POTENCIAL_POLUIDOR_ENUM['alto']:
                 return 'Alto';
