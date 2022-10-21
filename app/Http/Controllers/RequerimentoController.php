@@ -303,7 +303,7 @@ class RequerimentoController extends Controller
         }
 
         $requerimento = Requerimento::find($request->requerimento);
-        if ($requerimento->empresa->cnaes->first()->nome == 'Atividades similares' && $requerimento->potencial_poluidor_atribuido == null) {
+        if (!$requerimento->empresa->cnaes()->whereNotNull('potencial_poluidor')->exists() && $requerimento->potencial_poluidor_atribuido == null) {
             return redirect()->back()->withErrors(['error' => 'É necessário atribuir um potencial poluidor ao requerimento.'])->withInput($request->all());
         }
         $this->atribuirValor($request, $requerimento);
