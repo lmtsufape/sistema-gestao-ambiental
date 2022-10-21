@@ -91,30 +91,23 @@
                     <tr>
                         <td colspan="3"><p><strong>1 – Empreendimento</strong><br>{{mb_strtoupper($requerimento->empresa->cnaes->first()->setor->nome, 'UTF-8')}}</p></td>
                         <td colspan="4"><p><strong>2 – Razão Social</strong><br>{{$requerimento->empresa->nome}}</p></td>
-                        <td colspan="3"><p><strong>3 – Nome Fantasia</strong><br>***********</p></td>
+                        <td colspan="3"><p><strong>3 – CNPJ/CPF</strong><br>{{$requerimento->empresa->cpf_cnpj}}</p></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><p><strong>4 – CNPJ/CPF</strong><br>{{$requerimento->empresa->cpf_cnpj}}</p></td>
-                        <td colspan="4"><p><strong>5 – Endereço</strong><br>{{$requerimento->empresa->endereco->enderecoSimplificado()}}</p></td>
-                        <td colspan="3"><p><strong>6 – CEP</strong><br>{{$requerimento->empresa->endereco->cep}}</p></td>
+                        <td colspan="4"><p><strong>4 – Endereço</strong><br>{{$requerimento->empresa->endereco->enderecoSimplificado()}}</p></td>
+                        <td colspan="3"><p><strong>5 – CEP</strong><br>{{$requerimento->empresa->endereco->cep}}</p></td>
+                        <td colspan="3"><p><strong>6 – Telefone</strong><br>{{$requerimento->empresa->telefone->numero}}</p></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><p><strong>7 – Telefone</strong><br>{{$requerimento->empresa->telefone->numero}}</p></td>
-                        <td colspan="4"><p><strong>8 – Tipo de Solicitação</strong><br>{{$requerimento->protocoloTipoDeLicenca()}}</p></td>
-                        <td colspan="3"><p><strong>9 – RG/Inscrição Estadual</strong><br></p></td>
+                        <td colspan="10"><p><strong>7 – Tipo de Solicitação</strong><br>{{$requerimento->protocoloTipoDeLicenca()}}</p></td>
                     </tr>
                     <tr>
-                        <td colspan="10"><p><strong>10 – Tipologia</strong><br>
+                        <td colspan="10"><p><strong>8 – Tipologia</strong><br>
                             O empreendimento enquadra-se na Tipologia de {{mb_strtoupper($requerimento->empresa->cnaes->first()->setor->nome, 'UTF-8')}}, do anexo I da Lei Municipal Nº 4.224/2015, porte {{mb_strtoupper($requerimento->empresa->porte(), 'UTF-8')}} e potencial poluidor {{mb_strtoupper($requerimento->empresa->potencialPoluidor(), 'UTF-8')}}, localizada na {{$requerimento->empresa->endereco->enderecoSimplificado()}}, GARANHUNS/PE
                         </p></td>
                     </tr>
                     <tr>
-                        <td colspan="10"><p><strong>11 – Observações: <br>
-                           </strong>
-                        </p></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center" colspan="10"><p><strong>12 – Documentos Apresentados a SDRMA: <br>
+                        <td style="text-align: center" colspan="10"><p><strong>9 – Documentos Apresentados a SDRMA: <br>
                            </strong>
                         </p></td>
                     </tr>
@@ -135,11 +128,6 @@
                             @endif
                         @endif
                     @endforeach
-                    <tr>
-                        <td colspan="10"><p style="padding-bottom: 100px"><strong>13 – Funcionário (SDRMA): <br>
-                           </strong>
-                        </p></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
