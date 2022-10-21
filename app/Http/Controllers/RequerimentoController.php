@@ -417,7 +417,7 @@ class RequerimentoController extends Controller
     private function atribuirValor(Request $request, Requerimento $requerimento)
     {
         $valor = null;
-        $cnae_maior_poluidor = $requerimento->empresa->cnaes()->orderBy('potencial_poluidor', 'desc')->first();
+        $cnae_maior_poluidor = $requerimento->empresa->cnaes()->whereNotNull('potencial_poluidor')->orderBy('potencial_poluidor', 'desc')->first();
         if ($cnae_maior_poluidor->potencial_poluidor == null) {
             $maiorPotencialPoluidor = $requerimento->potencial_poluidor_atribuido;
         } else {
