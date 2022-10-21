@@ -416,6 +416,7 @@ class RequerimentoController extends Controller
      */
     private function atribuirValor(Request $request, Requerimento $requerimento)
     {
+        $tipoLicenca = $request->input('licença') ?: $requerimento->tipo_licenca;
         $valor = null;
         $cnae_maior_poluidor = $requerimento->empresa->cnaes()->whereNotNull('potencial_poluidor')->orderBy('potencial_poluidor', 'desc')->first();
         if ($cnae_maior_poluidor->potencial_poluidor == null) {
@@ -430,12 +431,12 @@ class RequerimentoController extends Controller
                 $requerimento->valor_juros = null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica']:
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $tipoLicenca]])->first();
                 $requerimento->valor_juros = null;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor : null;
                 break;
             case Requerimento::DEFINICAO_VALOR_ENUM['automatica_com_juros']:
-                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $request->input('licença')]])->first();
+                $valorRequerimento = ValorRequerimento::where([['porte', $requerimento->empresa->porte], ['potencial_poluidor', $maiorPotencialPoluidor], ['tipo_de_licenca', $tipoLicenca]])->first();
                 $requerimento->valor_juros = $request->valor_do_juros;
                 $valor = $valorRequerimento != null ? $valorRequerimento->valor + ($valorRequerimento->valor * ($request->valor_do_juros / 100)) : null;
                 break;
