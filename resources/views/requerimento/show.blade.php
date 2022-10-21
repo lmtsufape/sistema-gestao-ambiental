@@ -54,6 +54,9 @@
                                     {{--@if($requerimento->visitas->count() > 0)
                                         <a class="btn"  href="{{route('requerimento.visitas', ['id' => $requerimento])}}"><img class="icon-licenciamento" src="{{asset('img/chat-svgrepo-com.svg')}}"  alt="Visitas a empresa" title="Visitas a empresa"></a>
                                     @endif--}}
+                                    @if($requerimento->visitas->first() != null)
+                                        <a class="btn btn-color-dafault rounded text-white" href="{{route('requerimentos.protocolo', $requerimento)}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;">Protocolo</a>
+                                    @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
                                     @if ($requerimento->documentos->count() > 0)
@@ -68,6 +71,9 @@
                                             <a class="btn" data-toggle="modal" data-target="#documentos"><img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}"  alt="Requistar documentos" title="Requistar documentos"></a>
                                         @endif
                                     @endcan
+                                    @if($requerimento->visitas->first() != null)
+                                        <a class="btn btn-color-dafault rounded text-white" href="{{route('requerimentos.protocolo', $requerimento)}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;">Protocolo</a>
+                                    @endif
                                 @endcan
                             </div>
                         </div>

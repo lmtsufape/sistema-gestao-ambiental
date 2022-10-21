@@ -97,4 +97,30 @@ class Empresa extends Model
                 break;
         }
     }
+
+    /**
+     * Retorna o maior pontecial poluidor da empresa.
+     *
+     * @return string $string
+     */
+    public function porte()
+    {
+        switch ($this->porte) {
+            case Empresa::PORTE_ENUM['micro']:
+                return 'Micro';
+                break;
+            case Empresa::PORTE_ENUM['pequeno']:
+                return 'Pequeno';
+                break;
+            case Empresa::PORTE_ENUM['medio']:
+                return 'Médio';
+                break;
+            case Empresa::PORTE_ENUM['grande']:
+                return 'Grande';
+                break;
+            case Empresa::PORTE_ENUM['especial']:
+                return 'Especial';
+                break;
+        }
+    }
 }
