@@ -394,6 +394,9 @@ class RequerimentoController extends Controller
         if ($request->input('opcão_taxa_serviço') == Requerimento::DEFINICAO_VALOR_ENUM['manual'] && $request->input('valor_da_taxa_de_serviço') == 0) {
             return redirect()->back()->with('error', 'O valor do requerimento não pode ser 0.');
         }
+        if (!$requerimento->empresa->cnaes()->whereNotNull('potencial_poluidor')->exists() && $requerimento->potencial_poluidor_atribuido == null) {
+            return redirect()->back()->withErrors(['error' => 'É necessário atribuir um potencial poluidor ao requerimento.'])->withInput($request->all());
+        }
         $this->atribuirValor($request, $requerimento);
         $requerimento->save();
         try {
