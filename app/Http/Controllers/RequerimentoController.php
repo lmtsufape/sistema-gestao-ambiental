@@ -424,7 +424,7 @@ class RequerimentoController extends Controller
         $tipoLicenca = $request->input('licença') ?: $requerimento->tipo_licenca;
         $valor = null;
         $cnae_maior_poluidor = $requerimento->empresa->cnaes()->whereNotNull('potencial_poluidor')->orderBy('potencial_poluidor', 'desc')->first();
-        if ($cnae_maior_poluidor->potencial_poluidor == null) {
+        if ($cnae_maior_poluidor != null && $cnae_maior_poluidor->potencial_poluidor == null) {
             $maiorPotencialPoluidor = $requerimento->potencial_poluidor_atribuido;
         } else {
             $maiorPotencialPoluidor = $cnae_maior_poluidor->potencial_poluidor;
