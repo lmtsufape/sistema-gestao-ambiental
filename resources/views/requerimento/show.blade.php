@@ -19,11 +19,11 @@
                         {{session('success')}}
                     </div>
                 @endif
-                @if(session('error'))
+                @error('error')
                     <div class="alert alert-danger" role="alert">
-                        {{session('error')}}
+                        {{$message}}
                     </div>
-                    @endif
+                @endif
                 <div class="shadow card" style="width: 100%;">
                     <div class="card-body">
                         <div class="row align-items-center justify-content-between">
