@@ -48,4 +48,15 @@ class Denuncia extends Model
     {
         return $this->belongsTo(User::class, 'analista_id');
     }
+
+    public const STATUS_ENUM = [
+        'registrada' => 1,
+        'deferida' => 2,
+        'indeferida' => 3,
+    ];
+
+    public function getStatusStringAttribute()
+    {
+        return ucwords(str_replace('_', ' ', array_search($this->aprovacao, $this::STATUS_ENUM)));
+    }
 }

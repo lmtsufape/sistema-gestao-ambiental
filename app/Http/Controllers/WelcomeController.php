@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\BoletoCobranca;
+use App\Models\Denuncia;
 use App\Models\Empresa;
+use App\Models\Licenca;
 use App\Models\Noticia;
 use App\Models\Requerimento;
+use App\Models\SolicitacaoMuda;
+use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -29,24 +33,40 @@ class WelcomeController extends Controller
             switch ($ordenacao) {
                 case '7_dias':
                     $data = $this->requerimentosPieChart(Carbon::now()->subWeek());
+                    $mudasData = $this->mudasPieChart(Carbon::now()->subWeek());
+                    $podasData = $this->podasPieChart(Carbon::now()->subWeek());
+                    $denunciasData = $this->denunciasPieChart(Carbon::now()->subWeek());
+                    $licencasData = $this->licencasPieChart(Carbon::now()->subWeek());
                     $boletoData = $this->totalBoleto(Carbon::now()->subWeek());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek());
 
                     break;
                 case 'ultimo_mes':
                     $data = $this->requerimentosPieChart(Carbon::now()->subMonth());
+                    $mudasData = $this->mudasPieChart(Carbon::now()->subMonth());
+                    $podasData = $this->podasPieChart(Carbon::now()->subMonth());
+                    $denunciasData = $this->denunciasPieChart(Carbon::now()->subMonth());
+                    $licencasData = $this->licencasPieChart(Carbon::now()->subMonth());
                     $boletoData = $this->totalBoleto(Carbon::now()->subMonth());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subMonth());
 
                     break;
                 case 'meses':
                     $data = $this->requerimentosPieChart(Carbon::now()->subYear());
+                    $mudasData = $this->mudasPieChart(Carbon::now()->subYear());
+                    $podasData = $this->podasPieChart(Carbon::now()->subYear());
+                    $denunciasData = $this->denunciasPieChart(Carbon::now()->subYear());
+                    $licencasData = $this->licencasPieChart(Carbon::now()->subYear());
                     $boletoData = $this->totalBoleto(Carbon::now()->subYear());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'month', Carbon::now()->subYear());
 
                     break;
                 case 'anos':
                     $data = $this->requerimentosPieChart(Carbon::now()->subYears(5));
+                    $mudasData = $this->mudasPieChart(Carbon::now()->subYears(5));
+                    $podasData = $this->podasPieChart(Carbon::now()->subYears(5));
+                    $denunciasData = $this->denunciasPieChart(Carbon::now()->subYears(5));
+                    $licencasData = $this->licencasPieChart(Carbon::now()->subYears(5));
                     $boletoData = $this->totalBoleto(Carbon::now()->subYears(5));
                     $pagamentos = $this->pagamentosChart($ordenacao, 'year', Carbon::now()->subYears(5));
 
@@ -54,10 +74,18 @@ class WelcomeController extends Controller
                 default:
                     if ($request->dataDe != null || $request->dataAte != null){
                         $data = $this->requerimentosPieChart(Carbon::now()->subWeek(), $request);
+                        $mudasData = $this->mudasPieChart(Carbon::now()->subWeek(), $request);
+                        $podasData = $this->podasPieChart(Carbon::now()->subWeek(), $request);
+                        $denunciasData = $this->denunciasPieChart(Carbon::now()->subWeek(), $request);
+                        $licencasData = $this->licencasPieChart(Carbon::now()->subWeek(), $request);
                         $boletoData = $this->totalBoleto(Carbon::now()->subWeek(), $request);
                         $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek(), $request);
                     } else {
                         $data = $this->requerimentosPieChart(Carbon::now()->subWeek());
+                        $mudasData = $this->mudasPieChart(Carbon::now()->subWeek());
+                        $podasData = $this->podasPieChart(Carbon::now()->subWeek());
+                        $denunciasData = $this->denunciasPieChart(Carbon::now()->subWeek());
+                        $licencasData = $this->licencasPieChart(Carbon::now()->subWeek());
                         $boletoData = $this->totalBoleto(Carbon::now()->subWeek());
 
                         $ordenacao = '7_dias';
@@ -70,7 +98,7 @@ class WelcomeController extends Controller
             $dataDe = $request->dataDe;
             $dataAte = $request->dataAte;
 
-            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData', 'dataDe', 'dataAte'));
+            return view('welcome', compact('noticias', 'empresas', 'data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData', 'mudasData', 'podasData', 'denunciasData', 'licencasData', 'dataDe', 'dataAte'));
         }
 
 
@@ -261,6 +289,85 @@ class WelcomeController extends Controller
         }
 
         return $data;
+    }
 
+    private function mudasPieChart($periodo, $request = null) {
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = SolicitacaoMuda::where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = SolicitacaoMuda::where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $data = SolicitacaoMuda::where('created_at', '>=', $periodo);
+        }
+        $data = $data->get()
+        ->groupBy('status_string')
+        ->map->count();
+
+        return $data;
+    }
+
+    private function podasPieChart($periodo, $request = null) {
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = SolicitacaoPoda::where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = SolicitacaoPoda::where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $data = SolicitacaoPoda::where('created_at', '>=', $periodo);
+        }
+        $data = $data->get()
+        ->groupBy('status_string')
+        ->map->count();
+
+        return $data;
+    }
+
+    private function denunciasPieChart($periodo, $request = null) {
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = Denuncia::where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = Denuncia::where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $data = Denuncia::where('created_at', '>=', $periodo);
+        }
+        $data = $data->get()
+        ->groupBy('status_string')
+        ->map->count();
+
+        return $data;
+    }
+
+    private function licencasPieChart($periodo, $request = null) {
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $data = Licenca::where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $data = Licenca::where('created_at', '<=', $dataAte);
+            }
+        } else {
+            $data = Licenca::where('created_at', '>=', $periodo);
+        }
+        $data = $data->get()
+        ->groupBy('status_string')
+        ->map->count();
+
+        return $data;
     }
 }
