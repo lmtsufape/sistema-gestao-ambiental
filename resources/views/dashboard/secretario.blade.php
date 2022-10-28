@@ -99,13 +99,54 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-6">
+                <canvas id="requerimentosChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="licencasChart"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="mudasChart"></canvas>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="podasChart"></canvas>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        @if ($denunciasData->count() > 0)
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="denunciasChart"></canvas>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        @else
+        <div class="row">
             <div class="col-md-12">
-                <canvas id="myChart"></canvas>
+                Nenhuma denúncia no período informado
+            </div>
+        </div>
+        @endif
+
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="pagamentosPie"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <canvas id="pagamentosChart"></canvas>
             </div>
         </div>
 
-        <canvas id="pagamentosChart"></canvas>
-        <canvas id="pagamentosPie"></canvas>
     </div>
     @push ('scripts')
         <script>
@@ -146,7 +187,7 @@
                 options: options,
             };
             const myChart = new Chart(
-                document.getElementById('myChart'),
+                document.getElementById('requerimentosChart'),
                 config
             );
         </script>
@@ -229,6 +270,179 @@
             const myChartPagamentosPie = new Chart(
                 document.getElementById('pagamentosPie'),
                 configPagamentosPie
+            );
+        </script>
+
+        <script>
+            Chart.register(ChartDataLabels);
+            const dadosMudasPie = @json($mudasData);
+
+            const dataMudasPie = {
+                labels: Object.keys(dadosMudasPie),
+                datasets: [{
+                    data: Object.values(dadosMudasPie),
+                    backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+                    hoverOffset: 0,
+                }]
+            };
+            const optionsMudasPie = {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Solicitações de mudas por status',
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'black',
+                            pointStyle: 'rectRounded',
+                            usePointStyle: true,
+                        }
+                    },
+                    datalabels: {
+                        color: 'white'
+                    }
+                }
+            };
+            const configMudasPie = {
+                type: 'pie',
+                data: dataMudasPie,
+                options: optionsMudasPie
+            };
+            const myChartMudasPie = new Chart(
+                document.getElementById('mudasChart'),
+                configMudasPie
+            );
+        </script>
+
+        <script>
+            Chart.register(ChartDataLabels);
+            const dadosPodasPie = @json($podasData);
+
+            const dataPodasPie = {
+                labels: Object.keys(dadosPodasPie),
+                datasets: [{
+                    data: Object.values(dadosPodasPie),
+                    backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+                    hoverOffset: 0,
+                }]
+            };
+            const optionsPodasPie = {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Solicitações de podas por status',
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'black',
+                            pointStyle: 'rectRounded',
+                            usePointStyle: true,
+                        }
+                    },
+                    datalabels: {
+                        color: 'white'
+                    }
+                }
+            };
+            const configPodasPie = {
+                type: 'pie',
+                data: dataPodasPie,
+                options: optionsPodasPie
+            };
+            const myChartPodasPie = new Chart(
+                document.getElementById('podasChart'),
+                configPodasPie
+            );
+        </script>
+
+        <script>
+            Chart.register(ChartDataLabels);
+            const dadosDenunciasPie = @json($denunciasData);
+            if (dadosDenunciasPie.length > 0) {
+                const dataDenunciasPie = {
+                    labels: Object.keys(dadosDenunciasPie),
+                    datasets: [{
+                        data: Object.values(dadosDenunciasPie),
+                        backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+                        hoverOffset: 0,
+                    }]
+                };
+                const optionsDenunciasPie = {
+                    responsive: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Registros de denúncias por status',
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: 'black',
+                                pointStyle: 'rectRounded',
+                                usePointStyle: true,
+                            }
+                        },
+                        datalabels: {
+                            color: 'white'
+                        }
+                    }
+                };
+                const configDenunciasPie = {
+                    type: 'pie',
+                    data: dataDenunciasPie,
+                    options: optionsDenunciasPie
+                };
+                const myChartDenunciasPie = new Chart(
+                    document.getElementById('denunciasChart'),
+                    configDenunciasPie
+                );
+            }
+        </script>
+
+        <script>
+            Chart.register(ChartDataLabels);
+            const dadosLicencasPie = @json($licencasData);
+
+            const dataLicencasPie = {
+                labels: Object.keys(dadosLicencasPie),
+                datasets: [{
+                    data: Object.values(dadosLicencasPie),
+                    backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
+                    hoverOffset: 0,
+                }]
+            };
+            const optionsLicencasPie = {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Licenças por tipo',
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: 'black',
+                            pointStyle: 'rectRounded',
+                            usePointStyle: true,
+                        }
+                    },
+                    datalabels: {
+                        color: 'white'
+                    }
+                }
+            };
+            const configLicencasPie = {
+                type: 'pie',
+                data: dataLicencasPie,
+                options: optionsLicencasPie
+            };
+            const myChartLicencasPie = new Chart(
+                document.getElementById('licencasChart'),
+                configLicencasPie
             );
         </script>
     @endpush
