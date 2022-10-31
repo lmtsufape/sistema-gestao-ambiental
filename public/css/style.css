@@ -1066,6 +1066,11 @@ a.article:hover {
     color: black;
 }
 
+canvas {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
 /* ENVIAR DOCUMENTO */
 
 /* ---------------------------------------------------

@@ -1,9 +1,14 @@
 <x-app-layout>
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
-        <div class="d-flex align-items-center">
+        <div class="form-row">
+            <div class="col-md-12">
+                <h4 class="card-title">Dashboard estatístico</h4>
+            </div>
+        </div>
+        <div class="d-flex">
             <div class="ps-1 mt-0 pt-0" style="font-size: 14px; color: black;">
-                <span style="font-weight: bolder;">Apuração nos
+                <span style="font-weight: bolder;">Apuração rápida nos
                     @switch($ordenacao)
                         @case('7_dias')
                             últimos 7 dias
@@ -58,95 +63,105 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; margin-top: 5.2rem;">
-                    <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
-                        Filtrar período
+        </div>
+        <div class="shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; width: 30%">
+            <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
+                Filtrar por período
+            </div>
+            <form id="form-fitrar-boleto" method="GET" action="{{route('welcome')}}">
+                @csrf
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label for="dataDe">{{__('De')}}</label>
+                        <input type="date" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
+
+                        @error('dataDe')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
-                    <form id="form-fitrar-boleto" method="GET" action="{{route('welcome')}}">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-6 form-group">
-                                <label for="dataDe">{{__('De')}}</label>
-                                <input type="date" name="dataDe" id="dataDe" class="form-control @error('dataDe') is-invalid @enderror" value="{{old('dataDe')!=null ? old('dataDe') : $dataDe}}">
+                    <div class="col-md-6 form-group">
+                        <label for="dataAte">{{__('Até')}}</label>
+                        <input type="date" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
 
-                                @error('dataDe')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                        @error('dataAte')
+                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                {{ $message }}
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="dataAte">{{__('Até')}}</label>
-                                <input type="date" name="dataAte" id="dataAte" class="form-control @error('dataAte') is-invalid @enderror" value="{{old('dataAte')!=null ? old('dataAte') : $dataAte}}">
-
-                                @error('dataAte')
-                                    <div id="validationServer03Feedback" class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-6 form-group">
-                                <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Filtrar</button>
-                            </div>
-                        </div>
-                        <div style="border-bottom:solid 3px #e0e0e0; margin-top: -1%; margin-bottom: 3%;">
-                        </div>
-                    </form>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-6 form-group">
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Filtrar</button>
+                    </div>
+                </div>
+                <div style="border-bottom:solid 3px #e0e0e0; margin-top: -1%; margin-bottom: 3%;">
+                </div>
+            </form>
+        </div>
+        <div class="text-center">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    @if ($data->count() > 0)
+                        <canvas id="requerimentosChart"></canvas>
+                        <p>Totalizando {{array_sum(array_values($data->toArray()))}} requerimentos criados</p>
+                    @else
+                        <p>Nenhum requerimento criado no período informado</p>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    @if ($licencasData->count() > 0)
+                        <canvas id="licencasChart"></canvas>
+                        <p>Totalizando {{array_sum(array_values($licencasData->toArray()))}} licenças emitidas</p>
+                    @else
+                        <p>Nenhuma licença gerada no período informado</p>
+                    @endif
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    @if ($mudasData->count() > 0)
+                        <canvas id="mudasChart"></canvas>
+                        <p>Totalizando {{array_sum(array_values($mudasData->toArray()))}} mudas solicitadas</p>
+                    @else
+                        <p>Nenhuma solicitação de muda criada no período informado</p>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    @if ($podasData->count() > 0)
+                        <canvas id="podasChart"></canvas>
+                        <p>Totalizando {{array_sum(array_values($podasData->toArray()))}} solicitações de poda/supressão solicitadas</p>
+                    @else
+                        <p>Nenhuma solicitação de poda/supressão criada no período informado</p>
+                    @endif
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    @if (count($boletoData) > 0)
+                        <canvas id="pagamentosPie"></canvas>
+                        <p>Totalizando {{array_sum(array_values($boletoData))}} boletos gerados</p>
+                    @else
+                        <p>Nenhum boleto gerado no período informado</p>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    @if ($denunciasData->count() > 0)
+                        <canvas id="denunciasChart"></canvas>
+                        <p>Totalizando {{array_sum(array_values($denunciasData->toArray()))}} denúncias registradas</p>
+                    @else
+                        <p>Nenhuma denúncia registrada no período informado</p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="pagamentosChart"></canvas>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <canvas id="requerimentosChart"></canvas>
-            </div>
-            <div class="col-md-6">
-                <canvas id="licencasChart"></canvas>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <canvas id="mudasChart"></canvas>
-            </div>
-            <div class="col-md-6">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <canvas id="podasChart"></canvas>
-            </div>
-            <div class="col-md-6">
-            </div>
-        </div>
-        @if ($denunciasData->count() > 0)
-        <div class="row">
-            <div class="col-md-6">
-                <canvas id="denunciasChart"></canvas>
-            </div>
-            <div class="col-md-6">
-            </div>
-        </div>
-        @else
-        <div class="row">
-            <div class="col-md-12">
-                Nenhuma denúncia no período informado
-            </div>
-        </div>
-        @endif
-
-        <div class="row">
-            <div class="col-md-12">
-                <canvas id="pagamentosPie"></canvas>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <canvas id="pagamentosChart"></canvas>
-            </div>
-        </div>
-
     </div>
     @push ('scripts')
         <script>
@@ -162,11 +177,14 @@
                 }]
             };
             const options = {
-                responsive: false,
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Requerimentos de licença por status',
+                        font: {
+                            size: 16
+                        }
                     },
                     legend: {
                         display: true,
@@ -209,6 +227,9 @@
                         title: {
                             display: true,
                             text:  {!! json_encode($titulo) !!},
+                            font: {
+                                size: 16
+                            }
                         },
                         legend: {
                             display: false,
@@ -243,11 +264,14 @@
                 }]
             };
             const optionsPagamentosPie = {
-                responsive: false,
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Boletos por status',
+                        font: {
+                            size: 16
+                        }
                     },
                     legend: {
                         display: true,
@@ -286,11 +310,14 @@
                 }]
             };
             const optionsMudasPie = {
-                responsive: false,
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Solicitações de mudas por status',
+                        font: {
+                            size: 16
+                        }
                     },
                     legend: {
                         display: true,
@@ -329,11 +356,14 @@
                 }]
             };
             const optionsPodasPie = {
-                responsive: false,
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Solicitações de podas por status',
+                        font: {
+                            size: 16
+                        }
                     },
                     legend: {
                         display: true,
@@ -362,7 +392,6 @@
         <script>
             Chart.register(ChartDataLabels);
             const dadosDenunciasPie = @json($denunciasData);
-            if (dadosDenunciasPie.length > 0) {
                 const dataDenunciasPie = {
                     labels: Object.keys(dadosDenunciasPie),
                     datasets: [{
@@ -372,11 +401,14 @@
                     }]
                 };
                 const optionsDenunciasPie = {
-                    responsive: false,
+                    responsive: true,
                     plugins: {
                         title: {
                             display: true,
                             text: 'Registros de denúncias por status',
+                            font: {
+                                size: 16
+                            }
                         },
                         legend: {
                             display: true,
@@ -400,7 +432,6 @@
                     document.getElementById('denunciasChart'),
                     configDenunciasPie
                 );
-            }
         </script>
 
         <script>
@@ -416,11 +447,14 @@
                 }]
             };
             const optionsLicencasPie = {
-                responsive: false,
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
                         text: 'Licenças por tipo',
+                        font: {
+                            size: 16
+                        }
                     },
                     legend: {
                         display: true,
