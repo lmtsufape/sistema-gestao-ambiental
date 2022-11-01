@@ -22,6 +22,7 @@ class Denuncia extends Model
         'texto',
         'denunciante',
         'aprovacao',
+        'arquivo',
     ];
 
     public function visita()

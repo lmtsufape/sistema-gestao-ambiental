@@ -1,5 +1,11 @@
 $component-active-bg: #00883D;
 @import "~bootstrap/scss/functions";
+$custom-file-text: (
+  en: "Browse",
+  es: "Elegir",
+  pt: "Procurar"
+);
+
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";

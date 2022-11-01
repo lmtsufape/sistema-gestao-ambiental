@@ -281,6 +281,7 @@ nav img {
 .icon-licenciamento {
     height: 20px;
     display: inline-block;
+    max-width: none;
 }
 
 .add-card-btn {
