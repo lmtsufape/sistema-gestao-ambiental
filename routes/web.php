@@ -112,6 +112,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/denuncias/info', [DenunciaController::class, 'infoDenuncia'])->name('denuncias.info.ajax');
     Route::get('/denuncias/imagens', [DenunciaController::class, 'imagensDenuncia'])->name('denuncias.imagens');
     Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
+    Route::get("/denuncias/{denuncia}/arquivo", [DenunciaController::class, 'baixarArquivo'])->name('denuncias.arquivo');
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
     Route::resource('empresas', EmpresaController::class);
     Route::get('/empresas-listar', [EmpresaController::class, 'indexEmpresas'])->name('empresas.listar');

@@ -10,6 +10,7 @@ use App\Models\Relatorio;
 use App\Models\User;
 use App\Models\VideoDenuncia;
 use App\Notifications\DenunciaRecebida;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -112,6 +113,11 @@ class DenunciaController extends Controller
             }
         }
 
+        if ($request->has('arquivoFile')) {
+            $denuncia->arquivo = $request->arquivoFile->store("denuncias/{$denuncia->id}/arquivo");
+            $denuncia->save();
+        }
+
         if (array_key_exists('video', $data)) {
             $count = count($data['video']);
             for ($i = 0; $i < $count; $i++) {
@@ -178,6 +184,15 @@ class DenunciaController extends Controller
         $denuncia->update();
 
         return redirect()->back()->with(['success' => $msg]);
+    }
+
+    public function baixarArquivo(Denuncia $denuncia)
+    {
+        $this->authorize('isSecretarioOrAnalista', User::class);
+        if ($denuncia->arquivo && Storage::exists($denuncia->arquivo)) {
+            return Storage::download($denuncia->arquivo);
+        }
+        abort(404);
     }
 
     /**
