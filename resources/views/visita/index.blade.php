@@ -167,6 +167,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col" class="align-middle">Data de requerimento</th>
+                                        <th scope="col" class="align-middle">Data de entrada no setor de análise </th>
                                         <th scope="col" class="align-middle">Data marcada</th>
                                         <th scope="col" class="align-middle">Data realizada</th>
                                         @if($filtro == "requerimento" || $filtro == "denuncia")
@@ -194,7 +195,11 @@
                                             @elseif($visita->solicitacaoPoda != null)
                                                 <td>{{date('d/m/Y H:i', strtotime($visita->solicitacaoPoda->created_at))}}</td>
                                             @endif
+                                                                                      
+                                            <td>{{date('d/m/Y H:i', strtotime($visita->created_at))}}</td>
+                                            
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
+                                            
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
