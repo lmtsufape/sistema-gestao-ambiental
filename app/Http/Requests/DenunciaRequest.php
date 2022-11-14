@@ -39,6 +39,7 @@ class DenunciaRequest extends FormRequest
             'imagem.*' => 'nullable|file|mimes:jpg,bmp,png|max:2048',
             'video.*' => 'nullable|file|mimes:mp4,mkv,3gp,avi,m4v,ogg|max:51200',
             'comentario.*' => 'nullable|string|min:5|max:255',
+            'arquivoFile' => 'nullable|file|max:2048|mimes:pdf',
         ];
     }
 

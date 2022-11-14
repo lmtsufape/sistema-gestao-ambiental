@@ -44,237 +44,111 @@
                     </div>
                     <form method="POST" id="cria-denuncia" action="{{route('denuncias.store')}}" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group">
+                            <label for="empresa">Empresas cadastradas:<span style="color: red; font-weight: bold;">*</span></label>
+                            <select class="form-control selectpicker @error('empresa_id') is-invalid @enderror" data-live-search="true" title="Selecione uma empresa"
+                                    name="empresa_id" id="empresas" onChange="showCampoEmpresaNaoCadastrada(this)">
+                                <option disable="" hidden="" selected>-- Selecionar Empresa --</option>
+                                @foreach ($empresas as $empresa)
+                                    <option value="{{$empresa->id}}" {{old("empresa_id") == $empresa->id ? 'selected' : ""}}>{{$empresa->nome}}</option>
+                                @endforeach
+                                <option value="none" {{old("empresa_id") == 'none' ? 'selected' : ""}}>Empresa não cadastrada</option>
+                            </select>
+                            @error('empresa_id')
+                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-row justify-content-between" id="empresa_info">
+                            <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
+                                    class="col-md-12 form-group">
+                                <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
+                                    value="{{old('empresa_nao_cadastrada')}}">
+                                @error('empresa_nao_cadastrada')
+                                    <div id="validationServer02Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
+                                    class="col-md-12 form-group">
+                                <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
+                                @error('endereco')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="denunciante">{{ __('Seu nome (Opcional)') }}</label>
+                            <input id="denunciante" class="form-control @error('denunciante') is-invalid @enderror" type="text" name="denunciante"
+                                value="{{old('denunciante')}}">
+                            @error('denunciante')
+                                <div id="validationServer02Feedback" class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="texto">{{ __('Descrição') }}<span style="color: red; font-weight: bold;">*</span></label>
+                            <textarea @error('texto') class="is-invalid" @enderror id="denuncia-ckeditor" name="texto" cols="30" rows="10"></textarea><br>
+                            @error('texto')
+                                <div id="validationServer03Feedback" class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <div class="form-row justify-content-between">
-                            <div class="col-md-7">
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <label for="empresa">Empresas cadastradas:<span style="color: red; font-weight: bold;">*</span></label>
-                                        <select class="form-control selectpicker @error('empresa_id') is-invalid @enderror" data-live-search="true" title="Selecione uma empresa"
-                                                name="empresa_id" id="empresas" onChange="showCampoEmpresaNaoCadastrada(this)">
-                                            <option disable="" hidden="" selected>-- Selecionar Empresa --</option>
-                                            @foreach ($empresas as $empresa)
-                                                <option value="{{$empresa->id}}" {{old("empresa_id") == $empresa->id ? 'selected' : ""}}>{{$empresa->nome}}</option>
-                                            @endforeach
-                                            <option value="none" {{old("empresa_id") == 'none' ? 'selected' : ""}}>Empresa não cadastrada</option>
-                                        </select>
-                                        @error('empresa_id')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row justify-content-between" id="empresa_info">
-                                    <div id="campo_empresa_nao_cadastrada" @if (!old("empresa_nao_cadastrada")) style="display: none;" @endif
-                                            class="col-md-12 form-group">
-                                        <label for="empresa_nao_cadastrada">{{ __('Denunciado (Nome da empresa ou pessoa física)') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="empresa_nao_cadastrada" class="form-control @error('empresa_nao_cadastrada') is-invalid @enderror" type="text" name="empresa_nao_cadastrada"
-                                            value="{{old('empresa_nao_cadastrada')}}">
-                                        @error('empresa_nao_cadastrada')
-                                            <div id="validationServer02Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div id="campo_endereco_empresa_nao_cadastrada" @if (!old("endereco")) style="display: none;" @endif
-                                            class="col-md-12 form-group">
-                                        <label for="endereco">{{ __('Endereço') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="endereco" class="form-control @error('endereco') is-invalid @enderror" type="text" name="endereco" value="{{old('endereco')}}">
-                                        @error('endereco')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12 form-group">
-                                        <label for="denunciante">{{ __('Seu nome (Opcional)') }}</label>
-                                        <input id="denunciante" class="form-control @error('denunciante') is-invalid @enderror" type="text" name="denunciante"
-                                            value="{{old('denunciante')}}">
-                                        @error('denunciante')
-                                            <div id="validationServer02Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <label for="texto">{{ __('Descrição') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <textarea @error('texto') class="is-invalid" @enderror id="denuncia-ckeditor" name="texto" cols="30" rows="5"></textarea><br>
-                                        @error('texto')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+                            <div class="col-md-8">
+                                <label for="imagem">{{ __('Imagens anexadas') }}</label>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-row justify-content-between">
-                                    <div class="col-md-8">
-                                        <label for="imagem">{{ __('Imagens anexadas') }}</label>
+                            <div class="col-md-4" style="text-align: right">
+                                <input type="hidden" id="imagem_indice" value="-1">
+                                <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
+                                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
+                                </a>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="hidden" id="tamanhoTotal" value="0">
+                            <div id="imagens" class="form-row">
+                                {{-- style="width:100%; height:300px; overflow:auto;" --}}
+                                <div class="col-md-4">
+                                    <div>
+                                        <label for="file-input-imagem_indice">
+                                            <img id="imagem_previaimagem_indice" class="img-fluid" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
+                                        </label>
+                                        <input style="display: none;" type="file" name="imagem[]" id="file-input-imagem_indice" accept="image/*" onchange="loadPreview(event, 'imagem_indice')">
                                     </div>
-                                    <div class="col-md-4" style="text-align: right">
-                                        <input type="hidden" id="imagem_indice" value="-1">
-                                        <a title="Adicionar imagem" id="btn-add-imagem" onclick="addImagem()" style="cursor: pointer;">
-                                            <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar imagem">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="justify-content-betwceeen">
-                                    <input type="hidden" id="tamanhoTotal" value="0">
-                                    <div id="imagens" class="form-row" style="width:100%; height:300px; overflow:auto;">
-                                        <div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
-                                            <div class="form-row">
-                                                <div class="image-upload">
-                                                    <label for="file-input-imagem_indice">
-                                                        <img id="imagem_previaimagem_indice" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
-                                                    </label>
-                                                </div>
-                                                <input style="display: none;" type="file" name="imagem[]" id="file-input-imagem_indice" accept="image/*" onchange="loadPreview(event, 'imagem_indice')">
-                                            </div>
-                                            <div class="form-row justify-content-betwceeen">
-                                                <div class="col-md-6" style="text-align: right">
-                                                    <div id="nomeimagem_indice" style="display: none; font-style: italic;"></div>
-                                                </div>
-                                                <div class="col-md-6" style="text-align: right">
-                                                    <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
-                                                </div>
-                                            </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-6" style="text-align: right">
+                                            <div id="nomeimagem_indice" style="display: none; font-style: italic;"></div>
                                         </div>
-
-                                        @if ($errors->has('imagem.*') && $errors->has('comentario.*'))
-                                            @foreach ($errors->get('imagem.*') as $i => $images)
-                                                @foreach ($images as $b => $opcao)
-                                                    <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                                        <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                        <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
-                                                        @error('imagem.*'.$b)
-                                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                                {{ $opcao }}
-                                                            </div>
-                                                        @enderror
-                                                @endforeach
-                                            @endforeach
-                                            @foreach ($errors->get('comentario.*') as $i => $comentarios)
-                                                @foreach ($comentarios as $b => $opcao)
-                                                        <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
-                                                        <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
-                                                        @error('comentario.'.$b)
-                                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                                {{ $opcao }}
-                                                            </div>
-                                                        @enderror
-                                                        <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                                    </div>
-                                                @endforeach
-                                            @endforeach
-                                        @else
-                                            @if($errors->has('imagem.*'))
-                                                @foreach ($errors->get('imagem.*') as $i => $images)
-                                                    @foreach ($images as $b => $opcao)
-                                                        <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                                            <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                            <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
-                                                            @error('imagem.*'.$b)
-                                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                                    {{ $opcao }}
-                                                                </div>
-                                                            @enderror
-                                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                                            <input type="text" class="form-control" name="comentario[]" id="comentario">
-                                                            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                                        </div>
-                                                    @endforeach
-                                                @endforeach
-                                            @else
-                                                @foreach ($errors->get('comentario.*') as $i => $comentarios)
-                                                    @foreach ($comentarios as $b => $opcao)
-                                                        <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                                            <label for="imagem">{{ __('Selecione a imagem') }}</label>
-                                                            <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
-                                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
-                                                            <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
-                                                            @error('comentario.'.$b)
-                                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                                    {{ $opcao }}
-                                                                </div>
-                                                            @enderror
-                                                            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
-                                                        </div>
-                                                    @endforeach
-                                                @endforeach
-                                            @endif
-                                        @endif
+                                        <div class="col-md-6" style="text-align: right">
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        {{--<div class="form-row">
-                            <div class="col-md-6">
-                                <label for="video">{{ __('Anexar videos') }}</label>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <button type="button" id="btn-add-video" onclick="addVideo()" class="btn btn-primary btn-color-dafault"
-                                style="margin-top:10px; margin-bottom:10px;">
-                                Adicionar Video
-                            </button>
-                        </div>
 
-                        <div id="videos" class="form-row">
-                            @if ($errors->has('video.*') && $errors->has('comentario.*'))
-                                @foreach ($errors->get('video.*') as $i => $videos)
-                                    @foreach ($videos as $b => $opcao)
-                                        <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                            <label for="video">{{ __('Selecione o video') }}</label>
-                                            <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
-                                            @error('video.*'.$b)
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $opcao }}
-                                                </div>
-                                            @enderror
-                                    @endforeach
-                                @endforeach
-                                @foreach ($errors->get('comentario.*') as $i => $comentarios)
-                                    @foreach ($comentarios as $b => $opcao)
-                                            <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
-                                            <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
-                                            @error('comentario.'.$b)
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $opcao }}
-                                                </div>
-                                            @enderror
-                                            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
-                                        </div>
-                                    @endforeach
-                                @endforeach
-                            @else
-                                @if($errors->has('video.*'))
-                                    @foreach ($errors->get('video.*') as $i => $videos)
-                                        @foreach ($videos as $b => $opcao)
-                                            <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                                <label for="video">{{ __('Selecione o video') }}</label>
-                                                <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
-                                                @error('video.*'.$b)
+                                @if ($errors->has('imagem.*') && $errors->has('comentario.*'))
+                                    @foreach ($errors->get('imagem.*') as $i => $images)
+                                        @foreach ($images as $b => $opcao)
+                                            <div class="col-md-4" style="margin: 10px 10px 0 0;">
+                                                <label for="imagem">{{ __('Selecione a imagem') }}</label>
+                                                <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
+                                                @error('imagem.*'.$b)
                                                     <div id="validationServer03Feedback" class="invalid-feedback">
                                                         {{ $opcao }}
                                                     </div>
                                                 @enderror
-                                                <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
-                                                <input type="text" class="form-control" name="comentario[]" id="comentario">
-                                                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
-                                            </div>
                                         @endforeach
                                     @endforeach
-                                @else
                                     @foreach ($errors->get('comentario.*') as $i => $comentarios)
                                         @foreach ($comentarios as $b => $opcao)
-                                            <div class="col-md-5" style="margin: 10px 10px 0 0;">
-                                                <label for="video">{{ __('Selecione o video') }}</label>
-                                                <input type="file" class="@error('video.'.$b) is-invalid @enderror" name="video[]" id="video">
                                                 <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
                                                 <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
                                                 @error('comentario.'.$b)
@@ -282,14 +156,56 @@
                                                         {{ $opcao }}
                                                     </div>
                                                 @enderror
-                                                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover video</button>
+                                                <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
                                             </div>
                                         @endforeach
                                     @endforeach
+                                @else
+                                    @if($errors->has('imagem.*'))
+                                        @foreach ($errors->get('imagem.*') as $i => $images)
+                                            @foreach ($images as $b => $opcao)
+                                                <div class="col-md-4" style="margin: 10px 10px 0 0;">
+                                                    <label for="imagem">{{ __('Selecione a imagem') }}</label>
+                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
+                                                    @error('imagem.*'.$b)
+                                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                                            {{ $opcao }}
+                                                        </div>
+                                                    @enderror
+                                                    <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}</label>
+                                                    <input type="text" class="form-control" name="comentario[]" id="comentario">
+                                                    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        @foreach ($errors->get('comentario.*') as $i => $comentarios)
+                                            @foreach ($comentarios as $b => $opcao)
+                                                <div class="col-md-4" style="margin: 10px 10px 0 0;">
+                                                    <label for="imagem">{{ __('Selecione a imagem') }}</label>
+                                                    <input type="file" class="@error('imagem.'.$b) is-invalid @enderror" name="imagem[]" id="imagem" accept="image/*">
+                                                    <label for="comentarios" style="margin-right: 10px;">{{ __('Comentário') }}     </label>
+                                                    <input type="text" class="form-control @error('comentario.'.$b) is-invalid @enderror" name="comentario[]" id="comentario">
+                                                    @error('comentario.'.$b)
+                                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                                            {{ $opcao }}
+                                                        </div>
+                                                    @enderror
+                                                    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger" style="margin-top: 10px;">Remover imagem</button>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
                                 @endif
-                            @endif
-                        </div>--}}
-
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="customFilearquivo">Arquivo anexado</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" accept="application/pdf" id="customFilearquivo" name="arquivoFile" lang="pt">
+                                <label class="custom-file-label" for="customFilearquivo">Selecione um arquivo</label>
+                              </div>
+                        </div>
                     </form>
                     <br>
                     <div class="form row">
@@ -374,8 +290,14 @@
 
 @push ('scripts')
 <script>
+    $('#customFilearquivo').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
     var $videoId = 1;
-    CKEDITOR.replace('denuncia-ckeditor');
+    CKEDITOR.replace('denuncia-ckeditor', {
+        height: 400
+    });
 
     document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
         var messageLength = CKEDITOR.instances['denuncia-ckeditor'].getData().replace(/<[^>]*>/gi, '').length;
@@ -394,16 +316,14 @@
             var imagem_indice = parseInt(document.getElementById("imagem_indice").value)+1;
             indice.value = imagem_indice;
 
-            var campo_imagem = `<div class="col-md-6" style="padding-right: 15px; padding-left: 15px; padding-top: 10px;">
-                                    <div class="form-row">
-                                        <div class="image-upload">
-                                            <label for="file-input-`+imagem_indice+`">
-                                                <img id="imagem_previa`+imagem_indice+`" width="200" height="200" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
-                                            </label>
-                                        </div>
+            var campo_imagem = `<div class="col-md-4">
+                                    <div class="">
+                                        <label for="file-input-`+imagem_indice+`">
+                                            <img id="imagem_previa`+imagem_indice+`" class="img-fluid" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
+                                        </label>
                                         <input style="display: none;" type="file" name="imagem[]" id="file-input-`+imagem_indice+`" accept="image/*" onchange="loadPreview(event, `+imagem_indice+`)">
                                     </div>
-                                    <div class="form-row justify-content-betwceeen">
+                                    <div class="d-flex justify-content-end">
                                         <div class="col-md-6" style="text-align: right">
                                             <div id="nome`+imagem_indice+`" style="display: none; font-style: italic;"></div>
                                         </div>
