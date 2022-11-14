@@ -99,15 +99,16 @@
                         <td colspan="3"><p><strong>6 – Telefone</strong><br>{{$requerimento->empresa->telefone->numero}}</p></td>
                     </tr>
                     <tr>
-                        <td colspan="10"><p><strong>7 – Tipo de Solicitação</strong><br>{{$requerimento->protocoloTipoDeLicenca()}}</p></td>
+                        <td colspan="5"><p><strong>7 – Tipo de Solicitação</strong><br>{{$requerimento->protocoloTipoDeLicenca()}}</p></td>
+                        <td colspan="5"><p><strong>8 – Protocolo emitido na data: </strong><br>{{$requerimento->visitas->first()->created_at->format('d/m/Y')}}</p></td>
                     </tr>
                     <tr>
-                        <td colspan="10"><p><strong>8 – Tipologia</strong><br>
+                        <td colspan="10"><p><strong>9 – Tipologia</strong><br>
                             O empreendimento enquadra-se na Tipologia de {{mb_strtoupper($requerimento->empresa->cnaes->first()->setor->nome, 'UTF-8')}}, do anexo I da Lei Municipal Nº 4.224/2015, porte {{mb_strtoupper($requerimento->empresa->porte(), 'UTF-8')}} e potencial poluidor {{mb_strtoupper($requerimento->empresa->potencialPoluidor(), 'UTF-8')}}, localizada na {{$requerimento->empresa->endereco->enderecoSimplificado()}}, GARANHUNS/PE
                         </p></td>
                     </tr>
                     <tr>
-                        <td style="text-align: center" colspan="10"><p><strong>9 – Documentos Apresentados a SDRMA: <br>
+                        <td style="text-align: center" colspan="10"><p><strong>10 – Documentos Apresentados a SDRMA: <br>
                            </strong>
                         </p></td>
                     </tr>
