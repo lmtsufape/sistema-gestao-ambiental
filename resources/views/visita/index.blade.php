@@ -473,6 +473,28 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            @if($visita->denuncia->empresa)
+                                <div class="row form-row">
+                                    <label for="endereco">{{__('Endereço:')}}</label>
+                                    <div class="col-md-12 form-group">
+                                        <div class="texto-denuncia">
+                                            {{ $visita->denuncia->empresa->endereco->rua }},
+                                            {{ $visita->denuncia->empresa->endereco->numero }}
+                                            - {{ $visita->denuncia->empresa->endereco->bairro }},
+                                            {{ $visita->denuncia->empresa->endereco->cidade }}-{{ $visita->denuncia->empresa->endereco->estado }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($visita->denuncia->endereco)
+                                <div class="row form-row">
+                                    <label for="endereco">{{__('Endereço:')}}</label>
+                                    <div class="col-md-12 form-group">
+                                        <div class="texto-denuncia">
+                                            {{ $visita->denuncia->endereco }} 
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="row form-row">
                                 <label for="relato">{{__('Relato descrito pelo denunciante:')}}</label>
                                 <div class="col-md-12 form-group">
