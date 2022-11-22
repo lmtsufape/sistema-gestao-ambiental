@@ -22,10 +22,16 @@
                     <div class="card-body">
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-md-12 form-group">
+                                <div class="col-md-6 form-group">
                                     <label for="nome">Nome</label>
                                     <input id="nome" class="form-control" type="text" name="nome"
                                         value="{{ $solicitacao->requerente->user->name }}" autocomplete="nome" disabled>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="cpf">{{ __('CPF') }}</label>
+                                    <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
+                                        value="{{ $solicitacao->requerente->cpf }}" autofocus autocomplete="cpf"
+                                        data-mask="000.000.000-00" disabled>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -35,10 +41,9 @@
                                         value="{{ $solicitacao->requerente->user->email }}" autocomplete="email" disabled>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="cpf">{{ __('CPF') }}</label>
-                                    <input id="cpf" class="form-control simple-field-data-mask" type="text" name="cpf"
-                                        value="{{ $solicitacao->requerente->cpf }}" autofocus autocomplete="cpf"
-                                        data-mask="000.000.000-00" disabled>
+                                    <label for="telefone">Telefone</label>
+                                    <input id="telefone" class="form-control" type="text" name="telefone"
+                                        value="{{ $solicitacao->requerente->telefone->numero }}" autocomplete="telefone" disabled>
                                 </div>
                             </div>
                             <div class="form-row">
