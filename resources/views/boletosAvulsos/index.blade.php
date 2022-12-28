@@ -7,7 +7,7 @@
                     <div class="form-row">
                         <div class="col-md-12">
                             <h4 class="card-title">Cadastrar uma empresa</h4>
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('boletosAvulsos.index')}}">Boletos Avulsos</a> > Cadastrar empresa</h6>
+                            <h5 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('boletosAvulsos.index')}}">Boletos Avulsos</a> > Cadastrar empresa</h5>
                         </div>
                         
                     </div>
@@ -145,7 +145,7 @@
                                 <hr>
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <label for="multa">{{ __('MULTA(R$)') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <label for="multa">{{ __('Valor da multa (R$)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input id="multa" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
                                             @error('multa')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
