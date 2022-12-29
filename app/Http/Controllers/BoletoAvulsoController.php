@@ -8,7 +8,10 @@ use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\User;
 use App\Http\Controllers\BoletoAvulsoController;
+use App\Mail\CriacaoUsuarioPadrao;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class BoletoAvulsoController extends Controller
 {
@@ -33,6 +36,7 @@ class BoletoAvulsoController extends Controller
         } catch (ErrorRemessaException $e) {
             throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
+
     }
 
     public function buscarEmpresa(Request $request) {
@@ -72,7 +76,8 @@ class BoletoAvulsoController extends Controller
         
         $novo_user->name = "Empresario";
         $novo_user->email = $request->email_empresa;
-        $novo_user->password = "A5b1do3N"; //ALTERAR SENHA CRIADA
+        $senha_random = Str::random(8);
+        $novo_user->password = bcrypt($senha_random);
         $novo_user->role = 1;
         
         $novo_endereco->rua = $request->rua_da_empresa;
@@ -115,6 +120,8 @@ class BoletoAvulsoController extends Controller
 
             throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
+
+        Mail::to($novo_user->email)->send(new CriacaoUsuarioPadrao($novo_user, $senha_random));
 
         return $nova_empresa;
     }
