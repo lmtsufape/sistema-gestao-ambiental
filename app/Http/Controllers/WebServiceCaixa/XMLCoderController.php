@@ -5,11 +5,14 @@ namespace App\Http\Controllers\WebServiceCaixa;
 use App\Http\Controllers\Controller;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
+use App\Models\Empresa;
 use App\Models\WebServiceCaixa\AlterarBoletoRemessa;
 use App\Models\WebServiceCaixa\BaixarBoletoRemessa;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
 use App\Models\WebServiceCaixa\GerirBoletoRemessa;
+use App\Models\WebServiceCaixa\GerirBoletoRemessaAvulso;
 use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
+use App\Models\WebServiceCaixa\IncluirBoletoAvulsoRemessa;
 use App\Models\WebServiceCaixa\Pessoa;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,6 +54,42 @@ class XMLCoderController extends Controller
         ]);
 
         $boleto->salvarArquivo($boleto->gerarRemessa());
+        $boleto->update();
+
+        return $boleto;
+    }
+
+    public function gerarIncluirBoletoMulta(Empresa $empresa, $multa)
+    {   
+        $pagador = new Pessoa();
+        $beneficiario = new Pessoa();
+
+        $pagador->gerarPagador($empresa);
+        $beneficiario->gerarBeneficiario();
+        
+        $data_vencimento = now()->addDays(30)->format('Y-m-d');
+        
+        $boleto = new IncluirBoletoAvulsoRemessa([
+            'data_vencimento' => $data_vencimento,
+            'empresa_id' => $empresa->id,
+        ]);
+
+        $boleto->save();
+
+        $boleto->setAttributes([
+            'codigo_beneficiario' => $beneficiario->cod_beneficiario,
+            'data_vencimento' => $data_vencimento,
+            'valor' => $multa,
+            'pagador' => $pagador,
+            'beneficiario' => $beneficiario,
+            'tipo_juros_mora' => 'VALOR_POR_DIA',
+            'valor_juros_mora' => 0.01,
+            'data_multa' => $data_vencimento,
+            'valor_multa' => 0.79,
+            'mensagens_compensacao' => "MULTA POR INFRAÇÕES",
+        ]);
+
+        $boleto->salvarArquivoAvulso($boleto->gerarRemessaAvulso());
         $boleto->update();
 
         return $boleto;
