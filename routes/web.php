@@ -23,6 +23,7 @@ use App\Http\Controllers\LicencaController;
 use App\Http\Controllers\SolicitacaoPodaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\BoletoAvulsoController;
 
 
 /*
@@ -169,6 +170,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/noticias/{noticia}/edit', [NoticiaController::class, 'edit'])->name('noticias.edit');
     Route::put('/noticias/{noticia}/update', [NoticiaController::class, 'update'])->name('noticias.update');
     Route::delete('/noticias/{noticia}/destroy', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
+
+    Route::get('/boletosAvulsos', [BoletoAvulsoController::class, 'index'])->name('boletosAvulsos.index');
+    Route::post('/boletosAvulsos', [BoletoAvulsoController::class, 'store'])->name('boletosAvulsos.store');
+    Route::post('/consultaEmpresa', [BoletoAvulsoController::class, 'buscarEmpresa'])->name('boletosAvulsos.buscarEmpresa');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');

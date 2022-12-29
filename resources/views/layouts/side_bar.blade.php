@@ -151,6 +151,19 @@
                                         </li>
                                     </ul>
                                 </li>
+
+
+                                <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
+                                    <button href="#licenciamentoSubmenu1" data-toggle="collapse" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
+                                        Boletos Avulsos
+                                    </button>
+                                    <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu1">
+                                        <li class=" @if(request()->routeIs('valores*')) active @endif">
+                                            <a href="{{route('boletosAvulsos.index')}}">Gerar Multas</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 <li class="mb-2 item-align @if(request()->routeIs('denuncias*')) active @endif">
                                     <a href="{{route('denuncias.index', 'pendentes')}}">
                                         Denúncias
