@@ -31,7 +31,7 @@
                                     <div class="col-md-8 form-group">
                                         <label for="cpf_cnpj">{{ __('CPF/CNPJ') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         
-                                        <input id="cpf_cnpj" class="form-control @error('cpf_cnpj') is-invalid @enderror" type="text" name="cpf_cnpj" value="{{old('cpf_cnpj')}}" required autofocus autocomplete="cpf_cnpj">
+                                        <input onkeyup="mask_cpf_cnpj();" id="cpf_cnpj" class="form-control @error('cpf_cnpj') is-invalid @enderror" type="text" name="cpf_cnpj" value="{{old('cpf_cnpj')}}" required autofocus autocomplete="cpf_cnpj">
                                         @error('pessoa')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -39,13 +39,25 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 mt-4">
-
                                         <button class="btn btn-primary" style="height: 50px;" onClick="preencherEmpresaExistente()">
                                             Consultar
                                         </button>
-                                    </div>
-                                           
+                                    </div>    
                                 </div>
+
+                                <div class="form-row">
+                                    <div id="email_empresa_div" style="display: none" class="col-md-8 form-group">
+                                        <label for="email_empresa">{{ __('E-mail empresa') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        
+                                        <input id="email_empresa" class="form-control @error('email_empresa') is-invalid @enderror" type="text" name="email_empresa" value="{{old('email_empresa')}}" autocomplete="email_empresa">
+                                        @error('email_empresa')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="celular_da_empresa">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label>
@@ -98,8 +110,8 @@
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{old('número_da_empresa')}}" required autocomplete="número_da_empresa">
-                                        @error('número_da_empresa')
+                                        <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{old('numero_da_empresa')}}" required autocomplete="numero_da_empresa">
+                                        @error('numero_da_empresa')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -146,7 +158,7 @@
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <label for="multa">{{ __('Valor da multa (R$)') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <input id="multa" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
+                                            <input type="number" step="0.01" id="multa" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
                                             @error('multa')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                     {{ $message }}
@@ -502,6 +514,49 @@
             function exibirModalCep() {
                 $('#btn-modal-cep-nao-encontrado').click();
             }
+            
+            function emailHidden() {
+                // console.log("aqui")
+                var div_email = document.getElementById("email_empresa_div");
+                if (div_email.style.display === "none") {
+                    div_email.style.display = "block";
+                }
+            }
+
+            function emailEnable() {
+                var div_email = document.getElementById("email_empresa_div");
+                if (div_email.style.display === "block") {
+                    div_email.style.display = "none";
+                }
+            }
+
+            function mask_cpf_cnpj() {
+                $("#cpf_cnpj").keydown(function(){
+                try {
+                    $("#cpf_cnpj").unmask();
+                } catch (e) {}
+
+                var tamanho = $("#cpf_cnpj").val().length;
+
+                if(tamanho < 11){
+                    $("#cpf_cnpj").mask("999.999.999-99");
+                } else {
+                    $("#cpf_cnpj").mask("99.999.999/9999-99");
+                }
+
+                // ajustando foco
+                var elem = this;
+                setTimeout(function(){
+                    // mudo a posição do seletor
+                    elem.selectionStart = elem.selectionEnd = 10000;
+                }, 0);
+                // reaplico o valor para mudar o foco
+                var currentValue = $(this).val();
+                $(this).val('');
+                $(this).val(currentValue);
+            });
+
+            }
 
             function preencherEmpresaExistente() {
 
@@ -519,10 +574,11 @@
                         'cpf_cnpj': $('#cpf_cnpj').val()
                 },
                 success: function (data) {
-                    console.log(data)
                     if(data == 'inexistente'){
                         exibirModalEmpresaInexistente();
+                        emailHidden();
                     }else {
+                        emailEnable();
                         $('#nome_empresa').val(data[0]['nome']);
                         $('#cep_da_empresa').val(data[1]['cep']);
                         $('#rua_da_empresa').val(data[1]['rua']);
@@ -532,10 +588,7 @@
                         $('#estado_da_empresa').val(data[1]['estado']);
                         $('#complemento_da_empresa').val(data[1]['complemento']);
                         $('#celular_da_empresa').val(data[2]['numero']);
-
                     }
-                
-
 		        }
 	            });
             }
