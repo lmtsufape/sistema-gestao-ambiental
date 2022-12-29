@@ -28,8 +28,7 @@ class BoletoAvulsoController extends Controller
 
         try {
             $boleto = $xmlBoletoController->gerarIncluirBoletoMulta($empresa, $valor_multa);
-            $xmlBoletoController->incluirBoletoRemessa($boleto);
-
+            $xmlBoletoController->incluirBoletoAvulsoRemessa($boleto);
             return $boleto->URL;
         } catch (ErrorRemessaException $e) {
             throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
