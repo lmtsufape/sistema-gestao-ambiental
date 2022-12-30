@@ -73,6 +73,7 @@ class XMLCoderController extends Controller
         $boleto = new IncluirBoletoAvulsoRemessa([
             'data_vencimento' => $data_vencimento,
             'empresa_id' => $empresa->id,
+            'valor_boleto' => $multa,
         ]);
 
         $boleto->save();

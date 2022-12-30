@@ -14,6 +14,7 @@ class BoletoAvulso extends Model
     protected $fillable = [
         'data_vencimento',
         'data_pagamento',
+        'valor_boleto',
         'caminho_arquivo_remessa',
         'caminho_arquivo_resposta',
         'codigo_de_barras',
@@ -40,7 +41,7 @@ class BoletoAvulso extends Model
     {
         delete_file($this->caminho_arquivo_remessa);
         $caminho_arquivo = 'remessas/';
-        $documento_nome = 'incluir_boleto_remessa_' . $this->id . '.xml';
+        $documento_nome = 'incluir_boleto_avulso_remessa_' . $this->id . '.xml';
         $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
         $this->caminho_arquivo_remessa = $caminho_arquivo . $documento_nome;
     }
@@ -58,7 +59,7 @@ class BoletoAvulso extends Model
     {
         delete_file($this->resposta_incluir_boleto);
         $caminho_arquivo = 'remessas/';
-        $documento_nome = 'resposta_incluir_boleto_remessa_' . $this->id . '.xml';
+        $documento_nome = 'resposta_incluir_boleto_avulso_remessa_' . $this->id . '.xml';
         $this->gerarArquivo($string, $caminho_arquivo . $documento_nome);
         $this->resposta_incluir_boleto = $caminho_arquivo . $documento_nome;
     }
@@ -67,7 +68,7 @@ class BoletoAvulso extends Model
     {
         delete_file($this->resposta_alterar_boleto);
         $caminho_arquivo = 'remessas/';
-        $documento_nome = 'resposta_alterar_boleto_remessa_' . $this->id . '.xml';
+        $documento_nome = 'resposta_alterar_boleto_avulso_remessa_' . $this->id . '.xml';
         Storage::put($caminho_arquivo.$documento_nome, $string);
         $this->resposta_alterar_boleto = $caminho_arquivo . $documento_nome;
     }
@@ -76,7 +77,7 @@ class BoletoAvulso extends Model
     {
         delete_file($this->resposta_baixar_boleto);
         $caminho_arquivo = 'remessas/';
-        $documento_nome = 'resposta_baixar_boleto_remessa_' . $this->id . '.xml';
+        $documento_nome = 'resposta_baixar_boleto_avulso_remessa_' . $this->id . '.xml';
         Storage::put($caminho_arquivo.$documento_nome, $string);
         $this->resposta_baixar_boleto = $caminho_arquivo . $documento_nome;
     }
