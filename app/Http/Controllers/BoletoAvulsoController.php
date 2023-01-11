@@ -7,6 +7,7 @@ use App\Models\Empresa;
 use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\User;
+use App\Models\BoletoAvulso;
 use App\Http\Controllers\BoletoAvulsoController;
 use App\Mail\CriacaoUsuarioPadrao;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
@@ -20,7 +21,6 @@ class BoletoAvulsoController extends Controller
     }
 
     public function store(Request $request){
-        // dd("alskjdfcas");
         $valor_multa = $request->multa;
         $xmlBoletoController = new XMLCoderController();
         $empresa = Empresa::where('cpf_cnpj', $request->cpf_cnpj)->first();
@@ -32,7 +32,8 @@ class BoletoAvulsoController extends Controller
         try {
             $boleto = $xmlBoletoController->gerarIncluirBoletoMulta($empresa, $valor_multa);
             $xmlBoletoController->incluirBoletoAvulsoRemessa($boleto);
-            return $boleto->URL;
+            $multa = BoletoAvulso::where('id', $boleto->id)->first();
+            return redirect()->away($multa->URL);
         } catch (ErrorRemessaException $e) {
             throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
         }
