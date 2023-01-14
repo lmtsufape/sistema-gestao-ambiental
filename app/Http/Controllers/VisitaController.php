@@ -29,7 +29,7 @@ class VisitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($filtro, $ordenacao, $ordem)
+    public function index($filtro, $ordenacao, $ordem, Request $request)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $analistas = collect();
@@ -74,7 +74,16 @@ class VisitaController extends Controller
             }
         }
 
-        return view('visita.index', compact('visitas', 'filtro', 'analistas', 'ordenacao', 'ordem'));
+        $busca = $request->buscar;
+        if($busca != null) {
+            $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
+            $empresas = $empresas->pluck('id');
+            $requerimentos = Requerimento::whereIn('empresa_id', $empresas);
+            $requerimentos = $requerimentos->pluck('id');
+            $visitas = Visita::whereIn('requerimento_id', $requerimentos)->paginate(20);
+        }
+
+        return view('visita.index', compact('visitas', 'filtro', 'analistas', 'ordenacao', 'ordem', 'busca'));
     }
 
     private function ordenar($qry,$filtro, $ordenacao, $ordem)
