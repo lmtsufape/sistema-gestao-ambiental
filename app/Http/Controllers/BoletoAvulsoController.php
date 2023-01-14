@@ -7,6 +7,8 @@ use App\Models\Empresa;
 use App\Models\Endereco;
 use App\Models\Telefone;
 use App\Models\User;
+use App\Models\Requerente;
+use App\Models\BoletoAvulso;
 use App\Http\Controllers\BoletoAvulsoController;
 use App\Mail\CriacaoUsuarioPadrao;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
@@ -20,7 +22,6 @@ class BoletoAvulsoController extends Controller
     }
 
     public function store(Request $request){
-        // dd("alskjdfcas");
         $valor_multa = $request->multa;
         $xmlBoletoController = new XMLCoderController();
         $empresa = Empresa::where('cpf_cnpj', $request->cpf_cnpj)->first();
@@ -73,6 +74,7 @@ class BoletoAvulsoController extends Controller
         $nova_empresa = new Empresa();
         $novo_endereco = new Endereco();
         $novo_telefone = new Telefone();
+        $novo_requerente = new Requerente();
         
         $novo_user->name = "Empresario";
         $novo_user->email = $request->email_empresa;
@@ -102,6 +104,15 @@ class BoletoAvulsoController extends Controller
             $novo_user->save();
             $novo_endereco->save();
             $novo_telefone->save();
+
+            $novo_requerente->cpf = '000.000.000-00';
+            $novo_requerente->rg = '00000000';
+            $novo_requerente->orgao_emissor = 'SDS';
+            $novo_requerente->user_id = $novo_user->id;
+            $novo_requerente->telefone_id = $novo_telefone->id;
+            $novo_requerente->endereco_id = $novo_endereco->id;
+            $novo_requerente->save();
+
             $nova_empresa->user_id = $novo_user->id;
             $nova_empresa->endereco_id = $novo_endereco->id;
             $nova_empresa->telefone_id = $novo_telefone->id;
