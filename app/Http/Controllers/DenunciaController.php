@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DenunciaController extends Controller
 {
-    public function index($filtro)
+    public function index($filtro, Request $request)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
 
@@ -60,7 +60,14 @@ class DenunciaController extends Controller
         }
         $analistas = User::analistas();
 
-        return view('denuncia.index', compact('denuncias', 'analistas', 'filtro'));
+        $busca = $request->buscar;
+        if($busca != null) {
+            $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
+            $empresas = $empresas->pluck('id');
+            $denuncias = Denuncia::whereIn('empresa_id', $empresas)->orWhere('empresa_nao_cadastrada', 'ilike', '%'. $busca .'%')->paginate(20);
+        }
+
+        return view('denuncia.index', compact('denuncias', 'analistas', 'filtro', 'busca'));
     }
 
     public function infoDenuncia(Request $request)
