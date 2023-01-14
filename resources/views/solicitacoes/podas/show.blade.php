@@ -88,13 +88,13 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento') }}</label>
-                                    <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
+                                    <textarea disabled class="form-control" rows="3" id="complemento">{{ $solicitacao->endereco->complemento }}</textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="comentario">{{ __('Comentário') }}</label>
-                                    <textarea disabled class="form-control" id="comentario">{{$solicitacao->comentario}}</textarea>
+                                    <textarea disabled class="form-control" rows="5" id="comentario">{{$solicitacao->comentario}}</textarea>
                                 </div>
                             </div>
                             @if($solicitacao->fotos->first() != null)

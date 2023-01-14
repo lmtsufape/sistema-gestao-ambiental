@@ -42,7 +42,7 @@ class RequerimentoController extends Controller
      *
      * @return View
      */
-    public function index($filtro)
+    public function index($filtro, Request $request)
     {
         $user = auth()->user();
         $requerimentosCancelados = collect();
@@ -73,12 +73,19 @@ class RequerimentoController extends Controller
         }
         $tipos = Requerimento::TIPO_ENUM;
 
+        $busca = $request->buscar;  
+        if($busca != null){
+            $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
+            $empresas = $empresas->pluck('id');
+            $requerimentos = Requerimento::whereIn('empresa_id', $empresas)->paginate(20);
+        }
+
         /*$data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])
             ->get()
             ->groupBy('status_string')
             ->map->count();*/
 
-        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro'));
+        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro', 'busca'));
     }
 
     /**

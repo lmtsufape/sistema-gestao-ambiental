@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 use App\Models\BoletoCobranca;
 use App\Models\Requerimento;
+use App\Models\Empresa;
 use App\Models\User;
 use App\Models\WebServiceCaixa\ErrorRemessaException;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,6 +18,8 @@ class BoletoController extends Controller
 {
     public function index(Request $request, $filtragem)
     {
+        $busca = $request->buscar;
+
         $this->authorize('isSecretarioOrFinanca', auth()->user());
 
         if(!in_array($filtragem, ['pendentes', 'pagos', 'vencidos', 'cancelados'])) {
@@ -47,7 +50,16 @@ class BoletoController extends Controller
                 break;
         }
 
-        return view('boleto.index', compact('pagamentos', 'dataAte', 'dataDe', 'filtro', 'filtragem'));
+        if($busca != null){
+            $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
+            $empresas = $empresas->pluck('id');
+            $requerimentos = Requerimento::whereIn('empresa_id', $empresas);
+            $requerimentos = $requerimentos->pluck('id');
+            $pagamentos = BoletoCobranca::WhereIn('requerimento_id', $requerimentos)->paginate(20);
+        }
+
+
+        return view('boleto.index', compact('pagamentos', 'dataAte', 'dataDe', 'filtro', 'filtragem', 'busca'));
     }
 
     private function filtrarBoletos(Request $request)
