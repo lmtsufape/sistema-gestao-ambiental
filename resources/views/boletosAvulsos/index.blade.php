@@ -39,7 +39,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 mt-4">
-                                        <button class="btn btn-primary" style="height: 50px;" onClick="preencherEmpresaExistente()">
+                                        <button type="button" class="btn btn-primary" style="height: 50px;" onClick="preencherEmpresaExistente()">
                                             Consultar
                                         </button>
                                     </div>    
