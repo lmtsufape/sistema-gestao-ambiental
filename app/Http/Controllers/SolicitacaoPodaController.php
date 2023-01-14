@@ -8,6 +8,7 @@ use App\Mail\SolicitacaoPodasCriada;
 use App\Mail\SolicitacaoPodasEncaminhada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
+use App\Models\Requerente;
 use App\Models\Relatorio;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
@@ -26,7 +27,7 @@ class SolicitacaoPodaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($filtro)
+    public function index($filtro, Request $request)
     {
         $this->authorize('index', SolicitacaoPoda::class);
 
@@ -75,7 +76,16 @@ class SolicitacaoPodaController extends Controller
             }
             $analistas = User::analistasPoda();
 
-            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
+            $busca = $request->buscar;
+            if($busca != null) {
+                $usuarios = User::where('name', 'ilike', '%'. $busca .'%')->get();
+                $usuarios = $usuarios->pluck('id');
+                $requerentes = Requerente::whereIn('user_id', $usuarios);
+                $requerentes = $requerentes->pluck('id');
+                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->paginate(20);
+            }
+
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes', 'busca'));
         }
     }
 

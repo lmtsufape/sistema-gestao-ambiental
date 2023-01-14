@@ -6,6 +6,8 @@ use App\Http\Requests\SolicitacaoMudaAvaliarRequest;
 use App\Http\Requests\SolicitacaoMudaRequest;
 use App\Mail\SolicitacaoMudasCriada;
 use App\Models\EspecieMuda;
+use App\Models\User;
+use App\Models\Requerente;
 use App\Models\MudaSolicitada;
 use App\Models\SolicitacaoMuda;
 use App\Notifications\ParecerSolicitacao;
@@ -22,7 +24,7 @@ class SolicitacaoMudaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($filtro)
+    public function index($filtro, Request $request)
     {
         $this->authorize('index', SolicitacaoMuda::class);
         $registradas = SolicitacaoMuda::where('status', '1')->orderBy('created_at', 'DESC')->paginate(20);
@@ -41,7 +43,16 @@ class SolicitacaoMudaController extends Controller
                 break;
         }
 
-        return view('solicitacoes.mudas.index', compact('mudas', 'filtro'));
+        $busca = $request->buscar;
+        if($busca != null){
+            $usuarios= User::where('name', 'ilike', '%'. $busca .'%')->get();
+            $usuarios = $usuarios->pluck('id');
+            $requerentes = Requerente::whereIn('user_id', $usuarios);
+            $requerentes = $requerentes->pluck('id');
+            $mudas = SolicitacaoMuda::whereIn('requerente_id', $requerentes)->paginate(20);
+        }
+
+        return view('solicitacoes.mudas.index', compact('mudas', 'filtro', 'busca'));
     }
 
     public function requerenteIndex()

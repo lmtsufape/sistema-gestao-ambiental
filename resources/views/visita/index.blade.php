@@ -122,7 +122,20 @@
                     </div>
                 </div>
             </div>
+
+            
         </div>
+        <form action="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}" method="get">
+                @csrf
+                <div class="form-row mb-3">
+                    <div class="col-md-7">
+                        <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do requerente" value="{{ $busca }}">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                    </div>
+                </div>
+        </form>
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
