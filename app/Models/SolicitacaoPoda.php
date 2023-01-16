@@ -53,6 +53,11 @@ class SolicitacaoPoda extends Model
         return $this->belongsTo(Endereco::class);
     }
 
+    public function telefone()
+    {
+        return $this->belongsTo(Telefone::class);
+    }
+
     public function analista()
     {
         return $this->belongsTo(User::class, 'analista_id');

@@ -517,6 +517,17 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label for="celular">{{ __('Contato') }}</label>
+                                    <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" autocomplete="celular" placeholder="(00) 00000-0000">
+                                    @error('celular')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    </div>
+
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento') }}</label>
                                     <input class="form-control" value="{{old('complemento', '')}}" @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento"/>
@@ -713,6 +724,19 @@
 
     @push ('scripts')
         <script>
+
+            $(document).ready(function($) {
+                var SPMaskBehavior = function(val) {
+                        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+                    },
+                    spOptions = {
+                        onKeyPress: function(val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        }
+                    };
+                $('.celular').mask(SPMaskBehavior, spOptions);
+            });
+
             function addImagem() {
                 var campo_imagem = `<div class="card shadow bg-white" style="width: 50%;">
                                         <div class="card-body">

@@ -247,6 +247,15 @@
                                     </select>
                                 </div>
                             </div>
+
+                            @if($solicitacao->telefone != null)
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="celular">{{ __('Contato') }}</label>
+                                        <input id="celular" class="form-control" type="text" name="celular" value="{{ $solicitacao->telefone->numero }}" disabled> 
+                                    </div>
+                                </div>
+                            @endif
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento') }}</label>
