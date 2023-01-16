@@ -10,6 +10,7 @@ use App\Models\Endereco;
 use App\Models\FotoPoda;
 use App\Models\Requerente;
 use App\Models\Relatorio;
+use App\Models\Telefone;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Notifications\ParecerSolicitacao;
@@ -142,6 +143,15 @@ class SolicitacaoPodaController extends Controller
         $endereco = new Endereco();
         $endereco->fill($data);
         $endereco->save();
+
+        if($request->celular != null) {
+            $telefone = new Telefone();
+            $telefone->numero = $request->celular;
+            $telefone->save();
+
+            $solicitacao->telefone()->associate($telefone);
+        }
+
         $solicitacao->endereco()->associate($endereco);
         $solicitacao->requerente_id = auth()->user()->requerente->id;
         $protocolo = null;
