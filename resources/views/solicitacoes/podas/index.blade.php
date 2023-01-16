@@ -31,7 +31,7 @@
                     @csrf
                     <div class="form-row mb-3">
                         <div class="col-md-7">
-                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do requerente" value="{{ $busca }}">
+                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do requerente/endereço" value="{{ $busca }}">
                         </div>
                         <div class="col-md-3">
                             <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
