@@ -61,7 +61,10 @@ class SolicitacaoPodaController extends Controller
                 $usuarios = $usuarios->pluck('id');
                 $requerentes = Requerente::whereIn('user_id', $usuarios);
                 $requerentes = $requerentes->pluck('id');
-                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->paginate(20);
+
+                $enderecos = Endereco::where('rua', 'ilike', '%' . $busca . '%')->orWhere('bairro', 'ilike', '%' . $busca . '%')->orWhere('numero', 'ilike', '%' . $busca . '%')->get();
+                $enderecos = $enderecos->pluck('id');
+                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->orWhereIn('endereco_id', $enderecos)->paginate(20);
             }
 
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes', 'busca'));
@@ -90,7 +93,10 @@ class SolicitacaoPodaController extends Controller
                 $usuarios = $usuarios->pluck('id');
                 $requerentes = Requerente::whereIn('user_id', $usuarios);
                 $requerentes = $requerentes->pluck('id');
-                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->paginate(20);
+                
+                $enderecos = Endereco::where('rua', 'ilike', '%' . $busca . '%')->orWhere('bairro', 'ilike', '%' . $busca . '%')->orWhere('numero', 'ilike', '%' . $busca . '%')->get();
+                $enderecos = $enderecos->pluck('id');
+                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->orWhereIn('endereco_id', $enderecos)->paginate(20);
             }
 
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes', 'busca'));
