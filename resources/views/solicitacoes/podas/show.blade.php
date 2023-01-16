@@ -84,15 +84,19 @@
                                         <option selected value="PE">Pernambuco</option>
                                     </select>
                                 </div>
-                            </div>
-                            @if($solicitacao->telefone != null)
-                                <div class="row">
+                            </div>  
+                            <div class="row">
+                                @if($solicitacao->telefone != null)
                                     <div class="col-md-6 form-group">
                                         <label for="celular">{{ __('Contato') }}</label>
                                         <input id="celular" class="form-control" type="text" name="celular" value="{{ $solicitacao->telefone->numero }}" disabled> 
                                     </div>
+                                @endif
+                                <div class="col-md-6 form-group">
+                                    <label for="data">{{ __('Data da solicitação') }}</label>
+                                    <input id="data" class="form-control" type="text" name="data" value="{{ date('d/m/Y', strtotime($solicitacao->created_at)) }}" disabled> 
                                 </div>
-                            @endif
+                            </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento') }}</label>
