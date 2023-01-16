@@ -7,7 +7,7 @@
                     <div class="col-md-8">
                         <h4 class="card-title">Solicitação de poda/supressão</h4>
                         @can('usuarioInterno', \App\Models\User::class)
-                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('podas.index', 'pendentes')}}">Poda/Supressão</a> > Visualizar solicitação de poda/supressão {{$solicitacao->protocolo}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('podas.index', 'pendentes')}}">Poda/Supressão</a> > Visualizar solicitação de poda/supressão {{$solicitacao->id}}</h6>
                         @endcan
                     </div>
                     <div class="col-md-4" style="text-align: right; padding-top: 15px;">
