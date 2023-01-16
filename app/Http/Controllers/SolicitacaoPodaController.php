@@ -30,6 +30,7 @@ class SolicitacaoPodaController extends Controller
     public function index($filtro, Request $request)
     {
         $this->authorize('index', SolicitacaoPoda::class);
+        $busca = $request->buscar;
 
         $userPolicy = new UserPolicy();
         if ($userPolicy->isAnalistaPoda(auth()->user())) {
@@ -55,7 +56,15 @@ class SolicitacaoPodaController extends Controller
             }
             $analistas = User::analistasPoda();
 
-            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes'));
+            if($busca != null) {
+                $usuarios = User::where('name', 'ilike', '%'. $busca .'%')->get();
+                $usuarios = $usuarios->pluck('id');
+                $requerentes = Requerente::whereIn('user_id', $usuarios);
+                $requerentes = $requerentes->pluck('id');
+                $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->paginate(20);
+            }
+
+            return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes', 'busca'));
         } else {
             if(!in_array($filtro, ['pendentes', 'deferidas', 'indeferidas', 'encaminhadas'])) {
                 $filtro = 'pendentes';
@@ -76,7 +85,6 @@ class SolicitacaoPodaController extends Controller
             }
             $analistas = User::analistasPoda();
 
-            $busca = $request->buscar;
             if($busca != null) {
                 $usuarios = User::where('name', 'ilike', '%'. $busca .'%')->get();
                 $usuarios = $usuarios->pluck('id');
