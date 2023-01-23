@@ -81,6 +81,8 @@
                                                 <th scope="col">#</th>
                                                 <th scope="col">Empresa/serviço</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Analista</th>
+                                                <th scope="col">Protocolista</th>
                                                 <th scope="col">Tipo</th>
                                                 <th scope="col">Valor</th>
                                                 <th scope="col">Data</th>
@@ -99,6 +101,20 @@
                                                             Cancelado pela secretaria.
                                                         @else
                                                             {{ucfirst($requerimento->status())}}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->analistaProcesso != null)
+                                                            {{$requerimento->analistaProcesso->name}}
+                                                        @else
+                                                            s/ analista
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($requerimento->protocolista != null)
+                                                            {{$requerimento->protocolista->name}}
+                                                        @else
+                                                            s/ protocolista
                                                         @endif
                                                     </td>
                                                     <td>
