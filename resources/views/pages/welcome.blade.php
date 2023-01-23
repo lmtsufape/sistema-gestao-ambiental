@@ -113,6 +113,50 @@
                 </div>
             </button>
         </div>
+        @can('isSecretario', \App\Models\User::class)
+        <div class="col-md-6 col-lg-4 mb-3">
+            <a  
+            href="{{route('mudas.index', 'pendentes')}}" 
+            class="h-100 w-100">
+            <div class="card card-home">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-9 d-flex align-items-center justify-content-center">
+                            <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                SOLICITAÇÃO DE MUDAS
+                            </p>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3m0 2a6 6 0 0 1 6-6h3v1a6 6 0 0 1-6 6h-3m0 5V10"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+        @elsecan ('isRequerente', \App\Models\User::class)
+        <div class="col-md-6 col-lg-4 mb-3">
+            <a  
+            href="{{route('mudas.requerente.index')}}" 
+            class="h-100 w-100">
+            <div class="card card-home">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-9 d-flex align-items-center justify-content-center">
+                            <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                SOLICITAÇÃO DE MUDAS
+                            </p>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3m0 2a6 6 0 0 1 6-6h3v1a6 6 0 0 1-6 6h-3m0 5V10"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+        @endcan
+
     </div>
     <br>
     @if ($noticias->count() > 0)
