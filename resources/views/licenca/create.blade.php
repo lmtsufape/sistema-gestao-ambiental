@@ -41,7 +41,9 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="data_de_validade">{{__('Data de validade')}}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input type="date" class="form-control @error('data_de_validade') is-invalid @enderror" name="data_de_validade" id="data_de_validade" value="{{old('data_de_validade')}}" required>
+                                    <input type="date" class="form-control" name="data_de_validade" id="data_de_validade" value="{{old('data_de_validade')}}">
+                                    <label for="">Licença Permanente</label>
+                                    <input type="checkbox" name="licenca_permanente" id="licenca_permanente" onclick="data_inf()">
 
                                     @error('data_de_validade')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -90,6 +92,19 @@
             });
             function editar_caminho(string) {
                 return string.split("\\")[string.split("\\").length - 1];
+            }
+
+            function data_inf(){
+                let option = document.getElementById("data_de_validade");
+
+                option.value = '3000-12-31';
+
+                if(option.readOnly == true){
+                    option.readOnly = false;
+                }
+                else{
+                    option.readOnly = true;
+                }
             }
         </script>
     @endpush

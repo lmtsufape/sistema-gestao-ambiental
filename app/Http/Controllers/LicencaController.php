@@ -53,6 +53,13 @@ class LicencaController extends Controller
         $licenca->setAtributes($request, $requerimento);
 
         $licenca->status = Licenca::STATUS_ENUM['aprovada'];
+
+        if($request->licenca_permanente == "on"){
+            $licenca->licenca_permanente = true;
+        }else{
+            $licenca->licenca_permanente = false;
+        }
+        
         $requerimento->status = Requerimento::STATUS_ENUM['finalizada'];
         $licenca->update();
         $requerimento->update();
