@@ -155,6 +155,12 @@
                                 @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'poda', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Poda/Supressão</a>
                         </li>
                     @endcan
+                    @can('isSecretarioOrProcesso', \App\Models\User::class)
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'finalizados') active @endif" id="visitas-atuais-tab" role="tab" type="button"
+                                @if($filtro == 'finalizados') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Finalizados</a>
+                        </li>
+                    @endcan
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
@@ -182,7 +188,7 @@
                                         <th scope="col" class="align-middle">Data de requerimento</th>
                                         <th scope="col" class="align-middle">Data de entrada no setor de análise </th>
                                         <th scope="col" class="align-middle">Data marcada</th>
-                                        <th scope="col" class="align-middle">Data realizada</th>
+                                        <th scope="col" class="align-middle">Status</th>
                                         @if($filtro == "requerimento" || $filtro == "denuncia")
                                             <th scope="col" class="align-middle">Empresa/serviço</th>
                                         @else
@@ -194,7 +200,9 @@
                                         @can('isSecretario', \App\Models\User::class)
                                             <th scope="col" class="align-middle">Analista</th>
                                         @endcan
+                                        
                                         <th scope="col" class="align-middle">Opções</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -213,10 +221,11 @@
                                             
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             
+                                            
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
-                                                <td>{{__('Aguardando visita')}}</td>
+                                            <td>{{__('Notificado')}}</td>
                                             @endif
 
                                             @if($visita->requerimento != null)
@@ -234,6 +243,10 @@
                                             @can('isSecretario', \App\Models\User::class)
                                                 <td>{{$visita->analista->name}}</td>
                                             @endcan
+
+                                            
+
+
                                             <td>
                                                 @can('isSecretario', \App\Models\User::class)
 
@@ -288,8 +301,10 @@
                                                     @endif
                                                 @endcan
                                             </td>
+                                            
                                         </tr>
                                     @endforeach
+
                                 </tbody>
                         </table>
                         </div>
