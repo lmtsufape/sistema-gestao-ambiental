@@ -148,17 +148,15 @@
                             <a class="nav-link @if($filtro == 'denuncia') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
                                 @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'denuncia', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Denúncias</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'finalizado') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
+                                @if($filtro == 'finalizado') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'finalizado', 'ordenacao' => 'visita_id', 'ordem' => 'DESC'])}}">Finalizados</a>
+                        </li>
                     @endcan
                     @can('isAnalistaPodaOrSecretario', \App\Models\User::class)
                         <li class="nav-item">
                             <a class="nav-link @if($filtro == 'poda') active @endif" id="visitas-cancelados-tab" role="tab" type="button"
                                 @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'poda', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Poda/Supressão</a>
-                        </li>
-                    @endcan
-                    @can('isSecretarioOrProcesso', \App\Models\User::class)
-                        <li class="nav-item">
-                            <a class="nav-link @if($filtro == 'finalizados') active @endif" id="visitas-atuais-tab" role="tab" type="button"
-                                @if($filtro == 'finalizados') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Finalizados</a>
                         </li>
                     @endcan
                 </ul>
@@ -188,20 +186,27 @@
                                         <th scope="col" class="align-middle">Data de requerimento</th>
                                         <th scope="col" class="align-middle">Data de entrada no setor de análise </th>
                                         <th scope="col" class="align-middle">Data marcada</th>
+                                        @if($filtro == "requerimento")
                                         <th scope="col" class="align-middle">Status</th>
+                                        @endif
+                                        
                                         @if($filtro == "requerimento" || $filtro == "denuncia")
                                             <th scope="col" class="align-middle">Empresa/serviço</th>
                                         @else
                                             <th scope="col" class="align-middle">Requerente</th>
                                         @endif
-                                        @if($filtro == "requerimento")
+                                        
                                             <th scope="col" class="align-middle">Tipo</th>
-                                        @endif
+                                        
                                         @can('isSecretario', \App\Models\User::class)
                                             <th scope="col" class="align-middle">Analista</th>
                                         @endcan
                                         
-                                        <th scope="col" class="align-middle">Opções</th>
+                                        @if($filtro == "finalizado")
+                                         
+                                        @else
+                                            <th scope="col" class="align-middle">Opções</th>
+                                        @endif
                                        
                                     </tr>
                                 </thead>
@@ -222,10 +227,12 @@
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             
                                             
-                                            @if ($visita->data_realizada != null)
+                                            @if ($filtro == "requerimento" && $visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
-                                            @else
-                                            <td>{{__('Notificado')}}</td>
+                                            
+                                            @elseif ($filtro == "requerimento" && $visita->data_realizada == null)
+                                                <td>{{__('Notificado')}}</td>
+
                                             @endif
 
                                             @if($visita->requerimento != null)
@@ -233,10 +240,12 @@
                                                 <td>
                                                     {{ucfirst($visita->requerimento->tipoString())}}
                                                 </td>
+                                            
                                             @elseif($visita->denuncia != null)
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @elseif ($visita->solicitacaoPoda != null)
                                                 <td>{{$visita->solicitacaoPoda->requerente->user->name}}</td>
+            
                                             @endif
 
 
@@ -244,12 +253,14 @@
                                                 <td>{{$visita->analista->name}}</td>
                                             @endcan
 
+
+                                            <td> 
+                                            @if($filtro == "finalizado")
+
+                                            @else
                                             
-
-
-                                            <td>
                                                 @can('isSecretario', \App\Models\User::class)
-
+    
                                                     @if($visita->relatorio!=null)
                                                         <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">
                                                             <img class="icon-licenciamento"
@@ -301,7 +312,7 @@
                                                     @endif
                                                 @endcan
                                             </td>
-                                            
+                                            @endif
                                         </tr>
                                     @endforeach
 
@@ -327,6 +338,14 @@
             </div>
             <div class="col-md-3" style="margin-top: 2.5rem;">
                 <div class="col-md-12 shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem;">
+                @if($filtro == 'finalizado')
+                <div style="font-size: 21px;" class="tituloModal">
+                        Legenda
+                </div>
+                <div class="mt-2 borda-baixo"></div>
+                
+                    
+                @else    
                     <div style="font-size: 21px;" class="tituloModal">
                         Legenda
                     </div>
@@ -343,6 +362,7 @@
                                     </div>
                                 </li>
                             @endif
+                            
                             @if(\App\Models\Relatorio::select('relatorios.*')
                                     ->whereIn('visita_id', $visitas->pluck('id')->toArray())
                                     ->get()->count() > 0)
@@ -446,9 +466,13 @@
                                     </div>
                                 </li>
                             @endif
+                           
+                            
                         @endcan
                     </ul>
+                @endif
                 </div>
+
             </div>
         </div>
     </div>
