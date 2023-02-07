@@ -71,4 +71,33 @@ class Licenca extends Model
 
         return $protocolo;
     }
+
+    public function tipo()
+    {
+        switch ($this->tipo) {
+            case Licenca::TIPO_ENUM['previa']:
+                return 'prévia';
+                break;
+            case Licenca::TIPO_ENUM['instalacao']:
+                return 'instalação';
+                break;
+            case Licenca::TIPO_ENUM['operacao']:
+                return 'operação';
+                break;
+            case Licenca::TIPO_ENUM['simplificada']:
+                return 'simplificada';
+                break;
+            case Licenca::TIPO_ENUM['autorizacao_ambiental']:
+                return 'autorização ambiental';
+                break;
+            case Licenca::TIPO_ENUM['regularizacao']:
+                return 'regularização';
+                break;
+        }
+    }
+
+    public function getStatusStringAttribute()
+    {
+        return ucwords($this->tipo());
+    }
 }

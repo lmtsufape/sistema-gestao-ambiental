@@ -300,6 +300,11 @@
                                         Supressão
                                     </a>
                                 </li>
+                                <li class="mb-2 item-align @if(request()->routeIs('denuncias.*')) active @endif">
+                                    <a href="{{route('denuncias.create')}}">
+                                        Registro de <br>Denúncias
+                                    </a>
+                                </li>
                             @endcan
                         </ul>
                     </div>

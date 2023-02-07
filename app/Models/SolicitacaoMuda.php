@@ -54,4 +54,9 @@ class SolicitacaoMuda extends Model
                 break;
         }
     }
+
+    public function getStatusStringAttribute()
+    {
+        return ucwords($this->statusSolicitacao());
+    }
 }
