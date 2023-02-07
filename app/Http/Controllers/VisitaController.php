@@ -9,6 +9,7 @@ use App\Models\Requerimento;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Models\Visita;
+use App\Models\Relatorio;
 use App\Notifications\VisitaAlteradaPoda;
 use App\Notifications\VisitaAlteradaRequerimento;
 use App\Notifications\VisitaCanceladaPoda;
@@ -39,8 +40,11 @@ class VisitaController extends Controller
                     $analistas = User::analistas();
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
-                                ->where('cancelada', false);
+                                ->where('cancelada', false)->where('protocolo' , '==', null);
+                        
                     });
+                    
+
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'denuncia':
@@ -53,13 +57,18 @@ class VisitaController extends Controller
                     $visitas = Visita::where('solicitacao_poda_id', '!=', null);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
+                case 'finalizado':
+                    $analistas = User::analistas();
+                    $visitasFinalizadas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+                    $visitas = Visita::whereIn('requerimento_id', $visitasFinalizadas->pluck('id'))->paginate(20);
+                    break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
             switch ($filtro) {
                 case 'requerimento':
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
-                                ->where('cancelada', false);
+                                ->where('cancelada', false)->where('protocolo' , '==', null);
                     })->where('analista_id', auth()->user()->id);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
@@ -70,6 +79,10 @@ class VisitaController extends Controller
                 case 'poda':
                     $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]]);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
+                    break;
+                case 'finalizado':
+                    $visitasFinalizadas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+                    $visitas = Visita::whereIn('requerimento_id', $visitasFinalizadas->pluck('id'))->paginate(20);
                     break;
             }
         }
