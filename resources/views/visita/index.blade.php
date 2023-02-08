@@ -476,7 +476,6 @@
             </div>
         </div>
     </div>
-
     @can('isSecretario', \App\Models\User::class)
         @foreach ($visitas as $visita)
         <!-- Modal deletar visita -->
@@ -619,7 +618,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
                             @if ($denuncia->videos->first() != null)
                                 <div class="row">
                                     <div class="col-12" style="font-family: 'Roboto', sans-serif;">Vídeos anexados junto a denúncia:</div>
@@ -643,7 +641,6 @@
                                     @endforeach
                                 </div>
                             @endif
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -766,7 +763,6 @@
                     }
                 });
             }
-
             $('.link-ordenacao').click(function() {
                 window.location = this.children[2].href;
             });
