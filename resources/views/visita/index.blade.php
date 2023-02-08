@@ -155,12 +155,6 @@
                                 @if($filtro == 'poda') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'poda', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Poda/Supressão</a>
                         </li>
                     @endcan
-                    @can('isSecretarioOrProcesso', \App\Models\User::class)
-                        <li class="nav-item">
-                            <a class="nav-link @if($filtro == 'finalizados') active @endif" id="visitas-atuais-tab" role="tab" type="button"
-                                @if($filtro == 'finalizados') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Finalizados</a>
-                        </li>
-                    @endcan
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
