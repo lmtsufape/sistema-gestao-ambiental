@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
+
 class VisitaController extends Controller
 {
     /**
@@ -38,7 +39,7 @@ class VisitaController extends Controller
                 case 'requerimento':
                     $analistas = User::analistas();
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
-                        $qry->where('status', '!=', Requerimento::STATUS_ENUM)
+                        $qry->where('status', '!=', Requerimento::STATUS_ENUM['finalizada'])
                                 ->where('cancelada', false);
                     });
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
@@ -53,6 +54,11 @@ class VisitaController extends Controller
                     $visitas = Visita::where('solicitacao_poda_id', '!=', null);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
+                case 'finalizado':
+                        $analistas = User::analistas();
+                        $visitas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+                        $visitas = Visita::whereIn('requerimento_id', $visitas->pluck('id'))->paginate(20);
+                        break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
             switch ($filtro) {
@@ -71,6 +77,10 @@ class VisitaController extends Controller
                     $visitas = Visita::where([['solicitacao_poda_id', '!=', null], ['analista_id', auth()->user()->id]]);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
+                case 'finalizado':
+                    $visitas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]], ['analista_id', auth()->user()->id])->orderBy('created_at', 'DESC')->paginate(20);
+                    $visitas = Visita::whereIn('requerimento_id', $visitas->pluck('id'))->paginate(20);
+                        break;
             }
         }
 

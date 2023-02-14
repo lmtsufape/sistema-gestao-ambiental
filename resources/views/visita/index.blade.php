@@ -148,6 +148,10 @@
                             <a class="nav-link @if($filtro == 'denuncia') active @endif" id="visitas-finalizados-tab" role="tab" type="button"
                                 @if($filtro == 'denuncia') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'denuncia', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Denúncias</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if($filtro == 'finalizado') active @endif" id="visitas-finalizadas-tab" role="tab" type="button"
+                                @if($filtro == 'finalizado') aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'finalizado', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Finalizados</a>
+                        </li>
                     @endcan
                     @can('isAnalistaPodaOrSecretario', \App\Models\User::class)
                         <li class="nav-item">
@@ -216,7 +220,7 @@
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
-                                                <td>{{__('Aguardando visita')}}</td>
+                                                <td>{{__('Notificado')}}</td>
                                             @endif
 
                                             @if($visita->requerimento != null)
@@ -293,6 +297,7 @@
                                 </tbody>
                         </table>
                         </div>
+                        
                         @if($visitas->first() == null)
                             <div class="col-md-12 text-center" style="font-size: 18px;">
                                 @can('isSecretario', \App\Models\User::class)
