@@ -53,6 +53,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
+                                    
                                     @error('cep')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -140,6 +141,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <!-- <div class="col-md-12 form-group">
+                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
+                                    @error('motivo')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div> -->
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -259,6 +269,26 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dcd935;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="word-break: break-all">
+                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal acompanhar solicitacao -->
     <div class="modal fade" id="modalAcompanharSolicitacao" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -332,8 +362,7 @@
                 $('#imagens').append(campo_imagem);
             }
 
-            function pesquisacep(valor) {
-                rural = trim(str_replace('-', valor));
+            function pesquisacep(valor) {             
                 //Nova variável "cep" somente com dígitos.
                 var cep = valor.replace(/\D/g, '');
                 //Verifica se campo cep possui valor informado.
@@ -342,8 +371,6 @@
                     var validacep = /^[0-9]{8}$/;
                     //Valida o formato do CEP.
                     if(validacep.test(cep)) {
-                         
-                        if(rural != "899"){
                         //Preenche os campos com "..." enquanto consulta webservice.
                         document.getElementById('rua').value="...";
                         document.getElementById('bairro').value="...";
@@ -353,16 +380,11 @@
                         script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
                         //Insere script no documento e carrega o conteúdo.
                         document.body.appendChild(script);
-                        }
-                        else{
-                            exibirModalAreaRural();
-                        }
-
                     } //end if.
                     else {
                         //cep é inválido.
                         limpa_formulário_cep();
-                        exibirModalCepInvalido();;
+                        exibirModalCepInvalido();
                     }
                 } //end if.
                 else {
@@ -384,7 +406,7 @@
             }
 
             function exibirModalAreaRural() {
-                $('#btn-modal-cep-invalido').click();
+                $('#modalAreaRural').modal('show');
             }
 
             function meu_callback(conteudo) {
@@ -538,7 +560,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    </div>
+                                </div>
 
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
@@ -558,6 +580,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <!-- <div class="col-md-12 form-group">
+                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
+                                    @error('motivo')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div> -->
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -677,6 +708,26 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dcd935;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="word-break: break-all">
+                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal acompanhar solicitacao -->
     <div class="modal fade" id="modalAcompanharSolicitacao" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -764,7 +815,6 @@
             }
 
             function pesquisacep(valor) {
-                rural = trim(str_replace('-', valor));
                 //Nova variável "cep" somente com dígitos.
                 var cep = valor.replace(/\D/g, '');
                 //Verifica se campo cep possui valor informado.
@@ -774,8 +824,6 @@
                     //Valida o formato do CEP.
                     if(validacep.test(cep)) {
                         //Preenche os campos com "..." enquanto consulta webservice.
-                        if(rural != "899"){
-                        //Preenche os campos com "..." enquanto consulta webservice.
                         document.getElementById('rua').value="...";
                         document.getElementById('bairro').value="...";
                         //Cria um elemento javascript.
@@ -784,10 +832,6 @@
                         script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
                         //Insere script no documento e carrega o conteúdo.
                         document.body.appendChild(script);
-                        }
-                        else{
-                            exibirModalAreaRural();
-                        }
                     } //end if.
                     else {
                         //cep é inválido.
@@ -814,7 +858,7 @@
             }
             
             function exibirModalAreaRural() {
-                $('#btn-modal-cep-invalido').click();
+                $('#modalAreaRural').modal('show');
             }
 
             function meu_callback(conteudo) {
