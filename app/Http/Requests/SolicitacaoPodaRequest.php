@@ -35,6 +35,7 @@ class SolicitacaoPodaRequest extends FormRequest
             'imagem.*' => ['nullable', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
             'comentarios' => ['nullable', 'array'],
             'comentario' => ['nullable', 'string'],
+            'motivo_solicitacao' => ['nullable', 'string'],
         ];
     }
 }
