@@ -18,6 +18,7 @@ class SolicitacaoPodaFactory extends Factory
             'protocolo' => Hash::make($this->faker->word),
             'status' => 1,
             'comentario' => $this->faker->realText(),
+            'motivo_solictacao' => $this->faker->realText(),
             'area' => $this->faker->numberBetween(1, 2),
         ];
     }
