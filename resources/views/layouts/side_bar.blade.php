@@ -132,6 +132,13 @@
                     <div style="padding-top: 3rem; padding-right: 0px; clip-path: inset(0px -12px 0px 0px); max-width: fit-content; padding-left: 25px;">
                         <ul id="sidebar" class="list-unstyled">
                             @can('isSecretario', \App\Models\User::class)
+
+                                <li class="mb-2 item-align">
+                                    <a href="{{route('dashboard')}}">
+                                        Dashboard Estatístico
+                                    </a>
+                                </li>
+                                
                                 <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
                                     <button href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
                                         Licenciamento

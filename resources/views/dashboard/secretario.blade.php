@@ -38,37 +38,38 @@
                         <label class="form-check-label" for="flexRadioDefault1">
                             Últimos 7 dias
                         </label>
-                        <a class="dropdown-item" href="{{route('welcome', ['ordenacao' => '7_dias'])}}"></a>
+                        <a class="dropdown-item" href="{{route('dashboard', ['ordenacao' => '7_dias'])}}"></a>
                     </div>
                     <div class="form-check link-ordenacao">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" @if($ordenacao == 'ultimo_mes') checked @endif>
                         <label class="form-check-label" for="flexRadioDefault2">
                             Últimos 30 dias
                         </label>
-                        <a class="dropdown-item" href="{{route('welcome', ['ordenacao' => 'ultimo_mes'])}}"></a>
+                        <a class="dropdown-item" href="{{route('dashboard', ['ordenacao' => 'ultimo_mes'])}}"></a>
                     </div>
                     <div class="form-check link-ordenacao">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @if($ordenacao == 'meses') checked @endif>
                         <label class="form-check-label" for="flexRadioDefault3">
                             Últimos 12 meses
                         </label>
-                        <a class="dropdown-item" href="{{route('welcome', ['ordenacao' => 'meses'])}}"></a>
+                        <a class="dropdown-item" href="{{route('dashboard', ['ordenacao' => 'meses'])}}"></a>
                     </div>
                     <div class="form-check link-ordenacao">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" @if($ordenacao == 'anos') checked @endif>
                         <label class="form-check-label" for="flexRadioDefault4">
                             Últimos 5 anos
                         </label>
-                        <a class="dropdown-item" href="{{route('welcome', ['ordenacao' => 'anos'])}}"></a>
+                        <a class="dropdown-item" href="{{route('dashboard', ['ordenacao' => 'anos'])}}"></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; width: 30%">
+        <div class="shadow-sm p-2 px-3" style="background-color: #ffffff; border-radius: 00.5rem; width: 100%">
             <div style="font-size: 21px; margin-bottom: 10px;" class="tituloModal">
                 Filtrar por período
             </div>
-            <form id="form-fitrar-boleto" method="GET" action="{{route('welcome')}}">
+            <!-- AQUI QUE ROTA -->
+            <form id="form-fitrar-boleto" method="GET" action="{{route('dashboard')}}"> 
                 @csrf
                 <div class="form-row">
                     <div class="col-md-6 form-group">
@@ -94,7 +95,7 @@
                 </div>
                 <div class="form-row justify-content-center">
                     <div class="col-md-6 form-group">
-                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 100%">Filtrar</button>
+                        <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault submeterFormBotao" form="form-fitrar-boleto" style="width: 80%">Filtrar</button>
                     </div>
                 </div>
                 <div style="border-bottom:solid 3px #e0e0e0; margin-top: -1%; margin-bottom: 3%;">
