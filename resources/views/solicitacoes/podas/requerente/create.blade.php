@@ -53,6 +53,7 @@
                                 <div class="col-md-6 form-group">
                                     <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
+                                    
                                     @error('cep')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -123,7 +124,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                     <input class="form-control" value="{{old('complemento', '')}}" @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento"/>
                                     @error('complemento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -132,7 +133,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
                                     <textarea class="form-control" @error('comentario') is-invalid @enderror" type="text" name="comentario" id="comentario">{{old('comentario', '')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -140,6 +141,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <!-- <div class="col-md-12 form-group">
+                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
+                                    @error('motivo')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div> -->
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -259,6 +269,26 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dcd935;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="word-break: break-all">
+                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal acompanhar solicitacao -->
     <div class="modal fade" id="modalAcompanharSolicitacao" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -332,7 +362,7 @@
                 $('#imagens').append(campo_imagem);
             }
 
-            function pesquisacep(valor) {
+            function pesquisacep(valor) {             
                 //Nova variável "cep" somente com dígitos.
                 var cep = valor.replace(/\D/g, '');
                 //Verifica se campo cep possui valor informado.
@@ -354,7 +384,7 @@
                     else {
                         //cep é inválido.
                         limpa_formulário_cep();
-                        exibirModalCepInvalido();;
+                        exibirModalCepInvalido();
                     }
                 } //end if.
                 else {
@@ -373,6 +403,10 @@
             function exibirModalCepInvalido() {
                 jQuery.noConflict();
                 $('#aviso-modal-fora').modal('show');
+            }
+
+            function exibirModalAreaRural() {
+                $('#modalAreaRural').modal('show');
             }
 
             function meu_callback(conteudo) {
@@ -526,10 +560,10 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    </div>
+                                </div>
 
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                     <input class="form-control" value="{{old('complemento', '')}}" @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento"/>
                                     @error('complemento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -538,7 +572,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
                                     <textarea class="form-control" @error('comentario') is-invalid @enderror" type="text" name="comentario" id="comentario">{{old('comentario', '')}}</textarea>
                                     @error('comentario')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -546,6 +580,15 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <!-- <div class="col-md-12 form-group">
+                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
+                                    @error('motivo')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div> -->
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -657,6 +700,26 @@
                     <br>
                     Protocolo:
                     <strong>{{ session('protocolo') }}</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dcd935;">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="word-break: break-all">
+                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
@@ -792,6 +855,10 @@
             function exibirModalCepInvalido() {
                 jQuery.noConflict();
                 $('#aviso-modal-fora').modal('show');
+            }
+            
+            function exibirModalAreaRural() {
+                $('#modalAreaRural').modal('show');
             }
 
             function meu_callback(conteudo) {

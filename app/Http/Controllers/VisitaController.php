@@ -9,7 +9,6 @@ use App\Models\Requerimento;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Models\Visita;
-use App\Models\Relatorio;
 use App\Notifications\VisitaAlteradaPoda;
 use App\Notifications\VisitaAlteradaRequerimento;
 use App\Notifications\VisitaCanceladaPoda;
@@ -22,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+
 
 class VisitaController extends Controller
 {
@@ -39,12 +39,9 @@ class VisitaController extends Controller
                 case 'requerimento':
                     $analistas = User::analistas();
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
-                        $qry->where('status', '!=', Requerimento::STATUS_ENUM)
-                                ->where('cancelada', false)->where('protocolo' , '==', null);
-                        
+                        $qry->where('status', '!=', Requerimento::STATUS_ENUM['finalizada'])
+                                ->where('cancelada', false);
                     });
-                    
-
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'denuncia':
@@ -58,17 +55,17 @@ class VisitaController extends Controller
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'finalizado':
-                    $analistas = User::analistas();
-                    $visitasFinalizadas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
-                    $visitas = Visita::whereIn('requerimento_id', $visitasFinalizadas->pluck('id'))->paginate(20);
-                    break;
+                        $analistas = User::analistas();
+                        $visitas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
+                        $visitas = Visita::whereIn('requerimento_id', $visitas->pluck('id'))->paginate(20);
+                        break;
             }
         } elseif (auth()->user()->role == User::ROLE_ENUM['analista']) {
             switch ($filtro) {
                 case 'requerimento':
                     $visitas = Visita::whereHas('requerimento', function (Builder $qry) {
                         $qry->where('status', '!=', Requerimento::STATUS_ENUM)
-                                ->where('cancelada', false)->where('protocolo' , '==', null);
+                                ->where('cancelada', false);
                     })->where('analista_id', auth()->user()->id);
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
@@ -81,9 +78,9 @@ class VisitaController extends Controller
                     $visitas = $this->ordenar($visitas, $filtro, $ordenacao, $ordem)->paginate(10);
                     break;
                 case 'finalizado':
-                    $visitasFinalizadas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
-                    $visitas = Visita::whereIn('requerimento_id', $visitasFinalizadas->pluck('id'))->paginate(20);
-                    break;
+                    $visitas = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]], ['analista_id', auth()->user()->id])->orderBy('created_at', 'DESC')->paginate(20);
+                    $visitas = Visita::whereIn('requerimento_id', $visitas->pluck('id'))->paginate(20);
+                        break;
             }
         }
 

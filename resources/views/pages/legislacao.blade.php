@@ -44,6 +44,12 @@
                                         <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/decreto/d6514.htm" target="blank">Lei nº 6.514/2008</a> – Dispõe sobre as infrações e sanções administrativas ao meio ambiente, estabelece o processo administrativo federal para apuração destas infrações, e dá outras providências.</li>
                                     </ol>
                                 </li>
+                                <li class="scope">TERMOS DE REFERÊNCIA
+                                    <ol class="pl-3">
+                                        <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - ESTUDO DE IMPACTO DE VIZINHANÇA.pdf" target="blank">Termo EIV</a> - Estudo de Impacto de Vizinhança</li>
+                                        <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - PCA.pdf" target="blank">Termo PCA</a> - Plano de Controle Ambiental</li>
+                                    </ol>
+                                </li>
                             </ol>
                         </div>
                     </div>
