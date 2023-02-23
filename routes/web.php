@@ -24,6 +24,7 @@ use App\Http\Controllers\SolicitacaoPodaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\BoletoAvulsoController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -45,9 +46,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () 
 Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->name('denuncias.imagem');
 Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
 
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::delete('/boletos/{boleto}', [BoletoController::class, 'baixarBoleto'])->name('boletos.destroy');
