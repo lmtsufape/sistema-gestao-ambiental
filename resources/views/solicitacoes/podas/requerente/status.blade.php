@@ -100,6 +100,12 @@
                                 <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="motivo_solicitacao">{{ __('Motivo Solicitação') }}</label>
+                                <textarea disabled class="form-control" type="text" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
+                            </div>
+                        </div>
                         @if($solicitacao->fotos->first() != null)
                             <div class="row">
                                 <div class="col-md-12 form-group">
@@ -266,6 +272,12 @@
                             <div class="col-md-12 form-group">
                                 <label for="comentario">{{ __('Comentário') }}</label>
                                 <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="motivo_solicitacao">{{ __('Motivo Solicitação') }}</label>
+                                <textarea disabled class="form-control" type="text" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
                             </div>
                         </div>
                         @if($solicitacao->fotos->first() != null)
