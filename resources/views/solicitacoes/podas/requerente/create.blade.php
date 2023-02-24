@@ -53,7 +53,6 @@
                                 <div class="col-md-6 form-group">
                                     <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
-                                    
                                     @error('cep')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -269,26 +268,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #dcd935;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="word-break: break-all">
-                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal acompanhar solicitacao -->
     <div class="modal fade" id="modalAcompanharSolicitacao" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -362,9 +341,11 @@
                 $('#imagens').append(campo_imagem);
             }
 
-            function pesquisacep(valor) {             
+            function pesquisacep(valor) {
                 //Nova variável "cep" somente com dígitos.
                 var cep = valor.replace(/\D/g, '');
+                //Nova variável "rural" somente com os 3 ultimos dígitos do cep.
+                var rural = cep.substr(-3);
                 //Verifica se campo cep possui valor informado.
                 if (cep != "") {
                     //Expressão regular para validar o CEP.
@@ -380,6 +361,7 @@
                         script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
                         //Insere script no documento e carrega o conteúdo.
                         document.body.appendChild(script);
+                        arearural(rural);
                     } //end if.
                     else {
                         //cep é inválido.
@@ -390,6 +372,13 @@
                 else {
                     //cep sem valor, limpa formulário.
                     limpa_formulário_cep();
+                }
+            }
+
+            function arearural(valor){
+                 //Verifica se o cep é de alguma area rural.
+                if(valor == 899){
+                    exibirModalAreaRural();
                 }
             }
 
@@ -406,7 +395,7 @@
             }
 
             function exibirModalAreaRural() {
-                $('#modalAreaRural').modal('show');
+                alert("AVISO: Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.");
             }
 
             function meu_callback(conteudo) {
@@ -414,7 +403,6 @@
                     //Atualiza os campos com os valores.
                     document.getElementById('rua').value=(conteudo.logradouro);
                     document.getElementById('bairro').value=(conteudo.bairro);
-                    console.log(conteudo.localidade);
                     if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
                         exibirModalCepInvalido();
                         limpa_formulário_cep();
@@ -708,26 +696,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalAreaRural" role="dialog" data-backdrop="static" data-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #dcd935;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">AVISO:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="word-break: break-all">
-                Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal acompanhar solicitacao -->
     <div class="modal fade" id="modalAcompanharSolicitacao" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -817,6 +785,8 @@
             function pesquisacep(valor) {
                 //Nova variável "cep" somente com dígitos.
                 var cep = valor.replace(/\D/g, '');
+                //Nova variável "rural" somente com os 3 ultimos dígitos do cep.
+                var rural = cep.substr(-3);
                 //Verifica se campo cep possui valor informado.
                 if (cep != "") {
                     //Expressão regular para validar o CEP.
@@ -832,6 +802,7 @@
                         script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
                         //Insere script no documento e carrega o conteúdo.
                         document.body.appendChild(script);
+                        arearural(rural);
                     } //end if.
                     else {
                         //cep é inválido.
@@ -842,6 +813,13 @@
                 else {
                     //cep sem valor, limpa formulário.
                     limpa_formulário_cep();
+                }
+            }
+
+            function arearural(valor){
+                 //Verifica se o cep é de alguma area rural.
+                if(valor == 899){
+                    exibirModalAreaRural();
                 }
             }
 
@@ -858,7 +836,7 @@
             }
             
             function exibirModalAreaRural() {
-                $('#modalAreaRural').modal('show');
+                alert("AVISO: Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.");
             }
 
             function meu_callback(conteudo) {
@@ -866,7 +844,6 @@
                     //Atualiza os campos com os valores.
                     document.getElementById('rua').value=(conteudo.logradouro);
                     document.getElementById('bairro').value=(conteudo.bairro);
-                    console.log(conteudo.localidade);
                     if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
                         exibirModalCepInvalido();
                         limpa_formulário_cep();
