@@ -99,19 +99,19 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                     <textarea disabled class="form-control" rows="3" id="complemento">{{ $solicitacao->endereco->complemento }}</textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="comentario">{{ __('Comentário') }}</label>
+                                    <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
                                     <textarea disabled class="form-control" rows="5" id="comentario">{{$solicitacao->comentario}}</textarea>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="motivo_solicitacao">{{ __('Motivo Solicitação') }}</label>
+                                    <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
                                     <textarea disabled class="form-control" rows="5" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
                                 </div>
                             </div>
