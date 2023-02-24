@@ -90,14 +90,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                     <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text"  id="complemento" disabled/>
                                 </div>
                             </div>
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <label for="comentario">{{ __('Comentário') }}</label>
+                                <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
                                 <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                <textarea disabled class="form-control" type="text" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
                             </div>
                         </div>
                         @if($solicitacao->fotos->first() != null)
@@ -258,14 +264,20 @@
                             @endif
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <label for="complemento">{{ __('Complemento') }}</label>
+                                    <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                     <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text"  id="complemento" disabled/>
                                 </div>
                             </div>
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <label for="comentario">{{ __('Comentário') }}</label>
+                                <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
                                 <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                <textarea disabled class="form-control" type="text" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
                             </div>
                         </div>
                         @if($solicitacao->fotos->first() != null)

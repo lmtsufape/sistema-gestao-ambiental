@@ -141,15 +141,15 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <!-- <div class="col-md-12 form-group">
-                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
-                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
-                                    @error('motivo')
+                                <div class="col-md-12 form-group">
+                                    <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo_solicitacao') is-invalid @enderror" type="text" name="motivo_solicitacao" id="motivo_solicitacao">{{old('motivo_solicitacao', '')}}</textarea>
+                                    @error('motivo_solicitacao')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div> -->
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
@@ -580,15 +580,15 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <!-- <div class="col-md-12 form-group">
-                                    <label for="motivo">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
-                                    <textarea class="form-control" @error('motivo') is-invalid @enderror" type="text" name="motivo" id="motivo">{{old('motivo', '')}}</textarea>
-                                    @error('motivo')
+                                <div class="col-md-12 form-group">
+                                    <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <textarea class="form-control" @error('motivo_solicitacao') is-invalid @enderror" type="text" name="motivo_solicitacao" id="motivo_solicitacao">{{old('motivo_solicitacao', '')}}</textarea>
+                                    @error('motivo_solicitacao')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div> -->
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6">
