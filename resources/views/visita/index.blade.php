@@ -220,7 +220,7 @@
                                             @if ($visita->data_realizada != null)
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                             @else
-                                                <td>{{__('Notificado')}}</td>
+                                                <td>{{__('Aguardando visita')}}</td>
                                             @endif
 
                                             @if($visita->requerimento != null)
