@@ -19,6 +19,7 @@ class SolicitacaoPodaFactory extends Factory
             'status' => 1,
             'comentario' => $this->faker->realText(),
             'motivo_solictacao' => $this->faker->realText(),
+            'nome_solicitante' => $this->faker->realText(),
             'area' => $this->faker->numberBetween(1, 2),
         ];
     }
