@@ -539,16 +539,28 @@
                                         </div>
                                     @enderror
                                 </div>
+                                
+                                @if (Auth()->user()->email == 'solitacao@presencial.com')
+                                    <div class="col-md-6 form-group">
+                                        <label for="nome_solicitante">{{ __('Nome do solicitante') }}</label>
+                                        <input id="nome_solicitante" class="form-control nome_solicitante @error('nome_solicitante') is-invalid @enderror" type="text" name="nome_solicitante" value="{{old('nome_solicitante')}}" autocomplete="nome_solicitante">
+                                        @error('nome_solicitante')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
 
-                                <div class="col-md-6 form-group">
-                                    <label for="celular">{{ __('Contato') }}</label>
-                                    <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" autocomplete="celular" placeholder="(00) 00000-0000">
-                                    @error('celular')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="celular">{{ __('Contato') }}</label>
+                                        <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{old('celular')}}" autocomplete="celular" placeholder="(00) 00000-0000">
+                                        @error('celular')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                @endif
 
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
@@ -569,7 +581,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                    <label for="motivo_solicitacao">{{ __('Corte de árvores (Qual o motivo da solicitação?)') }}</label>
                                     <textarea class="form-control" @error('motivo_solicitacao') is-invalid @enderror" type="text" name="motivo_solicitacao" id="motivo_solicitacao">{{old('motivo_solicitacao', '')}}</textarea>
                                     @error('motivo_solicitacao')
                                         <div id="validationServer03Feedback" class="invalid-feedback">

@@ -64,10 +64,37 @@
                                     <option selected value="PE">Pernambuco</option>
                                 </select>
                             </div>
+
+                            @if($solicitacao->nome_solicitante != null)
+                                <div class="col-md-6 form-group">
+                                    <label for="numero">{{ __('Nome do solicitante') }}</span></label>
+                                    <input id="numero" class="form-control " type="text"  value="{{$solicitacao->nome_solicitante}}" disabled>
+                                </div>
+                            @endif
+
+                            @if($solicitacao->telefone != null)
+                                <div class="col-md-6 form-group">
+                                    <label for="celular">{{ __('Contato') }}</label>
+                                    <input id="celular" class="form-control" type="text" name="celular" value="{{ $solicitacao->telefone->numero }}" disabled> 
+                                </div>
+                            @endif
+
                             <div class="col-md-12 form-group">
-                                <label for="complemento">{{ __('Complemento') }}</label>
+                                <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
                                 <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text" name="complemento" id="complemento" disabled/>
                             </div>
+
+                            <div class="col-md-12 form-group">
+                                <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
+                                <textarea disabled class="form-control" type="text" id="comentario">{{$solicitacao->comentario}}</textarea>
+                            </div>
+                            
+                            <div class="col-md-12 form-group">
+                                <label for="motivo_solicitacao">{{ __('Corte de árvore (Qual o motivo da solicitação?)') }}</label>
+                                <textarea disabled class="form-control" type="text" id="motivo_solicitacao">{{$solicitacao->motivo_solicitacao}}</textarea>
+                            </div>
+
+
                             @if($solicitacao->fotos->first() != null)
                                 <div class="col-md-12 form-group">
                                     <label for="imagens">{{ __('Imagens anexadas junto à solicitação') }}</label>

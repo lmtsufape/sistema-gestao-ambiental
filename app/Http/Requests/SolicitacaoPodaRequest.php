@@ -36,6 +36,7 @@ class SolicitacaoPodaRequest extends FormRequest
             'comentarios' => ['nullable', 'array'],
             'comentario' => ['nullable', 'string'],
             'motivo_solicitacao' => ['nullable', 'string'],
+            'nome_solicitante' => ['nullable', 'string'],
         ];
     }
 }
