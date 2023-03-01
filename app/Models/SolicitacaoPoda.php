@@ -20,6 +20,7 @@ class SolicitacaoPoda extends Model
         'comentario',
         'area',
         'motivo_solicitacao',
+        'nome_solicitante',
     ];
 
     public const STATUS_ENUM = [
