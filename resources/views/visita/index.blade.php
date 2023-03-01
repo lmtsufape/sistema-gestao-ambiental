@@ -217,10 +217,20 @@
                                             
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             
-                                            @if ($visita->data_realizada != null)
-                                                <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
+                                            @if($visita->denuncia == null)
+                                                @if ($visita->data_realizada != null)
+                                                    <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
+                                                @elseif($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
+                                                    <td>{{__('Notificado')}}</td>
+                                                @else
+                                                    <td>{{__('Aguardando visita')}}</td>
+                                                @endif
                                             @else
-                                                <td>{{__('Aguardando visita')}}</td>
+                                                @if ($visita->data_realizada != null)
+                                                <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
+                                                @else
+                                                    <td>{{__('Aguardando visita')}}</td>
+                                                @endif
                                             @endif
 
                                             @if($visita->requerimento != null)
@@ -252,7 +262,7 @@
                                                         </a>
                                                     @endif
                                                     @if($visita->requerimento_id != null)
-                                                        @if($visita->requerimento->empresa->notificacoes != null)
+                                                        @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                             <a title="Notificado" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notificationVisit-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                         @else
                                                             <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
@@ -278,11 +288,10 @@
                                                                 src="{{asset('img/Relatório Sinalizado.svg')}}"
                                                             @endif alt="Icone de relatório">
                                                         @if($visita->requerimento_id != null)
-                                                            @if($visita->requerimento->empresa->notificacoes != null)
+                                                            @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                                 <a title="Notificado" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notificationVisit-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
                                                             @else
                                                                 <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $visita->requerimento->empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações"></a>
-
                                                         @endif
                                                     @endif
                                                     @elseif ($visita->denuncia != null)
