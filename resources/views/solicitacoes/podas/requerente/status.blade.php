@@ -94,6 +94,26 @@
                                     <input class="form-control" value="{{$solicitacao->endereco->complemento}}" type="text"  id="complemento" disabled/>
                                 </div>
                             </div>
+
+                            @if($solicitacao->nome_solicitante != null)
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="numero">{{ __('Nome do solicitante') }}</span></label>
+                                        <input id="numero" class="form-control " type="text"  value="{{$solicitacao->nome_solicitante}}" disabled>
+                                    </div>
+                                </div>
+                            @endif
+
+                            
+                            @if($solicitacao->telefone != null)
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="celular">{{ __('Contato') }}</label>
+                                        <input id="celular" class="form-control" type="text" name="celular" value="{{ $solicitacao->telefone->numero }}" disabled> 
+                                    </div>
+                                </div>
+                            @endif
+
                         <div class="row">
                             <div class="col-md-12 form-group">
                                 <label for="comentario">{{ __('Poda de árvores (Qual o motivo da solicitação?)') }}</label>
@@ -254,6 +274,15 @@
                                 </div>
                             </div>
 
+                            @if($solicitacao->nome_solicitante != null)
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="numero">{{ __('Nome do solicitante') }}</span></label>
+                                        <input id="numero" class="form-control " type="text"  value="{{$solicitacao->nome_solicitante}}" disabled>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if($solicitacao->telefone != null)
                                 <div class="row">
                                     <div class="col-md-6 form-group">
@@ -262,6 +291,7 @@
                                     </div>
                                 </div>
                             @endif
+
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="complemento">{{ __('Complemento/Ponto de referência') }}</label>
