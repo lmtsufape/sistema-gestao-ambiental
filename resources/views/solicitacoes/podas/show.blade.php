@@ -57,11 +57,13 @@
                                     <input id="rua" class="form-control" type="text" name="rua" value="{{$solicitacao->endereco->rua}}" disabled>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="numero" class="form-control " type="text"  value="{{$solicitacao->endereco->numero}}" disabled>
                                 </div>
+
                                 @php
                                     $areas = App\Models\SolicitacaoPoda::AREA_ENUM;
                                 @endphp
@@ -85,6 +87,16 @@
                                     </select>
                                 </div>
                             </div>  
+
+                            @if($solicitacao->nome_solicitante != null)
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="numero">{{ __('Nome do solicitante') }}</span></label>
+                                        <input id="numero" class="form-control " type="text"  value="{{$solicitacao->nome_solicitante}}" disabled>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="row">
                                 @if($solicitacao->telefone != null)
                                     <div class="col-md-6 form-group">
