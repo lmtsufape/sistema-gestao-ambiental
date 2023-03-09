@@ -204,7 +204,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" accept="application/pdf" id="customFilearquivo" name="arquivoFile" lang="pt">
                                 <label class="custom-file-label" for="customFilearquivo">Selecione um arquivo</label>
-                              </div>
+                            </div>
                         </div>
                     </form>
                     <br>

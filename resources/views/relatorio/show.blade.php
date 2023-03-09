@@ -141,8 +141,24 @@
                                 </div>
                             </div>
                         </div>
-
+                        @if ('relatorios/'.$relatorio->id.'/imagens' != null)
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 ">
+                                        <a href="{{route('relatorios.downloadImagem', $relatorio->id)}}">Baixar imagens anexadas</a>
+                                    </div>
+                                </div>
+                        @endif
+                        @if ($relatorio->arquivo != null)
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <a href="{{route('relatorios.downloadArquivo', $relatorio->id)}}">Baixar arquivo anexados </a>
+                                    </div>
+                                </div>
+                        @endif
+                        
                     </div>
+                        
+                            
                     @can('isSecretario', \App\Models\User::class)
                         <div class="card-footer">
                             <div class="form-row">
