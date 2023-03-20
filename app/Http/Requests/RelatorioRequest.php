@@ -27,6 +27,7 @@ class RelatorioRequest extends FormRequest
         return [
             'visita' => 'required',
             'texto' => 'required|string|max:65000',
+            'imagem' => 'nullable|array',
         ];
     }
 }

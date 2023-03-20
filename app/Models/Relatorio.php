@@ -20,6 +20,7 @@ class Relatorio extends Model
         'texto',
         'aprovacao',
         'motivo_edicao',
+        'arquivoFile',
     ];
 
     public function visita()
@@ -32,5 +33,6 @@ class Relatorio extends Model
         $this->visita_id = $request->visita;
         $this->texto = $request->texto;
         $this->aprovacao = $this::APROVACAO_ENUM['realizado'];
+        $request->hasFile('arquivoFile') ? $this->arquivo = $request->arquivoFile->store("relatorios/{$this->id}/arquivo") : null;
     }
 }
