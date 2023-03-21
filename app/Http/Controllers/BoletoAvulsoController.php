@@ -9,16 +9,105 @@ use App\Models\Telefone;
 use App\Models\User;
 use App\Models\Requerente;
 use App\Models\BoletoAvulso;
-use App\Http\Controllers\BoletoAvulsoController;
 use App\Mail\CriacaoUsuarioPadrao;
 use App\Http\Controllers\WebServiceCaixa\XMLCoderController;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class BoletoAvulsoController extends Controller
 {
     public function index() {
         return view('boletosAvulsos.index');
+    }
+
+    public function listar_boletos(Request $request, $filtragem)
+    {
+        $busca = $request->buscar;
+
+        $this->authorize('isSecretarioOrFinanca', auth()->user());
+
+        if(!in_array($filtragem, ['pendentes', 'pagos', 'vencidos', 'cancelados'])) {
+            $filtragem = 'pendentes';
+        }
+
+        $retorno = $this->filtrarBoletos($request);
+        $vencidos = $retorno[0];
+        $pendentes = $retorno[1];
+        $pagos = $retorno[2];
+        $cancelados = $retorno[3];
+        $dataAte = $retorno[4];
+        $dataDe = $retorno[5];
+        $filtro = $retorno[6];
+
+        switch ($filtragem) {
+            case 'pendentes':
+                $pagamentos = $pendentes;
+                break;
+            case 'pagos':
+                $pagamentos = $pagos;
+                break;
+            case 'vencidos':
+                $pagamentos = $vencidos;
+                break;
+            case 'cancelados':
+                $pagamentos = $cancelados;
+                break;
+        }
+
+        if($busca != null){
+            $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
+            $empresas = $empresas->pluck('id');
+            $pagamentos = BoletoAvulso::whereIn('empresa_id', $empresas)->paginate(20);
+            // $requerimentos = $requerimentos->pluck('id');
+            // $pagamentos = BoletoAvulso::WhereIn('requerimento_id', $requerimentos)->paginate(20);
+        }
+
+
+        return view('boletosAvulsos.listar_boletos', compact('pagamentos', 'dataAte', 'dataDe', 'filtro', 'filtragem', 'busca'));
+    }
+
+    private function filtrarBoletos(Request $request)
+    {
+        $dataAte = $request->dataAte;
+        $dataDe = $request->dataDe;
+        $filtro = $request->filtro;
+        $vencidos = BoletoAvulso::where('status_pagamento', BoletoAvulso::STATUS_PAGAMENTO_ENUM['vencido']);
+        $cancelados = BoletoAvulso::where('status_pagamento', BoletoAvulso::STATUS_PAGAMENTO_ENUM['cancelado']);
+        $pendentes = BoletoAvulso::where(function ($qry) {
+            $qry->whereNull('status_pagamento')
+                ->orWhere('status_pagamento', BoletoAvulso::STATUS_PAGAMENTO_ENUM['nao_pago']);
+        });
+        $pagos = BoletoAvulso::where('status_pagamento', BoletoAvulso::STATUS_PAGAMENTO_ENUM['pago']);
+        $condicao = 'vencimento' == $filtro ? 'data_vencimento' : 'created_at';
+        if ($dataDe != null) {
+            $vencidos = $vencidos->where($condicao, '>=', $dataDe);
+            $pendentes = $pendentes->where($condicao, '>=', $dataDe);
+            $pagos = $pagos->where($condicao, '>=', $dataDe);
+            $cancelados = $cancelados->where($condicao, '>=', $dataDe);
+        }
+        if ($dataAte != null) {
+            $vencidos = $vencidos->where($condicao, '<=', $dataAte);
+            $pendentes = $pendentes->where($condicao, '<=', $dataAte);
+            $pagos = $pagos->where($condicao, '<=', $dataAte);
+            $cancelados = $cancelados->where($condicao, '<=', $dataAte);
+        }
+        $vencidos = $vencidos->orderBy('created_at', 'DESC')->paginate(20);
+        $pendentes = $pendentes->orderBy('created_at', 'DESC')->paginate(20);
+        $pagos = $pagos->orderBy('created_at', 'DESC')->paginate(20);
+        $cancelados = $cancelados->orderBy('created_at', 'DESC')->paginate(20);
+
+        return [$vencidos, $pendentes, $pagos, $cancelados, $dataAte, $dataDe, $filtro];
+    }
+
+    public function gerarRelatorioBoletos(Request $request)
+    {
+        $retorno = $this->filtrarBoletos($request);
+
+        $pdf = PDF::loadview('pdf/boletosAvulsos', ['vencidos' => $retorno[0], 'pendentes' => $retorno[1], 'pagos' => $retorno[2],
+            'cancelados' => $retorno[3], 'dataAte' => $retorno[4], 'dataDe' => $retorno[5], 'filtro' => $retorno[6], ]);
+
+        return $pdf->setPaper('a4')->stream('boletosAvulsos.pdf');
     }
 
     public function store(Request $request){
