@@ -175,6 +175,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('/noticias/{noticia}/destroy', [NoticiaController::class, 'destroy'])->name('noticias.destroy');
 
     Route::get('/boletosAvulsos', [BoletoAvulsoController::class, 'index'])->name('boletosAvulsos.index');
+    Route::get('/boletosAvulsos/baixar-relatorio', [BoletoAvulsoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletosAvulsos');
+    Route::get('/boletosAvulsos/{filtro}/listar', [BoletoAvulsoController::class, 'listar_boletos'])->name('boletosAvulsos.listar_boletos');
     Route::post('/boletosAvulsos', [BoletoAvulsoController::class, 'store'])->name('boletosAvulsos.store');
     Route::post('/consultaEmpresa', [BoletoAvulsoController::class, 'buscarEmpresa'])->name('boletosAvulsos.buscarEmpresa');
 });
