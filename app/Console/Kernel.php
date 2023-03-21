@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AtualizarStatusBoletos;
+use App\Console\Commands\AtualizarStatusBoletosAvulsos;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         AtualizarStatusBoletos::class,
+        AtualizarStatusBoletosAvulsos::class,
     ];
 
     /**
@@ -27,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('atualizar:boletos')->dailyAt('8:01');
+        $schedule->command('atualizar:boletosAvulsos')->dailyAt('8:01');
     }
 
     /**
