@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RelatorioRequest;
+use App\Models\FotosRelatorio;
 use App\Models\Relatorio;
 use App\Models\Requerimento;
 use App\Models\Visita;
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use App\Http\Controllers\ZipArchive;
 class RelatorioController extends Controller
 {
     /**
@@ -42,12 +44,23 @@ class RelatorioController extends Controller
      */
     public function store(RelatorioRequest $request)
     {
+
         $this->authorize('isSecretarioOrAnalista', User::class);
         $visita = Visita::find($request->visita);
-        $request->validated();
+        $data = $request->validated();
         $relatorio = new Relatorio();
         $relatorio->setAtributes($request);
         $relatorio->save();
+        
+        if (array_key_exists('imagem', $data)) {
+            $count = count($data['imagem']);
+            for ($i = 0; $i < $count; $i++) {
+                $fotos_relatorio = new FotosRelatorio();
+                $fotos_relatorio->relatorio_id = $relatorio->id;
+                $fotos_relatorio->caminho = $data['imagem'][$i]->store("relatorios/{$relatorio->id}/imagens");
+                $fotos_relatorio->save();
+            }
+        }
 
         if ($visita->requerimento != null) {
             $requerimento = $visita->requerimento;
@@ -143,4 +156,27 @@ class RelatorioController extends Controller
 
         return redirect(route('relatorios.show', ['relatorio' => $relatorio->id]))->with(['success' => $msg]);
     }
+
+    public function downloadArquivo($id)
+    {
+        $this->authorize('isSecretarioOrAnalista', User::class);
+        $relatorio = Relatorio::find($id);
+        $path = storage_path('app/' . $relatorio->arquivo);
+        return response()->download($path);
+    }
+    
+    public function downloadImagem($id)
+    {
+        $this->authorize('isSecretarioOrAnalista', User::class);
+        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $id)->get();
+        foreach ($fotos_relatorio as $foto) {
+            $path = storage_path('app/' . $foto->caminho);
+            $zip = new \ZipArchive();
+            $zip->open('imagens.zip', \ZipArchive::CREATE);
+            $zip->addFile($path, $foto->caminho);
+            $zip->close();
+        }
+        return response()->download('imagens.zip');
+        
+    } 
 }
