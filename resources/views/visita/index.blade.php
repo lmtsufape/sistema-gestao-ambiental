@@ -222,6 +222,8 @@
                                                     <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                                 @elseif($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                     <td>{{__('Notificado')}}</td>
+                                                @elseif ($visita->requerimento->empresa == null)
+                                                    <td>{{__('Aguardando visita')}}</td>
                                                 @else
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @endif
