@@ -45,14 +45,7 @@
                                 @endpush
                             @endif
                         </div>
-                        <div class="form-row justify-content-between">
-                            <div class="col-md-8" style="text-align: right">
-                                <input type="hidden" id="especie_indice" value="-1">
-                                <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
-                                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar nova espécie">
-                                </a>
-                            </div>
-                        </div>
+                        
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
                             <div class="form-row justify-content-between">
@@ -95,6 +88,15 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <div class="form-row mb-2 justify-content-between">
+                                                <div class="col-md-12" style="text-align: right">
+                                                    <input type="hidden" id="especie_indice" value="-1">
+                                                        Adicionar nova espécie a este solicitação
+                                                    <a title="Adicionar nova espécie" id="btn-add-especie" onclick="addEspecie()" style="cursor: pointer;">
+                                                        <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar nova espécie">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
