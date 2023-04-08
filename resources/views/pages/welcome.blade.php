@@ -95,6 +95,26 @@
                 </div>
             </button>
         </div>
+
+        <div class="col-md-6 col-lg-4 mb-3">
+            <button class="h-100 w-100" data-toggle="modal" data-target="#acompanhamentoSolicitacoesPresenciaisModal">
+                <div class="card card-home">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
+                                <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                    ACOMPANHAMENTO DE SOLICITAÇÕES PRESENCIAIS
+                                </p>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                <img src="{{asset('img/acompanhar.svg')}}" width="45px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+
         <div class="col-md-6 col-lg-4 mb-3">
             <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesPodaModal">
                 <div class="card card-home">
@@ -106,7 +126,7 @@
                                 </p>
                             </div>
                             <div class="col-md-3 d-flex align-items-center justify-content-center">
-                                <img src="{{asset('img/poda.svg')}}" width="45px;">
+                                <img src="{{asset('img/poda.svg')}}" width="45px;" stroke="currentColor">
                             </div>
                         </div>
                     </div>
@@ -362,6 +382,37 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="acompanhamentoSolicitacoesPresenciaisModal" tabindex="-1" role="dialog" aria-labelledby="acompanhamentoSolicitacoesPresenciaisLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #00883D; color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel">Acompanhamento de Solicitações Presencias</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="modal-text text-justify">
+                        <label for="">Insira o número de protocolo da sua solicitação: </label>
+                        <input class="form-control" type="text" id="protocolo_id" name="protocolo">
+                    </div>
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button id="btn-buscar" type="button" class="btn btn-success btn-color-dafault">Buscar</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="solicitacoesPodaModal" tabindex="-1" role="dialog" aria-labelledby="solicitacoesPodaLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -388,6 +439,16 @@
 
 @push('scripts')
     <script>
+
+        $(document).ready(function() {
+			$("#btn-buscar").click(function() {
+				var protocolo = $("#protocolo_id").val(); // recupera o valor do input
+				var url = "{{ route('consulta.show', ['protocolo' => ':protocolo']) }}"; // cria a URL com um marcador de posição
+				url = url.replace(':protocolo', protocolo); // substitui o marcador de posição pelo valor do input
+				window.location.href = url; // redireciona para a rota com o valor do input
+			});
+		});
+        
         function mostrarContato(tipo, texto, img){
             if(tipo == "mostrar1"){
                 if(document.getElementById("mostrar1").style.display == "block"){

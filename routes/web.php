@@ -25,6 +25,7 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\BoletoAvulsoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ConsultaController;
 
 
 /*
@@ -47,6 +48,10 @@ Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->n
 Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/consulta/{protocolo}/show', [ConsultaController::class, 'show'])->name('consulta.show');
+Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
+Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaController::class, 'foto'])->name('podas.foto');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -136,7 +141,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/mudas/{filtro}/listar', [SolicitacaoMudaController::class, 'index'])->name('mudas.index');
     Route::get('/solicitacoes/mudas/requerente/index', [SolicitacaoMudaController::class, 'requerenteIndex'])->name('mudas.requerente.index');
 
-    Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaController::class, 'foto'])->name('podas.foto');
     Route::get('/solicitacoes/podas/{solicitacao}/show', [SolicitacaoPodaController::class, 'show'])->name('podas.show');
     Route::put('/solicitacoes/podas/{solicitacao}/', [SolicitacaoPodaController::class, 'avaliar'])->name('podas.avaliar');
     Route::get('/solicitacoes/podas/{solicitacao}/edit', [SolicitacaoPodaController::class, 'edit'])->name('podas.edit');
@@ -157,7 +161,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/solicitacoes/mudas/mostrar/{solicitacao}', [SolicitacaoMudaController::class, 'mostrar'])->name('mudas.mostrar');
     Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');
-    Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
     Route::get('/solicitacoes/mudas/requerente/create', [SolicitacaoMudaController::class, 'create'])->name('mudas.create');
     Route::post('/solicitacoes/mudas', [SolicitacaoMudaController::class, 'store'])->name('mudas.store');
 
