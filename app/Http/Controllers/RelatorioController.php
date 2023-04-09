@@ -9,7 +9,9 @@ use App\Models\Requerimento;
 use App\Models\Visita;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Controllers\ZipArchive;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+
 class RelatorioController extends Controller
 {
     /**
@@ -44,23 +46,21 @@ class RelatorioController extends Controller
      */
     public function store(RelatorioRequest $request)
     {
-
         $this->authorize('isSecretarioOrAnalista', User::class);
         $visita = Visita::find($request->visita);
-        $data = $request->validated();
         $relatorio = new Relatorio();
+        $fotos_relatorio = new FotosRelatorio();
         $relatorio->setAtributes($request);
-        $relatorio->save();
-        
-        if (array_key_exists('imagem', $data)) {
-            $count = count($data['imagem']);
-            for ($i = 0; $i < $count; $i++) {
-                $fotos_relatorio = new FotosRelatorio();
-                $fotos_relatorio->relatorio_id = $relatorio->id;
-                $fotos_relatorio->caminho = $data['imagem'][$i]->store("relatorios/{$relatorio->id}/imagens");
-                $fotos_relatorio->save();
-            }
+    
+        if ($request->has('arquivoFile') != null) {
+            $relatorio->salvarArquivo($request['arquivoFile'], $visita->id, $relatorio);
         }
+        $relatorio->save();
+
+        if ($request->has('imagem') != null) {
+            $fotos_relatorio->salvarImagem($request['imagem'], $visita->id, $fotos_relatorio);
+        }
+        $fotos_relatorio->save();
 
         if ($visita->requerimento != null) {
             $requerimento = $visita->requerimento;
@@ -112,14 +112,25 @@ class RelatorioController extends Controller
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
+        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $id)->first();
         if ($relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado']) {
             return redirect()->back()->with(['error' => 'Este relatório não pode ser editado!']);
         }
-        $request->validated();
         $relatorio->setAtributes($request);
         $relatorio->motivo_edicao = null;
-        $relatorio->update();
 
+        if ($request->has('arquivoFile') != null) {
+            $relatorio->salvarArquivo($request['arquivoFile'], $id, $relatorio);
+        }
+
+        $relatorio->update();
+        
+        if ($request->has('imagem') != null) {
+            $fotos_relatorio->salvarImagem($request['imagem'], $id, $fotos_relatorio);
+        }
+       
+        $fotos_relatorio->update();
+        
         $filtro = auth()->user()->getUserType();
 
         return redirect(route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Relátorio atualizado com sucesso!']);
@@ -161,22 +172,25 @@ class RelatorioController extends Controller
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
-        $path = storage_path('app/' . $relatorio->arquivo);
+        $arquivo = $relatorio->arquivo;
+        $path = storage_path('app/storage/' . $arquivo);
+
         return response()->download($path);
     }
-    
+
     public function downloadImagem($id)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $id)->get();
-        foreach ($fotos_relatorio as $foto) {
-            $path = storage_path('app/' . $foto->caminho);
-            $zip = new \ZipArchive();
-            $zip->open('imagens.zip', \ZipArchive::CREATE);
+        $fotos = FotosRelatorio::where('relatorio_id', $id)->get();
+        $zip = new ZipArchive();
+        foreach ($fotos as $foto) {
+            $path = storage_path('app/storage/' . $foto->caminho);
+            $zip->open('fotos.zip', ZipArchive::CREATE);
             $zip->addFile($path, $foto->caminho);
-            $zip->close();
         }
-        return response()->download('imagens.zip');
+        $zip->close();
         
-    } 
+        return response()->download('fotos.zip');        
+    }
+
 }

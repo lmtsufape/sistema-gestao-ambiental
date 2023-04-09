@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form col-md-9" style="margin-top:10px;">
-                                <form id="form-relatorio-visita" method="POST" action="{{route('relatorios.update', ['relatorio' => $relatorio->id])}}">
+                                <form id="form-relatorio-visita" enctype="multipart/form-data" method="POST" action="{{route('relatorios.update', ['relatorio' => $relatorio->id])}}">
                                     @csrf
                                     @if ($errors->any())
                                         <div class="alert alert-danger">
@@ -261,19 +261,29 @@
         </div>
     </div>
     @push ('scripts')
-        <script>
-            CKEDITOR.replace('relatorio');
+    <script>
+        
+        CKEDITOR.replace('relatorio');
+        
+        $('#customFilearquivo').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+        });
+        var $videoId = 1;
+        CKEDITOR.replace('denuncia-ckeditor', {
+        height: 400
+        });
 
-                $('#customFilearquivo').change(function(e){
-            var fileName = e.target.files[0].name;
-            $('.custom-file-label').html(fileName);
-            });
-            var $videoId = 1;
-            CKEDITOR.replace('denuncia-ckeditor', {
-            height: 400
-            });
+        document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+        var messageLength = CKEDITOR.instances['denuncia-ckeditor'].getData().replace(/<[^>]*>/gi, '').length;
+        if(!messageLength){
+            alert("O campo de denúncia não pode estar vazio");
+            event.preventDefault();
+        }
+        });
 
-            function addImagem() {
+
+        function addImagem() {
             if($('#imagens').children().length >= 20){
                 alert("A quantidade máxima de imagens é 20!");
             }else{
@@ -296,12 +306,7 @@
                                                 <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="removerImagem(this, `+imagem_indice+`)">remover</a>
                                             </div>
                                         </div>
-                                        {{--<div class="form-row">
-                                            <label for="comentarios"">{{ __('Comentário') }}</label>
-                                            <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
-                                        </div>--}}
                                     </div>`;
-
                 $('#imagens').append(campo_imagem);
                 $("#file-input-"+imagem_indice).click();
             }
@@ -361,8 +366,7 @@
                 total.value = parseInt(total.value) + imagem[0].files[0].size;
                 return true;
             };
-            
-        </script>
-    @endpush
+    </script>
+@endpush
     @endsection
 </x-app-layout>

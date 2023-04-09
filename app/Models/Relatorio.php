@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Relatorio extends Model
 {
@@ -33,6 +34,21 @@ class Relatorio extends Model
         $this->visita_id = $request->visita;
         $this->texto = $request->texto;
         $this->aprovacao = $this::APROVACAO_ENUM['realizado'];
-        $request->hasFile('arquivoFile') ? $this->arquivo = $request->arquivoFile->store("relatorios/{$this->id}/arquivo") : null;
+    }
+
+    public function salvarArquivo($file, $id, $relatorio)
+    {   
+        $caminho = 'relatorios/'. $id . '/arquivo/';
+        $documento_nome = $file->getClientOriginalName();
+        Storage::putFileAs('storage/' . $caminho, $file, $documento_nome);
+        $relatorio->arquivo  = $caminho . $documento_nome;
+        return $this->save();
+    }
+
+    public function deletar()
+    {
+        delete_file($this->arquivo, 'storage/storage/');
+
+        return $this->delete();
     }
 }

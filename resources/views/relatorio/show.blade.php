@@ -143,19 +143,22 @@
                         </div>
                         @if ('relatorios/'.$relatorio->id.'/imagens' != null)
                                 <div class="form-row">
-                                    <div class="form-group col-md-6 ">
-                                        <a href="{{route('relatorios.downloadImagem', $relatorio->id)}}">Baixar imagens anexadas</a>
-                                    </div>
+                                    <label class="col-md-12">{{__('Imagens anexadas:')}}</label>
+                                    <a class="w-100 btn btn-success btn-enviar-doc" href="{{route('relatorios.downloadImagem', $relatorio->id)}}">
+                                        <img class="icon-licenciamento" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" width="20px;">
+                                        Baixar imagens enviadas
+                                    </a>
                                 </div>
                         @endif
                         @if ($relatorio->arquivo != null)
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <a href="{{route('relatorios.downloadArquivo', $relatorio->id)}}">Baixar arquivo anexados </a>
-                                    </div>
-                                </div>
+                            <div class="form-row">
+                                <label class="col-md-12">{{__('Arquivo anexado:')}}</label>
+                                <a class="w-100 btn btn-success btn-enviar-doc" href="{{route('relatorios.downloadArquivo', $relatorio->id)}}">
+                                    <img class="icon-licenciamento" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" width="20px;">
+                                    Baixar arquivo enviado
+                                </a>
+                            </div>
                         @endif
-                        
                     </div>
                         
                             

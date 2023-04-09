@@ -181,7 +181,7 @@
         </div>
     </div>
 
-@push ('scripts')
+    @push ('scripts')
     <script>
         
         CKEDITOR.replace('relatorio');
@@ -227,12 +227,7 @@
                                                 <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="removerImagem(this, `+imagem_indice+`)">remover</a>
                                             </div>
                                         </div>
-                                        {{--<div class="form-row">
-                                            <label for="comentarios"">{{ __('Comentário') }}</label>
-                                            <textarea type="text" class="form-control" name="comentario[]" id="comentario"></textarea>
-                                        </div>--}}
                                     </div>`;
-
                 $('#imagens').append(campo_imagem);
                 $("#file-input-"+imagem_indice).click();
             }
@@ -294,5 +289,5 @@
             };
     </script>
 @endpush
-@endsection
+    @endsection
 </x-app-layout>
