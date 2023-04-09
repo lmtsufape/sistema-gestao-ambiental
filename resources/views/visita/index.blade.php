@@ -219,7 +219,7 @@
                                             
                                             @if($visita->denuncia == null)
                                                 @if ($visita->data_realizada != null)
-                                                    <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
+                                                    <td>{}</td>
                                                 @elseif(isset($visita) && isset($visita->requerimento->empresa))
                                                     @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                         <td>{{__('Notificado')}}</td>
