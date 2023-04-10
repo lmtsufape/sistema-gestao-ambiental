@@ -218,7 +218,7 @@
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             
                                             @if($visita->denuncia == null)
-                                                @if ($visita->data_realizada != null)
+                                                @if ($visita->data_realizada != null || $visita->data_realizada != '[]')
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @elseif(isset($visita) && isset($visita->requerimento->empresa))
                                                     @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
@@ -228,7 +228,7 @@
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @endif
                                             @else
-                                                @if ($visita->data_realizada != null)
+                                            @if ($visita->data_realizada != null || $visita->data_realizada != '[]')
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                                 @else
                                                     <td>{{__('Aguardando visita')}}</td>
