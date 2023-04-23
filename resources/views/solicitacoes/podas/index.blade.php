@@ -27,18 +27,6 @@
                     @endif
                 </div>
 
-                <form action="{{route('podas.index', 'pendentes')}}" method="get">
-                    @csrf
-                    <div class="form-row mb-3">
-                        <div class="col-md-7">
-                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do requerente/endereço" value="{{ $busca }}">
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
-                        </div>
-                    </div>
-                </form>
-
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
                     @can('isSecretario', \App\Models\User::class)
                         <li class="nav-item">
@@ -74,7 +62,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="solicitacoes-pendentes" role="tabpanel" aria-labelledby="solicitacoes-pendentes-tab">
                                 <div class="table-responsive">
-                                <table class="table mytable">
+                                <table class="table mytable" id="podas-table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -124,11 +112,11 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                @if($solicitacoes->first() == null)
+                                <!-- @if($solicitacoes->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma solicitação de poda/supressão @switch($filtro) @case('pendentes')pendente @break @case('deferidas') @can('isAnalistaPoda', \App\Models\User::class) atribuída @else deferida @endcan @break @case('concluidas')concluída @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
-                                @endif
+                                @endif -->
                             </div>
                         </div>
                     </div>
@@ -259,6 +247,25 @@
                     }
                 });
             }
+        </script>
+        <script>
+        $(document).ready(function () {
+                    $('#podas-table').DataTable({
+                        searching: true,
+                        "language": {
+                            "search": "Pesquisar: ",
+                            "lengthMenu": "Mostrar _MENU_ registros por página",
+                            "info": "Exibindo página _PAGE_ de _PAGES_",
+                            "infoEmpty": "Nenhuma solicitação de poda encontrada",
+                            "zeroRecords": "Nenhuma solicitação de poda encontrada",
+                        },
+                        "paginate": false,
+                        "columnDefs": [{
+                            "targets": [],
+                            "orderable": false
+                        }]
+                    });
+                });
         </script>
     @endpush
     @endsection

@@ -125,17 +125,7 @@
 
             
         </div>
-        <form action="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}" method="get">
-                @csrf
-                <div class="form-row mb-3">
-                    <div class="col-md-7">
-                        <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do requerente" value="{{ $busca }}">
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
-                    </div>
-                </div>
-        </form>
+        
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
@@ -179,7 +169,7 @@
                             @endif
                         </div>
                         <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="programacao-table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -321,7 +311,7 @@
                         </table>
                         </div>
                         
-                        @if($visitas->first() == null)
+                        <!-- @if($visitas->first() == null)
                             <div class="col-md-12 text-center" style="font-size: 18px;">
                                 @can('isSecretario', \App\Models\User::class)
                                     {{__('Nenhuma visita criada')}}
@@ -329,7 +319,7 @@
                                     {{__('Nenhuma visita programada para você')}}
                                 @endcan
                             </div>
-                        @endif
+                        @endif -->
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
@@ -780,6 +770,24 @@
             $('.link-ordenacao').click(function() {
                 window.location = this.children[2].href;
             });
+
+            $(document).ready(function () {
+                    $('#programacao-table').DataTable({
+                        searching: true,
+                        "language": {
+                            "search": "Pesquisar: ",
+                            "lengthMenu": "Mostrar _MENU_ registros por página",
+                            "info": "Exibindo página _PAGE_ de _PAGES_",
+                            "infoEmpty": "Nenhuma visita encontrada",
+                            "zeroRecords": "Nenhuma visita encontrada",
+                        },
+                        "paginate": false,
+                        "columnDefs": [{
+                            "targets": [],
+                            "orderable": false
+                        }]
+                    });
+                });
         </script>
     @endpush
 </x-app-layout>

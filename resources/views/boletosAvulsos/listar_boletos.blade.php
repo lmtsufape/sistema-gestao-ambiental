@@ -18,7 +18,7 @@
                     @endif
                 </div>
 
-                <form action="{{route('boletosAvulsos.listar_boletos', 'pendentes')}}" method="get">
+                <!-- <form action="{{route('boletosAvulsos.listar_boletos', 'pendentes')}}" method="get">
                     @csrf
                     <div class="form-row mb-3">
                         <div class="col-md-7">
@@ -28,7 +28,7 @@
                             <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -43,17 +43,17 @@
                         <a class="nav-link @if($filtragem == 'vencidos') active @endif" id="boletos-arquivadas-tab"
                             type="button" role="tab" @if($filtragem == 'vencidos') aria-selected="true" @endif href="{{route('boletosAvulsos.listar_boletos', 'vencidos')}}">Vencidos</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link @if($filtragem == 'cancelados') active @endif" id="boletos-cancelados-tab"
                             type="button" role="tab" @if($filtragem == 'cancelados') aria-selected="true" @endif href="{{route('boletosAvulsos.listar_boletos', 'cancelados')}}">Cancelados</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="tab-content tab-content-custom" id="myTabContent">
                             <div class="tab-pane fade show active" id="boletos-pendentes" role="tabpanel" aria-labelledby="boletos-pendentes-tab">
                                 <div class="table-responsive">
-                                <table class="table mytable">
+                                <table class="table mytable" id="boletos-avulsos_table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
@@ -76,11 +76,11 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                @if($pagamentos->first() == null)
+                                <!-- @if($pagamentos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @case('cancelados')cancelado @break @endswitch
                                     </div>
-                                @endif
+                                @endif -->
                             </div>
                         </div>
                     </div>
@@ -163,6 +163,25 @@
                 });
                 sleep(2000).then(() => window.location.reload());
             }
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#boletos-avulsos_table').DataTable({
+                    searching: true,
+                    "language": {
+                        "search": "Pesquisar: ",
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "info": "Exibindo página _PAGE_ de _PAGES_",
+                        "infoEmpty": "Nenhum boleto encontrado",
+                        "zeroRecords": "Nenhum boleto encontrado",
+                    },
+                    "paginate": false,
+                    "columnDefs": [{
+                        "targets": [],
+                        "orderable": false
+                    }]
+                });
+            });
         </script>
     @endpush
     @endsection
