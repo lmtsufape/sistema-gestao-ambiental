@@ -27,7 +27,7 @@
                     @endcan
                 </div>
 
-                <form action="{{route('requerimentos.index', 'atuais')}}" method="get">
+                <!-- <form action="{{route('requerimentos.index', 'atuais')}}" method="get">
                     @csrf
                     <div class="form-row mb-3">
                         <div class="col-md-7">
@@ -37,7 +37,7 @@
                             <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
                 <div div class="form-row">
                     @if(session('success'))
@@ -75,7 +75,7 @@
                             <div class="tab-content tab-content-custom" id="myTabContent">
                                 <div class="tab-pane fade show active" id="requerimnetos-atuais" role="tabpanel" aria-labelledby="requerimnetos-atuais-tab">
                                     <div class="table-responsive">
-                                    <table class="table mytable">
+                                    <table class="table mytable" id="requerimento_table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -152,11 +152,11 @@
                                         </tbody>
                                     </table>
                                     </div>
-                                    @if($requerimentos->first() == null)
+                                    <!-- @if($requerimentos->first() == null)
                                         <div class="col-md-12 text-center" style="font-size: 18px;">
                                             Nenhum requerimento @switch($filtro) @case('atuais') atual @break @case('finalizados') finalizado @break @case('cancelados') cancelado @break @endswitch
                                         </div>
-                                    @endif
+                                    @endif -->
                                 </div>
                             </div>
                         </div>
@@ -1236,46 +1236,26 @@
                     }
                 });
             }
-            // Chart.register(ChartDataLabels);
-            //const dados = @ json($data);
+        </script>
 
-            // const data = {
-            //     labels: Object.keys(dados),
-            //     datasets: [{
-            //         data: Object.values(dados),
-            //         backgroundColor: ['#273746','#F78259', '#581845', '#C70039 ', '#293462', '#1CD6CE', '#D61C4E', '#FEDB39', '#FF5733'],
-            //         hoverOffset: 0,
-            //     }]
-            // };
-            // const options = {
-            //     responsive: false,
-            //     plugins: {
-            //         title: {
-            //             display: true,
-            //             text: 'Requerimentos por status',
-            //         },
-            //         legend: {
-            //             display: true,
-            //             labels: {
-            //                 color: 'black',
-            //                 pointStyle: 'rectRounded',
-            //                 usePointStyle: true,
-            //             }
-            //         },
-            //         datalabels: {
-            //             color: 'white'
-            //         }
-            //     }
-            // };
-            // const config = {
-            //     type: 'pie',
-            //     data: data,
-            //     options: options,
-            // };
-            // const myChart = new Chart(
-            //     document.getElementById('myChart'),
-            //     config
-            // );
+        <script>
+            $(document).ready(function () {
+                $('#requerimento_table').DataTable({
+                    searching: true,
+                    "language": {
+                        "search": "Pesquisar: ",
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "info": "Exibindo página _PAGE_ de _PAGES_",
+                        "infoEmpty": "Nenhum requerimento encontrado",
+                        "zeroRecords": "Nenhum requerimento encontrado",
+                    },
+                    "paginate": false,
+                    "columnDefs": [{
+                        "targets": [0, 4],
+                        "orderable": false
+                    }]
+                });
+            });
         </script>
     @endpush
 @endsection
