@@ -182,7 +182,7 @@
                                         @else
                                             <th scope="col" class="align-middle">Requerente</th>
                                         @endif
-                                        @if($filtro == "requerimento")
+                                        @if($filtro == "requerimento" || $filtro == "finalizado")
                                             <th scope="col" class="align-middle">Tipo</th>
                                         @endif
                                         @can('isSecretario', \App\Models\User::class)
@@ -208,8 +208,8 @@
                                             <td>{{date('d/m/Y', strtotime($visita->data_marcada))}}</td>
                                             
                                             @if($visita->denuncia == null)
-                                                @if ($visita->data_realizada != null)
-                                                    <td>{}</td>
+                                                @if(empty($visita->data_realizada))
+                                                    <td>{{__('Aguardando visita')}}</td>
                                                 @elseif(isset($visita) && isset($visita->requerimento->empresa))
                                                     @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                         <td>{{__('Notificado')}}</td>
@@ -218,18 +218,20 @@
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @endif
                                             @else
-                                                @if ($visita->data_realizada != null)
+                                            @if(empty($visita->data_realizada))
                                                 <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
                                                 @else
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @endif
                                             @endif
 
-                                            @if($visita->requerimento != null)
+                                            @if($visita->requerimento != null )
                                                 <td>{{$visita->requerimento->empresa->nome}}</td>
-                                                <td>
-                                                    {{ucfirst($visita->requerimento->tipoString())}}
-                                                </td>
+                                                @if(!empty($visita->requerimento->tipo))
+                                                    <td>
+                                                        {{ucfirst($visita->requerimento->tipoString())}}
+                                                    </td>
+                                                @endif
                                             @elseif($visita->denuncia != null)
                                                 <td>{{$visita->denuncia->empresa_id ? $visita->denuncia->empresa->nome : $visita->denuncia->empresa_nao_cadastrada}}</td>
                                             @elseif ($visita->solicitacaoPoda != null)
