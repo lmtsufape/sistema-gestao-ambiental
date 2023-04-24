@@ -38,15 +38,19 @@ class BoletoController extends Controller
         switch ($filtragem) {
             case 'pendentes':
                 $pagamentos = $pendentes;
+                $tipo_boleto = 2;
                 break;
             case 'pagos':
                 $pagamentos = $pagos;
+                $tipo_boleto = 1;
                 break;
             case 'vencidos':
                 $pagamentos = $vencidos;
+                $tipo_boleto = 3;
                 break;
             case 'cancelados':
                 $pagamentos = $cancelados;
+                $tipo_boleto = 4;
                 break;
         }
 
@@ -55,7 +59,7 @@ class BoletoController extends Controller
             $empresas = $empresas->pluck('id');
             $requerimentos = Requerimento::whereIn('empresa_id', $empresas);
             $requerimentos = $requerimentos->pluck('id');
-            $pagamentos = BoletoCobranca::WhereIn('requerimento_id', $requerimentos)->paginate(20);
+            $pagamentos = BoletoCobranca::WhereIn('requerimento_id', $requerimentos)->where('status_pagamento', '=', $tipo_boleto)->paginate(20);
         }
 
 

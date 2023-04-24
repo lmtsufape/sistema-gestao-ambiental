@@ -36,6 +36,19 @@
                             type="button" role="tab" @if($filtragem == 'cancelados') aria-selected="true" @endif href="{{route('boletos.index', 'cancelados')}}">Cancelados</a>
                     </li>
                 </ul>
+
+                <form action="{{route('boletos.index', $filtragem )}}" method="get">
+                    @csrf
+                    <div class="form-row mb-3 mt-3">
+                        <div class="col-md-7">
+                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome da Empresa" value="{{ $busca }}">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div class="tab-content tab-content-custom" id="myTabContent">
@@ -74,11 +87,11 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                <!-- @if($pagamentos->first() == null)
+                                @if($pagamentos->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhum boleto @switch($filtragem) @case('pendentes')pendente @break @case('pagos')pago @break @case('vencidos')vencido @break @case('cancelados')cancelado @break @endswitch
                                     </div>
-                                @endif -->
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -161,26 +174,6 @@
                 });
                 sleep(2000).then(() => window.location.reload());
             }
-        </script>
-
-        <script>
-            $(document).ready(function () {
-                $('#boletos_table').DataTable({
-                    searching: true,
-                    "language": {
-                        "search": "Pesquisar: ",
-                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                        "info": "Exibindo página _PAGE_ de _PAGES_",
-                        "infoEmpty": "Nenhum boleto encontrado",
-                        "zeroRecords": "Nenhum boleto encontrado",
-                    },
-                    "paginate": false,
-                    "columnDefs": [{
-                        "targets": [0, 4],
-                        "orderable": false
-                    }]
-                });
-            });
         </script>
     @endpush
     @endsection
