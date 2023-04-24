@@ -1249,9 +1249,9 @@
                         "infoEmpty": "Nenhum requerimento encontrado",
                         "zeroRecords": "Nenhum requerimento encontrado",
                     },
-                    "paginate": false,
+                    "paginate": true,
                     "columnDefs": [{
-                        "targets": [0, 4],
+                        "targets": [],
                         "orderable": false
                     }]
                 });
