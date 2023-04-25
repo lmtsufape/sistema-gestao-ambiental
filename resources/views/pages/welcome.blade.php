@@ -103,7 +103,7 @@
                         <div class="row align-items-center justify-content-center">
                             <div class="col-md-9 d-flex align-items-center justify-content-center">
                                 <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
-                                    ACOMPANHAMENTO DE SOLICITAÇÕES PRESENCIAIS
+                                    CONSULTE SEU PROTOCOLO
                                 </p>
                             </div>
                             <div class="col-md-3 d-flex align-items-center justify-content-center">
@@ -394,21 +394,30 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="modal-text text-justify">
-                        <label for="">Insira o número de protocolo da sua solicitação: </label>
-                        <input class="form-control" type="text" id="protocolo_id" name="protocolo">
-                    </div>
-                    @if(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
+                    <form id="consultas-show" method="GET" action="{{route('consulta.show')}}">
+                        @csrf
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                <label for="protocolo">{{ __('Protocolo:') }}</label>
+                                <input id="protocolo" class="form-control @error('protocolo') is-invalid @enderror" type="text" name="protocolo" value="{{old('protocolo')}}" required autofocus autocomplete="protocolo">
+                                <br>
+                                <p>Digite o procotolo que deseja buscar. 
+                                    Certifique-se de que os caracteres digitados estão corretos, seguindo o padrão de letras maiúsculas e minúculas 
+                                    para que possamos encontrar em nosso sistema sua solicitação.</p> 
+
+                                @error('protocolo')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
-                    @endif
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button id="btn-buscar" type="button" class="btn btn-success btn-color-dafault">Buscar</button>
-                    </div>
+                    </form>
                 </div>
-                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="submeterFormBotao" class="btn btn-success btn-color-dafault  submeterFormBotao" form="consultas-show">Buscar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -439,16 +448,14 @@
 
 @push('scripts')
     <script>
+        document.querySelector( '#submeterFormBotao' ).addEventListener( 'click', (event) => {
+        var messageLength = CKEDITOR.instances['denuncia-ckeditor'].getData().replace(/<[^>]*>/gi, '').length;
+        if(!messageLength){
+            alert("O campo de denúncia não pode estar vazio");
+            event.preventDefault();
+        }
+    });
 
-        $(document).ready(function() {
-			$("#btn-buscar").click(function() {
-				var protocolo = $("#protocolo_id").val(); // recupera o valor do input
-				var url = "{{ route('consulta.show', ['protocolo' => ':protocolo']) }}"; // cria a URL com um marcador de posição
-				url = url.replace(':protocolo', protocolo); // substitui o marcador de posição pelo valor do input
-				window.location.href = url; // redireciona para a rota com o valor do input
-			});
-		});
-        
         function mostrarContato(tipo, texto, img){
             if(tipo == "mostrar1"){
                 if(document.getElementById("mostrar1").style.display == "block"){

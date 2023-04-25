@@ -44,19 +44,20 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [function () {
     return redirect(route('requerimentos.index'));
 }])->name('dashboard');
+
 Route::get('/denuncias/imagem/{foto}', [DenunciaController::class, 'imagem'])->name('denuncias.imagem');
 Route::get('/licenca/{licenca}/show', [LicencaController::class, 'show'])->name('licenca.show');
 Route::get('/licenca/{licenca}/documento', [LicencaController::class, 'documento'])->name('licenca.documento');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/consulta/{protocolo}/show', [ConsultaController::class, 'show'])->name('consulta.show');
+Route::get('/consulta/show', [ConsultaController::class, 'show'])->name('consulta.show');
 Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::class, 'documento'])->name('mudas.documento');
 Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaController::class, 'foto'])->name('podas.foto');
+Route::get('/denuncias/acompanhar', [DenunciaController::class, 'statusDenuncia'])->name('denuncias.acompanhar');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-
-
+    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::delete('/boletos/{boleto}', [BoletoController::class, 'baixarBoleto'])->name('boletos.destroy');
     Route::get('/boletos/baixar-relatorio', [BoletoController::class, 'gerarRelatorioBoletos'])->name('gerar.pdf.boletos');
@@ -190,7 +191,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');
 Route::post('/denuncias/store', [DenunciaController::class, 'store'])->name('denuncias.store');
-Route::get('/denuncias/acompanhar', [DenunciaController::class, 'statusDenuncia'])->name('denuncias.acompanhar');
 Route::get('/denuncias-get', [DenunciaController::class, 'get'])->name('denuncias.get');
 Route::get('/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('enviar.mensagem');
