@@ -18,7 +18,7 @@
                     @endif
                 </div>
 
-                <!-- <form action="{{route('denuncias.index', 'pendentes')}}" method="get">
+                <form action="{{route('denuncias.index', $filtro)}}" method="get">
                     @csrf
                     <div class="form-row mb-3">
                         <div class="col-md-7">
@@ -28,7 +28,7 @@
                             <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
                         </div>
                     </div>
-                </form> -->
+                </form>
 
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -107,11 +107,11 @@
                                     </tbody>
                                 </table>
                                 </div>
-                                <!-- @if($denuncias->first() == null)
+                                @if($denuncias->first() == null)
                                     <div class="col-md-12 text-center" style="font-size: 18px;">
                                         Nenhuma denúncia @switch($filtro) @case('pendentes')pendente @break @case('deferidas')deferida @break @case('concluidas')concluída @break @case('indeferidas')indeferida @break @endswitch
                                     </div>
-                                @endif -->
+                                @endif
                             </div>
                             {{--<div class="tab-pane fade" id="denuncias-aprovadas" role="tabpanel" aria-labelledby="denuncias-aprovadas-tab">
                                 <div class="table-responsive">
@@ -613,23 +613,6 @@
     @can('isSecretario', \App\Models\User::class)
         @push ('scripts')
             <script>
-                $(document).ready(function () {
-                    $('#denucias-table').DataTable({
-                        searching: true,
-                        "language": {
-                            "search": "Pesquisar: ",
-                            "lengthMenu": "Mostrar _MENU_ registros por página",
-                            "info": "Exibindo página _PAGE_ de _PAGES_",
-                            "infoEmpty": "Nenhuma denúncia encontrado",
-                            "zeroRecords": "Nenhuma denúncia encontrado",
-                        },
-                        "paginate": false,
-                        "columnDefs": [{
-                            "targets": [],
-                            "orderable": false
-                        }]
-                    });
-                });
                 function adicionarId(id) {
                     document.getElementById('denuncia_id').value = id;
                     $("#alerta-agendar").html("");
