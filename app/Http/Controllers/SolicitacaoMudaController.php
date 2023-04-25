@@ -49,7 +49,10 @@ class SolicitacaoMudaController extends Controller
             $usuarios = $usuarios->pluck('id');
             $requerentes = Requerente::whereIn('user_id', $usuarios);
             $requerentes = $requerentes->pluck('id');
-            $mudas = SolicitacaoMuda::whereIn('requerente_id', $requerentes)->paginate(20);
+            $muda_id = $mudas->pluck('id');
+            $mudas = SolicitacaoMuda::whereIn('requerente_id', $requerentes)
+                        ->whereIn('id', $muda_id)
+                        ->paginate(20);
         }
 
         return view('solicitacoes.mudas.index', compact('mudas', 'filtro', 'busca'));
