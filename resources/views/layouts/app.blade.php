@@ -12,12 +12,10 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
         <link rel="icon" type="imagem/png" href="{{asset('img/icon-page.png')}}" />
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
         <link rel="stylesheet" href="{{asset('css/sidebars.css')}}">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
         @livewireStyles
     </head>
     <body class="min-h-screen antialiased" style="background-color: #e9eef5; grid-template-rows: 1fr auto;">
@@ -45,13 +43,11 @@
         @component('layouts.footer')@endcomponent
 
         <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="{{asset('js/app.js')}}" defer></script>
         <script src="{{asset('js/main.js')}}"></script>
         <script src="{{asset('js/submit.js')}}"></script>
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-
 
         @livewireScripts
         @stack('scripts')

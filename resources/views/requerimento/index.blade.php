@@ -27,18 +27,6 @@
                     @endcan
                 </div>
 
-                <form action="{{route('requerimentos.index', $filtro )}}" method="get">
-                    @csrf
-                    <div class="form-row mb-3">
-                        <div class="col-md-7">
-                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome da Empresa" value="{{ $busca }}">
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
-                        </div>
-                    </div>
-                </form>
-
                 <div div class="form-row">
                     @if(session('success'))
                         <div class="col-md-12" style="margin-top: 5px;">
@@ -55,6 +43,21 @@
                         </div>
                     @endif
                 </div>
+                
+                @cannot('isRequerente', \App\Models\User::class)
+                <form action="{{route('requerimentos.index', $filtro )}}" method="get">
+                    @csrf
+                    <div class="form-row mb-3">
+                        <div class="col-md-7">
+                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome da Empresa" value="{{ $busca }}">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                @endcannot
+
                 @can('isSecretario', \App\Models\User::class)
                     <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
                         <li class="nav-item">
