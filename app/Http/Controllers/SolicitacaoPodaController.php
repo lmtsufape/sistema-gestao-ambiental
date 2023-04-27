@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use DateTime;
 
 class SolicitacaoPodaController extends Controller
 {
@@ -143,8 +144,19 @@ class SolicitacaoPodaController extends Controller
     public function store(SolicitacaoPodaRequest $request)
     {
         $data = $request->validated();
+
+        if($this->limiteSolicitacao($data, auth()->user()->requerente->id)){
+            return redirect()->back()->with(['error' => 'No momento já existe uma solicitação de poda para este endereço em nosso sistema. Em breve daremos continuidade a sua solicitação.']);
+        }
+
+        if($this->tempoMinimo($data, auth()->user()->requerente->id)){
+            return redirect()->back()->with(['error' => 'É necessário aguardar no mínimo um ano para solicitar uma nova poda, pois a árvore precisa recuperar sua estrutura novamente. 
+                                Tente novamente após um ano da última solicitação para esse endereço.']);
+        }
+
         $solicitacao = new SolicitacaoPoda();
         $solicitacao->fill($data);
+
         $endereco = new Endereco();
         $endereco->fill($data);
         $endereco->save();
@@ -180,6 +192,41 @@ class SolicitacaoPodaController extends Controller
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoPodasCriada($solicitacao));
 
         return redirect()->back()->with(['success' => 'Solicitação de poda/supressão realizada com sucesso!', 'protocolo' => $protocolo]);
+    }
+
+    public function limiteSolicitacao($data, $requerente_id)
+    {
+        $requisicoes = SolicitacaoPoda::where([['requerente_id', $requerente_id], ['status', 1]])->get();
+        $endereco = new Endereco();
+        $endereco->fill($data);
+
+        foreach($requisicoes as $requisicao){
+            if($endereco->cep == $requisicao->endereco->cep && $endereco->numero == $requisicao->endereco->numero){
+                return true;
+            }
+        }
+        return false; 
+    }
+
+    public function tempoMinimo($data, $requerente_id)
+    {
+        $requisicoes = SolicitacaoPoda::where('requerente_id', $requerente_id)->get();
+        $endereco = new Endereco();
+        $endereco->fill($data);
+        $dataAtual = new DateTime();
+
+        foreach($requisicoes as $requisicao) {
+            $requisicaoData = DateTime::createFromFormat('Y-m-d H:i:s', $requisicao->updated_at)->setTime(0, 0);
+
+            $diferenca = $dataAtual->diff($requisicaoData);
+            $anosDiferenca = $diferenca->y;
+
+            if($endereco->cep == $requisicao->endereco->cep && $endereco->numero == $requisicao->endereco->numero
+                && $anosDiferenca < 1) {
+                return true;
+            }
+        }
+        return false; 
     }
 
     /**
