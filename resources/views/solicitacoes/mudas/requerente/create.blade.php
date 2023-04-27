@@ -43,10 +43,20 @@
                                         });
                                     </script>
                                 @endpush
+
+                            @elseif (session('message'))
+                                @push ('scripts')
+                                    <script>
+                                        $(function() {
+                                            jQuery.noConflict();
+                                            $('#modal_wpp').modal('show');
+                                        });
+                                    </script>
+                                @endpush
                             @endif
                         </div>
                         
-                        <form method="POST" onsubmit="processarFormulario()" id="cria-solicitacao" action="{{ route('mudas.store') }}">
+                        <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
                             <div class="form-row justify-content-between">
                                 <div class="col-md-8">
@@ -234,28 +244,6 @@
 
     @push ('scripts')
     <script>
-        function processarFormulario() {
-            var textareaValue = document.getElementById('local').value;
-            verificarCidade(textareaValue);
-        }
-
-        function verificarCidade(endereco) {
-            const cidadeProibida = 'Garanhuns';
-            const enderecoFormatado = endereco.toLowerCase();
-            const cidadeFormatada = cidadeProibida.toLowerCase();
-
-            if (!enderecoFormatado.includes(cidadeFormatada)) {
-                ativarModal();
-                // A cidade é diferente de Garanhuns
-            }
-        } 
-        function ativarModal() {
-            $(function() {
-                jQuery.noConflict();
-                $('#modal_wpp').modal('show');
-            });
-        }
-
         function addEspecie() {
             var indice = document.getElementById("especie_indice");
             var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
