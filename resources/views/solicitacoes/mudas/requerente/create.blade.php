@@ -43,6 +43,16 @@
                                         });
                                     </script>
                                 @endpush
+
+                            @elseif (session('message'))
+                                @push ('scripts')
+                                    <script>
+                                        $(function() {
+                                            jQuery.noConflict();
+                                            $('#modal_wpp').modal('show');
+                                        });
+                                    </script>
+                                @endpush
                             @endif
                         </div>
                         
@@ -200,47 +210,79 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal_wpp" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dcd935;">                    
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">É necessário entrar em contato
+                        com a secretaria de Meio ambiente para dar continuidade a sua solicitação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Por ser uma solicitação para fora da cidade de Garanhuns, a secretria <strong>apenas</strong> dará 
+                       continuidade a sua solicitação após ser iniciado o contato pelo whatsapp</p>
+
+                       <div class="col-md-12">
+                        <a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank">
+                            <img class="img-logo" src="{{asset('img/whatsapp.svg')}}" alt="Logo whatsapp" style="display: inline; height: 40px; width: 40px;">
+                        </a>
+                        &nbsp;<a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank" style="text-decoration: none; color:black;">Whatsapp: +55 87 3762-7086</a>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push ('scripts')
-        <script>
-            function addEspecie() {
-                var indice = document.getElementById("especie_indice");
-                var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
-                indice.value = especie_indice;
+    <script>
+        function addEspecie() {
+            var indice = document.getElementById("especie_indice");
+            var especie_indice = parseInt(document.getElementById("especie_indice").value)+1;
+            indice.value = especie_indice;
 
-                var campo_especie = `<tr>
-                                        <td>
-                                            <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
-                                                <option value="" disabled selected>-- Selecionar a espécie--</option>
-                                                @foreach ($especies as $especie)
-                                                    <option value={{$especie->id}}>{{$especie->nome}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('especie.*')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </td>
-                                        <td>
-                                            <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
-                                                type="number" min="1" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
-                                                autocomplete="qtd_mudas" required>
-                                            @error('qtd_mudas.*')
-                                                <div id="validationServer03Feedback" class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+            var campo_especie = `<tr>
+                                    <td>
+                                        <select required class="form-control @error('especie.*') is-invalid @enderror" name="especie[]">
+                                            <option value="" disabled selected>-- Selecionar a espécie--</option>
+                                            @foreach ($especies as $especie)
+                                                <option value={{$especie->id}}>{{$especie->nome}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('especie.*')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
                                             </div>
-                                        </td>
-                                    </tr>`;
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input id="qtd_mudas`+especie_indice+`" class="form-control @error('qtd_mudas.*') is-invalid @enderror"
+                                            type="number" min="1" name="qtd_mudas[]" value="{{ old('qtd_mudas.*') }}"
+                                            autocomplete="qtd_mudas" required>
+                                        @error('qtd_mudas.*')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="this.parentElement.parentElement.parentElement.remove()">remover</a>
+                                        </div>
+                                    </td>
+                                </tr>`;
 
-                $('#especies tbody').append(campo_especie);
-            }
-        </script>
+            $('#especies tbody').append(campo_especie);
+        }
+    </script>
     @endpush
 @endsection
 </x-app-layout>

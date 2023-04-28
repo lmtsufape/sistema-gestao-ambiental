@@ -256,10 +256,11 @@
                     </button>
                 </div>
                 <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da solicitação
+                    <p>Anote o seguinte protocolo para acompanhar o status da solicitação</p>
                     <br>
                     Protocolo:
                     <strong>{{ session('protocolo') }}</strong>
+                    <br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
@@ -689,14 +690,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #dcd935;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">Protocolo da
-                        solicitação</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">Solicitação criada com sucesso! </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" style="word-break: break-all">
-                    Anote o seguinte protocolo para acompanhar o status da solicitação
+                    <p>Anote o seguinte protocolo para acompanhar o status da solicitação pelo seu perfil, ou no tópico
+                        <strong>CONSULTE SEU PROTOCOLO AQUI</strong> na página inicial do sistema. </p>
                     <br>
                     Protocolo:
                     <strong>{{ session('protocolo') }}</strong>

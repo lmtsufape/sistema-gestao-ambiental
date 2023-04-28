@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class SolicitacaoMudaController extends Controller
 {
@@ -85,6 +86,11 @@ class SolicitacaoMudaController extends Controller
     {
         $this->authorize('create', SolicitacaoMuda::class);
         $data = $request->validated();
+
+        if($this->periodoMinimo(auth()->user()->requerente->id)){
+            return redirect()->back()->with(['error' => 'Temos um período mínimo de 3 meses para novas solicitações. Solicite novamente após 3 meses da última solicitação de muda feita.']);
+        }
+
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
         $solicitacao->requerente_id = auth()->user()->requerente->id;
@@ -106,7 +112,31 @@ class SolicitacaoMudaController extends Controller
         }
         Mail::to($solicitacao->requerente->user->email)->send(new SolicitacaoMudasCriada($solicitacao));
 
-        return redirect()->route('mudas.requerente.index')->with(['success' => 'Solicitação de mudas realizada com sucesso!', 'protocolo' => $protocolo]);
+        if($this->verificarEndereco($solicitacao)){
+            return redirect()->back()->with(['message' => 'Solicitação de muda realizada com sucesso!']);
+        }
+
+        return redirect()->back()->with(['success' => 'Solicitação de muda realizada com sucesso!', 'protocolo' => $protocolo]);
+    }
+
+    public function verificarEndereco($solicitacao){
+        $local = strtolower($solicitacao->local);
+
+        if(stripos($local, 'garanhuns') !== false){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function periodoMinimo($requerente_id){
+        $solicitacoes = solicitacaoMuda::where('requerente_id', $requerente_id)
+                ->whereDate('updated_at', '>', Carbon::now()->subMonths(3)->format('Y-m-d'))->first();
+        if($solicitacoes != null){
+            return true;
+        }
+        return false;
     }
 
     /**

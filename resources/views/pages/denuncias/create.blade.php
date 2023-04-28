@@ -244,7 +244,10 @@
             </div>
             <div class="modal-body">
                 Sua denúncia foi recebida com sucesso! Ela se encontra sob análise da Secretária de Desenvolvimento Rural e Meio Ambiente. Acompanhe a tramitação dela por meio do seguinte protocolo:
-                <strong>{{session('protocolo')}}</strong>
+                <strong>{{session('protocolo')}}</strong><br>
+                Você também pode consultar a denúncia pela página inicial no módulo 
+                <strong>CONSULTE SEU PROTOCOLO AQUI</strong> 
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
