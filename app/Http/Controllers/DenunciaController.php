@@ -63,12 +63,8 @@ class DenunciaController extends Controller
         $busca = $request->buscar;
         if($busca != null) {
             $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
-            $denuncia_id = $denuncias->pluck('id');
             $empresas = $empresas->pluck('id');
-            $denuncias = Denuncia::whereIn('id', $denuncia_id)
-                      ->whereIn('empresa_id', $empresas)
-                      ->orWhere('empresa_nao_cadastrada', 'ilike', '%'. $busca .'%')
-                      ->paginate(20);
+            $denuncias = Denuncia::whereIn('empresa_id', $empresas)->orWhere('empresa_nao_cadastrada', 'ilike', '%'. $busca .'%')->paginate(20);
         }
 
         return view('denuncia.index', compact('denuncias', 'analistas', 'filtro', 'busca'));

@@ -92,9 +92,7 @@ class VisitaController extends Controller
             $requerimentos = Requerimento::whereIn('empresa_id', $empresas);
             $requerimentos = $requerimentos->pluck('id');
 
-            $visitas_ids = $visita->pluck('id');
-
-            $visitas = Visita::whereIn('requerimento_id', $requerimentos)->whereIn('id', $visitas_ids)->paginate(20);
+            $visitas = Visita::whereIn('requerimento_id', $requerimentos)->paginate(20);
         }
 
         return view('visita.index', compact('visitas', 'filtro', 'analistas', 'ordenacao', 'ordem', 'busca'));

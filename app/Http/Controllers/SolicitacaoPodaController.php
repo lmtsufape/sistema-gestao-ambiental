@@ -67,11 +67,8 @@ class SolicitacaoPodaController extends Controller
                 $enderecos = Endereco::where('rua', 'ilike', '%' . $busca . '%')->orWhere('bairro', 'ilike', '%' . $busca . '%')->orWhere('numero', 'ilike', '%' . $busca . '%')->get();
                 $enderecos = $enderecos->pluck('id');
 
-                $solicitacoes_ids = $solicitacoes->pluck('id');
                 $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)
-                        ->whereIn('id', $solicitacoes_ids)
-                        ->orWhereIn('endereco_id', $enderecos)
-                        ->paginate(20);
+                                ->orWhereIn('endereco_id', $enderecos)->paginate(20);
             }
 
             return view('solicitacoes.podas.index', compact('filtro', 'analistas', 'solicitacoes', 'busca'));
