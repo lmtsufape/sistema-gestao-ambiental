@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Relatorio;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class FotosRelatorio extends Model
 {
@@ -25,24 +26,21 @@ class FotosRelatorio extends Model
 
     public function salvarImagem($request, $id, $fotos_relatorio)
     {
+        
         $count = count($request);
-        for ($i = 0; $i < $count; $i++) {
-            delete_file($this->imagem, 'storage/storage/relatorios/' . $id . '/imagens/');
-            $fotos_relatorio = new FotosRelatorio();
-            $fotos_relatorio->relatorio_id = $id;
-            $caminho = 'relatorios/'. $id . '/imagens/';
-            $imagem_nome = $request[$i]->getClientOriginalName();
-            Storage::putFileAs('storage/' . $caminho, $request[$i], $imagem_nome);
-            $fotos_relatorio->caminho = $caminho . $imagem_nome;
-            $fotos_relatorio->update();
+        $zip = new ZipArchive;
+        $filename = "storage/app/relatorios/$id/imagens/imagens.zip";
+        if (!file_exists("storage/app/relatorios/$id/imagens")) {
+            mkdir("storage/app/relatorios/$id/imagens", 0777, true);
+        }
+        $zip->open($filename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+            for ($i = 0; $i < $count; $i++) {
+                $zip->addFile($request[$i]->getRealPath(), $request[$i]->getClientOriginalName());
             }
-    }
-
-    public function deletar($id)
-    {
-        delete_file($this->imagem, 'storage/storage/relatorios/' . $id . '/imagens/');
-
-        return $this->delete();
+        $zip->close();
+        $fotos_relatorio->relatorio_id = $id;
+        $fotos_relatorio->caminho = $filename;
+        $fotos_relatorio->save();
     }
 
 }
