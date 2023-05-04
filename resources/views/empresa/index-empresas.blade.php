@@ -18,6 +18,16 @@
                                 </div>
                             </div>
                         </li>
+                        @can('isSecretario', \App\Models\User::class)
+                            <li>
+                                <div title="Alterar requerente" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/update-requerente.svg')}}" alt="Alterar requerente">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Alterar requerente
+                                    </div>
+                                </div>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </div>
