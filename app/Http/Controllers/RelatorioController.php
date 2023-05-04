@@ -108,11 +108,11 @@ class RelatorioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RelatorioRequest $request, $id)
-    {
+    public function update(RelatorioRequest $request)
+    {   
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $relatorio = Relatorio::find($id);
-        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $id)->first();
+        $relatorio = Relatorio::find($request->visita);
+        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first();
         if ($relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado']) {
             return redirect()->back()->with(['error' => 'Este relatório não pode ser editado!']);
         }
@@ -120,15 +120,13 @@ class RelatorioController extends Controller
         $relatorio->motivo_edicao = null;
 
         if ($request->has('arquivoFile') != null) {
-            $relatorio->salvarArquivo($request['arquivoFile'], $id, $relatorio);
+            $relatorio->salvarArquivo($request['arquivoFile'], $request->visita, $relatorio);
         }
-
         $relatorio->update();
         
         if ($request->has('imagem') != null) {
-            $fotos_relatorio->salvarImagem($request['imagem'], $id, $fotos_relatorio);
+            $fotos_relatorio->salvarImagem($request['imagem'], $request->visita, $fotos_relatorio);
         }
-       
         $fotos_relatorio->update();
         
         $filtro = auth()->user()->getUserType();
@@ -173,7 +171,7 @@ class RelatorioController extends Controller
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
         $arquivo = $relatorio->arquivo;
-        $path = storage_path('app/storage/' . $arquivo);
+        $path = storage_path('app/' . $arquivo);
 
         return response()->download($path);
     }
@@ -181,16 +179,10 @@ class RelatorioController extends Controller
     public function downloadImagem($id)
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $fotos = FotosRelatorio::where('relatorio_id', $id)->get();
-        $zip = new ZipArchive();
-        foreach ($fotos as $foto) {
-            $path = storage_path('app/storage/' . $foto->caminho);
-            $zip->open('fotos.zip', ZipArchive::CREATE);
-            $zip->addFile($path, $foto->caminho);
-        }
-        $zip->close();
+        $fotos = FotosRelatorio::where('relatorio_id', $id)->first();
+        $path = $fotos->caminho;
         
-        return response()->download('fotos.zip');        
+        return response()->download($path);
     }
 
 }

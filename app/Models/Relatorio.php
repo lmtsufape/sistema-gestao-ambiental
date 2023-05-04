@@ -38,17 +38,13 @@ class Relatorio extends Model
 
     public function salvarArquivo($file, $id, $relatorio)
     {   
+        $path = 'relatorios/'. $id . '/arquivo/';
+        Storage::deleteDirectory($path);
         $caminho = 'relatorios/'. $id . '/arquivo/';
         $documento_nome = $file->getClientOriginalName();
-        Storage::putFileAs('storage/' . $caminho, $file, $documento_nome);
+        Storage::putFileAs($caminho, $file, $documento_nome);
         $relatorio->arquivo  = $caminho . $documento_nome;
-        return $this->save();
+        $relatorio->update();
     }
 
-    public function deletar()
-    {
-        delete_file($this->arquivo, 'storage/storage/');
-
-        return $this->delete();
-    }
 }
