@@ -30,7 +30,7 @@
                                 </div>
                             @endif
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="nome_empresa">{{ __('Razão social/Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome_empresa" class="form-control @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa')}}" required autofocus autocomplete="nome_empresa">
                                     @error('nome_da_empresa')
@@ -74,8 +74,7 @@
                                 <div class="col-md-2 form-group" id="div-btn-troca" style="@if(old('tipo_de_pessoa') != null) display: block; @else display: none; @endif top: 32px; margin-bottom: 50px;">
                                     <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%;" onclick="trocar()">Trocar</button>
                                 </div>
-                            </div>
-                            <div class="form-row">
+
                                 <div class="col-md-6 form-group">
                                     <label for="celular_da_empresa">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{old('celular_da_empresa')}}" required autocomplete="celular">
@@ -85,23 +84,8 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">(como classificar o porte?)</a>
-                                    <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
-                                        <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
-                                        <option @if(old('porte') == 1) selected @endif value="1">Micro</option>
-                                        <option @if(old('porte') == 2) selected @endif value="2">Pequeno</option>
-                                        <option @if(old('porte') == 3) selected @endif value="3">Médio</option>
-                                        <option @if(old('porte') == 4) selected @endif value="4">Grande</option>
-                                        <option @if(old('porte') == 5) selected @endif value="5">Especial</option>
-                                    </select>
-                                    @error('porte')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
                             </div>
+                            
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="cep_da_empresa">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
@@ -178,6 +162,25 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">(como classificar o porte?)</a>
+                                    <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
+                                        <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
+                                        <option @if(old('porte') == 1) selected @endif value="1">Micro</option>
+                                        <option @if(old('porte') == 2) selected @endif value="2">Pequeno</option>
+                                        <option @if(old('porte') == 3) selected @endif value="3">Médio</option>
+                                        <option @if(old('porte') == 4) selected @endif value="4">Grande</option>
+                                        <option @if(old('porte') == 5) selected @endif value="5">Especial</option>
+                                    </select>
+                                    @error('porte')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                                
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>

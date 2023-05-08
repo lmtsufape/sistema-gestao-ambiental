@@ -54,7 +54,6 @@ Route::get('/solicitacoes/mudas/documento/{id}', [SolicitacaoMudaController::cla
 Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaController::class, 'foto'])->name('podas.foto');
 Route::get('/denuncias/acompanhar', [DenunciaController::class, 'statusDenuncia'])->name('denuncias.acompanhar');
 
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -93,6 +92,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/visitas/baixar-relatorio', [VisitaController::class, 'gerarRelatorioVisitas'])->name('gerar.pdf.visitas');
     Route::get('empresas/{id}/historico', [HistoricoController::class, 'historicoEmpresa'])->name('historico.empresa');
+    Route::post('empresas/updateRequerente', [EmpresaController::class, 'updateRequerente'])->name('empresas.update.requerente');
     Route::resource('setores', SetorController::class);
     Route::resource('cnaes', CnaeController::class);
     Route::resource('especies', EspecieMudaController::class);
@@ -130,7 +130,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
     Route::resource('empresas', EmpresaController::class);
     Route::get('/empresas-listar', [EmpresaController::class, 'indexEmpresas'])->name('empresas.listar');
-
 
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');

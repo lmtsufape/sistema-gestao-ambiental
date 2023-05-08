@@ -59,8 +59,8 @@ class RelatorioController extends Controller
 
         if ($request->has('imagem') != null) {
             $fotos_relatorio->salvarImagem($request['imagem'], $visita->id, $fotos_relatorio);
+            $fotos_relatorio->save();
         }
-        $fotos_relatorio->save();
 
         if ($visita->requerimento != null) {
             $requerimento = $visita->requerimento;
@@ -126,8 +126,8 @@ class RelatorioController extends Controller
         
         if ($request->has('imagem') != null) {
             $fotos_relatorio->salvarImagem($request['imagem'], $request->visita, $fotos_relatorio);
+            $fotos_relatorio->update();
         }
-        $fotos_relatorio->update();
         
         $filtro = auth()->user()->getUserType();
 

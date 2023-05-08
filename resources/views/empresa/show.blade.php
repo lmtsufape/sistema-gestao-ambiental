@@ -285,6 +285,51 @@
                                             <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5" disabled>{{$empresa->user->requerente->endereco->complemento}}</textarea>
                                         </div>
                                     </div>
+                                    @can('isSecretario', \App\Models\User::class)
+                                        <div class="form-row justify-content-center">
+                                            <div class="col-md-6 form-group">
+                                                <button id="updateRequerente" class="btn btn-success btn-color-dafault" style="width: 100%;" data-toggle="modal" data-target="#modalAlterarRequerente">Editar Requerente</button>
+                                            </div>
+                                        </div>
+                                    @endcan
+                                    <div class="modal fade" id="modalAlterarRequerente" data-backdrop="static" data-keyboard="false"
+                                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: var(--primaria);">
+                                                <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Modificar Requerente</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Essa alteração fará com que todos os requerimentos da empresa sejam transferidos de requerente.
+                                                <br>
+                                                <br>
+                                                <form id="update-requerente" method="POST" action="{{ route('empresas.update.requerente') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="empresa_id" value="{{ $empresa->id }}">
+                                                    <div class="form-row">
+                                                        <div class="col-md-12 form-group">
+                                                            <label for="user_id">{{__('Selecione o requerente')}}</label>
+                                                            <select name="user_id" id="user_id" class="form-control @error('user_id') is-invalid @enderror" required>
+                                                                <option value="">-- {{__('Selecione um requerente')}} --</option>
+                                                                @foreach ($requerentes as $requerente)
+                                                                    <option value="{{$requerente->user_id}}">{{$requerente->user->name}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-success btn-color-dafault" form="update-requerente">Alterar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>      
+                                    
                                 </div>
                             </div>
                         </div>
