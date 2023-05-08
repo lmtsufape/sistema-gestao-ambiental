@@ -6,6 +6,7 @@ use App\Http\Requests\EmpresaRequest;
 use App\Models\Cnae;
 use App\Models\Empresa;
 use App\Models\Endereco;
+use App\Models\Requerente;
 use App\Models\Requerimento;
 use App\Models\Setor;
 use App\Models\Telefone;
@@ -23,8 +24,9 @@ class EmpresaController extends Controller
     {
         $this->authorize('isRequerente', User::class);
         $empresas = auth()->user()->empresas;
+        $requerentes = Requerente::all();
 
-        return view('empresa.index', compact('empresas'));
+        return view('empresa.index', compact('empresas', 'requerentes'));
     }
 
     /**
@@ -35,8 +37,9 @@ class EmpresaController extends Controller
     public function indexEmpresas()
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
+        $requerentes = Requerente::all();
 
-        return view('empresa.index-empresas');
+        return view('empresa.index-empresas', ['requerentes' => $requerentes]);
     }
 
     /**
@@ -100,8 +103,9 @@ class EmpresaController extends Controller
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $empresa = Empresa::find($id);
+        $requerentes = Requerente::all();
 
-        return view('empresa.show', compact('empresa'));
+        return view('empresa.show', compact('empresa', 'requerentes'));
     }
 
     /**
@@ -225,5 +229,17 @@ class EmpresaController extends Controller
     {
         $empresas = Empresa::search($request->search)->get();
         return response()->json($empresas);
+    }
+
+    public function updateRequerente(Request $request)
+    {   
+        $empresa = Empresa::find($request->empresa_id);
+
+        if($this->authorize('isSecretario', User::class)){
+            $empresa->user_id = $request->user_id;
+        }
+        $empresa->update();
+        
+        return redirect(route('empresas.listar'))->with(['success' => 'Requerente atualizado com sucesso!']);
     }
 }
