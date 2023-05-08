@@ -33,7 +33,7 @@ class Relatorio extends Model
     {
         $this->visita_id = $request->visita;
         $this->texto = $request->texto;
-        $this->aprovacao = $this::APROVACAO_ENUM['realizado'];
+        $this->aprovacao = Relatorio::APROVACAO_ENUM['realizado'];
     }
 
     public function salvarArquivo($file, $id, $relatorio)

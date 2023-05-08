@@ -83,8 +83,10 @@ class RelatorioController extends Controller
     {
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($id);
+        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $relatorio->id);
+        $caminho = $fotos_relatorio->first()->caminho ?? null;
 
-        return view('relatorio.show', compact('relatorio'));
+        return view('relatorio.show', compact('relatorio', 'caminho'));
     }
 
     /**
@@ -112,7 +114,12 @@ class RelatorioController extends Controller
     {   
         $this->authorize('isSecretarioOrAnalista', User::class);
         $relatorio = Relatorio::find($request->visita);
-        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first();
+        if($fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first() == null){
+            $fotos_relatorio = new FotosRelatorio();
+        }else{
+            $fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first();
+        }
+
         if ($relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado']) {
             return redirect()->back()->with(['error' => 'Este relatório não pode ser editado!']);
         }
@@ -181,7 +188,6 @@ class RelatorioController extends Controller
         $this->authorize('isSecretarioOrAnalista', User::class);
         $fotos = FotosRelatorio::where('relatorio_id', $id)->first();
         $path = $fotos->caminho;
-        
         return response()->download($path);
     }
 
