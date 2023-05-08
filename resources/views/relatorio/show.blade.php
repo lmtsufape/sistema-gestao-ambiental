@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ('relatorios/'.$relatorio->id.'/imagens' != null)
+                        @if ($caminho != null)
                                 <div class="form-row">
                                     <label class="col-md-12">{{__('Imagens anexadas:')}}</label>
                                     <a class="w-100 btn btn-success btn-enviar-doc" href="{{route('relatorios.downloadImagem', $relatorio->id)}}">

@@ -26,7 +26,6 @@ class FotosRelatorio extends Model
 
     public function salvarImagem($request, $id, $fotos_relatorio)
     {
-        
         $count = count($request);
         $zip = new ZipArchive;
         $filename = "storage/app/relatorios/$id/imagens/imagens.zip";
