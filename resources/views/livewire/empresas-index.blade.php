@@ -48,7 +48,7 @@
                                 <td>
                                     <a  href="{{route('empresas.show', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar a empresa" title="Visualizar a empresa"></a>
                                     @can('isSecretario', \App\Models\User::class)
-                                        <a  data-toggle="modal" data-target="#modalAlterarRequerente" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/update-requerente.svg')}}"  alt="Alterar requerente" title="Alterar requerente"></a>
+                                        <a data-toggle="modal" data-target="#modalAlterarRequerente" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/update-requerente.svg')}}"  alt="Alterar requerente" title="Alterar requerente"></a>
                                     @endcan
                                 </td>
                             </tr>
@@ -56,43 +56,45 @@
                     </tbody>
             </table>
             </div>
-            <div class="modal fade" id="modalAlterarRequerente" data-backdrop="static" data-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: var(--primaria);">
-                        <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Modificar Requerente</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Essa alteração fará com que todos os requerimentos da empresa sejam transferidos de requerente.
-                        <br>
-                        <br>
-                        <form id="update-requerente" method="POST" action="{{ route('empresas.update.requerente') }}">
-                            @csrf
-                            <input type="hidden" name="empresa_id" value="{{ $empresa->id }}">
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="user_id">{{__('Selecione o requerente')}}</label>
-                                    <select name="user_id" id="user_id" class="form-control @error('user_id') is-invalid @enderror" required>
-                                        <option value="">-- {{__('Selecione um requerente')}} --</option>
-                                        @foreach ($requerentes as $requerente)
-                                            <option value="{{$requerente->user_id}}">{{$requerente->user->name}}</option>
-                                        @endforeach
-                                    </select>
+            @if(!empty($empresa))
+                <div class="modal fade" id="modalAlterarRequerente" data-backdrop="static" data-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: var(--primaria);">
+                            <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Modificar Requerente</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Essa alteração fará com que todos os requerimentos da empresa sejam transferidos de requerente.
+                            <br>
+                            <br>
+                            <form id="update-requerente" method="POST" action="{{ route('empresas.update.requerente') }}">
+                                @csrf
+                                <input type="hidden" name="empresa_id" value="{{ $empresa->id }}">
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="user_id">{{__('Selecione o requerente')}}</label>
+                                        <select name="user_id" id="user_id" class="form-control @error('user_id') is-invalid @enderror" required>
+                                            <option value="">-- {{__('Selecione um requerente')}} --</option>
+                                            @foreach ($requerentes as $requerente)
+                                                <option value="{{$requerente->user_id}}">{{$requerente->user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success btn-color-dafault" form="update-requerente">Alterar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success btn-color-dafault" form="update-requerente">Alterar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            </div>   
+                </div>
+            @endif
             @if($empresas->first() == null)
                 <div class="col-md-12 text-center" style="font-size: 18px;">
                     {{__('Nenhuma empresa cadastrada')}}
