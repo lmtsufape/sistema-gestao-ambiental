@@ -8,7 +8,7 @@
                         @can('isSecretario', \App\Models\User::class)
                             <h4 class="card-title">
                                 @if($relatorio->aprovacao == \App\Models\Relatorio::APROVACAO_ENUM['realizado'])
-                                    Avaliar relátorio
+                                    Avaliar relatório
                                 @else
                                     Relatório
                                 @endif
@@ -37,7 +37,7 @@
                                 @endif
                             </h4>
                         @endcan
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Programação</a> > Visitas > Relátorio</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Programação</a> > Visitas > Relatório</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="javascript:window.history.back();">
@@ -184,7 +184,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: var(--primaria);">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Aprovar relátorio</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Aprovar relatório</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -193,7 +193,7 @@
                     <form id="form-relatorio-aprovar" method="POST" action="{{route('relatorios.resultado', ['relatorio' => $relatorio->id])}}">
                         @csrf
                         <input type="hidden" name="aprovacao" value="1">
-                        Tem certeza que deseja aprovar esse relátorio?
+                        Tem certeza que deseja aprovar esse relatório?
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -209,7 +209,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #e0a800;">
-                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Revisar relátorio</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Revisar relatório</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -220,7 +220,7 @@
                         <input type="hidden" name="aprovacao" value="0">
                         <div class="form-row">
                             <div class="col-md-12">
-                                Tem certeza que deseja mandar esse relátorio para revisão?
+                                Tem certeza que deseja mandar esse relatório para revisão?
                             </div>
                         </div>
                         <br>
