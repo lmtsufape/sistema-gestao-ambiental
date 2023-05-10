@@ -6,13 +6,13 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         @if ($relatorio->visita->requerimento != null)
-                            <h4 class="card-title">Editar relátorio do requerimento nº {{$relatorio->visita->requerimento->id}}</h4>
+                            <h4 class="card-title">Editar relatório do requerimento nº {{$relatorio->visita->requerimento->id}}</h4>
                         @elseif ($relatorio->visita->denuncia != null)
-                            <h4 class="card-title">Editar relátorio da denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
+                            <h4 class="card-title">Editar relatório da denúncia nº {{$relatorio->visita->denuncia->id}}</h4>
                         @elseif ($relatorio->visita->solicitacaoPoda != null)
-                            <h4 class="card-title">Editar relátorio da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}</h4>
+                            <h4 class="card-title">Editar relatório da solicitação de poda/supressão nº {{$relatorio->visita->solicitacaoPoda->id}}</h4>
                         @endif
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Programação</a> > Visitas > Editar relátorio</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Programação</a> > Visitas > Editar relatório</h6>
                     </div>
                     <div class="col-md-4" style="text-align: right">
                         {{-- <a title="Voltar" href="{{route('visitas.index')}}">

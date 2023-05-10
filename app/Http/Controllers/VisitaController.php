@@ -411,7 +411,7 @@ class VisitaController extends Controller
     }
 
     /**
-     * Gera o relátorio das visitas do dia.
+     * Gera o relatório das visitas do dia.
      *
      * @return PDF
      */
