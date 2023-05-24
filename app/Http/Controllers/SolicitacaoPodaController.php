@@ -8,6 +8,7 @@ use App\Mail\SolicitacaoPodasCriada;
 use App\Mail\SolicitacaoPodasEncaminhada;
 use App\Models\Endereco;
 use App\Models\FotoPoda;
+use App\Models\LaudoTecnico;
 use App\Models\Requerente;
 use App\Models\Relatorio;
 use App\Models\Telefone;
@@ -258,9 +259,10 @@ class SolicitacaoPodaController extends Controller
 
     public function mostrar(SolicitacaoPoda $solicitacao)
     {
-        $this->authorize('view', $solicitacao);
+        $laudo = LaudoTecnico::where('solicitacao_poda_id', $solicitacao->id)->first();
+        $this->authorize('view', $solicitacao, $laudo);
 
-        return view('solicitacoes.podas.requerente.status', compact('solicitacao'));
+        return view('solicitacoes.podas.requerente.status', compact('solicitacao', 'laudo'));
     }
 
     public function edit(SolicitacaoPoda $solicitacao)

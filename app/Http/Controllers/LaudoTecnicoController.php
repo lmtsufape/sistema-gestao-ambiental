@@ -34,6 +34,10 @@ class LaudoTecnicoController extends Controller
             $foto_laudo->save();
         }
 
+        if ($request->has('licenca')) {
+            $laudo->licenca = $data['licenca']->store("laudos/{$laudo->id}/");
+        }
+
         if ($request->pdf) {
             $laudo->pdf = $data['pdf']->store("laudos/{$laudo->id}/");
         }
@@ -53,10 +57,16 @@ class LaudoTecnicoController extends Controller
         return Storage::exists($laudo->pdf) ? Storage::download($laudo->pdf) : abort(404);
     }
 
+    public function licenca(LaudoTecnico $laudo)
+    {
+        return Storage::exists($laudo->licenca) ? Storage::download($laudo->licenca) : abort(404);
+    }
+
     public function foto(LaudoTecnico $laudo, FotoLaudoTecnico $foto)
     {
         $this->authorize('isAnalistaPodaOrSecretario', User::class);
 
         return Storage::download($foto->caminho);
     }
+
 }
