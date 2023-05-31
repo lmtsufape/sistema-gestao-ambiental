@@ -49,6 +49,16 @@
                                     class="form-control simple-field-data-mask" disabled
                                     type="text" name="localizacao" value="{{ $laudo->localizacao }}">
                             </div>
+                            @if ($laudo->solicitacaoPoda->area == 2)
+                                <div class="col-md-12 form-group">
+                                    <label for="licenca">Licença Ambiental</label>
+                                    <div class="form-row align-items-center">
+                                        @if($laudo->licenca)
+                                            <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.licenca', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="Licença Ambiental" style="width: 17px;"></a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="justify-content-between">
                             <label for="arquivos">Arquivos anexados</label>

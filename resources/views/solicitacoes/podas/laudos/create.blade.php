@@ -49,7 +49,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="localizacao">Localização<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="localizacao"
                                         class="form-control simple-field-data-mask @error('localizacao') is-invalid @enderror"
@@ -61,9 +61,26 @@
                                     @enderror
                                 </div>
                             </div>
+                            @if ($solicitacao->area == 2)
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label id="licenca" for="licenca">Licença Ambiental</label>
+                                        <br>
+                                        <label class="label-input btn btn-success btn-enviar-doc" for="licenca"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do arquivo" title="Enviar arquivo"></label>
+                                        <label for="licenca"></label>
+                                        <input id="licenca" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept=".pdf" name="licenca">
+
+                                        @error('licenca')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endif
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label id="pdf" for="pdf">Arquivo pdf</label>
+                                    <label id="pdf" for="pdf">Arquivo PDF</label>
                                     <br>
                                     <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do arquivo" title="Enviar arquivo" ></label>
                                     <label for="enviar_arquivo"></label>

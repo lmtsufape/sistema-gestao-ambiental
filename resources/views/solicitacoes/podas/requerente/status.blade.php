@@ -353,6 +353,14 @@
                                             @break
                                             @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['deferido'])
                                                 <h5>Solicitação deferida</h5>
+                                                @if ($laudo->solicitacaoPoda->area == 2)
+                                                    <br>
+                                                    <div class="col-d-12 form-group">
+                                                        @if($laudo->licenca)
+                                                        <a href="{{route('podas.laudos.licenca', $laudo)}}" target="_blank">Baixar Licença Ambiental</a>
+                                                        @endif
+                                                    </div>
+                                                @endif                                            
                                             @break
                                             @case(\App\Models\SolicitacaoPoda::STATUS_ENUM['indeferido'])
                                                 <h5>Solicitação indeferida</h5>
