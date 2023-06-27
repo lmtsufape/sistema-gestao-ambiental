@@ -11,6 +11,7 @@ use App\Models\Historico;
 use App\Models\ModificacaoCnae;
 use App\Models\ModificacaoPorte;
 use App\Models\Requerimento;
+use App\Models\RequerimentoDocumento;
 use App\Models\Setor;
 use App\Models\User;
 use App\Models\ValorRequerimento;
@@ -19,6 +20,7 @@ use App\Models\WebServiceCaixa\ErrorRemessaException;
 use App\Notifications\DocumentosAnalisadosNotification;
 use App\Notifications\DocumentosEnviadosNotification;
 use App\Notifications\DocumentosNotification;
+use App\Notifications\DocumentosExigenciasAnalisadosNotification;
 use App\Notifications\EmpresaModificadaNotification;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -80,7 +82,9 @@ class RequerimentoController extends Controller
             $requerimentos = Requerimento::whereIn('empresa_id', $empresas)->paginate(20);
         }
 
-        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro', 'busca'));
+        $requerimento_documento = RequerimentoDocumento::all();
+
+        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro', 'busca', 'requerimento_documento'));
     }
 
     /**
@@ -157,8 +161,13 @@ class RequerimentoController extends Controller
         $analistas = User::analistas();
         $documentos = Documento::orderBy('nome')->get();
         $definir_valor = Requerimento::DEFINICAO_VALOR_ENUM;
-
-        return view('requerimento.show', compact('requerimento', 'protocolistas', 'analistas', 'documentos', 'definir_valor'));
+        $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $id)->get();
+        if(empty($requerimento_documento)){
+            return view('requerimento.show', compact('requerimento', 'protocolistas', 'analistas', 'documentos', 'definir_valor'));
+        }
+        else{
+            return view('requerimento.show', compact('requerimento', 'protocolistas', 'analistas', 'documentos', 'definir_valor', 'requerimento_documento'));
+        }
     }
 
     /**
@@ -175,8 +184,14 @@ class RequerimentoController extends Controller
         $documentos = Documento::orderBy('nome')->get();
         $visita = true;
         $definir_valor = Requerimento::DEFINICAO_VALOR_ENUM;
+        $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento_id)->get();
 
-        return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita', 'definir_valor'));
+        if(empty($requerimento_documento)){
+            return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita', 'definir_valor'));
+        }
+        else{
+            return view('requerimento.show', compact('requerimento', 'protocolistas', 'documentos', 'visita', 'definir_valor', 'requerimento_documento'));
+        }
     }
 
     /**
@@ -286,6 +301,7 @@ class RequerimentoController extends Controller
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento nº ' . $requerimento->id . ' atribuído com sucesso a ' . $analista->name]);
     }
+
 
     /**
      * Salva a lista de documentos para retirar a licença.
@@ -465,6 +481,201 @@ class RequerimentoController extends Controller
         }
 
         return false;
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function showExigenciasDocumentacao($id)
+    {
+        $requerimento = Requerimento::find($id);
+        $this->authorize('verDocumentacao', $requerimento);
+        $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $id)->get();
+        $status = RequerimentoDocumento::STATUS_ENUM;
+        $documentoIds = $requerimento_documento->pluck('documento_id');
+        $documentos = Documento::whereIn('id', $documentoIds)->get();
+        // dd($documentos);
+        if(count($documentos) > 0){
+            if (auth()->user()->role == User::ROLE_ENUM['analista'] || auth()->user()->role == User::ROLE_ENUM['secretario']) {
+                return view('requerimento.analise-exigencias-documentos', compact('requerimento', 'documentos', 'status', 'requerimento_documento'));
+            }
+
+            return view('requerimento.exigencias-documentos', compact('requerimento', 'documentos', 'status', 'requerimento_documento'));
+        }
+        else{
+            $requerimento_documento_outro = $requerimento_documento->whereNotNull('nome_outro_documento')->first();
+            if (auth()->user()->role == User::ROLE_ENUM['analista'] || auth()->user()->role == User::ROLE_ENUM['secretario']) {
+                return view('requerimento.analise-exigencias-documentos', compact('requerimento', 'status', 'requerimento_documento_outro'));
+            }
+
+            return view('requerimento.exigencias-documentos', compact('requerimento', 'status', 'requerimento_documento_outro'));
+        }
+    }
+
+     /**
+     * @throws AuthorizationException
+     */
+    public function enviarExigenciasDocumentos(Request $request)
+    {   
+        $requerimento = Requerimento::find($request->requerimento_id);
+        $this->authorize('requerimentoDocumentacao', $requerimento);
+
+        if ($request->documentos == null && $request->outros_documentos == null) {
+            return redirect()->back()->withErrors(['error' => 'Anexe os documentos que devem ser enviados.'])->withInput($request->all());
+        }  
+
+        if($request->documentos != null){
+            foreach ($request->documentos as $documentoId => $documento) {
+                $requerimentoDocumento = RequerimentoDocumento::where([['requerimento_id', $request->requerimento_id],['documento_id', $documentoId]])->first();
+                $requerimentoDocumento->status = RequerimentoDocumento::STATUS_ENUM['enviado'];
+                $requerimentoDocumento->anexo_arquivo = $documento->store("documentos/exigencias/{$requerimento->id}"); 
+                $requerimentoDocumento->update();
+            }
+        }
+        if($request->outros_documentos != null){
+            foreach ($request->outros_documentos as $documento) {
+                $requerimentoDocumento = RequerimentoDocumento::where('requerimento_id', $request->requerimento_id)->whereNotNull('nome_outro_documento')->first();
+                $requerimentoDocumento->status = RequerimentoDocumento::STATUS_ENUM['enviado'];
+                $requerimentoDocumento->arquivo_outro_documento = $documento->store("documentos/exigencias/{$requerimento->id}"); 
+                $requerimentoDocumento->update();
+            }
+        }
+
+        Notification::send($requerimento->protocolista, new DocumentosEnviadosNotification($requerimento, 'Exigências enviados'));
+
+        return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Exigências enviadas com sucesso. Aguarde o resultado da avaliação dos documentos.']);
+    }
+
+    public function analisarExigenciasDocumentos(Request $request)
+    {   
+       
+        $data = $request->all();
+        // dd($data);
+        if ($request->documentos_id == null && $request->outros_documentos_id == null) {
+            return redirect()->back()->withErrors(['error' => 'Envie o parecer dos documentos que devem ser analisados.'])->withInput($request->all());
+        }
+
+        $id = 0;
+        $requerimento = Requerimento::find($request->requerimento_id);
+        $documentos = Documento::all();
+        $requerimento_documento_all = RequerimentoDocumento::where('requerimento_id', $request->requerimento_id)->get();
+
+        if($request->outros_documentos_id != null && $request->documentos_id != null){
+            foreach($request->outros_documentos_id as $outro_id){
+                $requerimento_documento = RequerimentoDocumento::find($outro_id);
+                if ($requerimento_documento->status != RequerimentoDocumento::STATUS_ENUM['nao_enviado']) {
+                    $requerimento_documento->status = $data['analise_outro' . $requerimento_documento->id];
+                    if ($data['comentario_outro_' . $requerimento_documento->id] != null) {
+                        $requerimento_documento->comentario_outro_documento = $data['comentario_outro_' . $requerimento_documento->id];
+                    } else {
+                        $requerimento_documento->comentario_outro_documento = null;
+                    }
+                    $requerimento_documento->update();
+                }
+            }
+            foreach($request->documentos_id as $documento_id){
+                $requerimento_documento = RequerimentoDocumento::where('documento_id', $documento_id)->first();
+                if ($requerimento_documento->status != RequerimentoDocumento::STATUS_ENUM['nao_enviado']) {
+                    $requerimento_documento->status = $data['analise_' . $documento_id];
+                    if ($data['comentario_' . $documento_id] != null) {
+                        $requerimento_documento->comentario_anexo = $data['comentario_' . $documento_id];
+                    } else {
+                        $requerimento_documento->comentario_anexo = null;
+                    }
+                    $requerimento_documento->update();
+                }
+            }
+
+            if ($requerimento_documento->where('status', RequerimentoDocumento::STATUS_ENUM['recusado'])->first() != null) {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos recusados'));
+            } else {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos aceitos'));
+            }
+
+            $requerimento_documento->update();
+
+            return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
+
+        }
+
+
+        if($request->documentos_id != null && $request->outros_documentos_id == null){
+            foreach ($request->documentos_id as $documento_id) {
+                $requerimento_documento = RequerimentoDocumento::where('documento_id', $documento_id)->first();
+                if ($requerimento_documento->status != RequerimentoDocumento::STATUS_ENUM['nao_enviado']) {
+                    $requerimento_documento->status = $data['analise_' . $documento_id];
+                    if ($data['comentario_' . $documento_id] != null) {
+                        $requerimento_documento->comentario_anexo = $data['comentario_' . $documento_id];
+                    } else {
+                        $requerimento_documento->comentario_anexo = null;
+                    }
+                    $requerimento_documento->update();
+                    $id++;
+                }
+            }
+
+            if ($requerimento_documento->where('status', RequerimentoDocumento::STATUS_ENUM['recusado'])->first() != null) {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos recusados'));
+            } else {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos aceitos'));
+            }
+
+            $requerimento_documento->update();
+
+            return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
+        }
+
+
+        // LOGICA PARA ANALISAR OUTROS DOCUMENTOS
+
+        if($request->outros_documentos_id != null && $request->documentos_id == null){
+            $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)->whereNotNull('arquivo_outro_documento')->first();
+            $requerimento_documento->status = $data['analise_outro' . $requerimento_documento->id];
+            if ($data['comentario_outro_' . $requerimento_documento->id] != null) {
+                $requerimento_documento->comentario_outro_documento = $data['comentario_outro_' . $requerimento_documento->id];
+            } else {
+                $requerimento_documento->comentario_outro_documento = null;
+            }
+            $requerimento_documento->update();
+       
+            if ($requerimento_documento->where('status', RequerimentoDocumento::STATUS_ENUM['recusado'])->first() != null) {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos recusados'));
+            } else {
+                Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos aceitos'));
+            }
+            
+            $requerimento_documento->update();
+
+            return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
+        }
+
+       
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function showExigenciaDocumento($requerimento_id, $documento_id)
+    {
+        $requerimento = Requerimento::find($requerimento_id);
+        $requerimento_documento = RequerimentoDocumento::where([['requerimento_id', $requerimento_id], ['documento_id', $documento_id]])->first();
+        $this->authorize('verDocumentacao', $requerimento);
+        
+        return Storage::exists($requerimento_documento->anexo_arquivo) ? Storage::download($requerimento_documento->anexo_arquivo) : abort(404);
+    }
+
+     /**
+     * @throws AuthorizationException
+     */
+    public function showExigenciaOutroDocumento($requerimento_id)
+    {   
+        $requerimento = Requerimento::find($requerimento_id);
+        $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)->whereNotNull('arquivo_outro_documento')->first();
+        
+        $this->authorize('verDocumentacao', $requerimento);
+        
+        return Storage::exists($requerimento_documento->arquivo_outro_documento) ? Storage::download($requerimento_documento->arquivo_outro_documento) : abort(404);
+
     }
 
     /**

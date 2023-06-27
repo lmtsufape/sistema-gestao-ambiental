@@ -44,6 +44,9 @@
                             </div>
                             <div class="col-md-2">
                                 @can('isSecretario', \App\Models\User::class)
+                                    @if (!empty($requerimento_documento->where('requerimento_id', $requerimento->id)->first()))
+                                        <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
+                                    @endif
                                     @if ($requerimento->documentos->count() > 0)
                                         <a href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                         <a class="btn" data-toggle="modal" data-target="#documentos-edit" ><img class="icon-licenciamento" src="{{asset('img/documents-transference-symbol-svgrepo-com.svg')}}"  alt="Editar documentos" title="Editar documentos"></a>
@@ -59,6 +62,9 @@
                                     @endif
                                 @endcan
                                 @can('isAnalista', \App\Models\User::class)
+                                    @if (!empty($requerimento_documento->where('requerimento_id', $requerimento->id)->first()))
+                                        <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
+                                    @endif
                                     @if ($requerimento->documentos->count() > 0)
                                         <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                     @endif
@@ -394,7 +400,6 @@
                                 </div>
                             </div>
                         </div>
-
                     @endif
                 @endcan
             </div>
@@ -701,7 +706,6 @@
             </div>
         </div>
     @endcan
-
     @can('isSecretarioOrProtocolista', \App\Models\User::class)
         <div class="modal fade" id="atribuir_potencial_poluidor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
