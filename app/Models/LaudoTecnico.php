@@ -15,6 +15,7 @@ class LaudoTecnico extends Model
         'condicoes',
         'localizacao',
         'pdf',
+        'licenca'
     ];
 
     public function fotos()
