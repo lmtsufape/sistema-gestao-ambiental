@@ -22,6 +22,11 @@ class Documento extends Model
         'padrao_regularizacao',
     ];
 
+    public function documentosRequeridos()
+    {
+        return $this->belongsToMany(RequerimentoDocumento::class, 'documento_id');
+    } 
+
     public function requerimentos()
     {
         return $this->belongsToMany(Requerimento::class, 'checklists', 'documento_id', 'requerimento_id')->withPivot('caminho', 'comentario', 'status');
