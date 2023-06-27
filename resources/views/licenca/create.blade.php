@@ -4,6 +4,20 @@
         <div class="form-row justify-content-center">
             <div class="col-md-12">
                 <div class="form-row">
+                    @if(session('success'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-success" role="alert">
+                                    <p>{{session('success')}}</p>
+                                </div>
+                            </div>
+                    @endif
+                    @if(session('error'))
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-danger" role="alert">
+                                    <p>{{session('error')}}</p>
+                                </div>
+                            </div>
+                    @endif
                     <div class="col-md-12">
                         <h4 class="card-title">Emitir licença</h4>
                         <h6 class="card-subtitle mb-2 text-muted"><a class="text-muted" href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a> > Emitir licença</h6>
@@ -71,6 +85,10 @@
                                     @enderror
                                 </div>
                             </div>
+                            <a class="btn" data-toggle="modal" data-target="#documentos" style="text-align: left;">
+                                <img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}" alt="Requisitar documentos" title="Requisitar documentos">
+                                <strong>Requisitar documentos</strong>
+                            </a>
                         </form>
                     </div>
                     <div class="card-footer">
@@ -81,12 +99,73 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="documentos" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: var(--primaria);">
+                                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Requisitar documentos</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="documentos-form" method="POST" action="{{route('licenca.requisitar.documentos', $requerimento->id)}}">
+                                        @csrf
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <h6 style="font-weight: bolder;">Documentos que o empresário deve enviar</h6>
+                                            </div>
+                                        </div>
+                                        @foreach ($documentos as $i => $documento)
+                                            <div class="form-check mt-3">
+                                                <input id="documento-{{$documento->id}}" class="form-check-input" type="checkbox" name="documentos[]" value="{{$documento->id}}" @if(old('documentos.'.$i) != null) checked @endif>
+                                                <label for="documento-{{$documento->id}}" class="form-check-label">{{$documento->nome}}</label>
+                                            </div>
+                                        @endforeach
+                                        <div class="form-check mt-3">
+                                            <input id="opcao-outros" class="form-check-input" type="checkbox">
+                                            <label for="opcao-outros" class="form-check-label">Outro</label>
+                                        </div>
+                                        <div class="form-group mt-3" id="campo-outros" style="display: none;">
+                                            <label for="nome-documento">Nome do Documento</label>
+                                            <input type="text" class="form-control" id="nome-documento" name="nome_documento" value="{{ old('nome_documento') }}">
+                                        </div>
+                                        <br>
+                                        <label for="prazo_exigencia">{{ __('Prazo para envio das exigências') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input class="form-control @error('prazo_exigencia') is-invalid @enderror" type="date"  id="prazo_exigencia" name="prazo_exigencia" required autofocus autocomplete="data_marcada">
+        
+                                        @error('prazo_exigencia')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button form="documentos-form"type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" class="btn btn-primary">Requisitar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     @push ('scripts')
         <script>
+
+            const checkboxOutros = document.getElementById('opcao-outros');
+            const campoOutros = document.getElementById('campo-outros');
+
+            checkboxOutros.addEventListener('change', function() {
+                if (this.checked) {
+                    campoOutros.style.display = 'block';
+                } else {
+                    campoOutros.style.display = 'none';
+                }
+            });
+
             $(".input-enviar-arquivo").change(function(){
                 $('#labelarquivoselecionado').text(editar_caminho($(this).val()));
             });
