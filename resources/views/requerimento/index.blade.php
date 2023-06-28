@@ -721,37 +721,44 @@
                                         {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
                                     </div>
                                 </div>
-                                @foreach ($requerimento_documento as $pivot)                                    
-                                    @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
-                                        <div class="row justify-content-center align-items-center mt-6" style="text-align: center">
-                                            <div class="col-md-10">
-                                                <span style="color: #00883D; font-weight: bold;">Prazo para cumprimento das exigências:</span>
-                                                <span style="color: red; font-weight: bold;">
-                                                    @foreach ($requerimento_documento as $pivot)
-                                                        @if($pivot->prazo_exigencia != null)
-                                                            <?php
-                                                            $dataObjeto = new DateTime($pivot->prazo_exigencia);
-                                                            $dataAtual = new DateTime();
-                                                            $diferenca = $dataObjeto->diff($dataAtual);
-                                                            $diasRestantes = $diferenca->days;
-                                                            ?>
-                                                            {{ date('d/m/Y', strtotime($pivot->prazo_exigencia)) }} (Restam {{ $diasRestantes }} dia(s))
-                                                            @break
-                                                        @endif
-                                                    @endforeach
-                                                </span>
+                                @foreach ($requerimento_documento as $pivot)  
+                                    @if ($pivot->requerimento_id == $requerimento->id)                  
+                                        @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
+                                            <div class="row justify-content-center align-items-center mt-6" style="text-align: center">
+                                                <div class="col-md-10">
+                                                    <span style="color: #00883D; font-weight: bold;">Prazo para cumprimento das exigências:</span>
+                                                    <span style="color: red; font-weight: bold;">
+                                                        @foreach ($requerimento_documento as $pivot)  
+                                                            @if ($pivot->requerimento_id == $requerimento->id)
+                                                                @if($pivot->prazo_exigencia != null)
+                                                                    <?php
+                                                                    $dataObjeto = new DateTime($pivot->prazo_exigencia);
+                                                                    $dataAtual = new DateTime();
+                                                                    $diferenca = $dataObjeto->diff($dataAtual);
+                                                                    $diasRestantes = $diferenca->days;
+                                                                    ?>
+                                                                    {{ date('d/m/Y', strtotime($pivot->prazo_exigencia)) }} (Restam {{ $diasRestantes }} dia(s))
+                                                                    @break
+                                                                @endif
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        @break
+                                            @break
+                                        @endif
                                     @endif
                                 @endforeach
                                 <div class="row mt-4">
                                     <div class="col-md-12" style="text-align: right">
                                         <div class="btn-group align-items-center">
-                                            @foreach ($requerimento_documento as $pivot)                                    
-                                                @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
-                                                    <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
-                                                @endif
+                                            @foreach ($requerimento_documento as $pivot)  
+                                                @if ($pivot->requerimento_id == $requerimento->id)
+                                                    @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
+                                                        <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
+                                                    @break
+                                                    @endif
+                                                @endif                                  
                                             @endforeach
                                             @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="30px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
