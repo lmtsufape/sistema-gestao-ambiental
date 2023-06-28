@@ -24,9 +24,9 @@ class Documento extends Model
 
     public function documentosRequeridos()
     {
-        return $this->belongsToMany(RequerimentoDocumento::class, 'documento_id');
+        return $this->belongsToMany(RequerimentoDocumento::class, 'documento_id', 'requerimento_id')->withPivot('status');
     } 
-
+    
     public function requerimentos()
     {
         return $this->belongsToMany(Requerimento::class, 'checklists', 'documento_id', 'requerimento_id')->withPivot('caminho', 'comentario', 'status');

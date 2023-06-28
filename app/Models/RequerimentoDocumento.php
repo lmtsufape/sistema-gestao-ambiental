@@ -37,7 +37,7 @@ class RequerimentoDocumento extends Pivot
 
     public function documentos()
     {
-        return $this->hasMany(Documento::class, 'documento_id');
+        return $this->hasMany(Documento::class, 'documento_id')->withPivot('status');
     }
 
     public function empresa()
