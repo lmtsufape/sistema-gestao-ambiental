@@ -47,7 +47,7 @@
                         <form class="form-envia-documentos" id="envia-documentos-exigencias" method="POST" action="{{route('requerimento.enviar.exigencias.documentos', $requerimento->id)}}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="requerimento_id" value="{{$requerimento->id}}">
-                            @if (count($documentos) > 0)
+                            @if (!empty($documentos))
                                 @foreach ($documentos as $documento)
                                     <div class="col-md-12" style="background-color: black; border: 1px solid black;"></div>
                                     <div class="card">
