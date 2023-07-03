@@ -103,6 +103,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $requerimento;
     }
 
+    public function modalUserNotification(){
+        $empresa = Empresa::where('user_id', auth()->user()->id)->first();
+        if($empresa != null){
+            $user_notification = Notificacao::where('empresa_id', $empresa->id)->get();
+            if ($user_notification->count() > 0) {
+                foreach($user_notification as $notification){
+                    if($notification->visto == false){
+                        return $notification;
+                    }
+                }
+            }
+        }
+    }
+
     public function requerimentosDocumentosExigidosNotificacao()
     {
         $requerimento = Requerimento::where('status', '=', Requerimento::STATUS_ENUM['visita_realizada'])

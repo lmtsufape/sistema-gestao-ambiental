@@ -346,7 +346,7 @@
                                 </div>
                             @endif
                             @if(Auth::user()->requerimentosDocumentosExigidosNotificacao() != null)
-                                <div id="card-notificacao" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
+                                <div id="card-notificacao-requerimentos" aria-live="polite" aria-atomic="true" style="position: relative; z-index: 1;">
                                     <div class="card" style="position: absolute; right: 0; top: 0; width: 300px;">
                                         <div class="card-header" style="background-color: #F26565; color: white;">
                                             <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
@@ -371,6 +371,37 @@
                                     </div>
                                 </div>
                             @endif
+                            @if(Auth::user()->modalUserNotification() != null)
+                                @php
+                                    $modalUserNotification = Auth::user()->modalUserNotification();
+                                @endphp
+                                <div class="overlay"></div>
+                                <div id="card-notificacao-user" aria-live="polite" aria-atomic="true" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000;">
+                                    <div class="card" style="width: 600px;">
+                                        <div class="card-header" style="background-color: #F26565; color: white;">
+                                            <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
+                                            {{--<small>11 mins ago</small>--}}
+                                            <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    Olá, {{Auth::user()->name}}. Você tem novas notificações!
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <a id="btn-notificacao-user" href="{{route('notificacoes.show', ['notificacao' => $modalUserNotification])}}">Clique aqui</a> para visualizar.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
                         @endcan
                         @yield('content')
                     </div>
@@ -380,27 +411,53 @@
     </div>
 </div>
 
+<style>
+    .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999; 
+}
+</style>
+
 @push ('scripts')
     <script>
-        function toggleSideBar(){
-            if($('#logoSGA').is(":hidden")){
+        function toggleSideBar() {
+            if ($('#logoSGA').is(":hidden")) {
                 $('#logoSGA').show();
                 $('#sidebarCollapse').hide();
                 $('#sidebarCollapseClose').show();
                 $('#logoImage').hide();
-            }else{
+            } else {
                 $('#logoSGA').hide();
                 $('#sidebarCollapse').show();
                 $('#sidebarCollapseClose').hide();
-                if($('#logoImage').is(":hidden")){
+                if ($('#logoImage').is(":hidden")) {
                     $('#logoImage').show();
                 }
             }
             $('#sidebar').toggleClass('active');
         }
-        $('#card-notificacao .close').click(function(){
+
+        $('#card-notificacao .close').click(function () {
             $('#card-notificacao').slideUp();
         })
-    </script>
 
+        $('#card-notificacao-requerimentos .close').click(function () {
+            $('#card-notificacao-requerimentos').slideUp();
+        })
+
+        $('#card-notificacao-user .close').click(function () {
+            $('#card-notificacao-user').slideUp();
+            $('.overlay').hide();
+        })
+
+        $('#btn-notificacao-user').click(function () {
+            $('#card-notificacao-user').slideUp();
+            $('.overlay').hide();
+        })
+    </script>
 @endpush
