@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use library\Q;
 
 class TipoAnalista extends Model
 {
@@ -15,6 +16,7 @@ class TipoAnalista extends Model
         'poda' => 3,
         'financa' => 4,
         'definir_mudas' => 5,
+        'beneficiario' => 6,
     ];
 
     public function users()
@@ -39,6 +41,9 @@ class TipoAnalista extends Model
                 break;
             case $this::TIPO_ENUM['definir_mudas']:
                 return 'Analista para definição de mudas';
+                break;
+            case $this::TIPO_ENUM['beneficiario']:
+                return 'Beneficiário';
                 break;
         }
     }

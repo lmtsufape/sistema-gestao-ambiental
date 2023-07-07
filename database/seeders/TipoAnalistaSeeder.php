@@ -24,6 +24,9 @@ class TipoAnalistaSeeder extends Seeder
             [
                 'tipo'  => 3,
             ],
+            [
+                'tipo'  => 6,
+            ],
         ];
 
         TipoAnalista::insert($tipos);
