@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Beneficiario',
             'email' => 'beneficiario@beneficiario.com',
-            'role' => User::ROLE_ENUM['analista'],
+            'role' => User::ROLE_ENUM['beneficiario'],
             'password' => Hash::make('12345678'),
             'email_verified_at' => now(),
         ]);
