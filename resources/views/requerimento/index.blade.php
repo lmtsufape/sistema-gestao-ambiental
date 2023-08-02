@@ -177,6 +177,7 @@
                                         <th scope="col">Tipo</th>
                                         <th scope="col">Valor</th>
                                         <th scope="col">Data</th>
+                                        <th scope="col">Licença</th>
                                         <th scope="col">Opções</th>
                                     </tr>
                                 </thead>
@@ -208,6 +209,13 @@
                                                 @endif
                                             </td>
                                             <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                            <td>
+                                                @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                    Enviada
+                                                @else
+                                                    Pendente
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div class="btn-group align-items-center">
                                                     <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
