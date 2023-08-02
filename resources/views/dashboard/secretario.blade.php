@@ -157,6 +157,34 @@
                     @endif
                 </div>
             </div>
+            <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px;">
+                @if ($notificacoes->count() > 0)
+                    <h2 style="text-align: center; font-size: 16px; color: #273746;">Notificações realizadas no período informado</h2>
+                    <br>
+                    <div style="overflow-x: auto;">
+                        <table class="table" style="text-align: center; font-size: 14px;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 34%;">Mensagem</th>
+                                    <th style="width: 33%;">Data</th>
+                                    <th style="width: 33%;">Destinatário</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($notificacoes as $notificacao)
+                                    <tr>
+                                        <td style="word-break: break-word;">{{ $notificacao->texto }}</td>
+                                        <td>{{ $notificacao->created_at->format('d/m/Y H:i') }}</td>
+                                        <td>{{ $notificacao->empresa->nome }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <h2 style="text-align: center; font-size: 16px; color: #273746;">Nenhuma notificação realizada no período informado</h2>
+                @endif
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <canvas id="pagamentosChart"></canvas>

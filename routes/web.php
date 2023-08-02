@@ -66,9 +66,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/requerimentos/update-checklist', [RequerimentoController::class, 'updateChecklist'])->name('requerimento.checklist.edit');
     Route::put('/requerimentos/{requerimento}/update-valor', [RequerimentoController::class, 'updateValor'])->name('requerimento.valor.edit');
     Route::get('/requerimentos/{requerimento_id}/documentacao', [RequerimentoController::class, 'showRequerimentoDocumentacao'])->name('requerimento.documentacao');
+    Route::get('/requerimentos/{requerimento_id}/exigencias_documentacao', [RequerimentoController::class, 'showExigenciasDocumentacao'])->name('requerimento.exigencias.documentacao');
+    Route::post('/requerimentos/{requerimento_id}/enviar_exigencias', [RequerimentoController::class, 'enviarExigenciasDocumentos'])->name('requerimento.enviar.exigencias.documentos');
     Route::post('/requerimentos/{requerimento_id}/enviar-documentos', [RequerimentoController::class, 'enviarDocumentos'])->name('requerimento.enviar.documentos');
     Route::post('/requerimentos/{requerimento_id}/analisar-documentos', [RequerimentoController::class, 'analisarDocumentos'])->name('requerimento.analisar.documentos');
+    Route::post('/requerimentos/{requerimento_id}/analisar-exigencias-documentos', [RequerimentoController::class, 'analisarExigenciasDocumentos'])->name('requerimento.analisar.exigencias.documentos');
     Route::get('/requerimentos/{requerimento_id}/documentacao/{documento_id}', [RequerimentoController::class, 'showDocumento'])->name('requerimento.documento');
+    Route::get('/requerimentos/{requerimento_id}/documentacaoExigencia/{documento_id}/download', [RequerimentoController::class, 'showExigenciaDocumento'])->name('requerimento.exigencia.documento.download');
+    Route::get('/requerimentos/{requerimento_id}/documentacaoExigencia/download_outro', [RequerimentoController::class, 'showExigenciaOutroDocumento'])->name('requerimento.exigencia.outro.documento');
     Route::get('/requerimentos/{id}/visitas', [RequerimentoController::class, 'indexVisitasRequerimento'])->name('requerimento.visitas');
     Route::get('/requerimentos/{requerimento_id}/visitas/{visita_id}/edit', [RequerimentoController::class, 'requerimentoVisitasEdit'])->name('requerimento.visitas.edit');
     Route::post('/visitas/editVisita', [VisitaController::class, 'editVisita'])->name('visitas.visita.edit');
@@ -184,6 +189,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('{visita}/licenca/{licenca}', [LicencaController::class, 'revisar'])->name('licenca.revisar');
     Route::put('/licenca/{licenca}/atualizar', [LicencaController::class, 'update'])->name('licenca.update');
     Route::put('/licenca/{licenca}/salvar-revisao/{visita}', [LicencaController::class, 'salvarRevisao'])->name('licenca.salvar.revisao');
+    Route::post('/{requerimento_id}/licenca/requisitar-documentos', [LicencaController::class, 'requisitarDocumentos'])->name('licenca.requisitar.documentos');
 
     Route::get('/noticias/create', [NoticiaController::class, 'create'])->name('noticias.create');
     Route::post('/noticias/create', [NoticiaController::class, 'store'])->name('noticias.store');

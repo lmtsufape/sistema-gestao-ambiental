@@ -104,6 +104,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return $requerimento;
     }
 
+    public function requerimentosDocumentosExigidosNotificacao()
+    {
+        $requerimento = Requerimento::where('status', '=', Requerimento::STATUS_ENUM['visita_realizada'])
+            ->where('cancelada', false)
+            ->whereRelation('empresa', 'user_id', auth()->user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+        
+            if ($requerimento) {
+            $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
+                ->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado'])
+                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['enviado'])
+                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['recusado'])
+                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['analisado'])
+                ->first();
+
+            if ($requerimento_documento) {
+                return $requerimento;
+            }
+        }
+    }
+
     public function setAtributes($input)
     {
         $this->name = $input['name'];

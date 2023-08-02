@@ -24,6 +24,11 @@ class Empresa extends Model
         'porte',
     ];
 
+    public function documentosRequeridos()
+    {
+        return $this->belongsToMany(RequerimentoDocumento::class, 'empresa_id');
+    } 
+
     public function endereco()
     {
         return $this->belongsTo(Endereco::class, 'endereco_id');

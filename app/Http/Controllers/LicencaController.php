@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LicencaRequest;
+use App\Models\Documento;
+use App\Models\Empresa;
 use App\Models\Licenca;
 use App\Models\Requerimento;
+use App\Models\RequerimentoDocumento;
 use App\Models\User;
 use App\Models\Visita;
 use App\Notifications\LicencaAprovada;
+use App\Notifications\LicencaAtualizada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Storage;
+use App\Notifications\DocumentosExigidosNotification;
 
 class LicencaController extends Controller
 {
@@ -33,8 +37,9 @@ class LicencaController extends Controller
     public function create(Requerimento $requerimento)
     {
         $this->authorize('isSecretario', User::class);
-
-        return view('licenca.create', compact('requerimento'));
+        $documentos = Documento::all();
+        
+        return view('licenca.create', compact('requerimento', 'documentos'));
     }
 
     /**
@@ -124,11 +129,15 @@ class LicencaController extends Controller
         $licenca->validade = $request->data_de_validade;
         //$licenca->status = Licenca::STATUS_ENUM['gerada'];
 
+        $requerimento = Requerimento::find($licenca->requerimento_id);
+
         if ($request->file('licença') != null) {
             $licenca->caminho = $licenca->salvarLicenca($request->file('licença'), $licenca->requerimento);
         }
 
         $licenca->update();
+
+        Notification::send($requerimento->empresa->user, new LicencaAtualizada($requerimento, $licenca));
 
         return redirect(route('requerimentos.index', 'finalizados'))->with(['success' => 'Licença atualizada com sucesso!']);
     }
@@ -175,4 +184,96 @@ class LicencaController extends Controller
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Licença revisada com sucesso!']);
     }
+
+    public function requisitarDocumentos(Request $request, $requerimento_id)
+{   
+    // dd($request->all());
+    $this->authorize('isSecretario', auth()->user());
+
+    $request->validate([
+        'documentos' => 'nullable',
+        'prazo_exigencia' => 'required',
+        'nome_documento' => 'nullable'
+    ]);
+
+    $requerimento = Requerimento::find($requerimento_id);
+    $empresa = Empresa::find($requerimento->empresa_id);
+    $requerimento_documentos = RequerimentoDocumento::where('requerimento_id', $requerimento_id)->get();
+    $documentos = Documento::all();
+
+    if ($requerimento_documentos->count() > 0) {
+        return redirect()->back()->with(['error' => 'Documentos já requisitados!']);
+    }
+
+    if ($request->nome_documento != null && $request->documentos != null) {
+        foreach ($request->documentos as $key => $documento_id) {
+            $data = [
+                'requerimento_id' => $requerimento_id,
+                'documento_id' => $documento_id,
+                'empresa_id' => $empresa->id,
+                'arquivo_outro_documento' => null,
+                'nome_outro_documento' => null,
+                'prazo_exigencia' => $request->prazo_exigencia,
+                'anexo_arquivo' => null,
+                'status' => RequerimentoDocumento::STATUS_ENUM['nao_enviado'],
+            ];
+            $requerimento_documentos = RequerimentoDocumento::create($data);
+        }
+            $data = [
+                'requerimento_id' => $requerimento_id,
+                'documento_id' => null,
+                'empresa_id' => $empresa->id,
+                'arquivo_outro_documento' => null,
+                'nome_outro_documento' => $request->nome_documento,
+                'prazo_exigencia' => $request->prazo_exigencia,
+                'anexo_arquivo' => null,
+                'status' => RequerimentoDocumento::STATUS_ENUM['nao_enviado'],
+            ];
+            $requerimento_documentos = RequerimentoDocumento::create($data);
+        
+        $all_requerimento_documentos = RequerimentoDocumento::where('requerimento_id', $requerimento_id)->get();
+        
+        Notification::send($requerimento->empresa->user, new DocumentosExigidosNotification($requerimento, $all_requerimento_documentos, $documentos, 'Documentos exigidos para emissão de licença ambiental'));
+        return redirect()->back()->with(['success' => 'Documentos requisitados com sucesso!']);
+
+    } elseif ($request->nome_documento == null && $request->documentos != null) {
+        foreach ($request->documentos as $key => $documento_id) {
+            $data = [
+                'requerimento_id' => $requerimento_id,
+                'documento_id' => $documento_id,
+                'empresa_id' => $empresa->id,
+                'arquivo_outro_documento' => null,
+                'nome_outro_documento' => null,
+                'prazo_exigencia' => $request->prazo_exigencia,
+                'anexo_arquivo' => null,
+                'status' => RequerimentoDocumento::STATUS_ENUM['nao_enviado'],
+            ];
+            $requerimento_documentos = RequerimentoDocumento::create($data);
+        }
+       
+        $all_requerimento_documentos = RequerimentoDocumento::where('requerimento_id', $requerimento_id)->get();
+
+        Notification::send($requerimento->empresa->user, new DocumentosExigidosNotification($requerimento, $all_requerimento_documentos, $documentos, 'Documentos exigidos para emissão de licença ambiental'));
+        return redirect()->back()->with(['success' => 'Documentos requisitados com sucesso!']);
+
+    } elseif($request->documentos == null && $request->nome_documento != null) {
+        $data = [
+            'requerimento_id' => $requerimento_id,
+            'documento_id' => null,
+            'empresa_id' => $empresa->id,
+            'arquivo_outro_documento' => null,
+            'nome_outro_documento' => $request->nome_documento,
+            'prazo_exigencia' => $request->prazo_exigencia,
+            'anexo_arquivo' => null,
+            'status' => RequerimentoDocumento::STATUS_ENUM['nao_enviado'],
+        ];
+
+        $requerimento_documentos = RequerimentoDocumento::create($data);
+
+        $all_requerimento_documentos = RequerimentoDocumento::where('requerimento_id', $requerimento_id)->get();
+
+        Notification::send($requerimento->empresa->user, new DocumentosExigidosNotification($requerimento, $all_requerimento_documentos, $documentos, 'Documentos exigidos para emissão de licença ambiental'));
+        return redirect()->back()->with(['success' => 'Documentos requisitados com sucesso!']);
+    } 
+}
 }
