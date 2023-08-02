@@ -26,6 +26,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\BoletoAvulsoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\BeneficiarioController;
 
 
 /*
@@ -108,8 +109,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('visitas/{filtro}/listar/{ordenacao}-{ordem}', [VisitaController::class, 'index'])->name('visitas.index');
     Route::get('/visitas/{visita}/foto/{foto}', [VisitaController::class, 'foto'])->name('visitas.foto');
     Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
-
-
+    
+    Route::resource('beneficiarios', BeneficiarioController::class)->except('index');
+    Route::get('/beneficiarios/', [BeneficiarioController::class, 'index'])->name('beneficiarios.index');
+    Route::get('/beneficiarios/create', [BeneficiarioController::class, 'create'])->name('beneficiarios.create');
+    Route::post('/beneficiarios/store', [BeneficiarioController::class, 'store'])->name('beneficiarios.store');
+    Route::get('/beneficiarios/{id}/show', [BeneficiarioController::class, 'show'])->name('beneficiarios.show');
+    Route::get('/beneficiarios/{id}/edit', [BeneficiarioController::class, 'edit'])->name('beneficiarios.edit');
+    Route::put('/beneficiarios/{id}/update', [BeneficiarioController::class, 'update'])->name('beneficiarios.update');
+    Route::delete('/beneficiarios/{id}/destroy', [BeneficiarioController::class, 'destroy'])->name('beneficiarios.destroy');
+    
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
     Route::get('/relatorio/{relatorio}/edit', [RelatorioController::class, 'edit'])->name('relatorios.edit');

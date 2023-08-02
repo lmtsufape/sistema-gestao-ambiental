@@ -23,6 +23,11 @@ class Telefone extends Model
         return $this->hasOne(Requerente::class, 'telefone_id');
     }
 
+    public function beneficiario()
+    {
+        return $this->hasOne(Beneficiario::class, 'telefone_id');
+    }
+
     public function representanteLegal()
     {
         return $this->hasOne(RepresetanteLegal::class, 'telefone_id');

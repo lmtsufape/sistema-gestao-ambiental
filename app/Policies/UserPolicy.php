@@ -39,6 +39,28 @@ class UserPolicy
     public function isAnalista(User $user)
     {
         return $user->role == User::ROLE_ENUM['analista'];
+    }   
+
+    /**
+     * Checa se o usuário logado é um beneficiario.
+     *
+     * @return bool
+     */
+    public function isBeneficiario(User $user)
+    {
+        return $user->role == User::ROLE_ENUM['beneficiario'];
+        
+    }
+
+    /**
+     * Checa se o usuário logado é um beneficiario.
+     *
+     * @return bool
+     */
+    public function isSecretarioOrBeneficiario(User $user)
+    {
+        return $this->isSecretario($user) || $this->isBeneficiario($user);
+        
     }
 
     /**
