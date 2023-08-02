@@ -380,7 +380,6 @@
                                     <div class="card" style="width: 600px;">
                                         <div class="card-header" style="background-color: #F26565; color: white;">
                                             <strong class="mr-auto" style="font-size: 26px;">Alerta!</strong>
-                                            {{--<small>11 mins ago</small>--}}
                                             <button type="button" class="ml-2 mb-1 close" data-dismiss="card" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>

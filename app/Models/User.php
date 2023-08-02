@@ -107,15 +107,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $empresa = Empresa::where('user_id', auth()->user()->id)->first();
         if($empresa != null){
             $user_notification = Notificacao::where('empresa_id', $empresa->id)->get();
-            if ($user_notification->count() > 0) {
-                foreach($user_notification as $notification){
-                    if($notification->visto == false){
-                        return $notification;
-                    }
-                }
+            if ($user_notification != null) {
+                $unseen_notification = $user_notification->firstWhere('visto', false);
+                return $unseen_notification;
             }
         }
     }
+    
 
     public function requerimentosDocumentosExigidosNotificacao()
     {
