@@ -317,7 +317,7 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                    O cadastro não está disponivel para solicitações fora do municipio de garanhuns!
+                    O cadastro não está disponivel para solicitações fora do municipio de Garanhuns!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
@@ -757,7 +757,7 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                    O cadastro não está disponivel para solicitações fora do municipio de garanhuns!
+                    O cadastro não está disponivel para solicitações fora do municipio de Garanhuns!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>

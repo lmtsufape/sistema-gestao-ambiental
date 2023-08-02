@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('atualizar:boletos')->dailyAt('8:01');
         $schedule->command('atualizar:boletosAvulsos')->dailyAt('8:01');
+        $schedule->command('enviar:emailAlertaPrazo')->dailyAt('8:01');
     }
 
     /**

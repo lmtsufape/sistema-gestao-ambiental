@@ -46,6 +46,11 @@ class Requerimento extends Model
         'status_empresa',
     ];
 
+    public function documentosRequeridos()
+    {
+        return $this->belongsToMany(RequerimentoDocumento::class, 'requerimento_id');
+    } 
+
     public function protocolista()
     {
         return $this->belongsTo(User::class, 'analista_id');
