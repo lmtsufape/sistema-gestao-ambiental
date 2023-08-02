@@ -7,6 +7,7 @@ use App\Models\Denuncia;
 use App\Models\Empresa;
 use App\Models\Licenca;
 use App\Models\Noticia;
+use App\Models\Notificacao;
 use App\Models\Requerimento;
 use App\Models\SolicitacaoMuda;
 use App\Models\SolicitacaoPoda;
@@ -18,7 +19,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {
+    {   
         if (auth()->user() && auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $ordenacao = $request->ordenacao;
 
@@ -31,6 +32,7 @@ class DashboardController extends Controller
                     $licencasData = $this->licencasPieChart(Carbon::now()->subWeek());
                     $boletoData = $this->totalBoleto(Carbon::now()->subWeek());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek());
+                    $notificacoes = $this->getNotificacoes(Carbon::now()->subWeek());
 
                     break;
                 case 'ultimo_mes':
@@ -41,6 +43,7 @@ class DashboardController extends Controller
                     $licencasData = $this->licencasPieChart(Carbon::now()->subMonth());
                     $boletoData = $this->totalBoleto(Carbon::now()->subMonth());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subMonth());
+                    $notificacoes = $this->getNotificacoes(Carbon::now()->subMonth());
 
                     break;
                 case 'meses':
@@ -51,6 +54,7 @@ class DashboardController extends Controller
                     $licencasData = $this->licencasPieChart(Carbon::now()->subYear());
                     $boletoData = $this->totalBoleto(Carbon::now()->subYear());
                     $pagamentos = $this->pagamentosChart($ordenacao, 'month', Carbon::now()->subYear());
+                    $notificacoes = $this->getNotificacoes(Carbon::now()->subYear());
 
                     break;
                 case 'anos':
@@ -61,6 +65,7 @@ class DashboardController extends Controller
                     $licencasData = $this->licencasPieChart(Carbon::now()->subYears(5));
                     $boletoData = $this->totalBoleto(Carbon::now()->subYears(5));
                     $pagamentos = $this->pagamentosChart($ordenacao, 'year', Carbon::now()->subYears(5));
+                    $notificacoes = $this->getNotificacoes(Carbon::now()->subYears(5));
 
                     break;
                 default:
@@ -72,6 +77,7 @@ class DashboardController extends Controller
                         $licencasData = $this->licencasPieChart(Carbon::now()->subWeek(), $request);
                         $boletoData = $this->totalBoleto(Carbon::now()->subWeek(), $request);
                         $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek(), $request);
+                        $notificacoes = $this->getNotificacoes(Carbon::now()->subWeek(), $request);
                     } else {
                         $data = $this->requerimentosPieChart(Carbon::now()->subWeek());
                         $mudasData = $this->mudasPieChart(Carbon::now()->subWeek());
@@ -82,6 +88,8 @@ class DashboardController extends Controller
 
                         $ordenacao = '7_dias';
                         $pagamentos = $this->pagamentosChart($ordenacao, 'day', Carbon::now()->subWeek());
+                        $notificacoes = $this->getNotificacoes(Carbon::now()->subWeek());
+
                     }
 
                     break;
@@ -90,7 +98,7 @@ class DashboardController extends Controller
             $dataDe = $request->dataDe;
             $dataAte = $request->dataAte;
 
-            return view('dashboard.secretario', compact('data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData', 'mudasData', 'podasData', 'denunciasData', 'licencasData', 'dataDe', 'dataAte'));
+            return view('dashboard.secretario', compact('data', 'pagamentos', 'titulo', 'ordenacao', 'boletoData', 'mudasData', 'podasData', 'denunciasData', 'licencasData', 'dataDe', 'dataAte', 'notificacoes'));
         }
     }
 
@@ -113,6 +121,32 @@ class DashboardController extends Controller
                 break;
         }
         return $titulo;
+    }
+
+    private function getNotificacoes($periodo, $request = null)
+    {   
+        $notificacoes = Notificacao::where('created_at', '!=', null);
+        if ($request != null) {
+            $dataDe = $request->dataDe;
+            $dataAte = $request->dataAte;
+            if ($dataDe != null) {
+                $notificacoes = $notificacoes->where('created_at', '>=', $dataDe);
+            }
+            if ($dataAte != null) {
+                $notificacoes = $notificacoes->where('created_at', '<=', $dataAte);
+            }
+        }
+        else {
+            $notificacoes = $notificacoes->where('created_at', '>=', $periodo);
+        }
+
+        if($notificacoes->count() > 0){
+            return $notificacoes->get();
+        }
+        else{
+            return $notificacoes;
+        }
+
     }
 
     private function totalBoleto($periodo, $request = null) {
