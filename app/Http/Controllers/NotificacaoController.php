@@ -29,7 +29,6 @@ class NotificacaoController extends Controller
             case User::ROLE_ENUM['requerente']:
                 $this->authorize('view', $empresa);
                 $notificacoes = Notificacao::where('empresa_id', $empresa->id)->orderBy('created_at', 'DESC')->paginate(8);
-
                 return view('notificacao.index', compact('notificacoes', 'empresa'));
                 break;
             case User::ROLE_ENUM['analista']:
@@ -100,10 +99,10 @@ class NotificacaoController extends Controller
      * @return View
      */
     public function show(Notificacao $notificacao)
-    {
+    {   
         if (! $notificacao->visto && auth()->user()->id == $notificacao->empresa->user->id) {
             $notificacao->visto = true;
-            $notificacao->save();
+            $notificacao->update();
         }
 
         return view('notificacao.show', ['notificacao' => $notificacao]);
@@ -160,4 +159,6 @@ class NotificacaoController extends Controller
 
         return response()->json($notificacaoInfo);
     }
+
+    
 }

@@ -134,6 +134,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         ->shallow()
         ->parameters(['notificacoes' => 'notificacao']);
     Route::get('/notificacoes-get', [NotificacaoController::class, 'get'])->name('notificacoes.get');
+    Route::get('/notificacoes/{notificacao}/show', [NotificacaoController::class, 'show'])->name('notificacoes.show');
     Route::get('/notificacoes/{notificacao}/foto/{foto}', [NotificacaoController::class, 'foto'])->name('notificacoes.foto');
 
     Route::get('/denuncias/{filtro}/listar', [DenunciaController::class, 'index'])->name('denuncias.index');

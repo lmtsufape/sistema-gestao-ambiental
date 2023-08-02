@@ -16,6 +16,7 @@ class TipoAnalista extends Model
         'poda' => 3,
         'financa' => 4,
         'definir_mudas' => 5,
+        'beneficiario' => 6,
     ];
 
     public function users()

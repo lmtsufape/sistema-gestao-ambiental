@@ -221,7 +221,7 @@
                                                 @if(empty($visita->data_realizada))
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @elseif(isset($visita) && isset($visita->requerimento->empresa))
-                                                    @if($visita->requerimento->empresa->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
+                                                    @if($visita->requerimento->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
                                                         <td>{{__('Notificado')}}</td>
                                                     @endif
                                                 @else
