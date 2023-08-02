@@ -125,6 +125,23 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function requerimentosDocumentosAnexados()
+    {
+        $requerimento = Requerimento::where('status', '=', Requerimento::STATUS_ENUM['visita_realizada'])
+            ->where('cancelada', false)
+            ->where('analista_processo_id', auth()->user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+            if ($requerimento) {
+            $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
+                ->where('status', RequerimentoDocumento::STATUS_ENUM['enviado'])
+                ->first();
+            if ($requerimento_documento) {
+                return $requerimento;
+            }
+        }
+    }
+
     public function setAtributes($input)
     {
         $this->name = $input['name'];
