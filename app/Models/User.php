@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'represetante_legal' => 2,
         'analista' => 3,
         'secretario' => 4,
+        'beneficiario' => 5,
     ];
 
     /**
