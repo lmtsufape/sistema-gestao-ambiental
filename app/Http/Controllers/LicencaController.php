@@ -11,6 +11,7 @@ use App\Models\RequerimentoDocumento;
 use App\Models\User;
 use App\Models\Visita;
 use App\Notifications\LicencaAprovada;
+use App\Notifications\LicencaAtualizada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DocumentosExigidosNotification;
@@ -128,11 +129,15 @@ class LicencaController extends Controller
         $licenca->validade = $request->data_de_validade;
         //$licenca->status = Licenca::STATUS_ENUM['gerada'];
 
+        $requerimento = Requerimento::find($licenca->requerimento_id);
+
         if ($request->file('licença') != null) {
             $licenca->caminho = $licenca->salvarLicenca($request->file('licença'), $licenca->requerimento);
         }
 
         $licenca->update();
+
+        Notification::send($requerimento->empresa->user, new LicencaAtualizada($requerimento, $licenca));
 
         return redirect(route('requerimentos.index', 'finalizados'))->with(['success' => 'Licença atualizada com sucesso!']);
     }
