@@ -12,18 +12,18 @@ use Illuminate\Http\Request;
 class BeneficiarioController extends Controller
 {
     public function index(Request $request)
-{
-    $this->authorize('isSecretarioOrBeneficiario', User::class);
+    {
+        $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-    $buscar = $request->input('buscar');
+        $buscar = $request->input('buscar');
 
-    if ($buscar != null) {
-        $beneficiario = Beneficiario::where('nome', 'LIKE', "%{$buscar}%")->get();
-    } else {
-        $beneficiario = Beneficiario::all()->sortBy('nome');
-    }
+        if ($buscar != null) {
+            $beneficiario = Beneficiario::where('nome', 'LIKE', "%{$buscar}%")->get();
+        } else {
+            $beneficiario = Beneficiario::all()->sortBy('nome');
+        }
 
-    return view('beneficiarios.index', compact('beneficiario', 'buscar'));
+        return view('beneficiarios.index', compact('beneficiario', 'buscar'));
     }
 
 
@@ -43,7 +43,7 @@ class BeneficiarioController extends Controller
     }
 
     public function store(Request $request)
-    {       
+    {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
         $input = $request->all();
 
@@ -58,7 +58,6 @@ class BeneficiarioController extends Controller
         $beneficiario->endereco_id = $endereco->id;
         $beneficiario->telefone_id = $telefone->id;
         $beneficiario->save();
-        
         return redirect(route('beneficiarios.index'))->with(['success' => 'Beneficiário cadastrado com sucesso!']);
     }
 
@@ -69,12 +68,11 @@ class BeneficiarioController extends Controller
         $endereco = Endereco::find($beneficiario->endereco_id);
         $telefone = Telefone::find($beneficiario->telefone_id);
         return view('beneficiarios.show', compact('beneficiario', 'endereco', 'telefone'));
-        
     }
 
-   
+
     public function update(Request $request, $id)
-    {   
+    {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $beneficiario = Beneficiario::find($id);
@@ -93,7 +91,6 @@ class BeneficiarioController extends Controller
         return redirect(route('beneficiarios.index'))->with(['success' => 'Beneficiário editado com sucesso!']);
     }
 
-    
     public function destroy($id)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);

@@ -13,6 +13,19 @@
                             </a>
                         </div>
                     </div>
+                    @can('isSecretarioOrBeneficiario', \App\Models\User::class)
+                        <form action="{{ route('beneficiarios.index') }}" method="get">
+                            @csrf
+                            <div class="form-row mb-3">
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do Beneficiário" value="{{ $buscar }}">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endcan
                     <div div class="form-row">
                         @if (session('success'))
                             <div class="col-md-12" style="margin-top: 5px;">
@@ -31,26 +44,13 @@
                             </div>
                         @endif
                     </div>
-                    @can('isSecretarioOrBeneficiario', \App\Models\User::class)
-                        <form action="{{ route('beneficiarios.index') }}" method="get">
-                            @csrf
-                            <div class="form-row mb-3">
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do Beneficiário" value="{{ $buscar }}">
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
-                                </div>
-                            </div>
-                        </form>
-                    @endcan
                     <div class="card" style="width: 100%;">
                         <div class="card-body">
                             <div class="tab-content tab-content-custom" id="myTabContent">
                                 <div class="tab-pane fade show active" id="beneficiarios" role="tabpanel" aria-labelledby="beneficiarios-tab">
                                     @if ($beneficiario->isEmpty())
                                         <div class="alert alert-info" role="alert">
-                                            Nenhum beneficiário correspondente à busca foi encontrado.
+                                            Nenhum beneficiário correspondente cadastrado.
                                         </div>
                                     @else
                                         <div class="table-responsive">
