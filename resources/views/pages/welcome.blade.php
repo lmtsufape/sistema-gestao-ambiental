@@ -176,6 +176,26 @@
         </a>
         </div>
         @endcan
+        {{-- @can('isSecretarioOrBeneficiario', \App\Models\User::class)
+        <div class="col-md-6 col-lg-4 mb-3">
+            <button class="h-100 w-100" data-toggle="modal" data-target="#solicitacoesServico">
+                <div class="card card-home">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-9 d-flex align-items-center justify-content-center">
+                                <p style="font-weight: bold; font-size: 18px; margin-bottom: 0px;">
+                                    AGRICULTURA
+                                </p>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                <img src="{{asset('img/agricultura.svg')}}" width="105px;" stroke="currentColor">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </button>
+        </div>
+        @endcan --}}
 
     </div>
     <br>
@@ -439,6 +459,29 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <a href="{{route('podas.requerente.index')}}" class="btn btn-success btn-color-dafault">Continuar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="solicitacoesServico" tabindex="-1" role="dialog" aria-labelledby="solicitacoesServico" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #00883D; color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel">Solicitações Agricultura</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <div class="modal-text text-justify">
+                            A partir da página referente a agricultura, beneficiários podem ser cadastrados e serem solicitados serviços de carro pipa e aração de terra para o beneficente.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <a href="{{}}" class="btn btn-success btn-color-dafault">Continuar</a>
                     </div>
                 </form>
             </div>

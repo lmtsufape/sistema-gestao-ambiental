@@ -83,5 +83,6 @@ class UserSeeder extends Seeder
             'user_id' => 4,
             'tipo_analista_id' => 4,
         ]);
+        
     }
 }
