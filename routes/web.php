@@ -27,6 +27,8 @@ use App\Http\Controllers\BoletoAvulsoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\BeneficiarioController;
+use App\Http\Controllers\AracaoController;
+use App\Http\Controllers\SolicitacaoServicoController;
 
 
 /*
@@ -113,6 +115,26 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/beneficiarios/{id}/edit', [BeneficiarioController::class, 'edit'])->name('beneficiarios.edit');
     Route::put('/beneficiarios/{id}/update', [BeneficiarioController::class, 'update'])->name('beneficiarios.update');
     Route::delete('/beneficiarios/{id}/destroy', [BeneficiarioController::class, 'destroy'])->name('beneficiarios.destroy');
+
+    Route::resource('aracao', AracaoController::class)->except('index');
+    Route::get('/aracao/', [AracaoController::class, 'index'])->name('aracao.index');
+    Route::get('/aracao/create', [AracaoController::class, 'create'])->name('aracao.create');
+    Route::post('/aracao/store', [AracaoController::class, 'store'])->name('aracao.store');
+    Route::get('/aracao/{id}/show', [AracaoController::class, 'show'])->name('aracao.show');
+    Route::get('/aracao/{id}/edit', [AracaoController::class, 'edit'])->name('aracao.edit');
+    Route::put('/aracao/{id}/update', [AracaoController::class, 'update'])->name('aracao.update');
+    Route::delete('/aracao/{id}/destroy', [AracaoController::class, 'destroy'])->name('aracao.destroy');
+
+    Route::resource('solicitacao_servicos', SolicitacaoServicoController::class)->except('index');
+    Route::get('/solicitacao_servicos/', [SolicitacaoServicoController::class, 'index'])->name('solicitacao_servicos.index');
+    Route::get('/solicitacao_servicos/create', [SolicitacaoServicoController::class, 'create'])->name('solicitacao_servicos.create');
+    Route::post('/solicitacao_servicos/store', [SolicitacaoServicoController::class, 'store'])->name('solicitacao_servicos.store');
+    Route::get('/solicitacao_servicos/{id}/show', [SolicitacaoServicoController::class, 'show'])->name('solicitacao_servicos.show');
+    Route::get('/solicitacao_servicos/{id}/edit', [SolicitacaoServicoController::class, 'edit'])->name('solicitacao_servicos.edit');
+    Route::put('/solicitacao_servicos/{id}/update', [SolicitacaoServicoController::class, 'update'])->name('solicitacao_servicos.update');
+    Route::delete('/solicitacao_servicos/{id}/destroy', [SolicitacaoServicoController::class, 'destroy'])->name('solicitacao_servicos.destroy');
+    Route::put ('/solicitacao_servicos/{id}/AtualizarDataSaida', [SolicitacaoServicoController::class, 'AtualizarDataSaida'])->name('solicitacao_servicos.AtualizarDataSaida');
+    Route::put ('/solicitacao_servicos/{id}/AtualizarDataEntrega', [SolicitacaoServicoController::class, 'AtualizarDataEntrega'])->name('solicitacao_servicos.AtualizarDataEntrega');
     
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
