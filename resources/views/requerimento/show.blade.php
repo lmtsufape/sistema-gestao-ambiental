@@ -123,12 +123,13 @@
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="rg">{{ __('RG') }}</label>
-                                            <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{$requerimento->empresa->user->requerente->rg}}" disabled autofocus autocomplete="rg">
+                                                <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{ $requerimento->empresa->user->requerente->rg ?? 'Não Informado' }}" disabled autofocus autocomplete="rg">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="orgao_emissor">{{ __('Orgão emissor') }}</label>
-                                            <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{$requerimento->empresa->user->requerente->orgao_emissor}}" disabled autocomplete="orgão_emissor">
+                                            <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{$requerimento->empresa->user->requerente->orgao_emissor ?? 'Não Informado'}}" disabled autocomplete="orgão_emissor">
                                         </div>
+
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
