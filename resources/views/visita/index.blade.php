@@ -220,8 +220,8 @@
                                             @if($visita->denuncia == null)
                                                 @if(empty($visita->data_realizada))
                                                     <td>{{__('Aguardando visita')}}</td>
-                                                @elseif(isset($visita) && isset($visita->requerimento->empresa))
-                                                    @if($visita->requerimento->notificacoes->where('empresa_id', $visita->requerimento->empresa->id) != '[]')
+                                                @elseif(isset($visita->requerimento) && isset($visita->requerimento->empresa))
+                                                    @if($visita->requerimento->notificacoes && $visita->requerimento->notificacoes->where('empresa_id', $visita->requerimento->empresa->id)->isNotEmpty())
                                                         <td>{{__('Notificado')}}</td>
                                                     @endif
                                                 @else
