@@ -21,7 +21,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-row">
-                                    <div class="col-md-6 form-group">
+                                    <div class="col-md-12 form-group">
                                         <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{ $beneficiario->nome }}" required autofocus autocomplete="name" placeholder="Digite seu nome aqui...">
                                         @error('name')
@@ -89,6 +89,29 @@
                                                 {{ $message }}
                                             </div>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="codigo">{{ __('Código do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{$beneficiario->codigo}}" required autofocus autocomplete="codigo" placeholder="Digite o código do beneficiário...">
+                                        @error('codigo')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <select name="tipo_beneficiario" id="tipo_beneficiario">
+                                            <option value="" disabled>-- {{__('Selecione o Tipo de Beneficiário')}} --</option>
+                                            @foreach (\App\Models\Beneficiario::ROLE_ENUM as $roleName => $roleId)
+                                                <option value="{{ $roleId }}" 
+                                                    @if(old('tipo_beneficiario', $beneficiario->tipo_beneficiario) == $roleId) selected @endif>
+                                                    {{ $roleId == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : 'Carro Pipa' }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <hr class="divisor">

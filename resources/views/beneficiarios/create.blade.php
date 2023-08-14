@@ -15,7 +15,7 @@
                     <form id="create-beneficiario" method="POST" action="{{route('beneficiarios.store')}}">
                             @csrf
                             <div class="form-row">
-                                    <div class="col-md-6 form-group">
+                                    <div class="col-md-12 form-group">
                                         <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite seu nome aqui...">
                                         @error('name')
@@ -83,6 +83,25 @@
                                                 {{ $message }}
                                             </div>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="codigo">{{ __('Código do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" required autofocus autocomplete="codigo" placeholder="Digite o código do beneficiário...">
+                                        @error('codigo')
+                                            <div id="validationServer03Feedback" class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <select name="tipo_beneficiario" id="tipo_beneficiario">
+                                            <option value="" disabled>-- {{__('Selecione o Tipo de Beneficiário')}} --</option>
+                                            <option value="0">Aração</option>
+                                            <option value="1">Carro Pipa</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <hr class="divisor">
