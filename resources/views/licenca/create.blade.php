@@ -89,6 +89,7 @@
                                 <img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}" alt="Requisitar documentos" title="Requisitar documentos">
                                 <strong>Requisitar documentos</strong>
                             </a>
+                            <p class="mt-3" style="font-style: italic;">Observação: A emissão da licença e a solicitação de documentos podem ser feitas na ordem que desejar.</p>
                         </form>
                     </div>
                     <div class="card-footer">
