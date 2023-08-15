@@ -14,7 +14,7 @@
                     <div class="card-body">
                             @csrf
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-12 form-group">
                                     <label for="name">{{ __('Name') }}</label>
                                     <input id="name" class="form-control" type="text" name="name" value="{{ $beneficiario->nome }}" readonly>
                                 </div>
@@ -47,6 +47,16 @@
                                 <div class="col-md-6 form-group">
                                     <label for="orgao_emissor">{{ __('Orgão emissor') }}</label>
                                     <input id="orgao_emissor" class="form-control" type="text" name="orgao_emissor" value="{{$beneficiario->orgao_emissor}}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="codigo">{{ __('Código do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{$beneficiario->codigo}}" readonly>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="tipo_beneficiario" class="form-control @error('tipo_beneficiario') is-invalid @enderror" type="text" name="tipo_beneficiario" value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : 'Carro Pipa' }}" readonly>
                                 </div>
                             </div>
                             <hr class="divisor">

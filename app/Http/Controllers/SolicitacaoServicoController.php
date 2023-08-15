@@ -13,11 +13,20 @@ use PDF;
 class SolicitacaoServicoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $solicitacao_servicos = SolicitacaoServico::all();
+        $buscar = $request->input('buscar');
+
+        if ($buscar != null) {
+            $solicitacao_servicos = SolicitacaoServico::whereHas('beneficiario', function($query) use ($buscar) {
+                $query->where('nome', 'ILIKE', "%{$buscar}%")
+                      ->orWhere('codigo', 'ILIKE', "%{$buscar}%")->orWhere('motorista', 'ILIKE', "%{$buscar}%");
+            })->get();
+        } else {
+            $solicitacao_servicos = SolicitacaoServico::all();
+        }
 
         return view('solicitacaoServicos.index', compact('solicitacao_servicos'));
     }
@@ -26,7 +35,7 @@ class SolicitacaoServicoController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $beneficiarios = Beneficiario::all();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->get();
 
         return view('solicitacaoServicos.create', compact('beneficiarios'));
     }
@@ -59,7 +68,7 @@ class SolicitacaoServicoController extends Controller
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $solicitacao_servico = SolicitacaoServico::find($id);
-        $beneficiarios = Beneficiario::all();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->get();
 
         return view('solicitacaoServicos.edit', compact('solicitacao_servico', 'beneficiarios'));
     }

@@ -12,3 +12,9 @@
     color: #212423;
     text-align: center;
 }
+
+#tipo_beneficiario {
+    border-radius: 5px;
+    padding: 5px;  
+    border: 1px solid #ccc; 
+}

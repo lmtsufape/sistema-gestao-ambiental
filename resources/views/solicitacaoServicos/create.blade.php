@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="beneficiario_id">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select name="beneficiario_id" id="beneficiario_id" class="form-control @error('beneficiario_id') is-invalid @enderror" required>
+                                    <select name="beneficiario_id" id="beneficiario_id" class="form-control selectpicker @error('beneficiario_id') is-invalid @enderror"  data-live-search="true" required>
                                         <option value="" selected disabled>-- {{__('Selecione o Beneficiário')}} --</option>
                                         @foreach ($beneficiarios as $beneficiario)
                                             <option @if(old('beneficiario_id') == $beneficiario->id) selected @endif value="{{$beneficiario->id}}">{{$beneficiario->nome}}</option>

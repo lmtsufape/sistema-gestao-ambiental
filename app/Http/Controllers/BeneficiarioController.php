@@ -18,7 +18,7 @@ class BeneficiarioController extends Controller
         $buscar = $request->input('buscar');
 
         if ($buscar != null) {
-            $beneficiario = Beneficiario::where('nome', 'LIKE', "%{$buscar}%")->get();
+            $beneficiario = Beneficiario::where('nome', 'ILIKE', "%{$buscar}%")->orWhere('codigo', 'ILIKE', "%{$buscar}%")->get();
         } else {
             $beneficiario = Beneficiario::all()->sortBy('nome');
         }
@@ -93,13 +93,25 @@ class BeneficiarioController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('isSecretarioOrBeneficiario', User::class);
-        $beneficiario = Beneficiario::find($id);
-        $endereco = Endereco::find($beneficiario->endereco_id);
-        $telefone = Telefone::find($beneficiario->telefone_id);
-        $beneficiario->delete();
-        $endereco->delete();
-        $telefone->delete();
-        return redirect(route('beneficiarios.index'))->with(['success' => 'Beneficiário excluído com sucesso!']);
+        try {
+            $this->authorize('isSecretarioOrBeneficiario', User::class);
+
+            $beneficiario = Beneficiario::find($id);
+            if (!$beneficiario) {
+                return redirect(route('beneficiarios.index'))->with(['error' => 'Beneficiário não encontrado']);
+            }
+
+            $endereco = Endereco::find($beneficiario->endereco_id);
+            $telefone = Telefone::find($beneficiario->telefone_id);
+
+            // Excluir os registros
+            $beneficiario->delete();
+            $endereco->delete();
+            $telefone->delete();
+
+            return redirect(route('beneficiarios.index'))->with(['success' => 'Beneficiário excluído com sucesso!']);
+        } catch (\Exception $e) {
+            return redirect(route('beneficiarios.index'))->with(['error' => 'Não é possível excluir o beneficiário, pois o mesmo está vinculado a solicitações existentes.']);
+        }
     }
 }

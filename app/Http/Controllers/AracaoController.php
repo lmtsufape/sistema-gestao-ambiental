@@ -9,20 +9,21 @@ use App\Models\Beneficiario;
 
 class AracaoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {   
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $aracao = Aracao::all();
+        $buscar = $request->input('buscar');
 
-        // $buscar = $request->input('buscar');
+        if ($buscar != null) {
+            $aracao = Aracao::whereHas('beneficiario', function($query) use ($buscar) {
+                $query->where('nome', 'ILIKE', "%{$buscar}%")
+                      ->orWhere('codigo', 'ILIKE', "%{$buscar}%");
+            })->get();
+        } else {
+            $aracao = Aracao::all();
+        }
 
-        // if ($buscar != null) {
-        //     $buscar = Beneficiario::where('nome', 'LIKE', "%{$buscar}%")->get();
-        // } else {
-        //     $buscar = Beneficiario::all()->sortBy('nome');
-        // }
-        
         return view('aracao.index', compact('aracao'));
     }
 
@@ -30,7 +31,7 @@ class AracaoController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $beneficiarios = Beneficiario::all();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['aracao'])->get();
 
         return view('aracao.create', compact('beneficiarios'));
     }
@@ -60,7 +61,7 @@ class AracaoController extends Controller
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $aracao = Aracao::find($id);
-        $beneficiarios = Beneficiario::all();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['aracao'])->get();
 
         return view('aracao.edit', compact('aracao', 'beneficiarios'));
     }

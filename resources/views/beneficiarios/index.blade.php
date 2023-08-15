@@ -18,7 +18,7 @@
                             @csrf
                             <div class="form-row mb-3">
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do Beneficiário" value="{{ $buscar }}">
+                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome ou o código do Beneficiário" value="{{ $buscar }}">
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
@@ -58,9 +58,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Nome</th>
-                                                        <th scope="col">NIS</th>
+                                                        <th scope="col">Tipo</th>
                                                         <th scope="col">CPF</th>
                                                         <th scope="col">RG</th>
+                                                        <th scope="col">Código</th>
                                                         <th scope="col">Ações</th>
                                                     </tr>
                                                 </thead>
@@ -68,9 +69,10 @@
                                                     @foreach ($beneficiario as $item)
                                                         <tr>
                                                             <td>{{ $item->nome }}</td>
-                                                            <td>{{ $item->nis }}</td>
+                                                            <td>@if($item->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao']) Aração @else Carro Pipa @endif</td>
                                                             <td>{{ $item->cpf }}</td>
                                                             <td>{{ $item->rg }} {{ $item->orgao_emissor }}</td>
+                                                            <td>{{ $item->codigo }}</td>
                                                             <td>
                                                                 <a href="{{ route('beneficiarios.show', ['id' => $item->id]) }}">
                                                                     <img class="icon-licenciamento" width="20px;" src="{{ asset('img/Visualizar.svg') }}" alt="Visualizar Beneficiário" title="Visualizar Beneficiário">

@@ -17,11 +17,11 @@
                         </div>
                     </div>
                     @can('isSecretarioOrBeneficiario', \App\Models\User::class)
-                        <form>
+                        <form action="{{ route('aracao.index') }}" method="get">
                             @csrf
                             <div class="form-row mb-3">
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome do Beneficiário">
+                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome ou o código do Beneficiário">
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
