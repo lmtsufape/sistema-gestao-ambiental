@@ -41,17 +41,17 @@
                                         <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12651.htm" target="blank">Lei nº 12.651/2012</a> – Dispõe sobre a proteção da vegetação nativa e dá outras providências (Código Florestal);</li>
                                         <li><a href="https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp140.htm" target="blank">Lei Complementar 140 de 2011</a> – Fixa normas para a cooperação entre a União, os Estados, o Distrito Federal e os Municípios nas ações administrativas decorrentes do exercício da competência comum relativas à proteção das paisagens naturais notáveis, à proteção do meio ambiente, ao combate à poluição em qualquer de suas formas e à preservação das florestas, da fauna e da flora; e altera a Lei nº 6.938/81;</li>
                                         <li><a href="https://www.planalto.gov.br/ccivil_03/LEIS/L9605.htm" target="blank">Lei nº 9605/1998</a> – Dispõe sobre as sanções penais e administrativas derivadas de condutas atividades lesivas ao meio ambiente, e dá outras providências;</li>
-                                        <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/decreto/d6514.htm" target="blank">Lei nº 6.514/2008</a> – Dispõe sobre as infrações e sanções administrativas ao meio ambiente, estabelece o processo administrativo federal para apuração destas infrações, e dá outras providências.</li>
+                                        <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/decreto/d6514.htm" target="blank">Lei nº 6.514/2008</a> – Dispõe sobre as infrações e sanções administrativas ao meio ambiente, estabelece o processo administrativo federal para apuração destas infrações, e dá outras providências;</li>
                                     </ol>
                                 </li>
                                 <li class="scope">TERMOS DE REFERÊNCIA
                                     <ol class="pl-3">
                                         <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - ESTUDO DE IMPACTO DE VIZINHANÇA.pdf" target="blank">Termo Estudo de Impacto de Vizinhança</a> - Dispõe subsidiar a análise da viabilidade ambiental
                                             (localização e concepção) de empreendimentos e atividades quando o seu criterio for
-                                            considerado potencial ou efetivamente causador de significativa degradação do meio ambiente.</li>
+                                            considerado potencial ou efetivamente causador de significativa degradação do meio ambiente;</li>
                                         <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - PCA.pdf" target="blank">Termo Plano de Controle Ambiental</a> - Dispõe orientar a elaboração do Plano de Controle Ambiental,
                                             necessário no âmbito do Licenciamento Ambiental e para o gerenciamento das atividades
-                                            potencialmente poluidoras de empreendimentos diversos.</li>
+                                            potencialmente poluidoras de empreendimentos diversos;</li>
                                     </ol>
                                 </li>
                                 <li class="scope">CARTILHA DE ARBORIZAÇÃO
