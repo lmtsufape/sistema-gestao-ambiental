@@ -121,11 +121,14 @@ class UserPolicy
         if ($this->isAnalista($user)) {
             $financa = TipoAnalista::where('tipo', TipoAnalista::TIPO_ENUM['financa'])->first();
 
-            return $user->tipoAnalista()->where('tipo_analista_id', $financa->id)->first() != null;
+            if ($financa !== null) {
+                return $user->tipoAnalista()->where('tipo_analista_id', $financa->id)->exists();
+            }
         }
 
         return false;
     }
+
 
     /**
      * Checa se o usuário logado é um analista de que pode definir mudas.
