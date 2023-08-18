@@ -228,12 +228,12 @@
                                                     <td>{{__('Aguardando visita')}}</td>
                                                 @endif
                                             @else
-                                            @if(empty($visita->data_realizada))
-                                                <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
-                                                @else
-                                                    <td>{{__('Aguardando visita')}}</td>
+                                                @if(empty($visita->data_realizada))
+                                                    <td>{{date('d/m/Y', strtotime($visita->data_realizada))}}</td>
+                                                    @else
+                                                        <td>{{__('Aguardando visita')}}</td>
+                                                    @endif
                                                 @endif
-                                            @endif
 
                                             @if($visita->requerimento != null )
                                                 <td>{{$visita->requerimento->empresa->nome}}</td>

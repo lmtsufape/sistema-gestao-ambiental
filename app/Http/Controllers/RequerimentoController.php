@@ -79,7 +79,7 @@ class RequerimentoController extends Controller
         if($busca != null){
             $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
             $empresas = $empresas->pluck('id');
-            $requerimentos = Requerimento::whereIn('empresa_id', $empresas)->paginate(20);
+            $requerimentos = Requerimento::whereIn('empresa_id', $empresas)->paginate(100);
         }
 
         $requerimento_documento = RequerimentoDocumento::all();
