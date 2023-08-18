@@ -13,7 +13,8 @@ class Beneficiario extends Model {
 
     public const ROLE_ENUM = [
         'aracao' => 0,
-        'carro_pipa' => 1
+        'carro_pipa' => 1,
+        'ambos' => 2
     ];
 
     protected $fillable = [

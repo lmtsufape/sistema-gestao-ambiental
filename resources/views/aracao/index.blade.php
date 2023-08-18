@@ -61,6 +61,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Beneficiário</th>
+                                                        <th scope="col">Código</th>
                                                         <th scope="col">Cultura</th>
                                                         <th scope="col">Localização</th>
                                                         <th scope="col">Hectares</th>
@@ -72,6 +73,7 @@
                                                     @foreach ($aracao as $item)
                                                         <tr>
                                                             <td>{{ $item->beneficiario->nome }}</td>
+                                                            <td>{{ $item->beneficiario->codigo }}</td>
                                                             <td>{{ $item->cultura }}</td>
                                                             <td>{{ $item->ponto_localizacao }}</td>
                                                             <td>{{ $item->quantidade_ha }}</td>

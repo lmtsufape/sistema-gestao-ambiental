@@ -28,8 +28,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\BeneficiarioController;
 use App\Http\Controllers\AracaoController;
+use App\Http\Controllers\PipeiroController;
 use App\Http\Controllers\SolicitacaoServicoController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +121,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/beneficiarios/{id}/update', [BeneficiarioController::class, 'update'])->name('beneficiarios.update');
     Route::delete('/beneficiarios/{id}/destroy', [BeneficiarioController::class, 'destroy'])->name('beneficiarios.destroy');
 
+    Route::resource('pipeiro', PipeiroController::class)->except('index');
+    Route::get('/pipeiros/', [PipeiroController::class, 'index'])->name('pipeiros.index');
+    Route::get('/pipeiros/create', [PipeiroController::class, 'create'])->name('pipeiros.create');
+    Route::post('/pipeiros/store', [PipeiroController::class, 'store'])->name('pipeiros.store');
+    Route::get('/pipeiros/{id}/show', [PipeiroController::class, 'show'])->name('pipeiros.show');
+    Route::get('/pipeiros/{id}/edit', [PipeiroController::class, 'edit'])->name('pipeiros.edit');
+    Route::put('/pipeiros/{id}/update', [PipeiroController::class, 'update'])->name('pipeiros.update');
+    Route::delete('/pipeiros/{id}/destroy', [PipeiroController::class, 'destroy'])->name('pipeiros.destroy');
+
     Route::resource('aracao', AracaoController::class)->except('index');
     Route::get('/aracao/', [AracaoController::class, 'index'])->name('aracao.index');
     Route::get('/aracao/create', [AracaoController::class, 'create'])->name('aracao.create');
@@ -140,6 +149,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('/solicitacao_servicos/{id}/destroy', [SolicitacaoServicoController::class, 'destroy'])->name('solicitacao_servicos.destroy');
     Route::put ('/solicitacao_servicos/{id}/AtualizarDataSaida', [SolicitacaoServicoController::class, 'AtualizarDataSaida'])->name('solicitacao_servicos.AtualizarDataSaida');
     Route::put ('/solicitacao_servicos/{id}/AtualizarDataEntrega', [SolicitacaoServicoController::class, 'AtualizarDataEntrega'])->name('solicitacao_servicos.AtualizarDataEntrega');
+    Route::post ('/solicitacao_servicos/gerarPedidosServicos', [SolicitacaoServicoController::class, 'gerarPedidosServicos'])->name('solicitacao_servicos.gerarPedidosServicos');
     
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
