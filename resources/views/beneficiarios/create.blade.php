@@ -101,6 +101,7 @@
                                             <option value="" disabled>-- {{__('Selecione o Tipo de Beneficiário')}} --</option>
                                             <option value="0">Aração</option>
                                             <option value="1">Carro Pipa</option>
+                                            <option value="2">Ambos</option>
                                         </select>
                                     </div>
                                 </div>

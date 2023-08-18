@@ -17,25 +17,52 @@ class SolicitacaoServicoController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
+        $filtro = $request->input('filtro', 'default_value');
+
+        $solicitacao_servicos = SolicitacaoServico::all();
+
+        switch ($filtro) {
+            case 'andamento':
+                $solicitacao_servicos = $solicitacao_servicos->where('status', 1);
+                break;
+            case 'finalizados':
+                $solicitacao_servicos = $solicitacao_servicos->where('status', 3);
+                break;
+            case 'cancelados':
+                $solicitacao_servicos = $solicitacao_servicos->where('status', 6);
+                break;
+        }
+
         $buscar = $request->input('buscar');
 
         if ($buscar != null) {
-            $solicitacao_servicos = SolicitacaoServico::whereHas('beneficiario', function($query) use ($buscar) {
+            $solicitacao_servicos = SolicitacaoServico::whereHas('beneficiario', function ($query) use ($buscar) {
                 $query->where('nome', 'ILIKE', "%{$buscar}%")
-                      ->orWhere('codigo', 'ILIKE', "%{$buscar}%")->orWhere('motorista', 'ILIKE', "%{$buscar}%");
+                    ->orWhere('codigo', 'ILIKE', "%{$buscar}%")->orWhere('motorista', 'ILIKE', "%{$buscar}%");
             })->get();
         } else {
             $solicitacao_servicos = SolicitacaoServico::all();
         }
 
-        return view('solicitacaoServicos.index', compact('solicitacao_servicos'));
+        $buscar = $request->input('buscar');
+
+        if ($buscar != null) {
+            $solicitacao_servicos = SolicitacaoServico::whereHas('beneficiario', function ($query) use ($buscar) {
+                $query->where('nome', 'ILIKE', "%{$buscar}%")
+                    ->orWhere('codigo', 'ILIKE', "%{$buscar}%")->orWhere('motorista', 'ILIKE', "%{$buscar}%");
+            })->get();
+        } else {
+            $solicitacao_servicos = SolicitacaoServico::all();
+        }
+
+        return view('solicitacaoServicos.index', compact('solicitacao_servicos'), ['filtro' => 'andamento']);
     }
 
     public function create()
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->get();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->orWhere('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['ambos'])->get();
 
         return view('solicitacaoServicos.create', compact('beneficiarios'));
     }
@@ -54,7 +81,7 @@ class SolicitacaoServicoController extends Controller
     public function show($id)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
+
         $solicitacao_servico = SolicitacaoServico::find($id);
         $beneficiario = Beneficiario::find($solicitacao_servico->beneficiario_id);
         $endereco = Endereco::find($beneficiario->endereco_id);
@@ -68,7 +95,7 @@ class SolicitacaoServicoController extends Controller
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $solicitacao_servico = SolicitacaoServico::find($id);
-        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->get();
+        $beneficiarios = Beneficiario::where('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['carro_pipa'])->orWhere('tipo_beneficiario', '=', Beneficiario::ROLE_ENUM['ambos'])->get();
 
         return view('solicitacaoServicos.edit', compact('solicitacao_servico', 'beneficiarios'));
     }
@@ -117,20 +144,24 @@ class SolicitacaoServicoController extends Controller
 
         return redirect()->route('solicitacao_servicos.index')->with('success', 'Solicitação de serviço excluída com sucesso!');
     }
-    
 
-    // public function gerarPedidosServicos()
-    // {
-    //     $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
-    //     $solicitacao_servicos = SolicitacaoServico::where('status', 1)->get();
 
-    //     if (empty($solicitacao_servicos)) {
-    //         return redirect()->route('solicitacao_servicos.index')->with('error', 'Não há solicitações de serviço para gerar o PDF!');
-    //     } else {
-    //         $pdf = PDF::loadView('solicitacaoServicos.PDF.pedidos_carro_pipa', compact('solicitacao_servicos'));
-    //         $pdf->setOption('header-html', view('solicitacaoServicos.PDF.header')->render());
-    //         return $pdf->download('pedidos_carro_pipa.pdf');
-    //     }
-    // }
+    public function gerarPedidosServicos(Request $request)
+    {
+        $this->authorize('isSecretarioOrBeneficiario', User::class);
+        if ($request->input('selected_items') == null) {
+            return redirect()->route('solicitacao_servicos.index')
+                ->with('error', 'Não há beneficiário válidos para gerar o PDF!');
+        }
+        $ids = $request->input('selected_items');
+        $solicitacao_servicos = SolicitacaoServico::whereIn('id', $ids)->get();
+
+        if ($solicitacao_servicos->isEmpty()) {
+            return redirect()->route('solicitacao_servicos.index')
+                ->with('error', 'Não há beneficiário válidos para gerar o PDF!');
+        } else {
+            $pdf = PDF::loadView('solicitacaoServicos.PDF.pedidos_carro_pipa', compact('solicitacao_servicos'));
+            return $pdf->download('pedidos_servicos.pdf');
+        }
+    }
 }

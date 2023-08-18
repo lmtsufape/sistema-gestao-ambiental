@@ -105,12 +105,9 @@
                                         <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <select name="tipo_beneficiario" id="tipo_beneficiario">
                                             <option value="" disabled>-- {{__('Selecione o Tipo de Beneficiário')}} --</option>
-                                            @foreach (\App\Models\Beneficiario::ROLE_ENUM as $roleName => $roleId)
-                                                <option value="{{ $roleId }}" 
-                                                    @if(old('tipo_beneficiario', $beneficiario->tipo_beneficiario) == $roleId) selected @endif>
-                                                    {{ $roleId == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : 'Carro Pipa' }}
-                                                </option>
-                                            @endforeach
+                                            <option value="0" {{ $beneficiario->tipo_beneficiario == 0 ? 'selected' : '' }}>Aração</option>
+                                            <option value="1" {{ $beneficiario->tipo_beneficiario == 1 ? 'selected' : '' }}>Carro Pipa</option>
+                                            <option value="2" {{ $beneficiario->tipo_beneficiario == 2 ? 'selected' : '' }}>Ambos</option>
                                         </select>
                                     </div>
                                 </div>

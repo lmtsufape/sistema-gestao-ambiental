@@ -36,13 +36,14 @@ class SolicitacaoServico extends Model
         return $this->belongsTo(Beneficiario::class, 'beneficiario_id');
     }
 
+    public function motorista() {
+        return $this->belongsTo(Pipeiro::class, 'motorista_id');
+    }
+
     public function setAtributes($request){
         $this->data_solicitacao = $request['data_solicitacao'];
         $this->data_saida = $request['data_saida'];
         $this->data_entrega = $request['data_entrega'];
-        $this->motorista = $request['motorista'];
-        $this->capacidade_tanque = $request['capacidade_tanque'];
-        $this->nome_apelido = $request['nome_apelido'];
         $this->beneficiario_id = $request['beneficiario_id'];
         $this->observacao = $request['observacao'];
     }

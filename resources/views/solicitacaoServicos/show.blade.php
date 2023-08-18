@@ -24,28 +24,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="motorista">{{ __('Motorista') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="motorista" class="form-control" type="string" name="motorista" value="{{ $solicitacao_servico->motorista }}" readonly>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="capacidade_tanque">{{ __('Capacidade do Tanque') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="capacidade_tanque" class="form-control" type="string" name="capacidade_tanque" value="{{ $solicitacao_servico->capacidade_tanque }}" readonly>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="nome_apelido">{{ __('Nome (Apelido)') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="nome_apelido" class="form-control" type="string" name="nome_apelido" value="{{ $solicitacao_servico->nome_apelido }}" readonly>
+                                    <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="beneficiario">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="beneficiario" class="form-control" type="string" name="beneficiario" value="{{ $solicitacao_servico->beneficiario->nome }}" readonly>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
                                 </div>
                             </div>
                             <hr class="divisor">
