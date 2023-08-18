@@ -186,9 +186,9 @@ class LicencaController extends Controller
     }
 
     public function requisitarDocumentos(Request $request, $requerimento_id)
-{   
-    // dd($request->all());
-    $this->authorize('isSecretario', auth()->user());
+    {   
+    // dd($request);
+    // $this->authorize('isSecretarioOrIsAnalista', auth()->user());
 
     $request->validate([
         'documentos' => 'nullable',
