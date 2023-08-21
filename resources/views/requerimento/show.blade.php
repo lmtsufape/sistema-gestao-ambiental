@@ -61,13 +61,19 @@
                                         <a class="btn btn-color-dafault rounded text-white" href="{{route('requerimentos.protocolo', $requerimento)}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;">Protocolo</a>
                                     @endif
                                 @endcan
+                               @can('isAnalista', \App\Models\User::class)
+                                    @cannot('isProtocolista', \App\Models\User::class)
+                                        <a class="btn" data-toggle="modal" data-target="#documentos-analista" style="text-align: left;">
+                                            <img class="icon-licenciamento" src="{{ asset('img/add-documents-svgrepo-com.svg') }}" alt="Requisitar documentos" title="Requisitar documentos">
+                                        </a>
+                                        @if (!empty($requerimento_documento->where('requerimento_id', $requerimento->id)->first()))
+                                            <a href="{{ route('requerimento.exigencias.documentacao', $requerimento->id) }}" style="cursor: pointer; margin-left: 9px;">
+                                                <img class="icon-licenciamento" width="25px;" src="{{ asset('img/alert-svgrepo-com.svg') }}" alt="Exigências de documentação" title="Exigências de documentação">
+                                            </a>
+                                        @endif
+                                    @endcannot
+                                @endcan
                                 @can('isAnalista', \App\Models\User::class)
-                                    <a class="btn" data-toggle="modal" data-target="#documentos-analista" style="text-align: left;">
-                                        <img class="icon-licenciamento" src="{{asset('img/add-documents-svgrepo-com.svg')}}" alt="Requisitar documentos" title="Requisitar documentos">
-                                    </a>
-                                    @if (!empty($requerimento_documento->where('requerimento_id', $requerimento->id)->first()))
-                                        <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
-                                    @endif
                                     @if ($requerimento->documentos->count() > 0)
                                         <a class="btn" href="{{route('requerimento.documentacao', $requerimento->id)}}"><img class="icon-licenciamento" src="{{asset('img/documents-svgrepo-com.svg')}}"  alt="Analisar documentos" title="Analisar documentos"></a>
                                     @endif
