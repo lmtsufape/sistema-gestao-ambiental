@@ -115,12 +115,19 @@ class BoletoAvulsoController extends Controller
         $xmlBoletoController = new XMLCoderController();
         $empresa = Empresa::where('cpf_cnpj', $request->cpf_cnpj)->first();
 
+        if(!is_null($request->mensagem_compensacao)){
+            $mensagem_compensacao = $request->mensagem_compensacao;
+        }
+        else{
+            return redirect()->route('boletosAvulsos.index')->withErrors(['erro' => 'Ocorreu um erro com a mensagem de compensação.']);
+        }
+
         if(is_null($empresa)){
             $empresa = $this->criar_user_padrao($request);
         }
 
         try {
-            $boleto = $xmlBoletoController->gerarIncluirBoletoMulta($empresa, $valor_multa);
+            $boleto = $xmlBoletoController->gerarIncluirBoletoMulta($empresa, $valor_multa, $mensagem_compensacao);
             $xmlBoletoController->incluirBoletoAvulsoRemessa($boleto);
             $multa = BoletoAvulso::where('id', $boleto->id)->first();
             return redirect()->away($multa->URL);

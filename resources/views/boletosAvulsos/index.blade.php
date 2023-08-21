@@ -165,7 +165,7 @@
                                                 </div>
                                             @enderror
                                             <br>
-                                            <label for="mensagem_compensacao">{{ __('Mensagem de Compensação') }}</label>
+                                            <label for="mensagem_compensacao">{{ __('Mensagem de Compensação') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <textarea id="mensagem_compensacao" class="form-control @error('mensagem_compensacao') is-invalid @enderror" type="text" name="mensagem_compensacao" required></textarea>
                                             @error('mensagem_compensacao')
                                             <div class="invalid-feedback">
