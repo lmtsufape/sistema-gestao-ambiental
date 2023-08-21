@@ -155,7 +155,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="form-row">
+                                <div class="form-row col-md-12">
                                     <div class="col-md-6">
                                         <label for="multa">{{ __('Valor da multa (R$)') }}<span style="color: red; font-weight: bold;">*</span></label>
                                             <input type="number" step="0.01" id="multa" min="50" max="100000" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
@@ -164,7 +164,16 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                            <br>
+                                            <label for="mensagem_compensacao">{{ __('Mensagem de Compensação') }}</label>
+                                            <textarea id="mensagem_compensacao" class="form-control @error('mensagem_compensacao') is-invalid @enderror" type="text" name="mensagem_compensacao" required></textarea>
+                                            @error('mensagem_compensacao')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                     </div>
+                                    
                                     <div class="col-md-6">
                                         <div style="width:100%; height:396px; display: inline-block;  background-color: #f3f3f3; overflow:auto;">
                                             <h3 style="text-align: center; margin-top: 10px;">INFRAÇÕES</h3>
@@ -178,6 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                    
                             </form>
                         </div>
                         <div class="card-footer">
