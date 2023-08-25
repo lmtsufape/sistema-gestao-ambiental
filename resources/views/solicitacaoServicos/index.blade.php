@@ -9,7 +9,8 @@
                         </div>
                         <div class="col-xs-4">
                             <a title="Solicitar serviço" class="ml-2" href="{{ route('solicitacao_servicos.create') }}">
-                                <img class="icon-licenciamento" src="{{ asset('img/Grupo 1666.svg') }}" style="height: 35px" alt="Icone de solicitação de serviço">
+                                <img class="icon-licenciamento" src="{{ asset('img/Grupo 1666.svg') }}" style="height: 35px"
+                                    alt="Icone de solicitação de serviço">
                             </a>
                         </div>
                     </div>
@@ -18,10 +19,12 @@
                             @csrf
                             <div class="form-row mb-3">
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="buscar" placeholder="Digite o nome do Beneficiário, Código ou nome do Motorista">
+                                    <input type="text" class="form-control" name="buscar"
+                                        placeholder="Digite o nome do Beneficiário, Código ou nome do Motorista">
                                 </div>
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                                    <button type="submit" class="btn"
+                                        style="background-color: #00883D; color: white;">Buscar</button>
                                 </div>
                             </div>
                         </form>
@@ -50,7 +53,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link @if ($filtro == 'andamento') active @endif" id="andamento-tab"
                                         data-toggle="tab" href="#andamento" role="tab" aria-controls="andamento"
-                                        aria-selected="@if ($filtro == 'andamento') true @else false @endif">Em andamento</a>
+                                        aria-selected="@if ($filtro == 'andamento') true @else false @endif">Em
+                                        andamento</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @if ($filtro == 'finalizados') active @endif" id="finalizado-tab"
@@ -139,9 +143,43 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <button type="submit" class="btn"
-                                            style="background-color: #00883D; color: white;">Gerar nota</button>
+                                        <input type="hidden" name="motorista_id" id="motorista_id" value="">
+                                        <button type="button" class="btn btn-success btn-color-dafault submeterFormBotao"
+                                            style="background-color: #00883D; color: white;" data-toggle="modal"
+                                            data-target="#modalStaticAtribuirMotorista_">Gerar nota</button>
+                                        <div class="modal fade" id="modalStaticAtribuirMotorista_" data-backdrop="static"
+                                            data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background-color: #00883D;">
+                                                        <h5 class="modal-title" id="staticBackdropLabel"
+                                                            style="color: white;">Selecione um Motorista</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                            <select name="motorista_id" class="form-control" required
+                                                                onchange="updateMotoristaId(this)">
+                                                                <option value="" disabled selected>Selecione um
+                                                                    motorista</option>
+                                                                @foreach ($motoristas as $motorista)
+                                                                    <option value="{{ $motorista->id }}">
+                                                                        {{ $motorista->nome_apelido }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-success" style="background-color: #00883D; color: white;">Gerar nota</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -359,5 +397,13 @@
                 @endforeach
             </div>
         </div>
+        @push('scripts')
+            <script>
+                function updateMotoristaId(select) {
+                    var motoristaId = select.value;
+                    document.getElementById('motorista_id').value = motoristaId;
+                }
+            </script>
+        @endpush
     @endsection
 </x-app-layout>

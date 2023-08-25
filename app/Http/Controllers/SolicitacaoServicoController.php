@@ -8,6 +8,7 @@ use App\Models\SolicitacaoServico;
 use App\Models\Endereco;
 use App\Models\Telefone;
 use Illuminate\Http\Request;
+use App\Models\Pipeiro;
 use PDF;
 
 class SolicitacaoServicoController extends Controller
@@ -20,6 +21,8 @@ class SolicitacaoServicoController extends Controller
         $filtro = $request->input('filtro', 'default_value');
 
         $solicitacao_servicos = SolicitacaoServico::all();
+
+        $motoristas = Pipeiro::all();
 
         switch ($filtro) {
             case 'andamento':
@@ -55,7 +58,7 @@ class SolicitacaoServicoController extends Controller
             $solicitacao_servicos = SolicitacaoServico::all();
         }
 
-        return view('solicitacaoServicos.index', compact('solicitacao_servicos'), ['filtro' => 'andamento']);
+        return view('solicitacaoServicos.index', compact('solicitacao_servicos','motoristas'), ['filtro' => 'andamento']);
     }
 
     public function create()
@@ -74,6 +77,7 @@ class SolicitacaoServicoController extends Controller
         $solicitacao_servico = new SolicitacaoServico();
         $solicitacao_servico->setAtributes($request);
         $solicitacao_servico->save();
+        $motoristas = Pipeiro::all();
 
         return redirect()->route('solicitacao_servicos.index')->with('sucess', 'Solicitação de serviço cadastrada com sucesso!');
     }
@@ -81,7 +85,6 @@ class SolicitacaoServicoController extends Controller
     public function show($id)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
-
         $solicitacao_servico = SolicitacaoServico::find($id);
         $beneficiario = Beneficiario::find($solicitacao_servico->beneficiario_id);
         $endereco = Endereco::find($beneficiario->endereco_id);
@@ -107,6 +110,7 @@ class SolicitacaoServicoController extends Controller
         $solicitacao_servico = SolicitacaoServico::find($id);
         $solicitacao_servico->setAtributes($request);
         $solicitacao_servico->update();
+        $motoristas = Pipeiro::all();
 
         return redirect()->route('solicitacao_servicos.index')->with('success', 'Solicitação de serviço atualizada com sucesso!');
     }
@@ -119,6 +123,7 @@ class SolicitacaoServicoController extends Controller
         $solicitacao_servico->data_saida = $request['data_saida'];
         $solicitacao_servico->status = 2;
         $solicitacao_servico->update();
+        $motoristas = Pipeiro::all();
 
         return redirect()->route('solicitacao_servicos.index')->with('success', 'Data de saída atualizada com sucesso!');
     }
@@ -131,6 +136,7 @@ class SolicitacaoServicoController extends Controller
         $solicitacao_servico->data_entrega = $request['data_entrega'];
         $solicitacao_servico->status = 3;
         $solicitacao_servico->update();
+
 
         return redirect()->route('solicitacao_servicos.index')->with('success', 'Data de entrega atualizada com sucesso!');
     }
@@ -147,21 +153,24 @@ class SolicitacaoServicoController extends Controller
 
 
     public function gerarPedidosServicos(Request $request)
-    {
-        $this->authorize('isSecretarioOrBeneficiario', User::class);
-        if ($request->input('selected_items') == null) {
-            return redirect()->route('solicitacao_servicos.index')
-                ->with('error', 'Não há beneficiário válidos para gerar o PDF!');
-        }
-        $ids = $request->input('selected_items');
-        $solicitacao_servicos = SolicitacaoServico::whereIn('id', $ids)->get();
-
-        if ($solicitacao_servicos->isEmpty()) {
-            return redirect()->route('solicitacao_servicos.index')
-                ->with('error', 'Não há beneficiário válidos para gerar o PDF!');
-        } else {
-            $pdf = PDF::loadView('solicitacaoServicos.PDF.pedidos_carro_pipa', compact('solicitacao_servicos'));
-            return $pdf->download('pedidos_servicos.pdf');
-        }
+{
+    $this->authorize('isSecretarioOrBeneficiario', User::class);
+    $motoristaId = $request->input('motorista_id');
+    $motorista = Pipeiro::find($motoristaId);
+    if ($request->input('selected_items') == null) {
+        return redirect()->route('solicitacao_servicos.index')
+            ->with('error', 'Não há beneficiários válidos para gerar o PDF!');
     }
+    $ids = $request->input('selected_items');
+    $solicitacao_servicos = SolicitacaoServico::whereIn('id', $ids)->get();
+
+    if ($solicitacao_servicos->isEmpty()) {
+        return redirect()->route('solicitacao_servicos.index')
+            ->with('error', 'Não há beneficiários válidos para gerar o PDF!');
+    } else {
+        $pdf = PDF::loadView('solicitacaoServicos.PDF.pedidos_carro_pipa', compact('solicitacao_servicos', 'motorista'));
+        return $pdf->download('pedidos_servicos.pdf');
+        
+    }
+}
 }
