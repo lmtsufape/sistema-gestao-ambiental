@@ -60,7 +60,7 @@ class XMLCoderController extends Controller
         return $boleto;
     }
 
-    public function gerarIncluirBoletoMulta(Empresa $empresa, $multa)
+    public function gerarIncluirBoletoMulta(Empresa $empresa, $multa, $mensagens_compensacao)
     {   
         $pagador = new Pessoa();
         $beneficiario = new Pessoa();
@@ -88,7 +88,7 @@ class XMLCoderController extends Controller
             'valor_juros_mora' => 0.01,
             'data_multa' => $data_vencimento,
             'valor_multa' => 0.79,
-            'mensagens_compensacao' => ["MULTA POR INFRAÇÕES"],
+            'mensagens_compensacao' => [$mensagens_compensacao],
         ]);
 
         $boleto->salvarArquivoAvulso($boleto->gerarRemessaAvulso());
