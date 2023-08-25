@@ -157,17 +157,25 @@
                                 </a>
                             </li>
 
-                            <li class="mb-2 @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) active @endif">
-                                <button href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos*') || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
+                            <li class="mb-2 @if(request()->routeIs('requerimentos.*') || request()->routeIs('documentos.*') || request()->routeIs('valores.*')) active @endif">
+                                <button href="#licenciamentoSubmenu" data-toggle="collapse" @if(request()->routeIs('requerimentos.*') || request()->routeIs('documentos.*') || request()->routeIs('valores.*'))
+                                    aria-expanded="true"
+                                    @else
+                                    aria-expanded="false"
+                                    @endif
+                                    class="btn btn-toggle d-flex justify-content-between w-100">
                                     Licenciamento
                                 </button>
+
                                 <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('requerimentos*')  || request()->routeIs('boletos*') || request()->routeIs('documentos*') || request()->routeIs('valores*')) show @endif" id="licenciamentoSubmenu">
                                     <li class=" @if(request()->routeIs('requerimentos*')) active @endif">
                                         <a href="{{route('requerimentos.index', 'atuais')}}">Requerimentos</a>
                                     </li>
-                                    <li class=" @if(request()->routeIs('boletos*')) active @endif">
+
+                                    <li class="@if(request()->routeIs('boletos.index')) active @endif">
                                         <a href="{{route('boletos.index', 'pendentes')}}">Pagamentos</a>
                                     </li>
+
                                     <li class=" @if(request()->routeIs('documentos*')) active @endif">
                                         <a href="{{route('documentos.index')}}" @if(request()->routeIs('documentos*')) @endif >Definição de documentos</a>
                                     </li>
@@ -177,9 +185,8 @@
                                 </ul>
                             </li>
 
-
-                            <li class="mb-2 @if(request()->routeIs('boletosAvulsos*')) active @endif">
-                                <button href="#licenciamentoSubmenu1" data-toggle="collapse" @if(request()->routeIs('boletosAvulsos*'))
+                            <li class="mb-2 @if(request()->routeIs('boletosAvulsos.*')) active @endif">
+                                <button href="#licenciamentoSubmenu1" data-toggle="collapse" @if(request()->routeIs('boletosAvulsos.*'))
                                     aria-expanded="true"
                                     @else
                                     aria-expanded="false"
@@ -187,16 +194,15 @@
                                     class="btn btn-toggle d-flex justify-content-between w-100">
                                     Boletos Avulsos
                                 </button>
-                                <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('boletos*')) show @endif" id="licenciamentoSubmenu1">
-                                    <li class="@if(request()->routeIs('boletosAvulsos*')) active @endif">
+                                <ul class="btn-toggle-nav collapse list-unstyled fw-normal pb-1 small @if(request()->routeIs('boletosAvulsos.*')) show @endif" id="licenciamentoSubmenu1">
+                                    <li class="@if(request()->routeIs('boletosAvulsos.index')) active @endif">
                                         <a href="{{ route('boletosAvulsos.index') }}">Gerar boletos avulsos</a>
                                     </li>
-                                    <li class="@if(request()->routeIs('boletosAvulsos*')) active @endif">
+                                    <li class="@if(request()->routeIs('boletosAvulsos.listar_boletos')) active @endif">
                                         <a href="{{ route('boletosAvulsos.listar_boletos', 'pendentes') }}">Pagamentos de boletos avulsos</a>
                                     </li>
                                 </ul>
                             </li>
-
 
                             <li class="mb-2 item-align @if(request()->routeIs('denuncias*')) active @endif">
                                 <a href="{{route('denuncias.index', 'pendentes')}}">
