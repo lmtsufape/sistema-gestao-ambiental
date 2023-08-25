@@ -2,51 +2,32 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             padding: 15px;
             font-size: 10px;
         }
-        h1 {
-            color: #444;
-            text-align: center;
-            border-bottom: 1px solid #444;
-            padding-bottom: 5px;
-            font-size: 18px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background-color: #f9f9f9;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 5px;
-            text-align: left;
-            font-size: 9px;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 10px;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
         .header {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 3px 15px;
+            background-color: #f8f9fa;
+            padding: 20px 0;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #d3d3d3;
         }
-        .header h1 {
-            font-size: 20px;
-            margin: 0;
+        .table-container {
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 16px;
+            margin-bottom: 30px;
         }
     </style>
 </head>
@@ -55,27 +36,34 @@
         <h1>SECRETARIA DE DESENVOLVIMENTO RURAL E MEIO AMBIENTE</h1>
     </div>
 
-    <h1>ORDEM DE SERVIÇOS - CARROS PIPAS</h1>
+    <div class="container">
+        <h1 class="text-center">Ordem de Serviços - Carros Pipas</h1>
+        <h3 class="text-center">Motorista/Apelido: {{ $motorista->motorista }}/{{$motorista->nome_apelido}}, Placa: </h3>
+        
+    </div>
 
-    <table>
-        <tr>
-            <th>COD</th>
-            <th>Motorista</th>
-            <th>Nome (Apelido)</th>
-            <th>Endereço/Referência</th>
-            <th>Contato</th>
-            <th>Solicitante</th>
-        </tr>
-        @foreach ($solicitacao_servicos as $solicitacao_servico)
-            <tr>
-                <td>{{ $solicitacao_servico->beneficiario->codigo }}</td>
-                <td>{{ $solicitacao_servico->motorista }}</td>
-                <td>{{ $solicitacao_servico->nome_apelido }}</td>
-                <td>{{ $solicitacao_servico->beneficiario->endereco->rua}}, {{ $solicitacao_servico->beneficiario->endereco->numero }} - {{ $solicitacao_servico->beneficiario->endereco->bairro }} - {{ $solicitacao_servico->beneficiario->endereco->cidade }}/{{ $solicitacao_servico->beneficiario->endereco->uf }}</td>
-                <td>{{ $solicitacao_servico->beneficiario->telefone->numero }}</td>
-                <td>{{ $solicitacao_servico->beneficiario->nome }}</td>
-            </tr>
-        @endforeach
-    </table>
+    <div class="container table-container">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">COD</th>
+                    <th scope="col">Endereço/Referência</th>
+                    <th scope="col">Contato</th>
+                    <th scope="col">Solicitante</th>
+                    <th scope="col">Data Recebimento</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($solicitacao_servicos as $solicitacao_servico)
+                    <tr>
+                        <td>{{ $solicitacao_servico->beneficiario->codigo }}</td>
+                        <td>{{ $solicitacao_servico->beneficiario->endereco->rua}}, {{ $solicitacao_servico->beneficiario->endereco->numero }} - {{ $solicitacao_servico->beneficiario->endereco->bairro }} - {{ $solicitacao_servico->beneficiario->endereco->cidade }}/{{ $solicitacao_servico->beneficiario->endereco->uf }}</td>
+                        <td>{{ $solicitacao_servico->beneficiario->telefone->numero }}</td>
+                        <td>{{ $solicitacao_servico->beneficiario->nome }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
