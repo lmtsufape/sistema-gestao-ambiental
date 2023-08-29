@@ -57,7 +57,7 @@
                         <a class="nav-link text-uppercase font-weight-bold" href="{{route('register')}}">Cadastre-se</a>
                     </li>
                 @else
-                    {{-- <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
+                    <li class="nav-item @if(request()->routeIs('dashboard')) active @endif">
                         <a class="nav-link" href="{{route('dashboard')}}">{{ __('Dashboard') }}</a>
                     </li>
                     @can('isRequerente', \App\Models\User::class)
@@ -141,7 +141,7 @@
                                     this.closest('form').submit();">{{__('Sair')}}</a>
                             </form>
                         </div>
-                    </li> --}}
+                    </li>
                 @endguest
             </ul>
         </div>
