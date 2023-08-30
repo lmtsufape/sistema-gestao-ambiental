@@ -191,4 +191,15 @@ class RelatorioController extends Controller
         return response()->download($path);
     }
 
+    public function recuperarRelatorios(Requerimento $requerimento)
+    {
+        $empresa = $requerimento->empresa;
+        $requerimentosIds = Requerimento::where('empresa_id', $empresa->id)->pluck('id');
+        $visitas = Visita::whereIn('requerimento_id', $requerimentosIds)->get();
+        $relatorios = Relatorio::whereIn('visita_id', $visitas->pluck('id'))->get();
+
+        return view('relatorio.listar', compact('relatorios', 'visitas'));
+    }
+
+
 }

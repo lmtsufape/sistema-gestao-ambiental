@@ -78,8 +78,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/{requerimento_id}/documentacaoExigencia/download_outro', [RequerimentoController::class, 'showExigenciaOutroDocumento'])->name('requerimento.exigencia.outro.documento');
     Route::get('/requerimentos/{id}/visitas', [RequerimentoController::class, 'indexVisitasRequerimento'])->name('requerimento.visitas');
     Route::get('/requerimentos/{requerimento_id}/visitas/{visita_id}/edit', [RequerimentoController::class, 'requerimentoVisitasEdit'])->name('requerimento.visitas.edit');
+    
     Route::post('/visitas/editVisita', [VisitaController::class, 'editVisita'])->name('visitas.visita.edit');
     Route::get('/visitas/info', [VisitaController::class, 'infoVisita'])->name('visitas.info.ajax');
+    
     Route::get('/requerimentos/visita-create-analista', [RequerimentoController::class, 'getAnalistaProcesso'])->name('requerimentos.get.analista');
     Route::get('/requerimentos/{id}/protocolo', [RequerimentoController::class, 'protocoloRequerimento'])->name('requerimentos.protocolo');
     Route::get('/requerimentos/{id}/protocolo-baixar', [RequerimentoController::class, 'baixarProtocoloRequerimento'])->name('requerimentos.protocolo.baixar');
@@ -165,7 +167,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get("/relatorios/{relatorio_id}/arquivo", [RelatorioController::class, 'downloadArquivo'])->name('relatorios.downloadArquivo');
     Route::get("/relatorios/{relatorio_id}/imagens", [RelatorioController::class, 'downloadImagem'])->name('relatorios.downloadImagem');
     Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
-    
+    Route::get("/relatorios/empresa/{requerimento}", [RelatorioController::class, 'recuperarRelatorios'])->name('recuperar.relatorios');    
     Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
 
 
