@@ -1,7 +1,7 @@
 <x-app-layout>
     @section('content')
         <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
-            <div class="form-row justify-content-start">
+            <div class="form-row">
                 <div class="col-md-9 col-span-3">
                     <div class="form-row justify-content-between">
                         <div class="col-xs-8">
@@ -31,10 +31,8 @@
                     @endcan
                     <div div class="form-row">
                         @if (session('success'))
-                            <div class="col-md-12" style="margin-top: 5px;">
-                                <div class="alert alert-success" role="alert">
-                                    <p>{{ session('success') }}</p>
-                                </div>
+                            <div class="alert alert-success">
+                                {{ session('success') }}
                             </div>
                         @endif
                     </div>
@@ -47,28 +45,31 @@
                             </div>
                         @endif
                     </div>
-                    <div class="form-row justify-content-center">
-                        <div class="col-md-12">
-                            <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link @if ($filtro == 'andamento') active @endif" id="andamento-tab"
-                                        data-toggle="tab" href="#andamento" role="tab" aria-controls="andamento"
-                                        aria-selected="@if ($filtro == 'andamento') true @else false @endif">Em
-                                        andamento</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if ($filtro == 'finalizados') active @endif" id="finalizado-tab"
-                                        data-toggle="tab" href="#finalizados" role="tab" aria-controls="finalizados"
-                                        aria-selected="@if ($filtro == 'finalizados') true @else false @endif">Finalizados</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if ($filtro == 'cancelados') active @endif" id="cancelados-tab"
-                                        data-toggle="tab" href="#cancelados" role="tab" aria-controls="cancelados"
-                                        aria-selected="@if ($filtro == 'cancelados') true @else false @endif">Cancelados</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
+                    <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link @if ($filtro == 'andamento') active @endif" id="andamento-tab"
+                                data-toggle="tab" href="#andamento" role="tab" aria-controls="andamento"
+                                aria-selected="@if ($filtro == 'andamento') true @else false @endif">Em
+                                andamento</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if ($filtro == 'rota_de_entrega') active @endif" id="rota_de_entrega-tab"
+                                data-toggle="tab" href="#rota_de_entrega" role="tab" aria-controls="rota_de_entrega"
+                                aria-selected="@if ($filtro == 'rota_de_entrega') true @else false @endif">Em Rota de
+                                Entrega</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if ($filtro == 'finalizados') active @endif" id="finalizado-tab"
+                                data-toggle="tab" href="#finalizados" role="tab" aria-controls="finalizados"
+                                aria-selected="@if ($filtro == 'finalizados') true @else false @endif">Finalizados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if ($filtro == 'cancelados') active @endif" id="cancelados-tab"
+                                data-toggle="tab" href="#cancelados" role="tab" aria-controls="cancelados"
+                                aria-selected="@if ($filtro == 'cancelados') true @else false @endif">Cancelados</a>
+                        </li>
+                    </ul>
                     <div class="tab-content" id="statusTabsContent">
                         <div class="tab-pane fade show @if ($filtro == 'andamento') active @endif" id="andamento"
                             role="tabpanel" aria-labelledby="andamento-tab">
@@ -91,10 +92,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($solicitacao_servicos as $item)
-                                                        @if (
-                                                            $item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['solicitacao_em_aberto'] ||
-                                                                $item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['rota_de_entrega']
-                                                        )
+                                                        @if ($item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['solicitacao_em_aberto'])
                                                             <tr>
                                                                 <td>
                                                                     <input type="checkbox" name="selected_items[]"
@@ -103,18 +101,8 @@
                                                                 <td>{{ $item->beneficiario->nome }}</td>
                                                                 <td>{{ date('d/m/Y', strtotime($item->data_solicitacao)) }}
                                                                 </td>
-                                                                @if ($item->data_saida == null)
-                                                                    <td> Aguardando </td>
-                                                                @else
-                                                                    <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}
-                                                                    </td>
-                                                                @endif
-                                                                @if ($item->data_entrega == null)
-                                                                    <td> Aguardando </td>
-                                                                @else
-                                                                    <td>{{ date('d/m/Y', strtotime($item->data_entrega)) }}
-                                                                    </td>
-                                                                @endif
+                                                                <td> Aguardando </td>
+                                                                <td> Aguardando </td>
                                                                 <td>
                                                                     <a
                                                                         href="{{ route('solicitacao_servicos.show', ['id' => $item->id]) }}">
@@ -143,47 +131,120 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <input type="hidden" name="motorista_id" id="motorista_id" value="">
-                                        <button type="button" class="btn btn-success btn-color-dafault submeterFormBotao"
-                                            style="background-color: #00883D; color: white;" data-toggle="modal"
-                                            data-target="#modalStaticAtribuirMotorista_">Gerar nota</button>
-                                        <div class="modal fade" id="modalStaticAtribuirMotorista_" data-backdrop="static"
-                                            data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color: #00883D;">
-                                                        <h5 class="modal-title" id="staticBackdropLabel"
-                                                            style="color: white;">Selecione um Motorista</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                        <div id="motoristaContainer">
+                                            <input type="hidden" name="motorista_id" id="motorista_id" value="">
+                                            <input type="hidden" name="data" value="<?php echo date('d-m-Y'); ?>">
+                                            <button type="button"
+                                                class="btn btn-success btn-color-dafault submeterFormBotao"
+                                                style="background-color: #00883D; color: white;" data-toggle="modal"
+                                                data-target="#modalStaticAtribuirMotorista_">Gerar nota</button>
+                                            <div class="modal fade" id="modalStaticAtribuirMotorista_"
+                                                data-backdrop="static" data-keyboard="false" tabindex="-1"
+                                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header" style="background-color: #00883D;">
+                                                            <h5 class="modal-title" id="staticBackdropLabel"
+                                                                style="color: white;">Selecione um Motorista</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
                                                             <select name="motorista_id" class="form-control" required
-                                                                onchange="updateMotoristaId(this)">
-                                                                <option value="" disabled selected>Selecione um
+                                                                onchange="updateMotoristaId(this); this.closest('.modal').modal('hide');">
+                                                                <option value="" disabled selected>Selecione
+                                                                    um
                                                                     motorista</option>
                                                                 @foreach ($motoristas as $motorista)
                                                                     <option value="{{ $motorista->id }}">
-                                                                        {{ $motorista->nome_apelido }}</option>
+                                                                        {{ $motorista->motorista }}</option>
                                                                 @endforeach
                                                             </select>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-success" style="background-color: #00883D; color: white;">Gerar nota</button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-success"
+                                                                style="background-color: #00883D; color: white;">Gerar
+                                                                nota</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
-
+                        <div class="tab-pane fade show @if ($filtro == 'rota_de_entrega') active @endif"
+                            id="rota_de_entrega" role="tabpanel" aria-labelledby="rota_de_entrega-tab">
+                            <div class="card" style="width: 100%;">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mytable" id="beneficiarios_table_rota_de_entrega">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Motorista</th>
+                                                    <th scope="col">Beneficiário</th>
+                                                    <th scope="col">Data Solicitação</th>
+                                                    <th scope="col">Data Saída</th>
+                                                    <th scope="col">Data Entrega</th>
+                                                    <th scope="col">Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($solicitacao_servicos as $item)
+                                                    @if ($item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['rota_de_entrega'])
+                                                        <tr>
+                                                            <td>{{ $item->motorista->motorista }}</td>
+                                                            <td>{{ $item->beneficiario->nome }}</td>
+                                                            <td>{{ date('d/m/Y', strtotime($item->data_solicitacao)) }}
+                                                            </td>
+                                                            @if ($item->data_saida == null)
+                                                                <td> Aguardando </td>
+                                                            @else
+                                                                <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}
+                                                                </td>
+                                                            @endif
+                                                            @if ($item->data_entrega == null)
+                                                                <td> Aguardando </td>
+                                                            @else
+                                                                <td>{{ date('d/m/Y', strtotime($item->data_entrega)) }}
+                                                                </td>
+                                                            @endif
+                                                            <td>
+                                                                <a
+                                                                    href="{{ route('solicitacao_servicos.show', ['id' => $item->id]) }}">
+                                                                    <img class="icon-licenciamento" width="20px;"
+                                                                        src="{{ asset('img/Visualizar.svg') }}"
+                                                                        alt="Visualizar Serviço"
+                                                                        title="Visualizar Serviço">
+                                                                </a>
+                                                                <a
+                                                                    href="{{ route('solicitacao_servicos.edit', ['id' => $item->id]) }}">
+                                                                    <img class="icon-licenciamento" width="20px;"
+                                                                        src="{{ asset('img/edit-svgrepo-com.svg') }}"
+                                                                        alt="Editar Serviço" title="Editar Serviço">
+                                                                </a>
+                                                                <a title="Deletar Serviço" type="button"
+                                                                    data-toggle="modal"
+                                                                    data-target="#modalStaticDeletarServico_{{ $item->id }}">
+                                                                    <img class="icon-licenciamento"
+                                                                        src="{{ asset('img/trash-svgrepo-com.svg') }}"
+                                                                        alt="Icone de deletar Serviço">
+                                                                </a>
+                                                            </td>
+                                                        <tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade show @if ($filtro == 'finalizados') active @endif" id="finalizados"
                             role="tabpanel" aria-labelledby="finalizados-tab">
                             <div class="card" style="width: 100%;">
@@ -192,7 +253,6 @@
                                         <table class="table mytable" id="beneficiarios_table_finalizado">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Selecionar</th>
                                                     <th scope="col">Motorista</th>
                                                     <th scope="col">Beneficiário</th>
                                                     <th scope="col">Data Solicitação</th>
@@ -205,18 +265,15 @@
                                                 @foreach ($solicitacao_servicos as $item)
                                                     @if ($item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['entregue'])
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" name="selected_items[]"
-                                                                    value="{{ $item->id }}">
-                                                            </td>
-                                                            <td>{{ $item->motorista }}</td>
+                                                            <td>{{ $item->motorista->motorista }}</td>
                                                             <td>{{ $item->beneficiario->nome }}</td>
                                                             <td>{{ date('d/m/Y', strtotime($item->data_solicitacao)) }}
                                                             </td>
                                                             @if ($item->data_saida == null)
                                                                 <td> Aguardando </td>
                                                             @else
-                                                                <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}</td>
+                                                                <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}
+                                                                </td>
                                                             @endif
                                                             @if ($item->data_entrega == null)
                                                                 <td> Aguardando </td>
@@ -263,7 +320,6 @@
                                         <table class="table mytable" id="beneficiarios_table_cancelados">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Selecionar</th>
                                                     <th scope="col">Motorista</th>
                                                     <th scope="col">Beneficiário</th>
                                                     <th scope="col">Data Solicitação</th>
@@ -276,18 +332,15 @@
                                                 @foreach ($solicitacao_servicos as $item)
                                                     @if ($item->status == \App\Models\SolicitacaoServico::STATUS_ENUM['cancelada'])
                                                         <tr>
-                                                            <td>
-                                                                <input type="checkbox" name="selected_items[]"
-                                                                    value="{{ $item->id }}">
-                                                            </td>
-                                                            <td>{{ $item->motorista }}</td>
+                                                            <td>{{ $item->motorista->motorista }}</td>
                                                             <td>{{ $item->beneficiario->nome }}</td>
                                                             <td>{{ date('d/m/Y', strtotime($item->data_solicitacao)) }}
                                                             </td>
                                                             @if ($item->data_saida == null)
                                                                 <td> Aguardando </td>
                                                             @else
-                                                                <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}</td>
+                                                                <td>{{ date('d/m/Y', strtotime($item->data_saida)) }}
+                                                                </td>
                                                             @endif
                                                             @if ($item->data_entrega == null)
                                                                 <td> Aguardando </td>
@@ -395,6 +448,28 @@
                         </div>
                     </div>
                 @endforeach
+                @if (session('filename'))
+                    <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog"
+                        aria-labelledby="downloadModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #00883D;">
+                                    <h5 class="modal-title" id="downloadModalLabel" style="color: white;">Nota Gerada com
+                                        Sucesso!</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" style="color: white;">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <a href="{{ route('solicitacao_servicos.download', session('filename')) }}"
+                                        class="btn btn-primary">
+                                        Baixar PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         @push('scripts')
@@ -403,6 +478,16 @@
                     var motoristaId = select.value;
                     document.getElementById('motorista_id').value = motoristaId;
                 }
+
+                $(document).ready(function() {
+                    if ("{{ session('filename') }}") {
+                        $('#downloadModal').modal('show');
+
+                        $('#downloadModal .btn-primary').click(function() {
+                            $('#downloadModal').modal('hide');
+                        });
+                    }
+                });
             </script>
         @endpush
     @endsection

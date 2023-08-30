@@ -147,9 +147,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacao_servicos/{id}/edit', [SolicitacaoServicoController::class, 'edit'])->name('solicitacao_servicos.edit');
     Route::put('/solicitacao_servicos/{id}/update', [SolicitacaoServicoController::class, 'update'])->name('solicitacao_servicos.update');
     Route::delete('/solicitacao_servicos/{id}/destroy', [SolicitacaoServicoController::class, 'destroy'])->name('solicitacao_servicos.destroy');
-    Route::put ('/solicitacao_servicos/{id}/AtualizarDataSaida', [SolicitacaoServicoController::class, 'AtualizarDataSaida'])->name('solicitacao_servicos.AtualizarDataSaida');
     Route::put ('/solicitacao_servicos/{id}/AtualizarDataEntrega', [SolicitacaoServicoController::class, 'AtualizarDataEntrega'])->name('solicitacao_servicos.AtualizarDataEntrega');
     Route::post ('/solicitacao_servicos/gerarPedidosServicos', [SolicitacaoServicoController::class, 'gerarPedidosServicos'])->name('solicitacao_servicos.gerarPedidosServicos');
+    Route::get('/solicitacao_servicos/download/{filename}', function ($filename) {
+        $pathToFile = storage_path('app/temp/' . $filename);
+        $headers = ['Content-Type: application/pdf'];
+        $response = response()->download($pathToFile, $filename, $headers);
+        $response->deleteFileAfterSend(true);
+        return $response;
+    })->name('solicitacao_servicos.download');
+    
     
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');

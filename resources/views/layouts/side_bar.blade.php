@@ -147,13 +147,13 @@
 
                                 <li class="mb-2 item-align">
                                     <a href="{{route('pipeiros.index')}}">
-                                        Pipeiros
+                                        Motoristas
                                     </a>
                                 </li>
 
                                 <li class="mb-2 item-align">
                                         <a href="{{route('solicitacao_servicos.index')}}">
-                                            Caminhão Pipa
+                                            Carro Pipa
                                         </a>
                                 </li>
 
@@ -254,12 +254,12 @@
                                     </li>
                                     <li class="mb-2 item-align">
                                         <a href="{{route('pipeiros.index')}}">
-                                            Pipeiros
+                                            Motoristas
                                         </a>
                                     </li>
                                     <li class="mb-2 item-align">
                                         <a href="{{route('solicitacao_servicos.index')}}">
-                                            Caminhão Pipa
+                                            Carro Pipa
                                         </a>
                                     </li>
                                     <li class="mb-2 item-align">

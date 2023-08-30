@@ -22,4 +22,6 @@ class Pipeiro extends Model
         $this->capacidade_tanque = $request['capacidade_tanque'];
         $this->nome_apelido = $request['nome_apelido'];
     }
+
+    
 }
