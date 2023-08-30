@@ -13,7 +13,8 @@ class Beneficiario extends Model {
 
     public const ROLE_ENUM = [
         'aracao' => 0,
-        'carro_pipa' => 1
+        'carro_pipa' => 1,
+        'ambos' => 2
     ];
 
     protected $fillable = [
@@ -33,11 +34,11 @@ class Beneficiario extends Model {
 
 
     public function telefone() {
-        return $this->belongsTo(Telefone::class);
+        return $this->belongsTo(Telefone::class, 'telefone_id');
     }
 
     public function endereco() {
-        return $this->belongsTo(Endereco::class);
+        return $this->belongsTo(Endereco::class, 'endereco_id');
     }
 
 

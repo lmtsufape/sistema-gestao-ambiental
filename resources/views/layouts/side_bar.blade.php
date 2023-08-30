@@ -145,11 +145,17 @@
                                 </a>
                             </li>
 
-                            <li class="mb-2 item-align">
-                                <a href="{{route('solicitacao_servicos.index')}}">
-                                    Caminhão Pipa
-                                </a>
-                            </li>
+                                <li class="mb-2 item-align">
+                                    <a href="{{route('pipeiros.index')}}">
+                                        Motoristas
+                                    </a>
+                                </li>
+
+                                <li class="mb-2 item-align">
+                                        <a href="{{route('solicitacao_servicos.index')}}">
+                                            Carro Pipa
+                                        </a>
+                                </li>
 
                             <li class="mb-2 item-align">
                                 <a href="{{route('aracao.index')}}">
@@ -253,21 +259,26 @@
                             </li>
                             @endcan
                             @can('isBeneficiario', \App\Models\User::class)
-                            <li class="mb-2 item-align">
-                                <a href="{{route('beneficiarios.index')}}">
-                                    Beneficiários
-                                </a>
-                            </li>
-                            <li class="mb-2 item-align">
-                                <a href="{{route('solicitacao_servicos.index')}}">
-                                    Caminhão Pipa
-                                </a>
-                            </li>
-                            <li class="mb-2 item-align">
-                                <a href="{{route('aracao.index')}}">
-                                    Aração
-                                </a>
-                            </li>
+                                    <li class="mb-2 item-align">
+                                        <a href="{{route('beneficiarios.index')}}">
+                                            Beneficiários
+                                        </a>
+                                    </li>
+                                    <li class="mb-2 item-align">
+                                        <a href="{{route('pipeiros.index')}}">
+                                            Motoristas
+                                        </a>
+                                    </li>
+                                    <li class="mb-2 item-align">
+                                        <a href="{{route('solicitacao_servicos.index')}}">
+                                            Carro Pipa
+                                        </a>
+                                    </li>
+                                    <li class="mb-2 item-align">
+                                        <a href="{{route('aracao.index')}}">
+                                            Aração
+                                        </a>
+                                    </li>
                             @endcan
                             @can('isAnalistaPoda', \App\Models\User::class)
                             <li class="mb-2 item-align @if(request()->routeIs('podas*')) active @endif">

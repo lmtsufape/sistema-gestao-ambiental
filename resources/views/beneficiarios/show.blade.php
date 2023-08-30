@@ -56,7 +56,13 @@
                                 </div>
                                 <div class="col-md-2 form-group">
                                     <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="tipo_beneficiario" class="form-control @error('tipo_beneficiario') is-invalid @enderror" type="text" name="tipo_beneficiario" value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : 'Carro Pipa' }}" readonly>
+                                    <input 
+                                        id="tipo_beneficiario" 
+                                        class="form-control @error('tipo_beneficiario') is-invalid @enderror" 
+                                        type="text" 
+                                        name="tipo_beneficiario" 
+                                        value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : ($beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa'] ? 'Carro Pipa' : 'Ambos') }}" 
+                                        readonly>
                                 </div>
                             </div>
                             <hr class="divisor">

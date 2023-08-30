@@ -24,28 +24,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="motorista">{{ __('Motorista') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="motorista" class="form-control" type="string" name="motorista" value="{{ $solicitacao_servico->motorista }}" readonly>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="capacidade_tanque">{{ __('Capacidade do Tanque') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="capacidade_tanque" class="form-control" type="string" name="capacidade_tanque" value="{{ $solicitacao_servico->capacidade_tanque }}" readonly>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="nome_apelido">{{ __('Nome (Apelido)') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="nome_apelido" class="form-control" type="string" name="nome_apelido" value="{{ $solicitacao_servico->nome_apelido }}" readonly>
+                                    <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="beneficiario">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="beneficiario" class="form-control" type="string" name="beneficiario" value="{{ $solicitacao_servico->beneficiario->nome }}" readonly>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
                                 </div>
                             </div>
                             <hr class="divisor">
@@ -87,41 +71,13 @@
                             </div>
                     </div>
                     <div class="card-footer">
-                        <div class="form-row">
-                            <div class="col-md-10" style="text-align: center"></div>
-                            <div class="col-md-5">
-                                <button data-toggle="modal" data-target="#modalStaticAtribuirDataSaida_{{$solicitacao_servico->id}}" type="button" class="btn btn-success btn-color-dafault submeterFormBotao" style="width: 100%">Atribuir data de saída</button>
-                            </div>
-                            <div class="col-md-5">
+                            <div class="col-md-5" style="text-align: center"></div>
                                 <button data-toggle="modal" data-target="#modalStaticAtribuirDataEntrega_{{$solicitacao_servico->id}}" type="button" class="btn btn-success btn-color-dafault submeterFormBotao" style="width: 100%">Atribuir data de entrega</button>
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="modalStaticAtribuirDataSaida_{{$solicitacao_servico->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header" style="background-color: #00883D;">
-                                    <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Data de saída</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="atualizar_data_saida" method="POST" action="{{route('solicitacao_servicos.AtualizarDataSaida', ['id' => $solicitacao_servico->id])}}">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="date" name="data_saida" class="form-control" required>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-success btn-color-dafault submeterFormBotao" form="atualizar_data_saida">Atualizar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="modal fade" id="modalStaticAtribuirDataEntrega_{{$solicitacao_servico->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #00883D;">
                                     <h5 class="modal-title" id="staticBackdropLabel" style="color: white;">Data de Entrega</h5>
