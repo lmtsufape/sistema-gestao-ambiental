@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <iframe src="{{route('licenca.documento', $licenca->id)}}" frameborder="0" width="100%" height="500px"></iframe>
+                                    <iframe src="{{route('licenca.documento', $licenca)}}" frameborder="0" width="100%" height="500px"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="card-body">
                             <div class="form-row">
                                 <div class="col-md-12">
-                                    <iframe src="{{route('licenca.documento', $licenca->id)}}" frameborder="0" width="100%" height="500px"></iframe>
+                                    <iframe src="{{route('licenca.documento', $licenca)}}" frameborder="0" width="100%" height="500px"></iframe>
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,6 @@ use App\Notifications\LicencaAtualizada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DocumentosExigidosNotification;
-
 class LicencaController extends Controller
 {
     /**
@@ -88,8 +87,20 @@ class LicencaController extends Controller
     }
 
     public function documento(Licenca $licenca)
+    {   
+        $path = storage_path('app/' . $licenca->caminho);
+        $headers = [
+            'Content-Type' => $this->getMimeType($path),
+            'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
+        ];
+
+        return response()->file($path, $headers);
+    }
+
+    private function getMimeType($path)
     {
-        return response()->file(storage_path('app/' . $licenca->caminho));
+        // Use a helper to determine the MIME type
+        return \File::mimeType($path);
     }
 
     /**
