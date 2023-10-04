@@ -37,7 +37,7 @@ class Endereco extends Model
     public function setAtributes($input)
     {
         $this->cep = $input['cep'];
-        $this->numero = $input['número'];
+        $this->numero = $input['numero'];
         $this->cidade = $input['cidade'];
         $this->estado = $input['uf'];
         $this->bairro = $input['bairro'];

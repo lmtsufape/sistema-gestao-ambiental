@@ -33,8 +33,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="nis">{{ __('NIS') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="nis" class="form-control @error('nis') is-invalid @enderror" type="string" name="nis" value="{{ $beneficiario->nis }}" required autofocus autocomplete="nis" placeholder="Digite seu NIS aqui...">
+                                        <label for="nis">{{ __('NIS') }}</label>
+                                        <input id="nis" class="form-control @error('nis') is-invalid @enderror" type="string" name="nis" value="{{ $beneficiario->nis }}"  placeholder="Digite seu NIS aqui...">
                                         @error('nis')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -53,8 +53,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cpf" class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$beneficiario->cpf}}" required autofocus autocomplete="cpf" data-mask="000.000.000-00" placeholder="000.000.000-00">
+                                        <label for="cpf">{{ __('CPF') }}</label>
+                                        <input id="cpf" class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$beneficiario->cpf}}"  data-mask="000.000.000-00" placeholder="000.000.000-00">
                                         @error('cpf')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -73,8 +73,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rg">{{ __('RG') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{$beneficiario->rg}}" required autofocus autocomplete="rg" placeholder="Digite o número de seu RG...">
+                                        <label for="rg">{{ __('RG') }}</label>
+                                        <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{$beneficiario->rg}}"  placeholder="Digite o número de seu RG...">
                                         @error('rg')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -82,8 +82,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="orgao_emissor" class="form-control @error('orgao_emissor') is-invalid @enderror" type="text" name="orgao_emissor" value="{{$beneficiario->orgao_emissor}}" required autocomplete="orgao_emissor" placeholder="O orgão emissor do RG...">
+                                        <label for="orgao_emissor">{{ __('Orgão emissor') }}</label>
+                                        <input id="orgao_emissor" class="form-control @error('orgao_emissor') is-invalid @enderror" type="text" name="orgao_emissor" value="{{$beneficiario->orgao_emissor}}"  placeholder="O orgão emissor do RG...">
                                         @error('orgao_emissor')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
