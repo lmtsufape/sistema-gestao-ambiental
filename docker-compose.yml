@@ -1,0 +1,33 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "9000:9000"
+
+  web:
+    image: nginx:alpine
+    container_name: nginx_server
+    volumes:
+      - .:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - "8080:80"
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
