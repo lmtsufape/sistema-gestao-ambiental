@@ -51,7 +51,7 @@ class RelatorioController extends Controller
         $relatorio = new Relatorio();
         $fotos_relatorio = new FotosRelatorio();
         $relatorio->setAtributes($request);
-    
+
         if ($request->has('arquivoFile') != null) {
             $relatorio->salvarArquivo($request['arquivoFile'], $visita->id, $relatorio);
         }
@@ -111,13 +111,17 @@ class RelatorioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(RelatorioRequest $request)
-    {   
+    {
         $this->authorize('isSecretarioOrAnalista', User::class);
-        $relatorio = Relatorio::find($request->visita);
-        if($fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first() == null){
+
+        $relatorio = Relatorio::where('visita_id', $request->visita)->first();
+
+        $fotos_relatorio = FotosRelatorio::where('relatorio_id', $relatorio->id)->first();
+
+        if($fotos_relatorio == null){
             $fotos_relatorio = new FotosRelatorio();
         }else{
-            $fotos_relatorio = FotosRelatorio::where('relatorio_id', $request->visita)->first();
+            $fotos_relatorio = FotosRelatorio::where('relatorio_id', $relatorio->id)->first();
         }
 
         if ($relatorio->aprovacao == Relatorio::APROVACAO_ENUM['aprovado']) {
@@ -129,13 +133,14 @@ class RelatorioController extends Controller
         if ($request->has('arquivoFile') != null) {
             $relatorio->salvarArquivo($request['arquivoFile'], $request->visita, $relatorio);
         }
+
         $relatorio->update();
-        
+
         if ($request->has('imagem') != null) {
-            $fotos_relatorio->salvarImagem($request['imagem'], $request->visita, $fotos_relatorio);
+            $fotos_relatorio->salvarImagem($request['imagem'], $relatorio->id, $fotos_relatorio);
             $fotos_relatorio->update();
         }
-        
+
         $filtro = auth()->user()->getUserType();
 
         return redirect(route('visitas.index', [$filtro, 'ordenacao' => 'data_marcada', 'ordem' => 'DESC']))->with(['success' => 'Relatório atualizado com sucesso!']);
