@@ -70,8 +70,8 @@
                                                         <tr>
                                                             <td>{{ $item->nome }}</td>
                                                             <td>@if($item->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao']) Aração @elseif ($item->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa']) Carro Pipa @else Ambos @endif</td>
-                                                            <td>{{ $item->cpf }}</td>
-                                                            <td>{{ $item->rg }} {{ $item->orgao_emissor }}</td>
+                                                            <td>{{ $item->cpf ?? "Não Especificado" }}</td>
+                                                            <td>{{ $item->rg ?? "Não Especificado" }} {{ $item->orgao_emissor }}</td>
                                                             <td>{{ $item->codigo }}</td>
                                                             <td>
                                                                 <a href="{{ route('beneficiarios.show', ['id' => $item->id]) }}">
