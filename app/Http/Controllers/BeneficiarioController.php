@@ -50,7 +50,14 @@ class BeneficiarioController extends Controller
         $beneficiario = new Beneficiario();
         $endereco = new Endereco();
         $telefone = new Telefone();
+        // Modificando os atributos nulos
+        $input['cep'] = $input['cep'] ?? '55299-899';
+        $input['numero'] = $input['numero'] ?? 's/n';
+        $input['bairro'] = $input['bairro'] ?? $input['rua'];
+        $input['complemento'] = $input['complemento'] ?? '';
+
         $endereco->setAtributes($input);
+    
         $endereco->save();
         $telefone->setNumero($input['celular']);
         $telefone->save();
