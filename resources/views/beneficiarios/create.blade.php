@@ -36,8 +36,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="quantidade_pessoas">{{ __('Quantidade de pessoas') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="quantidade_pessoas" class="form-control @error('quantidade_pessoas') is-invalid @enderror" type="number" name="quantidade_pessoas" value="{{old('quantidade_pessoas')}}" required autofocus autocomplete="quantidade_pessoas" placeholder="Digite a quantidade de pessoas que moram com você...">
+                                        <label for="quantidade_pessoas">{{ __('Quantidade de pessoas') }}</label>
+                                        <input id="quantidade_pessoas" class="form-control @error('quantidade_pessoas') is-invalid @enderror" type="number" name="quantidade_pessoas" value="{{old('quantidade_pessoas')}}" autofocus autocomplete="quantidade_pessoas" placeholder="Digite a quantidade de pessoas que moram com você...">
                                         @error('quantidade_pessoas')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -87,8 +87,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="codigo">{{ __('Código do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" required autofocus autocomplete="codigo" placeholder="Digite o código do beneficiário...">
+                                        <label for="codigo">{{ __('Código do Beneficiário') }}</label>
+                                        <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{old('codigo')}}" autofocus autocomplete="codigo" placeholder="Digite o código do beneficiário...">
                                         @error('codigo')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -108,8 +108,8 @@
                                 <hr class="divisor">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" required autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
+                                        <label for="cep">{{ __('CEP') }}</label>
+                                        <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
                                         <div class="col-md-12 text-right font-weight-bold">
                                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Não sei meu CEP</a>
                                         </div>
@@ -120,8 +120,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" required autofocus autocomplete="bairro" placeholder="Digite o bairro onde mora...">
+                                        <label for="bairro">{{ __('Bairro') }}</label>
+                                        <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" autofocus autocomplete="bairro" placeholder="Digite o bairro onde mora...">
                                         @error('bairro')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -131,8 +131,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" required autocomplete="rua" placeholder="Digite a rua onde mora...">
+                                        <label for="rua">{{ __('Rua') }} <span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" autocomplete="rua" required placeholder="Digite a rua onde mora...">
                                         @error('rua')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -140,8 +140,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="numero" class="form-control  @error('numero') is-invalid @enderror" type="text" name="numero" value="{{old('numero')}}" required autocomplete="numero" placeholder="Digite o número de sua casa...">
+                                        <label for="numero">{{ __('Número') }}</label>
+                                        <input id="numero" class="form-control  @error('numero') is-invalid @enderror" type="text" name="numero" value="{{old('numero')}}" autocomplete="numero" placeholder="Digite o número de sua casa...">
                                         @error('numero')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -151,8 +151,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cidade">{{ __('Cidade') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" name="cidade" value="Garanhuns" required autofocus autocomplete="cidade" placeholder="Digite a cidade que mora...">
+                                        <label for="cidade">{{ __('Cidade') }}</label>
+                                        <input id="cidade" class="form-control @error('cidade') is-invalid @enderror" type="text" name="cidade" value="Garanhuns" autofocus autocomplete="cidade" placeholder="Digite a cidade que mora...">
                                         @error('cidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -160,8 +160,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="uf">{{ __('Estado') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" required autocomplete="estado" name="uf">
+                                        <label for="uf">{{ __('Estado') }}</label>
+                                        <select id="uf" class="form-control @error('uf') is-invalid @enderror" type="text" autocomplete="estado" name="uf">
                                             <option value="" selected disabled >-- Selecione o UF --</option>
                                             <option @if(old('uf') == 'AC') selected @endif value="AC">Acre</option>
                                             <option @if(old('uf') == 'AL') selected @endif value="AL">Alagoas</option>

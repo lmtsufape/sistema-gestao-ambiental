@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="codigo">{{ __('Código do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="codigo">{{ __('Código do Beneficiário') }}</label>
                                     <input id="codigo" class="form-control @error('codigo') is-invalid @enderror" type="text" name="codigo" value="{{$beneficiario->codigo}}" readonly>
                                 </div>
                                 <div class="col-md-2 form-group">

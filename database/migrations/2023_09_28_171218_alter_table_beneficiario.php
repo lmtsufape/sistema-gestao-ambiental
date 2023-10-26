@@ -18,6 +18,9 @@ class AlterTableBeneficiario extends Migration
             $table->string('rg')->nullable()->change(); 
             $table->string('orgao_emissor')->nullable()->change();
             $table->string('nis')->nullable()->change();
+            $table->string('quantidade_pessoas')->nullable()->change();
+            $table->string('observacao')->nullable()->change();
+            $table->string('codigo')->nullable()->change();
         });
     }
 
@@ -28,6 +31,9 @@ class AlterTableBeneficiario extends Migration
             $table->string('rg')->nullable(false)->change(); 
             $table->string('orgao_emissor')->nullable(false)->change();
             $table->string('nis')->nullable(false)->change();
+            $table->string('quantidade_pessoas')->nullable(false)->change();
+            $table->string('observacao')->nullable(false)->change();
+            $table->string('codigo')->nullable(false)->change();
    });
 }
 }
