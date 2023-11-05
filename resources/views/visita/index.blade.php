@@ -5,7 +5,7 @@
             <div class="col-md-9 col-span-3">
                 <div class="form-row justify-content-between">
                     <div class="col-xs-8">
-                        @can('isSecretario', \App\Models\User::class)
+                        @can('isSecretarioOrProtocolista', \App\Models\User::class)
                         <h4 class="card-title">Programação de visitas</h4>
                         @else
                         <h4 class="card-title">Visitas programadas para você</h4>
@@ -81,7 +81,7 @@
                                         <a class="dropdown-item" href="{{route('visitas.index', [$filtro, 'ordenacao' => 'requerente', 'ordem' => $ordem])}}"></a>
                                     </div>
                                     @endif
-                                    @can('isSecretario', \App\Models\User::class)
+                                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
                                     <div class="form-check link-ordenacao">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" @if($ordenacao=='analista' ) checked @endif>
                                         <label class="form-check-label" for="flexRadioDefault5">
@@ -139,7 +139,7 @@
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    @can('isSecretarioOrProcesso', \App\Models\User::class)
+                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'requerimento') active @endif" id="visitas-atuais-tab" role="tab" type="button" @if($filtro=='requerimento' ) aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Requerimentos</a>
                     </li>
@@ -191,7 +191,7 @@
                                         @if($filtro == "requerimento" || $filtro == "finalizado")
                                         <th scope="col" class="align-middle">Tipo</th>
                                         @endif
-                                        @can('isSecretario', \App\Models\User::class)
+                                        @can('isSecretarioOrProtocolista', \App\Models\User::class)
                                         <th scope="col" class="align-middle">Analista</th>
                                         @endcan
                                         <th scope="col" class="align-middle">Opções</th>
@@ -244,11 +244,11 @@
                                         <td>{{$visita->solicitacaoPoda->requerente->user->name}}</td>
                                         @endif
 
-                                        @can('isSecretario', \App\Models\User::class)
+                                        @can('OrProtocolistaOrProtocolista', \App\Models\User::class)
                                         <td>{{$visita->analista->name}}</td>
                                         @endcan
                                         <td>
-                                            @can('isSecretario', \App\Models\User::class)
+                                            @can('isSecretarioOrProtocolista', \App\Models\User::class)
 
                                             @if($visita->relatorio!=null)
                                             <a title="Relatório" href="{{route('relatorios.show', ['relatorio' => $visita->relatorio])}}">
@@ -321,7 +321,7 @@
 
                         @if($visitas->first() == null)
                         <div class="col-md-12 text-center" style="font-size: 18px;">
-                            @can('isSecretario', \App\Models\User::class)
+                            @can('OrProtocolistaOrProtocolista', \App\Models\User::class)
                             {{__('Nenhuma visita criada')}}
                             @else
                             {{__('Nenhuma visita programada para você')}}
@@ -343,7 +343,7 @@
                     </div>
                     <div class="mt-2 borda-baixo"></div>
                     <ul class="list-group list-unstyled mt-2">
-                        @can('isSecretario', \App\Models\User::class)
+                        @can('isSecretarioOrProtocolista', \App\Models\User::class)
                         @if($filtro == 'requerimento')
                         <li>
                             <div title="Criar visita" class="d-flex align-items-center my-1 pt-0 pb-1">
@@ -488,7 +488,7 @@
             </div>
         </div>
     </div>
-    @can('isSecretario', \App\Models\User::class)
+    @can('isSecretarioOrProtocolista', \App\Models\User::class)
     @foreach ($visitas as $visita)
     <!-- Modal deletar visita -->
     <div class="modal fade" id="modalStaticDeletarVisita_{{$visita->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -671,7 +671,7 @@
     </div>--}}
     @endif
     @endforeach
-    @can('isSecretario', \App\Models\User::class)
+    @can('isSecretarioOrProtocolista', \App\Models\User::class)
     <div class="modal fade" id="modal-agendar-visita" tabindex="-1" role="dialog" aria-labelledby="modal-imagens" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -716,8 +716,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Cancelar</button>
                     <button type="submit" class="submeterFormBotao btn btn-success btn-color-dafault" form="form-criar-visita-denuncia">Editar</button>
+                    @endcan
                 </div>
             </div>
         </div>

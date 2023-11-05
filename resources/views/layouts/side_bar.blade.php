@@ -239,11 +239,15 @@
                                     Serviços
                                 </a>
                             </li>
+                            @endcan
+                            @can('isSecretarioOrProtocolista', \App\Models\User::class)
                             <li class="mb-2 item-align @if(request()->routeIs('visitas*')) active @endif">
                                 <a href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">
-                                    Programação
+                                    Programação de visitas
                                 </a>
                             </li>
+                            @endcan
+                            @can('isSecretario', \App\Models\User::class)
                             <li class="mb-2 @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) active @endif">
                                 <button href="#configuracoesSubmenu" data-toggle="collapse" @if(request()->routeIs('setores*') || request()->routeIs('usuarios*') || request()->routeIs('cnaes*')) aria-expanded="true" @else aria-expanded="false" @endif class="btn btn-toggle d-flex justify-content-between w-100">
                                     Configurações
