@@ -72,8 +72,7 @@
                                         <input type="hidden" id="tamanhoTotal" value="0">
                                         <div id="imagens" class="form-row">
                                             {{-- style="width:100%; height:300px; overflow:auto;" --}}
-                                           
-            
+
                                             @if ($errors->has('imagem.*') && $errors->has('comentario.*'))
                                                 @foreach ($errors->get('imagem.*') as $i => $images)
                                                     @foreach ($images as $b => $opcao)
@@ -247,9 +246,9 @@
     </div>
     @push ('scripts')
     <script>
-        
+
         CKEDITOR.replace('relatorio');
-        
+
         $('#customFilearquivo').change(function(e){
         var fileName = e.target.files[0].name;
         $('.custom-file-label').html(fileName);
@@ -297,60 +296,55 @@
             }
             }
 
-            function removerImagem(image, id){
-                let imagem = $('#file-input-'+id);
-                if(imagem[0].files[0]){
-                    let total = document.getElementById('tamanhoTotal');
-                    total.value = parseInt(total.value) - imagem[0].files[0].size;
-                }
-                image.parentElement.parentElement.parentElement.remove();
+        function loadPreview(event, indice) {
+            if (checarTamanhoIndividual(indice) && checarTamanhoTotal(indice)) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var output = document.getElementById('imagem_previa' + indice);
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+                document.getElementById('nome' + indice).innerHTML = event.target.files[0].name;
+                document.getElementById('nome' + indice).style.display = "block";
             }
+        }
 
-    
-            var loadPreview = function(event, indice) {
-                if(checarTamanhoIndividual(indice) && checarTamanhoTotal(indice)){
-                    var reader = new FileReader();
-                    reader.onload = function(){
-                    var output = document.getElementById('imagem_previa'+indice);
-                        output.src = reader.result;
-                    };
-                    reader.readAsDataURL(event.target.files[0]);
-                    document.getElementById('nome'+indice).innerHTML = event.target.files[0].name;
-                    document.getElementById('nome'+indice).style.display = "block";
+        function checarTamanhoIndividual(id) {
+            let imagem = document.getElementById('file-input-' + id);
+            if (imagem.files[0]) {
+                const fileSize = imagem.files[0].size / 1024 / 1024;
+                if (fileSize > 2) {
+                    alert("A imagem deve ter no máximo 2MB!");
+                    imagem.value = "";
+                    removerImagem(null, id);
+                    return false;
                 }
-            };
+            }
+            return true;
+        }
 
-            function checarTamanhoIndividual(id){
-                let imagem = $('#file-input-'+id);
-                if(imagem[0].files[0]){
-                    const fileSize = imagem[0].files[0].size / 1024 / 1024;
-                    if(fileSize > 2){
-                        alert("A imagem deve ter no máximo 2MB!");
-                        imagem.value = "";
-                        imagem[0].parentElement.parentElement.remove();
-                        return false;
-                    }
+        function checarTamanhoTotal(id) {
+            let total = document.getElementById('tamanhoTotal');
+            let imagem = document.getElementById('file-input-' + id);
+            if (imagem.files[0]) {
+                const fileSize = imagem.files[0].size / 1024 / 1024;
+                const totalSize = parseInt(total.value) / 1024 / 1024;
+                if (totalSize + fileSize > 8) {
+                    alert("A soma dos tamanhos da imagem não deve ultrapassar 8MB!");
+                    imagem.value = "";
+                    removerImagem(null, id);
+                    return false;
                 }
-                return true;
-            };
+            }
+            total.value = parseInt(total.value) + imagem.files[0].size;
+            return true;
+        }
 
-            function checarTamanhoTotal(id){
-                let total = document.getElementById('tamanhoTotal');
-                console.log(total.value);
-                let imagem = $('#file-input-'+id);
-                if(imagem[0].files[0]){
-                    const fileSize = imagem[0].files[0].size / 1024 / 1024;
-                    const totalSize = parseInt(total.value) / 1024 / 1024;
-                    if(totalSize+fileSize > 8){
-                        alert("A soma dos tamanhos da imagem não deve ultrapassar 8MB!");
-                        imagem.value = "";
-                        imagem[0].parentElement.parentElement.remove();
-                        return false;
-                    }
-                }
-                total.value = parseInt(total.value) + imagem[0].files[0].size;
-                return true;
-            };
+        function removerImagem(botaoRemover) {
+            var containerImagem = botaoRemover.parentElement.parentElement.parentElement;
+
+            containerImagem.remove();
+        }
     </script>
 @endpush
     @endsection

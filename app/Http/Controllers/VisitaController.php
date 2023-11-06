@@ -9,6 +9,7 @@ use App\Models\Requerimento;
 use App\Models\SolicitacaoPoda;
 use App\Models\User;
 use App\Models\Visita;
+use App\Models\TipoAnalista;
 use App\Notifications\VisitaAlteradaPoda;
 use App\Notifications\VisitaAlteradaRequerimento;
 use App\Notifications\VisitaCanceladaPoda;
@@ -31,10 +32,12 @@ class VisitaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($filtro, $ordenacao, $ordem, Request $request)
-    {
+    {   
         $this->authorize('isSecretarioOrAnalista', User::class);
         $analistas = collect();
-        if (auth()->user()->role == User::ROLE_ENUM['secretario']) {
+        if  (auth()->user()->role == User::ROLE_ENUM['secretario'] ||
+            (auth()->user()->role == User::ROLE_ENUM['analista'] && User::protocolistas()->contains('id', auth()->user()->id))) 
+        {
             switch ($filtro) {
                 case 'requerimento':
                     $analistas = User::analistas();
@@ -172,7 +175,7 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('isSecretario', User::class);
+        $this->authorize('isSecretarioOrProtocolista', User::class);
         $request->validate([
             'data_marcada' => 'required|date',
             'requerimento' => 'required',
@@ -374,7 +377,7 @@ class VisitaController extends Controller
      */
     public function infoVisita(Request $request)
     {
-        $this->authorize('isSecretario', User::class);
+        $this->authorize('isSecretarioOrProtocolista', User::class);
 
         $visita = Visita::find($request->visita_id);
 
