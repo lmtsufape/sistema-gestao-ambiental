@@ -72,22 +72,6 @@
                                         <input type="hidden" id="tamanhoTotal" value="0">
                                         <div id="imagens" class="form-row">
                                             {{-- style="width:100%; height:300px; overflow:auto;" --}}
-                                            <div class="col-md-4">
-                                                <div>
-                                                    <label for="file-input-imagem_indice">
-                                                        <img id="imagem_previaimagem_indice" class="img-fluid" src="{{asset('/img/nova_imagem.PNG')}}" alt="imagem de anexo" style="cursor: pointer;"/>
-                                                    </label>
-                                                    <input style="display: none;" type="file" name="imagem[]" id="file-input-imagem_indice" accept="image/*" onchange="loadPreview(event, 'imagem_indice')">
-                                                </div>
-                                                <div class="row justify-content-between">
-                                                    <div class="col-md-6" style="text-align: right">
-                                                        <div id="nomeimagem_indice" style="display: none; font-style: italic;"></div>
-                                                    </div>
-                                                    <div class="col-md-6" style="text-align: right">
-                                                        <a style="cursor: pointer; color: #ec3b3b; font-weight: bold;" onclick="removerImagem(this)">remover</a>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             @if ($errors->has('imagem.*') && $errors->has('comentario.*'))
                                                 @foreach ($errors->get('imagem.*') as $i => $images)
