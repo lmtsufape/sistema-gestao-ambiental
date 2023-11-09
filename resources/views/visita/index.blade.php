@@ -139,7 +139,7 @@
         <div class="form-row justify-content-center">
             <div class="col-md-9">
                 <ul class="nav nav-tabs nav-tab-custom" id="myTab" role="tablist">
-                    @can('isSecretarioOrProtocolista', \App\Models\User::class)
+                   @can('isSecretarioOrAnalistaOrProtocolista', \App\Models\User::class)
                     <li class="nav-item">
                         <a class="nav-link @if($filtro == 'requerimento') active @endif" id="visitas-atuais-tab" role="tab" type="button" @if($filtro=='requerimento' ) aria-selected="true" @endif href="{{route('visitas.index', ['filtro' => 'requerimento', 'ordenacao' => 'data_marcada', 'ordem' => 'DESC'])}}">Requerimentos</a>
                     </li>
@@ -244,7 +244,7 @@
                                         <td>{{$visita->solicitacaoPoda->requerente->user->name}}</td>
                                         @endif
 
-                                        @can('OrProtocolistaOrProtocolista', \App\Models\User::class)
+                                        @can('isSecretarioOrProtocolista', \App\Models\User::class)
                                         <td>{{$visita->analista->name}}</td>
                                         @endcan
                                         <td>
