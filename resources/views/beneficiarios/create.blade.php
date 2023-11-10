@@ -17,7 +17,7 @@
                             <div class="form-row">
                                     <div class="col-md-12 form-group">
                                         <label for="name">{{ __('Name') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="name" class="form-control apenas_letras @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite seu nome aqui...">
+                                        <input id="name" class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{old('name')}}" required autofocus autocomplete="name" placeholder="Digite seu nome aqui...">
                                         @error('name')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
