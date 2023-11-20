@@ -84,10 +84,6 @@ class SolicitacaoMudaController extends Controller
         $this->authorize('create', SolicitacaoMuda::class);
         $data = $request->validated();
 
-        if($this->periodoMinimo(auth()->user()->requerente->id)){
-            return redirect()->back()->with(['error' => 'Temos um período mínimo de 3 meses para novas solicitações. Solicite novamente após 3 meses da última solicitação de muda feita.']);
-        }
-
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
         $solicitacao->requerente_id = auth()->user()->requerente->id;
@@ -125,15 +121,6 @@ class SolicitacaoMudaController extends Controller
         else{
             return true;
         }
-    }
-
-    public function periodoMinimo($requerente_id){
-        $solicitacoes = solicitacaoMuda::where('requerente_id', $requerente_id)
-                ->whereDate('updated_at', '>', Carbon::now()->subMonths(3)->format('Y-m-d'))->first();
-        if($solicitacoes != null){
-            return true;
-        }
-        return false;
     }
 
     /**
