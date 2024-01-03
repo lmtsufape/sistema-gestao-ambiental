@@ -191,6 +191,10 @@ class Requerimento extends Model
             $titulo .= "de ";
         }
 
+        if ($this->tipoDeLicenca() == 'regularização') {
+            return "Licença de Regularização de Operação (LRO)";
+        }
+
         return $titulo.ucfirst($this->tipoDeLicenca());
     }
 
