@@ -6,9 +6,7 @@ services:
       dockerfile: Dockerfile
     container_name: sga_app
     volumes:
-      - ./src:/var/www/html/src
-      - ./config:/var/www/html/config
-      # Continue with other directories as needed, but exclude the vendor directory
+      - .:/var/www/html
     ports:
       - "9000:9000"
 
