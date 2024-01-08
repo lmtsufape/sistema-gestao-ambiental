@@ -72,12 +72,12 @@
                             <div>
                                 <ul style="list-style-type: disc !important; padding-left:1em !important; margin-left:1em;">
                                     <li><a href="https://www.linkedin.com/in/antonio-durval-380305239" target="_blanck" class="link-dark" style="font-size: 16px;">Antonio Durval Pereira Constantino</a></li>
+                                    <li><a href="https://www.linkedin.com/in/caio-gama-1969761b8/" target="_blanck" class="link-dark" style="font-size: 16px;">Caio Vinícius dos Santos Gama</a></li>
                                     <li><a href="https://www.linkedin.com/in/carlos-andr%C3%A9-611766196" target="_blanck" class="link-dark" style="font-size: 16px;">Carlos André de Almeida Cavalcante</a></li>
                                     <li><a href="https://br.linkedin.com/in/kelwin-jonas-1b8656214" target="_blanck" class="link-dark" style="font-size: 16px;">Kelwin Jonas Silva Santos</a></li>
                                     <li><a href="https://www.linkedin.com/in/jo-fernando" target="_blanck" class="link-dark" style="font-size: 16px;">José Fernando Mendes da Costa</a></li>
-                                    <li><a href="https://www.linkedin.com/in/snathalia/" target="_blanck" class="link-dark" style="font-size: 16px;">Nathalia Santos</a></li>
+                                    <li><a href="https://www.linkedin.com/in/snathalia/" target="_blanck" class="link-dark" style="font-size: 16px;">Nathalia dos Santos</a></li>
                                     <li><a href="https://www.linkedin.com/in/jdanielduarte/" target="_blanck" class="link-dark" style="font-size: 16px;">José Daniel Florêncio Duarte Filho</a></li>
-                                    <li><a href="https://www.linkedin.com/in/caio-gama-1969761b8/" target="_blanck" class="link-dark" style="font-size: 16px;">Caio Vinícius dos Santos Gama</a></li>
                                 </ul>
                             </div>
                             <div style="color: var(--textcolor); font-size: 17px; font-weight: 600;" class="my-1">

@@ -145,8 +145,8 @@
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="numero" class="form-control  @error('número') is-invalid @enderror" type="text" name="número" value="{{old('número')}}" required autocomplete="número" placeholder="Digite o número de sua casa...">
-                                        @error('número')
+                                        <input id="numero" class="form-control  @error('numero') is-invalid @enderror" type="text" name="numero" value="{{old('numero')}}" required autocomplete="numero" placeholder="Digite o número de sua casa...">
+                                        @error('numero')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
