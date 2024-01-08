@@ -15,9 +15,19 @@ class FeiranteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->authorize('isAnalista', User::class);
+
+        $buscar = $request->input('buscar');
+
+        if ($buscar != null) {
+            $feirante = Feirante::where('nome', 'ILIKE', "%{$buscar}%")->orWhere('cpf', 'ILIKE', "%{$buscar}%")->get();
+        } else {
+            $feirante = Feirante::all()->sortBy('nome');
+        }
+
+        return view('feirantes.index', compact('feirante', 'buscar'));
     }
 
     /**
@@ -34,7 +44,7 @@ class FeiranteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -74,51 +84,105 @@ class FeiranteController extends Controller
         $feirante->telefone_id = $telefone->id;
         $feirante->save();
 
-        return redirect(route('feirantes.create'))->with(['success' => 'Feirante cadastrado com sucesso!']);
+        return redirect(route('feirantes.index'))->with(['success' => 'Feirante cadastrado com sucesso!']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($feirante_id)
     {
-        //
+        $this->authorize('isAnalista', User::class);
+
+        $feirante = Feirante::findOrFail($feirante_id);
+        $endereco_residencia = Endereco::findOrFail($feirante->endereco_residencia_id);
+        $endereco_comercio = Endereco::findOrFail($feirante->endereco_comercio_id);
+        $telefone = Telefone::findOrFail($feirante->telefone_id);
+
+        return view('feirantes.show', compact('feirante', 'endereco_residencia', 'endereco_comercio', 'telefone'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($feirante_id)
     {
-        //
+        $this->authorize('isAnalista', User::class);
+        $feirante = Feirante::findOrFail($feirante_id);
+        $endereco_residencia = Endereco::findOrFail($feirante->endereco_residencia_id);
+        $endereco_comercio = Endereco::findOrFail($feirante->endereco_comercio_id);
+        $telefone = Telefone::findOrFail($feirante->telefone_id);
+
+        return view('feirantes.edit', compact('feirante', 'endereco_residencia', 'endereco_comercio', 'telefone'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $feirante_id)
     {
-        //
+        $this->authorize('isAnalista', User::class);
+
+        $input = $request->all();
+
+        $feirante = Feirante::findOrFail($feirante_id);
+        $endereco_residencia = Endereco::findOrFail($feirante->endereco_residencia_id);
+        $endereco_comercio = Endereco::findOrFail($feirante->endereco_comercio_id);
+        $telefone = Telefone::findOrFail($feirante->telefone_id);
+
+        $feirante->setAtributes($input);
+        $endereco_residencia->setAtributes($input);
+        $endereco_comercio->setAtributes($input);
+        $telefone->setNumero($input['celular']);
+
+        $endereco_residencia->update();
+        $endereco_comercio->update();
+        $telefone->update();
+
+        $feirante->update();
+
+        return redirect(route('feirantes.index'))->with(['success' => 'Feirante editado com sucesso!']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($feirante_id)
     {
-        //
+        try {
+            $this->authorize('isAnalista', User::class);
+
+            $feirante = Feirante::find($feirante_id);
+            if (!$feirante) {
+                return redirect(route('feirantes.index'))->with(['error' => 'Feirante não encontrado']);
+            }
+
+            $endereco_residencia = Endereco::findOrFail($feirante->endereco_residencia_id);
+            $endereco_comercio = Endereco::findOrFail($feirante->endereco_comercio_id);
+            $telefone = Telefone::findOrFail($feirante->telefone_id);
+
+            // Excluir os registros
+            $feirante->delete();
+            $endereco_residencia->delete();
+            $endereco_comercio->delete();
+            $telefone->delete();
+
+            return redirect(route('feirantes.index'))->with(['success' => 'Feirante excluído com sucesso!']);
+        } catch (\Exception $e) {
+            return redirect(route('feirantes.index'))->with(['error' => 'Não é possível excluir o feirante']);
+        }
     }
 }

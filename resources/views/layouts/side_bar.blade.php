@@ -320,6 +320,12 @@
                             </li>
                             @endcan
                             @can ('isAnalista', \App\Models\User::class)
+                            <li class="mb-2 item-align @if(request()->routeIs('feirantes*') || request()->routeIs('feirantes*')) active @endif">
+                                <a href="{{route('feirantes.index')}}">
+                                    Feirantes
+                                </a>
+                            </li>
+
                             <li class="mb-2 item-align @if(request()->routeIs('empresas*')) active @endif">
                                 <a href="{{route('empresas.listar')}}">
                                     Empresas/<br>
