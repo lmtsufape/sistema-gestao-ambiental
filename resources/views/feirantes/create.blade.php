@@ -588,4 +588,4 @@
             </script>
             @endpush
             @endsection
-            </x-guest-layout>
+</x-app-layout>

@@ -47,7 +47,7 @@
                                                class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror"
                                                type="text" name="cpf" value="{{ $feirante->cpf }}"
                                                data-mask="000.000.000-00"
-                                               placeholder="000.000.000-00">
+                                               placeholder="000.000.000-00" required>
                                         @error('cpf')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -62,7 +62,7 @@
                                         <input id="data_nascimento"
                                                class="form-control @error('data_nascimento') is-invalid @enderror"
                                                type="date" name="data_nascimento"
-                                               value="{{ $feirante->data_nascimento }}">
+                                               value="{{ $feirante->data_nascimento }}" required>
                                         @error('data_nascimento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -78,7 +78,7 @@
                                         </label>
                                         <input id="rg" class="form-control @error('rg') is-invalid @enderror"
                                                type="text" name="rg" value="{{ $feirante->rg }}"
-                                               placeholder="Informe o número do RG">
+                                               placeholder="Informe o número do RG" required>
                                         @error('rg')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -95,7 +95,7 @@
                                                class="form-control @error('orgao_emissor') is-invalid @enderror"
                                                type="text" name="orgao_emissor"
                                                value="{{ $feirante->orgao_emissor }}"
-                                               placeholder="Informe o orgão emissor do RG">
+                                               placeholder="Informe o orgão emissor do RG" required>
                                         @error('orgao_emissor')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -132,7 +132,7 @@
                                         <input id="cep" class="form-control cep @error('cep') is-invalid @enderror"
                                                type="text" name="cep" value="{{ $endereco_residencia->cep }}" autofocus
                                                autocomplete="cep" onblur="pesquisacep(this.value);"
-                                               placeholder="00000-000">
+                                               placeholder="00000-000" required>
                                         <div class="col-md-12 text-right font-weight-bold">
                                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php"
                                                target="_blank">Não sei meu CEP</a>
@@ -148,7 +148,7 @@
                                         <input id="bairro" class="form-control @error('bairro') is-invalid @enderror"
                                                type="text" name="bairro" value="{{ $endereco_residencia->bairro }}"
                                                autofocus
-                                               autocomplete="bairro" placeholder="Informe o bairro">
+                                               autocomplete="bairro" placeholder="Informe o bairro" required>
                                         @error('bairro')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -175,7 +175,7 @@
                                         <input id="numero" class="form-control  @error('numero') is-invalid @enderror"
                                                type="text" name="numero" value="{{ $endereco_residencia->numero }}"
                                                autocomplete="numero"
-                                               placeholder="Informe o número da residência">
+                                               placeholder="Informe o número da residência" required>
                                         @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -202,7 +202,7 @@
                                         <label for="cidade">{{ __('Cidade') }}</label>
                                         <input id="cidade" class="form-control @error('cidade') is-invalid @enderror"
                                                type="text" name="cidade" value="{{ $endereco_residencia->cidade }}" autofocus
-                                               autocomplete="cidade" placeholder="Informe a cidade">
+                                               autocomplete="cidade" placeholder="Informe a cidade" required>
                                         @error('cidade')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -212,7 +212,7 @@
                                     <div class="col-md-4 form-group">
                                         <label for="uf">{{ __('Estado') }}</label>
                                         <select id="uf" class="form-control @error('uf') is-invalid @enderror"
-                                                type="text" autocomplete="estado" name="uf">
+                                                type="text" autocomplete="estado" name="uf" required>
                                             <option value="" selected disabled>-- Selecione o Estado --</option>
                                             <option @if($endereco_residencia->estado == 'AC') selected
                                                     @endif value="AC">Acre
@@ -320,7 +320,7 @@
                                                type="text" name="cep_comercio" value="{{ $endereco_comercio->cep }}"
                                                autofocus
                                                autocomplete="cep_comercio" onblur="pesquisaCepComercio(this.value);"
-                                               placeholder="00000-000">
+                                               placeholder="00000-000" required>
                                         <div class="col-md-12 text-right font-weight-bold">
                                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php"
                                                target="_blank">Não sei meu CEP</a>
@@ -337,7 +337,7 @@
                                                class="form-control @error('bairro_comercio') is-invalid @enderror"
                                                type="text" name="bairro_comercio"
                                                value="{{ $endereco_comercio->bairro }}" autofocus
-                                               autocomplete="bairro_comercio" placeholder="Informe o bairro">
+                                               autocomplete="bairro_comercio" placeholder="Informe o bairro" required>
                                         @error('bairro_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -366,7 +366,7 @@
                                                class="form-control  @error('numero_comercio') is-invalid @enderror"
                                                type="text" name="numero_comercio"
                                                value="{{ $endereco_comercio->numero}}" autocomplete="numero"
-                                               placeholder="Informe o número">
+                                               placeholder="Informe o número" required>
                                         @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -394,7 +394,7 @@
                                         <input id="cidade_comercio"
                                                class="form-control @error('cidade_comercio') is-invalid @enderror"
                                                type="text" name="cidade_comercio" value="Garanhuns" autofocus
-                                               autocomplete="cidade_comercio" placeholder="Informe a cidade">
+                                               autocomplete="cidade_comercio" placeholder="Informe a cidade" required>
                                         @error('cidade_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -405,7 +405,7 @@
                                         <label for="uf_comercio">{{ __('Estado') }}</label>
                                         <select id="uf_comercio"
                                                 class="form-control @error('uf_comercio') is-invalid @enderror"
-                                                type="text" autocomplete="estado_comercio" name="uf_comercio">
+                                                type="text" autocomplete="estado_comercio" name="uf_comercio" required>
                                             <option value="" selected disabled>-- Selecione o UF --</option>
                                             <option @if($endereco_comercio->estado == 'AC') selected @endif value="AC">
                                                 Acre
@@ -509,7 +509,7 @@
                                                class="form-control @error('atividade_comercial') is-invalid @enderror"
                                                type="text" name="atividade_comercial"
                                                value="{{ $feirante->atividade_comercial }}"
-                                               placeholder="Informe a atividade comercial/produto">
+                                               placeholder="Informe a atividade comercial/produto" required>
                                         @error('atividade_comercial')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -542,7 +542,7 @@
                                                class="form-control @error('protocolo_vigilancia_sanitaria') is-invalid @enderror"
                                                type="text" name="protocolo_vigilancia_sanitaria"
                                                value="{{ $feirante->protocolo_vigilancia_sanitaria }}"
-                                               placeholder="Informe o protocolo da vigilância sanitária">
+                                               placeholder="Informe o protocolo da vigilância sanitária" required>
                                         @error('protocolo_vigilancia_sanitaria')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -714,4 +714,4 @@
             </script>
             @endpush
             @endsection
-            </x-guest-layout>
+</x-app-layout>

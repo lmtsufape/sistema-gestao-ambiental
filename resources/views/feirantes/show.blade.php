@@ -201,7 +201,7 @@
                                             style="color: red; font-weight: bold;">*</span>
                                     </label>
                                     <input class="form-control" type="text" name="protocolo_vigilancia_sanitaria"
-                                           value="{{ $feirante->protocolo_vigilancia_sanitaria }}" readonly
+                                           value="{{ $feirante->protocolo_vigilancia_sanitaria }}" readonly>
                                 </div>
                             </div>
                         </div>
