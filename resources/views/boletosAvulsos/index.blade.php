@@ -158,7 +158,7 @@
                                 <div class="form-row col-md-12">
                                     <div class="col-md-6">
                                         <label for="multa">{{ __('Valor da multa (R$)') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <input type="number" step="0.01" id="multa" min="50" max="100000" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
+                                            <input type="number" step="0.01" id="multa" max="100000" class="form-control @error('multa') is-invalid @enderror" type="text" name="multa" value="{{old('multa')}}" required autofocus autocomplete="nome_empresa">
                                             @error('multa')
                                                 <div id="validationServer03Feedback" class="invalid-feedback">
                                                     {{ $message }}
