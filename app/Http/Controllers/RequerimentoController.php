@@ -547,10 +547,8 @@ class RequerimentoController extends Controller
     }
 
     public function analisarExigenciasDocumentos(Request $request)
-    {   
-       
+    {          
         $data = $request->all();
-        // dd($data);
         if ($request->documentos_id == null && $request->outros_documentos_id == null) {
             return redirect()->back()->withErrors(['error' => 'Envie o parecer dos documentos que devem ser analisados.'])->withInput($request->all());
         }

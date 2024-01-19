@@ -135,8 +135,10 @@
                                     @else
                                         <div class="row">
                                             <div class="col-md-11">
-                                                <label class="titulo-documento" for="documento_{{$requerimento_documento_outro->id}}" style="color: black; font-weight: bolder;"><span style="color: red; font-weight: bold;">*</span> {{$requerimento_documento_outro->nome_outro_documento}} </label>
-                                            </div>
+                                            @if ($requerimento_documento_outro)
+                                                    <label class="titulo-documento" for="documento_{{$requerimento_documento_outro->id}}" style="color: black; font-weight: bolder;">
+                                                        <span style="color: red; font-weight: bold;">*</span> {{$requerimento_documento_outro->someOtherProperty}}
+                                            @endif                                            </div>
                                             <div class="col-md-1" style="text-align: right; float: right;">
                                                 @if($requerimento_documento_outro->arquivo_outro_documento != null) <a href="{{route('requerimento.exigencia.outro.documento', ['requerimento_id' => $requerimento->id])}}" target="_blank"><img src="{{asset('img/eye-svgrepo-com-green.svg')}}" alt="arquivo atual" style="width: 30px; margin-top: 2px;"></a> @endif
                                             </div>
