@@ -254,6 +254,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/feirantes/{id}/edit', [FeiranteController::class, 'edit'])->name('feirantes.edit');
     Route::put('/feirantes/{id}/update', [FeiranteController::class, 'update'])->name('feirantes.update');
     Route::delete('/feirantes/{id}/destroy', [FeiranteController::class, 'destroy'])->name('feirantes.destroy');
+    Route::get('/feirantes/{id}/comprovante_cadastro', [FeiranteController::class, 'comprovante_cadastro'])->name('feirantes.comprovante_cadastro');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');

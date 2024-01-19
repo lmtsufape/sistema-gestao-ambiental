@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Telefone;
 use App\Models\Endereco;
 use App\Models\Feirante;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -184,5 +185,21 @@ class FeiranteController extends Controller
         } catch (\Exception $e) {
             return redirect(route('feirantes.index'))->with(['error' => 'Não é possível excluir o feirante']);
         }
+    }
+
+    public function comprovante_cadastro($feirante_id)
+    {
+        $this->authorize('isAnalista', User::class);
+
+        $feirante = Feirante::findOrFail($feirante_id);
+
+        $endereco_comercio = Endereco::findOrFail($feirante->endereco_comercio_id);
+
+        $data_cadastro = $feirante->created_at->format('d/m/Y');
+
+        $pdf = \Barryvdh\DomPDF\Facade::loadView('pdf.comprovante_cadastro_feirante', ['feirante' => $feirante,
+                                                'data_cadastro' => $data_cadastro, 'endereco_comercio' => $endereco_comercio]);
+
+        return $pdf->setPaper('a4')->stream('comprovante_cadastro_feirante.pdf');
     }
 }

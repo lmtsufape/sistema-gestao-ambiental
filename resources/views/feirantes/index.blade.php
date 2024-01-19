@@ -79,6 +79,9 @@
                                                                 <a title="Deletar Feirante" type="button" data-toggle="modal" data-target="#modalStaticDeletarFeirante_{{$item->id}}">
                                                                     <img class="icon-licenciamento" src="{{ asset('img/trash-svgrepo-com.svg') }}" alt="Icone de deletar Feirante">
                                                                 </a>
+                                                                <a href="{{ route('feirantes.comprovante_cadastro', ['id' => $item->id]) }}" target="_blank">
+                                                                    <img class="icon-licenciamento" width="20px;" src="{{ asset('img/pdf-green.svg') }}" alt="Comprovante de Cadastro" title="Comprovante de Cadastro">
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -116,6 +119,12 @@
                                         <img class="icon-licenciamento align-middle" width="20" src="{{ asset('img/trash-svgrepo-com.svg') }}" alt="Excluir Feirante">
                                         <div style="font-size: 15px;" class="align-middle mx-3">
                                             Excluir Feirante
+                                        </div>
+                                    </div>
+                                    <div title="Comprovante de Cadastro" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento align-middle" width="20" src="{{ asset('img/pdf-green.svg') }}" alt="Comprovante de Cadastro">
+                                        <div style="font-size: 15px;" class="align-middle mx-3">
+                                            Comprovante de Cadastro
                                         </div>
                                     </div>
                                 @endcan
