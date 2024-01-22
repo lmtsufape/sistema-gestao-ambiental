@@ -38,7 +38,7 @@ class Feirante extends Model
 
     public function setAtributes($input)
     {
-        $this->nome = $input['name'];
+        $this->nome = $input['nome'];
         $this->data_nascimento = $input['data_nascimento'];
         $this->rg = $input['rg'];
         $this->orgao_emissor = $input['orgao_emissor'];

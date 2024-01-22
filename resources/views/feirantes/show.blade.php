@@ -16,10 +16,10 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="name">
-                                        {{ __('Name') }} <span style="color: red; font-weight: bold;">*</span>
+                                    <label for="nome">
+                                        {{ __('Nome') }} <span style="color: red; font-weight: bold;">*</span>
                                     </label>
-                                    <input class="form-control" type="text" name="name" value="{{ $feirante->nome }}"
+                                    <input class="form-control" type="text" name="nome" value="{{ $feirante->nome }}"
                                            readonly>
                                 </div>
                             </div>

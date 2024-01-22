@@ -17,13 +17,14 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
-                                        <label for="name">
-                                            {{ __('Name') }} <span style="color: red; font-weight: bold;">*</span>
+                                        <label for="nome">
+                                            {{ __('Nome') }} <span style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="name" class="form-control @error('name') is-invalid @enderror"
-                                               type="text" name="name" value="{{old('name')}}" required autofocus
-                                               autocomplete="name" placeholder="Informe o nome completo">
-                                        @error('name')
+                                        <input id="nome"
+                                               class="form-control apenas_letras @error('nome') is-invalid @enderror"
+                                               type="text" name="nome" value="{{old('nome')}}" required autofocus
+                                               autocomplete="nome" placeholder="Informe o nome completo">
+                                        @error('nome')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -39,7 +40,7 @@
                                         <input id="cpf"
                                                class="form-control simple-field-data-mask @error('cpf') is-invalid @enderror"
                                                type="text" name="cpf" value="{{old('cpf')}}" data-mask="000.000.000-00"
-                                               placeholder="000.000.000-00">
+                                               placeholder="000.000.000-00" required>
                                         @error('cpf')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -51,8 +52,10 @@
                                         <label for="data_nascimento">
                                             {{ __('Data de Nascimento') }} <span style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="data_nascimento" class="form-control @error('data_nascimento') is-invalid @enderror"
-                                               type="date" name="data_nascimento" value="{{old('data_nascimento')}}">
+                                        <input id="data_nascimento"
+                                               class="form-control @error('data_nascimento') is-invalid @enderror"
+                                               type="date" name="data_nascimento" value="{{old('data_nascimento')}}"
+                                               required>
                                         @error('data_nascimento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -68,7 +71,7 @@
                                         </label>
                                         <input id="rg" class="form-control @error('rg') is-invalid @enderror"
                                                type="text" name="rg" value="{{old('rg')}}"
-                                               placeholder="Informe o número do RG">
+                                               placeholder="Informe o número do RG" required>
                                         @error('rg')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -78,10 +81,14 @@
 
                                     <div class="col-md-4 form-group">
                                         <label for="orgao_emissor">
-                                            {{ __('Orgão emissor') }} <span style="color: red; font-weight: bold;">*</span>
+                                            {{ __('Orgão emissor') }} <span
+                                                style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="orgao_emissor" class="form-control @error('orgao_emissor') is-invalid @enderror" type="text" name="orgao_emissor"
-                                               value="{{old('orgao_emissor')}}"  placeholder="Informe o orgão emissor do RG">
+                                        <input id="orgao_emissor"
+                                               class="form-control @error('orgao_emissor') is-invalid @enderror"
+                                               type="text" name="orgao_emissor"
+                                               value="{{old('orgao_emissor')}}"
+                                               placeholder="Informe o orgão emissor do RG" required>
                                         @error('orgao_emissor')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -114,11 +121,12 @@
 
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}</label>
+                                        <label for="cep">{{ __('CEP') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
                                         <input id="cep" class="form-control cep @error('cep') is-invalid @enderror"
                                                type="text" name="cep" value="{{old('cep')}}" autofocus
                                                autocomplete="cep" onblur="pesquisacep(this.value);"
-                                               placeholder="00000-000">
+                                               placeholder="00000-000" required>
                                         <div class="col-md-12 text-right font-weight-bold">
                                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php"
                                                target="_blank">Não sei meu CEP</a>
@@ -130,10 +138,11 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}</label>
+                                        <label for="bairro">{{ __('Bairro') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
                                         <input id="bairro" class="form-control @error('bairro') is-invalid @enderror"
                                                type="text" name="bairro" value="{{old('bairro')}}" autofocus
-                                               autocomplete="bairro" placeholder="Informe o bairro">
+                                               autocomplete="bairro" placeholder="Informe o bairro" required>
                                         @error('bairro')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -155,10 +164,11 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}</label>
+                                        <label for="numero">{{ __('Número') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
                                         <input id="numero" class="form-control  @error('numero') is-invalid @enderror"
                                                type="text" name="numero" value="{{old('numero')}}" autocomplete="numero"
-                                               placeholder="Informe o número da residência">
+                                               placeholder="Informe o número da residência" required>
                                         @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -169,7 +179,10 @@
                                 <div class="form-row">
                                     <div class="col-md-4 form-group">
                                         <label for="complemento">{{ __('Complemento') }}</label>
-                                        <input id="complemento" class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" autofocus autocomplete="complemento" placeholder="Informe o complemento">
+                                        <input id="complemento"
+                                               class="form-control @error('complemento') is-invalid @enderror"
+                                               type="text" name="complemento" autofocus autocomplete="complemento"
+                                               placeholder="Informe o complemento">
                                         @error('complemento')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -178,10 +191,11 @@
                                     </div>
 
                                     <div class="col-md-4 form-group">
-                                        <label for="cidade">{{ __('Cidade') }}</label>
+                                        <label for="cidade">{{ __('Cidade') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
                                         <input id="cidade" class="form-control @error('cidade') is-invalid @enderror"
                                                type="text" name="cidade" value="Garanhuns" autofocus
-                                               autocomplete="cidade" placeholder="Informe a cidade">
+                                               autocomplete="cidade" placeholder="Informe a cidade" required>
                                         @error('cidade')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -189,9 +203,10 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="uf">{{ __('Estado') }}</label>
+                                        <label for="uf">{{ __('Estado') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
                                         <select id="uf" class="form-control @error('uf') is-invalid @enderror"
-                                                type="text" autocomplete="estado" name="uf">
+                                                type="text" autocomplete="estado" name="uf" required>
                                             <option value="" selected disabled>-- Selecione o Estado --</option>
                                             <option @if(old('uf') == 'AC') selected @endif value="AC">Acre</option>
                                             <option @if(old('uf') == 'AL') selected @endif value="AL">Alagoas</option>
@@ -252,11 +267,13 @@
 
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep_comercio">{{ __('CEP') }}</label>
-                                        <input id="cep_comercio" class="form-control cep @error('cep_comercio') is-invalid @enderror"
+                                        <label for="cep_comercio">{{ __('CEP') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
+                                        <input id="cep_comercio"
+                                               class="form-control cep @error('cep_comercio') is-invalid @enderror"
                                                type="text" name="cep_comercio" value="{{old('cep_comercio')}}" autofocus
                                                autocomplete="cep_comercio" onblur="pesquisaCepComercio(this.value);"
-                                               placeholder="00000-000">
+                                               placeholder="00000-000" required>
                                         <div class="col-md-12 text-right font-weight-bold">
                                             <a href="https://buscacepinter.correios.com.br/app/endereco/index.php"
                                                target="_blank">Não sei meu CEP</a>
@@ -268,10 +285,13 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="bairro_comercio">{{ __('Bairro') }}</label>
-                                        <input id="bairro_comercio" class="form-control @error('bairro_comercio') is-invalid @enderror"
-                                               type="text" name="bairro_comercio" value="{{old('bairro_comercio')}}" autofocus
-                                               autocomplete="bairro_comercio" placeholder="Informe o bairro">
+                                        <label for="bairro_comercio">{{ __('Bairro') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
+                                        <input id="bairro_comercio"
+                                               class="form-control @error('bairro_comercio') is-invalid @enderror"
+                                               type="text" name="bairro_comercio" value="{{old('bairro_comercio')}}"
+                                               autofocus
+                                               autocomplete="bairro_comercio" placeholder="Informe o bairro" required>
                                         @error('bairro_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -283,8 +303,10 @@
                                     <div class="col-md-6 form-group">
                                         <label for="rua_comercio">{{ __('Rua') }} <span
                                                 style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rua_comercio" class="form-control @error('rua_comercio') is-invalid @enderror"
-                                               type="text" name="rua_comercio" value="{{old('rua_comercio')}}" autocomplete="rua_comercio" required
+                                        <input id="rua_comercio"
+                                               class="form-control @error('rua_comercio') is-invalid @enderror"
+                                               type="text" name="rua_comercio" value="{{old('rua_comercio')}}"
+                                               autocomplete="rua_comercio" required
                                                placeholder="Informe o nome da rua">
                                         @error('rua_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -293,10 +315,13 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero_comercio">{{ __('Número') }}</label>
-                                        <input id="numero_comercio" class="form-control  @error('numero_comercio') is-invalid @enderror"
-                                               type="text" name="numero_comercio" value="{{old('numero_comercio')}}" autocomplete="numero"
-                                               placeholder="Informe o número">
+                                        <label for="numero_comercio">{{ __('Número') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
+                                        <input id="numero_comercio"
+                                               class="form-control  @error('numero_comercio') is-invalid @enderror"
+                                               type="text" name="numero_comercio" value="{{old('numero_comercio')}}"
+                                               autocomplete="numero"
+                                               placeholder="Informe o número" required>
                                         @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -307,7 +332,10 @@
                                 <div class="form-row">
                                     <div class="col-md-4 form-group">
                                         <label for="complemento_comercio">{{ __('Complemento') }}</label>
-                                        <input id="complemento_comercio" class="form-control @error('complemento_comercio') is-invalid @enderror" type="text" name="complemento_comercio" autofocus autocomplete="complemento_comercio" placeholder="Informe o complemento">
+                                        <input id="complemento_comercio"
+                                               class="form-control @error('complemento_comercio') is-invalid @enderror"
+                                               type="text" name="complemento_comercio" autofocus
+                                               autocomplete="complemento_comercio" placeholder="Informe o complemento">
                                         @error('complemento_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -316,10 +344,12 @@
                                     </div>
 
                                     <div class="col-md-4 form-group">
-                                        <label for="cidade_comercio">{{ __('Cidade') }}</label>
-                                        <input id="cidade_comercio" class="form-control @error('cidade_comercio') is-invalid @enderror"
+                                        <label for="cidade_comercio">{{ __('Cidade') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
+                                        <input id="cidade_comercio"
+                                               class="form-control @error('cidade_comercio') is-invalid @enderror"
                                                type="text" name="cidade_comercio" value="Garanhuns" autofocus
-                                               autocomplete="cidade_comercio" placeholder="Informe a cidade">
+                                               autocomplete="cidade_comercio" placeholder="Informe a cidade" required>
                                         @error('cidade_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -327,50 +357,84 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="uf_comercio">{{ __('Estado') }}</label>
-                                        <select id="uf_comercio" class="form-control @error('uf_comercio') is-invalid @enderror"
-                                                type="text" autocomplete="estado_comercio" name="uf_comercio">
+                                        <label for="uf_comercio">{{ __('Estado') }}</label> <span
+                                            style="color: red; font-weight: bold;">*</span>
+                                        <select id="uf_comercio"
+                                                class="form-control @error('uf_comercio') is-invalid @enderror"
+                                                type="text" autocomplete="estado_comercio" name="uf_comercio" required>
                                             <option value="" selected disabled>-- Selecione o UF --</option>
-                                            <option @if(old('uf_comercio') == 'AC') selected @endif value="AC">Acre</option>
-                                            <option @if(old('uf_comercio') == 'AL') selected @endif value="AL">Alagoas</option>
-                                            <option @if(old('uf_comercio') == 'AP') selected @endif value="AP">Amapá</option>
-                                            <option @if(old('uf_comercio') == 'AM') selected @endif value="AM">Amazonas</option>
-                                            <option @if(old('uf_comercio') == 'BA') selected @endif value="BA">Bahia</option>
-                                            <option @if(old('uf_comercio') == 'CE') selected @endif value="CE">Ceará</option>
-                                            <option @if(old('uf_comercio') == 'DF') selected @endif value="DF">Distrito Federal
+                                            <option @if(old('uf_comercio') == 'AC') selected @endif value="AC">Acre
                                             </option>
-                                            <option @if(old('uf_comercio') == 'ES') selected @endif value="ES">Espírito Santo
+                                            <option @if(old('uf_comercio') == 'AL') selected @endif value="AL">Alagoas
                                             </option>
-                                            <option @if(old('uf_comercio') == 'GO') selected @endif value="GO">Goiás</option>
-                                            <option @if(old('uf_comercio') == 'MA') selected @endif value="MA">Maranhão</option>
-                                            <option @if(old('uf_comercio') == 'MT') selected @endif value="MT">Mato Grosso
+                                            <option @if(old('uf_comercio') == 'AP') selected @endif value="AP">Amapá
                                             </option>
-                                            <option @if(old('uf_comercio') == 'MS') selected @endif value="MS">Mato Grosso do
+                                            <option @if(old('uf_comercio') == 'AM') selected @endif value="AM">
+                                                Amazonas
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'BA') selected @endif value="BA">Bahia
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'CE') selected @endif value="CE">Ceará
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'DF') selected @endif value="DF">Distrito
+                                                Federal
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'ES') selected @endif value="ES">Espírito
+                                                Santo
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'GO') selected @endif value="GO">Goiás
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'MA') selected @endif value="MA">
+                                                Maranhão
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'MT') selected @endif value="MT">Mato
+                                                Grosso
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'MS') selected @endif value="MS">Mato
+                                                Grosso do
                                                 Sul
                                             </option>
-                                            <option @if(old('uf_comercio') == 'MG') selected @endif value="MG">Minas Gerais
+                                            <option @if(old('uf_comercio') == 'MG') selected @endif value="MG">Minas
+                                                Gerais
                                             </option>
-                                            <option @if(old('uf_comercio') == 'PA') selected @endif value="PA">Pará</option>
-                                            <option @if(old('uf_comercio') == 'PB') selected @endif value="PB">Paraíba</option>
-                                            <option @if(old('uf_comercio') == 'PR') selected @endif value="PR">Paraná</option>
-                                            <option @if(old('uf_comercio', 'PE') == 'PE') selected @endif value="PE">Pernambuco
+                                            <option @if(old('uf_comercio') == 'PA') selected @endif value="PA">Pará
                                             </option>
-                                            <option @if(old('uf_comercio') == 'PI') selected @endif value="PI">Piauí</option>
-                                            <option @if(old('uf_comercio') == 'RJ') selected @endif value="RJ">Rio de Janeiro
+                                            <option @if(old('uf_comercio') == 'PB') selected @endif value="PB">Paraíba
                                             </option>
-                                            <option @if(old('uf_comercio') == 'RN') selected @endif value="RN">Rio Grande do
+                                            <option @if(old('uf_comercio') == 'PR') selected @endif value="PR">Paraná
+                                            </option>
+                                            <option @if(old('uf_comercio', 'PE') == 'PE') selected @endif value="PE">
+                                                Pernambuco
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'PI') selected @endif value="PI">Piauí
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'RJ') selected @endif value="RJ">Rio de
+                                                Janeiro
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'RN') selected @endif value="RN">Rio
+                                                Grande do
                                                 Norte
                                             </option>
-                                            <option @if(old('uf_comercio') == 'RS') selected @endif value="RS">Rio Grande do
+                                            <option @if(old('uf_comercio') == 'RS') selected @endif value="RS">Rio
+                                                Grande do
                                                 Sul
                                             </option>
-                                            <option @if(old('uf_comercio') == 'RO') selected @endif value="RO">Rondônia</option>
-                                            <option @if(old('uf_comercio') == 'RR') selected @endif value="RR">Roraima</option>
-                                            <option @if(old('uf_comercio') == 'SC') selected @endif value="SC">Santa Catarina
+                                            <option @if(old('uf_comercio') == 'RO') selected @endif value="RO">
+                                                Rondônia
                                             </option>
-                                            <option @if(old('uf_comercio') == 'SP') selected @endif value="SP">São Paulo</option>
-                                            <option @if(old('uf_comercio') == 'SE') selected @endif value="SE">Sergipe</option>
-                                            <option @if(old('uf_comercio') == 'TO') selected @endif value="TO">Tocantins</option>
+                                            <option @if(old('uf_comercio') == 'RR') selected @endif value="RR">Roraima
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'SC') selected @endif value="SC">Santa
+                                                Catarina
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'SP') selected @endif value="SP">São
+                                                Paulo
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'SE') selected @endif value="SE">Sergipe
+                                            </option>
+                                            <option @if(old('uf_comercio') == 'TO') selected @endif value="TO">
+                                                Tocantins
+                                            </option>
                                         </select>
                                         @error('uf_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -385,10 +449,13 @@
                                 <div class="form-row">
                                     <div class="col-md-4 form-group">
                                         <label for="atividade_comercial">
-                                            {{ __('Atividade Comercial/Produto') }} <span style="color: red; font-weight: bold;">*</span>
+                                            {{ __('Atividade Comercial/Produto') }} <span
+                                                style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="atividade_comercial" class="form-control @error('atividade_comercial') is-invalid @enderror"
-                                               type="text" name="atividade_comercial" value="{{old('atividade_comercial')}}"
+                                        <input id="atividade_comercial"
+                                               class="form-control  letras_e_simbolos @error('atividade_comercial') is-invalid @enderror"
+                                               type="text" name="atividade_comercial"
+                                               value="{{old('atividade_comercial')}}"
                                                placeholder="Informe a atividade comercial/produto">
                                         @error('atividade_comercial')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
@@ -401,9 +468,11 @@
                                         <label for="residuos_gerados">{{ __('Resíduos Gerados') }}<span
                                                 style="color: red; font-weight: bold;">*</span></label>
                                         <input id="residuos_gerados"
-                                               class="form-control @error('residuos_gerados') is-invalid @enderror"
-                                               type="text" name="residuos_gerados" value="{{old('residuos_gerados')}}" required
-                                               autocomplete="residuos_gerados" placeholder="Informe os resíduos que são gerados">
+                                               class="form-control letras_e_simbolos @error('residuos_gerados') is-invalid @enderror"
+                                               type="text" name="residuos_gerados" value="{{old('residuos_gerados')}}"
+                                               required
+                                               autocomplete="residuos_gerados"
+                                               placeholder="Informe os resíduos que são gerados">
                                         @error('residuos_gerados')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -413,10 +482,14 @@
 
                                     <div class="col-md-4 form-group">
                                         <label for="protocolo_vigilancia_sanitaria">
-                                            {{ __('Protocolo Vigilância Sanitária') }} <span style="color: red; font-weight: bold;">*</span>
+                                            {{ __('Protocolo Vigilância Sanitária') }} <span
+                                                style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="protocolo_vigilancia_sanitaria" class="form-control @error('protocolo_vigilancia_sanitaria') is-invalid @enderror"
-                                               type="text" name="protocolo_vigilancia_sanitaria" value="{{old('protocolo_vigilancia_sanitaria')}}"  placeholder="Informe o protocolo da vigilância sanitária">
+                                        <input id="protocolo_vigilancia_sanitaria"
+                                               class="form-control letras_e_simbolos @error('protocolo_vigilancia_sanitaria') is-invalid @enderror"
+                                               type="text" name="protocolo_vigilancia_sanitaria"
+                                               value="{{old('protocolo_vigilancia_sanitaria')}}"
+                                               placeholder="Informe o protocolo da vigilância sanitária">
                                         @error('protocolo_vigilancia_sanitaria')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -462,6 +535,17 @@
                             '#': {pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true}
                         }
                     });
+                    $(".letras_e_simbolos").mask("#", {
+                        maxlength: true,
+                        translation: {
+                            '#': {
+                                pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s!@#$%^&*()_+={}[\]:;<>,.?~\\/-]+$/,
+                                recursive: true
+                            }
+                        }
+                    });
+
+
                 });
 
                 function limpa_formulário_cep() {
@@ -586,6 +670,6 @@
                     $('#btn-modal-cep-invalido').click();
                 }
             </script>
-            @endpush
-            @endsection
+        @endpush
+    @endsection
 </x-app-layout>

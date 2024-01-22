@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FeiranteRequest;
 use App\Models\Telefone;
 use App\Models\Endereco;
 use App\Models\Feirante;
@@ -48,9 +49,10 @@ class FeiranteController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FeiranteRequest $request)
     {
         $this->authorize('isAnalista', User::class);
+
         $input = $request->all();
 
         $feirante = new Feirante();

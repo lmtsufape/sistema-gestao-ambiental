@@ -24,13 +24,13 @@
                                 @method('PUT')
                                 <div class="form-row">
                                     <div class="col-md-12 form-group">
-                                        <label for="name">
-                                            {{ __('Name') }} <span style="color: red; font-weight: bold;">*</span>
+                                        <label for="nome">
+                                            {{ __('Nome') }} <span style="color: red; font-weight: bold;">*</span>
                                         </label>
-                                        <input id="name" class="form-control @error('name') is-invalid @enderror"
-                                               type="text" name="name" value="{{ $feirante->nome }}" required autofocus
-                                               autocomplete="name" placeholder="Informe o nome completo">
-                                        @error('name')
+                                        <input id="nome" class="form-control @error('nome') is-invalid @enderror"
+                                               type="text" name="nome" value="{{ $feirante->nome }}" required autofocus
+                                               autocomplete="nome" placeholder="Informe o nome completo">
+                                        @error('nome')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
