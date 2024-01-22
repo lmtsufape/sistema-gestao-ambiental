@@ -322,7 +322,7 @@
                                                type="text" name="numero_comercio" value="{{old('numero_comercio')}}"
                                                autocomplete="numero"
                                                placeholder="Informe o número" required>
-                                        @error('numero')
+                                        @error('numero_comercio')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -456,7 +456,7 @@
                                                class="form-control  letras_e_simbolos @error('atividade_comercial') is-invalid @enderror"
                                                type="text" name="atividade_comercial"
                                                value="{{old('atividade_comercial')}}"
-                                               placeholder="Informe a atividade comercial/produto">
+                                               placeholder="Informe a atividade comercial/produto" required>
                                         @error('atividade_comercial')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -489,7 +489,7 @@
                                                class="form-control letras_e_simbolos @error('protocolo_vigilancia_sanitaria') is-invalid @enderror"
                                                type="text" name="protocolo_vigilancia_sanitaria"
                                                value="{{old('protocolo_vigilancia_sanitaria')}}"
-                                               placeholder="Informe o protocolo da vigilância sanitária">
+                                               placeholder="Informe o protocolo da vigilância sanitária" required>
                                         @error('protocolo_vigilancia_sanitaria')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}

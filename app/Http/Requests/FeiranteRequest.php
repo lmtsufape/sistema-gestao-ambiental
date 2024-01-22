@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
+use Illuminate\Validation\Rule;
 
 class FeiranteRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class FeiranteRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->role == User::ROLE_ENUM['analista'];
     }
 
     /**
@@ -26,20 +28,26 @@ class FeiranteRequest extends FormRequest
         return [
             'nome' => 'required|string|max:255',
             'data_nascimento' => 'string|required|before_or_equal:today',
-            'cpf' => 'string|max:255|unique:feirantes',
-            'rg' => 'string|max:255|unique:feirantes',
+            'cpf' => [
+                'string',
+                'max:255',
+                Rule::unique('feirantes')->ignore($this->route('id')),
+            ],
+            'rg' => [
+                'string',
+                'max:255',
+                Rule::unique('feirantes')->ignore($this->route('id')),
+            ],
             'orgao_emissor' => 'string|max:255',
             'cep' => 'required|string|max:255',
             'bairro' => 'required|string|max:255',
             'numero' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
-            'estado' => 'required|string|max:255',
             'uf' => 'required|string|max:255',
             'cep_comercio' => 'required|string|max:255',
             'bairro_comercio' => 'required|string|max:255',
-            'numero_comerciu' => 'required|string|max:255',
+            'numero_comercio' => 'required|string|max:255',
             'cidade_comercio' => 'required|string|max:255',
-            'estado_comercio' => 'required|string|max:255',
             'uf_comercio' => 'required|string|max:255',
             'atividade_comercial' => 'required|string|max:255',
             'residuos_gerados' => 'required|string|max:255',
@@ -59,11 +67,11 @@ class FeiranteRequest extends FormRequest
             'cpf.required' => 'O campo cpf é obrigatório',
             'cpf.max' => 'O campo cpf deve ter no máximo 255 caracteres',
             'cpf.string' => 'O campo cpf deve ser uma sequencia númerica',
-            'cpf.unique' => 'O cpf já está cadastrado',
+            'cpf.unique' => 'O CPF informado já possui cadastro no sistema',
             'rg.required' => 'O campo rg é obrigatório',
             'rg.max' => 'O campo rg deve ter no máximo 255 caracteres',
             'rg.string' => 'O campo rg deve ser uma sequencia númerica',
-            'rg.unique' => 'O rg já está cadastrado',
+            'rg.unique' => 'O RG informado já possui cadastro no sistema',
             'orgao_emissor.required' => 'O campo orgão emissor é obrigatório',
             'orgao_emissor.max' => 'O campo orgão emissor deve ter no máximo 255 caracteres',
             'cep.required' => 'O campo cep é obrigatório',
@@ -74,8 +82,6 @@ class FeiranteRequest extends FormRequest
             'numero.max' => 'O campo número deve ter no máximo 255 caracteres',
             'cidade.required' => 'O campo cidade é obrigatório',
             'cidade.max' => 'O campo cidade deve ter no máximo 255 caracteres',
-            'estado.required' => 'O campo estado é obrigatório',
-            'estado.max' => 'O campo estado deve ter no máximo 255 caracteres',
             'uf.required' => 'O campo uf é obrigatório',
             'uf.max' => 'O campo uf deve ter no máximo 255 caracteres',
             'cep_comercio.required' => 'O campo cep é obrigatório',
@@ -86,8 +92,6 @@ class FeiranteRequest extends FormRequest
             'numero_comercio.max' => 'O campo número deve ter no máximo 255 caracteres',
             'cidade_comercio.required' => 'O campo cidade é obrigatório',
             'cidade_comercio.max' => 'O campo cidade deve ter no máximo 255 caracteres',
-            'estado_comercio.required' => 'O campo estado é obrigatório',
-            'estado_comercio.max' => 'O campo estado deve ter no máximo 255 caracteres',
             'uf_comercio.required' => 'O campo uf é obrigatório',
             'uf_comercio.max' => 'O campo uf deve ter no máximo 255 caracteres',
             'atividade_comercial.required' => 'O campo atividade comercial é obrigatório',

@@ -132,7 +132,7 @@ class FeiranteController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $feirante_id)
+    public function update(FeiranteRequest $request, $feirante_id)
     {
         $this->authorize('isAnalista', User::class);
 
