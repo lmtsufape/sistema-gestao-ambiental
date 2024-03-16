@@ -1,6 +1,8 @@
 name: SGA CI
 
 on:
+  push:
+    branches: [ main ]
   pull_request_target:
     branches: [ main ]
 
@@ -33,14 +35,18 @@ jobs:
     - name: Set up environment
       run: |
         cp .env.example .env
-        php artisan key:generate --show | xargs echo "APP_KEY=" >> .env
+        echo "APP_KEY=$(php artisan key:generate --show)" >> .env
         echo "DB_CONNECTION=pgsql" >> .env
         echo "DB_HOST=sga_db" >> .env
         echo "DB_PORT=5432" >> .env
         echo "DB_DATABASE=laravel" >> .env
         echo "DB_USERNAME=laravel" >> .env
         echo "DB_PASSWORD=secret" >> .env
-        # Adicione outras configurações do .env conforme necessário
+        # As configurações a seguir são exemplos; ajuste conforme necessário
+        echo "CACHE_DRIVER=array" >> .env
+        echo "QUEUE_CONNECTION=sync" >> .env
+        echo "SESSION_DRIVER=file" >> .env
+        echo "MAIL_MAILER=log" >> .env
 
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
@@ -55,4 +61,4 @@ jobs:
       run: php artisan dusk
 
 
-      
+
