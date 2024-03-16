@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\CnaeController;
+use App\Http\Controllers\FeiranteController;
 use App\Http\Controllers\VisitaController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\SetorController;
@@ -58,7 +59,7 @@ Route::get('/solicitacoes/podas/{solicitacao}/foto/{foto}', [SolicitacaoPodaCont
 Route::get('/denuncias/acompanhar', [DenunciaController::class, 'statusDenuncia'])->name('denuncias.acompanhar');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/boletos/{filtro}/listar', [BoletoController::class, 'index'])->name('boletos.index');
     Route::delete('/boletos/{boleto}', [BoletoController::class, 'baixarBoleto'])->name('boletos.destroy');
@@ -78,10 +79,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/requerimentos/{requerimento_id}/documentacaoExigencia/download_outro', [RequerimentoController::class, 'showExigenciaOutroDocumento'])->name('requerimento.exigencia.outro.documento');
     Route::get('/requerimentos/{id}/visitas', [RequerimentoController::class, 'indexVisitasRequerimento'])->name('requerimento.visitas');
     Route::get('/requerimentos/{requerimento_id}/visitas/{visita_id}/edit', [RequerimentoController::class, 'requerimentoVisitasEdit'])->name('requerimento.visitas.edit');
-    
+
     Route::post('/visitas/editVisita', [VisitaController::class, 'editVisita'])->name('visitas.visita.edit');
     Route::get('/visitas/info', [VisitaController::class, 'infoVisita'])->name('visitas.info.ajax');
-    
+
     Route::get('/requerimentos/visita-create-analista', [RequerimentoController::class, 'getAnalistaProcesso'])->name('requerimentos.get.analista');
     Route::get('/requerimentos/{id}/protocolo', [RequerimentoController::class, 'protocoloRequerimento'])->name('requerimentos.protocolo');
     Route::get('/requerimentos/{id}/protocolo-baixar', [RequerimentoController::class, 'baixarProtocoloRequerimento'])->name('requerimentos.protocolo.baixar');
@@ -113,7 +114,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('visitas/{filtro}/listar/{ordenacao}-{ordem}', [VisitaController::class, 'index'])->name('visitas.index');
     Route::get('/visitas/{visita}/foto/{foto}', [VisitaController::class, 'foto'])->name('visitas.foto');
     Route::get('/visitas/{visita_id}/requerimento/{requerimento_id}/ver', [RequerimentoController::class, 'verRequerimentoVisita'])->name('visitas.requerimento.show');
-    
+
     Route::resource('beneficiarios', BeneficiarioController::class)->except('index');
     Route::get('/beneficiarios/', [BeneficiarioController::class, 'index'])->name('beneficiarios.index');
     Route::get('/beneficiarios/create', [BeneficiarioController::class, 'create'])->name('beneficiarios.create');
@@ -158,8 +159,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         $response->deleteFileAfterSend(true);
         return $response;
     })->name('solicitacao_servicos.download');
-    
-    
+
+
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');
     Route::post('/relatorio/store', [RelatorioController::class, 'store'])->name('relatorios.store');
     Route::get('/relatorio/{relatorio}/edit', [RelatorioController::class, 'edit'])->name('relatorios.edit');
@@ -167,7 +168,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get("/relatorios/{relatorio_id}/arquivo", [RelatorioController::class, 'downloadArquivo'])->name('relatorios.downloadArquivo');
     Route::get("/relatorios/{relatorio_id}/imagens", [RelatorioController::class, 'downloadImagem'])->name('relatorios.downloadImagem');
     Route::get('/relatorio/{relatorio}/show', [RelatorioController::class, 'show'])->name('relatorios.show');
-    Route::get("/relatorios/empresa/{requerimento}", [RelatorioController::class, 'recuperarRelatorios'])->name('recuperar.relatorios');    
+    Route::get("/relatorios/empresa/{requerimento}", [RelatorioController::class, 'recuperarRelatorios'])->name('recuperar.relatorios');
     Route::post('/relatorio/{relatorio}/resultado', [RelatorioController::class, 'resultado'])->name('relatorios.resultado');
 
 
@@ -244,6 +245,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/boletosAvulsos/{filtro}/listar', [BoletoAvulsoController::class, 'listar_boletos'])->name('boletosAvulsos.listar_boletos');
     Route::post('/boletosAvulsos', [BoletoAvulsoController::class, 'store'])->name('boletosAvulsos.store');
     Route::post('/consultaEmpresa', [BoletoAvulsoController::class, 'buscarEmpresa'])->name('boletosAvulsos.buscarEmpresa');
+
+    Route::resource('feirantes', FeiranteController::class)->except('index');
+    Route::get('/feirantes/', [FeiranteController::class, 'index'])->name('feirantes.index');
+    Route::get('/feirantes/create', [FeiranteController::class, 'create'])->name('feirantes.create');
+    Route::post('/feirantes/store', [FeiranteController::class, 'store'])->name('feirantes.store');
+    Route::get('/feirantes/{id}/show', [FeiranteController::class, 'show'])->name('feirantes.show');
+    Route::get('/feirantes/{id}/edit', [FeiranteController::class, 'edit'])->name('feirantes.edit');
+    Route::put('/feirantes/{id}/update', [FeiranteController::class, 'update'])->name('feirantes.update');
+    Route::delete('/feirantes/{id}/destroy', [FeiranteController::class, 'destroy'])->name('feirantes.destroy');
+    Route::get('/feirantes/{id}/comprovante_cadastro', [FeiranteController::class, 'comprovante_cadastro'])->name('feirantes.comprovante_cadastro');
 });
 
 Route::get('/denuncias/create', [DenunciaController::class, 'create'])->name('denuncias.create');

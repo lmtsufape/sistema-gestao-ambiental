@@ -45,6 +45,17 @@ class Endereco extends Model
         $this->complemento = array_key_exists('complemento', $input) ? $input['complemento'] : null;
     }
 
+    public function setAtributesComercio($input)
+    {
+        $this->cep = $input['cep_comercio'];
+        $this->numero = $input['numero_comercio'];
+        $this->cidade = $input['cidade_comercio'];
+        $this->estado = $input['uf_comercio'];
+        $this->bairro = $input['bairro_comercio'];
+        $this->rua = $input['rua_comercio'];
+        $this->complemento = array_key_exists('complemento_comercio', $input) ? $input['complemento_comercio'] : null;
+    }
+
     public function setAtributesEmpresa($input)
     {
         $this->cep = $input['cep_da_empresa'];
