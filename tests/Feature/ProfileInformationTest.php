@@ -14,7 +14,8 @@ class ProfileInformationTest extends TestCase
 
     public function test_current_profile_information_is_available()
     {
-        $this->actingAs($user = User::factory()->create());
+        // Adicionando 'role' => 1 ao criar o usuário
+        $this->actingAs($user = User::factory()->create(['role' => 1]));
 
         $component = Livewire::test(UpdateProfileInformationForm::class);
 
@@ -24,7 +25,8 @@ class ProfileInformationTest extends TestCase
 
     public function test_profile_information_can_be_updated()
     {
-        $this->actingAs($user = User::factory()->create());
+        // Adicionando 'role' => 1 ao criar o usuário
+        $this->actingAs($user = User::factory()->create(['role' => 1]));
 
         Livewire::test(UpdateProfileInformationForm::class)
                 ->set('state', ['name' => 'Test Name', 'email' => 'test@example.com'])
