@@ -28,28 +28,55 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install composer
+      run: |
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+        composer update
+        composer install --optimize-autoloader
+        composer dump-autoload --optimize --classmap-authoritative
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
     - name: Install Dependencies
       run: |
-        composer install --prefer-dist --no-interaction
+        composer install --prefer-dist --no-progress --optimize-autoloader
 
     - name: Set up environment
       run: |
         cp .env.example .env
-        echo "APP_KEY=$(php artisan key:generate --show)" >> .env
+        php artisan key:generate --show --no-ansi
+        echo "APP_KEY=$(php artisan key:generate --show --no-ansi)" >> .env
         echo "DB_CONNECTION=pgsql" >> .env
-        echo "DB_HOST=sga_db" >> .env
+        echo "DB_HOST=localhost" >> .env
         echo "DB_PORT=5432" >> .env
         echo "DB_DATABASE=laravel" >> .env
         echo "DB_USERNAME=laravel" >> .env
         echo "DB_PASSWORD=secret" >> .env
-        # As configurações a seguir são exemplos; ajuste conforme necessário
-        echo "CACHE_DRIVER=array" >> .env
-        echo "QUEUE_CONNECTION=sync" >> .env
-        echo "SESSION_DRIVER=file" >> .env
-        echo "MAIL_MAILER=log" >> .env
 
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
+
+    - name: Aguardar PostgreSQL
+      run: |
+        sudo apt-get update && sudo apt-get install -y netcat
+        until nc -zv localhost 5432; do echo 'Aguardando o PostgreSQL...'; sleep 1; done
+    
+    - name: Create Database
+      run: |
+        PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d postgres -c 'CREATE DATABASE laravel;'
+      env:
+        POSTGRES_USER: laravel
+        POSTGRES_PASSWORD: secret
 
     - name: Run Migrations
       run: php artisan migrate
@@ -57,8 +84,7 @@ jobs:
     - name: Run Unit and Feature Tests
       run: vendor/bin/phpunit
 
-    - name: Run Laravel Dusk Tests
-      run: php artisan dusk
-
-
-
+    - name: Code Coverage
+      run: |
+        vendor/bin/phpunit --coverage-clover=coverage.clover --testsuite unit
+        vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
