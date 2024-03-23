@@ -71,13 +71,6 @@ jobs:
         sudo apt-get update && sudo apt-get install -y netcat
         until nc -zv localhost 5432; do echo 'Aguardando o PostgreSQL...'; sleep 1; done
     
-    - name: Create Database
-      run: |
-        PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -U $POSTGRES_USER -d postgres -c 'CREATE DATABASE laravel;'
-      env:
-        POSTGRES_USER: laravel
-        POSTGRES_PASSWORD: secret
-
     - name: Run Migrations
       run: php artisan migrate
 
