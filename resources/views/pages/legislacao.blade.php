@@ -52,6 +52,8 @@
                                         <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - PCA.pdf" target="blank">Termo Plano de Controle Ambiental</a> - Dispõe orientar a elaboração do Plano de Controle Ambiental,
                                             necessário no âmbito do Licenciamento Ambiental e para o gerenciamento das atividades
                                             potencialmente poluidoras de empreendimentos diversos;</li>
+                                        <li><a href="/documents/legislacao/TERMO DE REFERÊNCIA - ELABORAÇÃO DE PLANO DE ENCERRAMENTO.pdf" target="blank">Termo Plano de Encerramento de Atividades de Posto de Combustíveis</a> - Tem por objetivo orientar a Elaboração de Plano 
+                                            de Encerramento de atividades de Postos de Combustíveis;</li>
                                     </ol>
                                 </li>
                                 <li class="scope">CARTILHA DE ARBORIZAÇÃO
