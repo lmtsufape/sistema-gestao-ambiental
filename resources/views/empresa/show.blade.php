@@ -227,41 +227,41 @@
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="rg">{{ __('RG') }}</label>
-                                            <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{$empresa->user->requerente->rg}}" disabled autofocus autocomplete="rg">
+                                            <input id="rg" class="form-control @error('rg') is-invalid @enderror" type="text" name="rg" value="{{$empresa->user->requerente->rg ?? 'Não informado' }}" disabled autofocus autocomplete="rg">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="orgao_emissor">{{ __('Orgão emissor') }}</label>
-                                            <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{$empresa->user->requerente->orgao_emissor}}" disabled autocomplete="orgão_emissor">
+                                            <input id="orgao_emissor" class="form-control @error('orgão_emissor') is-invalid @enderror" type="text" name="orgão_emissor" value="{{$empresa->user->requerente->orgao_emissor ?? 'Não informado'}}" disabled autocomplete="orgão_emissor">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="cpf">{{ __('CPF') }}</label>
-                                            <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$empresa->user->requerente->cpf}}" disabled autofocus autocomplete="cpf">
+                                            <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{$empresa->user->requerente->cpf ?? 'Não informado'}}" disabled autofocus autocomplete="cpf">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="celular">{{ __('Contato') }}</label>
-                                            <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{$empresa->user->requerente->telefone->numero}}" disabled autocomplete="celular">
+                                            <input id="celular" class="form-control celular @error('celular') is-invalid @enderror" type="text" name="celular" value="{{$empresa->user->requerente->telefone->numero ?? 'Não informado'}}" disabled autocomplete="celular">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="cep">{{ __('CEP') }}</label>
-                                            <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{$empresa->user->requerente->endereco->cep}}" disabled autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
+                                            <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{$empresa->user->requerente->endereco->cep ?? 'Não informado'}}" disabled autofocus autocomplete="cep" onblur="pesquisacep(this.value);">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="bairro">{{ __('Bairro') }}</label>
-                                            <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{$empresa->user->requerente->endereco->bairro}}" disabled autofocus autocomplete="bairro">
+                                            <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{$empresa->user->requerente->endereco->bairro ?? 'Não informado'}}" disabled autofocus autocomplete="bairro">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6 form-group">
                                             <label for="rua">{{ __('Rua') }}</label>
-                                            <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{$empresa->user->requerente->endereco->rua}}" disabled autocomplete="rua">
+                                            <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{$empresa->user->requerente->endereco->rua ?? 'Não informado'}}" disabled autocomplete="rua">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="numero">{{ __('Número') }}</label>
-                                            <input id="numero" class="form-control  @error('número') is-invalid @enderror" type="text" name="número" value="{{$empresa->user->requerente->endereco->numero}}" disabled autocomplete="número">
+                                            <input id="numero" class="form-control  @error('número') is-invalid @enderror" type="text" name="número" value="{{$empresa->user->requerente->endereco->numero ?? 'Não informado'}}" disabled autocomplete="número">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -282,7 +282,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12 form-group">
                                             <label for="complemento">{{ __('Complemento') }}</label>
-                                            <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5" disabled>{{$empresa->user->requerente->endereco->complemento}}</textarea>
+                                            <textarea class="form-control @error('complemento') is-invalid @enderror" type="text" name="complemento" id="complemento" cols="30" rows="5" disabled>{{$empresa->user->requerente->endereco->complemento ?? 'Não informado'}}</textarea>
                                         </div>
                                     </div>
                                     @can('isSecretario', \App\Models\User::class)
