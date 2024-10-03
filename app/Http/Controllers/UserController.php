@@ -288,7 +288,7 @@ class UserController extends Controller
             'cep' => ['required', 'string', 'max:255'],
             'bairro' => ['required', 'string', 'max:255'],
             'rua' => ['required', 'string', 'max:255'],
-            'número' => ['required', 'string', 'max:255'],
+            'numero' => ['required', 'string', 'max:255'],
             'cidade' => ['required', 'string', 'max:255'],
             'uf' => ['required', 'string', 'max:255'],
             'complemento' => ['nullable', 'string', 'max:255'],
@@ -296,7 +296,7 @@ class UserController extends Controller
 
         $endereco->setAtributes($request->all());
         $endereco->save();
-
+        
         return redirect(route('perfil'))->with(['success_dados_basicos' => 'Endereço atualizado com sucesso!']);
     }
 }
