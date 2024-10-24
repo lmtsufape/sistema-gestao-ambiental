@@ -333,10 +333,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="número">Número<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="número" name="número" type="text" class="form-control @error('número') is-invalid @enderror" value="{{old('número', auth()->user()->requerente->endereco->numero)}}">
+                                    <label for="numero">Número<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="numero" name="numero" type="text" class="form-control @error('numero') is-invalid @enderror" value="{{old('numero', auth()->user()->requerente->endereco->numero)}}">
 
-                                    @error('número')
+                                    @error('numero')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
