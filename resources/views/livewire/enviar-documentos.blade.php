@@ -106,6 +106,7 @@
                                             </div>
                                         @endif
                                         <div class="form-group">
+
                                             @switch($requerimento->documentos()->where('documento_id', $documento->id)->first()->pivot->status)
                                                 @case($status['aceito'])
                                                     <div class="row justify-content-center" style="padding-top: 1rem;">
