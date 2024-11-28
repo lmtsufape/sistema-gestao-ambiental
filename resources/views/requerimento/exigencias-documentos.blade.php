@@ -464,26 +464,29 @@
                                                         <div class="row justify-content-center" style="padding-top: 1rem;">
                                                             <div class="card card-enviar-doc text-center">
                                                                 <div class="card-body">
-                                                                    <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-download.svg')}}"  alt="Icone de baixar documento" title="Baixar documento">
+                                                                    <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-download.svg')}}" alt="Icone de baixar documento" title="Baixar documento">
                                                                     @if ($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['enviado'])
-                                                                    <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-upload.svg')}}"  alt="Icone de enviar documento" title="Enviar documento">
+                                                                        <img style="width: 30px; display: inline-block;" src="{{asset('img/fa-solid_file-upload.svg')}}" alt="Icone de enviar documento" title="Enviar documento">
                                                                     @endif
                                                                     <div class="row" style="padding-top: 10px">
-                                                                        <div class="col-md-12  @error('arquivos.'.$documento->id) is-invalid @enderror">
-                                                                            <a class="btn btn-success btn-enviar-doc" href="{{route('requerimento.exigencia.outro.documento.download', ['requerimento_id' => $requerimento->id, 'documento_id' => $documento->id])}}">
-                                                                                <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento" >
-                                                                                @if($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['enviado'])
+                                                                        <div class="col-md-12 @error('arquivos.'.$requerimento_documento_outro->id) is-invalid @enderror">
+                                                                            <a class="btn btn-success btn-enviar-doc" href="{{route('requerimento.exigencia.outro.documento', ['requerimento_id' => $requerimento->id])}}">
+                                                                                <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-down-20-regular.svg')}}" alt="Icone de download do documento" title="Download documento">
+                                                                                @if ($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['enviado'])
                                                                                     Baixar arquivo enviado
                                                                                 @else
-                                                                                    Baixe o arquivo @if($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])anexado @else enviado @endif
+                                                                                    Baixe o arquivo @if($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito']) anexado @else enviado @endif
                                                                                 @endif
                                                                             </a>
                                                                             @if ($requerimento_documento_outro->status == \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
-                                                                            <p class="font-weight-bold text-white" style="margin-bottom: 0px">ou</p>
-                                                                            <label class="label-input-novo btn btn-success btn-enviar-doc" for="outros_documentos_{{$documento->id}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento" ></label>
-                                                                            <br><label for="label-input-arquivo" for="outros_documentos_{{$documento->id}}"></label>
-                                                                            <input name="outros_documentos[{{$requerimento_documento_outro->id}}]" id="outros_documentos_{{$documento->id}}" type="file" class="input-enviar-arquivo @error('{{$documento->id}}') is-invalid @enderror" accept=".pdf" onchange="showAttachmentSuccess(this)" required>
-                                                                            <small>Enviar arquivo com extensão .pdf e tamanho máximo de 2mb</small>
+                                                                                <p class="font-weight-bold text-white" style="margin-bottom: 0px">ou</p>
+                                                                                <label class="label-input-novo btn btn-success btn-enviar-doc" for="outros_documentos_{{$requerimento_documento_outro->id}}">
+                                                                                    <img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do documento" title="Enviar documento">
+                                                                                </label>
+                                                                                <br>
+                                                                                <label for="label-input-arquivo" for="outros_documentos_{{$requerimento_documento_outro->id}}"></label>
+                                                                                <input name="outros_documentos[{{$requerimento_documento_outro->id}}]" id="outros_documentos_{{$requerimento_documento_outro->id}}" type="file" class="input-enviar-arquivo @error('arquivos.'.$requerimento_documento_outro->id) is-invalid @enderror" accept=".pdf" onchange="showAttachmentSuccess(this)" required>
+                                                                                <small>Enviar arquivo com extensão .pdf e tamanho máximo de 2mb</small>
                                                                             @endif
                                                                         </div>
                                                                     </div>
