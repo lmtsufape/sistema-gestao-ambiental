@@ -50,7 +50,7 @@
                                 <div class="tab-pane fade show active" id="feirantes" role="tabpanel" aria-labelledby="feirantes-tab">
                                     @if ($feirante->isEmpty())
                                         <div class="alert alert-info" role="alert">
-                                            Nenhum fierante correspondente cadastrado.
+                                            Nenhum feirante correspondente cadastrado.
                                         </div>
                                     @else
                                         <div class="table-responsive">
