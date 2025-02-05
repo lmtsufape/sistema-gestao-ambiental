@@ -43,7 +43,7 @@
                         </div>
                     @endif
                 </div>
-                
+
                 @cannot('isRequerente', \App\Models\User::class)
                 <form action="{{route('requerimentos.index', $filtro )}}" method="get">
                     @csrf
@@ -438,9 +438,9 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         @if($requerimento->status == 3)
-                                                                            Envie os documentos solicitados pelo protocolista.
-                                                                        @elseif($requerimento->status > 3)
                                                                             O protocolista definiu quais documentos devem ser enviados para a emissão da licença.
+                                                                        @elseif($requerimento->status > 3)
+                                                                            Documentos solicitados pelo protocolista foram enviados.
                                                                         @else
                                                                             O protocolista definirá quais documentos devem ser enviados para a emissão da licença.
                                                                         @endif
@@ -596,7 +596,7 @@
                                                                         @if($requerimento->status == 6)
                                                                             A visita à empresa/serviço foi agendada, aguarde a equipe da secretaria até a data informada.
                                                                         @elseif($requerimento->status > 6)
-                                                                            A visita à empresa/serviço foi agendada.
+                                                                            A visita à empresa/serviço foi concluída.
                                                                         @else
                                                                             A visita à empresa/serviço será agendada.
                                                                         @endif
@@ -646,11 +646,11 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         @if($requerimento->status == 7)
-                                                                            A visita à empresa/serviço foi realizada, aguarde a análise da secretaria para receber sua licença.
+                                                                            O relatório da visita está em analise pela secretaria.
                                                                         @elseif($requerimento->status > 7)
-                                                                            A visita à empresa/serviço foi realizada.
+                                                                            O relatório da visita foi analisado pela secretaria.
                                                                         @else
-                                                                            A visita à empresa/serviço será realizada e a secretaria aprovará a emissão da licença.
+                                                                            O relatório da visita será encaminhado à secretaria para analise.
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -729,14 +729,14 @@
                                         {{$requerimento->created_at->format('d/m/Y')}} às <td>{{$requerimento->created_at->format('H:i')}}</td>
                                     </div>
                                 </div>
-                                @foreach ($requerimento_documento as $pivot)  
-                                    @if ($pivot->requerimento_id == $requerimento->id)                  
+                                @foreach ($requerimento_documento as $pivot)
+                                    @if ($pivot->requerimento_id == $requerimento->id)
                                         @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
                                             <div class="row justify-content-center align-items-center mt-6" style="text-align: center">
                                                 <div class="col-md-10">
                                                     <span style="color: #00883D; font-weight: bold;">Prazo para cumprimento das exigências:</span>
                                                     <span style="color: red; font-weight: bold;">
-                                                        @foreach ($requerimento_documento as $pivot)  
+                                                        @foreach ($requerimento_documento as $pivot)
                                                             @if ($pivot->requerimento_id == $requerimento->id)
                                                                 @if($pivot->prazo_exigencia != null)
                                                                     <?php
@@ -760,13 +760,13 @@
                                 <div class="row mt-4">
                                     <div class="col-md-12" style="text-align: right">
                                         <div class="btn-group align-items-center">
-                                            @foreach ($requerimento_documento as $pivot)  
+                                            @foreach ($requerimento_documento as $pivot)
                                                 @if ($pivot->requerimento_id == $requerimento->id)
                                                     @if ($pivot->status != \App\Models\RequerimentoDocumento::STATUS_ENUM['aceito'])
                                                         <a  href="{{route('requerimento.exigencias.documentacao', $requerimento->id)}}" style="cursor: pointer;margin-left: 9px;"><img class="icon-licenciamento" width="25px;" src="{{asset('img/alert-svgrepo-com.svg')}}" alt="Exigências de documentação" title="Exigências de documentação"></a>
                                                     @break
                                                     @endif
-                                                @endif                                  
+                                                @endif
                                             @endforeach
                                             @if($requerimento->licenca != null && $requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" class="" style="margin-left: 9px;cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="30px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>

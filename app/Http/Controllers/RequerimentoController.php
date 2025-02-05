@@ -75,7 +75,7 @@ class RequerimentoController extends Controller
         }
         $tipos = Requerimento::TIPO_ENUM;
 
-        $busca = $request->buscar;  
+        $busca = $request->buscar;
         if($busca != null){
             $empresas = Empresa::where('nome', 'ilike', '%'. $busca .'%')->get();
             $empresas = $empresas->pluck('id');
@@ -516,19 +516,19 @@ class RequerimentoController extends Controller
      * @throws AuthorizationException
      */
     public function enviarExigenciasDocumentos(Request $request)
-    {   
+    {
         $requerimento = Requerimento::find($request->requerimento_id);
         $this->authorize('requerimentoDocumentacao', $requerimento);
 
         if ($request->documentos == null && $request->outros_documentos == null) {
             return redirect()->back()->withErrors(['error' => 'Anexe os documentos que devem ser enviados.'])->withInput($request->all());
-        }  
+        }
 
         if($request->documentos != null){
             foreach ($request->documentos as $documentoId => $documento) {
                 $requerimentoDocumento = RequerimentoDocumento::where([['requerimento_id', $request->requerimento_id],['documento_id', $documentoId]])->first();
                 $requerimentoDocumento->status = RequerimentoDocumento::STATUS_ENUM['enviado'];
-                $requerimentoDocumento->anexo_arquivo = $documento->store("documentos/exigencias/{$requerimento->id}"); 
+                $requerimentoDocumento->anexo_arquivo = $documento->store("documentos/exigencias/{$requerimento->id}");
                 $requerimentoDocumento->update();
             }
         }
@@ -536,7 +536,7 @@ class RequerimentoController extends Controller
             foreach ($request->outros_documentos as $documento) {
                 $requerimentoDocumento = RequerimentoDocumento::where('requerimento_id', $request->requerimento_id)->whereNotNull('nome_outro_documento')->first();
                 $requerimentoDocumento->status = RequerimentoDocumento::STATUS_ENUM['enviado'];
-                $requerimentoDocumento->arquivo_outro_documento = $documento->store("documentos/exigencias/{$requerimento->id}"); 
+                $requerimentoDocumento->arquivo_outro_documento = $documento->store("documentos/exigencias/{$requerimento->id}");
                 $requerimentoDocumento->update();
             }
         }
@@ -547,7 +547,7 @@ class RequerimentoController extends Controller
     }
 
     public function analisarExigenciasDocumentos(Request $request)
-    {          
+    {
         $data = $request->all();
         if ($request->documentos_id == null && $request->outros_documentos_id == null) {
             return redirect()->back()->withErrors(['error' => 'Envie o parecer dos documentos que devem ser analisados.'])->withInput($request->all());
@@ -635,19 +635,19 @@ class RequerimentoController extends Controller
                 $requerimento_documento->comentario_outro_documento = null;
             }
             $requerimento_documento->update();
-       
+
             if ($requerimento_documento->where('status', RequerimentoDocumento::STATUS_ENUM['recusado'])->first() != null) {
                 Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos recusados'));
             } else {
                 Notification::send($requerimento->empresa->user, new DocumentosExigenciasAnalisadosNotification($requerimento, $requerimento_documento_all, $documentos, 'Documentos aceitos'));
             }
-            
+
             $requerimento_documento->update();
 
             return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
         }
 
-       
+
     }
 
     /**
@@ -658,7 +658,7 @@ class RequerimentoController extends Controller
         $requerimento = Requerimento::find($requerimento_id);
         $requerimento_documento = RequerimentoDocumento::where([['requerimento_id', $requerimento_id], ['documento_id', $documento_id]])->first();
         $this->authorize('verDocumentacao', $requerimento);
-        
+
         return Storage::exists($requerimento_documento->anexo_arquivo) ? Storage::download($requerimento_documento->anexo_arquivo) : abort(404);
     }
 
@@ -666,12 +666,12 @@ class RequerimentoController extends Controller
      * @throws AuthorizationException
      */
     public function showExigenciaOutroDocumento($requerimento_id)
-    {   
+    {
         $requerimento = Requerimento::find($requerimento_id);
         $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)->whereNotNull('arquivo_outro_documento')->first();
-        
+
         $this->authorize('verDocumentacao', $requerimento);
-        
+
         return Storage::exists($requerimento_documento->arquivo_outro_documento) ? Storage::download($requerimento_documento->arquivo_outro_documento) : abort(404);
 
     }
@@ -767,12 +767,13 @@ class RequerimentoController extends Controller
         }
         if ($requerimento->documentos()->where('status', Checklist::STATUS_ENUM['recusado'])->first() != null) {
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_requeridos'];
+            $requerimento->update();
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos recusados'));
         } else {
             $requerimento->status = Requerimento::STATUS_ENUM['documentos_aceitos'];
+            $requerimento->update();
             Notification::send($requerimento->empresa->user, new DocumentosAnalisadosNotification($requerimento, $requerimento->documentos, 'Documentos aceitos'));
         }
-        $requerimento->update();
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Análise enviada com sucesso.']);
     }
