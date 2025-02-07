@@ -3,10 +3,21 @@
         <div class="col-md-4">
             <h4 class="card-title">Empresas/Serviços</h4>
         </div>
-        <div class="col-md-7 d-flex justify-content-end">
+
+    </div>
+    <div class="row pb-3">
+        <div class="col-md-7">
             <input wire:model="search" class="form-control w-100" type="search" placeholder="Busque pelo nome da empresa ou pelo CNPJ/CPF">
         </div>
+        @can('isProtocolista', auth()->user())
+            <div class="col-md-4 d-flex justify-content-end">
+                <a title="Adicionar empresa/serviço" href="{{route('empresas.create')}}">
+                    <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar empresa/serviço">
+                </a>
+            </div>
+        @endcan
     </div>
+
     <div class="card card-borda-esquerda" style="width: 100%;">
         <div class="card-body">
             <div div class="form-row">
@@ -43,7 +54,7 @@
                                 <th scope="row">{{ ($empresas->currentpage()-1) * $empresas->perpage() + $loop->index + 1 }}</th>
                                 <td>{{$empresa->nome}}</td>
                                 <td>{{$empresa->cpf_cnpj}}</td>
-                                <td>{{$empresa->user->name}}</td>
+                                <td>@if($empresa->user->role == 4)Cadastrado no REDSIM @else{{$empresa->user->name}}@endif</td>
                                 <td>{{$empresa->cnaes()->first() ? $empresa->cnaes()->first()->setor->nome : "Sem cnae cadastrado"}}</td>
                                 <td>
                                     <a  href="{{route('empresas.show', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar a empresa" title="Visualizar a empresa"></a>
