@@ -12,6 +12,7 @@ use App\Models\Setor;
 use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
@@ -49,7 +50,8 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        $this->authorize('isRequerente', User::class);
+        $this->authorize('create', Empresa::class);
+
         $setores = Setor::orderBy('nome')->get();
 
         return view('empresa.create', compact('setores'));
@@ -72,7 +74,7 @@ class EmpresaController extends Controller
      */
     public function store(EmpresaRequest $request)
     {
-        $this->authorize('isRequerente', User::class);
+        $this->authorize('store', Empresa::class);
         $enderecoEmpresa = new Endereco();
         $telefoneEmpresa = new Telefone();
         $empresa = new Empresa();
@@ -81,7 +83,13 @@ class EmpresaController extends Controller
         $telefoneEmpresa->setNumero($request->celular_da_empresa);
         $telefoneEmpresa->save();
         $empresa->setAtributes($request->all());
-        $empresa->user_id = auth()->user()->id;
+
+        if(!Auth::user()->tipoAnalista->contains('tipo', 1)){
+            $empresa->user_id = auth()->user()->id;
+        }else{
+            $empresa->user_id = User::where('role', 4)->first()->id;
+        }
+
         $empresa->endereco_id = $enderecoEmpresa->id;
         $empresa->telefone_id = $telefoneEmpresa->id;
         $empresa->save();
@@ -90,7 +98,11 @@ class EmpresaController extends Controller
             $empresa->cnaes()->attach((Cnae::find($cnae_id)));
         }
 
-        return redirect(route('empresas.index'))->with(['success' => 'Empresa cadastrada com sucesso!']);
+        if(!Auth::user()->tipoAnalista->contains('tipo', 1)){
+            return redirect(route('empresas.index'))->with(['success' => 'Empresa cadastrada com sucesso!']);
+        }else{
+            return redirect()->route('empresas.listar')->with(['success' => 'Empresa cadastrada com sucesso!']);
+        }
     }
 
     /**
@@ -232,14 +244,14 @@ class EmpresaController extends Controller
     }
 
     public function updateRequerente(Request $request)
-    {   
+    {
         $empresa = Empresa::find($request->empresa_id);
 
         if($this->authorize('isSecretario', User::class)){
             $empresa->user_id = $request->user_id;
         }
         $empresa->update();
-        
+
         return redirect(route('empresas.listar'))->with(['success' => 'Requerente atualizado com sucesso!']);
     }
 }

@@ -41,9 +41,13 @@ class EmpresaPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role == 1 || $user->tipoAnalista->contains('tipo', 1);
     }
 
+    public function store(User $user)
+    {
+        return $user->role == 1 || $user->tipoAnalista->contains('tipo', 1);
+    }
     /**
      * Determine whether the user can update the model.
      *

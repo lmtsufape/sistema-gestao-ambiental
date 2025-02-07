@@ -15,7 +15,7 @@ class EmpresaRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->role == User::ROLE_ENUM['requerente'];
+        return true;
     }
 
     /**
