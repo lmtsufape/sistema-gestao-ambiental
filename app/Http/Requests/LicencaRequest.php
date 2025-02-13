@@ -25,7 +25,7 @@ class LicencaRequest extends FormRequest
     {
         return [
             'requerimento' => 'required',
-            'licença' => 'required|file|mimes:pdf|max:2048',
+            'licença' => 'required|file|mimes:pdf|max:6144',
             'data_de_validade' => 'required|date',
             'tipo_de_licença' => 'required',
         ];
