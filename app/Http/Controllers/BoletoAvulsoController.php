@@ -123,7 +123,13 @@ class BoletoAvulsoController extends Controller
         }
 
         if(is_null($empresa)){
-            $empresa = $this->criar_user_padrao($request);
+            $user = User::where('email', $request->email_empresa)->first();
+
+            if($user) {
+                $empresa = $this->criar_nova_empresa($request, $user);
+            } else {
+                $empresa = $this->criar_user_padrao($request);
+            }
         }
 
         try {
@@ -163,6 +169,53 @@ class BoletoAvulsoController extends Controller
         }
 
         return ucfirst($mensagem_formatada);
+    }
+
+    public function criar_nova_empresa(Request $request, User $user) {
+        $nova_empresa = new Empresa();
+        $novo_endereco = new Endereco();
+        $novo_telefone = new Telefone();
+        
+        $novo_endereco->rua = $request->rua_da_empresa;
+        $novo_endereco->numero = $request->numero_da_empresa;
+        $novo_endereco->bairro = $request->bairro_da_empresa;
+        $novo_endereco->cidade = $request->cidade_da_empresa;
+        $novo_endereco->estado = $request->estado_da_empresa;
+        $novo_endereco->cep = $request->cep_da_empresa;
+        
+        $novo_telefone->numero = $request->celular_da_empresa;
+        
+        $nova_empresa->nome = $request->nome_da_empresa;
+        $nova_empresa->cpf_cnpj = $request->cpf_cnpj;
+
+        if(strlen($request->cpf_cnpj) > 14){
+            $nova_empresa->eh_cnpj = true;
+        }
+        else {
+            $nova_empresa->eh_cnpj = false;
+        }
+        
+        try {
+            $novo_endereco->save();
+            $novo_telefone->save();
+
+            $nova_empresa->user_id = $user->id;
+            $nova_empresa->endereco_id = $novo_endereco->id;
+            $nova_empresa->telefone_id = $novo_telefone->id;
+            $nova_empresa->save();   
+        }
+        catch(ErrorBoletoAvulsoException $e){
+            if(!(is_null($novo_endereco->id))){
+                $novo_endereco->delete();
+            }
+            if(!(is_null($novo_telefone->id))){
+                $novo_telefone->delete();
+            }
+
+            throw new ErrorRemessaException($this->formatarMensagem($e->getMessage()));
+        }
+
+        return $nova_empresa; 
     }
 
     public function criar_user_padrao(Request $request){
