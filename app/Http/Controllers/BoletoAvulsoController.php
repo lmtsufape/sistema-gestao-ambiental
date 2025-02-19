@@ -123,7 +123,7 @@ class BoletoAvulsoController extends Controller
         }
 
         if(is_null($empresa)){
-            $user = User::where('email', $request->email_empresa)->first();
+            $user = User::where('email', 'ilike', $request->email_empresa)->first();
 
             if($user) {
                 $empresa = $this->criar_nova_empresa($request, $user);
