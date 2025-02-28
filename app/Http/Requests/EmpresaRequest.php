@@ -25,13 +25,12 @@ class EmpresaRequest extends FormRequest
      */
     public function rules()
     {
-        $this->validarDocumentos();
 
         return [
             'nome_da_empresa' => ['required', 'string', 'min:5', 'max:255'],
-            'tipo_de_pessoa' => ['nullable'],
-            'cpf' => ['required_if:tipo_de_pessoa,física'],
-            'cnpj' => ['required_if:tipo_de_pessoa,jurídica'],
+            'eh_cnpj' => ['nullable', 'in:true,false'],
+            'cpf' => ['required_if:eh_cnpj,false', 'cpf', 'nullable'],
+            'cnpj' => ['required_if:eh_cnpj,true', 'cnpj', 'nullable'],
             'setor' => ['required', 'string'],
             'celular_da_empresa' => ['required', 'string', 'celular_com_ddd', 'max:255'],
             'porte' => ['required'],
@@ -43,7 +42,7 @@ class EmpresaRequest extends FormRequest
             'estado_da_empresa' => ['required', 'string', 'max:255'],
             'complemento_da_empresa' => ['nullable', 'string', 'max:255'],
             'cnaes_id' => ['required', 'array', 'min:1'],
-            'cnaes_id.*' => ['required', 'integer', 'min:0'],
+            'cnaes_id.*' => ['required', 'integer', 'min:1'],
         ];
     }
 
@@ -58,21 +57,5 @@ class EmpresaRequest extends FormRequest
             'cnaes_id.*.integer' => 'Informe um CNAE valido.',
             'cnaes_id.*.min' => 'Informe um CNAE valido.',
         ];
-    }
-
-    public function validarDocumentos()
-    {
-        switch ($this->tipo_de_pessoa) {
-            case 'física':
-                $this->validate([
-                    'cpf' => 'cpf',
-                ]);
-                break;
-            case 'jurídica':
-                $this->validate([
-                    'cnpj' => 'cnpj',
-                ]);
-                break;
-        }
     }
 }

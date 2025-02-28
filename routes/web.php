@@ -187,6 +187,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
     Route::resource('empresas', EmpresaController::class);
     Route::get('/empresas-listar', [EmpresaController::class, 'indexEmpresas'])->name('empresas.listar');
+    Route::post('/empresas/import', [EmpresaController::class, 'importXml'])->name('empresas.import');
 
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');

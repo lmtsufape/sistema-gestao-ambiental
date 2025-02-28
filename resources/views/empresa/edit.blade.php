@@ -40,18 +40,8 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div id="selecionar-cpf-cnpj" class="col-md-6 form-group" style="display: none;">
-                                    {{-- <label for="pessoa">{{ __('Tipo de pessoa') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select id="pessoa" class="form-control @error('tipo_de_pessoa') is-invalid @enderror" name="tipo_de_pessoa" required autocomplete="pessoa" onchange="mostrarDiv(this)">
-                                        <option disabled selected value="">-- Selecione o tipo de pessoa --</option>
-                                        <option @if(old('tipo_de_pessoa') == "física") selected @endif value="física">Pessoa física</option>
-                                        <option @if(old('tipo_de_pessoa') == "jurídica") selected @endif value="jurídica">Pessoa jurídica</option>
-                                    </select>
-                                    @error('tipo_de_pessoa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror --}}
+                                <div>
+                                    <input type="hidden" name="eh_cnpj" id="eh_cnpj" value="{{ old('eh_cnpj', $empresa->eh_cnpj ? true : false) }}">
                                 </div>
                                 <div class="col-md-4 form-group" id="div-cnpj" style="@if(old('cnpj') != null || $empresa->eh_cnpj) display: block; @else display: none; @endif">
                                     <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;">*</span></label>
@@ -449,10 +439,13 @@
                     document.getElementById('div-cpf').style.display = "none";
                     document.getElementById('cpf').value = null;
                     document.getElementById('div-cnpj').style.display = "block";
+                    document.getElementById('eh_cnpj').value = true;
                 } else {
                     document.getElementById('div-cpf').style.display = "block";
                     document.getElementById('cnpj').value = null;
                     document.getElementById('div-cnpj').style.display = "none";
+                    document.getElementById('eh_cnpj').value = false;
+
                 }
             }
 
