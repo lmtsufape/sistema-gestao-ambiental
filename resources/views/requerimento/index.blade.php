@@ -9,13 +9,26 @@
                             @can('isSecretario', \App\Models\User::class)
                                 Requerimentos {{$filtro}}
                             @elsecan('isAnalista', \App\Models\User::class)
-                                {{__('Requerimentos atribuídos a você')}}
+                                @if($requerimentoRedeSim)
+                                    {{__('Requerimentos criados por você')}}
+                                @else
+                                    {{__('Requerimentos atribuídos a você')}}
+                                @endif
                             @elsecan('isRequerente', \App\Models\User::class)
                                 {{__('Requerimentos criados por você')}}
                             @endcan
                         </h4>
                     </div>
                     @can('isRequerente', \App\Models\User::class)
+                        <div class="col-md-4" style="text-align: right;">
+                            <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
+                                <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar novo requerimento">
+                            </button>
+                            <a id="btn-etapas-requerimento" class="btn btn-success btn-color-dafault" title="Etapas do requerimento" data-toggle="modal" data-target="#etapas" style="cursor: pointer">
+                                Etapas
+                            </a>
+                        </div>
+                    @elsecan('isProtocolista', \App\Models\User::class)
                         <div class="col-md-4" style="text-align: right;">
                             <button id="btn-novo-requerimento" title="Novo requerimento" data-toggle="modal" data-target="#novo_requerimento" style="cursor: pointer">
                                 <img class="icon-licenciamento " src="{{asset('img/Grupo 1666.svg')}}" style="height: 35px" alt="Icone de adicionar novo requerimento">
@@ -45,17 +58,19 @@
                 </div>
 
                 @cannot('isRequerente', \App\Models\User::class)
-                <form action="{{route('requerimentos.index', $filtro )}}" method="get">
-                    @csrf
-                    <div class="form-row mb-3">
-                        <div class="col-md-7">
-                            <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome da Empresa" value="{{ $busca }}">
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
-                        </div>
-                    </div>
-                </form>
+                    @if(!$requerimentoRedeSim)
+                        <form action="{{route('requerimentos.index', $filtro )}}" method="get">
+                            @csrf
+                            <div class="form-row mb-3">
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome da Empresa" value="{{ $busca }}">
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 @endcannot
 
                 @can('isSecretario', \App\Models\User::class)
@@ -165,84 +180,86 @@
                         </div>
                     </div>
                 @elsecan('isAnalista', \App\Models\User::class)
-                    <div class="card card-borda-esquerda" style="width: 100%;">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                            <table class="table mytable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Empresa/serviço</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Valor</th>
-                                        <th scope="col">Data</th>
-                                        <th scope="col">Licença</th>
-                                        <th scope="col">Opções</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($requerimentos as $i => $requerimento)
+                    @if(!$requerimentoRedeSim)
+                        <div class="card card-borda-esquerda" style="width: 100%;">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <table class="table mytable">
+                                    <thead>
                                         <tr>
-                                            <th scope="row">{{ ($requerimentos->currentpage()-1) * $requerimentos->perpage() + $loop->index + 1 }}</th>
-                                            <td>
-                                                {{$requerimento->empresa->nome}}
-                                            </td>
-                                            <td>
-                                                {{ucfirst($requerimento->status())}}
-                                            </td>
-                                            <td>
-                                                {{ucfirst($requerimento->tipoString())}}
-                                            </td>
-                                            <td>
-                                                @if($requerimento->valor == null)
-                                                    {{__('Em definição')}}
-                                                @else
-                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                        Pago
+                                            <th scope="col">#</th>
+                                            <th scope="col">Empresa/serviço</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Data</th>
+                                            <th scope="col">Licença</th>
+                                            <th scope="col">Opções</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($requerimentos as $i => $requerimento)
+                                            <tr>
+                                                <th scope="row">{{ ($requerimentos->currentpage()-1) * $requerimentos->perpage() + $loop->index + 1 }}</th>
+                                                <td>
+                                                    {{$requerimento->empresa->nome}}
+                                                </td>
+                                                <td>
+                                                    {{ucfirst($requerimento->status())}}
+                                                </td>
+                                                <td>
+                                                    {{ucfirst($requerimento->tipoString())}}
+                                                </td>
+                                                <td>
+                                                    @if($requerimento->valor == null)
+                                                        {{__('Em definição')}}
                                                     @else
-                                                        R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
-                                                        @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
-                                                            <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                        @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                            Pago
+                                                        @else
+                                                            R$ {{number_format($requerimento->valor, 2, ',', ' ')}}
+                                                            @if ($requerimento->boletos->last() != null && $requerimento->boletos->last()->URL != null)
+                                                                <a href="{{$requerimento->boletos->last()->URL}}" target="_blanck"><img src="{{asset('img/boleto.png')}}" alt="Baixar boleto de cobrança" width="40px;" style="display: inline;"></a>
+                                                            @endif
                                                         @endif
                                                     @endif
-                                                @endif
-                                            </td>
-                                            <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
-                                            <td>
-                                                @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
-                                                    Enviada
-                                                @else
-                                                    Pendente
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="btn-group align-items-center">
-                                                    <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
-                                                </div>
-                                                @if($requerimento->licenca != null)
-                                                    @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
-                                                    <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
+                                                </td>
+                                                <td>{{$requerimento->created_at->format('d/m/Y H:i')}}</td>
+                                                <td>
+                                                    @if($requerimento->status == \App\Models\Requerimento::STATUS_ENUM['finalizada'])
+                                                        Enviada
                                                     @else
-                                                        @can ('isAnalistaProcesso', \App\Models\User::class)
-                                                            <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaRelatorioAceito()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
-                                                        @endcan
+                                                        Pendente
                                                     @endif
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            </div>
-                            @if($requerimentos->first() == null)
-                                <div class="col-md-12 text-center" style="font-size: 18px;">
-                                    {{__('Nenhum requerimento foi atribuído a você')}}
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group align-items-center">
+                                                        <a title="Analisar requerimentos" href="{{route('requerimentos.show', ['requerimento' => $requerimento])}}"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Analisar requerimentos"></a>
+                                                    </div>
+                                                    @if($requerimento->licenca != null)
+                                                        @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
+                                                        <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
+                                                        @else
+                                                            @can ('isAnalistaProcesso', \App\Models\User::class)
+                                                                <a style="cursor: pointer;" href="{{route('licenca.revisar', ['licenca' => $requerimento->licenca, 'visita' => $requerimento->ultimaVisitaRelatorioAceito()])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Revisar licença" title="Revisar licença"></a>
+                                                            @endcan
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                                 </div>
-                            @endif
+                                @if($requerimentos->first() == null)
+                                    <div class="col-md-12 text-center" style="font-size: 18px;">
+                                        {{__('Nenhum requerimento foi atribuído a você')}}
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @else
+                    @endif
+                @elsecan('isRequerente', \App\Models\User::class)
                     @forelse ($requerimentos as $i => $requerimento)
                         <div class="card card-borda-esquerda @if($i>0)mt-3 @endif" style="width: 100%;">
                             <div class="card-body" style="padding-top: 10px;">
@@ -976,12 +993,21 @@
                     <div class="col-md-12 form-group">
                         <label for="empresa">{{ __('Empresa') }}<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="empresa" id="empresa" class="form-control @error('empresa') is-invalid @enderror" required onchange="tiposPossiveis(this)">
-                            <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
-                            @foreach (auth()->user()->empresas as $empresa)
-                                @if($empresa->cnaes()->exists())
-                                    <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
-                                @endif
-                            @endforeach
+                            @can('isProtocolista', \App\Models\User::class)
+                                <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
+                                @foreach (\App\Models\Empresa::all() as $empresa)
+                                    @if($empresa->cnaes()->exists())
+                                        <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                                    @endif
+                                @endforeach
+                            @elsecan('isRequerente', \App\Models\User::class)
+                                <option value="" selected disabled>{{__('-- Selecione a empresa --')}}</option>
+                                @foreach (auth()->user()->empresas as $empresa)
+                                    @if($empresa->cnaes()->exists())
+                                        <option @if(old('empresa') == $empresa->id) selected @endif value="{{$empresa->id}}">{{$empresa->nome}}</option>
+                                    @endif
+                                @endforeach
+                            @endcan  
                         </select>
 
                         @error('empresa')

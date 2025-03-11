@@ -319,6 +319,15 @@
                                 </a>
                             </li>
                             @endcan
+
+                            @can('isProtocolista', \App\Models\User::class)
+                            <li class="mb-2 item-align @if(request()->routeIs('requerimentos*') || request()->routeIs('requerimento*')) active @endif">
+                                <a href="{{route('requerimentos.index', 'redesim')}}">
+                                    Requerimentos REDESim
+                                </a>
+                            </li>
+                            @endcan
+
                             @can ('isAnalista', \App\Models\User::class)
                             <li class="mb-2 item-align @if(request()->routeIs('feirantes*') || request()->routeIs('feirantes*')) active @endif">
                                 <a href="{{route('feirantes.index')}}">
