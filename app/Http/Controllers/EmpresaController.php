@@ -55,7 +55,9 @@ class EmpresaController extends Controller
 
         $setores = Setor::orderBy('nome')->get();
 
-        return view('empresa.create', compact('setores'));
+        $empresa = session('empresa');
+
+        return view('empresa.create', compact('setores', 'empresa'));
     }
 
     public function licencasIndex(Request $request)
@@ -96,9 +98,7 @@ class EmpresaController extends Controller
         $empresa->telefone_id = $telefoneEmpresa->id;
         $empresa->save();
 
-        foreach ($request->cnaes_id as $cnae_id) {
-            $empresa->cnaes()->attach((Cnae::find($cnae_id)));
-        }
+        $empresa->cnaes()->attach($request->cnaes_id);
 
         if(!Auth::user()->tipoAnalista->contains('tipo', 1)){
             return redirect(route('empresas.index'))->with(['success' => 'Empresa cadastrada com sucesso!']);
@@ -261,9 +261,8 @@ class EmpresaController extends Controller
 
         ];
 
-        $setores = Setor::orderBy('nome')->get();
 
-        return view('empresa.create', compact('setores', 'empresa'));
+        return redirect()->route('empresas.create')->with(compact('empresa'));
     }
 
     public function updateRequerente(Request $request)

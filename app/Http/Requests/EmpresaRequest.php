@@ -37,12 +37,13 @@ class EmpresaRequest extends FormRequest
             'cep_da_empresa' => ['required', 'string', 'max:255', new CEPGaranhuns()],
             'bairro_da_empresa' => ['required', 'string', 'max:255'],
             'rua_da_empresa' => ['required', 'string', 'max:255'],
-            'número_da_empresa' => ['required', 'string', 'max:255'],
+            'numero_da_empresa' => ['required', 'string', 'max:255'],
             'cidade_da_empresa' => ['required', 'string', 'max:255'],
             'estado_da_empresa' => ['required', 'string', 'max:255'],
             'complemento_da_empresa' => ['nullable', 'string', 'max:255'],
-            'cnaes_id' => ['required', 'array', 'min:1'],
-            'cnaes_id.*' => ['required', 'integer', 'min:1'],
+            'cnaes_id' => ['required', 'array', 'min:1',],
+            'cnaes_id.*' => ['exists:cnaes,id'],
+
         ];
     }
 
@@ -57,5 +58,20 @@ class EmpresaRequest extends FormRequest
             'cnaes_id.*.integer' => 'Informe um CNAE valido.',
             'cnaes_id.*.min' => 'Informe um CNAE valido.',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        if ($this->has('cnaes_id')) {
+            if(!empty($this->input('cnaes_id'))){
+                $this->merge([
+                    'cnaes_id' => explode(',', $this->input('cnaes_id'))
+                ]);
+            }else{
+                $this->merge([
+                    'cnaes_id' => []
+                ]);
+            }
+        }
     }
 }

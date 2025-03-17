@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="numero_da_empresa">{{ __('Número') }}</label>
-                                            <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{$empresa->endereco->numero}}" disabled autocomplete="número_da_empresa">
+                                            <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{$empresa->endereco->numero}}" disabled autocomplete="numero_da_empresa">
                                         </div>
                                     </div>
                                     <div class="form-row">

@@ -2,22 +2,22 @@
     <div class="modal-dialog modal-dialog-centered modal-lg vh-75">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-3" id="xmlModalLabel">Importar Dados da Empresa</h1>
+                <h3 class="modal-title fs-3" id="xmlModalLabel">Importar Dados da Empresa</h3>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{route('empresas.import')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
+            <div class="modal-body mx-5 mt-5">
+                <form id="form-importar-empresa" action="{{route('empresas.import')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
-                        <label for="empresa_xml" class="form-label">Insira um arquivo XML para importar os dados da empresa</label>
-                        <input type="file" class="" name="empresa_xml" id="empres_xml" accept=".xml">
+                        <input type="file" class="custom-file-input" name="empresa_xml" id="empresa_xml" accept=".xml">
+                        <label for="empresa_xml" class="custom-file-label">Insira um arquivo XML para importar os dados da empresa</label>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-success">Importar</button>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" form="form-importar-empresa" class="btn btn-success">Importar</button>
+            </div>
         </div>
     </div>
 </div>

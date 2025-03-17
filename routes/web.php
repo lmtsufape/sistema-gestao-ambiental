@@ -185,9 +185,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post("/denuncias/avaliar", [DenunciaController::class, 'avaliarDenuncia'])->name('denuncias.avaliar');
     Route::get("/denuncias/{denuncia}/arquivo", [DenunciaController::class, 'baixarArquivo'])->name('denuncias.arquivo');
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
+    Route::prefix('empresas')->controller(EmpresaController::class)->name('empresas.')->group(function () {
+        Route::get('/listar', 'indexEmpresas')->name('listar');
+        Route::post('/import', 'importXml')->name('import');
+    });
     Route::resource('empresas', EmpresaController::class);
-    Route::get('/empresas-listar', [EmpresaController::class, 'indexEmpresas'])->name('empresas.listar');
-    Route::post('/empresas/import', [EmpresaController::class, 'importXml'])->name('empresas.import');
 
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');
@@ -266,7 +268,7 @@ Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('envi
 Route::get("/setor/ajax-listar-cnaes", [SetorController::class, 'ajaxCnaes'])
     ->name("ajax.listar.cnaes");
 Route::get('/status/requerimento', [EmpresaController::class, 'statusRequerimento'])->name('status.requerimento');
-Route::get('/licencas/', [EmpresaController::class, 'licencasIndex'])->name('empresa.licenca.index');
+Route::get('/licencas', [EmpresaController::class, 'licencasIndex'])->name('empresa.licenca.index');
 Route::get("/info/porte", [ContatoController::class, 'infoPorte'])->name('info.porte');
 Route::get('/sobre', [ContatoController::class, 'sobre'])->name('sobre');
 Route::get('/legislacao', [ContatoController::class, 'legislacao'])->name('legislacao');

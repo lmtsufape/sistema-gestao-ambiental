@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <form id="form-cadastrar-empresa" method="POST" action="{{route('empresas.store')}}">
                             @csrf
-                            @if ($errors->any())
+                                @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
@@ -41,8 +41,8 @@
                                     @enderror
                                 </div>
                                 <div id="selecionar-cpf-cnpj" class="col-md-6 form-group">
-                                    <label for="pessoa">{{ __('Tipo de pessoa') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select id="pessoa" class="form-control @error('tipo_de_pessoa') is-invalid @enderror" name="tipo_de_pessoa" required autocomplete="pessoa" onchange="mostrarDiv(this)">
+                                    <label for="tipo_de_pessoa">{{ __('Tipo de pessoa') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <select id="tipo_de_pessoa" class="form-control @error('tipo_de_pessoa') is-invalid @enderror" name="tipo_de_pessoa" required autocomplete="tipo_de_pessoa">
                                         <option disabled selected value="">-- Selecione o tipo de pessoa --</option>
                                         <option @if(old('tipo_de_pessoa') == "física") selected @endif value="física">Pessoa física</option>
                                         <option @if(old('tipo_de_pessoa') == "jurídica" || !empty($empresa->cnpj)) selected @endif value="jurídica">Pessoa jurídica</option>
@@ -72,8 +72,8 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 form-group d-none" id="div-btn-troca">
-                                    <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%;" onclick="trocar()">Trocar</button>
+                                <div class="col-md-2 d-none" id="div-btn-troca">
+                                    <button type="button" id="trocar" class="btn btn-success btn-color-dafault w-75 h-50">Trocar</button>
                                 </div>
 
                                 <div class="col-md-6 form-group">
@@ -119,8 +119,8 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{$empresa->numero ?? old('número_da_empresa')}}" required autocomplete="número_da_empresa">
-                                    @error('número_da_empresa')
+                                    <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{$empresa->numero ?? old('numero_da_empresa')}}" required autocomplete="numero_da_empresa">
+                                    @error('numero_da_empresa')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -185,8 +185,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
-                                            @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                    <select required class="form-control @error('setor') is-invalid @enderror" id="setor" name="setor">
                                         <option value="" disabled selected>-- Selecionar o Grupo --</option>
                                         @foreach ($setores as $setor)
                                             <option value={{$setor->id}}>{{$setor->nome}}</option>
@@ -197,16 +196,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    @error('cnaes_id')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    @error('cnaes_id.*')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+
                                 </div>
                             </div>
                             <div class="form-row">
@@ -221,21 +211,19 @@
                                         </div>
                                     </div>
                                     <div class="row col-md-12">
-                                        <div style="width:100%; height:250px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
-                                            <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                <tbody id="dentroTabelaCnaes"></tbody>
-                                            </table>
-                                        </div>
+                                        <ul id="lista_esquerda" style="width:100%; height:250px; display: inline-block; overflow:auto; background-color: #f3f3f3;"></ul>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                    <div style="width:100%; height:396px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
-                                        <table cellspacing="0" cellpadding="1"width="100%" >
-                                            <tbody class="areaMeusCnaes" id="listaCnaes">
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <ul class="areaMeusCnaes" id="lista_direita" style="width:100%; height:396px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                        <input type="hidden" id="cnaes_id" name="cnaes_id" value="{{ old('cnaes_id') }}">
+                                    </ul>
+                                    @error('cnaes_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </form>
@@ -321,8 +309,9 @@
             </div>
         </div>
     </div>
-
-    @include('empresa.importacaoModal')
+    @push('modals')
+        @include('empresa.importacaoModal')
+    @endpush
 
     @push ('scripts')
         <script>
@@ -346,223 +335,210 @@
                         '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
                     }
                 });
-            });
 
-            window.selecionarSetor = function(){
-                //setor
-                var historySelectList = $('select#idSelecionarSetor');
-                var $setor_id = $('option:selected', historySelectList).val();
-                limparLista();
-                $.ajax({
-                    url:"{{route('ajax.listar.cnaes')}}",
-                    type:"get",
-                    data: {"setor_id": $setor_id},
-                    dataType:'json',
-                    /*success: function(response){
-                        console.log(response.responseJSON);
-                        for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                            var html = data.responseJSON.cnaes[i];
-                            $('#tabelaCnaes tbody').append(html);
+                $('#setor').click(function(){
+                    var setor_id = $(this).val();
+                    $('#lista_esquerda').empty();
+
+                    axios.get("{{ route('ajax.listar.cnaes') }}", {
+                        params: {
+                            setor_id: setor_id
                         }
-                    },*/
-                    complete: function(data) {
-                        if(data.responseJSON.success){
-                            for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                                var naLista = document.getElementById('listaCnaes');
-                                var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                                <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
-                                                <div style="width:140px; height:25px; text-align:right;">
-                                                    <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
-                                                        <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-color-dafault btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
-                                                    </div>
-                                                </div>
-                                            </div>`;
-                                if(document.getElementById('cnaeCard_'+$setor_id+'_'+data.responseJSON.cnaes[i].id) == null){
-                                    $('#tabelaCnaes tbody').append(html);
-                                }
+                    })
+                    .then(response => {
+                        for(var i = 0; i < response.data.cnaes.length; i++){
+                            var html = `<li id="cnaeCard_`+setor_id+`_`+response.data.cnaes[i].id+`" class="d-flex justify-content-center align-items-center card-cnae">
+                                            <div class="mr-auto p-2" id="`+response.data.cnaes[i].id+`">`+response.data.cnaes[i].nome+`</div>
+
+                                            <div id="cardSelecionado`+response.data.cnaes[i].id+`" class="btn-group d-none" style="width:140px; height:40px;">
+                                                <button id="${response.data.cnaes[i].id}" class="btn btn-success botao-card" data-setor_id="${setor_id}">Adicionar</button>
+                                            </div>
+                                        </li>`;
+                            if($('#cnaeCard_'+setor_id+'_'+response.data.cnaes[i].id).length === 0){
+                                $('#lista_esquerda').append(html);
                             }
+                        }
+                    })
+                })
+
+                $(document).on("click", ".botao-card", function(){
+                    event.preventDefault();
+                    let elemento = $(this).parent();
+                    let tabela_esquerda = $('#lista_esquerda');
+                    let btn = $(this);
+                    let array = []
+
+                    if(tabela_esquerda.is(elemento.parent().parent())){
+                        if ($('#cnaes_id').val()) {
+                            array = $('#cnaes_id').val().split(',');
+                            array.push($(this).attr('id'));
+                        } else {
+                            array.push($(this).attr('id'));
+                        }
+                        $('#cnaes_id').val(array.join(','));
+                        $('#lista_direita').append(elemento.parent());
+                        btn.text('Remover').addClass('btn-danger').removeClass('btn-success');
+
+                    }else{
+                        let id = $(this).attr('id');
+                        array = $('#cnaes_id').val().split(',')
+                        array = array.filter(function (value){
+                            return value !== id;
+                        })
+                        $('#cnaes_id').val(array.join(','));
+
+                        if($(this).data('setor_id') == $('#setor').val()){
+                            $('#lista_esquerda').append(elemento.parent());
+                            btn.text('Adicionar').addClass('btn-success').removeClass('btn-danger')
+
+                        }else{
+                            elemento.parent().remove();
                         }
                     }
                 });
-            }
 
-        window.add_Lista = function($setor, $id) {
-            var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-            var naTabela = document.getElementById('dentroTabelaCnaes');
-            var divBtn = elemento.children[1].children[0].children[0];
+                $(document).on('mouseenter', '.card-cnae', function() {
+                    $(this).find('div').eq(1).removeClass('d-none');
+                }).on('mouseleave', '.card-cnae', function() {
+                    $(this).find('div').eq(1).addClass('d-none');
+                });
 
-            if(elemento.parentElement == naTabela){
-                $('#listaCnaes').append(elemento);
-                divBtn.style.backgroundColor = "#dc3545";
-                divBtn.style.borderColor = "#dc3545";
-                divBtn.textContent = "Remover";
-                var html = `<input id ="inputCnae_`+$id+`" hidden name="cnaes_id[]" value="`+$id+`">`;
-                $('#cnaeCard_'+$setor+'_'+$id).append(html);
-            }else{
-                var historySelectList = $('select#idSelecionarSetor');
-                var $setor_id = $('option:selected', historySelectList).val();
-                if($setor == $setor_id){
-                    $('#dentroTabelaCnaes').append(elemento);
-                    divBtn.style.backgroundColor = "var(--primaria)";
-                    divBtn.style.borderColor = "var(--primaria)";
-                    divBtn.textContent = "Adicionar";
-                    $('#inputCnae_'+$id).remove();
-                }else{
-                    document.getElementById('listaCnaes').removeChild(elemento);
-                }
-            }
+                $('#tipo_de_pessoa').on('change', function() {
+                    mostrar($(this).val());
+                });
 
-            }
-
-            var tempIdCard = -1;
-            window.mostrarBotaoAdicionar = function(valor){
-                if(tempIdCard == -1){
-                    document.getElementById("cardSelecionado"+valor).style.display = "block";
-                    this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-                }else if(tempIdCard != -1){
-                    tempIdCard.style.display = "none";
-                    document.getElementById("cardSelecionado"+valor).style.display = "block";
-                    this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-                }
-            }
-
-            function limparLista() {
-                var cnaes = document.getElementById('tabelaCnaes').children[0];
-                cnaes.innerHTML = "";
-            }
-
-            function mostrarDiv(select) {
-                document.getElementById('selecionar-cpf-cnpj').classList.add('d-none');
-                document.getElementById('div-btn-troca').classList.remove('d-none');
-                document.getElementById('div-btn-troca').classList.add('d-flex', 'align-items-end')
-                if (select.value == "física") {
-                    document.getElementById('div-cpf').classList.remove('d-none');
-                    document.getElementById('div-cnpj').classList.add('d-none');
-                } else if(select.value == "jurídica") {
-                    document.getElementById('div-cpf').classList.add('d-none');
-                    document.getElementById('div-cnpj').classList.remove('d-none');
-                }
-            }
-            window.onload = function(){
-                if(@json(!empty($empresa->cnpj))){
-                    mostrarDiv(document.getElementById('pessoa'))
+                if(@json(!empty($empresa->cnpj ?? old('tipo_de_pessoa')))){
+                    mostrar($('#tipo_de_pessoa').val())
                 }
 
-            }
-
-            function trocar() {
-                if (!document.getElementById('div-cpf').classList.contains('d-none')) {
-                    document.getElementById('div-cpf').classList.add('d-none');
-                    document.getElementById('cpf').value = null;
-                    document.getElementById('div-cnpj').classList.remove('d-none');
-                } else {
-                    document.getElementById('div-cpf').classList.remove('d-none');
-                    document.getElementById('cnpj').value = null;
-                    document.getElementById('div-cnpj').classList.add('d-none');
-                }
-            }
-
-            function meu_callback_empresa(conteudo) {
-                console.log(conteudo);
-                if (!("erro" in conteudo)) {
-                    //Atualiza os campos com os valores.
-                    document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
-                    document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
-                    if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                        exibirModal();
+                function mostrar(elemento){
+                    $('#selecionar-cpf-cnpj').addClass('d-none');
+                    $('#div-btn-troca').removeClass('d-none');
+                    $('#div-btn-troca').addClass(['d-flex', 'align-items-center', 'mt-3'])
+                    if (elemento == "física") {
+                        $('#div-cpf').removeClass('d-none');
+                        $('#div-cnpj').addClass('d-none');
+                    } else if(elemento == "jurídica") {
+                        $('#div-cpf').addClass('d-none');
+                        $('#div-cnpj').removeClass('d-none');
                     }
-                } //end if.
-                else {
-                    //CEP não Encontrado.
-                    limpa_formulário_cep_empresa();
-                    exibirModalCep();
                 }
-            }
 
-            function pesquisacep(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua').value="...";
-                        document.getElementById('bairro').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
+                $('#trocar').on('click', function(){
+                    if (!$('#div-cpf').hasClass('d-none')) {
+                        $('#div-cpf').addClass('d-none');
+                        $('#cpf').val(null);
+                        $('#div-cnpj').removeClass('d-none');
+                    } else {
+                        $('#div-cpf').removeClass('d-none');
+                        $('#cnpj').val(null);
+                        $('#div-cnpj').addClass('d-none');
+                    }
+                })
+
+                function meu_callback_empresa(conteudo) {
+                    if (!("erro" in conteudo)) {
+                        //Atualiza os campos com os valores.
+                        document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
+                        document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
+                        if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
+                            exibirModal();
+                        }
                     } //end if.
                     else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        exibirModalCepInvalido();;
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            }
-
-            function pesquisacepEmpresa(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua_da_empresa').value="...";
-                        document.getElementById('bairro_da_empresa').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
-                    } //end if.
-                    else {
-                        //cep é inválido.
+                        //CEP não Encontrado.
                         limpa_formulário_cep_empresa();
-                        exibirModalCepInvalido();
+                        exibirModalCep();
                     }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep_empresa();
                 }
-            }
 
-            function limpa_formulário_cep_empresa() {
-                //Limpa valores do formulário de cep.
-                document.getElementById('rua_da_empresa').value=("");
-                document.getElementById('bairro_da_empresa').value=("");
-            }
+                function pesquisacep(valor) {
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = valor.replace(/\D/g, '');
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+                        //Valida o formato do CEP.
+                        if(validacep.test(cep)) {
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            document.getElementById('rua').value="...";
+                            document.getElementById('bairro').value="...";
+                            //Cria um elemento javascript.
+                            var script = document.createElement('script');
+                            //Sincroniza com o callback.
+                            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                            //Insere script no documento e carrega o conteúdo.
+                            document.body.appendChild(script);
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep();
+                            exibirModalCepInvalido();;
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep();
+                    }
+                }
 
-            function exibirModalCepInvalido() {
-                $('#aviso-modal-fora').modal('show');
-            }
+                function pesquisacepEmpresa(valor) {
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = valor.replace(/\D/g, '');
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+                        //Valida o formato do CEP.
+                        if(validacep.test(cep)) {
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            document.getElementById('rua_da_empresa').value="...";
+                            document.getElementById('bairro_da_empresa').value="...";
+                            //Cria um elemento javascript.
+                            var script = document.createElement('script');
+                            //Sincroniza com o callback.
+                            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
+                            //Insere script no documento e carrega o conteúdo.
+                            document.body.appendChild(script);
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep_empresa();
+                            exibirModalCepInvalido();
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep_empresa();
+                    }
+                }
 
-            function exibirModal() {
-                $('#btn-modal-aviso').click();
-            }
+                function limpa_formulário_cep_empresa() {
+                    //Limpa valores do formulário de cep.
+                    document.getElementById('rua_da_empresa').value=("");
+                    document.getElementById('bairro_da_empresa').value=("");
+                }
 
-            function exibirModalCep() {
-                $('#btn-modal-cep-nao-encontrado').click();
-            }
+                function exibirModalCepInvalido() {
+                    $('#aviso-modal-fora').modal('show');
+                }
 
-            if (performance.navigation.type === 1) {
-                // Se a página for recarregada
-                window.location.href = "{{ route('empresas.create') }}";
-            }
+                function exibirModal() {
+                    $('#btn-modal-aviso').click();
+                }
+
+                function exibirModalCep() {
+                    $('#btn-modal-cep-nao-encontrado').click();
+                }
+
+                if (performance.navigation.type === 1) {
+                    // Se a página for recarregada
+                    window.location.href = "{{ route('empresas.create') }}";
+                }
+            });
+
+
         </script>
     @endpush
     @endsection

@@ -125,8 +125,8 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="numero_da_empresa" class="form-control @error('número_da_empresa') is-invalid @enderror" type="text" name="número_da_empresa" value="{{old('número_da_empresa', $empresa->endereco->numero)}}" required autocomplete="número_da_empresa">
-                                    @error('número_da_empresa')
+                                    <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{old('numero_da_empresa', $empresa->endereco->numero)}}" required autocomplete="numero_da_empresa">
+                                    @error('numero_da_empresa')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
