@@ -14,7 +14,7 @@
                                 </div>
                             </div>
                         @endif
-                    </div>
+                    </div> 
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label for="nome_completo" style="margin-right: 5px;">Nome completo</label><span style="color: red; font-weight: bold;">*</span>
