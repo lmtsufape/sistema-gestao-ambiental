@@ -59,7 +59,7 @@ class Endereco extends Model
     public function setAtributesEmpresa($input)
     {
         $this->cep = $input['cep_da_empresa'];
-        $this->numero = $input['número_da_empresa'];
+        $this->numero = $input['numero_da_empresa'];
         $this->cidade = $input['cidade_da_empresa'];
         $this->estado = $input['estado_da_empresa'];
         $this->bairro = $input['bairro_da_empresa'];
