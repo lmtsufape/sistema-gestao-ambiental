@@ -34,39 +34,36 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="beneficiario">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="beneficiario">{{ __('Beneficiário') }}</label>
                                     <input id="beneficiario" class="form-control" type="string" name="beneficiario" value="{{ $aracao->beneficiario->nome }}" readonly>
                                 </div>
                             </div>
-                            
+
                             <hr class="divisor">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cep" class="form-control" type="string" name="cep" value="{{ $aracao->beneficiario->endereco->cep }}" readonly>
+                                        <label for="distrito">{{ __('Distrito') }}</label>
+                                        <input id="distrito" class="form-control" type="string" name="distrito" value="{{ $aracao->beneficiario->endereco->distrito }}" readonly>
                                     </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="bairro" class="form-control" type="string" name="bairro" value="{{ $aracao->beneficiario->endereco->bairro }}" readonly>
-                                    </div>
+
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rua" class="form-control" type="string" name="rua" value="{{ $aracao->beneficiario->endereco->rua }}" readonly>
+                                        <label for="comunidade">{{ __('Comunidade') }}</label>
+                                        <input id="comunidade" class="form-control" type="string" name="comunidade" value="{{ $aracao->beneficiario->endereco->comunidade }}" readonly>
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <label for="numero">{{ __('Número') }}</label>
                                         <input id="numero" class="form-control" type="string" name="numero" value="{{ $aracao->beneficiario->endereco->numero }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cidade">{{ __('Cidade') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <label for="cidade">{{ __('Cidade') }}</label>
                                         <input id="cidade" class="form-control" type="string" name="cidade" value="{{ $aracao->beneficiario->endereco->cidade }}" readonly>
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="uf">{{ __('Estado') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <label for="uf">{{ __('Estado') }}</label>
                                         <input id="uf" class="form-control" type="string" name="uf" value="{{ $aracao->beneficiario->endereco->estado }}" readonly>
                                     </div>
                                 </div>
@@ -77,8 +74,8 @@
     </div>
     {{-- @push ('scripts')
         <script>
-            
+
         </script>
     @endpush --}}
 @endsection
-</x-guest-layout>
+</x-app-layout>
