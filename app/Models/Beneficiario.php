@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Beneficiario extends Model {
-    
+
     use HasFactory;
 
     protected $table = 'beneficiario';
@@ -33,12 +33,14 @@ class Beneficiario extends Model {
 
 
 
-    public function telefone() {
+    public function telefone(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Telefone::class, 'telefone_id');
     }
 
-    public function endereco() {
-        return $this->belongsTo(Endereco::class, 'endereco_id');
+    public function Endereco(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(EnderecoBeneficiario::class, 'endereco_id');
     }
 
 
@@ -52,7 +54,7 @@ class Beneficiario extends Model {
         $this->quantidade_pessoas = $input['quantidade_pessoas'] ? $input['orgao_emissor'] : null;
         $this->observacao = $input['observacao'] ? $input['orgao_emissor'] : null;;
         $this->tipo_beneficiario = $input['tipo_beneficiario'];
-        $this->codigo = $input['codigo'] ? $input['orgao_emissor'] : null;;
+        $this->codigo = $input['codigo'] ?: null;;
 }
 
 }
