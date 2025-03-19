@@ -13,6 +13,7 @@ use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleXMLElement;
 
 class EmpresaController extends Controller
 {
@@ -54,7 +55,9 @@ class EmpresaController extends Controller
 
         $setores = Setor::orderBy('nome')->get();
 
-        return view('empresa.create', compact('setores'));
+        $empresa = session('empresa');
+
+        return view('empresa.create', compact('setores', 'empresa'));
     }
 
     public function licencasIndex(Request $request)
@@ -75,6 +78,7 @@ class EmpresaController extends Controller
     public function store(EmpresaRequest $request)
     {
         $this->authorize('store', Empresa::class);
+
         $enderecoEmpresa = new Endereco();
         $telefoneEmpresa = new Telefone();
         $empresa = new Empresa();
@@ -94,9 +98,7 @@ class EmpresaController extends Controller
         $empresa->telefone_id = $telefoneEmpresa->id;
         $empresa->save();
 
-        foreach ($request->cnaes_id as $cnae_id) {
-            $empresa->cnaes()->attach((Cnae::find($cnae_id)));
-        }
+        $empresa->cnaes()->attach($request->cnaes_id);
 
         if(!Auth::user()->tipoAnalista->contains('tipo', 1)){
             return redirect(route('empresas.index'))->with(['success' => 'Empresa cadastrada com sucesso!']);
@@ -241,6 +243,26 @@ class EmpresaController extends Controller
     {
         $empresas = Empresa::search($request->search)->get();
         return response()->json($empresas);
+    }
+
+    public function importXml(Request $request){
+        $this->authorize('create', Empresa::class);
+
+        $xml = simplexml_load_file($request->empresa_xml->getRealPath())->ROWSET;
+        $cep = (String) $xml->RUC_COMP->RCO_ZONA_POSTAL;
+        $empresa = (object)[
+            'nome' => (string) $xml->RUC_GENERAL->RGE_NOMB,
+            'contato' => (string) $xml->GROUPRUC_GEN_PROTOCOLO->RUC_GEN_PROTOCOLO[1]->RGP_VALOR,
+            'cep' => (string) $xml->RUC_COMP->RCO_ZONA_POSTAL,
+            'numero' => (string) trim($xml->RUC_ESTAB->RES_NUME),
+            'cnpj' => (string) trim($xml->PSC_PROTOCOLO->CNPJ),
+            'logradouro' => (string) $xml->RUC_COMP->RCO_TTL_TIP_LOGRADORO . ' ' . (string) $xml->RUC_COMP->RCO_DIRECCION,
+            'bairro' => (string) $xml->RUC_COMP->RCO_URBANIZACION
+
+        ];
+
+
+        return redirect()->route('empresas.create')->with(compact('empresa'));
     }
 
     public function updateRequerente(Request $request)
