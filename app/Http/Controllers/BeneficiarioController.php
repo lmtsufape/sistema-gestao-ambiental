@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Beneficiario;
 use App\Models\Endereco;
+use App\Models\EnderecoBeneficiario;
 use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,18 +47,18 @@ class BeneficiarioController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
         $input = $request->all();
-
         $beneficiario = new Beneficiario();
-        $endereco = new Endereco();
+        $endereco = new EnderecoBeneficiario();
         $telefone = new Telefone();
         // Modificando os atributos nulos
-        $input['cep'] = $input['cep'] ?? '55299-899';
+        $input['distrito'] = $input['distrito'] ?? 'n/a';
         $input['numero'] = $input['numero'] ?? 's/n';
-        $input['bairro'] = $input['bairro'] ?? $input['rua'];
+        $input['comunidade'] = $input['comunidade'] ?? 'n/a';
+        $input['cidade'] = $input['cidade'] ?? 'n/a';
+        $input['estado'] = $input['estado'] ?? 'n/a';
         $input['complemento'] = $input['complemento'] ?? '';
-
         $endereco->setAtributes($input);
-    
+
         $endereco->save();
         $telefone->setNumero($input['celular']);
         $telefone->save();
@@ -72,7 +73,7 @@ class BeneficiarioController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
         $beneficiario = Beneficiario::find($id);
-        $endereco = Endereco::find($beneficiario->endereco_id);
+        $endereco = EnderecoBeneficiario::find($beneficiario->endereco_id);
         $telefone = Telefone::find($beneficiario->telefone_id);
         return view('beneficiarios.show', compact('beneficiario', 'endereco', 'telefone'));
     }
@@ -84,7 +85,7 @@ class BeneficiarioController extends Controller
 
         $beneficiario = Beneficiario::find($id);
         $input = $request->all();
-        $endereco = Endereco::find($beneficiario->endereco_id);
+        $endereco = EnderecoBeneficiario::find($beneficiario->endereco_id);
         $telefone = Telefone::find($beneficiario->telefone_id);
         $endereco->setAtributes($input);
         $endereco->update();
@@ -108,7 +109,7 @@ class BeneficiarioController extends Controller
                 return redirect(route('beneficiarios.index'))->with(['error' => 'Beneficiário não encontrado']);
             }
 
-            $endereco = Endereco::find($beneficiario->endereco_id);
+            $endereco = EnderecoBeneficiario::find($beneficiario->endereco_id);
             $telefone = Telefone::find($beneficiario->telefone_id);
 
             // Excluir os registros
