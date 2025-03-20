@@ -47,13 +47,13 @@ class Beneficiario extends Model {
     public function setAtributes($input){
         // 55299899
         $this->nome = $input['name'];
-        $this->cpf = isset($input['cpf']) ? $input['cpf'] : null;
-        $this->rg = isset($input['rg']) ? $input['rg'] : null;
-        $this->nis = isset($input['nis']) ? $input['nis'] : null;
-        $this->orgao_emissor = isset($input['orgao_emissor']) ? $input['orgao_emissor'] : null;
-        $this->quantidade_pessoas = $input['quantidade_pessoas'] ? $input['orgao_emissor'] : null;
-        $this->observacao = $input['observacao'] ? $input['orgao_emissor'] : null;;
-        $this->tipo_beneficiario = $input['tipo_beneficiario'];
+        $this->cpf = $input['cpf'] ?? null;
+        $this->rg = $input['rg'] ?? null;
+        $this->nis = $input['nis'] ?? null;
+        $this->orgao_emissor = $input['orgao_emissor'] ?? null;
+        $this->quantidade_pessoas = $input['quantidade_pessoas'] ?? null;
+        $this->observacao = $input['observacao'] ?? null;
+        $this->tipo_beneficiario = $input['tipo_beneficiario'] ?? null;
         $this->codigo = $input['codigo'] ?: null;;
 }
 
