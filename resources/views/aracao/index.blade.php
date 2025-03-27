@@ -20,10 +20,19 @@
                         <form action="{{ route('aracao.index') }}" method="get">
                             @csrf
                             <div class="form-row mb-3">
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control w-100" name="buscar" placeholder="Digite o nome ou o código do Beneficiário">
+                                <div class="col-md-2">
+                                    <label for="filtro">Filtro</label>
+                                    <select id="filtro" name="filtro" class="form-control">
+                                        <option value="nome">Nome</option>
+                                        <option value="codigo">Código</option>
+                                        <option value="ponto_localizacao">Localização</option>
+                                    </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-5">
+                                    <label for="buscar">Termo</label>
+                                    <input type="text" id="buscar" class="form-control" name="buscar" placeholder="Digite o termo de busca">
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
                                     <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
                                 </div>
                             </div>

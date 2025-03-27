@@ -10,19 +10,22 @@ use App\Models\Beneficiario;
 class AracaoController extends Controller
 {
     public function index(Request $request)
-    {   
+    {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $buscar = $request->input('buscar');
+        $query = Aracao::query();
 
-        if ($buscar != null) {
-            $aracao = Aracao::whereHas('beneficiario', function($query) use ($buscar) {
-                $query->where('nome', 'ILIKE', "%{$buscar}%")
-                      ->orWhere('codigo', 'ILIKE', "%{$buscar}%");
-            })->get();
-        } else {
-            $aracao = Aracao::all();
+        if ($request->filled('buscar') && $request->filled('filtro')) {
+            $buscar = $request->input('buscar');
+            $filtro = $request->input('filtro');
+
+
+            $query->whereHas('beneficiario', function($q) use ($buscar, $filtro) {
+                $q->where($filtro, 'ILIKE', "%{$buscar}%");
+            });
         }
+
+        $aracao = $query->get();
 
         return view('aracao.index', compact('aracao'));
     }
@@ -80,7 +83,7 @@ class AracaoController extends Controller
     public function destroy($id)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
+
         $aracao = Aracao::find($id);
         $aracao->delete();
 
@@ -89,7 +92,7 @@ class AracaoController extends Controller
 
     // public function gerarPedidosAracao(){
     //     $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
+
     //     $aracaos = Aracao::all();
 
     //     if (empty($aracao)) {

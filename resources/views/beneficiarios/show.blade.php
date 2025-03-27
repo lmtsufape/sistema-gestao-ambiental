@@ -56,34 +56,30 @@
                                 </div>
                                 <div class="col-md-2 form-group">
                                     <label for="tipo_beneficiario">{{ __('Tipo do Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input 
-                                        id="tipo_beneficiario" 
-                                        class="form-control @error('tipo_beneficiario') is-invalid @enderror" 
-                                        type="text" 
-                                        name="tipo_beneficiario" 
-                                        value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : ($beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa'] ? 'Carro Pipa' : 'Ambos') }}" 
+                                    <input
+                                        id="tipo_beneficiario"
+                                        class="form-control @error('tipo_beneficiario') is-invalid @enderror"
+                                        type="text"
+                                        name="tipo_beneficiario"
+                                        value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : ($beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa'] ? 'Carro Pipa' : 'Ambos') }}"
                                         readonly>
                                 </div>
                             </div>
                             <hr class="divisor">
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cep">{{ __('CEP') }}</label>
-                                    <input id="cep" class="form-control" type="text" name="cep" value="{{$beneficiario->endereco->cep}}" readonly>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="bairro">{{ __('Bairro') }}</label>
-                                    <input id="bairro" class="form-control" type="text" name="bairro" value="{{$beneficiario->endereco->bairro}}" readonly>
+                                    <label for="distrito">{{ __('Distrito') }}</label>
+                                    <input id="distrito" class="form-control" type="text" name="distrito" value="{{$beneficiario->endereco->distrito}}" readonly>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="rua">{{ __('Rua') }}</label>
-                                    <input id="rua" class="form-control" type="text" name="rua" value="{{$beneficiario->endereco->rua}}" readonly>
+                                    <label for="comunidade">{{ __('Comunidade') }}</label>
+                                    <input id="comunidade" class="form-control" type="text" name="comunidade" value="{{$beneficiario->endereco->comunidade}}" readonly>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="numero">{{ __('Número') }}</label>
-                                    <input id="numero" class="form-control" type="text" name="número" value="{{$beneficiario->endereco->numero}}" readonly>
+                                    <input id="numero" class="form-control" type="text" name="numero" value="{{$beneficiario->endereco->numero}}" readonly>
                                 </div>
                             </div>
                             <div class="form-row">
