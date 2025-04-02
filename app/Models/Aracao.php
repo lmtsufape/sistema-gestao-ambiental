@@ -24,6 +24,11 @@ class Aracao extends Model
         return $this->belongsTo(Beneficiario::class);
     }
 
+    public function fotos()
+    {
+        return $this->hasMany(FotoAracao::class, 'aracao_id');
+    }
+
     public function setAtributes($request)
     {
         $this->beneficiario_id = $request['beneficiario_id'];
@@ -32,5 +37,5 @@ class Aracao extends Model
         $this->quantidade_ha = $request['quantidade_ha'];
         $this->quantidade_horas = $request['quantidade_horas'];
     }
-    
+
 }
