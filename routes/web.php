@@ -141,6 +141,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/aracao/{id}/edit', [AracaoController::class, 'edit'])->name('aracao.edit');
     Route::put('/aracao/{id}/update', [AracaoController::class, 'update'])->name('aracao.update');
     Route::delete('/aracao/{id}/destroy', [AracaoController::class, 'destroy'])->name('aracao.destroy');
+    Route::post('/aracao/{id}/anexar-fotos', [AracaoController::class, 'anexarFotos'])->name('aracao.anexarFotos');
+    Route::get('/aracao/{id}/imagem/{path}', function ($id, $path) {return response()->file(storage_path("app/aracoes/${id}/fotos/" . $path));})->where('path', '.*');
+
 
     Route::resource('solicitacao_servicos', SolicitacaoServicoController::class)->except('index');
     Route::get('/solicitacao_servicos/', [SolicitacaoServicoController::class, 'index'])->name('solicitacao_servicos.index');
