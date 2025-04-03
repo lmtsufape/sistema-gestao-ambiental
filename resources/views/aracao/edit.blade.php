@@ -23,12 +23,12 @@
                                             value="{{ $aracao->cultura }}" required autofocus autocomplete="cultura">
                                     </div>
                                     <div class="col-md-6 form-group">
-                                        <label for="ponto_localizacao">{{ __('Ponto de Localização') }}<span
+                                        <label for="ponto_localizacao">{{ __('Ponto de Referência') }}<span
                                                 style="color: red; font-weight: bold;">*</span></label>
                                         <input id="ponto_localizacao" class="form-control" type="string"
                                             name="ponto_localizacao" value="{{ $aracao->ponto_localizacao }}" required
                                             autofocus autocomplete="ponto_localizacao"
-                                            placeholder="Digite o ponto de localização...">
+                                            placeholder="Digite o ponto de referência...">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -84,7 +84,7 @@
         </div>
         {{-- @push('scripts')
         <script>
-            
+
         </script>
     @endpush --}}
     @endsection

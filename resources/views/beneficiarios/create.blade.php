@@ -109,8 +109,8 @@
                                 <div class="form-row">
 
                                     <div class="col-md-6 form-group">
-                                        <label for="distrito">{{ __('Distrito') }}</label>
-                                        <input id="distrito" class="form-control @error('distrito') is-invalid @enderror" type="text" name="distrito" value="{{old('distrito')}}" autofocus autocomplete="distrito" placeholder="Digite o distrito onde mora...">
+                                        <label for="distrito">{{ __('Distrito') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="distrito" class="form-control @error('distrito') is-invalid @enderror" type="text" name="distrito" value="{{old('distrito')}}" autofocus required autocomplete="distrito" placeholder="Digite o distrito onde mora...">
                                         @error('distrito')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
@@ -120,8 +120,8 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="comunidade">{{ __('Comunidade') }} </label>
-                                        <input id="comunidade" class="form-control @error('comunidade') is-invalid @enderror" type="text" name="comunidade" value="{{old('comunidade')}}" autocomplete="comunidade"  placeholder="Digite a comunidade onde mora...">
+                                        <label for="comunidade">{{ __('Comunidade') }}<span style="color: red; font-weight: bold;">*</span> </label>
+                                        <input id="comunidade" class="form-control @error('comunidade') is-invalid @enderror" type="text" name="comunidade" value="{{old('comunidade')}}" required autocomplete="comunidade"  placeholder="Digite a comunidade onde mora...">
                                         @error('comunidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
