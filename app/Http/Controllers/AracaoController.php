@@ -6,31 +6,35 @@ use App\Models\Aracao;
 use App\Http\Controllers\Controller;
 use App\Models\FotoAracao;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Models\Beneficiario;
 use Illuminate\Support\Facades\Storage;
 
 class AracaoController extends Controller
 {
+    /**
+     * @throws AuthorizationException
+     */
     public function index(Request $request)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $query = Aracao::query();
 
-        if ($request->filled('buscar') && $request->filled('filtro')) {
-            $buscar = $request->input('buscar');
-            $filtro = $request->input('filtro');
+        $query->when(
+            $request->filled('buscar') && $request->filled('filtro'),
+            function ($query) use ($request) {
+                $buscar = $request->input('buscar');
+                $filtro = $request->input('filtro');
 
+                $relation = in_array($filtro, ['distrito', 'comunidade']) ? 'beneficiario.endereco' : 'beneficiario';
 
-            $query->whereHas('beneficiario', function($q) use ($buscar, $filtro) {
-                $q->where($filtro, 'ILIKE', "%{$buscar}%");
-            });
-        }
+                $query->whereHas($relation, fn($subQuery) => $subQuery->where($filtro, 'ILIKE', "%{$buscar}%"));
+            }
+        );
 
-        $aracao = $query->get();
-
-        return view('aracao.index', compact('aracao'));
+        return view('aracao.index', ['aracao' => $query->get()]);
     }
 
     public function create()

@@ -26,7 +26,7 @@
             <th>Endereço/Referência</th>
             <th>Telefone</th>
             <th>Cultura</th>
-            <th>Ponto de Localização</th>
+            <th>Ponto de Referência</th>
             <th>Quantidade de Ha</th>
             <th>Quantidade de Horas</th>
         </tr>
@@ -36,7 +36,7 @@
                 <td>{{ $aracao->beneficiario->nome }}</td>
                 <td>{{ $aracao->beneficiario->cpf }}</td>
                 <td>{{ $aracao->beneficiario->rg }}</td>
-                <td>{{ $aracao->beneficiario->endereco->rua}}, {{ $solicitacao_servico->beneficiario->endereco->numero }} - {{ $solicitacao_servico->beneficiario->endereco->bairro }} - {{ $solicitacao_servico->beneficiario->endereco->cidade }}/{{ $solicitacao_servico->beneficiario->endereco->uf }}</td>
+                <td>{{ $aracao->beneficiario->endereco->distrito}}, {{ $solicitacao_servico->beneficiario->endereco->numero }} - {{ $solicitacao_servico->beneficiario->endereco->comunidade }} - {{ $solicitacao_servico->beneficiario->endereco->cidade }}/{{ $solicitacao_servico->beneficiario->endereco->uf }}</td>
                 <td>{{ $aracao->beneficiario->telefone->numero }}</td>
                 <td>{{ $aracao->cultura }}</td>
                 <td>{{ $aracao->ponto_localizacao }}</td>

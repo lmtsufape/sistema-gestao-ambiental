@@ -18,7 +18,7 @@
                                     <input id="cultura" class="form-control" type="string" name="cultura" value="{{ $aracao->cultura }}" readonly>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="ponto_localizacao">{{ __('Ponto de Localização') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <label for="ponto_localizacao">{{ __('Ponto de Referência') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="ponto_localizacao" class="form-control" type="string" name="ponto_localizacao" value="{{ $aracao->ponto_localizacao }}" readonly>
                                 </div>
                             </div>
@@ -75,8 +75,11 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                @foreach ($aracao->fotos as $foto)
+                                @foreach ($aracao->fotos as $index => $foto)
                                     <div class="col-md-4 text-center mb-3">
+                                        <h5 class="text-muted">
+                                            {{ $index === 0 ? 'Antes' : 'Depois' }}
+                                        </h5>
                                         <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center"
                                              style="max-width: 300px; border-radius: 10px;">
                                             <img src="{{ url("aracao/$aracao->id/imagem/" . basename($foto->caminho)) }}"
