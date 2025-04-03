@@ -25,15 +25,16 @@
                                     <select id="filtro" name="filtro" class="form-control">
                                         <option value="nome">Nome</option>
                                         <option value="codigo">Código</option>
-                                        <option value="ponto_localizacao">Localização</option>
+                                        <option value="distrito">Distrito</option>
+                                        <option value="comunidade">Comunidade</option>
                                     </select>
                                 </div>
-                                <div class="col-md-5">
-                                    <label for="buscar">Termo</label>
-                                    <input type="text" id="buscar" class="form-control" name="buscar" placeholder="Digite o termo de busca">
+                                <div class="col-md-4">
+                                    <label for="buscar">Buscar</label>
+                                    <input type="text" id="buscar" name="buscar" class="form-control" placeholder="Digite sua busca">
                                 </div>
-                                <div class="col-md-3 d-flex align-items-end">
-                                    <button type="submit" class="btn" style="background-color: #00883D; color: white;">Buscar</button>
+                                <div class="col-md-2 align-self-end">
+                                    <button type="submit" style="background-color: #00883d" class="btn btn-primary">Buscar</button>
                                 </div>
                             </div>
                         </form>
