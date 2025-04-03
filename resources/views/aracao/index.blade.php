@@ -97,6 +97,9 @@
                                                                 <a title="Deletar Aração" type="button" data-toggle="modal" data-target="#modalStaticDeletarAracao_{{$item->id}}">
                                                                     <img class="icon-licenciamento" src="{{ asset('img/trash-svgrepo-com.svg') }}" alt="Icone de deletar Aração">
                                                                 </a>
+                                                                <a title="Anexar Fotos" type="button" data-toggle="modal" data-target="#modalAnexarFotos_{{ $item->id }}">
+                                                                    <img class="icon-licenciamento" width="20px;" src="{{ asset('img/clip-svgrepo-com.svg') }}" alt="Anexar Fotos">
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -136,6 +139,12 @@
                                             Excluir Aração
                                         </div>
                                     </div>
+                                    <div title="Anexar Fotos"class="d-flex align-items-center my-1 pt-0 pb-1">
+                                        <img class="icon-licenciamento align-middle" width="20" src="{{ asset('img/clip-svgrepo-com.svg') }}" alt="Anexar Fotos">
+                                        <div style="font-size: 15px;" class="align-middle mx-3">
+                                            Anexar Fotos
+                                        </div>
+                                    </div>
                                 @endcan
                             </li>
                         </ul>
@@ -165,8 +174,62 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="modalAnexarFotos_{{ $item->id }}" tabindex="-1" aria-labelledby="modalLabel_{{ $item->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #00883D;">
+                                    <h5 class="modal-title text-white">Anexar Fotos</h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('aracao.anexarFotos', $item->id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+
+                                        <!-- Foto Antes -->
+                                        <label>Foto Antes</label>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <input type="file" name="foto_antes" id="fotoAntes_{{ $item->id }}" class="d-none" accept="image/*" onchange="previewImage(event, 'previewAntes_{{ $item->id }}')">
+                                            <label for="fotoAntes_{{ $item->id }}" class="btn btn-light d-flex align-items-center justify-content-center p-0"
+                                                   style="width: 120px; height: 120px; border-radius: 10px; overflow: hidden;">
+                                                <img id="previewAntes_{{ $item->id }}" src="{{ asset('img/upload-icon.jpg') }}" style="width: 100%; height: 100%; object-fit: cover;" alt="Upload">
+                                            </label>
+                                        </div>
+                                        <input type="text" name="comentario_antes" class="form-control mt-2" placeholder="Comentário">
+
+                                        <!-- Foto Depois -->
+                                        <label class="mt-3">Foto Depois</label>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <input type="file" name="foto_depois" id="fotoDepois_{{ $item->id }}" class="d-none" accept="image/*" onchange="previewImage(event, 'previewDepois_{{ $item->id }}')">
+                                            <label for="fotoDepois_{{ $item->id }}" class="btn btn-light d-flex align-items-center justify-content-center p-0"
+                                                   style="width: 120px; height: 120px; border-radius: 10px; overflow: hidden;">
+                                                <img id="previewDepois_{{ $item->id }}" src="{{ asset('img/upload-icon.jpg') }}" style="width: 100%; height: 100%; object-fit: cover;" alt="Upload">
+                                            </label>
+                                        </div>
+                                        <input type="text" name="comentario_depois" class="form-control mt-2" placeholder="Comentário">
+
+                                        <!-- Botão de Envio -->
+                                        <button type="submit" class="btn btn-success mt-3 w-100">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
     @endsection
 </x-app-layout>
+
+<script>
+
+    function previewImage(event, previewId) {
+        const reader = new FileReader();
+        reader.onload = function () {
+        document.getElementById(previewId).src = reader.result;
+    }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+</script>

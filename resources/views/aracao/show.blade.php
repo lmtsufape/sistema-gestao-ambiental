@@ -67,7 +67,33 @@
                                         <input id="uf" class="form-control" type="string" name="uf" value="{{ $aracao->beneficiario->endereco->estado }}" readonly>
                                     </div>
                                 </div>
+                            <hr class="divisor">
+                        @if ($aracao->fotos->isNotEmpty())
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <h5>Galeria</h5>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                @foreach ($aracao->fotos as $foto)
+                                    <div class="col-md-4 text-center mb-3">
+                                        <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center"
+                                             style="max-width: 300px; border-radius: 10px;">
+                                            <img src="{{ url("aracao/$aracao->id/imagem/" . basename($foto->caminho)) }}"
+                                                 class="img-fluid rounded"
+                                                 style="max-width: 100%; height: auto;">
+                                        </div>
+                                        @if ($foto->comentario)
+                                            <p class="mt-2 text-muted" style="font-size: 18px; max-width: 300px;">
+                                                <strong>Comentário:</strong> {{ $foto->comentario }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
+
                 </div>
             </div>
         </div>
