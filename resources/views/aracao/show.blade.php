@@ -76,18 +76,18 @@
                             </div>
                             <div class="form-row">
                                 @foreach ($aracao->fotos as $index => $foto)
-                                    <div class="col-md-4 text-center mb-3">
+                                    <div class="col-md-6 text-center mb-4">
                                         <h5 class="text-muted">
                                             {{ $index === 0 ? 'Antes' : 'Depois' }}
                                         </h5>
-                                        <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center"
-                                             style="max-width: 300px; border-radius: 10px;">
+                                        <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center mx-auto"
+                                             style="max-width: 100%; border-radius: 10px;">
                                             <img src="{{ url("aracao/$aracao->id/imagem/" . basename($foto->caminho)) }}"
                                                  class="img-fluid rounded"
-                                                 style="max-width: 100%; height: auto;">
+                                                 style="max-width: 300px; height: auto;">
                                         </div>
                                         @if ($foto->comentario)
-                                            <p class="mt-2 text-muted" style="font-size: 18px; max-width: 300px;">
+                                            <p class="mt-2 text-muted" style="font-size: 18px; max-width: 300px; margin-left: auto; margin-right: auto;">
                                                 <strong>Comentário:</strong> {{ $foto->comentario }}
                                             </p>
                                         @endif
