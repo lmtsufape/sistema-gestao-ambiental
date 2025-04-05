@@ -85,7 +85,7 @@
                                                             <td>{{ $item->beneficiario->nome }}</td>
                                                             <td>{{ $item->beneficiario->codigo }}</td>
                                                             <td>{{ $item->cultura }}</td>
-                                                            <td>{{ $item->ponto_localizacao }}</td>
+                                                            <td>{{ $item->beneficiario->Endereco->comunidade }}</td>
                                                             <td>{{ $item->quantidade_ha }}</td>
                                                             <td>{{ $item->quantidade_horas }}</td>
                                                             <td>
