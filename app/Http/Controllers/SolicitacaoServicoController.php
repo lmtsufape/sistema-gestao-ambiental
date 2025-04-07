@@ -6,9 +6,11 @@ use App\Models\Beneficiario;
 use App\Http\Controllers\Controller;
 use App\Models\SolicitacaoServico;
 use App\Models\Endereco;
+use App\Models\FotosAbastecimento;
 use App\Models\Telefone;
 use Illuminate\Http\Request;
 use App\Models\Pipeiro;
+use App\Models\User;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 
@@ -176,5 +178,44 @@ class SolicitacaoServicoController extends Controller
 
             return redirect()->route('solicitacao_servicos.index')->with('filename', $filename);
         }
+    }
+
+    public function anexarFotos(Request $request, $id)
+    {
+        $this->authorize('isSecretarioOrBeneficiario', User::class);
+
+        $request->validate([
+            'foto_assinatura' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_abastecimento' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $solicitacao_servico = SolicitacaoServico::findOrFail($id);
+
+        $fotos_abastecimento = $solicitacao_servico->fotos_abastecimento;
+
+        if ($request->hasFile('foto_assinatura') && $request->hasFile('foto_abastecimento')) {
+            if($fotos_abastecimento) {
+                Storage::delete($fotos_abastecimento->assinatura_solicitante);
+                Storage::delete($fotos_abastecimento->abastecimento);
+                
+                $fotos_abastecimento->delete();
+            }
+        }
+
+        $fotos_abastecimento = [
+            'assinatura_solicitante' => $request->file('foto_assinatura'),
+            'abastecimento' => $request->file('foto_abastecimento'),
+        ];
+        
+        $path_assinatura = $fotos_abastecimento['assinatura_solicitante']->store("solicitacao_servicos/{$id}/fotos");
+        $path_abastecimento = $fotos_abastecimento['abastecimento']->store("solicitacao_servicos/{$id}/fotos");
+
+        FotosAbastecimento::create([
+            'solicitacao_servico_id' => $id,
+            'assinatura_solicitante' => $path_assinatura,
+            'abastecimento' => $path_abastecimento,
+        ]);
+
+        return back()->with('success', 'Fotos anexadas com sucesso!');
     }
 }

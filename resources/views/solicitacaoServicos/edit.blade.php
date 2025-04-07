@@ -41,6 +41,12 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
+                                        <label for="codigo_solicitante">{{ __('Código do Solicitante') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="data_entrega" class="form-control" type="text" name="codigo_solicitante" value="{{ $solicitacao_servico->codigo_solicitante }}" >
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 form-group">
                                         <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" >
                                     </div>

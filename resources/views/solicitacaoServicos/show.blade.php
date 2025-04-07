@@ -12,63 +12,105 @@
             <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="data_solicitacao">{{ __('Data da Solicitação') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="data_solicitacao" class="form-control" type="date" name="data_solicitacao" value="{{ $solicitacao_servico->data_solicitacao }}" readonly>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="cpf">{{ __('Data da saída') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="data_saida" class="form-control" type="date" name="data_saida" value="{{ $solicitacao_servico->data_saida }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="beneficiario">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="beneficiario" class="form-control" type="string" name="beneficiario" value="{{ $solicitacao_servico->beneficiario->nome }}" readonly>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="codigo_solicitante">{{ __('Código do Solicitante') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="codigo_solicitante" class="form-control" type="text" name="codigo_solicitante" value="{{ $solicitacao_servico->codigo_solicitante ?? "" }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
+                            </div>
+                        </div>
+                        <hr class="divisor">
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="cep" class="form-control" type="string" name="cep" value="{{ $solicitacao_servico->beneficiario->endereco->cep }}" readonly>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="bairro" class="form-control" type="string" name="bairro" value="{{ $solicitacao_servico->beneficiario->endereco->bairro }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="rua" class="form-control" type="string" name="rua" value="{{ $solicitacao_servico->beneficiario->endereco->rua }}" readonly>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="numero" class="form-control" type="string" name="numero" value="{{ $solicitacao_servico->beneficiario->endereco->numero }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label for="cidade">{{ __('Cidade') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="cidade" class="form-control" type="string" name="cidade" value="{{ $solicitacao_servico->beneficiario->endereco->cidade }}" readonly>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="uf">{{ __('Estado') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                <input id="uf" class="form-control" type="string" name="uf" value="{{ $solicitacao_servico->beneficiario->endereco->estado }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 form-group">
+                                <label for="observacao">{{ __('Observação') }}</label>
+                                <input id="observacao" class="form-control" type="string" name="observacao" value="{{ $solicitacao_servico->observacao }}" readonly>
+                            </div>
+                        </div>
+
+                        <hr class="divisor">
+                    
+                        @if($solicitacao_servico->fotos_abastecimento)
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="data_solicitacao">{{ __('Data da Solicitação') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="data_solicitacao" class="form-control" type="date" name="data_solicitacao" value="{{ $solicitacao_servico->data_solicitacao }}" readonly>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="cpf">{{ __('Data da saída') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="data_saida" class="form-control" type="date" name="data_saida" value="{{ $solicitacao_servico->data_saida }}" readonly>
+                                <div class="col-md-12">
+                                    <h5>Galeria</h5>
                                 </div>
                             </div>
+
                             <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <label for="data_entrega">{{ __('Data de entrega') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="data_entrega" class="form-control" type="date" name="data_entrega" value="{{ $solicitacao_servico->data_entrega }}" readonly>
+                                <div class="col-md-6 text-center mb-4">
+                                    <h5 class="text-muted">
+                                        Assinatura do Solicitante
+                                    </h5>
+                                    <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center mx-auto"
+                                         style="max-width: 100%; border-radius: 10px;">
+                                        <img src="{{ url("solicitacao_servicos/$solicitacao_servico->id/imagem/" . basename($solicitacao_servico->fotos_abastecimento->assinatura_solicitante)) }}"
+                                             class="img-fluid rounded"
+                                             style="max-width: 300px; height: auto;">
+                                    </div>
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="beneficiario">{{ __('Beneficiário') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="beneficiario" class="form-control" type="string" name="beneficiario" value="{{ $solicitacao_servico->beneficiario->nome }}" readonly>
+                            
+                                <div class="col-md-6 text-center mb-4">
+                                    <h5 class="text-muted">
+                                        Abastecimento
+                                    </h5>
+                                    <div class="card shadow-sm p-2 d-flex align-items-center justify-content-center mx-auto"
+                                         style="max-width: 100%; border-radius: 10px;">
+                                        <img src="{{ url("solicitacao_servicos/$solicitacao_servico->id/imagem/" . basename($solicitacao_servico->fotos_abastecimento->abastecimento)) }}"
+                                             class="img-fluid rounded"
+                                             style="max-width: 300px; height: auto;">
+                                    </div>
                                 </div>
                             </div>
-                            <hr class="divisor">
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cep" class="form-control" type="string" name="cep" value="{{ $solicitacao_servico->beneficiario->endereco->cep }}" readonly>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="bairro" class="form-control" type="string" name="bairro" value="{{ $solicitacao_servico->beneficiario->endereco->bairro }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rua" class="form-control" type="string" name="rua" value="{{ $solicitacao_servico->beneficiario->endereco->rua }}" readonly>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="numero">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="numero" class="form-control" type="string" name="numero" value="{{ $solicitacao_servico->beneficiario->endereco->numero }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="cidade">{{ __('Cidade') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="cidade" class="form-control" type="string" name="cidade" value="{{ $solicitacao_servico->beneficiario->endereco->cidade }}" readonly>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="uf">{{ __('Estado') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="uf" class="form-control" type="string" name="uf" value="{{ $solicitacao_servico->beneficiario->endereco->estado }}" readonly>
-                                    </div>
-                                </div>
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label for="observacao">{{ __('Observação') }}</label>
-                                    <input id="observacao" class="form-control" type="string" name="observacao" value="{{ $solicitacao_servico->observacao }}" readonly>
-                                </div>
-                            </div>
+                        @endif
                     </div>
                     <div class="card-footer">
                             <div class="col-md-5" style="text-align: center"></div>

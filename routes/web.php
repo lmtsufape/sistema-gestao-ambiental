@@ -162,6 +162,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         $response->deleteFileAfterSend(true);
         return $response;
     })->name('solicitacao_servicos.download');
+    Route::post('/solicitacao_servicos/{id}/anexar-fotos', [SolicitacaoServicoController::class, 'anexarFotos'])->name('solicitacao_servicos.anexarFotos');
+    Route::get('/solicitacao_servicos/{id}/imagem/{path}', function ($id, $path) {return response()->file(storage_path("app/solicitacao_servicos/${id}/fotos/" . $path));})->where('path', '.*');
 
 
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');

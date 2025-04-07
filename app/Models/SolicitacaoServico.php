@@ -21,6 +21,7 @@ class SolicitacaoServico extends Model
         'status',
         'observacao',
         'beneficiario_id',
+        'codigo_solicitante',
     ];
 
     public const STATUS_ENUM = [
@@ -46,6 +47,11 @@ class SolicitacaoServico extends Model
         $this->data_entrega = $request['data_entrega'];
         $this->beneficiario_id = $request['beneficiario_id'];
         $this->observacao = $request['observacao'];
+        $this->codigo_solicitante = $request['codigo_solicitante'];
+    }
+
+    public function fotos_abastecimento() {
+        return $this->hasOne(FotosAbastecimento::class);
     }
 
 }

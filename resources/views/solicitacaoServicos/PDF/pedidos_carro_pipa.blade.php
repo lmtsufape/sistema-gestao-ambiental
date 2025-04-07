@@ -124,10 +124,10 @@
                     @foreach ($solicitacao_servicos as $solicitacao_servico)
                         <tr>
                             <td>{{ $solicitacao_servico->beneficiario->codigo }}</td>
-                            <td>{{ $solicitacao_servico->beneficiario->endereco->rua }},
-                                {{ $solicitacao_servico->beneficiario->endereco->numero }} -
-                                {{ $solicitacao_servico->beneficiario->endereco->bairro }} -
-                                {{ $solicitacao_servico->beneficiario->endereco->cidade }}-{{ $solicitacao_servico->beneficiario->endereco->estado }}
+                            <td>{{ $solicitacao_servico->beneficiario->Endereco->distrito }},
+                                {{ $solicitacao_servico->beneficiario->Endereco->comunidade }},
+                                {{ $solicitacao_servico->beneficiario->Endereco->numero }} -
+                                {{ $solicitacao_servico->beneficiario->Endereco->cidade }}-{{ $solicitacao_servico->beneficiario->endereco->estado }}
                             </td>
                             <td>{{ $solicitacao_servico->beneficiario->telefone->numero }}</td>
                             <td>{{ $solicitacao_servico->beneficiario->nome }}</td>
