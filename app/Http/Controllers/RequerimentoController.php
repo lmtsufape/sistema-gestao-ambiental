@@ -68,6 +68,8 @@ class RequerimentoController extends Controller
         if($filtro == 'redesim') {
             $filtro = 'atuais'; 
             $requerimentoRedeSim = true;
+
+            $requerimentos = Requerimento::where('redesim', true)->orderBy('created_at', 'DESC')->paginate(8);
         }
         
         switch ($filtro) {
@@ -144,10 +146,17 @@ class RequerimentoController extends Controller
 
         $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
-        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
         $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
         $requerimento->status_empresa = $request->status_empresa;
+
+        if($request->redesim == true) {
+            $requerimento->status = Requerimento::STATUS_ENUM['visita_realizada'];
+            $requerimento->redesim = true;
+        } else {
+            $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+        }   
+
         $requerimento->save();
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento realizado com sucesso.']);

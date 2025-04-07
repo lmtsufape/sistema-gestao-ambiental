@@ -154,11 +154,13 @@
                                                         @if($requerimento->licenca != null)
                                                             @if ($requerimento->licenca->status == \App\Models\Licenca::STATUS_ENUM['aprovada'])
                                                                 <a href="{{route('licenca.show', ['licenca' => $requerimento->licenca])}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Relatório Aprovado.svg')}}" alt="Visualizar licença" title="Visualizar licença"></a>
-                                                                @if($filtro == "finalizados")
-                                                                    <a style="cursor: pointer; margin-left: 2px;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                @if($requerimento->redesim != true)
+                                                                    @if($filtro == "finalizados")
+                                                                        <a style="cursor: pointer; margin-left: 2px;" href="{{route('licenca.revisar', ['visita' => $requerimento->ultimaVisitaRelatorioAceito(), 'licenca' => $requerimento->licenca])}}"><img class="icon-licenciamento" src="{{asset('img/Relatório Sinalizado.svg')}}"  alt="Editar licença" title="Editar licença"></a>
+                                                                    @endif
                                                                 @endif
                                                             @endif
-                                                        @elseif($requerimento->ultimaVisitaRelatorioAceito() != null)
+                                                        @elseif($requerimento->ultimaVisitaRelatorioAceito() != null || $requerimento->redesim == true)
                                                             @if($filtro != "cancelados")
                                                                 <a style="cursor: pointer;" href="{{route('licenca.create', $requerimento)}}"><img class="icon-licenciamento" src="{{asset('img/Grupo 1666.svg')}}"  alt="Criar licença" title="Criar licença"></a>
                                                             @endif
@@ -425,6 +427,10 @@
             </div>
             <div class="modal-body">
                 <form id="novo-requerimento-form" method="POST" action="{{route('requerimentos.store')}}">
+                    @can('isProtocolista', \App\Models\User::class)
+                        <input type="hidden" name="redesim" value="true">
+                    @endcan
+
                     <div class="form-row">
                         <div class="col-md-12">
                             <div class="alert alert-warning" role="alert">
