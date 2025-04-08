@@ -49,7 +49,8 @@ class RequerimentoController extends Controller
         $user = auth()->user();
         $requerimentosCancelados = collect();
         $requerimentosFinalizados = collect();
-        if ($user->role == User::ROLE_ENUM['requerente']) {
+        $requerimentoRedeSim = false;
+        if ($user->role == User::ROLE_ENUM['requerente'] || $user->role == User::ROLE_ENUM['analista'] && $filtro == 'redesim') {
             $requerimentos = auth()->user()->requerimentosRequerente()->orderBy('created_at', 'DESC')->paginate(8);
         } elseif ($user->role == User::ROLE_ENUM['analista']) {
                 $requerimentos = Requerimento::where(function (Builder $query) use ($user) {
@@ -63,6 +64,14 @@ class RequerimentoController extends Controller
             $requerimentosFinalizados = Requerimento::where([['status', Requerimento::STATUS_ENUM['finalizada']], ['cancelada', false]])->orderBy('created_at', 'DESC')->paginate(20);
             $requerimentosCancelados = Requerimento::where('status', Requerimento::STATUS_ENUM['cancelada'])->orWhere('cancelada', true)->orderBy('created_at', 'DESC')->paginate(20);
         }
+
+        if($filtro == 'redesim') {
+            $filtro = 'atuais'; 
+            $requerimentoRedeSim = true;
+
+            $requerimentos = Requerimento::where('redesim', true)->orderBy('created_at', 'DESC')->paginate(8);
+        }
+        
         switch ($filtro) {
             case 'atuais':
                 break;
@@ -84,7 +93,7 @@ class RequerimentoController extends Controller
 
         $requerimento_documento = RequerimentoDocumento::all();
 
-        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro', 'busca', 'requerimento_documento'));
+        return view('requerimento.index', compact('requerimentos', 'tipos', 'filtro', 'busca', 'requerimento_documento', 'requerimentoRedeSim'));
     }
 
     /**
@@ -137,10 +146,17 @@ class RequerimentoController extends Controller
 
         $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
-        $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
         $requerimento->empresa_id = $empresa->id;
         $requerimento->analista_id = $this->protocolistaComMenosRequerimentos()->id;
         $requerimento->status_empresa = $request->status_empresa;
+
+        if($request->redesim == true) {
+            $requerimento->status = Requerimento::STATUS_ENUM['visita_realizada'];
+            $requerimento->redesim = true;
+        } else {
+            $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
+        }   
+
         $requerimento->save();
 
         return redirect(route('requerimentos.index', 'atuais'))->with(['success' => 'Requerimento realizado com sucesso.']);

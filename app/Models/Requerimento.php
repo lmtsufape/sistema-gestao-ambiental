@@ -44,6 +44,7 @@ class Requerimento extends Model
         'cancelada',
         'motivo_cancelamento',
         'status_empresa',
+        'redesim',
     ];
 
     public function documentosRequeridos()
@@ -131,7 +132,11 @@ class Requerimento extends Model
                 return 'visita marcada para até ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_marcada));
                 break;
             case $this::STATUS_ENUM['visita_realizada']:
-                return 'visita feita em ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
+                if(!empty($this->ultimaVisitaMarcada()->data_realizada)) {
+                    return 'visita feita em ' . date('d/m/Y', strtotime($this->ultimaVisitaMarcada()->data_realizada));
+                } else {
+                    return 'Requerimento via REDESim';
+                }
                 break;
             case $this::STATUS_ENUM['finalizada']:
                 return 'finalizado';
