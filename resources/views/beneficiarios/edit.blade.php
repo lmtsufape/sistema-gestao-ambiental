@@ -114,35 +114,24 @@
                                 <hr class="divisor">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}</label>
-                                        <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{$beneficiario->endereco->cep}}" autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
-                                        <div class="col-md-12 text-right font-weight-bold">
-                                            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Não sei meu CEP</a>
+                                        <label for="distrito">{{ __('Distrito') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="distrito" class="form-control @error('distrito') is-invalid @enderror" type="text" name="distrito" value="{{$beneficiario->endereco->distrito}}" autofocus required autocomplete="distrito" placeholder="Digite o distrito onde mora...">
+                                        @error('distrito')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                        @error('cep')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}</label>
-                                        <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{$beneficiario->endereco->bairro}}" autofocus autocomplete="bairro" placeholder="Digite o bairro onde mora...">
-                                        @error('bairro')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
+
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }}</label>
-                                        <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{$beneficiario->endereco->rua}}" autocomplete="rua" placeholder="Digite a rua onde mora...">
-                                        @error('rua')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        <label for="comunidade">{{ __('Comunidade') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="comunidade" class="form-control @error('comunidade') is-invalid @enderror" type="text" name="comunidade" value="{{$beneficiario->endereco->comunidade}}" autofocus autocomplete="comunidade" placeholder="Digite o comunidade onde mora...">
+                                        @error('comunidade')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6 form-group">
@@ -376,4 +365,4 @@
         </script>
     @endpush
 @endsection
-</x-guest-layout>
+</x-app-layout>

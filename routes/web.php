@@ -141,6 +141,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/aracao/{id}/edit', [AracaoController::class, 'edit'])->name('aracao.edit');
     Route::put('/aracao/{id}/update', [AracaoController::class, 'update'])->name('aracao.update');
     Route::delete('/aracao/{id}/destroy', [AracaoController::class, 'destroy'])->name('aracao.destroy');
+    Route::post('/aracao/{id}/anexar-fotos', [AracaoController::class, 'anexarFotos'])->name('aracao.anexarFotos');
+    Route::get('/aracao/{id}/imagem/{path}', function ($id, $path) {return response()->file(storage_path("app/aracoes/${id}/fotos/" . $path));})->where('path', '.*');
+
 
     Route::resource('solicitacao_servicos', SolicitacaoServicoController::class)->except('index');
     Route::get('/solicitacao_servicos/', [SolicitacaoServicoController::class, 'index'])->name('solicitacao_servicos.index');
@@ -159,6 +162,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         $response->deleteFileAfterSend(true);
         return $response;
     })->name('solicitacao_servicos.download');
+    Route::post('/solicitacao_servicos/{id}/anexar-fotos', [SolicitacaoServicoController::class, 'anexarFotos'])->name('solicitacao_servicos.anexarFotos');
+    Route::get('/solicitacao_servicos/{id}/imagem/{path}', function ($id, $path) {return response()->file(storage_path("app/solicitacao_servicos/${id}/fotos/" . $path));})->where('path', '.*');
 
 
     Route::get('/{visita}/relatorio', [RelatorioController::class, 'create'])->name('relatorios.create');

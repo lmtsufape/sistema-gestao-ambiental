@@ -4,27 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\Aracao;
 use App\Http\Controllers\Controller;
+use App\Models\FotoAracao;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Models\Beneficiario;
+use Illuminate\Support\Facades\Storage;
 
 class AracaoController extends Controller
 {
+    /**
+     * @throws AuthorizationException
+     */
     public function index(Request $request)
-    {   
+    {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $buscar = $request->input('buscar');
+        $query = Aracao::query();
 
-        if ($buscar != null) {
-            $aracao = Aracao::whereHas('beneficiario', function($query) use ($buscar) {
-                $query->where('nome', 'ILIKE', "%{$buscar}%")
-                      ->orWhere('codigo', 'ILIKE', "%{$buscar}%");
-            })->get();
-        } else {
-            $aracao = Aracao::all();
-        }
+        $query->when(
+            $request->filled('buscar') && $request->filled('filtro'),
+            function ($query) use ($request) {
+                $buscar = $request->input('buscar');
+                $filtro = $request->input('filtro');
 
-        return view('aracao.index', compact('aracao'));
+                $relation = in_array($filtro, ['distrito', 'comunidade']) ? 'beneficiario.endereco' : 'beneficiario';
+
+                $query->whereHas($relation, fn($subQuery) => $subQuery->where($filtro, 'ILIKE', "%{$buscar}%"));
+            }
+        );
+
+        return view('aracao.index', ['aracao' => $query->get()]);
     }
 
     public function create()
@@ -51,7 +61,7 @@ class AracaoController extends Controller
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
-        $aracao = Aracao::find($id);
+        $aracao = Aracao::with('fotos')->findOrFail($id);
 
         return view('aracao.show', compact('aracao'));
     }
@@ -80,16 +90,55 @@ class AracaoController extends Controller
     public function destroy($id)
     {
         $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
+
         $aracao = Aracao::find($id);
         $aracao->delete();
 
         return redirect()->route('aracao.index')->with('success', 'Aração excluída com sucesso!');
     }
 
+    public function anexarFotos(Request $request, $id)
+    {
+        $this->authorize('isSecretarioOrBeneficiario', User::class);
+        $request->validate([
+            'foto_antes' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_depois' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'comentario_antes' => 'nullable|string|max:255',
+            'comentario_depois' => 'nullable|string|max:255',
+        ]);
+
+        $aracao = Aracao::findOrFail($id);
+
+        if ($request->hasFile('foto_antes') && $request->hasFile('foto_depois')) {
+            foreach ($aracao->fotos as $foto) {
+                Storage::delete($foto->caminho);
+                $foto->delete();
+            }
+
+        }
+
+        $fotos = [
+            'antes' => $request->file('foto_antes'),
+            'depois' => $request->file('foto_depois'),
+        ];
+
+        foreach ($fotos as $key => $foto) {
+            $path = $foto->store("aracoes/{$id}/fotos");
+
+            FotoAracao::create([
+                'aracao_id' => $id,
+                'caminho' => $path,
+                'comentario' => $request->input("comentario_{$key}") ?? null,
+            ]);
+        }
+
+        return back()->with('success', 'Fotos anexadas com sucesso!');
+    }
+
+
     // public function gerarPedidosAracao(){
     //     $this->authorize('isSecretarioOrBeneficiario', User::class);
-        
+
     //     $aracaos = Aracao::all();
 
     //     if (empty($aracao)) {

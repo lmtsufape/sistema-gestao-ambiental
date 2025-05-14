@@ -107,22 +107,11 @@
                                 </div>
                                 <hr class="divisor">
                                 <div class="form-row">
+
                                     <div class="col-md-6 form-group">
-                                        <label for="cep">{{ __('CEP') }}</label>
-                                        <input id="cep" class="form-control cep @error('cep') is-invalid @enderror" type="text" name="cep" value="{{old('cep')}}" autofocus autocomplete="cep" onblur="pesquisacep(this.value);" placeholder="00000-000">
-                                        <div class="col-md-12 text-right font-weight-bold">
-                                            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank">Não sei meu CEP</a>
-                                        </div>
-                                        @error('cep')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label for="bairro">{{ __('Bairro') }}</label>
-                                        <input id="bairro" class="form-control @error('bairro') is-invalid @enderror" type="text" name="bairro" value="{{old('bairro')}}" autofocus autocomplete="bairro" placeholder="Digite o bairro onde mora...">
-                                        @error('bairro')
+                                        <label for="distrito">{{ __('Distrito') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                        <input id="distrito" class="form-control @error('distrito') is-invalid @enderror" type="text" name="distrito" value="{{old('distrito')}}" autofocus required autocomplete="distrito" placeholder="Digite o distrito onde mora...">
+                                        @error('distrito')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -131,9 +120,9 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="rua">{{ __('Rua') }} <span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="rua" class="form-control @error('rua') is-invalid @enderror" type="text" name="rua" value="{{old('rua')}}" autocomplete="rua" required placeholder="Digite a rua onde mora...">
-                                        @error('rua')
+                                        <label for="comunidade">{{ __('Comunidade') }}<span style="color: red; font-weight: bold;">*</span> </label>
+                                        <input id="comunidade" class="form-control @error('comunidade') is-invalid @enderror" type="text" name="comunidade" value="{{old('comunidade')}}" required autocomplete="comunidade"  placeholder="Digite a comunidade onde mora...">
+                                        @error('comunidade')
                                             <div id="validationServer03Feedback" class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -247,19 +236,7 @@
                 });
             });
 
-            function limpa_formulário_cep() {
-                //Limpa valores do formulário de cep.
-                document.getElementById('rua').value=("");
-                document.getElementById('bairro').value=("");
-                document.getElementById('cidade').value=("");
-                document.getElementById('uf').value=("");
-            }
 
-            function limpa_formulário_cep_empresa() {
-                //Limpa valores do formulário de cep.
-                document.getElementById('rua_da_empresa').value=("");
-                document.getElementById('bairro_da_empresa').value=("");
-            }
 
             function meu_callback(conteudo) {
                 if (!("erro" in conteudo)) {
@@ -293,80 +270,16 @@
                 }
             }
 
-            function pesquisacep(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua').value="...";
-                        document.getElementById('bairro').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        exibirModalCepInvalido();;
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            }
 
-            function pesquisacepEmpresa(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua_da_empresa').value="...";
-                        document.getElementById('bairro_da_empresa').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep_empresa();
-                        exibirModalCepInvalido();
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep_empresa();
-                }
-            }
+
+
 
             function exibirModal() {
                 $('#btn-modal-aviso').click();
             }
 
-            function exibirModalCep() {
-                $('#btn-modal-cep-nao-encontrado').click();
-            }
 
-            function exibirModalCepInvalido() {
-                $('#btn-modal-cep-invalido').click();
-            }
         </script>
     @endpush
 @endsection
-</x-guest-layout>
+</x-app-layout>

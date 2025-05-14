@@ -30,6 +30,16 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label for="codigo_solicitante">{{ __('Código do Solicitante') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input name="codigo_solicitante" id="codigo_solicitante" class="form-control @error('codigo_solicitante') is-invalid @enderror"  data-live-search="true" required/>
+                                    {{-- @error('codigo_solicitante')
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror --}}
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">

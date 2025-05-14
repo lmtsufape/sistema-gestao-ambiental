@@ -25,8 +25,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="ponto_localizacao">{{ __('Ponto de Localização') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="ponto_localizacao" class="form-control @error('ponto_localizacao') is-invalid @enderror" type="string" name="ponto_localizacao" value="{{old('ponto_localizacao')}}" required autofocus autocomplete="ponto_localizacao" placeholder="Digite o ponto de localização...">
+                                    <label for="ponto_localizacao">{{ __('Ponto de Referência') }}<span style="color: red; font-weight: bold;">*</span></label>
+                                    <input id="ponto_localizacao" class="form-control @error('ponto_localizacao') is-invalid @enderror" type="string" name="ponto_localizacao" value="{{old('ponto_localizacao')}}" required autofocus autocomplete="ponto_localizacao" placeholder="Digite o ponto de referência...">
                                     @error('ponto_localizacao')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
@@ -84,8 +84,8 @@
     </div>
     {{-- @push ('scripts')
         <script>
-            
+
         </script>
     @endpush --}}
 @endsection
-</x-guest-layout>
+</x-app-layout>
