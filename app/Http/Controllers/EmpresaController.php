@@ -128,9 +128,14 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($empresa_id)
     {
-        $empresa = Empresa::find($id);
+        if(session('empresa')){
+            $empresa = (object) session('empresa');
+            $empresa->id = $empresa_id;
+        }else{
+            $empresa = Empresa::find($empresa_id);
+        }
         $this->authorize('update', $empresa);
         $setores = Setor::orderBy('nome')->get();
 
@@ -144,9 +149,9 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EmpresaRequest $request, $id)
+    public function update(EmpresaRequest $request, $empresa_id)
     {
-        $empresa = Empresa::find($id);
+        $empresa = Empresa::find($empresa_id);
         $this->authorize('update', $empresa);
 
         $endereco = $empresa->endereco;
@@ -174,7 +179,11 @@ class EmpresaController extends Controller
         $empresa->setAtributes($request->all());
         $empresa->update();
 
-        return redirect(route('empresas.index'))->with(['success' => 'Empresa editada com sucesso!']);
+        if(!Auth::user()->tipoAnalista->contains('tipo', 1)){
+            return redirect(route('empresas.index'))->with(['success' => 'Empresa cadastrada com sucesso!']);
+        }else{
+            return redirect()->route('empresas.listar')->with(['success' => 'Empresa cadastrada com sucesso!']);
+        }
     }
 
     /**
@@ -247,22 +256,56 @@ class EmpresaController extends Controller
 
     public function importXml(Request $request){
         $this->authorize('create', Empresa::class);
-
-        $xml = simplexml_load_file($request->empresa_xml->getRealPath())->ROWSET;
+        $xml = simplexml_load_file($request->file('empresa_xml')->getRealPath())->ROWSET;
         $cep = (String) $xml->RUC_COMP->RCO_ZONA_POSTAL;
         $empresa = (object)[
             'nome' => (string) $xml->RUC_GENERAL->RGE_NOMB,
-            'contato' => (string) $xml->GROUPRUC_GEN_PROTOCOLO->RUC_GEN_PROTOCOLO[1]->RGP_VALOR,
-            'cep' => (string) $xml->RUC_COMP->RCO_ZONA_POSTAL,
+            'contato' =>  (function($num) {
+                                $num = preg_replace('/\D/', '', trim((string) $num));
+                                return strlen($num) === 11
+                                    ? preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $num)
+                                    : preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $num);
+                            })($xml->GROUPRUC_GEN_PROTOCOLO->RUC_GEN_PROTOCOLO[1]->RGP_VALOR) ,
+            'cep' => (string) preg_replace("/(\d{5})(\d{3})/", "$1-$2", $xml->RUC_COMP->RCO_ZONA_POSTAL),
             'numero' => (string) trim($xml->RUC_ESTAB->RES_NUME),
-            'cnpj' => (string) trim($xml->PSC_PROTOCOLO->CNPJ),
+            'cnpj' => (string) preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "$1.$2.$3/$4-$5", trim($xml->PSC_PROTOCOLO->CNPJ)),
             'logradouro' => (string) $xml->RUC_COMP->RCO_TTL_TIP_LOGRADORO . ' ' . (string) $xml->RUC_COMP->RCO_DIRECCION,
             'bairro' => (string) $xml->RUC_COMP->RCO_URBANIZACION
 
         ];
 
+        if($empresa_existente = Empresa::where('cpf_cnpj',preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3/$4-$5', $empresa->cnpj))->first()){
+            session()->flash('comparativo', true);
+            $empresa_upload = $empresa;
+            $setores = Setor::orderBy('nome')->get();
+            return view('empresa.create', compact('empresa_existente', 'empresa_upload', 'setores'));
 
-        return redirect()->route('empresas.create')->with(compact('empresa'));
+        }
+        session()->flash('empresa', $empresa);
+
+        return redirect()->route('empresas.create', compact('empresa'));
+    }
+
+    public function comparativo(Request $request, $empresa_id){
+        $empresa_temp = Empresa::find($empresa_id);
+
+        $empresa = (object)[
+            'nome' => $request->nome_escolhido,
+            'telefone' => $request->telefone_escolhido,
+            'cep' => $request->cep_escolhido,
+            'numero' => $request->numero_escolhido,
+            'cnpj' => $request->cnpj_escolhido,
+            'logradouro' => $request->logradouro_escolhido,
+            'bairro' => $request->bairro_escolhido,
+            'eh_cnpj' => true,
+            'setor' => $empresa_temp->cnaes->first()->setor->only(['id', 'nome']),
+            'cnaes' => $empresa_temp->cnaes
+
+        ];
+
+        session()->put('empresa', $empresa);
+
+        return redirect()->route('empresas.edit', compact('empresa_id'));
     }
 
     public function updateRequerente(Request $request)

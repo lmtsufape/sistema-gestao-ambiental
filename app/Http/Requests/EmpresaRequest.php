@@ -28,7 +28,7 @@ class EmpresaRequest extends FormRequest
 
         return [
             'nome_da_empresa' => ['required', 'string', 'min:5', 'max:255'],
-            'eh_cnpj' => ['nullable', 'in:true,false'],
+            'eh_cnpj' => ['nullable', 'boolean'],
             'cpf' => ['required_if:eh_cnpj,false', 'cpf', 'nullable'],
             'cnpj' => ['required_if:eh_cnpj,true', 'cnpj', 'nullable'],
             'setor' => ['required', 'string'],

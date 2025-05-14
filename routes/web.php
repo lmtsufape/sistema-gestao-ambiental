@@ -188,8 +188,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::prefix('empresas')->controller(EmpresaController::class)->name('empresas.')->group(function () {
         Route::get('/listar', 'indexEmpresas')->name('listar');
         Route::post('/import', 'importXml')->name('import');
+        Route::put('/comparativos/{empresa_id?}', 'comparativo')->name('comparativo');
     });
-    Route::resource('empresas', EmpresaController::class);
+    Route::resource('empresas', EmpresaController::class)->parameters(['empresas' => 'empresa_id']);
 
     Route::get('/documentos-padrao/licenca', [DocumentoController::class, 'documentosPadrao'])->name('documentos.default');
     Route::post('/denuncias/create/visita', [VisitaController::class, 'createVisitaDenuncia'])->name('denuncias.visita.create');

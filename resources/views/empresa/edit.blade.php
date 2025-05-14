@@ -18,9 +18,9 @@
             <div class="col-md-12">
                 <div class="card card-borda-esquerda" style="width: 100%;">
                     <div class="card-body">
-                        <form id="form-editar-empresa" method="POST" action="{{route('empresas.update', ['empresa' => $empresa])}}">
+                        <form id="form-editar-empresa" method="POST" action="{{ route('empresas.update', ['empresa_id' => $empresa->id]) }}">
                             @csrf
-                            <input type="hidden" name="_method" value="PUT">
+                            @method('PUT')
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -30,106 +30,92 @@
                                     </ul>
                                 </div>
                             @endif
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
+                            <div class="row">
+                                <div class="col-md-12 form-group">
                                     <label for="nome_empresa">{{ __('Razão social/Nome') }}<span style="color: red; font-weight: bold;">*</span></label>
                                     <input id="nome_empresa" class="form-control @error('nome_da_empresa') is-invalid @enderror" type="text" name="nome_da_empresa" value="{{old('nome_da_empresa', $empresa->nome)}}" required autofocus autocomplete="nome_empresa">
+
                                     @error('nome_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
-                                <div>
-                                    <input type="hidden" name="eh_cnpj" id="eh_cnpj" value="{{ old('eh_cnpj', $empresa->eh_cnpj ? true : false) }}">
-                                </div>
-                                <div class="col-md-4 form-group" id="div-cnpj" style="@if(old('cnpj') != null || $empresa->eh_cnpj) display: block; @else display: none; @endif">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group d-none" id="div-cnpj">
                                     <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="@if($empresa->eh_cnpj){{old('cnpj', $empresa->cpf_cnpj)}}@else{{old('cnpj')}}@endif" autocomplete="cnpj">
+                                    <input id="cnpj" class="form-control @error('cnpj') is-invalid @enderror" type="text" name="cnpj" value="{{old('cnpj', $empresa->cnpj ?? $empresa->cpf_cnpj)}}" autocomplete="cnpj">
 
                                     @error('cnpj')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 form-group" id="div-cpf" style="@if(old('cpf') != null || !$empresa->eh_cnpj) display: block; @else display: none; @endif">
+                                <div class="col-md-4 form-group d-none" id="div-cpf">
                                     <label for="cpf">{{ __('CPF') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="@if(!$empresa->eh_cnpj){{old('cpf', $empresa->cpf_cnpj)}}@else{{old('cpf')}}@endif" autocomplete="cpf">
+                                    <input id="cpf" class="form-control @error('cpf') is-invalid @enderror" type="text" name="cpf" value="{{old('cpf', $empresa->cpf_cnpj ?? '')}}" autocomplete="cpf">
+
                                     @error('cpf')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 form-group" id="div-btn-troca" style="display: block; top: 32px; margin-bottom: 50px;">
-                                    <button type="button" class="btn btn-success btn-color-dafault" style="width: 100%;" onclick="trocar()">Trocar</button>
+                                <div class="col-md-2" id="div-btn-troca">
+                                    <button type="button" class="btn btn-success btn-color-dafault w-75 h-50" id="trocar">Trocar</button>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="celular_da_empresa">{{ __('Contato') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{old('celular_da_empresa', $empresa->telefone->numero)}}" required autocomplete="celular">
+                                    <input id="celular_da_empresa" class="form-control celular @error('celular_da_empresa') is-invalid @enderror" type="text" name="celular_da_empresa" value="{{old('celular_da_empresa', $empresa->telefone ?? $empresa->telefone->numero)}}" required autocomplete="celular">
                                     @error('celular_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">(como classificar o porte?)</a>
-                                    <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
-                                        <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
-                                        <option @if(old('porte', $empresa->porte) == 1) selected @endif value="1">Micro</option>
-                                        <option @if(old('porte', $empresa->porte) == 2) selected @endif value="2">Pequeno</option>
-                                        <option @if(old('porte', $empresa->porte) == 3) selected @endif value="3">Médio</option>
-                                        <option @if(old('porte', $empresa->porte) == 4) selected @endif value="4">Grande</option>
-                                        <option @if(old('porte', $empresa->porte) == 5) selected @endif value="5">Especial</option>
-                                    </select>
-                                    @error('porte')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                                <input type="hidden" name="eh_cnpj" id="eh_cnpj" value="{{ old('eh_cnpj', $empresa->eh_cnpj ? true : false) }}">
+
                             </div>
+
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="cep_da_empresa">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="cep_da_empresa" class="form-control cep @error('cep_da_empresa') is-invalid @enderror" type="text" name="cep_da_empresa" value="{{old('cep_da_empresa', $empresa->endereco->cep)}}" required autofocus autocomplete="cep_da_empresa" onblur="pesquisacepEmpresa(this.value);">
+                                    <input id="cep_da_empresa" class="form-control cep @error('cep_da_empresa') is-invalid @enderror" type="text" name="cep_da_empresa" value="{{old('cep_da_empresa', $empresa->cep ?? $empresa->endereco->cep)}}" required autofocus autocomplete="cep_da_empresa" onblur="pesquisacepEmpresa(this.value);">
                                     @error('cep_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="bairro_da_empresa">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="bairro_da_empresa" class="form-control @error('bairro_da_empresa') is-invalid @enderror" type="text" name="bairro_da_empresa" value="{{old('bairro_da_empresa', $empresa->endereco->bairro)}}" required autofocus autocomplete="bairro_da_empresa">
+                                    <input id="bairro_da_empresa" class="form-control @error('bairro_da_empresa') is-invalid @enderror" type="text" name="bairro_da_empresa" value="{{old('bairro_da_empresa', $empresa->bairro ?? $empresa->endereco->bairro)}}" required autofocus autocomplete="bairro_da_empresa">
                                     @error('bairro_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
                                     <label for="rua_da_empresa">{{ __('Rua') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="rua_da_empresa" class="form-control @error('rua_da_empresa') is-invalid @enderror" type="text" name="rua_da_empresa" value="{{old('rua_da_empresa', $empresa->endereco->rua)}}" required autocomplete="rua_da_empresa">
+                                    <input id="rua_da_empresa" class="form-control @error('rua_da_empresa') is-invalid @enderror" type="text" name="rua_da_empresa" value="{{old('rua_da_empresa', $empresa->logradouro ?? $empresa->endereco->rua)}}" required autocomplete="rua_da_empresa">
                                     @error('rua_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="numero_da_empresa">{{ __('Número') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{old('numero_da_empresa', $empresa->endereco->numero)}}" required autocomplete="numero_da_empresa">
+                                    <input id="numero_da_empresa" class="form-control @error('numero_da_empresa') is-invalid @enderror" type="text" name="numero_da_empresa" value="{{old('numero_da_empresa', $empresa->numero ?? $empresa->endereco->numero)}}" required autocomplete="numero_da_empresa">
                                     @error('numero_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
@@ -139,9 +125,9 @@
                                     <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
                                     <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
                                     @error('cidade_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
@@ -152,44 +138,52 @@
                                         <option selected value="PE">Pernambuco</option>
                                     </select>
                                     @error('estado_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="complemento_da_empresa">{{ __('Complemento') }}</label>
-                                    <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5">{{old('complemento_da_empresa', $empresa->endereco->complemento)}}</textarea>
+                                    <textarea class="form-control @error('complemento_da_empresa') is-invalid @enderror" type="text" name="complemento_da_empresa" id="complemento_da_empresa" cols="30" rows="5">{{old('complemento_da_empresa', $empresa->endereco->complemento ?? '')}}</textarea>
                                     @error('complemento_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 form-group">
+                                    <label for="porte">{{ __('Porte') }}<span style="color: red; font-weight: bold;">*</span></label> <a href="{{route('info.porte')}}" title="Como classificar o porte?" target="_blanck">(como classificar o porte?)</a>
+                                    <select id="porte" class="form-control @error('porte') is-invalid @enderror" type="text" name="porte" required autofocus autocomplete="porte">
+                                        <option selected disabled value="">-- Selecione o porte da sua empresa --</option>
+                                        <option @if(old('porte', optional($empresa)->porte) == 1) selected @endif value="1">Micro</option>
+                                        <option @if(old('porte', optional($empresa)->porte) == 2) selected @endif value="2">Pequeno</option>
+                                        <option @if(old('porte', optional($empresa)->porte) == 3) selected @endif value="3">Médio</option>
+                                        <option @if(old('porte', optional($empresa)->porte) == 4) selected @endif value="4">Grande</option>
+                                        <option @if(old('porte', optional($empresa)->porte) == 5) selected @endif value="5">Especial</option>
+                                    </select>
+                                    @error('porte')
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="setor">{{ __('Grupo') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <select required class="form-control @error('setor') is-invalid @enderror  @error('cnaes_id') is-invalid @enderror
-                                            @error('cnaes_id.*') is-invalid @enderror" id="idSelecionarSetor" onChange="selecionarSetor(this)" name="setor">
+                                    <select required class="form-control @error('setor') is-invalid @enderror" id="setor" name="setor">
                                         <option value="">-- Selecionar o Grupo --</option>
                                         @foreach ($setores as $setor)
-                                            <option @if($empresa->cnaes()->exists() && $empresa->cnaes()->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
+                                            <option @if( $empresa->cnaes->first()->setor->id == $setor->id) selected @endif value={{$setor->id}}>{{$setor->nome}}</option>
                                         @endforeach
                                     </select>
+
                                     @error('setor')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    @error('cnaes_id')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    @error('cnaes_id.*')
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -202,32 +196,21 @@
                                         <label class="styleTituloDoInputCadastro">Lista de CNAE</label>
                                     </div>
                                     <div class="row col-md-12">
-                                        <div style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
-                                            <table id="tabelaCnaes" cellspacing="0" cellpadding="1"width="100%" >
-                                                <tbody id="dentroTabelaCnaes"></tbody>
-                                            </table>
-                                        </div>
+                                        <ul id="lista_esquerda" style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="styleTituloDoInputCadastro" for="exampleFormControlSelect1">CNAE selecionado</label>
-                                    <div style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
-                                        <table cellspacing="0" cellpadding="1"width="100%" >
-                                            <tbody class="areaMeusCnaes" id="listaCnaes">
-                                                @foreach ($empresa->cnaes as $cnae)
-                                                    <div id="cnaeCard_{{$cnae->setor->id}}_{{$cnae->id}}" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar('{{$cnae->id}}')">
-                                                        <div class="mr-auto p-2" id="{{$cnae->id}}">{{$cnae->nome}}</div>
-                                                        <div style="width:140px; height:25px; text-align:right;">
-                                                            <div id="cardSelecionado{{$cnae->id}}" class="btn-group" style="display:none;">
-                                                                <div id="botaoCardSelecionado{{$cnae->id}}" class="btn btn-danger btn-sm"  onclick="add_Lista('{{$cnae->setor->id}}', '{{$cnae->id}}')" >Remover</div>
-                                                            </div>
-                                                        </div>
-                                                        <input id ="inputCnae_{{$cnae->id}}" type="hidden" name="cnaes_id[]" value="{{$cnae->id}}">
-                                                    </div>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <ul class="areaMeusCnaes" id="lista_direita" style="width:100%; height:400px; display: inline-block; overflow:auto; background-color: #f3f3f3;">
+                                        <input type="hidden" id="cnaes_id" name="cnaes_id" value="{{ old('cnaes_id') }}">
+
+                                    </ul>
+                                    @error('cnaes_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </form>
@@ -316,8 +299,8 @@
 
     @push ('scripts')
         <script>
-            $(document).ready(function($) {
-                selecionarSetor();
+            $(document).ready(function() {
+
                 $('#cpf').mask('000.000.000-00');
                 $('#rg').mask('00000000');
                 $('#cnpj').mask('00.000.000/0000-00');
@@ -337,214 +320,254 @@
                         '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
                     }
                 });
-            });
 
-            window.selecionarSetor = function(){
-                //setor
-                var historySelectList = $('select#idSelecionarSetor');
-                var $setor_id = $('option:selected', historySelectList).val();
-                limparLista();
-                $.ajax({
-                    url:"{{route('ajax.listar.cnaes')}}",
-                    type:"get",
-                    data: {"setor_id": $setor_id},
-                    dataType:'json',
-                    /*success: function(response){
-                        console.log(response.responseJSON);
-                        for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                            var html = data.responseJSON.cnaes[i];
-                            $('#tabelaCnaes tbody').append(html);
-                        }
-                    },*/
-                    complete: function(data) {
-                        if(data.responseJSON.success){
-                            for(var i = 0; i < data.responseJSON.cnaes.length; i++){
-                                var naLista = document.getElementById('listaCnaes');
-                                var html = `<div id="cnaeCard_`+$setor_id+`_`+data.responseJSON.cnaes[i].id+`" class="d-flex justify-content-center card-cnae" onmouseenter="mostrarBotaoAdicionar(`+data.responseJSON.cnaes[i].id+`)">
-                                                <div class="mr-auto p-2" id="`+data.responseJSON.cnaes[i].id+`">`+data.responseJSON.cnaes[i].nome+`</div>
-                                                <div style="width:140px; height:25px; text-align:right;">
-                                                    <div id="cardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn-group" style="display:none;">
-                                                        <div id="botaoCardSelecionado`+data.responseJSON.cnaes[i].id+`" class="btn btn-success btn-color-dafault btn-sm"  onclick="add_Lista(`+$setor_id+`, `+data.responseJSON.cnaes[i].id+`)" >Adicionar</div>
-                                                    </div>
-                                                </div>
-                                            </div>`;
-                                if(document.getElementById('cnaeCard_'+$setor_id+'_'+data.responseJSON.cnaes[i].id) == null){
-                                    $('#tabelaCnaes tbody').append(html);
+
+                function mostrarDivTipoPessoa(elemento){
+                    $('#selecionar-cpf-cnpj').addClass('d-none');
+                    $('#div-btn-troca').removeClass('d-none');
+                    $('#div-btn-troca').addClass(['d-flex', 'align-items-center', 'mt-3'])
+                    if (elemento == "física") {
+                        $('#div-cpf').removeClass('d-none');
+                        $('#div-cnpj').addClass('d-none');
+                    } else if(elemento == "jurídica") {
+                        $('#div-cpf').addClass('d-none');
+                        $('#div-cnpj').removeClass('d-none');
+                    }
+
+                };
+
+                if(@json(!empty($empresa->eh_cnpj))){
+                    mostrarDivTipoPessoa('jurídica')
+                }else{
+                    mostrarDivTipoPessoa('física')
+                }
+
+
+                $('#trocar').on('click', function(){
+                    if (!$('#div-cpf').hasClass('d-none')) {
+                        $('#div-cpf').addClass('d-none');
+                        $('#cpf').val(null);
+                        $('#div-cnpj').removeClass('d-none');
+                    } else {
+                        $('#div-cpf').removeClass('d-none');
+                        $('#cnpj').val(null);
+                        $('#div-cnpj').addClass('d-none');
+                    }
+                })
+
+
+
+
+                $('#setor').change(function(){
+                    cnaes($(this).val());
+                })
+
+                cnaes(@json($empresa->cnaes->first()->setor_id))
+
+                function cnaes(setor){
+                    var setor_id = setor;
+                    const cnaes = @json($empresa->cnaes);
+                    $('#lista_esquerda').empty();
+                    $('#lista_direita li').remove();
+                    $('#cnaes_id').val('')
+                    
+                    if(cnaes && cnaes[0].setor_id == setor_id){
+                        cnaes.forEach(cnae => {
+                            if($('#cnaeCard_'+setor_id+'_'+cnae.id).length === 0){
+
+                                let elemento = $(card(cnae.id, cnae.nome, setor_id));
+                                let btn = elemento.find('.btn')
+                                let array = []
+
+                                if ($('#cnaes_id').val()) {
+                                    array = $('#cnaes_id').val().split(',');
+                                    array.push(cnae.id);
+                                } else {
+                                    array.push(cnae.id);
                                 }
+                                $('#cnaes_id').val(array.join(','));
+                                console.log($('#cnaes_id').length)
+                                console.log($('#cnaes_id').val())
+
+                                btn.text('Remover').addClass('btn-danger').removeClass('btn-success');
+
+
+                                $('#lista_direita').append(elemento)
+
                             }
+
+                        })
+                    }
+                    axios.get("{{ route('ajax.listar.cnaes') }}", {
+                        params: {
+                            setor_id: setor_id
+                        }
+                    })
+                    .then(response => {
+                        for(var i = 0; i < response.data.cnaes.length; i++){
+                            var html = card(response.data.cnaes[i].id, response.data.cnaes[i].nome, setor_id);
+
+                            if($('#cnaeCard_'+setor_id+'_'+response.data.cnaes[i].id).length === 0){
+                                $('#lista_esquerda').append(html);
+                            }
+                        }
+                    })
+                }
+
+                function card(cnae_id, cnae_nome, setor_id){
+                    return `<li id="cnaeCard_`+setor_id+`_`+cnae_id+`" class="d-flex justify-content-center align-items-center card-cnae">
+                                            <div class="mr-auto p-2" id="`+cnae_id+`">`+cnae_nome+`</div>
+
+                                            <div id="cardSelecionado`+cnae_id+`" class="btn-group d-none" style="width:140px; height:40px;">
+                                                <button id="${cnae_id}" class="btn btn-success botao-card" data-setor_id="${setor_id}">Adicionar</button>
+                                            </div>
+                                        </li>`;
+                }
+
+
+
+                $(document).on("click", ".botao-card", function(){
+                    event.preventDefault();
+                    let elemento = $(this).parent();
+                    let tabela_esquerda = $('#lista_esquerda');
+                    let btn = $(this);
+                    let array = []
+
+                    if(tabela_esquerda.is(elemento.parent().parent())){
+                        if ($('#cnaes_id').val()) {
+                            array = $('#cnaes_id').val().split(',');
+                            array.push($(this).attr('id'));
+                        } else {
+                            array.push($(this).attr('id'));
+                        }
+                        $('#cnaes_id').val(array.join(','));
+                        $('#lista_direita').append(elemento.parent());
+                        btn.text('Remover').addClass('btn-danger').removeClass('btn-success');
+
+                    }else{
+                        let id = $(this).attr('id');
+                        array = $('#cnaes_id').val().split(',')
+                        array = array.filter(function (value){
+                            return value !== id;
+                        })
+                        $('#cnaes_id').val(array.join(','));
+
+                        if($(this).data('setor_id') == $('#setor').val()){
+                            $('#lista_esquerda').append(elemento.parent());
+                            btn.text('Adicionar').addClass('btn-success').removeClass('btn-danger')
+
+                        }else{
+                            elemento.parent().remove();
                         }
                     }
                 });
-            }
 
-            window.add_Lista = function($setor, $id) {
-                var elemento = document.getElementById('cnaeCard_'+$setor+'_'+$id);
-                var naTabela = document.getElementById('dentroTabelaCnaes');
-                var divBtn = elemento.children[1].children[0].children[0];
+                $(document).on('mouseenter', '.card-cnae', function() {
+                    $(this).find('div').eq(1).removeClass('d-none');
+                }).on('mouseleave', '.card-cnae', function() {
+                    $(this).find('div').eq(1).addClass('d-none');
+                });
 
-                if(elemento.parentElement == naTabela){
-                    $('#listaCnaes').append(elemento);
-                    divBtn.style.backgroundColor = "#dc3545";
-                    divBtn.style.borderColor = "#dc3545";
-                    divBtn.textContent = "Remover";
-                    var html = `<input id ="inputCnae_`+$id+`" hidden name="cnaes_id[]" value="`+$id+`">`;
-                    $('#cnaeCard_'+$setor+'_'+$id).append(html);
-                }else{
-                    var historySelectList = $('select#idSelecionarSetor');
-                    var $setor_id = $('option:selected', historySelectList).val();
-                    if($setor == $setor_id){
-                        $('#dentroTabelaCnaes').append(elemento);
-                        divBtn.style.backgroundColor = "var(--primaria)";
-                        divBtn.style.borderColor = "var(--primaria)";
-                        divBtn.textContent = "Adicionar";
-                        $('#inputCnae_'+$id).remove();
-                    }else{
-                        document.getElementById('listaCnaes').removeChild(elemento);
-                    }
-                }
 
-            }
 
-            var tempIdCard = -1;
-            window.mostrarBotaoAdicionar = function(valor){
-                if(tempIdCard == -1){
-                    document.getElementById("cardSelecionado"+valor).style.display = "block";
-                    this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-                }else if(tempIdCard != -1){
-                    tempIdCard.style.display = "none";
-                    document.getElementById("cardSelecionado"+valor).style.display = "block";
-                    this.tempIdCard=document.getElementById("cardSelecionado"+valor);
-                }
-            }
 
-            function limparLista() {
-                var cnaes = document.getElementById('tabelaCnaes').children[0];
-                cnaes.innerHTML = "";
-            }
-
-            function mostrarDiv(select) {
-                document.getElementById('selecionar-cpf-cnpj').style.display = "none";
-                document.getElementById('div-btn-troca').style.display = "block";
-                if (select.value == "física") {
-                    document.getElementById('div-cpf').style.display = "block";
-                    document.getElementById('div-cnpj').style.display = "none";
-                } else if(select.value == "jurídica") {
-                    document.getElementById('div-cpf').style.display = "none";
-                    document.getElementById('div-cnpj').style.display = "block";
-                }
-            }
-
-            function trocar() {
-                if (document.getElementById('div-cpf').style.display == "block") {
-                    document.getElementById('div-cpf').style.display = "none";
-                    document.getElementById('cpf').value = null;
-                    document.getElementById('div-cnpj').style.display = "block";
-                    document.getElementById('eh_cnpj').value = true;
-                } else {
-                    document.getElementById('div-cpf').style.display = "block";
-                    document.getElementById('cnpj').value = null;
-                    document.getElementById('div-cnpj').style.display = "none";
-                    document.getElementById('eh_cnpj').value = false;
-
-                }
-            }
-
-            function meu_callback_empresa(conteudo) {
-                console.log(conteudo);
-                if (!("erro" in conteudo)) {
-                    //Atualiza os campos com os valores.
-                    document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
-                    document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
-                    if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
-                        exibirModal();
-                    }
-                } //end if.
-                else {
-                    //CEP não Encontrado.
-                    limpa_formulário_cep_empresa();
-                    exibirModalCep();
-                }
-            }
-
-            function pesquisacep(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua').value="...";
-                        document.getElementById('bairro').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
+                function meu_callback_empresa(conteudo) {
+                    console.log(conteudo);
+                    if (!("erro" in conteudo)) {
+                        //Atualiza os campos com os valores.
+                        document.getElementById('rua_da_empresa').value=(conteudo.logradouro);
+                        document.getElementById('bairro_da_empresa').value=(conteudo.bairro);
+                        if (conteudo.localidade != "Garanhuns" || conteudo.uf != "PE") {
+                            exibirModal();
+                        }
                     } //end if.
                     else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        exibirModalCepInvalido();;
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            }
-
-            function pesquisacepEmpresa(valor) {
-                //Nova variável "cep" somente com dígitos.
-                var cep = valor.replace(/\D/g, '');
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        document.getElementById('rua_da_empresa').value="...";
-                        document.getElementById('bairro_da_empresa').value="...";
-                        //Cria um elemento javascript.
-                        var script = document.createElement('script');
-                        //Sincroniza com o callback.
-                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
-                        //Insere script no documento e carrega o conteúdo.
-                        document.body.appendChild(script);
-                    } //end if.
-                    else {
-                        //cep é inválido.
+                        //CEP não Encontrado.
                         limpa_formulário_cep_empresa();
-                        exibirModalCepInvalido();
+                        exibirModalCep();
                     }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep_empresa();
                 }
-            }
 
-            function limpa_formulário_cep_empresa() {
-                //Limpa valores do formulário de cep.
-                document.getElementById('rua_da_empresa').value=("");
-                document.getElementById('bairro_da_empresa').value=("");
-            }
+                function pesquisacep(valor) {
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = valor.replace(/\D/g, '');
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+                        //Valida o formato do CEP.
+                        if(validacep.test(cep)) {
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            document.getElementById('rua').value="...";
+                            document.getElementById('bairro').value="...";
+                            //Cria um elemento javascript.
+                            var script = document.createElement('script');
+                            //Sincroniza com o callback.
+                            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                            //Insere script no documento e carrega o conteúdo.
+                            document.body.appendChild(script);
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep();
+                            exibirModalCepInvalido();;
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep();
+                    }
+                }
 
-            function exibirModalCepInvalido() {
-                $('#aviso-modal-fora').modal('show');
-            }
+                function pesquisacepEmpresa(valor) {
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = valor.replace(/\D/g, '');
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+                        //Valida o formato do CEP.
+                        if(validacep.test(cep)) {
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            document.getElementById('rua_da_empresa').value="...";
+                            document.getElementById('bairro_da_empresa').value="...";
+                            //Cria um elemento javascript.
+                            var script = document.createElement('script');
+                            //Sincroniza com o callback.
+                            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_empresa';
+                            //Insere script no documento e carrega o conteúdo.
+                            document.body.appendChild(script);
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep_empresa();
+                            exibirModalCepInvalido();
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep_empresa();
+                    }
+                }
 
-            function exibirModal() {
-                $('#btn-modal-aviso').click();
-            }
+                function limpa_formulário_cep_empresa() {
+                    //Limpa valores do formulário de cep.
+                    document.getElementById('rua_da_empresa').value=("");
+                    document.getElementById('bairro_da_empresa').value=("");
+                }
 
-            function exibirModalCep() {
-                $('#btn-modal-cep-nao-encontrado').click();
-            }
+                function exibirModalCepInvalido() {
+                    $('#aviso-modal-fora').modal('show');
+                }
+
+                function exibirModal() {
+                    $('#btn-modal-aviso').click();
+                }
+
+                function exibirModalCep() {
+                    $('#btn-modal-cep-nao-encontrado').click();
+                }
+            })
         </script>
     @endpush
     @endsection

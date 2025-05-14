@@ -44,7 +44,7 @@
                                             <td>{{$empresa->cnaes()->first() ? $empresa->cnaes()->first()->setor->nome : "Sem cnae cadastrado"}}</td>
                                             <td>
                                                 <a title="Notificações" href="{{route('empresas.notificacoes.index', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/notification-svgrepo-com.svg')}}" alt="Icone de notificações da empresa/serviço"></a>
-                                                <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa' => $empresa])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
+                                                <a title="Editar empresa/serviço" href="{{route('empresas.edit', ['empresa_id' => $empresa->id])}}"><img class="icon-licenciamento" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Icone de editar empresa/serviço"></a>
                                                 <a title="Deletar empresa/serviço" type="button" data-toggle="modal" data-target="#modalStaticDeletarEmpresa_{{$empresa->id}}"><img class="icon-licenciamento" src="{{asset('img/trash-svgrepo-com.svg')}}" alt="Icone de deletar empresa/serviço"></a>
                                             </td>
                                         </tr>
@@ -121,7 +121,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="deletar-empresa-form-{{$empresa->id}}" method="POST" action="{{route('empresas.destroy', ['empresa' => $empresa])}}">
+                    <form id="deletar-empresa-form-{{$empresa->id}}" method="POST" action="{{route('empresas.destroy', ['empresa_id' => $empresa->id])}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                         Tem certeza que deseja deletar a empresa {{$empresa->nome}}?
