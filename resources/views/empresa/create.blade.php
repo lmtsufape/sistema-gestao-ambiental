@@ -311,6 +311,8 @@
     </div>
     @push('modals')
         @include('empresa.importacaoModal')
+        @include('empresa.comparativoModal')
+
     @endpush
 
     @push ('scripts')
@@ -407,7 +409,7 @@
                     mostrar($(this).val());
                 });
 
-                if(@json(!empty($empresa->cnpj ?? old('tipo_de_pessoa')))){
+                if(@json(!empty($empresa->eh_cnpj ?? old('tipo_de_pessoa')))){
                     mostrar($('#tipo_de_pessoa').val())
                 }
 

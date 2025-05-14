@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
         <link rel="icon" type="imagem/png" href="{{asset('img/icon-page.png')}}" />
@@ -51,6 +53,6 @@
         <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 
         @livewireScripts
-        @stack('scripts')
+            @stack('scripts')
     </body>
 </html>
