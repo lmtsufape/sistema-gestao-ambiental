@@ -267,7 +267,7 @@
                                                     <input type="hidden" name="cidade" value="Garanhuns">
                                                     <input id="cidade"
                                                         class="form-control @error('cidade') is-invalid @enderror"
-                                                        type="text" value="Garanhuns" required disabled autofocus
+                                                        type="text" value="{{$requerimento->empresa->user->requerente->endereco->cidade ?? 'Não Informado'}}" required disabled autofocus
                                                         autocomplete="cidade">
                                                 </div>
                                                 <div class="col-md-6 form-group">
@@ -276,8 +276,7 @@
                                                     <select id="estado"
                                                         class="form-control @error('estado') is-invalid @enderror"
                                                         type="text" required autocomplete="estado" disabled>
-                                                        <option value="" hidden>-- Selecione o UF --</option>
-                                                        <option selected value="PE">Pernambuco</option>
+                                                        <option value="" hidden>{{$requerimento->empresa->user->requerente->endereco->estado ?? 'Não Informado'}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -439,7 +438,7 @@
                                                     <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
                                                     <input id="cidade_da_empresa"
                                                         class="form-control @error('cidade_da_empresa') is-invalid @enderror"
-                                                        type="text" value="Garanhuns" required disabled autofocus
+                                                        type="text" value="{{ $requerimento->empresa->endereco->cidade }}" required disabled autofocus
                                                         autocomplete="cidade_da_empresa">
                                                 </div>
                                                 <div class="col-md-6 form-group">
@@ -448,8 +447,7 @@
                                                     <select id="estado_da_empresa"
                                                         class="form-control @error('estado_da_empresa') is-invalid @enderror"
                                                         type="text" required autocomplete="estado_da_empresa" disabled>
-                                                        <option value="" hidden>-- Selecione o UF --</option>
-                                                        <option selected value="PE">Pernambuco</option>
+                                                        <option value="" hidden>{{ $requerimento->empresa->endereco->estado }}</option>
                                                     </select>
                                                 </div>
                                             </div>
