@@ -14,9 +14,11 @@
                                 </a>
                             </div>
                             <div>
-                                <img class="img" src="{{ asset('img/gus-logotipo.svg') }}"
-                                    alt="Prefeitura de Garanhuns" width="100px;"
-                                    style="max-width: 100px; max-height: 100px; display:inline;">
+                                <a href="https://garanhuns.pe.gov.br/secretarias-e-orgaos/secretarias/desenvolvimento-rural-e-meio-ambiente/" target="_blank">
+                                    <img class="img" src="{{ asset('img/gus-logotipo.svg') }}"
+                                        alt="Prefeitura de Garanhuns" width="100px;"
+                                        style="max-width: 100px; max-height: 100px; display:inline;">
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -27,10 +29,12 @@
                             <label style="text-align: center">Desenvolvido por:</label>
                         </div>
                         <div class="col-md-9" style="padding-top: 10px;">
-                            <div class="row justify-center justify-content-md-end mr-md-0">
+                            <div class="d-flex align-items-center justify-center justify-content-md-end mr-md-0">
                                 <a href="http://ufape.edu.br/" target="_blank">
-                                    <img class="img " src="{{ asset('img/ufape-lmts.svg') }}" alt="Logo da UFAPE"
-                                        style="display:inline; height: 80px;" />
+                                    <img class="img " src="{{ asset('img/ufape.png') }}" width="100px" alt="Logo da UFAPE">
+                                </a>
+                                <a href="http://www.lmts.ufape.edu.br" target="_blank">
+                                    <img class="img " src="{{ asset('img/lmts.svg') }}" width="150px" alt="Logo da UFAPE">
                                 </a>
                             </div>
                         </div>
