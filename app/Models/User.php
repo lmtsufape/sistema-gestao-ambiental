@@ -118,22 +118,47 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function requerimentosDocumentosExigidosNotificacao()
     {
-        $requerimento = Requerimento::where('status', '=', Requerimento::STATUS_ENUM['visita_realizada'])
+        $requerimentos = Requerimento::whereIn('status', [
+                Requerimento::STATUS_ENUM['finalizada'],
+            ])
+            ->where('cancelada', false)
+            ->whereRelation('empresa', 'user_id', auth()->user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        foreach($requerimentos as $requerimento) {
+            if($requerimento) {
+                $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
+                    ->where(function ($query) {
+                        $query->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado']);
+                    })
+                    ->first();
+                
+                if($requerimento_documento) {
+                    return $requerimento;
+                } 
+            }
+        }
+
+        $requerimento = Requerimento::whereIn('status', [
+                Requerimento::STATUS_ENUM['visita_realizada'],
+            ])
             ->where('cancelada', false)
             ->whereRelation('empresa', 'user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')
             ->first();
-        
-            if ($requerimento) {
-            $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
-                ->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado'])
-                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['enviado'])
-                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['recusado'])
-                ->orWhere('status', RequerimentoDocumento::STATUS_ENUM['analisado'])
-                ->first();
-
-            if ($requerimento_documento) {
-                return $requerimento;
+                    
+        foreach($requerimentos as $requerimento) {
+            if($requerimento) {
+                $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
+                    ->where(function ($query) {
+                        $query->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado']);
+                    })
+                    ->first();
+            
+                if($requerimento_documento) {
+                    return $requerimento;
+                }
             }
         }
     }

@@ -121,9 +121,13 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cidade_da_empresa">{{ __('Cidade') }}</label>
-                                    <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
-                                    <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
+                                    <label for="cidade_da_empresa">{{ __('Cidade') }}<span class="text-danger">*</span></label>
+                                    <input id="cidade_da_empresa"
+                                           name="cidade_da_empresa"
+                                           type="text"
+                                           class="form-control @error('cidade_da_empresa') is-invalid @enderror"
+                                           value="{{ old('cidade_da_empresa') ?? $empresa->endereco->cidade ?? '' }}"
+                                           required>
                                     @error('cidade_da_empresa')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -131,11 +135,22 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="estado_da_empresa">{{ __('Estado') }}</label>
-                                    <input type="hidden" name="estado_da_empresa" value="PE">
-                                    <select id="estado_da_empresa" class="form-control @error('estado_da_empresa') is-invalid @enderror" type="text" required autocomplete="estado_da_empresa" disabled>
-                                        <option value=""  hidden>-- Selecione o UF --</option>
-                                        <option selected value="PE">Pernambuco</option>
+                                    <label for="estado_da_empresa">{{ __('Estado') }}<span class="text-danger">*</span></label>
+                                    <select id="estado_da_empresa"
+                                            name="estado_da_empresa"
+                                            class="form-control @error('estado_da_empresa') is-invalid @enderror"
+                                            required>
+                                        <option value="" hidden>-- Selecione o UF --</option>
+                                        @foreach ([
+                                            'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
+                                            'MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN',
+                                            'RS','RO','RR','SC','SP','SE','TO'
+                                        ] as $uf)
+                                            <option value="{{ $uf }}"
+                                                {{ (old('estado_da_empresa') ?? $empresa->endereco->estado ?? '') === $uf ? 'selected' : '' }}>
+                                                {{ $uf }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('estado_da_empresa')
                                         <span class="invalid-feedback" role="alert">
@@ -229,9 +244,6 @@
     </div>
     <div style="display: none;">
         <!-- Button trigger modal -->
-        <button id="btn-modal-aviso" type="button" class="btn btn-primary" data-toggle="modal" data-target="#aviso-modal-fora">
-            Launch demo modal
-        </button>
         <button id="btn-modal-cep-nao-encontrado" type="button" class="btn btn-primary" data-toggle="modal" data-target="#aviso-modal-cep-nao-encontrado">
             Launch demo modal
         </button>
@@ -278,24 +290,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="aviso-modal-fora" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4A7836;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    O cadastro não está disponivel para empresas fora do municipio de garanhuns!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     @push ('scripts')
         <script>
@@ -370,7 +365,7 @@
                     $('#lista_esquerda').empty();
                     $('#lista_direita li').remove();
                     $('#cnaes_id').val('')
-                    
+
                     if(cnaes && cnaes[0].setor_id == setor_id){
                         cnaes.forEach(cnae => {
                             if($('#cnaeCard_'+setor_id+'_'+cnae.id).length === 0){
@@ -488,6 +483,36 @@
                     }
                 }
 
+            function pesquisacep(valor) {
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value="...";
+                        document.getElementById('bairro').value="...";
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        exibirModalCep();;
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            }
                 function pesquisacep(valor) {
                     //Nova variável "cep" somente com dígitos.
                     var cep = valor.replace(/\D/g, '');

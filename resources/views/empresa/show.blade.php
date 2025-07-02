@@ -141,14 +141,13 @@
                                         <div class="col-md-6 form-group">
                                             <label for="cidade_da_empresa">{{ __('Cidade') }}</label>
                                             <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
-                                            <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
+                                            <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="{{$empresa->endereco->cidade}}" required disabled autofocus autocomplete="cidade_da_empresa">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label for="estado_da_empresa">{{ __('Estado') }}</label>
-                                            <input type="hidden" name="estado_da_empresa" value="PE">
+                                            <input type="hidden" name="estado_da_empresa" value="{{$empresa->endereco->estado}}">
                                             <select id="estado_da_empresa" class="form-control @error('estado_da_empresa') is-invalid @enderror" type="text" required autocomplete="estado_da_empresa" disabled>
-                                                <option value=""  hidden>-- Selecione o UF --</option>
-                                                <option selected value="PE">Pernambuco</option>
+                                                <option value=""  hidden>{{$empresa->endereco->estado}}</option>
                                             </select>
                                         </div>
                                     </div>
