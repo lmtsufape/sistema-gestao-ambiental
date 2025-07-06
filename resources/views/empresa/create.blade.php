@@ -89,21 +89,28 @@
 
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cep_da_empresa">{{ __('CEP') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="cep_da_empresa" class="form-control cep @error('cep_da_empresa') is-invalid @enderror" type="text" name="cep_da_empresa" value="{{old('cep_da_empresa') ?? $empresa->cep ?? ''}}" required autofocus autocomplete="cep_da_empresa" >
+                                    <label for="cep_da_empresa">{{ __('CEP') }}<span class="text-danger">*</span></label>
+                                    <input id="cep_da_empresa"
+                                           name="cep_da_empresa"
+                                           type="text"
+                                           class="form-control cep @error('cep_da_empresa') is-invalid @enderror"
+                                           value="{{ old('cep_da_empresa') ?? $empresa->cep ?? '' }}"
+                                           required
+                                           onblur="pesquisacepEmpresa(this.value);">
                                     @error('cep_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="bairro_da_empresa">{{ __('Bairro') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="bairro_da_empresa" class="form-control @error('bairro_da_empresa') is-invalid @enderror" type="text" name="bairro_da_empresa" value="{{$empresa->bairro ?? old('bairro_da_empresa')}}" required autofocus autocomplete="bairro_da_empresa">
+                                    <label for="bairro_da_empresa">{{ __('Bairro') }}<span class="text-danger">*</span></label>
+                                    <input id="bairro_da_empresa"
+                                           name="bairro_da_empresa"
+                                           type="text"
+                                           class="form-control @error('bairro_da_empresa') is-invalid @enderror"
+                                           value="{{ old('bairro_da_empresa') ?? $empresa->bairro ?? '' }}"
+                                           required>
                                     @error('bairro_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -129,26 +136,37 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 form-group">
-                                    <label for="cidade_da_empresa">{{ __('Cidade') }}</label>
-                                    <input type="hidden" name="cidade_da_empresa" value="Garanhuns">
-                                    <input id="cidade_da_empresa" class="form-control @error('cidade_da_empresa') is-invalid @enderror" type="text" value="Garanhuns" required disabled autofocus autocomplete="cidade_da_empresa">
+                                    <label for="cidade_da_empresa">{{ __('Cidade') }}<span class="text-danger">*</span></label>
+                                    <input id="cidade_da_empresa"
+                                           name="cidade_da_empresa"
+                                           type="text"
+                                           class="form-control @error('cidade_da_empresa') is-invalid @enderror"
+                                           value="{{ old('cidade_da_empresa') ?? $empresa->cidade ?? '' }}"
+                                           required>
                                     @error('cidade_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="estado_da_empresa">{{ __('Estado') }}</label>
-                                    <input type="hidden" name="estado_da_empresa" value="PE">
-                                    <select id="estado_da_empresa" class="form-control @error('estado_da_empresa') is-invalid @enderror" type="text" required autocomplete="estado_da_empresa" disabled>
-                                        <option value=""  hidden>-- Selecione o UF --</option>
-                                        <option selected value="PE">Pernambuco</option>
+                                    <label for="estado_da_empresa">{{ __('Estado') }}<span class="text-danger">*</span></label>
+                                    <select id="estado_da_empresa"
+                                            name="estado_da_empresa"
+                                            class="form-control @error('estado_da_empresa') is-invalid @enderror"
+                                            required>
+                                        <option value="" hidden>-- Selecione o UF --</option>
+                                        @foreach ([
+                                            'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
+                                            'MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN',
+                                            'RS','RO','RR','SC','SP','SE','TO'
+                                        ] as $uf)
+                                            <option value="{{ $uf }}"
+                                                {{ (old('estado_da_empresa') ?? $empresa->estado ?? '') === $uf ? 'selected' : '' }}>
+                                                {{ $uf }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                     @error('estado_da_empresa')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -291,30 +309,50 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="aviso-modal-fora" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #4A7836;">
-                    <h5 class="modal-title" id="exampleModalLabel" style="color: white;">Aviso</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    O cadastro não está disponivel para empresas fora do municipio de garanhuns!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-color-dafault" data-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
     @push('modals')
         @include('empresa.importacaoModal')
+        @include('empresa.comparativoModal')
+
     @endpush
 
     @push ('scripts')
         <script>
+            window.meu_callback_empresa = function(conteudo) {
+                if (!("erro" in conteudo)) {
+                    document.getElementById('rua_da_empresa').value    = conteudo.logradouro;
+                    document.getElementById('bairro_da_empresa').value = conteudo.bairro;
+                    document.getElementById('cidade_da_empresa').value = conteudo.localidade;
+                    document.getElementById('estado_da_empresa').value = conteudo.uf;
+                } else {
+                    limpa_formulario_cep_empresa();
+                    $('#aviso-modal-cep-nao-encontrado').modal('show');
+                }
+            };
+
+            // Dispara a busca via CEP
+            window.pesquisacepEmpresa = function(valor) {
+                var cep = valor.replace(/\D/g, '');
+                if (cep) {
+                    var validacep = /^[0-9]{8}$/;
+                    if (validacep.test(cep)) {
+                        ['rua_da_empresa','bairro_da_empresa','cidade_da_empresa','estado_da_empresa']
+                            .forEach(id => document.getElementById(id).value = '…');
+                        var script = document.createElement('script');
+                        script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback_empresa';
+                        document.body.appendChild(script);
+                    } else {
+                        limpa_formulario_cep_empresa();
+                        $('#aviso-modal-cep-invalido').modal('show');
+                    }
+                } else {
+                    limpa_formulario_cep_empresa();
+                }
+            };
+
+            function limpa_formulario_cep_empresa() {
+                ['rua_da_empresa','bairro_da_empresa','cidade_da_empresa','estado_da_empresa']
+                    .forEach(id => document.getElementById(id).value = '');
+            }
             $(document).ready(function($) {
                 $('#cpf').mask('000.000.000-00');
                 $('#rg').mask('00000000');
@@ -407,7 +445,7 @@
                     mostrar($(this).val());
                 });
 
-                if(@json(!empty($empresa->cnpj ?? old('tipo_de_pessoa')))){
+                if(@json(!empty($empresa->eh_cnpj ?? old('tipo_de_pessoa')))){
                     mostrar($('#tipo_de_pessoa').val())
                 }
 

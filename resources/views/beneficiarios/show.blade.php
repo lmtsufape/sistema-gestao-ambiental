@@ -61,7 +61,7 @@
                                         class="form-control @error('tipo_beneficiario') is-invalid @enderror"
                                         type="text"
                                         name="tipo_beneficiario"
-                                        value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : ($beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa'] ? 'Carro Pipa' : 'Ambos') }}"
+                                        value="{{ $beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['aracao'] ? 'Aração' : ($beneficiario->tipo_beneficiario == \App\Models\Beneficiario::ROLE_ENUM['carro_pipa'] ? 'Carro-pipa' : 'Ambos') }}"
                                         readonly>
                                 </div>
                             </div>

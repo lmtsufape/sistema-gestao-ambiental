@@ -135,8 +135,8 @@
         </div>
         @can('isSecretario', \App\Models\User::class)
         <div class="col-md-6 col-lg-4 mb-3">
-            <a  
-            href="{{route('mudas.index', 'pendentes')}}" 
+            <a
+            href="{{route('mudas.index', 'pendentes')}}"
             class="h-100 w-100">
             <div class="card card-home">
                 <div class="card-body d-flex align-items-center justify-content-center">
@@ -156,8 +156,8 @@
         </div>
         @elsecan ('isRequerente', \App\Models\User::class)
         <div class="col-md-6 col-lg-4 mb-3">
-            <a  
-            href="{{route('mudas.requerente.index')}}" 
+            <a
+            href="{{route('mudas.requerente.index')}}"
             class="h-100 w-100">
             <div class="card card-home">
                 <div class="card-body d-flex align-items-center justify-content-center">
@@ -421,9 +421,9 @@
                                 <label for="protocolo">{{ __('Protocolo:') }}</label>
                                 <input id="protocolo" class="form-control @error('protocolo') is-invalid @enderror" type="text" name="protocolo" value="{{old('protocolo')}}" required autofocus autocomplete="protocolo">
                                 <br>
-                                <p>Digite o procotolo que deseja buscar. 
-                                    Certifique-se de que os caracteres digitados estão corretos, seguindo o padrão de letras maiúsculas e minúculas 
-                                    para que possamos encontrar em nosso sistema sua solicitação.</p> 
+                                <p>Digite o procotolo que deseja buscar.
+                                    Certifique-se de que os caracteres digitados estão corretos, seguindo o padrão de letras maiúsculas e minúculas
+                                    para que possamos encontrar em nosso sistema sua solicitação.</p>
 
                                 @error('protocolo')
                                     <div id="validationServer03Feedback" class="invalid-feedback">
@@ -476,7 +476,7 @@
                 </div>
                     <div class="modal-body">
                         <div class="modal-text text-justify">
-                            A partir da página referente a agricultura, beneficiários podem ser cadastrados e serem solicitados serviços de carro pipa e aração de terra para o beneficente.
+                            A partir da página referente a agricultura, beneficiários podem ser cadastrados e serem solicitados serviços de carro-pipa e aração de terra para o beneficente.
                         </div>
                     </div>
                     <div class="modal-footer">
