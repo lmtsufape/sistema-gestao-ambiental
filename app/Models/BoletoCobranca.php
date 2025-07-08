@@ -30,6 +30,16 @@ class BoletoCobranca extends Model
         'cancelado' => 4,
     ];
 
+    public static function statusPagamentoRotulos(): array
+    {
+        return [
+            self::STATUS_PAGAMENTO_ENUM['pago'] => 'Pago',
+            self::STATUS_PAGAMENTO_ENUM['nao_pago'] => 'Não pago',
+            self::STATUS_PAGAMENTO_ENUM['vencido'] => 'Vencido',
+            self::STATUS_PAGAMENTO_ENUM['cancelado'] => 'Cancelado',
+        ];
+    }
+
     public function getCanceladoAttribute()
     {
         return $this->status_pagamento == BoletoCobranca::STATUS_PAGAMENTO_ENUM['cancelado'];

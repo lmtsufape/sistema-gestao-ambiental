@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(Request $request)
-    {   
+    {
         if (auth()->user() && auth()->user()->role == User::ROLE_ENUM['secretario']) {
             $ordenacao = $request->ordenacao;
 
@@ -124,7 +124,7 @@ class DashboardController extends Controller
     }
 
     private function getNotificacoes($periodo, $request = null)
-    {   
+    {
         $notificacoes = Notificacao::where('created_at', '!=', null);
         if ($request != null) {
             $dataDe = $request->dataDe;
@@ -150,53 +150,28 @@ class DashboardController extends Controller
     }
 
     private function totalBoleto($periodo, $request = null) {
-        $query = BoletoCobranca::where('created_at', '!=', null);
-        $query2 = BoletoCobranca::where('created_at', '!=', null);
-        $query3 = BoletoCobranca::where('created_at', '!=', null);
+        $boletos = BoletoCobranca::whereNotNull('created_at')->get();
 
         if ($request != null) {
             $dataDe = $request->dataDe;
             $dataAte = $request->dataAte;
             if ($dataDe != null) {
-                $query = $query->where('created_at', '>=', $dataDe);
-                $query2 = $query2->where('created_at', '>=', $dataDe);
-                $query3 = $query3->where('created_at', '>=', $dataDe);
+                $boletos = $boletos->where('created_at', '>=', $dataDe);
             }
             if ($dataAte != null) {
-                $query = $query->where('created_at', '<=', $dataAte);
-                $query2 = $query2->where('created_at', '<=', $dataAte);
-                $query3 = $query3->where('created_at', '<=', $dataAte);
+                $boletos = $boletos->where('created_at', '<=', $dataAte);
             }
         } else {
-            $query = BoletoCobranca::where('created_at', '>=', $periodo);
-            $query2 = BoletoCobranca::where('created_at', '>=', $periodo);
-            $query3 = BoletoCobranca::where('created_at', '>=', $periodo);
-        }
-        $boletoData = array();
-
-        $vencidos = $query
-        ->where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['vencido'])
-        ->count();
-        if ($vencidos > 0) {
-            $boletoData['Vencidos'] = $vencidos;
+            $boletos = $boletos->where('created_at', '>=', $periodo);
         }
 
-        $pagos = $query2
-        ->where('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['pago'])
-        ->count();
-        if ($pagos > 0) {
-            $boletoData['Pagos'] = $pagos;
-        }
+        $labelsStatusPagamento = BoletoCobranca::statusPagamentoRotulos();
 
-        $pendentes = $query3
-        ->where(function ($qry) {
-            $qry->whereNull('status_pagamento')
-                ->orWhere('status_pagamento', BoletoCobranca::STATUS_PAGAMENTO_ENUM['nao_pago']);
-        })->count();
-
-        if ($pendentes > 0) {
-            $boletoData['Pendentes'] = $pendentes;
-        }
+        $boletoData = $boletos
+            ->groupBy('status_pagamento')
+            ->mapWithKeys(fn ($grupo, $status) => [
+                $labelsStatusPagamento[$status] ?? 'Desconhecido' => $grupo->count()
+            ]);
 
         return $boletoData;
     }
@@ -285,31 +260,28 @@ class DashboardController extends Controller
     }
 
     private function requerimentosPieChart($periodo, $request = null) {
-        $data = Requerimento::where('status', '!=', Requerimento::STATUS_ENUM['cancelada']);
+        $requerimentos = Requerimento::all();
 
         if ($request != null) {
             $dataDe = $request->dataDe;
             $dataAte = $request->dataAte;
             if ($dataDe != null) {
-                $data = $data->where('created_at', '>=', $dataDe);
+                $requerimentos = $requerimentos->where('created_at', '>=', $dataDe);
             }
             if ($dataAte != null) {
-                $data = $data->where('created_at', '<=', $dataAte);
+                $requerimentos = $requerimentos->where('created_at', '<=', $dataAte);
             }
-        } else {
-            $data = $data->where('created_at', '>=', $periodo);
+        } else if($periodo) {
+            $requerimentos = $requerimentos->where('created_at', '>=', $periodo);
         }
-        $data = $data->get()
-        ->groupBy('status_string')
-        ->map->count();
 
-        $canceladas = Requerimento::where('created_at', '>=', $periodo)
-        ->where('status', Requerimento::STATUS_ENUM['cancelada'])
-        ->orWhere('cancelada', true)
-        ->count();
-        if ($canceladas > 0) {
-            $data['Cancelados'] = $canceladas;
-        }
+        $data = [
+            'Cancelados' => $requerimentos->filter(function($requerimento){
+                return $requerimento->status === Requerimento::STATUS_ENUM['cancelada'] || $requerimento->cancelada === true;
+            })->count(),
+            'Em andamento' => $requerimentos->where('status', '!=', Requerimento::STATUS_ENUM['cancelada'])->where('status', '!=', Requerimento::STATUS_ENUM['finalizada'])->count(),
+            'Aprovados'  => $requerimentos->where('status', '!=', Requerimento::STATUS_ENUM['finalizada'])->count(),
+        ];
 
         return $data;
     }
