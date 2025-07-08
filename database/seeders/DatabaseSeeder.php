@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ValoresSeeder::class,
             EspecieMudaSeeder::class,
             NovoAnalistaSeeder::class,
+            BoletoCobrancasSeeder::class,
         ]);
     }
 }
