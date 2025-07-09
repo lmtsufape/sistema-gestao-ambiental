@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Requerente;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ValoresSeeder::class,
             EspecieMudaSeeder::class,
             NovoAnalistaSeeder::class,
+            RequerimentoSeeder::class,
             BoletoCobrancasSeeder::class,
         ]);
     }
