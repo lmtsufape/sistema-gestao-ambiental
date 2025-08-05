@@ -15,6 +15,7 @@ use App\Models\WebServiceCaixa\GerirBoletoRemessaAvulso;
 use App\Models\WebServiceCaixa\IncluirBoletoRemessa;
 use App\Models\WebServiceCaixa\IncluirBoletoAvulsoRemessa;
 use App\Models\WebServiceCaixa\Pessoa;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class XMLCoderController extends Controller
@@ -107,28 +108,11 @@ class XMLCoderController extends Controller
      */
     public function incluirBoletoRemessa(BoletoCobranca $boleto)
     {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => IncluirBoletoRemessa::URL,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $boleto->caminho_arquivo_remessa),
-            CURLOPT_HTTPHEADER => [
-                'SoapAction: INCLUI_BOLETO',
-                'Content-Type: text/plain',
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
+        $response = $this->enviarArquivoRemessa(
+            IncluirBoletoRemessa::URL,
+            'INCLUI_BOLETO',
+            $boleto->caminho_arquivo_remessa
+        );
 
         $resultado = (new IncluirBoletoRemessa())->xmlToArray($response);
         if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
@@ -148,28 +132,11 @@ class XMLCoderController extends Controller
 
     public function incluirBoletoAvulsoRemessa(BoletoAvulso $boleto)
     {
-        $curl = curl_init();
-        
-        curl_setopt_array($curl, [
-            CURLOPT_URL => IncluirBoletoAvulsoRemessa::URL,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $boleto->caminho_arquivo_remessa),
-            CURLOPT_HTTPHEADER => [
-                'SoapAction: INCLUI_BOLETO',
-                'Content-Type: text/plain',
-            ],
-        ]);
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
+        $response = $this->enviarArquivoRemessa(
+            IncluirBoletoAvulsoRemessa::URL,
+            'INCLUI_BOLETO',
+            $boleto->caminho_arquivo_remessa
+        );
         
         $resultado = (new IncluirBoletoAvulsoRemessa())->xmlToArray($response);
         if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
@@ -264,27 +231,11 @@ class XMLCoderController extends Controller
         Storage::put($caminho, $remessa_alterar_boleto->gerarRemessa());
         $boleto->update();
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => GerirBoletoRemessa::URL,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $caminho),
-            CURLOPT_HTTPHEADER => [
-                'SoapAction: ALTERA_BOLETO',
-                'Content-Type: text/plain',
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        curl_close($curl);
+        $response = $this->enviarArquivoRemessa(
+            GerirBoletoRemessa::URL,
+            'ALTERA_BOLETO',
+            $caminho
+        );
         $resultado = (new AlterarBoletoRemessa())->xmlToArray($response);
 
         if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
@@ -319,27 +270,11 @@ class XMLCoderController extends Controller
         Storage::put($caminho, $baixar_boleto->gerarRemessa());
         $boleto->update();
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => GerirBoletoRemessa::URL,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_SSL_CIPHER_LIST => 'DEFAULT@SECLEVEL=1',
-            CURLOPT_POSTFIELDS => file_get_contents(storage_path('') . '/app/' . $caminho),
-            CURLOPT_HTTPHEADER => [
-                'SoapAction: ALTERA_BOLETO',
-                'Content-Type: text/plain',
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        curl_close($curl);
+        $response = $this->enviarArquivoRemessa(
+            GerirBoletoRemessa::URL,
+            'ALTERA_BOLETO',
+            $caminho
+        );
         $resultado = (new BaixarBoletoRemessa())->xmlToArray($response);
 
         if (! array_key_exists('COD_RETORNO', $resultado) || ! is_array($resultado['COD_RETORNO']) || ! array_key_exists('DADOS', $resultado['COD_RETORNO'])) {
@@ -354,5 +289,18 @@ class XMLCoderController extends Controller
             default:
                 throw new ErrorRemessaException($resultado['RETORNO']);
         }
+    }
+
+    private function enviarArquivoRemessa(string $url, string $soapAction, string $caminhoArquivo): string
+    {
+        return Http::withHeaders([
+            'SoapAction' => $soapAction,
+            'Content-Type' => 'text/plain',
+        ])->withOptions([
+            'verify' => false,
+        ])->withBody(
+            file_get_contents(storage_path('app/' . $caminhoArquivo)),
+            'text/plain'
+        )->post($url)->body();
     }
 }
