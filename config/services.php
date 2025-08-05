@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'caixa' => [
+        'fake' => env('CAIXA_HTTP_FAKE', false),
+    ],
+
 ];
