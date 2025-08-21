@@ -63,11 +63,17 @@ class EmpresaRequest extends FormRequest
     public function prepareForValidation()
     {
         if ($this->has('cnaes_id')) {
-            if(!empty($this->input('cnaes_id'))){
+            $cnaesId = $this->input('cnaes_id');
+
+            if (is_string($cnaesId) && !empty($cnaesId)) {
                 $this->merge([
-                    'cnaes_id' => explode(',', $this->input('cnaes_id'))
+                    'cnaes_id' => explode(',', $cnaesId)
                 ]);
-            }else{
+            } elseif (is_array($cnaesId)) {
+                $this->merge([
+                    'cnaes_id' => $cnaesId
+                ]);
+            } else {
                 $this->merge([
                     'cnaes_id' => []
                 ]);
