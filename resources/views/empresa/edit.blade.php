@@ -41,7 +41,9 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <input type="hidden" name="eh_cnpj" id="eh_cnpj" value="{{ old('eh_cnpj', $empresa->eh_cnpj ? true : false) }}">
+                                    <input type="hidden" name="eh_cnpj" id="eh_cnpj"
+                                           value="{{ old('eh_cnpj', $empresa->eh_cnpj ? 'true' : 'false') }}">
+
                                 </div>
                                 <div class="col-md-4 form-group" id="div-cnpj" style="@if(old('cnpj') != null || $empresa->eh_cnpj) display: block; @else display: none; @endif">
                                     <label for="cnpj">{{ __('CNPJ') }}<span style="color: red; font-weight: bold;">*</span></label>
@@ -426,17 +428,17 @@
             }
 
             function trocar() {
-                if (document.getElementById('div-cpf').style.display == "block") {
+                const input = document.getElementById('eh_cnpj');
+                if (document.getElementById('div-cpf').style.display === "block") {
                     document.getElementById('div-cpf').style.display = "none";
                     document.getElementById('cpf').value = null;
                     document.getElementById('div-cnpj').style.display = "block";
-                    document.getElementById('eh_cnpj').value = true;
+                    input.value = "true";   // <- string
                 } else {
                     document.getElementById('div-cpf').style.display = "block";
                     document.getElementById('cnpj').value = null;
                     document.getElementById('div-cnpj').style.display = "none";
-                    document.getElementById('eh_cnpj').value = false;
-
+                    input.value = "false";  // <- string
                 }
             }
 
