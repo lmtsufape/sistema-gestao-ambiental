@@ -98,7 +98,7 @@ class SolicitacaoPodaController extends Controller
                 $usuarios = $usuarios->pluck('id');
                 $requerentes = Requerente::whereIn('user_id', $usuarios);
                 $requerentes = $requerentes->pluck('id');
-                
+
                 $enderecos = Endereco::where('rua', 'ilike', '%' . $busca . '%')->orWhere('bairro', 'ilike', '%' . $busca . '%')->orWhere('numero', 'ilike', '%' . $busca . '%')->get();
                 $enderecos = $enderecos->pluck('id');
                 $solicitacoes = SolicitacaoPoda::whereIn('requerente_id', $requerentes)->orWhereIn('endereco_id', $enderecos)->paginate(20);
@@ -137,7 +137,7 @@ class SolicitacaoPodaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\SolicitacaoPodaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(SolicitacaoPodaRequest $request)
     {
@@ -148,7 +148,7 @@ class SolicitacaoPodaController extends Controller
         }
 
         if($this->tempoMinimo($data, auth()->user()->requerente->id)){
-            return redirect()->back()->with(['error' => 'É necessário aguardar no mínimo um ano para solicitar uma nova poda, pois a árvore precisa recuperar sua estrutura novamente. 
+            return redirect()->back()->with(['error' => 'É necessário aguardar no mínimo um ano para solicitar uma nova poda, pois a árvore precisa recuperar sua estrutura novamente.
                                 Tente novamente após um ano da última solicitação para esse endereço.']);
         }
 
@@ -203,7 +203,7 @@ class SolicitacaoPodaController extends Controller
                 return true;
             }
         }
-        return false; 
+        return false;
     }
 
     public function tempoMinimo($data, $requerente_id)
@@ -224,7 +224,7 @@ class SolicitacaoPodaController extends Controller
                 return true;
             }
         }
-        return false; 
+        return false;
     }
 
     /**
