@@ -129,12 +129,13 @@ class RequerimentoController extends Controller
      *
      * @param RequerimentoRequest $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function store(RequerimentoRequest $request)
     {
         $request->validated();
         $empresa = Empresa::find($request->empresa);
-
+        $this->authorize('create', [Requerimento::class, $empresa]);
         $requerimento = new Requerimento();
         $requerimento->tipo = $request->tipo;
         $requerimento->status = Requerimento::STATUS_ENUM['em_andamento'];
