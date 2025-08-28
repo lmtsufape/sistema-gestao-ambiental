@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -14,14 +15,18 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Auditable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, AuditableContract
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Auditable;
+
+
 
     public const ROLE_ENUM = [
         'requerente' => 1,
@@ -73,6 +78,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    protected array $auditInclude = [
+        'name',
+        'email',
+        'role',
+    ];
+
+    protected array $auditExclude = [
+        'password',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+    ];
+
     public function requerente()
     {
         return $this->hasOne(Requerente::class, 'user_id');
@@ -114,7 +131,7 @@ class User extends Authenticatable implements MustVerifyEmail
             }
         }
     }
-    
+
 
     public function requerimentosDocumentosExigidosNotificacao()
     {
@@ -133,10 +150,10 @@ class User extends Authenticatable implements MustVerifyEmail
                         $query->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado']);
                     })
                     ->first();
-                
+
                 if($requerimento_documento) {
                     return $requerimento;
-                } 
+                }
             }
         }
 
@@ -147,7 +164,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->whereRelation('empresa', 'user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')
             ->first();
-                    
+
         foreach($requerimentos as $requerimento) {
             if($requerimento) {
                 $requerimento_documento = RequerimentoDocumento::where('requerimento_id', $requerimento->id)
@@ -155,7 +172,7 @@ class User extends Authenticatable implements MustVerifyEmail
                         $query->where('status', RequerimentoDocumento::STATUS_ENUM['nao_enviado']);
                     })
                     ->first();
-            
+
                 if($requerimento_documento) {
                     return $requerimento;
                 }

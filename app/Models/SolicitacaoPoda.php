@@ -4,12 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class SolicitacaoPoda extends Model
+class SolicitacaoPoda extends Model implements  AuditableContract
 {
     use HasFactory;
+    use Auditable;
 
     protected $table = 'solicitacoes_podas';
+
+    protected $auditInclude = [
+        'protocolo',
+        'motivo_indeferimento',
+        'status',
+        'analista_id',
+        'autorizacao_ambiental',
+        'comentario',
+        'area',
+        'motivo_solicitacao',
+        'nome_solicitante',
+    ];
 
     protected $fillable = [
         'protocolo',

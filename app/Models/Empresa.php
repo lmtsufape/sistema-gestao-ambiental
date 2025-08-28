@@ -4,10 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Empresa extends Model
+class Empresa extends Model implements AuditableContract
 {
     use HasFactory;
+    use Auditable;
+
+    protected $auditInclude = [
+        'nome',
+        'cpf_cnpj',
+        'eh_cnpj',
+        'porte',
+        'endereco_id',
+        'telefone_id',
+        'user_id',
+        'represetante_legal_id',
+    ];
 
     public const PORTE_ENUM = [
         'micro' => 1,
@@ -27,7 +41,7 @@ class Empresa extends Model
     public function documentosRequeridos()
     {
         return $this->belongsToMany(RequerimentoDocumento::class, 'empresa_id');
-    } 
+    }
 
     public function endereco()
     {

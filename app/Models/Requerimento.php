@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Requerimento extends Model
+class Requerimento extends Model implements AuditableContract
 {
     use HasFactory;
+    use Auditable;
 
     public const STATUS_ENUM = [
         'requerida' => 1,
@@ -46,10 +49,20 @@ class Requerimento extends Model
         'status_empresa',
     ];
 
+    protected array $auditInclude = [
+        'status',
+        'tipo',
+        'valor',
+        'potencial_poluidor_atribuido',
+        'cancelada',
+        'motivo_cancelamento',
+        'status_empresa',
+    ];
+
     public function documentosRequeridos()
     {
         return $this->belongsToMany(RequerimentoDocumento::class, 'requerimento_id');
-    } 
+    }
 
     public function protocolista()
     {
