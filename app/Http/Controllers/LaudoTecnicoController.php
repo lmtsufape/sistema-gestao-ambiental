@@ -49,7 +49,12 @@ class LaudoTecnicoController extends Controller
 
     public function show(LaudoTecnico $laudo)
     {
-        return view('solicitacoes.podas.laudos.show', ['laudo' => $laudo]);
+        $atividades = LaudoTecnico::ATIVIDADE_ENUM;
+        $rotulo = array_search( $laudo->atividade, $atividades, true) ?: $laudo->atividade;
+        return view('solicitacoes.podas.laudos.show', [
+            'laudo'            => $laudo,
+            'rotulo'  => $rotulo,
+        ]);
     }
 
     public function pdf(LaudoTecnico $laudo)

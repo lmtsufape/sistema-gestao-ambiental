@@ -39,15 +39,29 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 form-group">
-                                <label for="condicoes">Condições da árvore</label>
-                                <input id="condicoes" class="form-control" disabled
-                                    type="text" name="condicoes" value="{{ $laudo->condicoes }}" autocomplete="condicoes">
+                                <label for="condicoes">Observações</label>
+                                <textarea
+                                    id="condicoes"
+                                    class="form-control"
+                                    rows="5"
+                                    disabled>{{ $laudo->condicoes }}</textarea>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="localizacao">Localização</label>
                                 <input id="localizacao"
                                     class="form-control simple-field-data-mask" disabled
                                     type="text" name="localizacao" value="{{ $laudo->localizacao }}">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="atividade">Atividade</label>
+                                <input
+                                    id="atividade"
+                                    class="form-control"
+                                    type="text"
+                                    name="atividade"
+                                    value="{{ $rotulo }}"
+                                    disabled
+                                >
                             </div>
                             @if ($laudo->solicitacaoPoda->area == 2)
                                 <div class="col-md-12 form-group">

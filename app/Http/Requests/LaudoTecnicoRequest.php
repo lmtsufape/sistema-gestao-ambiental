@@ -30,6 +30,7 @@ class LaudoTecnicoRequest extends FormRequest
             'imagem.*' => ['required', 'file', 'mimes:jpg,bmp,png', 'max:2048'],
             'pdf' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             'licenca' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'atividade' => ['required','integer','in:1,2,3']
         ];
     }
 
@@ -44,7 +45,7 @@ class LaudoTecnicoRequest extends FormRequest
     public function attributes()
     {
         return [
-            'condicoes' => 'condições fitosanitárias da árvore',
+            'condicoes' => 'observações',
             'localizacao' => 'localização',
         ];
     }

@@ -40,13 +40,14 @@
                             @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="condicoes">Condições da árvore<span style="color: red; font-weight: bold;">*</span></label>
-                                    <input id="condicoes" class="form-control @error('condicoes') is-invalid @enderror"
-                                        type="text" name="condicoes" value="{{ old('condicoes') }}" autocomplete="condicoes">
+                                    <label for="condicoes">
+                                        Observações<span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    <textarea id="condicoes" name="condicoes" rows="5" class="form-control @error('condicoes') is-invalid @enderror" autocomplete="off">{{ old('condicoes', $laudo->condicoes ?? '') }}</textarea>
                                     @error('condicoes')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                    <div id="validationServer03Feedback" class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                                 <div class="col-md-12 form-group">
@@ -58,6 +59,26 @@
                                         <div id="validationServer03Feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label for="atividade">
+                                        Atividade a ser executada<span class="text-danger fw-bold">*</span>
+                                    </label>
+                                    <select id="atividade" name="atividade" class="form-control @error('atividade') is-invalid @enderror">
+                                        @foreach(\App\Models\LaudoTecnico::ATIVIDADE_ENUM as $rotulo => $valor)
+                                            <option
+                                                value="{{ $valor }}"
+                                                {{ old('atividade', $laudo->atividade ?? '') == $valor ? 'selected' : '' }}>
+                                                {{ $rotulo }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('atividade')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
@@ -78,21 +99,21 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="form-row">
-                                <div class="col-md-12 form-group">
-                                    <label id="pdf" for="pdf">Arquivo PDF</label>
-                                    <br>
-                                    <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do arquivo" title="Enviar arquivo" ></label>
-                                    <label for="enviar_arquivo"></label>
-                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept=".pdf" name="pdf">
+{{--                            <div class="form-row">--}}
+{{--                                <div class="col-md-12 form-group">--}}
+{{--                                    <label id="pdf" for="pdf">Arquivo PDF</label>--}}
+{{--                                    <br>--}}
+{{--                                    <label class="label-input btn btn-success btn-enviar-doc" for="enviar_arquivo"><img class="icon-licenciamento" width="20px;" src="{{asset('img/fluent_document-arrow-up-20-regular.svg')}}" alt="Icone de envio do arquivo" title="Enviar arquivo" ></label>--}}
+{{--                                    <label for="enviar_arquivo"></label>--}}
+{{--                                    <input id="enviar_arquivo" type="file" class="input-enviar-arquivo @error('imagem_principal') is-invalid @enderror" accept=".pdf" name="pdf">--}}
 
-                                    @error('pdf')
-                                        <div id="validationServer03Feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
+{{--                                    @error('pdf')--}}
+{{--                                        <div id="validationServer03Feedback" class="invalid-feedback">--}}
+{{--                                            {{ $message }}--}}
+{{--                                        </div>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <label for="imagem">{{ __('Anexar imagens') }}</label>
