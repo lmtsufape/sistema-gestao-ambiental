@@ -15,7 +15,14 @@ class LaudoTecnico extends Model
         'condicoes',
         'localizacao',
         'pdf',
-        'licenca'
+        'licenca',
+        'atividade'
+    ];
+
+    public const ATIVIDADE_ENUM = [
+        'Supressao' => 1,
+        'Poda' => 2,
+        'Sem intervenção' => 3,
     ];
 
     public function fotos()
