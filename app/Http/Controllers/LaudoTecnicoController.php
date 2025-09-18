@@ -7,6 +7,8 @@ use App\Models\FotoLaudoTecnico;
 use App\Models\LaudoTecnico;
 use App\Models\SolicitacaoPoda;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User; // ⚠️ faltava esse import no seu arquivo
+use Barryvdh\DomPDF\Facade as PDF;
 
 class LaudoTecnicoController extends Controller
 {
@@ -50,7 +52,7 @@ class LaudoTecnicoController extends Controller
     public function show(LaudoTecnico $laudo)
     {
         $atividades = LaudoTecnico::ATIVIDADE_ENUM;
-        $rotulo = array_search( $laudo->atividade, $atividades, true) ?: $laudo->atividade;
+        $rotulo = array_search($laudo->atividade, $atividades, true) ?: $laudo->atividade;
         return view('solicitacoes.podas.laudos.show', [
             'laudo'            => $laudo,
             'rotulo'  => $rotulo,
@@ -73,5 +75,49 @@ class LaudoTecnicoController extends Controller
 
         return Storage::download($foto->caminho);
     }
+    public function exportarPdf(LaudoTecnico $laudo)
+    {
 
+        $atividades = LaudoTecnico::ATIVIDADE_ENUM;
+        $rotulo = array_search($laudo->atividade, $atividades, true) ?: $laudo->atividade;
+
+        $solicitacao = $laudo->solicitacaoPoda()
+            ->with(['requerente.user', 'endereco', 'telefone', 'fotos'])
+            ->first();
+
+        $imagensLaudo = $laudo->fotos->map(function ($foto) {
+            $bin = Storage::get($foto->caminho);
+
+            return [
+                'src'        => 'data:image/jpeg;base64,' . base64_encode($bin),
+                'comentario' => $foto->comentario,
+            ];
+        });
+
+        $imagensSolicitacao = $solicitacao && $solicitacao->fotos
+            ? $solicitacao->fotos->map(function ($foto) {
+                $bin = Storage::get($foto->caminho);
+                return [
+                    'src'        => 'data:image/jpeg;base64,' . base64_encode($bin),
+                    'comentario' => $foto->comentario,
+                ];
+            })
+            : collect();
+
+        PDF::setOptions([
+            'isRemoteEnabled'      => false,
+            'isHtml5ParserEnabled' => true,
+            'dpi'                  => 96,
+        ]);
+
+        $pdf = PDF::loadView('solicitacoes.podas.laudos.pdf', [
+            'laudo'               => $laudo,
+            'rotulo'              => $rotulo,
+            'solicitacao'         => $solicitacao,
+            'imagensLaudo'        => $imagensLaudo,
+            'imagensSolicitacao'  => $imagensSolicitacao,
+        ])->setPaper('a4');
+
+        return $pdf->download('laudo-tecnico-ambiental-' . $laudo->id . '.pdf');
+    }
 }

@@ -224,6 +224,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/solicitacoes/podas/ficha/{ficha}/foto/{foto}', [FichaAnaliseController::class, 'foto'])->name('podas.fichas.foto');
     Route::post('/solicitacoes/atribuir/analista', [SolicitacaoPodaController::class, 'atribuirAnalistaSolicitacao'])->name('solicitacoes.atribuir.analista');
     Route::post('/solicitacoes/create/visita', [VisitaController::class, 'createVisitaSolicitacaoPoda'])->name('solicitacoes.visita.create');
+    Route::get('/podas/laudos/{laudo}/exportar-pdf', [LaudoTecnicoController::class, 'exportarPdf'])->name('podas.laudos.exportarPdf');
 
     Route::get('/solicitacoes/mudas/mostrar/{solicitacao}', [SolicitacaoMudaController::class, 'mostrar'])->name('mudas.mostrar');
     Route::get('/solicitacoes/mudas/status', [SolicitacaoMudaController::class, 'status'])->name('mudas.status');

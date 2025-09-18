@@ -6,10 +6,10 @@
                 <div class="form-row">
                     <div class="col-md-12" style="padding-top: 15px;">
                         <h4 class="card-title">Laudo Técnico Ambiental</h4>
-                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Podas</a> > <a class="card-subtitle mb-2 text-muted"  href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="card-subtitle mb-2 text-muted" href="javascript:window.history.back();">Podas</a> > <a class="card-subtitle mb-2 text-muted" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}">Avaliar solicitação de poda/supressão {{$laudo->solicitacaoPoda->protocolo}}</a> > Laudo Tecnico Ambiental</h6>
                     </div>
                     <div class="col-md-2" style="text-align: right; padding-top: 15px;">
-                        {{-- <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}"  alt="Voltar" title="Voltar"></a> --}}
+                        {{-- <a class="btn my-2" href="{{route('podas.edit', ['solicitacao' => $laudo->solicitacaoPoda])}}" style="cursor: pointer;"><img class="icon-licenciamento btn-voltar" src="{{asset('img/back-svgrepo-com.svg')}}" alt="Voltar" title="Voltar"></a> --}}
                     </div>
                 </div>
             </div>
@@ -23,18 +23,18 @@
                         </div>
                         <div div class="form-row">
                             @if (session('success'))
-                                <div class="col-md-12" style="margin-top: 5px;">
-                                    <div class="alert alert-success" role="alert">
-                                        <p>{{ session('success') }}</p>
-                                    </div>
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-success" role="alert">
+                                    <p>{{ session('success') }}</p>
                                 </div>
+                            </div>
                             @endif
                             @if (session('error'))
-                                <div class="col-md-12" style="margin-top: 5px;">
-                                    <div class="alert alert-danger" role="alert">
-                                        <p>{{ session('error') }}</p>
-                                    </div>
+                            <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="alert alert-danger" role="alert">
+                                    <p>{{ session('error') }}</p>
                                 </div>
+                            </div>
                             @endif
                         </div>
                         <div class="form-row">
@@ -60,27 +60,35 @@
                                     type="text"
                                     name="atividade"
                                     value="{{ $rotulo }}"
-                                    disabled
-                                >
+                                    disabled>
                             </div>
                             @if ($laudo->solicitacaoPoda->area == 2)
-                                <div class="col-md-12 form-group">
-                                    <label for="licenca">Licença Ambiental</label>
-                                    <div class="form-row align-items-center">
-                                        @if($laudo->licenca)
-                                            <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.licenca', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="Licença Ambiental" style="width: 17px;"></a>
-                                        @endif
-                                    </div>
+                            <div class="col-md-12 form-group">
+                                <label for="licenca">Licença Ambiental</label>
+                                <div class="form-row align-items-center">
+                                    @if($laudo->licenca)
+                                    <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.licenca', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="Licença Ambiental" style="width: 17px;"></a>
+                                    @endif
                                 </div>
+                            </div>
                             @endif
                         </div>
                         <div class="justify-content-between">
                             <label for="arquivos">Arquivos anexados</label>
                             <div class="form-row align-items-center">
-                                <a class="icon-licenciamento ml-2 align-middle" title="Mídia do laudo" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="20px;" src="{{asset('img/Visualizar mídia.svg')}}"  alt="Mídia"></a>
+                                <a class="icon-licenciamento ml-2 align-middle" title="Mídia do laudo" data-toggle="modal" data-target="#modal-imagens" style="cursor: pointer; margin-left: 2px; margin-right: 2px;"><img width="20px;" src="{{asset('img/Visualizar mídia.svg')}}" alt="Mídia"></a>
                                 @if($laudo->pdf)
-                                    <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.pdf', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="arquivo pdf" style="width: 17px;"></a>
+                                <a class="icon-licenciamento px-4 align-middle" href="{{route('podas.laudos.pdf', $laudo)}}" target="_blank"><img src="{{asset('img/file-pdf-solid.svg')}}" alt="arquivo pdf" style="width: 17px;"></a>
                                 @endif
+                            </div>
+                            <div class="form-row mt-3">
+                                <div class="col text-right">
+                                    <a href="{{ route('podas.laudos.exportarPdf', $laudo) }}"
+                                        class="btn btn-danger shadow-sm px-4 py-2"
+                                        style="border-radius: 6px; font-weight: 500;">
+                                        <i class="fas fa-file-pdf mr-1"></i> Baixar PDF
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,6 +96,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade bd-example-modal-lg" id="modal-imagens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelC" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -107,16 +116,16 @@
                     <br>
                     <div class="row">
                         @foreach ($laudo->fotos as $foto)
-                            <div class="col-md-6">
-                                <div class="card" style="width: 100%;">
-                                    <img src="{{route('podas.laudos.foto', ['laudo' => $laudo->id, 'foto' => $foto->id])}}" class="card-img-top" alt="...">
-                                    @if ($foto->comentario != null)
-                                        <div class="card-body">
-                                            <p class="card-text">{{$foto->comentario}}</p>
-                                        </div>
-                                    @endif
+                        <div class="col-md-6">
+                            <div class="card" style="width: 100%;">
+                                <img src="{{route('podas.laudos.foto', ['laudo' => $laudo->id, 'foto' => $foto->id])}}" class="card-img-top" alt="...">
+                                @if ($foto->comentario != null)
+                                <div class="card-body">
+                                    <p class="card-text">{{$foto->comentario}}</p>
                                 </div>
+                                @endif
                             </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>
