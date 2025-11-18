@@ -260,8 +260,9 @@ nav img {
 }
 
 .card-borda-esquerda {
-    border-left: 20px solid var(--primaria);
-    border-radius: 7px;
+    border-left: 8px solid #00883D !important;
+    border-radius: 8px;
+    background-color: #fff;
 }
 
 .card-title {
@@ -1218,6 +1219,9 @@ canvas {
 
 .bootstrap-select.form-control button.dropdown-toggle{
     background-color: white;
+}
+.card card-borda-esquerda{
+    max-width: 100%;
 }
 
 /* X DEMO STYLE SIDE BAR X */

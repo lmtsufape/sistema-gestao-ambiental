@@ -2,7 +2,7 @@
     @section('content')
     <div class="container-fluid" style="padding-top: 3rem; padding-bottom: 6rem; padding-left: 10px; padding-right: 20px">
         <div class="form-row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="form-row">
                     <div class="col-md-8">
                         <h4 class="card-title">Realizar solicitação de mudas</h4>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
                         <div div class="form-row">
@@ -59,7 +59,7 @@
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
                             <div class="form-row justify-content-between">
-                                <div class="col-md-8">
+                                <div class="col-md-12 mb-4">
                                     <div class="card card-borda-esquerda" style="width: 100%;">
                                         <div class="card-body">
                                             <table class="table" data-toggle="table" id="especies">
@@ -110,8 +110,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-row mb-2">
+                              
+                                    <div class="col-md-12 mb-4">
                                         <label for="local">Endereço completo do local de plantio<span style="font-weight: bold; color: red">*</span><span style="font-weight: normal; color: rgb(88, 88, 88)">(Informar o endereço completo do local onde as mudas serão plantadas)</span></label>
                                         <textarea id="local" class="form-control @error('local') is-invalid @enderror"
                                                   name="local"
@@ -122,7 +122,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="form-row">
+                                    <div class="col-md-12">
                                         <label for="comentario">Comentário <span style="font-weight: normal; color: rgb(88, 88, 88)">(Mencionar informação que julgar necessária)</span></label>
                                         <textarea id="comentario" class="form-control @error('comentario') is-invalid @enderror"
                                                   name="comentario"
@@ -138,8 +138,8 @@
                             <br>
                             <div class="form-row">
                                 <div class="col-md-6 form-group"></div>
-                                <div class="col-md-6 form-group">
-                                    <button type="submit" class="btn btn-success submeterFormBotao btn-color-dafault" style="width: 100%;">Confirmar</button>
+                                <div class="col-md-6 form-group text-center">
+                                    <button type="submit" class="btn btn-success submeterFormBotao btn-color-dafault" style="width: 90%;">Confirmar</button>
                                 </div>
                             </div>
                         </form>
