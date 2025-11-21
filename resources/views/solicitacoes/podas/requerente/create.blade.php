@@ -29,6 +29,15 @@
                                     </div>
                                 </div>
                             @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             @if (session('error'))
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     <div class="alert alert-danger" role="alert">
@@ -540,7 +549,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                                
+
                                 @if (Auth()->user()->email == 'solitacao@presencial.com')
                                     <div class="col-md-6 form-group">
                                         <label for="nome_solicitante">{{ __('Nome do solicitante') }}</label>
@@ -847,7 +856,7 @@
                 jQuery.noConflict();
                 $('#aviso-modal-fora').modal('show');
             }
-            
+
             function exibirModalAreaRural() {
                 alert("AVISO: Caso seja necessário a supressão vegetal em área rural, o seu empreendimento deverá ser licenciado pela CPRH de acordo com o parecer n° 0264/2020.");
             }

@@ -4,10 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Denuncia extends Model
+class Denuncia extends Model implements AuditableContract
 {
     use HasFactory;
+    use Auditable;
+
+    protected $auditInclude = [
+        'empresa_id',
+        'empresa_nao_cadastrada',
+        'endereco',
+        'texto',
+        'aprovacao',
+        'arquivo',
+    ];
+
+    protected $auditExclude = [
+        'denunciante',
+    ];
 
     public const APROVACAO_ENUM = [
         'registrada' => 1,

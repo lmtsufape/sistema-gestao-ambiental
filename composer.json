@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "ext-curl": "*",
+        "ext-dom": "*",
         "barryvdh/laravel-dompdf": "^0.9.0",
         "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,8 +18,8 @@
         "laravel/tinker": "^2.5",
         "laravellegends/pt-br-validator": "^8.0",
         "livewire/livewire": "^2.5",
-        "ext-dom": "*",
-        "ext-curl": "*"
+        "owen-it/laravel-auditing": "^13.7",
+        "spatie/laravel-activitylog": "^4.10"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -27,8 +29,7 @@
         "lucascudo/laravel-pt-br-localization": "^1.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpmd/phpmd": "^2.12",
-        "phpunit/phpunit": "^9.3.3"
+        "phpmd/phpmd": "^2.12"
     },
     "autoload": {
         "files": [

@@ -27,6 +27,15 @@
                                     </div>
                                 </div>
                             @endif
+                            @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             @if (session('error'))
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     <div class="alert alert-danger" role="alert">
@@ -55,7 +64,7 @@
                                 @endpush
                             @endif
                         </div>
-                        
+
                         <form method="POST" id="cria-solicitacao" action="{{ route('mudas.store') }}">
                             @csrf
                             <div class="form-row justify-content-between">
@@ -149,6 +158,7 @@
         </div>
     </div>
 
+
     <div class="modal fade" id="modalProtocolo" role="dialog" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -215,7 +225,7 @@
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #dcd935;">                    
+                <div class="modal-header" style="background-color: #dcd935;">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color: rgb(66, 66, 66);">É necessário entrar em contato
                         com a secretaria de Meio ambiente para dar continuidade a sua solicitação</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -224,7 +234,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>Por ser uma solicitação para fora da cidade de Garanhuns, a secretria <strong>apenas</strong> dará 
+                    <p>Por ser uma solicitação para fora da cidade de Garanhuns, a secretria <strong>apenas</strong> dará
                        continuidade a sua solicitação após ser iniciado o contato pelo whatsapp</p>
 
                        <div class="col-md-12">
@@ -234,7 +244,7 @@
                         &nbsp;<a href="https://api.whatsapp.com/send?1=pt_BR&phone=558737627086" target="_blank" style="text-decoration: none; color:black;">Whatsapp: +55 87 3762-7086</a>
                     </div>
                 </div>
-                
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
                 </div>

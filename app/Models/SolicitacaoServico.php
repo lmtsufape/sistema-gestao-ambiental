@@ -4,10 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class SolicitacaoServico extends Model
-{   
+class SolicitacaoServico extends Model implements AuditableContract
+{
     use HasFactory;
+    use Auditable;
+
+    protected $auditInclude = [
+        'data_solicitacao',
+        'data_saida',
+        'data_entrega',
+        'motorista',
+        'capacidade_tanque',
+        'nome_apelido',
+        'status',
+        'observacao',
+        'beneficiario_id',
+        'codigo_solicitante',
+    ];
 
     protected $table = 'solicitacao_servicos';
 

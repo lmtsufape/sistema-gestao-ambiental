@@ -77,13 +77,25 @@ class SolicitacaoMudaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\SolicitacaoMudaRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(SolicitacaoMudaRequest $request)
     {
         $this->authorize('create', SolicitacaoMuda::class);
-        $data = $request->validated();
+        $user = auth()->user();
+        $requerenteId = $user->requerente->id;
+        $hoje = Carbon::today();
+        $qtdHoje = SolicitacaoMuda::where('requerente_id', $requerenteId)
+            ->whereDate('created_at', $hoje)
+            ->count();
 
+        if ($qtdHoje >= 5) {
+            return redirect()->back()
+                ->withErrors(['Limite diário atingido: você só pode fazer até 5 solicitações de muda por dia.'])
+                ->withInput();
+        }
+
+        $data = $request->validated();
         $solicitacao = new SolicitacaoMuda();
         $solicitacao->fill($data);
         $solicitacao->requerente_id = auth()->user()->requerente->id;

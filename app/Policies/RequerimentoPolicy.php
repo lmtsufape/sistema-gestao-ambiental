@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Empresa;
 use App\Models\Requerimento;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -41,9 +42,14 @@ class RequerimentoPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, Empresa $empresa)
     {
-        //
+        $userPolicy = new UserPolicy();
+
+        return ($user->empresas->contains('id', $empresa->id)
+            || $userPolicy->isSecretario($user) ||
+            $userPolicy->isProtocolista($user));
+
     }
 
     /**

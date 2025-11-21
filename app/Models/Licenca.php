@@ -6,10 +6,22 @@ use App\Http\Requests\LicencaRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Licenca extends Model
+class Licenca extends Model implements AuditableContract
 {
     use HasFactory;
+    use Auditable;
+
+    protected $auditInclude = [
+        'protocolo',
+        'status',
+        'tipo',
+        'validade',
+        'caminho',
+        'requerimento_id',
+    ];
 
     public const STATUS_ENUM = [
         'gerada' => 1,

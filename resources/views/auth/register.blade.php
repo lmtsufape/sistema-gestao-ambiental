@@ -55,15 +55,31 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
-                                        <label for="password">{{ __('Password') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                        <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autofocus autocomplete="new-password">
-                                        <small>Deve ter no mínimo 8 caracteres</small>
+                                        <label for="password">{{ __('Password') }}<span class="text-danger fw-bold">*</span></label>
+                                        <input
+                                            id="password"
+                                            class="form-control @error('password') is-invalid @enderror"
+                                            type="password"
+                                            name="password"
+                                            required
+                                            autofocus
+                                            autocomplete="new-password"
+                                        >
                                         @error('password')
-                                            <div id="validationServer03Feedback" class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        <div id="validationServer03Feedback" class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
                                         @enderror
+
+                                        <ul id="password-requirements" class="list-unstyled mt-2 d-none">
+                                            <li id="req-length"    class="text-danger">Mínimo de 8 caracteres</li>
+                                            <li id="req-lower"     class="text-danger">Pelo menos uma letra minúscula</li>
+                                            <li id="req-upper"     class="text-danger">Pelo menos uma letra maiúscula</li>
+                                            <li id="req-number"    class="text-danger">Pelo menos um número</li>
+                                            <li id="req-symbol"    class="text-danger">Pelo menos um símbolo (ex: !@#$%)</li>
+                                        </ul>
                                     </div>
+
                                     <div class="col-md-6 form-group">
                                         <label for="password_confirmation">{{ __('Confirm Password') }}<span style="color: red; font-weight: bold;">*</span></label>
                                         <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
@@ -313,6 +329,50 @@
 
     @push ('scripts')
         <script>
+            const pwd = document.getElementById('password');
+            const list = document.getElementById('password-requirements');
+
+            pwd.addEventListener('focus', () => {
+                list.classList.remove('d-none');
+            });
+
+            pwd.addEventListener('blur', () => {
+                if (!pwd.value) {
+                    list.classList.add('d-none');
+                }
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                const passwordInput = document.getElementById('password');
+                const reqs = {
+                    length: document.getElementById('req-length'),
+                    lower:  document.getElementById('req-lower'),
+                    upper:  document.getElementById('req-upper'),
+                    number: document.getElementById('req-number'),
+                    symbol: document.getElementById('req-symbol'),
+                };
+
+                passwordInput.addEventListener('input', function() {
+                    const v = passwordInput.value;
+
+                    const tests = {
+                        length: v.length >= 8,
+                        lower:  /[a-z]/.test(v),
+                        upper:  /[A-Z]/.test(v),
+                        number: /\d/.test(v),
+                        symbol: /[^A-Za-z0-9]/.test(v),
+                    };
+
+                    for (let key in tests) {
+                        if (tests[key]) {
+                            reqs[key].classList.remove('text-danger');
+                            reqs[key].classList.add('text-success');
+                        } else {
+                            reqs[key].classList.remove('text-success');
+                            reqs[key].classList.add('text-danger');
+                        }
+                    }
+                });
+            });
             $(document).ready(function($) {
                 $('#cpf').mask('000.000.000-00');
                 $('#rg').mask('00000000');
