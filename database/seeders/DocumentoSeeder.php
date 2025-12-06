@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +16,7 @@ class DocumentoSeeder extends Seeder
      */
     public function run()
     {
-        $pdf = PDF::loadHTML("<h1>Documento</h1>");
+        $pdf = Pdf::loadHTML('<h1>Documento</h1>');
         $caminho_licencas = "documentos/licencas/";      
 
         Storage::put('public/' . $caminho_licencas . 'cpf_rg_requerente.pdf', $pdf->stream());

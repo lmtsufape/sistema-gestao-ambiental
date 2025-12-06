@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
 use Illuminate\Contracts\Support\Arrayable;
@@ -19,9 +18,13 @@ class UserProvider extends EloquentUserProvider implements UserProviderContract
      */
     public function retrieveByCredentials(array $credentials)
     {
-        if (empty($credentials) ||
-           (count($credentials) === 1 &&
-            Str::contains($this->firstCredentialKey($credentials), 'password'))) {
+        $credentials = array_filter(
+            $credentials,
+            fn ($key) => ! str_contains($key, 'password'),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        if (empty($credentials)) {
             return;
         }
 
@@ -31,16 +34,12 @@ class UserProvider extends EloquentUserProvider implements UserProviderContract
         $query = $this->newModelQuery();
 
         foreach ($credentials as $key => $value) {
-            if (Str::contains($key, 'password')) {
-                continue;
-            }
-
             if (is_array($value) || $value instanceof Arrayable) {
                 $query->whereIn($key, $value);
             } elseif ($value instanceof Closure) {
                 $value($query);
             } else {
-                $query->where($key, 'ilike', $value);
+                $query->where($key, $value);
             }
         }
 
