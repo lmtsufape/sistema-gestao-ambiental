@@ -232,9 +232,9 @@
                                 <br>
                                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                                     <div class="mt-2">
-                                        <x-jet-label for="terms">
+                                        <x-label for="terms">
                                             <div class="flex items-center">
-                                                <x-jet-checkbox name="terms" id="terms" class="checkbox-licenciamento" required/>
+                                                <x-checkbox name="terms" id="terms" class="checkbox-licenciamento" required/>
 
                                                 <div class="ml-2">
                                                     {!! __('Eu aceito os :terms_of_service e a :privacy_policy.', [
@@ -243,19 +243,19 @@
                                                     ]) !!}<span style="color: red; font-weight: bold;">*</span>
                                                 </div>
                                             </div>
-                                        </x-jet-label>
+                                        </x-label>
                                     </div>
                                     <div class="mt-2">
-                                        <x-jet-label for="declaracao">
+                                        <x-label for="declaracao">
                                             <div class="flex items-center">
-                                                <x-jet-checkbox name="declaracao" id="declaracao" class="checkbox-licenciamento" required/>
+                                                <x-checkbox name="declaracao" id="declaracao" class="checkbox-licenciamento" required/>
 
                                                 <div class="ml-2">
                                                     {!! __('Declaro sob as penas da lei que todas as informações prestadas são verdadeiras e estou ciente de eventual responsabilidade administrativa, cível e criminal que tais informações possam gerar.') !!}
                                                     <span style="color: red; font-weight: bold;">*</span>
                                                 </div>
                                             </div>
-                                        </x-jet-label>
+                                        </x-label>
                                     </div>
                                 @endif
 

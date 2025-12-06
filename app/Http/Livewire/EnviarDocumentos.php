@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
-use Livewire\FileUploadConfiguration;
-use Livewire\WithFileUploads;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class EnviarDocumentos extends Component
 {
