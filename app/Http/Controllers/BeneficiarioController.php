@@ -17,12 +17,18 @@ class BeneficiarioController extends Controller
         $this->authorize('isSecretarioOrBeneficiario', User::class);
 
         $buscar = $request->input('buscar');
+        $beneficiarioQuery = Beneficiario::query()->orderBy('nome');
 
         if ($buscar != null) {
-            $beneficiario = Beneficiario::where('nome', 'ILIKE', "%{$buscar}%")->orWhere('codigo', 'ILIKE', "%{$buscar}%")->get();
-        } else {
-            $beneficiario = Beneficiario::all()->sortBy('nome');
+            $beneficiarioQuery->where(function ($query) use ($buscar) {
+                $query->where('nome', 'ILIKE', "%{$buscar}%")
+                    ->orWhere('codigo', 'ILIKE', "%{$buscar}%");
+            });
         }
+
+        $beneficiario = $beneficiarioQuery
+            ->paginate(15)
+            ->appends($request->query());
 
         return view('beneficiarios.index', compact('beneficiario', 'buscar'));
     }

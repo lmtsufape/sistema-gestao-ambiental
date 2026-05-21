@@ -23,6 +23,13 @@
                                     </div>
                                 </div>
                             @endif
+                            @if(session('error'))
+                                <div class="col-md-12" style="margin-top: 5px;">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p>{{session('error')}}</p>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="table-responsive">
                         <table class="table">

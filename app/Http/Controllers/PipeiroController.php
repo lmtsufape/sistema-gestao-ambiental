@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\SolicitacaoServico;
 use Illuminate\Http\Request;
 use App\Models\Pipeiro;
@@ -21,7 +22,9 @@ class PipeiroController extends Controller
                 ->orWhere('nome_apelido', 'ILIKE', "%{$buscar}%");
         }
 
-        $motoristas = $motoristasQuery->get();
+        $motoristas = $motoristasQuery
+            ->paginate(15)
+            ->appends($request->query());
 
         return view('pipeiro.index', compact('motoristas'));
     }

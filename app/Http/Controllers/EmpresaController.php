@@ -11,6 +11,7 @@ use App\Models\Requerimento;
 use App\Models\Setor;
 use App\Models\Telefone;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleXMLElement;
@@ -211,6 +212,11 @@ class EmpresaController extends Controller
             return redirect()->back()->with(['error' => 'Essa empresa tem requerimentos pendentes e não pode ser deletada.']);
         }
 
+        $denuncias = $empresa->denuncias()->count();
+        if ($denuncias > 0) {
+            return redirect()->back()->with(['error' => 'Essa empresa tem denúncias registradas e não pode ser deletada.']);
+        }
+
         $endereco = $empresa->endereco;
         $telefone = $empresa->telefone;
 
@@ -218,7 +224,12 @@ class EmpresaController extends Controller
             $empresa->cnaes()->detach($cnae->id);
         }
 
-        $empresa->delete();
+        try {
+            $empresa->delete();
+        } catch (QueryException $exception) {
+            return redirect()->back()->with(['error' => 'Essa empresa possui registros relacionados e não pode ser deletada.']);
+        }
+
         $endereco->delete();
         $telefone->delete();
 
