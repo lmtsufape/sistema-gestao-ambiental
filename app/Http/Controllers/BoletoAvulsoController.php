@@ -111,16 +111,14 @@ class BoletoAvulsoController extends Controller
     }
 
     public function store(Request $request){
+        $request->validate([
+            'mensagem_compensacao' => 'required|string|max:80',
+        ]);
+
         $valor_multa = $request->multa;
         $xmlBoletoController = new XMLCoderController();
         $empresa = Empresa::where('cpf_cnpj', $request->cpf_cnpj)->first();
-
-        if(!is_null($request->mensagem_compensacao)) {
-            $mensagem_compensacao = $request->mensagem_compensacao;
-        }
-        else {
-            return redirect()->route('boletosAvulsos.index')->withErrors(['erro' => 'Ocorreu um erro com a mensagem de compensação.']);
-        }
+        $mensagem_compensacao = $request->mensagem_compensacao;
 
         if(is_null($empresa)) {
             $user = User::where('email', 'ilike', $request->email_empresa)->first();

@@ -14,6 +14,8 @@ use DOMElement;
  */
 abstract class Remessa extends BoletoCobranca
 {
+    use FormataMensagensCompensacao;
+
     // VERSAO : char[10]
     public $versao = '2.1';
 
