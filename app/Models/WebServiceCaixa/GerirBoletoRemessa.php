@@ -296,8 +296,10 @@ abstract class GerirBoletoRemessa extends Remessa
         $this->percentuais_desconto = array_key_exists('percentuais_desconto', $data) ? $data['percentuais_desconto'] : [null, null, null];
         $this->tipos_de_desconto = array_key_exists('tipos_de_desconto', $data) ? $data['tipos_de_desconto'] : [null, null, null];
         $this->valor_iof = array_key_exists('valor_iof', $data) ? $data['valor_iof'] : 0;
-        $this->quant_mensagens_compensacao = array_key_exists('mensagens_compensacao', $data) ? (min(count($data['mensagens_compensacao']), 2)) : 0;
-        $this->mensagens_compensacao = array_key_exists('mensagens_compensacao', $data) ? $data['mensagens_compensacao'] : [null, null];
+        $this->mensagens_compensacao = array_key_exists('mensagens_compensacao', $data)
+            ? $this->formatarMensagensCompensacao($data['mensagens_compensacao'])
+            : [];
+        $this->quant_mensagens_compensacao = count($this->mensagens_compensacao);
         $this->quant_mensagens_pagador = array_key_exists('mensagens_pagador', $data) ? (min(count($data['mensagens_pagador']), 4)) : 0;
         $this->mensagens_pagador = array_key_exists('mensagens_pagador', $data) ? $data['mensagens_pagador'] : [null, null, null, null];
         $this->quant_pagamento_permitido = array_key_exists('quant_pagamento_permitido', $data) ? count($data['quant_pagamento_permitido']) : 0;

@@ -166,8 +166,8 @@
                                             @enderror
                                             <br>
                                             <label for="mensagem_compensacao">{{ __('Mensagem de Compensação') }}<span style="color: red; font-weight: bold;">*</span></label>
-                                            <span style="color: red; font-weight: bold;">Atenção: A mensagem de compensação deve estar correta e nos padrões da caixa! </span>
-                                            <textarea id="mensagem_compensacao" class="form-control @error('mensagem_compensacao') is-invalid @enderror" type="text" name="mensagem_compensacao" required></textarea>
+                                            <span style="color: red; font-weight: bold;">Atenção: A mensagem de compensação deve estar correta e nos padrões da caixa (máximo de 80 caracteres)! </span>
+                                            <textarea id="mensagem_compensacao" class="form-control @error('mensagem_compensacao') is-invalid @enderror" type="text" name="mensagem_compensacao" maxlength="80" rows="3" required>{{ old('mensagem_compensacao') }}</textarea>
                                             @error('mensagem_compensacao')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

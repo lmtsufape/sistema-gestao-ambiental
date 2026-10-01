@@ -226,22 +226,56 @@ class Requerimento extends Model implements AuditableContract
 
     public function gerarMensagemCompesacao()
     {
+        $mensagemEnquadramento = 'PORTE ' . mb_strtoupper($this->empresa->porte(), 'UTF-8')
+            . '/POTENCIAL POLUIDOR ' . mb_strtoupper($this->potencialPoluidor(), 'UTF-8');
+
         switch ($this->tipo) {
             case $this::TIPO_ENUM['primeira_licenca']:
                 return [
                     'TAXA DE PRIMEIRA LICENCA ' . $this->tipoDeLicencaCompensacao(),
+                    $mensagemEnquadramento,
                 ];
                 break;
             case $this::TIPO_ENUM['renovacao']:
                 return [
                     'TAXA DE RENOVACAO DA LICENCA ' . $this->tipoDeLicencaCompensacao(),
+                    $mensagemEnquadramento,
                 ];
                 break;
             case $this::TIPO_ENUM['autorizacao']:
                 return [
                     'TAXA DE ' . $this->tipoDeLicencaCompensacao(),
+                    $mensagemEnquadramento,
                 ];
                 break;
+        }
+    }
+
+    /**
+     * Retorna o potencial poluidor utilizado no enquadramento da taxa.
+     */
+    public function potencialPoluidor(): string
+    {
+        $cnaeMaiorPoluidor = $this->empresa->cnaes
+            ->whereNotNull('potencial_poluidor')
+            ->sortByDesc('potencial_poluidor')
+            ->first();
+
+        $potencialPoluidor = $cnaeMaiorPoluidor != null
+            ? $cnaeMaiorPoluidor->potencial_poluidor
+            : $this->potencial_poluidor_atribuido;
+
+        switch ($potencialPoluidor) {
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['baixo']:
+                return 'Baixo';
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['medio']:
+                return 'Médio';
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['alto']:
+                return 'Alto';
+            case Cnae::POTENCIAL_POLUIDOR_ENUM['a_definir']:
+                return 'A definir';
+            default:
+                return 'Não definido';
         }
     }
 
