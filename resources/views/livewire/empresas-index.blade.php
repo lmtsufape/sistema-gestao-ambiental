@@ -59,6 +59,7 @@
                                 <td>
                                     <a  href="{{route('empresas.show', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/Visualizar.svg')}}"  alt="Visualizar a empresa" title="Visualizar a empresa"></a>
                                     @can('isSecretario', \App\Models\User::class)
+                                        <a href="{{route('empresas.endereco.edit', $empresa)}}" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar endereço da empresa" title="Editar endereço da empresa"></a>
                                         <a data-toggle="modal" data-target="#modalAlterarRequerente" style="cursor: pointer; margin-left: 2px;"><img class="icon-licenciamento" width="20px;" src="{{asset('img/update-requerente.svg')}}"  alt="Alterar requerente" title="Alterar requerente"></a>
                                     @endcan
                                 </td>

@@ -192,6 +192,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/{requerimento}/gerar/boleto_taxa_de_licenciamento_ambiental', [BoletoController::class, 'create'])->name('boleto.create');
     Route::prefix('empresas')->controller(EmpresaController::class)->name('empresas.')->group(function () {
         Route::get('/listar', 'indexEmpresas')->name('listar');
+        Route::get('/{id}/endereco', 'editEndereco')->name('endereco.edit');
+        Route::put('/{id}/endereco', 'updateEndereco')->name('endereco.update');
         Route::post('/import', 'importXml')->name('import');
     });
     Route::resource('empresas', EmpresaController::class);

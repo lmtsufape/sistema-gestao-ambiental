@@ -13,6 +13,7 @@ use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use SimpleXMLElement;
 
 class EmpresaController extends Controller
@@ -175,6 +176,38 @@ class EmpresaController extends Controller
         $empresa->update();
 
         return redirect(route('empresas.index'))->with(['success' => 'Empresa editada com sucesso!']);
+    }
+
+    public function editEndereco($id)
+    {
+        $this->authorize('isSecretario', User::class);
+        $empresa = Empresa::with('endereco')->findOrFail($id);
+
+        return view('empresa.edit-endereco', compact('empresa'));
+    }
+
+    public function updateEndereco(Request $request, $id)
+    {
+        $this->authorize('isSecretario', User::class);
+        $empresa = Empresa::with('endereco')->findOrFail($id);
+
+        $validated = $request->validate([
+            'cep_da_empresa' => ['required', 'string', 'max:255'],
+            'bairro_da_empresa' => ['required', 'string', 'max:255'],
+            'rua_da_empresa' => ['required', 'string', 'max:255'],
+            'numero_da_empresa' => ['required', 'string', 'max:255'],
+            'cidade_da_empresa' => ['required', 'string', 'max:255'],
+            'estado_da_empresa' => ['required', 'string', 'in:AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MS,MG,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO'],
+            'complemento_da_empresa' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        DB::transaction(function () use ($empresa, $validated) {
+            $endereco = $empresa->endereco;
+            $endereco->setAtributesEmpresa($validated);
+            $endereco->save();
+        });
+
+        return redirect()->route('empresas.listar')->with(['success' => 'Endereço da empresa atualizado com sucesso!']);
     }
 
     /**

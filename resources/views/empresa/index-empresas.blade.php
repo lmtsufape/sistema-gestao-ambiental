@@ -20,6 +20,14 @@
                         </li>
                         @can('isSecretario', \App\Models\User::class)
                             <li>
+                                <div title="Editar endereço da empresa" class="d-flex align-items-center my-1 pt-0 pb-1">
+                                    <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/edit-svgrepo-com.svg')}}" alt="Editar endereço da empresa">
+                                    <div style="font-size: 15px;" class="aling-middle mx-3">
+                                        Editar endereço da empresa
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
                                 <div title="Alterar requerente" class="d-flex align-items-center my-1 pt-0 pb-1">
                                     <img class="icon-licenciamento aling-middle" width="20" src="{{asset('img/update-requerente.svg')}}" alt="Alterar requerente">
                                     <div style="font-size: 15px;" class="aling-middle mx-3">
